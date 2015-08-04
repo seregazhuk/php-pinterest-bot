@@ -118,10 +118,11 @@ $autoload['language'] = array();
 |
 */
 
-$autoload['model'] = array('ar_model', 'settings_model',
-    'items_model',
-    'categories_model',
-    'brands_model');
+$autoload['model'] = array('ar_model',
+                            'settings_model',
+                            'items_model',
+                            'categories_model',
+                            'brands_model');
 
 
 /* End of file autoload.php */
