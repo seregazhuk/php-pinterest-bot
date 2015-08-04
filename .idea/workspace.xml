@@ -33,7 +33,7 @@
         <entry file="file://$PROJECT_DIR$/lib/PinterestBot.php">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="441" column="44" selection-start-line="441" selection-start-column="9" selection-end-line="441" selection-end-column="44" />
+              <caret line="441" column="50" selection-start-line="441" selection-start-column="15" selection-end-line="441" selection-end-column="50" />
               <folding>
                 <element signature="e#29#61#0#PHP" expanded="true" />
               </folding>
@@ -45,7 +45,7 @@
         <entry file="file://$PROJECT_DIR$/test.php">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.64351004">
-              <caret line="121" column="0" selection-start-line="121" selection-start-column="0" selection-end-line="124" selection-end-column="42" />
+              <caret line="121" column="28" selection-start-line="121" selection-start-column="28" selection-end-line="124" selection-end-column="44" />
               <folding />
             </state>
           </provider>
@@ -87,7 +87,7 @@
         <entry file="file://$PROJECT_DIR$/tests/PinterestBotTest.php">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="164" column="66" selection-start-line="164" selection-start-column="66" selection-end-line="164" selection-end-column="66" />
+              <caret line="164" column="70" selection-start-line="164" selection-start-column="70" selection-end-line="164" selection-end-column="70" />
               <folding>
                 <element signature="e#6#33#0#PHP" expanded="true" />
               </folding>
@@ -99,7 +99,7 @@
         <entry file="file://$PROJECT_DIR$/tests/ApiRequestTest.php">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="56" column="6" selection-start-line="56" selection-start-column="6" selection-end-line="56" selection-end-column="6" />
+              <caret line="56" column="12" selection-start-line="56" selection-start-column="12" selection-end-line="56" selection-end-column="12" />
               <folding />
             </state>
           </provider>
@@ -352,7 +352,13 @@
       <option name="project" value="LOCAL" />
       <updated>1438694330259</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="rere">
+      <created>1438694394187</created>
+      <option name="number" value="00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1438694394187</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -799,7 +805,7 @@
     <entry file="file://$PROJECT_DIR$/tests/PinterestBotTest.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="164" column="66" selection-start-line="164" selection-start-column="66" selection-end-line="164" selection-end-column="66" />
+          <caret line="164" column="70" selection-start-line="164" selection-start-column="70" selection-end-line="164" selection-end-column="70" />
           <folding>
             <element signature="e#6#33#0#PHP" expanded="true" />
           </folding>
@@ -809,7 +815,7 @@
     <entry file="file://$PROJECT_DIR$/lib/PinterestBot.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="441" column="44" selection-start-line="441" selection-start-column="9" selection-end-line="441" selection-end-column="44" />
+          <caret line="441" column="50" selection-start-line="441" selection-start-column="15" selection-end-line="441" selection-end-column="50" />
           <folding>
             <element signature="e#29#61#0#PHP" expanded="true" />
           </folding>
@@ -827,7 +833,7 @@
     <entry file="file://$PROJECT_DIR$/test.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.64351004">
-          <caret line="121" column="0" selection-start-line="121" selection-start-column="0" selection-end-line="124" selection-end-column="42" />
+          <caret line="121" column="28" selection-start-line="121" selection-start-column="28" selection-end-line="124" selection-end-column="44" />
           <folding />
         </state>
       </provider>
@@ -835,7 +841,7 @@
     <entry file="file://$PROJECT_DIR$/tests/ApiRequestTest.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="56" column="6" selection-start-line="56" selection-start-column="6" selection-end-line="56" selection-end-column="6" />
+          <caret line="56" column="12" selection-start-line="56" selection-start-column="12" selection-end-line="56" selection-end-column="12" />
           <folding />
         </state>
       </provider>
