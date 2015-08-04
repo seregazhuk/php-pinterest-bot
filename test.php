@@ -65,15 +65,15 @@ $autoload['libraries'] = array('database', 'session', 'report', 'my_authorizatio
 */
 
 $autoload['helper'] = array('url',
-							'html',
-							'form',
-							'cookie',
-							'check_path',
-							'get_order_status',
-							'trans',
-							'order_id',
-							'get_payout_status',
-							'human_plural_form');
+                            'html',
+                            'form',
+                            'cookie',
+                            'check_path',
+                            'get_order_status',
+                            'trans',
+                            'order_id',
+                            'get_payout_status',
+                            'human_plural_form');
 
 
 /*
@@ -119,10 +119,10 @@ $autoload['language'] = array();
 */
 
 $autoload['model'] = array('ar_model',
-							'settings_model',
-							'items_model',
-							'categories_model',
-							'brands_model');
+                          'settings_model',
+                          'items_model',
+                          'categories_model',
+                          'brands_model');
 
 
 /* End of file autoload.php */
