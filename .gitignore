@@ -1,3 +1,4 @@
-# Created by .ignore support plugin (hsz.mobi)
 vendor
-tests
+index.php
+.DS_Store
+.idea

@@ -1,20 +1,24 @@
 {
-  "name": "vendor_name/package_name",
-  "description": "description_text",
-  "minimum-stability": "stable",
-  "license": "proprietary",
-  "autoload": {
-    "psr-4": {
-      "Pinterest\\": "lib/"
-    }
-  },
-  "require-dev": {
-    "phpunit/phpunit": "*"
-  },
-  "authors": [
-    {
-      "name": "Serega Zhuk",
-      "email": "seregazhuk88@gmail.com"
-    }
-  ]
+	"name": "szhuk/pinterestapi",
+	"description": "PHP library for pintrest api",
+	"minimum-stability": "dev",
+	"license": "proprietary",
+	"autoload": {
+		"psr-4": {
+			"Pinterest\\": "src/"
+		}
+	},
+	"require": {
+		"php": ">=5.3.0",
+		"ext-curl": "*"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "*"
+	},
+	"authors": [
+		{
+			"name": "Serega Zhuk",
+			"email": "seregazhuk88@gmail.com"
+		}
+	]
 }
