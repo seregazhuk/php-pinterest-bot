@@ -5,7 +5,7 @@ API calss.
 
 ## Dependencies
 
-This API uses the CURL module and PHP 5.3 or above.
+API requires CURL extension and PHP 5.3 or above.
 
 
 ## Quick Start

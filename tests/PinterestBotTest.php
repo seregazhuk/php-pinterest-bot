@@ -2,12 +2,6 @@
 use Pinterest\PinterestBot;
 use Pinterest\ApiRequest;
 
-/**
- * Created by PhpStorm.
- * User: serega
- * Date: 31.07.15
- * Time: 23:42
- */
 class PinterestBotTest extends PHPUnit_Framework_TestCase
 {
 	/**
