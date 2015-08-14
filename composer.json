@@ -1,16 +1,23 @@
 {
 	"name": "szhuk/pinterestapi",
 	"description": "PHP library for pintrest api",
-	"minimum-stability": "stable",
+	"minimum-stability": "dev",
 	"license": "GPL-3.0",
 	"autoload": {
 		"psr-4": {
 			"Pinterest\\": "src/"
 		}
 	},
+	"repositories": [
+		{
+			"type": "vcs",
+			"url": "git@github.com:seregazhuk/php-pinterest-api.git"
+		}
+	],
 	"require": {
 		"php": ">=5.3.0",
-		"ext-curl": "*"
+		"ext-curl": "*",
+		"szhuk/pinterestapi": "*"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "*"
