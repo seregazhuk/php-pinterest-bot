@@ -21,7 +21,7 @@ Next, get your list of boards:
 
     $boards = $bot->getBoards();
 
-## Work with pins
+## Pins
 
 Create new pin. Accepts image url, board id, where to post image, description and preview url.
  
@@ -44,7 +44,7 @@ Write a comment.
 
 	$bot->commentPin($pinId, 'your comment');
 
-## Work with your account and other pinners
+## Pinners
 
 Get your account name
 
@@ -59,4 +59,5 @@ Get user info by username
 
 	$userData = $bot->getUserInfo($username);
 	
+Search queries coming soon.
 Questions?  Email me:  seregazhuk88@gmail.com

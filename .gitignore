@@ -2,3 +2,5 @@ vendor
 index.php
 .DS_Store
 .idea
+composer.lock
+composer.phar
