@@ -2,7 +2,7 @@
 	"name": "szhuk/pinterestapi",
 	"description": "PHP library for pintrest api",
 	"minimum-stability": "dev",
-	"license": "proprietary",
+	"license": "GPL-3.0",
 	"autoload": {
 		"psr-4": {
 			"Pinterest\\": "src/"
