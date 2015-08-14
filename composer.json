@@ -1,8 +1,14 @@
 {
 	"name": "szhuk/pinterestapi",
-	"description": "PHP library for pintrest api",
+	"description": "PHP library for Pintrest api",
+	"keywords": [
+		"php",
+		"lib",
+		"pinterest"
+	],
+	"type": "library",
 	"minimum-stability": "dev",
-	"license": "GPL-3.0",
+	"license": "Mit",
 	"autoload": {
 		"psr-4": {
 			"Pinterest\\": "src/"
@@ -25,7 +31,8 @@
 	"authors": [
 		{
 			"name": "Serega Zhuk",
-			"email": "seregazhuk88@gmail.com"
+			"email": "seregazhuk88@gmail.com",
+			"role": "Developer"
 		}
 	]
 }
