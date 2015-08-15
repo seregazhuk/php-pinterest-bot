@@ -27,7 +27,7 @@ use Pinterest\ApiRequest;
 use Pinterest\PinterestBot;
 
 $api = new ApiRequest();
-$api->userAgent = "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36";
+$api->useragent = "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36";
 $bot = new PinterestBot('mypinterestlogin', 'mypinterestpassword', $api);
 $bot->login();
 ```
