@@ -451,14 +451,15 @@ class PinterestBot
         } else {
 
             if (isset($res['resource']['options']['bookmarks'][0])) {
-                $bookmarks = $res['resource']['options']['bookmarks'][0];
+                $bookmarks = [$res['resource']['options']['bookmarks'][0]];
             } else {
-                $bookmarks = [];
+                $bookmarks = null;
             }
 
             if (isset($res['resource_response']['data'])) {
                 $data = $res['resource_response']['data'];
-                return ['data' => $data, 'bookmarks' => [$bookmarks]];
+
+                return ['data' => $data, 'bookmarks' => $bookmarks];
             } else {
                 return [];
             }
@@ -624,16 +625,24 @@ class PinterestBot
     }
 
     /**
-     * Iterate through results of Api function call
+     * Iterate through results of Api function call. By
+     * default generator will return all pagination results.
+     * To limit result batches, set $batchesLimit.
      *
-     * @param string $function
+*@param string $function
      * @param array  $params
-     * @return array
+     * @param int $batchesLimit
+     * @return \Generator
      */
-    protected function getPaginatedData($function, $params)
+    protected function getPaginatedData($function, $params, $batchesLimit = 0)
     {
-
+        $batchesNum = 0;
         do {
+
+            if ($batchesLimit && $batchesNum >= $batchesLimit) {
+                break;
+            }
+
             $items = [];
             $res   = call_user_func_array([$this, $function], $params);
 
@@ -649,50 +658,198 @@ class PinterestBot
                 $params['bookmarks'] = $res['bookmarks'];
             }
 
+            if (empty($items)) {
+                return;
+            }
+
+            $batchesNum++;
             yield $items;
 
-            if (empty($items) || isset($res['bookmarks'])) {
-                break;
-            }
+
         } while (isset($res['data']) && ! empty($res['data']));
 
     }
 
     /**
      * Get pinner followers
+
      *
-     * @param $username
-     * @return array
+* @param string   $username
+     * @param int $batchesLimit
+     * @return \Generator
      */
-    public function getFollowers($username)
+    public function getFollowers($username, $batchesLimit = 0)
     {
         return $this->getPaginatedData('getUserData',
-            ['username' => $username, 'url' => self::URL_USER_FOLLOWERS, 'sourceUrl' => "/$username/followers/"]);
+            ['username' => $username, 'url' => self::URL_USER_FOLLOWERS, 'sourceUrl' => "/$username/followers/"],
+            $batchesLimit);
     }
 
     /**
      * Get pinner following other pinners
+
      *
-     * @param $username
-     * @return array
+     * @param string $username
+     * @param int    $batchesLimit
+     * @return \Generator
      */
-    public function getFollowing($username)
+    public function getFollowing($username, $batchesLimit = 0)
     {
         return $this->getPaginatedData('getUserData',
-            ['username' => $username, 'url' => self::URL_USER_FOLLOWING, 'sourceUrl' => "/$username/following/"]);
+            ['username' => $username, 'url' => self::URL_USER_FOLLOWING, 'sourceUrl' => "/$username/following/"],
+            $batchesLimit);
     }
 
     /**
      * Get pinner pins
+
      *
-     * @param $username
-     * @return array
+     * @param string $username
+     * @param int    $batchesLimit
+     * @return \Generator
      */
-    public function getUserPins($username)
+    public function getUserPins($username, $batchesLimit = 0)
     {
         return $this->getPaginatedData('getUserData',
-            ['username' => $username, 'url' => self::URL_USER_PINS, 'sourceUrl' => "/$username/pins/"]);
+            ['username' => $username, 'url' => self::URL_USER_PINS, 'sourceUrl' => "/$username/pins/"],
+            $batchesLimit);
     }
 
 
+    /**
+     * Executes search to API. Query - search string.
+     *
+     * @param       $query
+     * @param       $scope
+     * @param array $bookmarks
+     * @return array
+     */
+    public function search($query, $scope, $bookmarks = [])
+    {
+        if (empty($bookmarks)) {
+            $options  = [
+                "restrict"            => null,
+                "scope"               => $scope,
+                "constraint_string"   => null,
+                "show_scope_selector" => true,
+                "query"               => $query,
+            ];
+            $dataJson = [
+                "options" => $options,
+                "context" => [],
+                'module'  => [
+                    "name"    => "SearchPage",
+                    "options" => $options,
+                ],
+            ];
+
+
+            $modulePath = 'App(module=[object Object])';
+            // And prepare the post data array
+            $get = [
+                "source_url"  => "/search/pins/?q=" . $query,
+                "data"        => json_encode($dataJson, JSON_FORCE_OBJECT),
+                "module_path" => urlencode($modulePath),
+            ];
+            $url = self::URL_SEARCH . '?' . UrlHelper::buildRequestString($get);
+        } else {
+            $options  = [
+                "layout"              => null,
+                "places"              => false,
+                "scope"               => $scope,
+                "constraint_string"   => null,
+                "show_scope_selector" => true,
+                "bookmarks"           => $bookmarks,
+                "query"               => $query,
+            ];
+            $dataJson = [
+                "options" => $options,
+                "context" => new \stdClass(),
+            ];
+
+
+            $modulePath = 'App(module=[object Object])';
+            $get        = [
+                "source_url"  => "/search/pins/?q=" . $query,
+                "data"        => json_encode($dataJson),
+                "module_path" => urlencode($modulePath),
+            ];
+
+            $url = self::URL_SEARCH_WITH_PAGINATION . '?' . UrlHelper::buildRequestString($get);
+        }
+
+
+        $res = $this->api->exec($url, self::URL_BASE);
+
+        if (empty($bookmarks)) {
+            if (isset($res['module']['tree']['resource']['options']['bookmarks'][0])) {
+                $bookmarks = $res['module']['tree']['resource']['options']['bookmarks'][0];
+            } else {
+                $bookmarks = [];
+            }
+
+            if ($res === null) {
+                return [];
+            } else {
+                if ( ! empty($res['module']['tree']['data']['results'])) {
+                    return ['data' => $res['module']['tree']['data']['results'], 'bookmarks' => [$bookmarks]];
+                } else {
+                    return [];
+                }
+            }
+        } else {
+
+            if ( ! empty($res['resource_response']['data'])) {
+                return [
+                    'data'      => $res['resource_response']['data'],
+                    'bookmarks' => $res['resource']['options']['bookmarks'],
+                ];
+            } else {
+                return [];
+            }
+        }
+
+    }
+
+    /**
+     * Search pinners by search query
+     *
+     * @param string $query
+     * @param int    $batchesLimit
+     * @return \Generator
+     */
+    public function searchPinners($query, $batchesLimit)
+    {
+        return $this->getPaginatedData('search',
+            ['query' => $query, 'scope' => self::SEARCH_PEOPLE_SCOPES],
+            $batchesLimit);
+    }
+
+    /**
+     * Search pins by search query
+     *
+     * @param string $query
+     * @param int    $batchesLimit
+     * @return \Generator
+     */
+    public function searchPins($query, $batchesLimit = 0)
+    {
+        return $this->getPaginatedData('search',
+            ['query' => $query, 'scope' => self::SEARCH_PINS_SCOPES],
+            $batchesLimit);
+    }
+
+    /**
+     * Search boards by search query
+     *
+     * @param string $query
+     * @param int    $batchesLimit
+     * @return \Generator
+     */
+    public function searchBoards($query, $batchesLimit = 0)
+    {
+        return $this->getPaginatedData('search',
+            ['query' => $query, 'scope' => self::SEARCH_BOARDS_SCOPES],
+            $batchesLimit);
+    }
 }

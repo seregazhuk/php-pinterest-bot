@@ -3,12 +3,22 @@ This PHP class will help you to work with your Pinterest account like
 api calls from your script. It's a wrapper around the undocumented Pinterest
 API calss. Some functions use pinterest navigation through results, for example,
 get user followers. Function returns generator object with api results as batches in 
-every iteration.
+every iteration. By default functions return all pinterest result batches, but you can 
+pass batches num as second argument. For example, 
+```php 
+$bot->searchPins('query', 2)
+```
+will return only 2 batches of search results.
 
 ## Dependencies
 
-API requires CURL extension and PHP 5.3 or above.
+API requires CURL extension and PHP 5.5 or above.
 
+## Installation
+Via composer:
+```
+php composer.phar require "szhuk/pinterestapi:*"
+```
 
 ## Quick Start
 
@@ -88,5 +98,25 @@ foreach($bot->getFollowers('username') as $followersBatch)
 	// ...
 }
 ```
+## Search
+
+Search functions use pinterest pagination in fetching results and return generator.
+```php
+foreach($bot->searchPins('query') as $pinsBatch)
+{
+	// ...
+}
+
+foreach($bot->searchPinners('query') as $pinnersBatch)
+{
+	// ...
+}
+
+foreach($bot->searchBoards('query') as $boardsBatch);
+{
+	// ...
+}
+```
+
 Search queries coming soon.
 Questions?  Email me:  seregazhuk88@gmail.com

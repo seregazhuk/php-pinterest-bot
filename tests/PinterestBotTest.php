@@ -230,13 +230,41 @@ class PinterestBotTest extends PHPUnit_Framework_TestCase
             ['id' => 1],
             ['id' => 2],
         ];
-        $mock                             = $this->getMock(ApiRequest::class, ['exec', 'isLoggedIn']);
-        $mock->method('exec')->willReturn($res);
+
+        $mock = $this->getMock(ApiRequest::class, ['exec', 'isLoggedIn']);
+        $mock->expects($this->at(1))
+            ->method('exec')
+            ->willReturn($res);
+
+        $mock->expects($this->at(2))
+            ->method('exec')
+            ->willReturn(['resource_response' => ['data' => []]]);
+
         $mock->method('isLoggedIn')->willReturn(true);
         $this->setProperty('api', $mock);
 
         $followers = $this->bot->getFollowers($this->bot->username);
         $this->assertCount(2, iterator_to_array($followers)[0]);
+    }
+
+    public function testGetFollowing()
+    {
+        $res['resource_response']['data'] = [
+            ['id' => 1],
+            ['id' => 2],
+        ];
+
+        $mock = $this->getMock(ApiRequest::class, ['exec', 'isLoggedIn']);
+        $mock->expects($this->at(1))
+            ->method('exec')
+            ->willReturn($res);
+
+        $mock->expects($this->at(2))
+            ->method('exec')
+            ->willReturn(['resource_response' => ['data' => []]]);
+
+        $mock->method('isLoggedIn')->willReturn(true);
+        $this->setProperty('api', $mock);
 
         $following = $this->bot->getFollowing($this->bot->username);
         $this->assertCount(2, iterator_to_array($following)[0]);
@@ -248,13 +276,48 @@ class PinterestBotTest extends PHPUnit_Framework_TestCase
             ['id' => 1],
             ['id' => 2],
         ];
-        $mock                             = $this->getMock(ApiRequest::class, ['exec', 'isLoggedIn']);
-        $mock->method('exec')->willReturn($res);
+
+        $mock = $this->getMock(ApiRequest::class, ['exec', 'isLoggedIn']);
+        $mock->expects($this->at(1))
+            ->method('exec')
+            ->willReturn($res);
+        $mock->expects($this->at(2))
+            ->method('exec')
+            ->willReturn(['resource_response' => ['data' => []]]);
+
         $mock->method('isLoggedIn')->willReturn(true);
         $this->setProperty('api', $mock);
 
         $pins = $this->bot->getUserPins($this->bot->username);
         $this->assertCount(2, iterator_to_array($pins)[0]);
+    }
+
+    public function testSearch()
+    {
+        $response = [
+            'resource_response' => [
+                'data' => [
+                    ['id' => 1],
+                    ['id' => 2],
+                ],
+            ],
+            'resource'          => [
+                'options' => ['bookmarks' => 'my_bookmarks'],
+            ],
+        ];
+
+        $expected = [
+            'data'      => $response['resource_response']['data'],
+            'bookmarks' => $response['resource']['options']['bookmarks'],
+        ];
+
+        $mock = $this->getMock(ApiRequest::class, ['exec', 'isLoggedIn']);
+        $mock->method('exec')->willReturn($response);
+        $mock->method('isLoggedIn')->willReturn(true);
+        $this->setProperty('api', $mock);
+
+        $res = $this->bot->search('cats', PinterestBot::SEARCH_PINS_SCOPES, 'bookmarks');
+        $this->assertEquals($expected, $res);
     }
 
 }
