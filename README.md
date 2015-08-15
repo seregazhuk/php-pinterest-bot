@@ -12,75 +12,85 @@ API requires CURL extension and PHP 5.3 or above.
 
 ## Quick Start
 
-	use Pinterest\ApiRequest;
-	use Pinterest\PinterestBot;
-	
-	$api = new ApiRequest();
-	$bot = new PinterestBot('mypinterestlogin', 'mypinterestpassword', $api);
-	$bot->login();
+```php
+<?php
+use Pinterest\ApiRequest;
+use Pinterest\PinterestBot;
+
+$api = new ApiRequest();
+$bot = new PinterestBot('mypinterestlogin', 'mypinterestpassword', $api);
+$bot->login();
+```
 
 Next, get your list of boards:
 
-    $boards = $bot->getBoards();
+```php
+<?php
+$boards = $bot->getBoards();
+```
 
 ## Pins
 
 Create new pin. Accepts image url, board id, where to post image, description and preview url.
- 
-    $pinId = $bot->pin('http://exmaple.com/image.jpg', $boards[0]['id'], 'pin description');
+
+```php
+$pinId = $bot->pin('http://exmaple.com/image.jpg', $boards[0]['id'], 'pin description');
+```
     
 Repin other pin by its id.
-
-    $bot->repin($pinId, $boards[0]['id'], 'my repin');
-    
+```php
+$bot->repin($pinId, $boards[0]['id'], 'my repin');
+``` 
 Delete pin by id.
- 
-    $bot->deletePin($pinId);
-   
+```php
+$bot->deletePin($pinId);
+```   
 Like/dislike pin by id.
-
-	$bot->likePin($pinId);
-	$bot->unLikePin($pinId);
-
+```php
+$bot->likePin($pinId);
+$bot->unLikePin($pinId);
+```
 Write a comment.
-
-	$bot->commentPin($pinId, 'your comment');
-
+```php
+$bot->commentPin($pinId, 'your comment');
+```
 Get all pins by username. Uses pinterest api pagination. Function returns pins batch every iteration.
-
-	foreach($bot->getUserPins('username') as $pinsBatch)
-    {
-        // ...
-    }
-    
+```php
+foreach($bot->getUserPins('username') as $pinsBatch)
+{
+	// ...
+}
+```    
 ## Pinners
 
 Get your account name
-
-	$bot->getAccountName();
-	
+```php
+<?php $bot->getAccountName(); ?>
+```	
 Follow/unfollow user by ID
+```php
 
-	$bot->followUser($userId);
-	$bot->unFollowUser($userId);
-	
+$bot->followUser($userId);
+$bot->unFollowUser($userId);
+```	
 Get user info by username
+```php
 
-	$userData = $bot->getUserInfo($username);
-	
+$userData = $bot->getUserInfo($username);
+```	
 Get user following. Uses pinterest api pagination.
-
-	foreach($bot->getFollowing('username') as $followingBatch)
-    {
-        // ...
-    }
-
+```php
+foreach($bot->getFollowing('username') as $followingBatch)
+{
+	// ...
+}
+```
 Get user followers. Uses pinterest api pagination.
-
-	foreach($bot->getFollowers('username') as $followersBatch)
-    {
-        // ...
-    }
-
+```php
+foreach($bot->getFollowers('username') as $followersBatch)
+{
+	// ...
+}
+```
 Search queries coming soon.
 Questions?  Email me:  seregazhuk88@gmail.com
