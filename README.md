@@ -1,7 +1,9 @@
 # Pinterest API for PHP
 This PHP class will help you to work with your Pinterest account like
 api calls from your script. It's a wrapper around the undocumented Pinterest
-API calss.
+API calss. Some functions use pinterest navigation through results, for example,
+get user followers. Function returns generator object with api results as batches in 
+every iteration.
 
 ## Dependencies
 
@@ -44,6 +46,13 @@ Write a comment.
 
 	$bot->commentPin($pinId, 'your comment');
 
+Get all pins by username. Uses pinterest api pagination. Function returns pins batch every iteration.
+
+	foreach($bot->getUserPins('username') as $pinsBatch)
+    {
+        // ...
+    }
+    
 ## Pinners
 
 Get your account name
@@ -59,5 +68,19 @@ Get user info by username
 
 	$userData = $bot->getUserInfo($username);
 	
+Get user following. Uses pinterest api pagination.
+
+	foreach($bot->getFollowing('username') as $followingBatch)
+    {
+        // ...
+    }
+
+Get user followers. Uses pinterest api pagination.
+
+	foreach($bot->getFollowers('username') as $followersBatch)
+    {
+        // ...
+    }
+
 Search queries coming soon.
 Questions?  Email me:  seregazhuk88@gmail.com
