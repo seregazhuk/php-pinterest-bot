@@ -72,7 +72,6 @@ $bot->unFollowUser($userId);
 ```	
 Get user info by username
 ```php
-
 $userData = $bot->getUserInfo($username);
 ```	
 Get user following. Uses pinterest api pagination.
