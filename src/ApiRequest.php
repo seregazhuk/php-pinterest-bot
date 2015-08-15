@@ -4,6 +4,18 @@ namespace Pinterest;
 
 use Pinterest\helpers\CsrfHelper;
 
+/**
+ * Class ApiRequest
+ *
+ * @package Pinterest
+ * @property string   $cookieJar
+ * @property string   $cookePath
+ * @property resource $ch
+ * @property array    $options
+ * @property string   $csrfToken
+ * @property bool     $loggedIn
+ * @property string   $useragent
+ */
 class ApiRequest implements ApiInterface
 {
     protected $cookieJar;
@@ -122,6 +134,7 @@ class ApiRequest implements ApiInterface
         $this->setCurlOptions($refer, $postString, $headers, $csrfToken, $cookieFileExists);
         $res = curl_exec($this->ch);
         curl_close($this->ch);
+
         return json_decode($res, true);
     }
 

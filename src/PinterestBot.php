@@ -7,9 +7,14 @@ use Pinterest\helpers\CsrfHelper;
 
 /**
  * Class PinterestBot
+
  *
- * @package Pinterest
- * @property $userAgent string
+*@package Pinterest
+ * @property string       $username
+ * @property string       $password
+ * @property ApiInterface $api
+ * @property int          $lastApiErrorCode
+ * @property string       $lastApiErrorMsg
  */
 class PinterestBot
 {
@@ -98,6 +103,7 @@ class PinterestBot
             return false;
         } else {
             $this->api->setLoggedIn(CsrfHelper::getCsrfToken($this->api->getCookieJar()));
+
             return true;
         }
     }
@@ -111,20 +117,20 @@ class PinterestBot
     {
         $this->checkLoggedIn();
 
-        $dataJson = array(
-            "options" => array(
+        $dataJson = [
+            "options" => [
                 "filter"        => "all",
                 "field_set_key" => "board_picker",
-            ),
-            "context" => array(),
-        );
+            ],
+            "context" => [],
+        ];
 
-        $get = array(
+        $get = [
             "source_url"  => "/pin/create/bookmarklet/?url=",
             "pinFave"     => "1",
             "description" => "",
             "data"        => json_encode($dataJson, JSON_FORCE_OBJECT),
-        );
+        ];
 
         $getString = UrlHelper::buildRequestString($get);
 
@@ -134,6 +140,7 @@ class PinterestBot
         if (isset($res['resource_response']['data']['all_boards'])) {
             return $res['resource_response']['data']['all_boards'];
         }
+
         return null;
 
     }
@@ -206,7 +213,7 @@ class PinterestBot
             ],
             "context" => [],
         ];
-        $post = [
+        $post     = [
             "data" => json_encode($dataJson, JSON_FORCE_OBJECT),
         ];
         $postString = UrlHelper::buildRequestString($post);
@@ -218,6 +225,7 @@ class PinterestBot
         if ($res === null) {
             return false;
         }
+
         return true;
     }
 
@@ -231,17 +239,17 @@ class PinterestBot
     {
         $this->checkLoggedIn();
 
-        $dataJson = array(
-            "options" => array(
+        $dataJson = [
+            "options" => [
                 "pin_id" => $pinId,
-            ),
-            "context" => array(),
-        );
+            ],
+            "context" => [],
+        ];
 
-        $post = array(
-            "source_url"  => "/pin/{$pinId}/",
-            "data"        => json_encode($dataJson, JSON_FORCE_OBJECT),
-        );
+        $post = [
+            "source_url" => "/pin/{$pinId}/",
+            "data"       => json_encode($dataJson, JSON_FORCE_OBJECT),
+        ];
         $postString = URlHelper::buildRequestString($post);
 
         $res = $this->api->exec(self::URL_LIKE_PIN,
@@ -267,16 +275,16 @@ class PinterestBot
     {
         $this->checkLoggedIn();
 
-        $dataJson = array(
-            "options" => array(
+        $dataJson = [
+            "options" => [
                 "pin_id" => $pinId,
-            ),
-            "context" => array(),
-        );
-        $post = array(
-            "source_url"  => "/pin/{$pinId}/",
-            "data"        => json_encode($dataJson, JSON_FORCE_OBJECT),
-        );
+            ],
+            "context" => [],
+        ];
+        $post     = [
+            "source_url" => "/pin/{$pinId}/",
+            "data"       => json_encode($dataJson, JSON_FORCE_OBJECT),
+        ];
 
         $postString = URlHelper::buildRequestString($post);
 
@@ -304,18 +312,18 @@ class PinterestBot
     {
         $this->checkLoggedIn();
 
-        $dataJson = array(
-            "options" => array(
+        $dataJson = [
+            "options" => [
                 "pin_id" => $pinId,
                 "text"   => $text,
-            ),
-            "context" => array(),
-        );
+            ],
+            "context" => [],
+        ];
 
-        $post = array(
-            "source_url"  => "/pin/{$pinId}/",
-            "data"        => json_encode($dataJson, JSON_FORCE_OBJECT),
-        );
+        $post = [
+            "source_url" => "/pin/{$pinId}/",
+            "data"       => json_encode($dataJson, JSON_FORCE_OBJECT),
+        ];
         $postString = UrlHelper::buildRequestString($post);
 
         $res = $this->api->exec(self::URL_COMMENT_PIN,
@@ -375,8 +383,8 @@ class PinterestBot
         }
 
         $get = [
-            "source_url"  => $sourceUrl,
-            "data"        => json_encode($dataJson, true),
+            "source_url" => $sourceUrl,
+            "data"       => json_encode($dataJson, true),
         ];
 
         $getString = UrlHelper::buildRequestString($get);
@@ -425,6 +433,7 @@ class PinterestBot
 
             return true;
         }
+
         return false;
     }
 
@@ -486,6 +495,7 @@ class PinterestBot
         if (isset($res['resource_response']['data']['id'])) {
             return $res['resource_response']['data']['id'];
         }
+
         return false;
     }
 
@@ -501,21 +511,21 @@ class PinterestBot
     {
         $this->checkLoggedIn();
 
-        $dataJson = array(
-            "options" => array(
+        $dataJson = [
+            "options" => [
                 "board_id"    => $boardId,
                 "description" => stripslashes($description),
                 "link"        => stripslashes($repinId),
                 "is_video"    => null,
                 "pin_id"      => $repinId,
-            ),
-            "context" => array(),
-        );
+            ],
+            "context" => [],
+        ];
 
-        $post = array(
+        $post = [
             "source_url" => "/pin/{$repinId}/",
             "data"       => json_encode($dataJson, JSON_FORCE_OBJECT),
-        );
+        ];
 
         $postString = UrlHelper::buildRequestString($post);
         $res        = $this->api->exec(self::URL_REPIN, self::URL_BASE, $postString);
@@ -527,6 +537,7 @@ class PinterestBot
         if (isset($res['resource_response']['data']['id'])) {
             return $res['resource_response']['data']['id'];
         }
+
         return false;
     }
 
@@ -564,6 +575,7 @@ class PinterestBot
         if ($res) {
             return true;
         }
+
         return false;
     }
 
@@ -572,9 +584,9 @@ class PinterestBot
      * default generator will return all pagination results.
      * To limit result batches, set $batchesLimit.
      *
-*@param string $function
+     * @param string $function
      * @param array  $params
-     * @param int $batchesLimit
+     * @param int    $batchesLimit
      * @return \Generator
      */
     protected function getPaginatedData($function, $params, $batchesLimit = 0)
@@ -615,10 +627,9 @@ class PinterestBot
 
     /**
      * Get pinner followers
-
      *
-* @param string   $username
-     * @param int $batchesLimit
+     * @param string $username
+     * @param int    $batchesLimit
      * @return \Generator
      */
     public function getFollowers($username, $batchesLimit = 0)
@@ -630,7 +641,6 @@ class PinterestBot
 
     /**
      * Get pinner following other pinners
-
      *
      * @param string $username
      * @param int    $batchesLimit
@@ -645,7 +655,6 @@ class PinterestBot
 
     /**
      * Get pinner pins
-
      *
      * @param string $username
      * @param int    $batchesLimit
@@ -718,7 +727,7 @@ class PinterestBot
                 "module_path" => urlencode($modulePath),
             ];
 
-            $url = self::URL_SEARCH_WITH_PAGINATION . '?' . UrlHelper::buildRequemovedestString($get);
+            $url = self::URL_SEARCH_WITH_PAGINATION . '?' . UrlHelper::buildRequestString($get);
         }
 
 

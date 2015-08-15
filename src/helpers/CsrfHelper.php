@@ -5,30 +5,33 @@ namespace Pinterest\helpers;
 
 class CsrfHelper
 {
-	/**
-	 * Get a CSRF token from the given cookie file
-	 */
-	public static function getCsrfToken($file)
-	{
+    /**
+     * Get a CSRF token from the given cookie file
+     */
+    public static function getCsrfToken($file)
+    {
 
-		if( !file_exists($file) )
-			return null;
+        if ( ! file_exists($file)) {
+            return null;
+        }
 
-		foreach( file($file) as $line ) {
+        foreach (file($file) as $line) {
 
-			$line = trim($line);
+            $line = trim($line);
 
-			if( $line == "" or substr($line, 0, 2) == "# " )
-				continue;
+            if ($line == "" or substr($line, 0, 2) == "# ") {
+                continue;
+            }
 
-			list($domain, $tailmatch, $path, $secure, $expires, $name, $value) = explode("\t", $line);
+            list($domain, $tailmatch, $path, $secure, $expires, $name, $value) = explode("\t", $line);
 
-			if( $name == "csrftoken" )
-				return $value;
+            if ($name == "csrftoken") {
+                return $value;
+            }
 
-		}
+        }
 
-		return null;
+        return null;
 
-	}
+    }
 }
