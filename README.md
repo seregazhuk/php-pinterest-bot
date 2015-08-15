@@ -63,11 +63,10 @@ foreach($bot->getUserPins('username') as $pinsBatch)
 
 Get your account name
 ```php
-<?php $bot->getAccountName(); ?>
+$bot->getAccountName(); 
 ```	
 Follow/unfollow user by ID
 ```php
-
 $bot->followUser($userId);
 $bot->unFollowUser($userId);
 ```	
