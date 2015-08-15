@@ -6,7 +6,7 @@ use Pinterest\helpers\CsrfHelper;
 
 class ApiRequest implements ApiInterface
 {
-    public $cookieJar;
+    protected $cookieJar;
     public $cookiePath;
 
     protected $ch;
@@ -14,7 +14,7 @@ class ApiRequest implements ApiInterface
     protected $csrfToken = "";
     protected $loggedIn;
 
-    public $userAgent = 'Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0';
+    public $useragent = 'Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0';
 
     const COOKIE_NAME = 'pinterest_cookie';
 
@@ -58,7 +58,7 @@ class ApiRequest implements ApiInterface
     ){
         $this->options = [
             CURLOPT_REFERER        => $referer,
-            CURLOPT_USERAGENT      => $this->userAgent,
+            CURLOPT_USERAGENT => $this->useragent,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_SSL_VERIFYPEER => false,
         ];
@@ -176,12 +176,21 @@ class ApiRequest implements ApiInterface
     }
 
     /**
-     * @param string $csrfToken Pinterest security token
-     *                          Mark api as logged
+     * @param string $csrfToken Pinterest security token. Mark api as logged
      */
     public function setLoggedIn($csrfToken)
     {
         $this->csrfToken = $csrfToken;
         $this->loggedIn  = true;
+    }
+
+    /**
+     * Get requests cookieJar
+     *
+     * @return mixed
+     */
+    public function getCookieJar()
+    {
+        return $this->cookieJar;
     }
 }

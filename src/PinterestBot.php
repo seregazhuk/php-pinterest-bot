@@ -97,7 +97,7 @@ class PinterestBot
         if ($res === null) {
             return false;
         } else {
-            $this->api->setLoggedIn(CsrfHelper::getCsrfToken($this->api->cookieJar));
+            $this->api->setLoggedIn(CsrfHelper::getCsrfToken($this->api->getCookieJar()));
             return true;
         }
     }
@@ -111,7 +111,6 @@ class PinterestBot
     {
         $this->checkLoggedIn();
 
-        // OK!  We're ready!  Prepare the board get JSON
         $dataJson = array(
             "options" => array(
                 "filter"        => "all",
@@ -120,7 +119,6 @@ class PinterestBot
             "context" => array(),
         );
 
-        // And prepare the get data array
         $get = array(
             "source_url"  => "/pin/create/bookmarklet/?url=",
             "pinFave"     => "1",
@@ -130,7 +128,6 @@ class PinterestBot
 
         $getString = UrlHelper::buildRequestString($get);
 
-        // Now set up the CURL call
         $res = $this->api->exec(self::URL_GET_BOARDS . "?{$getString}",
             "https://www.pinterest.com/pin/create/bookmarklet/?url=&pinFave=1&description=");
 
@@ -167,7 +164,6 @@ class PinterestBot
     {
         $this->checkLoggedIn();
 
-        // OK!  We're ready!  Prepare the pin JSON
         $dataJson = [
             "options" => [
                 "user_id" => $userId,
@@ -175,17 +171,8 @@ class PinterestBot
             "context" => [],
         ];
 
-        // Set up the "module path" data
-        $modulePath = "App()>UserProfilePage(resource=UserResource(username=jocleveland, invite_code=null))>UserProfileHeader
-                        (resource=UserResource(username=jocleveland, invite_code=null))>UserFollowButton(followed=false, is_me
-                        =false, unfollow_text=Unfollow, memo=[object Object], follow_ga_category=user_follow, unfollow_ga_category
-                        =user_unfollow, disabled=false, color=primary, text=Follow, user_id=$userId, follow_text=Follow
-                        , follow_class=primary)";
-
-        // And prepare the post data array
         $post = [
-            "data"        => json_encode($dataJson, JSON_FORCE_OBJECT),
-            "module_path" => urlencode($modulePath),
+            "data" => json_encode($dataJson, JSON_FORCE_OBJECT),
         ];
 
         $postString = UrlHelper::buildRequestString($post);
@@ -219,21 +206,9 @@ class PinterestBot
             ],
             "context" => [],
         ];
-
-        // Set up the "module path" data
-        $modulePath = "App()>UserProfilePage(resource=UserResource(username=jocleveland, invite_code=null))>UserProfileHeader
-                        (resource=UserResource(username=jocleveland, invite_code=null))>UserFollowButton(followed=true, is_me
-                        =false, unfollow_text=Unfollow, memo=[object Object], follow_ga_category=user_follow, unfollow_ga_category
-                        =user_unfollow, disabled=false, color=dim, text=Unfollow, user_id=$userId, follow_text=Follow
-                        , follow_class=primary)";
-
-        // And prepare the post data array
         $post = [
-            "data"        => json_encode($dataJson, JSON_FORCE_OBJECT),
-            "module_path" => urlencode($modulePath),
+            "data" => json_encode($dataJson, JSON_FORCE_OBJECT),
         ];
-
-
         $postString = UrlHelper::buildRequestString($post);
 
         $res = $this->api->exec(self::URL_UNFOLLOW_USER,
@@ -263,19 +238,10 @@ class PinterestBot
             "context" => array(),
         );
 
-        // Set up the "module path" data
-        $module_path = "App()>Closeup(resource=PinResource(fetch_visual_search_objects=true, id={$pinId}))>PinActionBar
-                        (resource=PinResource(fetch_visual_search_objects=true, id={$pinId}, allow_stale=true))>PinLikeButton
-                        (class_name=like pinActionBarButton, liked=false, size=medium, has_icon=true, pin_id={$pinId}
-                        , show_text=true, text=Like)";
-
-        // And prepare the post data array
         $post = array(
             "source_url"  => "/pin/{$pinId}/",
             "data"        => json_encode($dataJson, JSON_FORCE_OBJECT),
-            "module_path" => urlencode($module_path),
         );
-
         $postString = URlHelper::buildRequestString($post);
 
         $res = $this->api->exec(self::URL_LIKE_PIN,
@@ -307,16 +273,9 @@ class PinterestBot
             ),
             "context" => array(),
         );
-
-        // Set up the "module path" data
-        $module_path = "App>Closeup>PinActionBar>PinLikeButton(liked=true, has_icon=false, pin_id=$pinId, class_name
-						=like leftRounded pinActionBarButton, text=Delete Лайк, show_text=true, size=medium";
-
-        // And prepare the post data array
         $post = array(
             "source_url"  => "/pin/{$pinId}/",
             "data"        => json_encode($dataJson, JSON_FORCE_OBJECT),
-            "module_path" => urlencode($module_path),
         );
 
         $postString = URlHelper::buildRequestString($post);
@@ -353,20 +312,10 @@ class PinterestBot
             "context" => array(),
         );
 
-        // Set up the "module path" data
-        $module_path = "App()>Closeup(resource=PinResource(fetch_visual_search_objects=true, id={$pinId}))>CloseupContent
-                        (resource=PinResource(fetch_visual_search_objects=true, id={$pinId}))>Pin(resource=PinResource
-                        (id={$pinId}))>PinCommentsPage(resource=PinCommentListResource(pin_id={$pinId}, page_size
-                        =5))>PinDescriptionComment(content=null, show_comment_form=true, view_type=detailed, pin_id={$pinId},
-                        is_description=false)";
-
-        // And prepare the post data array
         $post = array(
             "source_url"  => "/pin/{$pinId}/",
             "data"        => json_encode($dataJson, JSON_FORCE_OBJECT),
-            "module_path" => urlencode($module_path),
         );
-
         $postString = UrlHelper::buildRequestString($post);
 
         $res = $this->api->exec(self::URL_COMMENT_PIN,
@@ -425,14 +374,9 @@ class PinterestBot
             $dataJson["options"]["bookmarks"] = $bookmarks;
         }
 
-        // Set up the "module path" data
-        $modulePath = "UserProfilePage(resource=UserResource(username=ç))";
-
-        // And prepare the post data array
         $get = [
             "source_url"  => $sourceUrl,
             "data"        => json_encode($dataJson, true),
-            "module_path" => urlencode($modulePath),
         ];
 
         $getString = UrlHelper::buildRequestString($get);
@@ -488,9 +432,8 @@ class PinterestBot
      * Get user info
      * If username param is not specified, will
      * return info for logged user
-
      *
-*@param string $username
+     * @param string $username
      * @return null|array
      */
     public function getUserInfo($username)
@@ -775,7 +718,7 @@ class PinterestBot
                 "module_path" => urlencode($modulePath),
             ];
 
-            $url = self::URL_SEARCH_WITH_PAGINATION . '?' . UrlHelper::buildRequestString($get);
+            $url = self::URL_SEARCH_WITH_PAGINATION . '?' . UrlHelper::buildRequemovedestString($get);
         }
 
 

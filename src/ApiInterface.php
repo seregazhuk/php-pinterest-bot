@@ -26,9 +26,15 @@ interface ApiInterface
     public function isLoggedIn();
 
     /**
-     * @param string $csrfToken Pinterest security token
-     *                          Mark api as logged
+     * @param string $csrfToken Pinterest security token. Mark api as logged
      */
     public function setLoggedIn($csrfToken);
+
+    /**
+     * Get requests cookieJar
+     *
+     * @return mixed
+     */
+    public function getCookieJar();
 
 }
