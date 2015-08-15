@@ -441,6 +441,7 @@ class PinterestBot
             self::URL_BASE . $username
         );
 
+
         if ($this->checkErrorInResponse($res)) {
             return [];
         }
@@ -456,9 +457,7 @@ class PinterestBot
             }
 
             if (isset($res['resource_response']['data'])) {
-                // if results is array return the first element
-                $data = $res['resource_response']['data'][0] ? $res['resource_response']['data'][0] :
-                    $res['resource_response']['data'];
+                $data = $res['resource_response']['data'];
                 return ['data' => $data, 'bookmarks' => [$bookmarks]];
             } else {
                 return [];
@@ -488,16 +487,19 @@ class PinterestBot
      * Get user info
      * If username param is not specified, will
      * return info for logged user
+
      *
-     * @param string $username
-     * @return array
+*@param string $username
+     * @return null|array
      */
     public function getUserInfo($username)
     {
-        return $this->getUserData($username,
+        $res = $this->getUserData($username,
             self::URL_USER_INFO,
             "/$username/"
         );
+
+        return isset($res['data']) ? $res['data'] : null;
     }
 
     /**
@@ -601,7 +603,6 @@ class PinterestBot
             "context" => new \stdClass(),
         ];
 
-
         // And prepare the post data array
         $post = [
             "source_url" => "/pin/{$pinId}/",
@@ -621,5 +622,77 @@ class PinterestBot
         }
         return false;
     }
+
+    /**
+     * Iterate through results of Api function call
+     *
+     * @param string $function
+     * @param array  $params
+     * @return array
+     */
+    protected function getPaginatedData($function, $params)
+    {
+
+        do {
+            $items = [];
+            $res   = call_user_func_array([$this, $function], $params);
+
+            if (isset($res['data']) && ! empty($res['data'])) {
+
+                if (isset($res['data'][0]['type']) && $res['data'][0]['type'] == 'module') {
+                    array_shift($res['data']);
+                }
+                $items = $res['data'];
+            }
+
+            if (isset($res['bookmarks'])) {
+                $params['bookmarks'] = $res['bookmarks'];
+            }
+
+            yield $items;
+
+            if (empty($items) || isset($res['bookmarks'])) {
+                break;
+            }
+        } while (isset($res['data']) && ! empty($res['data']));
+
+    }
+
+    /**
+     * Get pinner followers
+     *
+     * @param $username
+     * @return array
+     */
+    public function getFollowers($username)
+    {
+        return $this->getPaginatedData('getUserData',
+            ['username' => $username, 'url' => self::URL_USER_FOLLOWERS, 'sourceUrl' => "/$username/followers/"]);
+    }
+
+    /**
+     * Get pinner following other pinners
+     *
+     * @param $username
+     * @return array
+     */
+    public function getFollowing($username)
+    {
+        return $this->getPaginatedData('getUserData',
+            ['username' => $username, 'url' => self::URL_USER_FOLLOWING, 'sourceUrl' => "/$username/following/"]);
+    }
+
+    /**
+     * Get pinner pins
+     *
+     * @param $username
+     * @return array
+     */
+    public function getUserPins($username)
+    {
+        return $this->getPaginatedData('getUserData',
+            ['username' => $username, 'url' => self::URL_USER_PINS, 'sourceUrl' => "/$username/pins/"]);
+    }
+
 
 }

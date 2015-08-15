@@ -155,9 +155,9 @@ class PinterestBotTest extends PHPUnit_Framework_TestCase
 
 	public function testGetUserData()
 	{
-		$expected = ['data'=>['data'=>''], 'bookmarks' => ['booksmarks_string']];
+        $expected                         = ['data' => ['info' => ''], 'bookmarks' => ['booksmarks_string']];
 		$res['resource']['options']['bookmarks'] = $expected['bookmarks'];
-		$res['resource_response']['data'] = [$expected['data']];
+        $res['resource_response']['data'] = $expected['data'];
 
 		$mock = $this->getMock(ApiRequest::class, ['exec', 'isLoggedIn']);
 		$mock->method('exec')->willReturn($res);
@@ -171,7 +171,7 @@ class PinterestBotTest extends PHPUnit_Framework_TestCase
 
 	public function testGetUserInfo()
 	{
-		$res = [];
+        $res['resource_response'] = ['data' => ['name' => 'test']];
 		$mock = $this->getMock(ApiRequest::class, ['exec', 'isLoggedIn']);
 		$mock->method('exec')->willReturn($res);
 		$mock->method('isLoggedIn')->willReturn(true);
@@ -179,7 +179,7 @@ class PinterestBotTest extends PHPUnit_Framework_TestCase
 		$this->setProperty('api', $mock);
 
 		$data = $this->bot->getUserInfo($this->bot->username);
-		$this->assertEquals($data, $res);
+        $this->assertEquals($res['resource_response']['data'], $data);
 	}
 
 	public function testPin()
@@ -222,5 +222,39 @@ class PinterestBotTest extends PHPUnit_Framework_TestCase
 
 		$this->assertNotFalse($this->bot->deletePin(1));
 	}
+
+
+    public function testGetFollowersAndFollowing()
+    {
+        $res['resource_response']['data'] = [
+            ['id' => 1],
+            ['id' => 2],
+        ];
+        $mock                             = $this->getMock(ApiRequest::class, ['exec', 'isLoggedIn']);
+        $mock->method('exec')->willReturn($res);
+        $mock->method('isLoggedIn')->willReturn(true);
+        $this->setProperty('api', $mock);
+
+        $followers = $this->bot->getFollowers($this->bot->username);
+        $this->assertCount(2, iterator_to_array($followers)[0]);
+
+        $following = $this->bot->getFollowing($this->bot->username);
+        $this->assertCount(2, iterator_to_array($following)[0]);
+    }
+
+    public function testPinnerPins()
+    {
+        $res['resource_response']['data'] = [
+            ['id' => 1],
+            ['id' => 2],
+        ];
+        $mock                             = $this->getMock(ApiRequest::class, ['exec', 'isLoggedIn']);
+        $mock->method('exec')->willReturn($res);
+        $mock->method('isLoggedIn')->willReturn(true);
+        $this->setProperty('api', $mock);
+
+        $pins = $this->bot->getUserPins($this->bot->username);
+        $this->assertCount(2, iterator_to_array($pins)[0]);
+    }
 
 }
