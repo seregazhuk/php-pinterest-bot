@@ -13,7 +13,6 @@ API requires CURL extension and PHP 5.3 or above.
 ## Quick Start
 
 ```php
-<?php
 use Pinterest\ApiRequest;
 use Pinterest\PinterestBot;
 
@@ -25,7 +24,6 @@ $bot->login();
 Next, get your list of boards:
 
 ```php
-<?php
 $boards = $bot->getBoards();
 ```
 
