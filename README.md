@@ -27,7 +27,7 @@ use Pinterest\ApiRequest;
 use Pinterest\PinterestBot;
 
 $api = new ApiRequest();
-$api->userAgent
+$api->userAgent = "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36";
 $bot = new PinterestBot('mypinterestlogin', 'mypinterestpassword', $api);
 $bot->login();
 ```
@@ -118,6 +118,4 @@ foreach($bot->searchBoards('query') as $boardsBatch);
 	// ...
 }
 ```
-
-Search queries coming soon.
 Questions?  Email me:  seregazhuk88@gmail.com
