@@ -7,9 +7,8 @@ use Pinterest\helpers\CsrfHelper;
 
 /**
  * Class PinterestBot
-
  *
-*@package Pinterest
+ * @package Pinterest
  * @property string       $username
  * @property string       $password
  * @property ApiInterface $api
@@ -367,10 +366,6 @@ class PinterestBot
     {
         $this->checkLoggedIn();
 
-        if ( ! $username) {
-            $username = $this->username;
-        }
-
         $dataJson = [
             "options" => [
                 "username" => $username,
@@ -394,9 +389,7 @@ class PinterestBot
         );
 
 
-        if ($this->checkErrorInResponse($res)) {
-            return [];
-        }
+        $this->checkErrorInResponse($res);
 
         if ($res === null) {
             return [];
@@ -423,18 +416,16 @@ class PinterestBot
      * it.
      *
      * @param array $response
-     * @return bool
      */
-    protected function checkErrorInResponse($response)
+    public function checkErrorInResponse($response)
     {
+        $this->lastApiErrorCode = null;
+        $this->lastApiErrorMsg  = null;
+
         if (isset($response['api_error_code'])) {
             $this->lastApiErrorCode = $response['api_error_code'];
             $this->lastApiErrorMsg  = $response['message'];
-
-            return true;
         }
-
-        return false;
     }
 
     /**
@@ -488,9 +479,7 @@ class PinterestBot
         $postString = UrlHelper::buildRequestString($post);
         $res        = $this->api->exec(self::URL_CREATE_PIN, self::URL_BASE, $postString);
 
-        if ($this->checkErrorInResponse($res)) {
-            return false;
-        }
+        $this->checkErrorInResponse($res);
 
         if (isset($res['resource_response']['data']['id'])) {
             return $res['resource_response']['data']['id'];
@@ -529,10 +518,7 @@ class PinterestBot
 
         $postString = UrlHelper::buildRequestString($post);
         $res        = $this->api->exec(self::URL_REPIN, self::URL_BASE, $postString);
-
-        if ($this->checkErrorInResponse($res)) {
-            return false;
-        }
+        $this->checkErrorInResponse($res);
 
         if (isset($res['resource_response']['data']['id'])) {
             return $res['resource_response']['data']['id'];
@@ -558,7 +544,6 @@ class PinterestBot
             "context" => new \stdClass(),
         ];
 
-        // And prepare the post data array
         $post = [
             "source_url" => "/pin/{$pinId}/",
             "data"       => json_encode($dataJson, JSON_FORCE_OBJECT),
@@ -567,11 +552,7 @@ class PinterestBot
         $postString = UrlHelper::buildRequestString($post);
         $res        = $this->api->exec(self::URL_DELETE_PIN, self::URL_BASE, $postString);
 
-        if ($this->checkErrorInResponse($res)) {
-            return false;
-        }
-
-
+        $this->checkErrorInResponse($res);
         if ($res) {
             return true;
         }
@@ -597,6 +578,7 @@ class PinterestBot
             if ($batchesLimit && $batchesNum >= $batchesLimit) {
                 break;
             }
+
 
             $items = [];
             $res   = call_user_func_array([$this, $function], $params);
@@ -770,7 +752,7 @@ class PinterestBot
      * @param int    $batchesLimit
      * @return \Generator
      */
-    public function searchPinners($query, $batchesLimit)
+    public function searchPinners($query, $batchesLimit = 0)
     {
         return $this->getPaginatedData('search',
             ['query' => $query, 'scope' => self::SEARCH_PEOPLE_SCOPES],

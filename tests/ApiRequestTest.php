@@ -1,6 +1,7 @@
 <?php
 
 use Pinterest\ApiRequest;
+use org\bovigo\vfs\vfsStream;
 
 class ApiRequestTest extends PHPUnit_Framework_TestCase
 {
@@ -74,7 +75,7 @@ class ApiRequestTest extends PHPUnit_Framework_TestCase
         $requestOptions = $this->getProperty('options');
         $this->assertArrayHasKey(CURLOPT_POST, $requestOptions);
 
-        $this->apiRequest->setCurlOptions($referer, $postString, $headers, true);
+        $this->apiRequest->setCurlOptions($referer, $postString, $headers, true, false);
         $requestOptions = $this->getProperty('options');
 
         $this->assertArraySubset([9 => 'X-CSRFToken: '], $requestOptions[CURLOPT_HTTPHEADER]);
@@ -87,4 +88,18 @@ class ApiRequestTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(true, $this->apiRequest->isLoggedIn());
     }
 
+    public function testCookieJarInit()
+    {
+        vfsStream::setup();
+        $cookiePath = vfsStream::url('root/path_to_cookies.txt');
+        touch($cookiePath);
+
+        $api = new ApiRequest('My UserAgent String', $cookiePath);
+        $this->assertNotNull($cookiePath, $api->getCookieJar());
+    }
+
+    public function testExec()
+    {
+
+    }
 }

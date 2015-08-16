@@ -25,7 +25,8 @@
 		"ext-curl": "*"
 	},
 	"require-dev": {
-		"phpunit/phpunit": "*"
+		"phpunit/phpunit": "*",
+		"mikey179/vfsStream": "*"
 	},
 	"authors": [
 		{

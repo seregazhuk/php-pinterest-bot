@@ -22,12 +22,12 @@ php composer.phar require "szhuk/pinterestapi:*"
 
 ## Quick Start
 
-```php
+```php 
 use Pinterest\ApiRequest;
 use Pinterest\PinterestBot;
 
-$api = new ApiRequest();
-$api->useragent = "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36";
+// pass useragent string to request object
+$api = new ApiRequest("Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36");
 $bot = new PinterestBot('mypinterestlogin', 'mypinterestpassword', $api);
 $bot->login();
 ```

@@ -26,12 +26,21 @@ class ApiRequest implements ApiInterface
     protected $csrfToken = "";
     protected $loggedIn;
 
-    public $useragent = 'Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0';
+    protected $useragent;
 
     const COOKIE_NAME = 'pinterest_cookie';
 
-    public function __construct()
+    /**
+     * @param string      $useragent
+     * @param null|string $cookiePath
+     */
+    public function __construct(
+        $useragent = 'Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0',
+        $cookiePath = null
+    )
     {
+        $this->useragent  = $useragent;
+        $this->cookiePath = $cookiePath;
         $this->cookieJarInit();
     }
 
@@ -161,7 +170,6 @@ class ApiRequest implements ApiInterface
     {
 
         if (isset($this->cookiePath)) {
-
             // If the given cookie path exists, then let's assume
             // we're already logged in
             $this->cookieJar = $this->cookiePath;
@@ -175,7 +183,6 @@ class ApiRequest implements ApiInterface
         } else {
             $this->cookieJar = tempnam(sys_get_temp_dir(), self::COOKIE_NAME);
         }
-
     }
 
     /**
