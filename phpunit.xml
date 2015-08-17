@@ -7,11 +7,9 @@
          processIsolation="false"
          stopOnFailure="false"
          syntaxCheck="false">
-
     <testsuite name="Pinterest PHP API Test Suite">
         <directory suffix=".php">./tests/</directory>
     </testsuite>
-
     <filter>
         <whitelist>
             <directory suffix=".php">../src/</directory>
