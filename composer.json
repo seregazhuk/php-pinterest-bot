@@ -11,7 +11,7 @@
 	"license": "Mit",
 	"autoload": {
 		"psr-4": {
-			"Pinterest\\": "src/"
+			"szhuk\\PinterestAPI\\": "src"
 		}
 	},
 	"repositories": [

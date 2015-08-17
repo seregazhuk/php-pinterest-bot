@@ -1,6 +1,6 @@
 <?php
 
-use Pinterest\ApiRequest;
+use szhuk\PinterestAPI\ApiRequest;
 use org\bovigo\vfs\vfsStream;
 
 class ApiRequestTest extends PHPUnit_Framework_TestCase

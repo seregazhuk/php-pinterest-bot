@@ -1,8 +1,8 @@
 <?php
 
-namespace Pinterest;
+namespace szhuk\PinterestAPI;
 
-use Pinterest\helpers\CsrfHelper;
+use szhuk\PinterestAPI\helpers\CsrfHelper;
 
 /**
  * Class ApiRequest

@@ -1,6 +1,6 @@
 <?php
 
-namespace Pinterest;
+namespace szhuk\PinterestAPI;
 
 
 interface ApiInterface

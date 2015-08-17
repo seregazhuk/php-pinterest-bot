@@ -1,6 +1,6 @@
 <?php
 
-namespace Pinterest\helpers;
+namespace szhuk\PinterestAPI\helpers;
 
 
 class CsrfHelper

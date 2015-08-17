@@ -1,9 +1,9 @@
 <?php
 
-namespace Pinterest;
+namespace szhuk\PinterestAPI;
 
-use Pinterest\helpers\UrlHelper;
-use Pinterest\helpers\CsrfHelper;
+use szhuk\PinterestAPI\helpers\UrlHelper;
+use szhuk\PinterestAPI\helpers\CsrfHelper;
 
 /**
  * Class PinterestBot

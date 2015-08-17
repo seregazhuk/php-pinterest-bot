@@ -1,6 +1,6 @@
 <?php
-use Pinterest\PinterestBot;
-use Pinterest\ApiRequest;
+use szhuk\PinterestAPI\PinterestBot;
+use szhuk\PinterestAPI\ApiRequest;
 
 class PinterestBotTest extends PHPUnit_Framework_TestCase
 {
