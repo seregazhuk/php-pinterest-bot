@@ -4,4 +4,4 @@ index.php
 .idea
 composer.lock
 composer.phar
-log
+logs
