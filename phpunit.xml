@@ -19,8 +19,6 @@
         </whitelist>
     </filter>
     <logging>
-        <log type="coverage-html" target="./log/coverage" charset="UTF-8"
-             yui="true" highlight="true"
-             lowUpperBound="50" highLowerBound="80"/>
+        <log type="coverage-clover" target="./logs/cover.xml"/>
     </logging>
 </phpunit>

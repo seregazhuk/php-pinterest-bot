@@ -1,4 +1,6 @@
 # Pinterest API for PHP
+
+
 This PHP class will help you to work with your Pinterest account like
 api calls from your script. It's a wrapper around the undocumented Pinterest
 API calss. Some functions use pinterest navigation through results, for example,
