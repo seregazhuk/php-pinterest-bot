@@ -168,31 +168,7 @@ class PinterestBot
      */
     public function followUser($userId)
     {
-        $this->checkLoggedIn();
-
-        $dataJson = [
-            "options" => [
-                "user_id" => $userId,
-            ],
-            "context" => [],
-        ];
-
-        $post = [
-            "data" => json_encode($dataJson, JSON_FORCE_OBJECT),
-        ];
-
-        $postString = UrlHelper::buildRequestString($post);
-
-        $res = $this->api->exec(self::URL_FOLLOW_USER,
-            self::URL_BASE,
-            $postString
-        );
-
-        if ($res === null) {
-            return false;
-        }
-
-        return true;
+        return $this->followUserMethodCall($userId, self::URL_FOLLOW_USER);
     }
 
 
@@ -203,6 +179,18 @@ class PinterestBot
      * @return bool
      */
     public function unFollowUser($userId)
+    {
+        return $this->followUserMethodCall($userId, self::URL_UNFOLLOW_USER);
+    }
+
+    /**
+     * Executes api call for follow or unfollow user
+     *
+     * @param int    $userId
+     * @param string $url
+     * @return bool
+     */
+    protected function followUserMethodCall($userId, $url)
     {
         $this->checkLoggedIn();
 
@@ -217,7 +205,7 @@ class PinterestBot
         ];
         $postString = UrlHelper::buildRequestString($post);
 
-        $res = $this->api->exec(self::URL_UNFOLLOW_USER,
+        $res = $this->api->exec($url,
             self::URL_BASE,
             $postString);
 

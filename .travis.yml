@@ -10,7 +10,3 @@ before_script:
   - composer install --prefer-source --no-interaction --dev
  
 script: phpunit
-
-addons:
-  code_climate:
-    repo_token: 5ee678fadd1d4bb7bece6a4504820773a5bf1ecf090a82bce1634dd87b91a462
