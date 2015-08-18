@@ -3,6 +3,7 @@
 namespace szhuk\PinterestAPI;
 
 use szhuk\PinterestAPI\helpers\CsrfHelper;
+use szhuk\PinterestAPI\helpers\UrlHelper;
 
 /**
  * Class ApiRequest
@@ -77,6 +78,8 @@ class ApiRequest implements ApiInterface
         $csrfToken = true,
         $cookeFileExists = true
     ){
+        $referer = $this->getReferer($referer);
+
         $this->options = [
             CURLOPT_REFERER        => $referer,
             CURLOPT_USERAGENT => $this->useragent,
@@ -128,23 +131,42 @@ class ApiRequest implements ApiInterface
 
     /**
      * Executes api call to pinterest
-     *
-     * @param            $url
-     * @param            $refer
+
+*
+*@param                  $resourceUrl
      * @param string     $postString
+     * @param            $referer
      * @param array      $headers
      * @param bool|false $csrfToken
      * @param bool|true  $cookieFileExists
      * @return array
      */
-    public function exec($url, $refer, $postString = "", $headers = [], $csrfToken = true, $cookieFileExists = true)
-    {
+    public function exec(
+        $resourceUrl,
+        $postString = "",
+        $referer = "",
+        $headers = [],
+        $csrfToken = true,
+        $cookieFileExists = true
+    ){
+        $url = UrlHelper::buildApiUrl($resourceUrl);
         $this->ch = curl_init($url);
-        $this->setCurlOptions($refer, $postString, $headers, $csrfToken, $cookieFileExists);
+        $this->setCurlOptions($referer, $postString, $headers, $csrfToken, $cookieFileExists);
         $res = curl_exec($this->ch);
         curl_close($this->ch);
 
         return json_decode($res, true);
+    }
+
+    /**
+     * Creates Pinterest api call referer
+     *
+     * @param string $referer
+     * @return string
+     */
+    protected function getReferer($referer)
+    {
+        return UrlHelper::URL_BASE . $referer;
     }
 
     /**

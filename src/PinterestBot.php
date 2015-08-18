@@ -32,27 +32,6 @@ class PinterestBot
     const SEARCH_PEOPLE_SCOPES = 'people';
     const SEARCH_BOARDS_SCOPES = 'boards';
 
-    const URL_GET_ACCOUNT_NAME       = "https://www.pinterest.com/";
-    const URL_LOGIN                  = "https://www.pinterest.com/resource/UserSessionResource/create/";
-    const URL_GET_BOARDS             = "https://www.pinterest.com/resource/BoardPickerBoardsResource/get/";
-    const URL_CREATE_PIN             = "https://www.pinterest.com/resource/PinResource/create/";
-    const URL_REPIN                  = "https://www.pinterest.com/resource/RepinResource/create/";
-    const URL_USER_FOLLOWERS         = "https://www.pinterest.com/resource/UserFollowersResource/get/";
-    const URL_DELETE_PIN             = "https://www.pinterest.com/resource/PinResource/delete/";
-    const URL_FOLLOW_USER            = 'https://www.pinterest.com/resource/UserFollowResource/create/';
-    const URL_UNFOLLOW_USER          = "https://www.pinterest.com/resource/UserFollowResource/delete/";
-    const URL_SEARCH                 = "https://www.pinterest.com/resource/BaseSearchResource/get/";
-    const URL_SEARCH_WITH_PAGINATION = "https://www.pinterest.com/resource/SearchResource/get/";
-    const URL_USER_INFO              = "https://www.pinterest.com/resource/UserResource/get/";
-    const URL_USER_FOLLOWING         = "https://www.pinterest.com/resource/UserFollowingResource/get/";
-    const URL_USER_PINS              = "https://www.pinterest.com/resource/UserPinsResource/get/";
-    const URL_LIKE_PIN               = "https://www.pinterest.com/resource/PinLikeResource2/create/";
-    const URL_UNLIKE_PIN             = "https://www.pinterest.com/resource/PinLikeResource2/delete/";
-    const URL_COMMENT_PIN            = "https://www.pinterest.com/resource/PinCommentResource/create/";
-    const URL_PIN_INFO = "https://www.pinterest.com/resource/PinResource/get";
-    const URL_BASE                   = 'https://www.pinterest.com/';
-
-
     const MAX_PAGINATED_ITEMS = 100;
 
     public function __construct($username, $password, ApiInterface $api)
@@ -79,14 +58,14 @@ class PinterestBot
             "context" => [],
         ];
         $post = [
-            "source_url"  => "/login/",
-            "data"        => json_encode($dataJson, JSON_FORCE_OBJECT),
+            "source_url" => "/login/",
+            "data"       => json_encode($dataJson, JSON_FORCE_OBJECT),
         ];
 
         $postString = UrlHelper::buildRequestString($post);
-        $res = $this->api->exec(self::URL_LOGIN,
-            "https://www.pinterest.com/login/",
+        $res = $this->api->exec(UrlHelper::RESOURCE_LOGIN,
             $postString,
+            "https://www.pinterest.com/login/",
             [
                 'X-CSRFToken: 1234',
                 'Cookie: csrftoken=1234;',
@@ -98,6 +77,7 @@ class PinterestBot
             return false;
         } else {
             $this->api->setLoggedIn(CsrfHelper::getCsrfToken($this->api->getCookieJar()));
+
             return true;
         }
     }
@@ -128,7 +108,7 @@ class PinterestBot
 
         $getString = UrlHelper::buildRequestString($get);
 
-        $res = $this->api->exec(self::URL_GET_BOARDS . "?{$getString}",
+        $res = $this->api->exec(UrlHelper::RESOURCE_GET_BOARDS . "?{$getString}", "",
             "https://www.pinterest.com/pin/create/bookmarklet/?url=&pinFave=1&description=");
 
         if (isset($res['resource_response']['data']['all_boards'])) {
@@ -147,7 +127,7 @@ class PinterestBot
     public function getAccountName()
     {
         $this->checkLoggedIn();
-        $res = $this->api->exec(self::URL_GET_ACCOUNT_NAME, self::URL_BASE);
+        $res = $this->api->exec(UrlHelper::RESOURCE_GET_ACCOUNT_NAME);
         if (isset($res['resource_data_cache'][1]['resource']['options']['username'])) {
             return $res['resource_data_cache'][1]['resource']['options']['username'];
         }
@@ -163,7 +143,7 @@ class PinterestBot
      */
     public function followUser($userId)
     {
-        return $this->followUserMethodCall($userId, self::URL_FOLLOW_USER);
+        return $this->followMethodCall($userId, "user_id", UrlHelper::RESOURCE_FOLLOW_USER);
     }
 
     /**
@@ -174,23 +154,24 @@ class PinterestBot
      */
     public function unFollowUser($userId)
     {
-        return $this->followUserMethodCall($userId, self::URL_UNFOLLOW_USER);
+        return $this->followMethodCall($userId, "user_id", UrlHelper::RESOURCE_UNFOLLOW_USER);
     }
 
     /**
      * Executes api call for follow or unfollow user
      *
-     * @param int    $userId
+     * @param int    $entityId
+     * @param string $entityName
      * @param string $url
      * @return bool
      */
-    protected function followUserMethodCall($userId, $url)
+    protected function followMethodCall($entityId, $entityName, $url)
     {
         $this->checkLoggedIn();
 
         $dataJson = [
             "options" => [
-                "user_id" => $userId,
+                $entityName => $entityId,
             ],
             "context" => [],
         ];
@@ -198,10 +179,7 @@ class PinterestBot
             "data" => json_encode($dataJson, JSON_FORCE_OBJECT),
         ];
         $postString = UrlHelper::buildRequestString($post);
-
-        $res = $this->api->exec($url,
-            self::URL_BASE,
-            $postString);
+        $res      = $this->api->exec($url, $postString);
 
         if ($res === null) {
             return false;
@@ -218,7 +196,7 @@ class PinterestBot
      */
     public function likePin($pinId)
     {
-        return $this->likePinMethodCall($pinId, self::URL_LIKE_PIN);
+        return $this->likePinMethodCall($pinId, UrlHelper::RESOURCE_LIKE_PIN);
     }
 
 
@@ -230,7 +208,7 @@ class PinterestBot
      */
     public function unLikePin($pinId)
     {
-        return $this->likePinMethodCall($pinId, self::URL_UNLIKE_PIN);
+        return $this->likePinMethodCall($pinId, UrlHelper::RESOURCE_UNLIKE_PIN);
     }
 
 
@@ -257,17 +235,9 @@ class PinterestBot
         ];
 
         $postString = URlHelper::buildRequestString($post);
+        $res = $this->api->exec($url, $postString, "pin/$pinId/");
 
-        $res = $this->api->exec($url,
-            self::URL_BASE . "pin/$pinId/",
-            $postString);
-
-
-        if ($res !== null && isset($res['resource_response'])) {
-            return true;
-        }
-
-        return false;
+        return $this->checkPinMethodCallResult($res);
     }
 
     /**
@@ -294,19 +264,26 @@ class PinterestBot
             "data"       => json_encode($dataJson, JSON_FORCE_OBJECT),
         ];
         $postString = UrlHelper::buildRequestString($post);
+        $res  = $this->api->exec(UrlHelper::RESOURCE_COMMENT_PIN, $postString,
+            UrlHelper::URL_BASE . "pin/$pinId/");
 
-        $res = $this->api->exec(self::URL_COMMENT_PIN,
-            self::URL_BASE . "pin/$pinId/",
-            $postString
-        );
+        return $this->checkPinMethodCallResult($res);
+    }
 
+    /**
+     * Checks result of PIN-methods
+     *
+     * @param array $res
+     * @return bool
+     */
+    protected function checkPinMethodCallResult($res)
+    {
         if ($res !== null && isset($res['resource_response'])) {
             return true;
         } else {
             return false;
         }
     }
-
 
     /**
      * Checks if bot is logged in
@@ -354,9 +331,7 @@ class PinterestBot
 
         $getString = UrlHelper::buildRequestString($get);
 
-        $res = $this->api->exec($url . '?' . $getString,
-            self::URL_BASE . $username
-        );
+        $res = $this->api->exec($url . '?' . $getString, "", $username);
 
         $this->checkErrorInResponse($res);
 
@@ -408,7 +383,7 @@ class PinterestBot
     public function getUserInfo($username)
     {
         $res = $this->getUserData($username,
-            self::URL_USER_INFO,
+            UrlHelper::RESOURCE_USER_INFO,
             "/$username/"
         );
 
@@ -446,7 +421,7 @@ class PinterestBot
         ];
 
         $postString = UrlHelper::buildRequestString($post);
-        $res        = $this->api->exec(self::URL_CREATE_PIN, self::URL_BASE, $postString);
+        $res        = $this->api->exec(UrlHelper::RESOURCE_CREATE_PIN, $postString);
 
         $this->checkErrorInResponse($res);
 
@@ -482,7 +457,7 @@ class PinterestBot
         ];
 
         $postString = UrlHelper::buildRequestString($post);
-        $res        = $this->api->exec(self::URL_REPIN, self::URL_BASE, $postString);
+        $res        = $this->api->exec(UrlHelper::RESOURCE_REPIN, $postString);
         $this->checkErrorInResponse($res);
 
         return $this->parsePinCreateResponse($res);
@@ -496,10 +471,10 @@ class PinterestBot
      */
     protected function parsePinCreateResponse($response)
     {
-
         if (isset($response['resource_response']['data']['id'])) {
             return $response['resource_response']['data']['id'];
         }
+
         return false;
     }
 
@@ -526,7 +501,7 @@ class PinterestBot
         ];
 
         $postString = UrlHelper::buildRequestString($post);
-        $res        = $this->api->exec(self::URL_DELETE_PIN, self::URL_BASE, $postString);
+        $res        = $this->api->exec(UrlHelper::RESOURCE_DELETE_PIN, $postString);
 
         $this->checkErrorInResponse($res);
 
@@ -568,8 +543,7 @@ class PinterestBot
             }
 
             if (empty($items)) {
-                return;
-            }
+                return; }
 
             $batchesNum++;
             yield $items;
@@ -589,7 +563,9 @@ class PinterestBot
     public function getFollowers($username, $batchesLimit = 0)
     {
         return $this->getPaginatedData('getUserData',
-            ['username' => $username, 'url' => self::URL_USER_FOLLOWERS, 'sourceUrl' => "/$username/followers/"],
+            ['username'  => $username,
+             'url'       => UrlHelper::RESOURCE_USER_FOLLOWERS,
+             'sourceUrl' => "/$username/followers/"],
             $batchesLimit);
     }
 
@@ -603,7 +579,9 @@ class PinterestBot
     public function getFollowing($username, $batchesLimit = 0)
     {
         return $this->getPaginatedData('getUserData',
-            ['username' => $username, 'url' => self::URL_USER_FOLLOWING, 'sourceUrl' => "/$username/following/"],
+            ['username'  => $username,
+             'url'       => UrlHelper::RESOURCE_USER_FOLLOWING,
+             'sourceUrl' => "/$username/following/"],
             $batchesLimit);
     }
 
@@ -617,7 +595,7 @@ class PinterestBot
     public function getUserPins($username, $batchesLimit = 0)
     {
         return $this->getPaginatedData('getUserData',
-            ['username' => $username, 'url' => self::URL_USER_PINS, 'sourceUrl' => "/$username/pins/"],
+            ['username' => $username, 'url' => UrlHelper::RESOURCE_USER_PINS, 'sourceUrl' => "/$username/pins/"],
             $batchesLimit);
     }
 
@@ -651,11 +629,11 @@ class PinterestBot
                 "options" => $options,
             ];
 
-            $url = self::URL_SEARCH;
+            $url = UrlHelper::RESOURCE_SEARCH;
 
         } else {
             $options["bookmarks"] = $bookmarks;
-            $url                  = self::URL_SEARCH_WITH_PAGINATION;
+            $url                  = UrlHelper::RESOURCE_SEARCH_WITH_PAGINATION;
         }
 
         $get = [
@@ -664,7 +642,11 @@ class PinterestBot
             "module_path" => urlencode($modulePath),
         ];
         $url = $url . '?' . UrlHelper::buildRequestString($get);
-        $res = $this->api->exec($url, self::URL_BASE);
+        $res = $this->api->exec($url);
+
+        if ($res === null) {
+            return [];
+        }
 
         return $this->parseSearchResponse($res, ! empty($bookmarks));
     }
@@ -679,34 +661,53 @@ class PinterestBot
      */
     protected function parseSearchResponse($res, $bookmarksUsed)
     {
-        if ( ! $bookmarksUsed) {
-            if (isset($res['module']['tree']['resource']['options']['bookmarks'][0])) {
-                $bookmarks = $res['module']['tree']['resource']['options']['bookmarks'][0];
-            } else {
-                $bookmarks = [];
-            }
-
-            if ($res === null) {
-                return [];
-            } else {
-                if ( ! empty($res['module']['tree']['data']['results'])) {
-                    return ['data' => $res['module']['tree']['data']['results'], 'bookmarks' => [$bookmarks]];
-                } else {
-                    return [];
-                }
-            }
+        if ($bookmarksUsed) {
+            return $this->parseSimpledSearchResponse($res);
         } else {
-            if ( ! empty($res['resource_response']['data'])) {
-                return [
-                    'data'      => $res['resource_response']['data'],
-                    'bookmarks' => $res['resource']['options']['bookmarks'],
-                ];
-            } else {
-                return [];
-            }
+            return $this->parseBookMarkedSearchResponse($res);
         }
     }
 
+
+    /**
+     * Parses simple Pinterest search API response
+     * on request with bookmarks
+     *
+     * @param $res
+     * @return array
+     */
+    protected function parseSimpledSearchResponse($res)
+    {
+        if ( ! empty($res['resource_response']['data'])) {
+            return [
+                'data'      => $res['resource_response']['data'],
+                'bookmarks' => $res['resource']['options']['bookmarks'],
+            ];
+        }
+
+        return [];
+    }
+
+    /**
+     * Parses Pinterest search API response
+     * on request without bookmarks
+     *
+     * @param $res
+     * @return array
+     */
+    protected function parseBookMarkedSearchResponse($res)
+    {
+        $bookmarks = [];
+        if (isset($res['module']['tree']['resource']['options']['bookmarks'][0])) {
+            $bookmarks = $res['module']['tree']['resource']['options']['bookmarks'][0];
+        }
+
+        if ( ! empty($res['module']['tree']['data']['results'])) {
+            return ['data' => $res['module']['tree']['data']['results'], 'bookmarks' => [$bookmarks]];
+        }
+
+        return [];
+    }
 
     /**
      * Search pinners by search query
@@ -773,13 +774,38 @@ class PinterestBot
             "source_url" => "/pin/$pinId/",
             "data"       => json_encode($dataJson, JSON_FORCE_OBJECT),
         ];
-        $url = self::URL_PIN_INFO . '?' . UrlHelper::buildRequestString($get);
-        $res = $this->api->exec($url, self::URL_BASE);
+        $url = UrlHelper::RESOURCE_PIN_INFO . '?' . UrlHelper::buildRequestString($get);
+        $res = $this->api->exec($url);
         if ($res) {
             if (isset($res['resource_response']['data'])) {
                 return $res['resource_response']['data'];
             }
         }
+
         return null;
+    }
+
+    /**
+     * Follow board by boardID
+     *
+     * @param $boardId
+     * @return bool
+     */
+    public function followBoard($boardId)
+    {
+        return $this->followMethodCall($boardId, "board_id", UrlHelper::RESOURCE_FOLLOW_BOARD);
+
+    }
+
+    /**
+     * Unfollow board by boardID
+     *
+     * @param $boardId
+     * @return bool
+     */
+    public function unFollowBoard($boardId)
+    {
+        return $this->followMethodCall($boardId, "board_id", UrlHelper::RESOURCE_UNFOLLOW_BOARD);
+
     }
 }

@@ -7,16 +7,24 @@ interface ApiInterface
 {
     /**
      * Executes api call to pinterest
+
      *
-     * @param            $url
-     * @param            $refer
+*@param            $url
      * @param string     $postString
+     * @param            $referer
      * @param array      $headers
      * @param bool|false $csrfToken
      * @param bool|true  $cookieFileExists
      * @return array
      */
-    public function exec($url, $refer, $postString = "", $headers = [], $csrfToken = true, $cookieFileExists = true);
+    public function exec(
+        $url,
+        $postString = "",
+        $referer = "",
+        $headers = [],
+        $csrfToken = true,
+        $cookieFileExists = true
+    );
 
     /**
      * Checks if current api user is logged in

@@ -109,6 +109,13 @@ foreach($bot->getFollowers('username') as $followersBatch)
 	// ...
 }
 ```
+## Boards
+Follow/unfollow board by ID
+```php
+$bot->followBoard($boardId);
+$bot->unFollowUser($boardId);
+```
+
 ## Search
 
 Search functions use pinterest pagination in fetching results and return generator.

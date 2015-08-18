@@ -1,6 +1,10 @@
 <?php
+
+namespace szhuk\tests;
+
 use szhuk\PinterestAPI\PinterestBot;
 use szhuk\PinterestAPI\ApiRequest;
+use PHPUnit_Framework_TestCase;
 
 class PinterestBotTest extends PHPUnit_Framework_TestCase
 {

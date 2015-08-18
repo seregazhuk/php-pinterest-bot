@@ -1,7 +1,10 @@
 <?php
 
+namespace szhuk\tests;
+
 use szhuk\PinterestAPI\ApiRequest;
 use org\bovigo\vfs\vfsStream;
+use PHPUnit_Framework_TestCase;
 
 class ApiRequestTest extends PHPUnit_Framework_TestCase
 {
@@ -32,6 +35,7 @@ class ApiRequestTest extends PHPUnit_Framework_TestCase
     {
         $property = $this->reflection->getProperty($property);
         $property->setAccessible(true);
+
         return $property->getValue($this->apiRequest);
     }
 
@@ -65,8 +69,6 @@ class ApiRequestTest extends PHPUnit_Framework_TestCase
 
         $this->assertArrayNotHasKey(CURLOPT_POST, $requestOptions);
         $this->assertArrayHasKey(CURLOPT_REFERER, $requestOptions);
-        $this->assertEquals($requestOptions[CURLOPT_REFERER], $referer);
-
         $this->assertArraySubset($headers, $requestOptions[CURLOPT_HTTPHEADER]);
 
         $postString = 'post';
@@ -95,5 +97,10 @@ class ApiRequestTest extends PHPUnit_Framework_TestCase
 
         $api = new ApiRequest('My UserAgent String', $cookiePath);
         $this->assertNotNull($cookiePath, $api->getCookieJar());
+    }
+
+    public function testGetReferer()
+    {
+
     }
 }

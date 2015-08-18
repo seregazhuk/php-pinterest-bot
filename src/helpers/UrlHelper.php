@@ -7,6 +7,27 @@ namespace szhuk\PinterestAPI\helpers;
  */
 class UrlHelper
 {
+    const RESOURCE_GET_ACCOUNT_NAME       = "https://www.pinterest.com/";
+    const RESOURCE_LOGIN                  = "/resource/UserSessionResource/create/";
+    const RESOURCE_GET_BOARDS             = "/resource/BoardPickerBoardsResource/get/";
+    const RESOURCE_CREATE_PIN             = "/resource/PinResource/create/";
+    const RESOURCE_REPIN                  = "/resource/RepinResource/create/";
+    const RESOURCE_USER_FOLLOWERS         = "/resource/UserFollowersResource/get/";
+    const RESOURCE_DELETE_PIN             = "/resource/PinResource/delete/";
+    const RESOURCE_FOLLOW_USER            = '/resource/UserFollowResource/create/';
+    const RESOURCE_UNFOLLOW_USER          = "/resource/UserFollowResource/delete/";
+    const RESOURCE_SEARCH                 = "/resource/BaseSearchResource/get/";
+    const RESOURCE_SEARCH_WITH_PAGINATION = "/resource/SearchResource/get/";
+    const RESOURCE_USER_INFO              = "/resource/UserResource/get/";
+    const RESOURCE_USER_FOLLOWING         = "/resource/UserFollowingResource/get/";
+    const RESOURCE_USER_PINS              = "/resource/UserPinsResource/get/";
+    const RESOURCE_LIKE_PIN               = "/resource/PinLikeResource2/create/";
+    const RESOURCE_UNLIKE_PIN             = "/resource/PinLikeResource2/delete/";
+    const RESOURCE_COMMENT_PIN            = "/resource/PinCommentResource/create/";
+    const RESOURCE_PIN_INFO               = "/resource/PinResource/get";
+    const RESOURCE_FOLLOW_BOARD           = "resource/BoardFollowResource/create/";
+    const RESOURCE_UNFOLLOW_BOARD         = "resource/BoardFollowResource/delete/";
+    const URL_BASE                        = 'https://www.pinterest.com/';
 
     /**
      * @param $request
@@ -17,6 +38,16 @@ class UrlHelper
         return self::fixEncoding(http_build_query($request));
     }
 
+    /**
+     * Appends resource url to base pinterest url
+     *
+     * @param string $resourceUrl
+     * @return string
+     */
+    public static function buildApiUrl($resourceUrl)
+    {
+        return self::URL_BASE . $resourceUrl;
+    }
 
     /**
      * Fix URL-encoding for some characters

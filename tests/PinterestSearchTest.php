@@ -1,4 +1,7 @@
 <?php
+
+namespace szhuk\tests;
+
 use szhuk\PinterestAPI\PinterestBot;
 use szhuk\PinterestAPI\ApiRequest;
 
