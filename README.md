@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/seregazhuk/php-pinterest-api.svg?branch=master)](https://travis-ci.org/seregazhuk/php-pinterest-api)
 [![Code Climate](https://codeclimate.com/github/seregazhuk/php-pinterest-api/badges/gpa.svg)](https://codeclimate.com/github/seregazhuk/php-pinterest-api)
+[![Code Climate](https://codeclimate.com/github/seregazhuk/php-pinterest-api/badges/gpa.svg)](https://codeclimate.com/github/seregazhuk/php-pinterest-api)
 
 This PHP class will help you to work with your Pinterest account like
 api calls from your script. It's a wrapper around the undocumented Pinterest
