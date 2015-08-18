@@ -32,7 +32,6 @@ class ApiRequestTest extends PHPUnit_Framework_TestCase
     {
         $property = $this->reflection->getProperty($property);
         $property->setAccessible(true);
-
         return $property->getValue($this->apiRequest);
     }
 
@@ -96,10 +95,5 @@ class ApiRequestTest extends PHPUnit_Framework_TestCase
 
         $api = new ApiRequest('My UserAgent String', $cookiePath);
         $this->assertNotNull($cookiePath, $api->getCookieJar());
-    }
-
-    public function testExec()
-    {
-
     }
 }

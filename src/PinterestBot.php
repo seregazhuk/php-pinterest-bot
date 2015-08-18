@@ -780,7 +780,6 @@ class PinterestBot
                 return $res['resource_response']['data'];
             }
         }
-
         return null;
     }
 }

@@ -1,6 +1,7 @@
 # Pinterest API for PHP
 
 [![Build Status](https://travis-ci.org/seregazhuk/php-pinterest-api.svg?branch=master)](https://travis-ci.org/seregazhuk/php-pinterest-api)
+[![Code Climate](https://codeclimate.com/github/seregazhuk/php-pinterest-api/badges/gpa.svg)](https://codeclimate.com/github/seregazhuk/php-pinterest-api)
 
 This PHP class will help you to work with your Pinterest account like
 api calls from your script. It's a wrapper around the undocumented Pinterest
@@ -42,6 +43,11 @@ $boards = $bot->getBoards();
 ```
 
 ## Pins
+
+Get pin info by its id.
+```php
+$info = $bot->getPinInfo(1234567890);
+```
 
 Create new pin. Accepts image url, board id, where to post image, description and preview url.
 

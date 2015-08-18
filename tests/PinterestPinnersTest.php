@@ -119,7 +119,7 @@ class PinterestPinnersTest extends PinterestBotTest
     /**
      * @dataProvider getFollowResponse
      */
-    public function testGetFollowersAndFollowing($response)
+    public function testGetFollowers($response)
     {
         $mock = $this->getMock(ApiRequest::class, ['exec', 'isLoggedIn']);
         $mock->expects($this->at(1))
@@ -130,11 +130,25 @@ class PinterestPinnersTest extends PinterestBotTest
             ->method('exec')
             ->willReturn(['resource_response' => ['data' => []]]);
 
+        $mock->expects($this->at(3))
+            ->method('exec')
+            ->willReturn([
+                'resource_response' => [
+                    'data' => [
+                        ['type' => 'module'],
+                    ],
+                ],
+            ]);
+
         $mock->method('isLoggedIn')->willReturn(true);
         $this->setProperty('api', $mock);
 
         $followers = $this->bot->getFollowers($this->bot->username);
         $this->assertCount(2, iterator_to_array($followers)[0]);
+
+        $followers = $this->bot->getFollowers($this->bot->username);
+        $this->assertEmpty(iterator_to_array($followers));
+
     }
 
     /**
@@ -160,23 +174,30 @@ class PinterestPinnersTest extends PinterestBotTest
 
     public function testPinnerPins()
     {
-        $res['resource_response']['data'] = [
-            ['id' => 1],
-            ['id' => 2],
+        $res = [
+            'resource'          => [
+                'options' => [
+                    'bookmarks' => ['my_bookmarks'],
+                ],
+            ],
+            'resource_response' => [
+                'data' => [
+                    ['id' => 1],
+                    ['id' => 2],
+                ],
+            ],
+
         ];
 
         $mock = $this->getMock(ApiRequest::class, ['exec', 'isLoggedIn']);
         $mock->expects($this->at(1))
             ->method('exec')
             ->willReturn($res);
-        $mock->expects($this->at(2))
-            ->method('exec')
-            ->willReturn(['resource_response' => ['data' => []]]);
 
         $mock->method('isLoggedIn')->willReturn(true);
         $this->setProperty('api', $mock);
 
-        $pins               = $this->bot->getUserPins($this->bot->username);
+        $pins = $this->bot->getUserPins($this->bot->username, 1);
         $expectedResultsNum = count($res['resource_response']['data']);
         $this->assertCount($expectedResultsNum, iterator_to_array($pins)[0]);
     }

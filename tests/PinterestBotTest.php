@@ -110,4 +110,5 @@ class PinterestBotTest extends PHPUnit_Framework_TestCase
         $this->assertNull($this->bot->lastApiErrorCode);
         $this->assertNull($this->bot->lastApiErrorMsg);
     }
+
 }

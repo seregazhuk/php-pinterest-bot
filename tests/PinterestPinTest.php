@@ -84,6 +84,7 @@ class PinterestPinTest extends PinterestBotTest
         $res['resource_response']['data'] = ['data'];
         $mock                             = $this->getMock(ApiRequest::class, ['exec', 'isLoggedIn']);
         $mock->expects($this->at(0))->method('exec')->willReturn($res);
+        $mock->expects($this->at(1))->method('exec')->willReturn(['resource_response' => []]);
         $mock->method('isLoggedIn')->willReturn(true);
         $this->setProperty('api', $mock);
 
