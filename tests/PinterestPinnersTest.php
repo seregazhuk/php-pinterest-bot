@@ -6,30 +6,6 @@ use szhuk\PinterestAPI\ApiRequest;
 
 class PinterestPinnersTest extends PinterestBotTest
 {
-
-    public function testGetBoards()
-    {
-        $initBoards                                     = ['first', 'second'];
-        $res['resource_response']['data']['all_boards'] = $initBoards;
-
-        $mock = $this->getMock(ApiRequest::class, ['exec', 'isLoggedIn']);
-        $mock->method('exec')->willReturn($res);
-        $mock->method('isLoggedIn')->willReturn(true);
-
-        $this->setProperty('api', $mock);
-        $boards = $this->bot->getBoards();
-        $this->assertEquals($initBoards, $boards);
-
-        $res  = null;
-        $mock = $this->getMock(ApiRequest::class, ['exec', 'isLoggedIn']);
-        $mock->method('exec')->willReturn($res);
-        $mock->method('isLoggedIn')->willReturn(true);
-
-        $this->setProperty('api', $mock);
-        $boards = $this->bot->getBoards();
-        $this->assertNull($boards);
-    }
-
     public function testGetAccountName()
     {
         $accountName                                                      = 'test';
