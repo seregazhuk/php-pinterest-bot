@@ -30,7 +30,7 @@ class PinterestSearchTest extends PinterestBotTest
         $mock->method('isLoggedIn')->willReturn(true);
         $this->setProperty('api', $mock);
 
-        $res = $this->bot->search('cats', PinterestBot::SEARCH_PINS_SCOPES, 'bookmarks');
+        $res = $this->bot->search('cats', PinterestBot::SEARCH_PINS_SCOPES, ['bookmarks']);
         $this->assertEquals($expected, $res);
     }
 
@@ -41,9 +41,9 @@ class PinterestSearchTest extends PinterestBotTest
             ['id' => 1],
             ['id' => 2],
         ];
-        $expectedResultsNum                            = count($response['module']['tree']['data']['results']);
 
-        $mock = $this->getMock(ApiRequest::class, ['exec', 'isLoggedIn']);
+        $expectedResultsNum = count($response['module']['tree']['data']['results']);
+        $mock               = $this->getMock(ApiRequest::class, ['exec', 'isLoggedIn']);
         $mock->method('exec')->willReturn($response);
         $mock->method('isLoggedIn')->willReturn(true);
         $this->setProperty('api', $mock);

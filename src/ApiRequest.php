@@ -159,7 +159,6 @@ class ApiRequest implements ApiInterface
         } else {
             $this->options[CURLOPT_COOKIEJAR] = $this->cookieJar;
         }
-
     }
 
 
@@ -168,7 +167,6 @@ class ApiRequest implements ApiInterface
      */
     protected function cookieJarInit()
     {
-
         if (isset($this->cookiePath)) {
             // If the given cookie path exists, then let's assume
             // we're already logged in
@@ -213,4 +211,5 @@ class ApiRequest implements ApiInterface
     {
         return $this->cookieJar;
     }
+
 }

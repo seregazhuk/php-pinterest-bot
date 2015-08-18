@@ -79,4 +79,16 @@ class PinterestPinTest extends PinterestBotTest
         $this->assertFalse($this->bot->deletePin(1));
     }
 
+    public function testGetPinInfo()
+    {
+        $res['resource_response']['data'] = ['data'];
+        $mock                             = $this->getMock(ApiRequest::class, ['exec', 'isLoggedIn']);
+        $mock->expects($this->at(0))->method('exec')->willReturn($res);
+        $mock->method('isLoggedIn')->willReturn(true);
+        $this->setProperty('api', $mock);
+
+        $this->assertNotNull($this->bot->getPinInfo(1));
+        $this->assertNull($this->bot->getPinInfo(1));
+    }
+
 }
