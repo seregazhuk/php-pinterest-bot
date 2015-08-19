@@ -113,7 +113,7 @@ foreach($bot->getFollowers('username') as $followersBatch)
 Follow/unfollow board by ID
 ```php
 $bot->followBoard($boardId);
-$bot->unFollowUser($boardId);
+$bot->unFollowBoard($boardId);
 ```
 
 ## Search

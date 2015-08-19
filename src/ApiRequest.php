@@ -131,14 +131,13 @@ class ApiRequest implements ApiInterface
 
     /**
      * Executes api call to pinterest
-
-*
-*@param                  $resourceUrl
-     * @param string     $postString
-     * @param            $referer
-     * @param array      $headers
-     * @param bool|false $csrfToken
-     * @param bool|true  $cookieFileExists
+     *
+     * @param                  $resourceUrl
+     * @param string           $postString
+     * @param                  $referer
+     * @param array            $headers
+     * @param bool|false       $csrfToken
+     * @param bool|true        $cookieFileExists
      * @return array
      */
     public function exec(
@@ -216,7 +215,9 @@ class ApiRequest implements ApiInterface
     }
 
     /**
-     * @param string $csrfToken Pinterest security token. Mark api as logged
+     * Mark api as logged
+     *
+     * @param string $csrfToken Pinterest security token.
      */
     public function setLoggedIn($csrfToken)
     {
@@ -232,6 +233,47 @@ class ApiRequest implements ApiInterface
     public function getCookieJar()
     {
         return $this->cookieJar;
+    }
+
+    /**
+     * Executes api call for follow or unfollow user
+     *
+     * @param int    $entityId
+     * @param string $entityName
+     * @param string $url
+     * @return bool
+     */
+    public function followMethodCall($entityId, $entityName, $url)
+    {
+        $dataJson   = [
+            "options" => [
+                $entityName => $entityId,
+            ],
+            "context" => [],
+        ];
+        $post       = [
+            "data" => json_encode($dataJson, JSON_FORCE_OBJECT),
+        ];
+        $postString = UrlHelper::buildRequestString($post);
+        $res        = $this->exec($url, $postString);
+
+        if ($res === null) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Checks if bot is logged in
+     *
+     * @throws \LogicException if is not logged in
+     */
+    public function checkLoggedIn()
+    {
+        if ( ! $this->isLoggedIn()) {
+            throw new \LogicException("You must log in before.");
+        }
     }
 
 }

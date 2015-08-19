@@ -63,4 +63,19 @@ class UrlHelper
             $str
         );
     }
+
+    /**
+     * Return Pinterest API url for search requests
+     *
+     * @param bool $bookmarksUsed
+     * @return string
+     */
+    public static function getSearchUrl($bookmarksUsed)
+    {
+        if ( ! $bookmarksUsed) {
+            return self::RESOURCE_SEARCH;
+        }
+
+        return self::RESOURCE_SEARCH_WITH_PAGINATION;
+    }
 }

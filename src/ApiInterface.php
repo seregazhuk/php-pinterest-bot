@@ -7,9 +7,8 @@ interface ApiInterface
 {
     /**
      * Executes api call to pinterest
-
      *
-*@param            $url
+     * @param            $url
      * @param string     $postString
      * @param            $referer
      * @param array      $headers
@@ -44,5 +43,16 @@ interface ApiInterface
      * @return mixed
      */
     public function getCookieJar();
+
+
+    /**
+     * Executes api call for follow or unfollow pinner or board
+     *
+     * @param int    $entityId
+     * @param string $entityName
+     * @param string $url
+     * @return bool
+     */
+    public function followMethodCall($entityId, $entityName, $url);
 
 }
