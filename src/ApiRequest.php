@@ -264,16 +264,4 @@ class ApiRequest implements ApiInterface
         return true;
     }
 
-    /**
-     * Checks if bot is logged in
-     *
-     * @throws \LogicException if is not logged in
-     */
-    public function checkLoggedIn()
-    {
-        if ( ! $this->isLoggedIn()) {
-            throw new \LogicException("You must log in before.");
-        }
-    }
-
 }

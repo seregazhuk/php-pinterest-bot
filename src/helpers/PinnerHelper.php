@@ -4,6 +4,8 @@
 namespace szhuk\PinterestAPI\helpers;
 
 
+use szhuk\PinterestAPI\ApiInterface;
+
 class PinnerHelper
 {
     /**
@@ -62,5 +64,61 @@ class PinnerHelper
             "data"       => json_encode($dataJson, true),
         ];
 
+    }
+
+    /**
+     * Parses Pinterest API response with pinner name
+     *
+     * @param $res
+     * @return null
+     */
+    public static function parseAccountNameResponse($res)
+    {
+        if (isset($res['resource_data_cache'][1]['resource']['options']['username'])) {
+            return $res['resource_data_cache'][1]['resource']['options']['username'];
+        }
+
+        return null;
+    }
+
+    /**
+     * Creates Pinterest API request to login
+     *
+     * @param string $username
+     * @param string $password
+     * @return array
+     */
+    public static function createLoginRequest($username, $password)
+    {
+        $dataJson = [
+            "options" => [
+                "username_or_email" => $username,
+                "password"          => $password,
+            ],
+            "context" => [],
+        ];
+
+        return [
+            "source_url" => "/login/",
+            "data"       => json_encode($dataJson, JSON_FORCE_OBJECT),
+        ];
+    }
+
+    /**
+     * Parses Pintrest Api response after login
+     *
+     * @param              $res
+     * @param ApiInterface $apiInterface
+     * @return bool
+     */
+    public static function parseLoginResponse($res, ApiInterface $apiInterface)
+    {
+        if ($res === null) {
+            return false;
+        } else {
+            $apiInterface->setLoggedIn(CsrfHelper::getCsrfToken($apiInterface->getCookieJar()));
+
+            return true;
+        }
     }
 }

@@ -2,6 +2,8 @@
 
 namespace szhuk\PinterestAPI;
 
+use szhuk\PinterestAPI\helpers\BoardHelper;
+use szhuk\PinterestAPI\helpers\PaginationHelper;
 use szhuk\PinterestAPI\helpers\PinHelper;
 use szhuk\PinterestAPI\helpers\PinnerHelper;
 use szhuk\PinterestAPI\helpers\SearchHelper;
@@ -53,20 +55,9 @@ class PinterestBot
             throw new \LogicException('You must set username and password to login.');
         }
 
-        $dataJson = [
-            "options" => [
-                "username_or_email" => $this->username,
-                "password"          => $this->password,
-            ],
-            "context" => [],
-        ];
-        $post = [
-            "source_url" => "/login/",
-            "data"       => json_encode($dataJson, JSON_FORCE_OBJECT),
-        ];
-
+        $post = PinnerHelper::createLoginRequest($this->username, $this->password);
         $postString = UrlHelper::buildRequestString($post);
-        $res = $this->api->exec(UrlHelper::RESOURCE_LOGIN,
+        $res  = $this->api->exec(UrlHelper::RESOURCE_LOGIN,
             $postString,
             "https://www.pinterest.com/login/",
             [
@@ -76,13 +67,7 @@ class PinterestBot
             false,
             false);
 
-        if ($res === null) {
-            return false;
-        } else {
-            $this->api->setLoggedIn(CsrfHelper::getCsrfToken($this->api->getCookieJar()));
-
-            return true;
-        }
+        return PinnerHelper::parseLoginResponse($res, $this->api);
     }
 
     /**
@@ -93,32 +78,11 @@ class PinterestBot
     public function getBoards()
     {
         $this->checkLoggedIn();
-
-        $dataJson = [
-            "options" => [
-                "filter"        => "all",
-                "field_set_key" => "board_picker",
-            ],
-            "context" => [],
-        ];
-
-        $get = [
-            "source_url"  => "/pin/create/bookmarklet/?url=",
-            "pinFave"     => "1",
-            "description" => "",
-            "data"        => json_encode($dataJson, JSON_FORCE_OBJECT),
-        ];
-
+        $get = BoardHelper::createBoardsInfoRequest();
         $getString = UrlHelper::buildRequestString($get);
-
         $res = $this->api->exec(UrlHelper::RESOURCE_GET_BOARDS . "?{$getString}", "");
 
-        if (isset($res['resource_response']['data']['all_boards'])) {
-            return $res['resource_response']['data']['all_boards'];
-        }
-
-        return null;
-
+        return BoardHelper::parseBoardsInfoResponse($res);
     }
 
     /**
@@ -130,11 +94,8 @@ class PinterestBot
     {
         $this->checkLoggedIn();
         $res = $this->api->exec(UrlHelper::RESOURCE_GET_ACCOUNT_NAME);
-        if (isset($res['resource_data_cache'][1]['resource']['options']['username'])) {
-            return $res['resource_data_cache'][1]['resource']['options']['username'];
-        }
 
-        return null;
+        return PinnerHelper::parseAccountNameResponse($res);
     }
 
     /**
@@ -146,7 +107,6 @@ class PinterestBot
     public function followUser($userId)
     {
         $this->checkLoggedIn();
-
         return $this->api->followMethodCall($userId, "user_id", UrlHelper::RESOURCE_FOLLOW_USER);
     }
 
@@ -159,7 +119,6 @@ class PinterestBot
     public function unFollowUser($userId)
     {
         $this->checkLoggedIn();
-
         return $this->api->followMethodCall($userId, "user_id", UrlHelper::RESOURCE_UNFOLLOW_USER);
     }
 
@@ -354,50 +313,6 @@ class PinterestBot
         return $res ? true : false;
     }
 
-    /**
-     * Iterate through results of Api function call. By
-     * default generator will return all pagination results.
-     * To limit result batches, set $batchesLimit.
-     *
-     * @param string $function
-     * @param array  $params
-     * @param int    $batchesLimit
-     * @return \Generator
-     */
-    protected function getPaginatedData($function, $params, $batchesLimit = 0)
-    {
-        $batchesNum = 0;
-        do {
-
-            if ($batchesLimit && $batchesNum >= $batchesLimit) {
-                break;
-            }
-
-            $items = [];
-            $res   = call_user_func_array([$this, $function], $params);
-
-            if (isset($res['data']) && ! empty($res['data'])) {
-
-                if (isset($res['data'][0]['type']) && $res['data'][0]['type'] == 'module') {
-                    array_shift($res['data']);
-                }
-                $items = $res['data'];
-            }
-
-            if (isset($res['bookmarks'])) {
-                $params['bookmarks'] = $res['bookmarks'];
-            }
-
-            if (empty($items)) {
-                return; }
-
-            $batchesNum++;
-            yield $items;
-
-
-        } while (isset($res['data']) && ! empty($res['data']));
-
-    }
 
     /**
      * Get pinner followers
@@ -408,7 +323,7 @@ class PinterestBot
      */
     public function getFollowers($username, $batchesLimit = 0)
     {
-        return $this->getPaginatedData('getUserData',
+        return PaginationHelper::getPaginatedData($this, 'getUserData',
             [
                 'username'  => $username,
                 'url'       => UrlHelper::RESOURCE_USER_FOLLOWERS,
@@ -426,7 +341,7 @@ class PinterestBot
      */
     public function getFollowing($username, $batchesLimit = 0)
     {
-        return $this->getPaginatedData('getUserData',
+        return PaginationHelper::getPaginatedData($this, 'getUserData',
             [
                 'username'  => $username,
                 'url'       => UrlHelper::RESOURCE_USER_FOLLOWING,
@@ -444,7 +359,7 @@ class PinterestBot
      */
     public function getUserPins($username, $batchesLimit = 0)
     {
-        return $this->getPaginatedData('getUserData',
+        return PaginationHelper::getPaginatedData($this, 'getUserData',
             ['username' => $username, 'url' => UrlHelper::RESOURCE_USER_PINS, 'sourceUrl' => "/$username/pins/"],
             $batchesLimit);
     }
@@ -461,15 +376,9 @@ class PinterestBot
     public function search($query, $scope, $bookmarks = [])
     {
         $url = UrlHelper::getSearchUrl(! empty($bookmarks));
-
         $get = SearchHelper::createSearchRequest($query, $scope, $bookmarks);
         $url = $url . '?' . UrlHelper::buildRequestString($get);
         $res = $this->api->exec($url);
-
-        if ($res === null) {
-            return [];
-        }
-
         return SearchHelper::parseSearchResponse($res, ! empty($bookmarks));
     }
 
@@ -483,7 +392,7 @@ class PinterestBot
      */
     public function searchPinners($query, $batchesLimit = 0)
     {
-        return $this->getPaginatedData('search',
+        return PaginationHelper::getPaginatedData($this, 'search',
             ['query' => $query, 'scope' => self::SEARCH_PEOPLE_SCOPES],
             $batchesLimit);
     }
@@ -497,7 +406,7 @@ class PinterestBot
      */
     public function searchPins($query, $batchesLimit = 0)
     {
-        return $this->getPaginatedData('search',
+        return PaginationHelper::getPaginatedData($this, 'search',
             ['query' => $query, 'scope' => self::SEARCH_PINS_SCOPES],
             $batchesLimit);
     }
@@ -511,7 +420,7 @@ class PinterestBot
      */
     public function searchBoards($query, $batchesLimit = 0)
     {
-        return $this->getPaginatedData('search',
+        return PaginationHelper::getPaginatedData($this, 'search',
             ['query' => $query, 'scope' => self::SEARCH_BOARDS_SCOPES],
             $batchesLimit);
     }
