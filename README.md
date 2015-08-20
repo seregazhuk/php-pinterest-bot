@@ -1,12 +1,14 @@
-# Pinterest API for PHP
+# Pinterest Bot for PHP
 
 [![Build Status](https://travis-ci.org/seregazhuk/php-pinterest-api.svg?branch=master)](https://travis-ci.org/seregazhuk/php-pinterest-api)
 [![Code Climate](https://codeclimate.com/github/seregazhuk/php-pinterest-api/badges/gpa.svg)](https://codeclimate.com/github/seregazhuk/php-pinterest-api)
 [![Test Coverage](https://codeclimate.com/github/seregazhuk/php-pinterest-api/badges/coverage.svg)](https://codeclimate.com/github/seregazhuk/php-pinterest-api/coverage)
 
-This PHP class will help you to work with your Pinterest account like
-api calls from your script. It's a wrapper around the undocumented Pinterest
-API calss. Some functions use pinterest navigation through results, for example,
+This PHP class will help you to work with your Pinterest account. You don't
+need to register application in Pintererst to get access token for api. Use
+only your account login and password.
+
+Some functions use pinterest navigation through results, for example,
 get user followers. Function returns generator object with api results as batches in 
 every iteration. By default functions return all pinterest result batches, but you can 
 pass batches num as second argument. For example, 
