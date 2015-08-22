@@ -26,9 +26,9 @@ engines:
 # http://docs.codeclimate.com/article/289-configuring-your-repository-via-codeclimate-yml#platform
 
 ratings:
- paths:
- - src/**
- - "**.php"
+  paths:
+  - src/**
+  - "**.php"
 
 # You can globally exclude files from being analyzed by any engine using the
 # exclude_paths key.
