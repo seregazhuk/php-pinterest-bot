@@ -3,8 +3,12 @@ language: php
 php:
   - 5.5
   - 5.6
-  - hhvm
- 
+
+addons:
+  code_climate:
+    repo_token:
+      secure: "FwEgsX2t4CSFSJsw4cNuIgPllt/zc9RB4HUDj6H95hp88C6F6MBbxVgsM+Ml9sVhRdJVWQvqIe3FscJTNgc6mxJR/ByTM3lOxOu0HNUD+QdH2MIDeLCa/rWSpyawSidI5ALXQ1dOMKEku4Iwi1wDZDC3+FdyEbxA/ZS7NTjK/l0+vFdwzNEIIRYnkAKVki7ahhgjiZ1uXMY8noBVApXvbqNJx2OBpn1zIgN4tyxACiUFmXfUYGXNVwKFz4DZPd7Is01wsCF8t9VNzCl38hUbypBUDgekoxJuoDJrKmAM+XZe59OQ6HNhAm4HxdoWMEobfmPzGgQCZGPcO6nwgJy/pET7mcITfLYoRnmkFoJFoWk5mbYXW6te0rOEpJFlII+NsNs3a8z9yzkdDhcNf8WHN5wi3ZzbFmleAF2V5BpboemqFmWFuZPxsthiW9Fx0A6Cw64buBzD5YgAlohL0xddKYpJnLHjJZvfCi9sfXkApYoT/rjiZ/t3Cfhf/XlKQO4fC/lzDv3JpSmhITLmqPUTkm0EP7S0dlUe0brFxGYSWE4D/lc8NbRF9BAt/EjcEpqxtSSsFbK8U0ZrgoT/8pqJPdlMAUbPsA2cU0XuKVDgNI/iMFvCf44zsCIWCo3auyJNpZzymkDjwllnliqKnVQmqewC4bcrNlVyZ/1qwYOTrK4="
+
 before_script:
   - composer self-update
   - composer install --prefer-source --no-interaction --dev
@@ -14,7 +18,3 @@ script: phpunit
 after_script:
   - vendor/bin/test-reporter
 
-addons:
-  code_climate:
-    repo_token:
-      secure: "FwEgsX2t4CSFSJsw4cNuIgPllt/zc9RB4HUDj6H95hp88C6F6MBbxVgsM+Ml9sVhRdJVWQvqIe3FscJTNgc6mxJR/ByTM3lOxOu0HNUD+QdH2MIDeLCa/rWSpyawSidI5ALXQ1dOMKEku4Iwi1wDZDC3+FdyEbxA/ZS7NTjK/l0+vFdwzNEIIRYnkAKVki7ahhgjiZ1uXMY8noBVApXvbqNJx2OBpn1zIgN4tyxACiUFmXfUYGXNVwKFz4DZPd7Is01wsCF8t9VNzCl38hUbypBUDgekoxJuoDJrKmAM+XZe59OQ6HNhAm4HxdoWMEobfmPzGgQCZGPcO6nwgJy/pET7mcITfLYoRnmkFoJFoWk5mbYXW6te0rOEpJFlII+NsNs3a8z9yzkdDhcNf8WHN5wi3ZzbFmleAF2V5BpboemqFmWFuZPxsthiW9Fx0A6Cw64buBzD5YgAlohL0xddKYpJnLHjJZvfCi9sfXkApYoT/rjiZ/t3Cfhf/XlKQO4fC/lzDv3JpSmhITLmqPUTkm0EP7S0dlUe0brFxGYSWE4D/lc8NbRF9BAt/EjcEpqxtSSsFbK8U0ZrgoT/8pqJPdlMAUbPsA2cU0XuKVDgNI/iMFvCf44zsCIWCo3auyJNpZzymkDjwllnliqKnVQmqewC4bcrNlVyZ/1qwYOTrK4="
