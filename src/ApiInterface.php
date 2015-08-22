@@ -10,18 +10,9 @@ interface ApiInterface
      *
      * @param            $url
      * @param string     $postString
-     * @param array      $headers
-     * @param bool|false $csrfToken
-     * @param bool|true  $cookieFileExists
      * @return array
      */
-    public function exec(
-        $url,
-        $postString = "",
-        $headers = [],
-        $csrfToken = true,
-        $cookieFileExists = true
-    );
+    public function exec($url, $postString = "");
 
     /**
      * Checks if current api user is logged in
@@ -52,5 +43,13 @@ interface ApiInterface
      * @return bool
      */
     public function followMethodCall($entityId, $entityName, $url);
+
+
+    /**
+     * Clear token information
+     *
+     * @return mixed
+     */
+    public function clearToken();
 
 }

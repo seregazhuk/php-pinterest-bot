@@ -57,15 +57,8 @@ class PinterestBot
 
         $post = PinnerHelper::createLoginRequest($this->username, $this->password);
         $postString = UrlHelper::buildRequestString($post);
-        $res  = $this->api->exec(UrlHelper::RESOURCE_LOGIN,
-            $postString,
-            [
-                'X-CSRFToken: 1234',
-                'Cookie: csrftoken=1234;',
-            ],
-            false,
-            false);
-
+        $this->api->clearToken();
+        $res = $this->api->exec(UrlHelper::RESOURCE_LOGIN, $postString);
         return PinnerHelper::parseLoginResponse($res, $this->api);
     }
 
@@ -80,7 +73,6 @@ class PinterestBot
         $get = BoardHelper::createBoardsInfoRequest();
         $getString = UrlHelper::buildRequestString($get);
         $res = $this->api->exec(UrlHelper::RESOURCE_GET_BOARDS . "?{$getString}");
-
         return BoardHelper::parseBoardsInfoResponse($res);
     }
 

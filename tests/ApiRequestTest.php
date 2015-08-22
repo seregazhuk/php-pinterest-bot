@@ -57,27 +57,18 @@ class ApiRequestTest extends PHPUnit_Framework_TestCase
 
     public function testCommonCurlOptions()
     {
-        $headers = [
-            10 => 'TestHeader: test',
-        ];
-
         $this->setProperty('curl', curl_init());
 
-        $this->apiRequest->setCurlOptions("", $headers);
+        $this->apiRequest->setCurlOptions("");
         $requestOptions = $this->getProperty('options');
 
         $this->assertArrayNotHasKey(CURLOPT_POST, $requestOptions);
-        $this->assertArraySubset($headers, $requestOptions[CURLOPT_HTTPHEADER]);
 
         $postString = 'post';
-        $this->apiRequest->setCurlOptions($postString, $headers, false);
+        $this->apiRequest->clearToken();
+        $this->apiRequest->setCurlOptions($postString);
         $requestOptions = $this->getProperty('options');
         $this->assertArrayHasKey(CURLOPT_POST, $requestOptions);
-
-        $this->apiRequest->setCurlOptions($postString, $headers, true, false);
-        $requestOptions = $this->getProperty('options');
-
-        $this->assertArraySubset([9 => 'X-CSRFToken: '], $requestOptions[CURLOPT_HTTPHEADER]);
     }
 
     public function testLoggedIn()

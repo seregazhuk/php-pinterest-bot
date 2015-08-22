@@ -29,7 +29,9 @@ class UrlHelper
     const RESOURCE_UNFOLLOW_BOARD         = "resource/BoardFollowResource/delete/";
     const RESOURCE_FOLLOW_INTEREST   = "resource/InterestFollowResource/create/";
     const RESOURCE_UNFOLLOW_INTEREST = "resource/InterestFollowResource/delete/";
-    const URL_BASE                        = 'https://www.pinterest.com/';
+
+    const URL_BASE      = 'https://www.pinterest.com/';
+    const LOGIN_REF_URL = "https://www.pinterest.com/login/";
 
     /**
      * @param $request

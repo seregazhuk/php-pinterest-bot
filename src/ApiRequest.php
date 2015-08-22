@@ -27,24 +27,24 @@ class ApiRequest implements ApiInterface
     protected $csrfToken = "";
     protected $loggedIn;
 
-    protected $useragent;
+    protected $useragent = 'Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0';
 
     const COOKIE_NAME = 'pinterest_cookie';
 
     const INTEREST_ENTITY_ID = 'interest_id';
     const BOARD_ENTITY_ID    = 'board_id';
     const PINNER_ENTITY_ID   = 'user_id';
+    const DEFAULT_CSRFTOKEN = '1234';
 
     /**
      * @param string      $useragent
      * @param null|string $cookiePath
      */
-    public function __construct(
-        $useragent = 'Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0',
-        $cookiePath = null
-    )
+    public function __construct($useragent = "", $cookiePath = null)
     {
-        $this->useragent  = $useragent;
+        if ( ! empty($useragent)) {
+            $this->useragent = $useragent;
+        }
         $this->cookiePath = $cookiePath;
         $this->cookieJarInit();
     }
@@ -70,51 +70,47 @@ class ApiRequest implements ApiInterface
      * Adds necessary curl options for query
      *
      * @param string    $postString        POST query string
-     * @param array     $additionalHeaders Additional headers, needed for query
-     * @param bool      $csrfToken         Flag to add csrfToken to headers
-     * @param bool|true $cookeFileExists
      */
-    public function setCurlOptions(
-        $postString = "",
-        $additionalHeaders = [],
-        $csrfToken = true,
-        $cookeFileExists = true
-    ){
+    public function setCurlOptions($postString = "")
+    {
+
         $this->options = [
             CURLOPT_USERAGENT => $this->useragent,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_SSL_VERIFYPEER => false,
         ];
 
-
-        $this->addHeadersCurlOptions($additionalHeaders, $csrfToken);
+        $this->addHeadersCurlOptions();
 
         if ( ! empty($postString)) {
             $this->addPostCurlOption($postString);
         }
 
-        $this->addCookieCurlOption($cookeFileExists);
-
+        $this->addCookieCurlOption();
         curl_setopt_array($this->curl, $this->options);
     }
 
     /**
-     * @param array $additionalHeaders
-     * @param bool  $csrfToken
      */
-    protected function addHeadersCurlOptions($additionalHeaders = [], $csrfToken = true)
+    protected function addHeadersCurlOptions()
     {
         $headers = $this->requestHeaders;
-
-        if ($csrfToken) {
-            $headers[] = 'X-CSRFToken: ' . $this->csrfToken;
+        $headers[] = 'X-CSRFToken: ' . $this->csrfToken;
+        if ($this->csrfToken == self::DEFAULT_CSRFTOKEN) {
+            $this->options[CURLOPT_REFERER] = UrlHelper::LOGIN_REF_URL;
+            $headers[]                      = 'Cookie: csrftoken=1234;';
         }
-
-        if ( ! empty($additionalHeaders)) {
-            $headers = array_merge($headers, $additionalHeaders);
-        }
-
         $this->options[CURLOPT_HTTPHEADER] = $headers;
+    }
+
+    /**
+     * Clear token information
+     *
+     * @return mixed
+     */
+    public function clearToken()
+    {
+        $this->csrfToken = self::DEFAULT_CSRFTOKEN;
     }
 
     /**
@@ -133,36 +129,25 @@ class ApiRequest implements ApiInterface
      *
      * @param                  $resourceUrl
      * @param string           $postString
-     * @param array            $headers
-     * @param bool|false       $csrfToken
-     * @param bool|true        $cookieFileExists
      * @return array
      */
-    public function exec(
-        $resourceUrl,
-        $postString = "",
-        $headers = [],
-        $csrfToken = true,
-        $cookieFileExists = true
-    ){
+    public function exec($resourceUrl, $postString = "")
+    {
         $url = UrlHelper::buildApiUrl($resourceUrl);
         $this->curl = curl_init($url);
-        $this->setCurlOptions($postString, $headers, $csrfToken, $cookieFileExists);
+        $this->setCurlOptions($postString);
         $res = curl_exec($this->curl);
         curl_close($this->curl);
-
         return json_decode($res, true);
     }
 
 
     /**
      * Adds cookies to curl requests
-     *
-     * @param bool|true $cookeFileExists
      */
-    protected function addCookieCurlOption($cookeFileExists = true)
+    protected function addCookieCurlOption()
     {
-        if ($cookeFileExists) {
+        if ($this->csrfToken != self::DEFAULT_CSRFTOKEN) {
             $this->options[CURLOPT_COOKIEFILE] = $this->cookieJar;
         } else {
             $this->options[CURLOPT_COOKIEJAR] = $this->cookieJar;
@@ -171,7 +156,7 @@ class ApiRequest implements ApiInterface
 
 
     /**
-     * Check if coockies were saved before and load them
+     * Check if cookies were saved before and load them
      */
     protected function cookieJarInit()
     {
