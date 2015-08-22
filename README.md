@@ -1,9 +1,8 @@
 # Pinterest Bot for PHP
 
-[![Build Status](https://travis-ci.org/seregazhuk/php-pinterest-api.svg?branch=master)](https://travis-ci.org/seregazhuk/php-pinterest-api)
-[![Code Climate](https://codeclimate.com/github/seregazhuk/php-pinterest-api/badges/gpa.svg)](https://codeclimate.com/github/seregazhuk/php-pinterest-api)
-[![Test Coverage](https://codeclimate.com/github/seregazhuk/php-pinterest-api/badges/coverage.svg)](https://codeclimate.com/github/seregazhuk/php-pinterest-api/coverage)
-
+[![Build Status](https://travis-ci.org/seregazhuk/php-pinterest-bot.svg)](https://travis-ci.org/seregazhuk/php-pinterest-bot)
+[![Code Climate](https://codeclimate.com/github/seregazhuk/php-pinterest-bot/badges/gpa.svg)](https://codeclimate.com/github/seregazhuk/php-pinterest-bot)
+[![Test Coverage](https://codeclimate.com/github/seregazhuk/php-pinterest-bot/badges/coverage.svg)](https://codeclimate.com/github/seregazhuk/php-pinterest-bot/coverage)
 This PHP class will help you to work with your Pinterest account. You don't
 need to register application in Pintererst to get access token for api. Use
 only your account login and password.
@@ -30,8 +29,8 @@ php composer.phar require "szhuk/pinterestapi:*"
 ## Quick Start
 
 ```php 
-use szhuk\PinterestAPI\PinterestBot;
-use szhuk\PinterestAPI\ApiRequest;
+use seregazhuk\PinterestBot\PinterestBot;
+use seregazhuk\PinterestBot\ApiRequest;
 
 // pass useragent string to request object
 $api = new ApiRequest("Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36");
