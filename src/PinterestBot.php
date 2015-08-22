@@ -59,7 +59,6 @@ class PinterestBot
         $postString = UrlHelper::buildRequestString($post);
         $res  = $this->api->exec(UrlHelper::RESOURCE_LOGIN,
             $postString,
-            "https://www.pinterest.com/login/",
             [
                 'X-CSRFToken: 1234',
                 'Cookie: csrftoken=1234;',
@@ -80,7 +79,7 @@ class PinterestBot
         $this->checkLoggedIn();
         $get = BoardHelper::createBoardsInfoRequest();
         $getString = UrlHelper::buildRequestString($get);
-        $res = $this->api->exec(UrlHelper::RESOURCE_GET_BOARDS . "?{$getString}", "");
+        $res = $this->api->exec(UrlHelper::RESOURCE_GET_BOARDS . "?{$getString}");
 
         return BoardHelper::parseBoardsInfoResponse($res);
     }
@@ -160,7 +159,7 @@ class PinterestBot
         $this->checkLoggedIn();
         $post = PinHelper::createLikeRequest($pinId);
         $postString = URlHelper::buildRequestString($post);
-        $res  = $this->api->exec($url, $postString, "pin/$pinId/");
+        $res = $this->api->exec($url, $postString);
 
         return PinHelper::checkMethodCallResult($res);
     }
@@ -177,8 +176,7 @@ class PinterestBot
         $this->checkLoggedIn();
         $post = PinHelper::createCommentRequest($pinId, $text);
         $postString = UrlHelper::buildRequestString($post);
-        $res  = $this->api->exec(UrlHelper::RESOURCE_COMMENT_PIN, $postString,
-            UrlHelper::URL_BASE . "pin/$pinId/");
+        $res = $this->api->exec(UrlHelper::RESOURCE_COMMENT_PIN, $postString);
 
         return PinHelper::checkMethodCallResult($res);
     }
@@ -213,7 +211,7 @@ class PinterestBot
 
         $get = PinnerHelper::createUserDataRequest($username, $sourceUrl, $bookmarks);
         $getString = UrlHelper::buildRequestString($get);
-        $res = $this->api->exec($url . '?' . $getString, "", $username);
+        $res = $this->api->exec($url . '?' . $getString, $username);
         $this->checkErrorInResponse($res);
 
         return PinnerHelper::checkUserDataResponse($res);
