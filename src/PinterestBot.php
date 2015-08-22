@@ -107,7 +107,8 @@ class PinterestBot
     public function followUser($userId)
     {
         $this->checkLoggedIn();
-        return $this->api->followMethodCall($userId, "user_id", UrlHelper::RESOURCE_FOLLOW_USER);
+
+        return $this->api->followMethodCall($userId, ApiRequest::PINNER_ENTITY_ID, UrlHelper::RESOURCE_FOLLOW_USER);
     }
 
     /**
@@ -119,7 +120,8 @@ class PinterestBot
     public function unFollowUser($userId)
     {
         $this->checkLoggedIn();
-        return $this->api->followMethodCall($userId, "user_id", UrlHelper::RESOURCE_UNFOLLOW_USER);
+
+        return $this->api->followMethodCall($userId, ApiRequest::PINNER_ENTITY_ID, UrlHelper::RESOURCE_UNFOLLOW_USER);
     }
 
     /**
@@ -450,7 +452,7 @@ class PinterestBot
     {
         $this->checkLoggedIn();
 
-        return $this->api->followMethodCall($boardId, "board_id", UrlHelper::RESOURCE_FOLLOW_BOARD);
+        return $this->api->followMethodCall($boardId, ApiRequest::BOARD_ENTITY_ID, UrlHelper::RESOURCE_FOLLOW_BOARD);
 
     }
 
@@ -464,7 +466,35 @@ class PinterestBot
     {
         $this->checkLoggedIn();
 
-        return $this->api->followMethodCall($boardId, "board_id", UrlHelper::RESOURCE_UNFOLLOW_BOARD);
+        return $this->api->followMethodCall($boardId, ApiRequest::BOARD_ENTITY_ID, UrlHelper::RESOURCE_UNFOLLOW_BOARD);
 
+    }
+
+    /**
+     * Follow interest by ID
+     *
+     * @param int $interestId
+     * @return bool
+     */
+    public function followInterest($interestId)
+    {
+        $this->checkLoggedIn();
+
+        return $this->api->followMethodCall($interestId, ApiRequest::INTEREST_ENTITY_ID,
+            UrlHelper::RESOURCE_FOLLOW_INTEREST);
+    }
+
+    /**
+     * Unfollow interest by ID
+     *
+     * @param int $interestId
+     * @return bool
+     */
+    public function unFollowInterest($interestId)
+    {
+        $this->checkLoggedIn();
+
+        return $this->api->followMethodCall($interestId, ApiRequest::INTEREST_ENTITY_ID,
+            UrlHelper::RESOURCE_UNFOLLOW_INTEREST);
     }
 }

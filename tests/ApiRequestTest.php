@@ -15,7 +15,7 @@ class ApiRequestTest extends PHPUnit_Framework_TestCase
 
 
     /**
-     * @var ReflectionClass
+     * @var \ReflectionClass
      */
     protected $reflection;
 

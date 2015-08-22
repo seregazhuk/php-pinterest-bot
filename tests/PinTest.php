@@ -4,7 +4,7 @@ namespace seregazhuk\tests;
 
 use seregazhuk\PinterestBot\ApiRequest;
 
-class PinterestPinTest extends PinterestBotTest
+class PinTest extends BotTest
 {
 
     public function testLikeAndUnlikePin()

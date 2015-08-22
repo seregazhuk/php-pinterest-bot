@@ -6,7 +6,7 @@ use seregazhuk\PinterestBot\PinterestBot;
 use seregazhuk\PinterestBot\ApiRequest;
 use PHPUnit_Framework_TestCase;
 
-class PinterestBotTest extends PHPUnit_Framework_TestCase
+class BotTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @var PinterestBot;

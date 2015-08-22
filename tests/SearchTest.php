@@ -5,7 +5,7 @@ namespace seregazhuk\tests;
 use seregazhuk\PinterestBot\PinterestBot;
 use seregazhuk\PinterestBot\ApiRequest;
 
-class PinterestSearchTest extends PinterestBotTest
+class SearchTest extends BotTest
 {
 
     public function testSearchWithoutBookmarks()

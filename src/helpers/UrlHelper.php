@@ -27,6 +27,8 @@ class UrlHelper
     const RESOURCE_PIN_INFO               = "/resource/PinResource/get";
     const RESOURCE_FOLLOW_BOARD           = "resource/BoardFollowResource/create/";
     const RESOURCE_UNFOLLOW_BOARD         = "resource/BoardFollowResource/delete/";
+    const RESOURCE_FOLLOW_INTEREST   = "resource/InterestFollowResource/create/";
+    const RESOURCE_UNFOLLOW_INTEREST = "resource/InterestFollowResource/delete/";
     const URL_BASE                        = 'https://www.pinterest.com/';
 
     /**

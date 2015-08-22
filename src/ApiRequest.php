@@ -31,6 +31,10 @@ class ApiRequest implements ApiInterface
 
     const COOKIE_NAME = 'pinterest_cookie';
 
+    const INTEREST_ENTITY_ID = 'interest_id';
+    const BOARD_ENTITY_ID    = 'board_id';
+    const PINNER_ENTITY_ID   = 'user_id';
+
     /**
      * @param string      $useragent
      * @param null|string $cookiePath
@@ -251,6 +255,11 @@ class ApiRequest implements ApiInterface
             ],
             "context" => [],
         ];
+
+        if ($entityName == self::INTEREST_ENTITY_ID) {
+            $dataJson["options"]["interest_list"] = "favorited";
+        }
+
         $post       = [
             "data" => json_encode($dataJson, JSON_FORCE_OBJECT),
         ];

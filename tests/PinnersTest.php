@@ -4,7 +4,7 @@ namespace seregazhuk\tests;
 
 use seregazhuk\PinterestBot\ApiRequest;
 
-class PinterestPinnersTest extends PinterestBotTest
+class PinnersTest extends BotTest
 {
     public function testGetAccountName()
     {

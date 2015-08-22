@@ -4,7 +4,7 @@ namespace seregazhuk\tests;
 
 use seregazhuk\PinterestBot\ApiRequest;
 
-class PinterestBoardsTest extends PinterestBotTest
+class BoardsTest extends BotTest
 {
 
     public function testGetBoards()

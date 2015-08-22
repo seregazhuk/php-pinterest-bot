@@ -3,6 +3,7 @@
 [![Build Status](https://travis-ci.org/seregazhuk/php-pinterest-bot.svg)](https://travis-ci.org/seregazhuk/php-pinterest-bot)
 [![Code Climate](https://codeclimate.com/github/seregazhuk/php-pinterest-bot/badges/gpa.svg)](https://codeclimate.com/github/seregazhuk/php-pinterest-bot)
 [![Test Coverage](https://codeclimate.com/github/seregazhuk/php-pinterest-bot/badges/coverage.svg)](https://codeclimate.com/github/seregazhuk/php-pinterest-bot/coverage)
+
 This PHP class will help you to work with your Pinterest account. You don't
 need to register application in Pintererst to get access token for api. Use
 only your account login and password.
@@ -115,6 +116,13 @@ Follow/unfollow board by ID
 ```php
 $bot->followBoard($boardId);
 $bot->unFollowBoard($boardId);
+```
+
+## Interests
+Follow/unfollow interest by ID
+```php
+$bot->followInterest($interestId);
+$bot->unFollowInterest($interestId);
 ```
 
 ## Search
