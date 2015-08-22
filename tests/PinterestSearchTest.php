@@ -1,9 +1,9 @@
 <?php
 
-namespace szhuk\tests;
+namespace seregazhuk\tests;
 
-use szhuk\PinterestAPI\PinterestBot;
-use szhuk\PinterestAPI\ApiRequest;
+use seregazhuk\PinterestBot\PinterestBot;
+use seregazhuk\PinterestBot\ApiRequest;
 
 class PinterestSearchTest extends PinterestBotTest
 {

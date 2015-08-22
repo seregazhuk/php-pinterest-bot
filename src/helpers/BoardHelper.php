@@ -1,6 +1,6 @@
 <?php
 
-namespace szhuk\PinterestAPI\helpers;
+namespace seregazhuk\PinterestBot\helpers;
 
 
 class BoardHelper

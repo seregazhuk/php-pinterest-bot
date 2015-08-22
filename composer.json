@@ -1,6 +1,6 @@
 {
-	"name": "szhuk/pinterestapi",
-	"description": "PHP library for Pintrest api",
+    "name": "seregazhuk/pinterestbot",
+    "description": "PHP library for Pintrest",
 	"keywords": [
 		"php",
 		"lib",
@@ -11,14 +11,14 @@
 	"license": "Mit",
 	"autoload": {
 		"psr-4": {
-			"szhuk\\PinterestAPI\\": "src",
-			"szhuk\\tests\\": "tests"
+            "seregazhuk\\PinterestBot\\": "src",
+            "seregazhuk\\tests\\": "tests"
 		}
 	},
 	"repositories": [
 		{
 			"type": "vcs",
-			"url": "git@github.com:seregazhuk/php-pinterest-api.git"
+            "url": "git@github.com:seregazhuk/php-pinterest-bot.git"
 		}
 	],
 	"require": {

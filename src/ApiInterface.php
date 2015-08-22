@@ -1,6 +1,6 @@
 <?php
 
-namespace szhuk\PinterestAPI;
+namespace seregazhuk\PinterestBot;
 
 
 interface ApiInterface

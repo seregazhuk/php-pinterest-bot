@@ -1,9 +1,9 @@
 <?php
 
-namespace szhuk\PinterestAPI;
+namespace seregazhuk\PinterestBot;
 
-use szhuk\PinterestAPI\helpers\CsrfHelper;
-use szhuk\PinterestAPI\helpers\UrlHelper;
+use seregazhuk\PinterestBot\helpers\CsrfHelper;
+use seregazhuk\PinterestBot\helpers\UrlHelper;
 
 /**
  * Class ApiRequest

@@ -1,14 +1,14 @@
 <?php
 
-namespace szhuk\PinterestAPI;
+namespace seregazhuk\PinterestBot;
 
-use szhuk\PinterestAPI\helpers\BoardHelper;
-use szhuk\PinterestAPI\helpers\PaginationHelper;
-use szhuk\PinterestAPI\helpers\PinHelper;
-use szhuk\PinterestAPI\helpers\PinnerHelper;
-use szhuk\PinterestAPI\helpers\SearchHelper;
-use szhuk\PinterestAPI\helpers\UrlHelper;
-use szhuk\PinterestAPI\helpers\CsrfHelper;
+use seregazhuk\PinterestBot\helpers\BoardHelper;
+use seregazhuk\PinterestBot\helpers\PaginationHelper;
+use seregazhuk\PinterestBot\helpers\PinHelper;
+use seregazhuk\PinterestBot\helpers\PinnerHelper;
+use seregazhuk\PinterestBot\helpers\SearchHelper;
+use seregazhuk\PinterestBot\helpers\UrlHelper;
+use seregazhuk\PinterestBot\helpers\CsrfHelper;
 
 /**
  * Class PinterestBot

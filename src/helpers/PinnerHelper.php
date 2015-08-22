@@ -1,10 +1,10 @@
 <?php
 
 
-namespace szhuk\PinterestAPI\helpers;
+namespace seregazhuk\PinterestBot\helpers;
 
 
-use szhuk\PinterestAPI\ApiInterface;
+use seregazhuk\PinterestBot\ApiInterface;
 
 class PinnerHelper
 {

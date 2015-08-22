@@ -2,7 +2,7 @@
 
 namespace szhuk\tests;
 
-use szhuk\PinterestAPI\ApiRequest;
+use seregazhuk\PinterestBot\ApiRequest;
 use org\bovigo\vfs\vfsStream;
 use PHPUnit_Framework_TestCase;
 
