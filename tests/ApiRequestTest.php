@@ -57,26 +57,24 @@ class ApiRequestTest extends PHPUnit_Framework_TestCase
 
     public function testCommonCurlOptions()
     {
-        $referer = 'http://google.com';
         $headers = [
             10 => 'TestHeader: test',
         ];
 
-        $this->setProperty('ch', curl_init());
+        $this->setProperty('curl', curl_init());
 
-        $this->apiRequest->setCurlOptions($referer, "", $headers);
+        $this->apiRequest->setCurlOptions("", $headers);
         $requestOptions = $this->getProperty('options');
 
         $this->assertArrayNotHasKey(CURLOPT_POST, $requestOptions);
-        $this->assertArrayHasKey(CURLOPT_REFERER, $requestOptions);
         $this->assertArraySubset($headers, $requestOptions[CURLOPT_HTTPHEADER]);
 
         $postString = 'post';
-        $this->apiRequest->setCurlOptions($referer, $postString, $headers, false);
+        $this->apiRequest->setCurlOptions($postString, $headers, false);
         $requestOptions = $this->getProperty('options');
         $this->assertArrayHasKey(CURLOPT_POST, $requestOptions);
 
-        $this->apiRequest->setCurlOptions($referer, $postString, $headers, true, false);
+        $this->apiRequest->setCurlOptions($postString, $headers, true, false);
         $requestOptions = $this->getProperty('options');
 
         $this->assertArraySubset([9 => 'X-CSRFToken: '], $requestOptions[CURLOPT_HTTPHEADER]);
@@ -97,10 +95,5 @@ class ApiRequestTest extends PHPUnit_Framework_TestCase
 
         $api = new ApiRequest('My UserAgent String', $cookiePath);
         $this->assertNotNull($cookiePath, $api->getCookieJar());
-    }
-
-    public function testGetReferer()
-    {
-
     }
 }

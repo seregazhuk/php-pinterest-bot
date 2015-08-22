@@ -22,7 +22,7 @@ class ApiRequest implements ApiInterface
     protected $cookieJar;
     public $cookiePath;
 
-    protected $ch;
+    protected $curl;
     protected $options;
     protected $csrfToken = "";
     protected $loggedIn;
@@ -69,23 +69,18 @@ class ApiRequest implements ApiInterface
     /**
      * Adds necessary curl options for query
      *
-     * @param string    $referer           Referer Header
      * @param string    $postString        POST query string
      * @param array     $additionalHeaders Additional headers, needed for query
      * @param bool      $csrfToken         Flag to add csrfToken to headers
      * @param bool|true $cookeFileExists
      */
     public function setCurlOptions(
-        $referer,
         $postString = "",
         $additionalHeaders = [],
         $csrfToken = true,
         $cookeFileExists = true
     ){
-        $referer = $this->getReferer($referer);
-
         $this->options = [
-            CURLOPT_REFERER        => $referer,
             CURLOPT_USERAGENT => $this->useragent,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_SSL_VERIFYPEER => false,
@@ -100,7 +95,7 @@ class ApiRequest implements ApiInterface
 
         $this->addCookieCurlOption($cookeFileExists);
 
-        curl_setopt_array($this->ch, $this->options);
+        curl_setopt_array($this->curl, $this->options);
     }
 
     /**
@@ -138,7 +133,6 @@ class ApiRequest implements ApiInterface
      *
      * @param                  $resourceUrl
      * @param string           $postString
-     * @param                  $referer
      * @param array            $headers
      * @param bool|false       $csrfToken
      * @param bool|true        $cookieFileExists
@@ -147,30 +141,19 @@ class ApiRequest implements ApiInterface
     public function exec(
         $resourceUrl,
         $postString = "",
-        $referer = "",
         $headers = [],
         $csrfToken = true,
         $cookieFileExists = true
     ){
         $url = UrlHelper::buildApiUrl($resourceUrl);
-        $this->ch = curl_init($url);
-        $this->setCurlOptions($referer, $postString, $headers, $csrfToken, $cookieFileExists);
-        $res = curl_exec($this->ch);
-        curl_close($this->ch);
+        $this->curl = curl_init($url);
+        $this->setCurlOptions($postString, $headers, $csrfToken, $cookieFileExists);
+        $res = curl_exec($this->curl);
+        curl_close($this->curl);
 
         return json_decode($res, true);
     }
 
-    /**
-     * Creates Pinterest api call referer
-     *
-     * @param string $referer
-     * @return string
-     */
-    protected function getReferer($referer)
-    {
-        return UrlHelper::URL_BASE . $referer;
-    }
 
     /**
      * Adds cookies to curl requests

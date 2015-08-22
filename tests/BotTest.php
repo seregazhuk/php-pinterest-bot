@@ -89,7 +89,7 @@ class BotTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException LogicException
+     * @expectedException \LogicException
      * @expectedExceptionMessage You must log in before.
      */
     public function testCheckIsLoggedThrowsException()
@@ -114,5 +114,4 @@ class BotTest extends PHPUnit_Framework_TestCase
         $this->assertNull($this->bot->lastApiErrorCode);
         $this->assertNull($this->bot->lastApiErrorMsg);
     }
-
 }

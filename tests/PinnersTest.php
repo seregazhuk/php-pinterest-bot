@@ -179,21 +179,4 @@ class PinnersTest extends BotTest
         $expectedResultsNum = count($res['resource_response']['data']);
         $this->assertCount($expectedResultsNum, iterator_to_array($pins)[0]);
     }
-
-    public function testCheckErrorInResponse()
-    {
-        $response = [
-            [
-                'api_error_code' => 404,
-                'message'        => 'Not found',
-            ],
-        ];
-        $this->invokeMethod('checkErrorInResponse', $response);
-        $this->assertEquals($response[0]['api_error_code'], $this->bot->lastApiErrorCode);
-        $this->assertEquals($response[0]['message'], $this->bot->lastApiErrorMsg);
-
-        $this->invokeMethod('checkErrorInResponse', [[]]);
-        $this->assertNull($this->bot->lastApiErrorCode);
-        $this->assertNull($this->bot->lastApiErrorMsg);
-    }
 }

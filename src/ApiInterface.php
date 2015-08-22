@@ -10,7 +10,6 @@ interface ApiInterface
      *
      * @param            $url
      * @param string     $postString
-     * @param            $referer
      * @param array      $headers
      * @param bool|false $csrfToken
      * @param bool|true  $cookieFileExists
@@ -19,7 +18,6 @@ interface ApiInterface
     public function exec(
         $url,
         $postString = "",
-        $referer = "",
         $headers = [],
         $csrfToken = true,
         $cookieFileExists = true
