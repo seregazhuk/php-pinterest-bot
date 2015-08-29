@@ -2,49 +2,59 @@
 
 namespace seregazhuk\PinterestBot;
 
-use seregazhuk\PinterestBot\helpers\BoardHelper;
-use seregazhuk\PinterestBot\helpers\PaginationHelper;
-use seregazhuk\PinterestBot\helpers\PinHelper;
-use seregazhuk\PinterestBot\helpers\PinnerHelper;
-use seregazhuk\PinterestBot\helpers\SearchHelper;
-use seregazhuk\PinterestBot\helpers\UrlHelper;
-use seregazhuk\PinterestBot\helpers\CsrfHelper;
+use seregazhuk\PinterestBot\Exceptions\InvalidRequestException;
+use seregazhuk\PinterestBot\Providers\Pinners;
+use seregazhuk\PinterestBot\Providers\Pins;
+use seregazhuk\PinterestBot\Providers\Boards;
+use seregazhuk\PinterestBot\Providers\Interests;
 
 /**
  * Class PinterestBot
+
  *
- * @package Pinterest
- * @property string       $username
- * @property string       $password
- * @property ApiInterface $api
- * @property int          $lastApiErrorCode
- * @property string       $lastApiErrorMsg
+*@package Pinterest
+ * @property string    $username
+ * @property string    $password
+ * @property Pinners   $pinners
+ * @property Pins      $pins
+ * @property Boards    $boards
+ * @property Interests $interests
  */
 class PinterestBot
 {
     public $username;
     public $password;
 
-    /**
-     * @var ApiInterface
-     */
-    protected $api;
+    protected $loggedIn = false;
 
-    public $lastApiErrorCode;
-    public $lastApiErrorMsg;
-
-    const SEARCH_PINS_SCOPES   = 'pins';
-    const SEARCH_PEOPLE_SCOPES = 'people';
-    const SEARCH_BOARDS_SCOPES = 'boards';
+    const PROVIDERS_NAMESPACE = "seregazhuk\\PinterestBot\\Providers\\";
 
     const MAX_PAGINATED_ITEMS = 100;
 
-    public function __construct($username, $password, ApiInterface $api)
+    public function __construct($username, $password)
     {
         $this->username = $username;
         $this->password = $password;
-        $this->api      = $api;
+
+        $this->request = new Request(new Http());
     }
+
+    /**
+     * A array containing the cached providers
+
+*
+* @var array
+     */
+    private $providers = [];
+
+    /**
+     * A reference to the request class which travels
+     * through the application
+     *
+     * @var Request
+     */
+    public $request;
+
 
     /**
      * Login and parsing csrfToken from cookies if success
@@ -55,436 +65,36 @@ class PinterestBot
             throw new \LogicException('You must set username and password to login.');
         }
 
-        $post = PinnerHelper::createLoginRequest($this->username, $this->password);
-        $postString = UrlHelper::buildRequestString($post);
-        $this->api->clearToken();
-        $res = $this->api->exec(UrlHelper::RESOURCE_LOGIN, $postString);
-        return PinnerHelper::parseLoginResponse($res, $this->api);
-    }
-
-    /**
-     * Get all logged-in user boards
-     *
-     * @return array|null
-     */
-    public function getBoards()
-    {
-        $this->checkLoggedIn();
-        $get = BoardHelper::createBoardsInfoRequest();
-        $getString = UrlHelper::buildRequestString($get);
-        $res = $this->api->exec(UrlHelper::RESOURCE_GET_BOARDS . "?{$getString}");
-        return BoardHelper::parseBoardsInfoResponse($res);
-    }
-
-    /**
-     * Get the logged-in account username
-     *
-     * @return array|null
-     */
-    public function getAccountName()
-    {
-        $this->checkLoggedIn();
-        $res = $this->api->exec(UrlHelper::RESOURCE_GET_ACCOUNT_NAME);
-
-        return PinnerHelper::parseAccountNameResponse($res);
-    }
-
-    /**
-     * Follow user by user_id
-     *
-     * @param integer $userId
-     * @return bool
-     */
-    public function followUser($userId)
-    {
-        $this->checkLoggedIn();
-
-        return $this->api->followMethodCall($userId, ApiRequest::PINNER_ENTITY_ID, UrlHelper::RESOURCE_FOLLOW_USER);
-    }
-
-    /**
-     * Unfollow user by user_id
-     *
-     * @param integer $userId
-     * @return bool
-     */
-    public function unFollowUser($userId)
-    {
-        $this->checkLoggedIn();
-
-        return $this->api->followMethodCall($userId, ApiRequest::PINNER_ENTITY_ID, UrlHelper::RESOURCE_UNFOLLOW_USER);
-    }
-
-    /**
-     * Likes pin with current ID
-     *
-     * @param integer $pinId
-     * @return bool
-     */
-    public function likePin($pinId)
-    {
-        return $this->likePinMethodCall($pinId, UrlHelper::RESOURCE_LIKE_PIN);
-    }
-
-
-    /**
-     * Removes your like from pin with current ID
-     *
-     * @param integer $pinId
-     * @return bool
-     */
-    public function unLikePin($pinId)
-    {
-        return $this->likePinMethodCall($pinId, UrlHelper::RESOURCE_UNLIKE_PIN);
-    }
-
-
-    /**
-     * Calls pinterest API to like or unlike Pin by ID
-     *
-     * @param $pinId
-     * @param $url
-     * @return bool
-     */
-    protected function likePinMethodCall($pinId, $url)
-    {
-        $this->checkLoggedIn();
-        $post = PinHelper::createLikeRequest($pinId);
-        $postString = URlHelper::buildRequestString($post);
-        $res = $this->api->exec($url, $postString);
-
-        return PinHelper::checkMethodCallResult($res);
-    }
-
-    /**
-     * Writes comment for pin with current id
-     *
-     * @param integer $pinId
-     * @param string  $text Comment
-     * @return bool
-     */
-    public function commentPin($pinId, $text)
-    {
-        $this->checkLoggedIn();
-        $post = PinHelper::createCommentRequest($pinId, $text);
-        $postString = UrlHelper::buildRequestString($post);
-        $res = $this->api->exec(UrlHelper::RESOURCE_COMMENT_PIN, $postString);
-
-        return PinHelper::checkMethodCallResult($res);
-    }
-
-    /**
-     * Checks if bot is logged in
-     *
-     * @throws \LogicException if is not logged in
-     */
-    public function checkLoggedIn()
-    {
-        if ( ! $this->api->isLoggedIn()) {
-            throw new \LogicException("You must log in before.");
+        $res = $this->pinners->login($this->username, $this->password);
+        if ($res) {
+            $this->request->setLoggedIn();
         }
-    }
 
-
-    /**
-     * Get different user data, for example, followers, following, pins.
-     * Collects data while paginating with bookmarks through pinterest results.
-     * Return array. Key data - for results and key bookmarks - for pagination.
-     *
-     * @param string $username
-     * @param string $url
-     * @param string $sourceUrl
-     * @param array  $bookmarks
-     * @return array
-     */
-    public function getUserData($username, $url, $sourceUrl, $bookmarks = [])
-    {
-        $this->checkLoggedIn();
-
-        $get = PinnerHelper::createUserDataRequest($username, $sourceUrl, $bookmarks);
-        $getString = UrlHelper::buildRequestString($get);
-        $res = $this->api->exec($url . '?' . $getString, $username);
-        $this->checkErrorInResponse($res);
-
-        return PinnerHelper::checkUserDataResponse($res);
+        return $res;
     }
 
     /**
-     * Check for error info in api response and save
-     * it.
-     *
-     * @param array $response
+     * @param string $provider
+     * @return mixed
+     * @throws InvalidRequestException
      */
-    public function checkErrorInResponse($response)
+    public function __get($provider)
     {
-        $this->lastApiErrorCode = null;
-        $this->lastApiErrorMsg  = null;
+        $provider = strtolower($provider);
+        $class    = self::PROVIDERS_NAMESPACE . ucfirst($provider);
+        // Check if an instance has already been initiated
+        if ( ! isset($this->providers[$provider])) {
+            // Check endpoint existence
+            if ( ! class_exists($class)) {
+                throw new InvalidRequestException;
+            }
+            // Create a reflection of the called class
+            $ref = new \ReflectionClass($class);
+            $obj = $ref->newInstanceArgs([$this->request]);
 
-        if (isset($response['api_error_code'])) {
-            $this->lastApiErrorCode = $response['api_error_code'];
-            $this->lastApiErrorMsg  = $response['message'];
+            $this->providers[$provider] = $obj;
         }
-    }
 
-    /**
-     * Get user info
-     * If username param is not specified, will
-     * return info for logged user
-     *
-     * @param string $username
-     * @return null|array
-     */
-    public function getUserInfo($username)
-    {
-        $res = $this->getUserData($username,
-            UrlHelper::RESOURCE_USER_INFO,
-            "/$username/"
-        );
-
-        return isset($res['data']) ? $res['data'] : null;
-    }
-
-    /**
-     * Create pin. Returns created pin ID
-     *
-     * @param string $imageUrl
-     * @param string $imagePreview
-     * @param int    $boardId
-     * @param string $description
-     * @return bool|int
-     */
-    public function pin($imageUrl, $boardId, $description = "", $imagePreview = "")
-    {
-        $this->checkLoggedIn();
-        $post = PinHelper::createPinCreationRequest($imageUrl, $boardId, $description, $imagePreview);
-        $postString = UrlHelper::buildRequestString($post);
-        $res        = $this->api->exec(UrlHelper::RESOURCE_CREATE_PIN, $postString);
-
-        $this->checkErrorInResponse($res);
-
-        return PinHelper::parsePinCreateResponse($res);
-    }
-
-    /**
-     * Repin
-     *
-     * @param int    $repinId
-     * @param int    $boardId
-     * @param string $description
-     * @return bool|int
-     */
-    public function repin($repinId, $boardId, $description = "")
-    {
-        $this->checkLoggedIn();
-
-        $post = PinHelper::createRepinRequest($repinId, $boardId, $description);
-        $postString = UrlHelper::buildRequestString($post);
-        $res        = $this->api->exec(UrlHelper::RESOURCE_REPIN, $postString);
-        $this->checkErrorInResponse($res);
-
-        return PinHelper::parsePinCreateResponse($res);
-    }
-
-
-    /**
-     * Delete pin
-     *
-     * @param int $pinId
-     * @return bool
-     */
-    public function deletePin($pinId)
-    {
-        $this->checkLoggedIn();
-
-        $post = PinHelper::createDeleteRequest($pinId);
-        $postString = UrlHelper::buildRequestString($post);
-        $res        = $this->api->exec(UrlHelper::RESOURCE_DELETE_PIN, $postString);
-
-        $this->checkErrorInResponse($res);
-
-        return $res ? true : false;
-    }
-
-
-    /**
-     * Get pinner followers
-     *
-     * @param string $username
-     * @param int    $batchesLimit
-     * @return \Generator
-     */
-    public function getFollowers($username, $batchesLimit = 0)
-    {
-        return PaginationHelper::getPaginatedData($this, 'getUserData',
-            [
-                'username'  => $username,
-                'url'       => UrlHelper::RESOURCE_USER_FOLLOWERS,
-                'sourceUrl' => "/$username/followers/",
-            ],
-            $batchesLimit);
-    }
-
-    /**
-     * Get pinner following other pinners
-     *
-     * @param string $username
-     * @param int    $batchesLimit
-     * @return \Generator
-     */
-    public function getFollowing($username, $batchesLimit = 0)
-    {
-        return PaginationHelper::getPaginatedData($this, 'getUserData',
-            [
-                'username'  => $username,
-                'url'       => UrlHelper::RESOURCE_USER_FOLLOWING,
-                'sourceUrl' => "/$username/following/",
-            ],
-            $batchesLimit);
-    }
-
-    /**
-     * Get pinner pins
-     *
-     * @param string $username
-     * @param int    $batchesLimit
-     * @return \Generator
-     */
-    public function getUserPins($username, $batchesLimit = 0)
-    {
-        return PaginationHelper::getPaginatedData($this, 'getUserData',
-            ['username' => $username, 'url' => UrlHelper::RESOURCE_USER_PINS, 'sourceUrl' => "/$username/pins/"],
-            $batchesLimit);
-    }
-
-
-    /**
-     * Executes search to API. Query - search string.
-     *
-     * @param       $query
-     * @param       $scope
-     * @param array $bookmarks
-     * @return array
-     */
-    public function search($query, $scope, $bookmarks = [])
-    {
-        $url = UrlHelper::getSearchUrl(! empty($bookmarks));
-        $get = SearchHelper::createSearchRequest($query, $scope, $bookmarks);
-        $url = $url . '?' . UrlHelper::buildRequestString($get);
-        $res = $this->api->exec($url);
-        return SearchHelper::parseSearchResponse($res, ! empty($bookmarks));
-    }
-
-
-    /**
-     * Search pinners by search query
-     *
-     * @param string $query
-     * @param int    $batchesLimit
-     * @return \Generator
-     */
-    public function searchPinners($query, $batchesLimit = 0)
-    {
-        return PaginationHelper::getPaginatedData($this, 'search',
-            ['query' => $query, 'scope' => self::SEARCH_PEOPLE_SCOPES],
-            $batchesLimit);
-    }
-
-    /**
-     * Search pins by search query
-     *
-     * @param string $query
-     * @param int    $batchesLimit
-     * @return \Generator
-     */
-    public function searchPins($query, $batchesLimit = 0)
-    {
-        return PaginationHelper::getPaginatedData($this, 'search',
-            ['query' => $query, 'scope' => self::SEARCH_PINS_SCOPES],
-            $batchesLimit);
-    }
-
-    /**
-     * Search boards by search query
-     *
-     * @param string $query
-     * @param int    $batchesLimit
-     * @return \Generator
-     */
-    public function searchBoards($query, $batchesLimit = 0)
-    {
-        return PaginationHelper::getPaginatedData($this, 'search',
-            ['query' => $query, 'scope' => self::SEARCH_BOARDS_SCOPES],
-            $batchesLimit);
-    }
-
-    /**
-     * Get information of pin by PinID
-     *
-     * @param $pinId
-     * @return array|null;
-     */
-    public function getPinInfo($pinId)
-    {
-        $get = PinHelper::createInfoRequest($pinId);
-        $url = UrlHelper::RESOURCE_PIN_INFO . '?' . UrlHelper::buildRequestString($get);
-        $res = $this->api->exec($url);
-
-        return PinHelper::parsePinInfoResponse($res);
-    }
-
-    /**
-     * Follow board by boardID
-     *
-     * @param $boardId
-     * @return bool
-     */
-    public function followBoard($boardId)
-    {
-        $this->checkLoggedIn();
-
-        return $this->api->followMethodCall($boardId, ApiRequest::BOARD_ENTITY_ID, UrlHelper::RESOURCE_FOLLOW_BOARD);
-
-    }
-
-    /**
-     * Unfollow board by boardID
-     *
-     * @param $boardId
-     * @return bool
-     */
-    public function unFollowBoard($boardId)
-    {
-        $this->checkLoggedIn();
-
-        return $this->api->followMethodCall($boardId, ApiRequest::BOARD_ENTITY_ID, UrlHelper::RESOURCE_UNFOLLOW_BOARD);
-
-    }
-
-    /**
-     * Follow interest by ID
-     *
-     * @param int $interestId
-     * @return bool
-     */
-    public function followInterest($interestId)
-    {
-        $this->checkLoggedIn();
-
-        return $this->api->followMethodCall($interestId, ApiRequest::INTEREST_ENTITY_ID,
-            UrlHelper::RESOURCE_FOLLOW_INTEREST);
-    }
-
-    /**
-     * Unfollow interest by ID
-     *
-     * @param int $interestId
-     * @return bool
-     */
-    public function unFollowInterest($interestId)
-    {
-        $this->checkLoggedIn();
-
-        return $this->api->followMethodCall($interestId, ApiRequest::INTEREST_ENTITY_ID,
-            UrlHelper::RESOURCE_UNFOLLOW_INTEREST);
+        return $this->providers[$provider];
     }
 }

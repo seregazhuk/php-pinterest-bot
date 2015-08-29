@@ -2,9 +2,10 @@
 
 namespace seregazhuk\tests;
 
+use seregazhuk\PinterestBot\Http;
 use seregazhuk\PinterestBot\PinterestBot;
-use seregazhuk\PinterestBot\ApiRequest;
 use PHPUnit_Framework_TestCase;
+use seregazhuk\PinterestBot\Request;
 
 class BotTest extends PHPUnit_Framework_TestCase
 {
@@ -14,18 +15,18 @@ class BotTest extends PHPUnit_Framework_TestCase
     protected $bot;
 
     /**
-     * @var Mockable
+     * @var \Mockable
      */
     protected $mock;
 
     /**
-     * @var ReflectionClass
+     * @var \ReflectionClass
      */
     protected $reflection;
 
     protected function setUp()
     {
-        $this->bot        = new PinterestBot('test', 'test', new ApiRequest());
+        $this->bot = new PinterestBot('test', 'test');
         $this->reflection = new \ReflectionClass($this->bot);
     }
 
@@ -62,56 +63,29 @@ class BotTest extends PHPUnit_Framework_TestCase
     {
         $property = $this->reflection->getProperty($property);
         $property->setAccessible(true);
-
         $property->setValue($this->bot, $value);
-    }
-
-
-    public function testLogin()
-    {
-        $mock = $this->getMock(ApiRequest::class, ['exec', 'isLoggedIn']);
-        $mock->expects($this->at(0))->method('exec')->willReturn([]);
-        $mock->expects($this->at(1))->method('exec')->willReturn(null);
-        $this->setProperty('api', $mock);
-        $this->assertTrue($this->bot->login());
-        $this->assertFalse($this->bot->login());
-    }
-
-    /**
-     * @expectedException LogicException
-     * @expectedExceptionMessage You must set username and password to login.
-     */
-    public function testLoginWithoutUsernameOrPassword()
-    {
-        $this->setProperty('username', null);
-        $this->setProperty('password', null);
-        $this->bot->login();
     }
 
     /**
      * @expectedException \LogicException
-     * @expectedExceptionMessage You must log in before.
      */
-    public function testCheckIsLoggedThrowsException()
+    public function testLogin()
     {
-        $this->bot->checkLoggedIn();
+        $mock = $this->getMock(Request::class, ['exec'], [new Http()]);
+        $mock->expects($this->at(0))->method('exec')->willReturn(true);
+        $this->setProperty('request', $mock);
+        $this->assertTrue($this->bot->login());
+
+        $this->setProperty('username', null);
+        $this->assertTrue($this->bot->login());
     }
 
-
-    public function testCheckErrorInResponse()
+    /**
+     * @expectedException \Exception
+     */
+    public function testWrongProvider()
     {
-        $response = [
-            [
-                'api_error_code' => 404,
-                'message'        => 'Not found',
-            ],
-        ];
-        $this->invokeMethod('checkErrorInResponse', $response);
-        $this->assertEquals($response[0]['api_error_code'], $this->bot->lastApiErrorCode);
-        $this->assertEquals($response[0]['message'], $this->bot->lastApiErrorMsg);
-
-        $this->invokeMethod('checkErrorInResponse', [[]]);
-        $this->assertNull($this->bot->lastApiErrorCode);
-        $this->assertNull($this->bot->lastApiErrorMsg);
+        $this->bot->badProvider;
     }
+
 }

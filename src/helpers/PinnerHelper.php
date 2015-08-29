@@ -1,10 +1,10 @@
 <?php
 
 
-namespace seregazhuk\PinterestBot\helpers;
+namespace seregazhuk\PinterestBot\Helpers;
 
 
-use seregazhuk\PinterestBot\ApiInterface;
+use seregazhuk\PinterestBot\Interfaces\ApiInterface;
 
 class PinnerHelper
 {
@@ -108,16 +108,13 @@ class PinnerHelper
      * Parses Pintrest Api response after login
      *
      * @param              $res
-     * @param ApiInterface $apiInterface
      * @return bool
      */
-    public static function parseLoginResponse($res, ApiInterface $apiInterface)
+    public static function parseLoginResponse($res)
     {
         if ($res === null) {
             return false;
         } else {
-            $apiInterface->setLoggedIn(CsrfHelper::getCsrfToken($apiInterface->getCookieJar()));
-
             return true;
         }
     }

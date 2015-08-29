@@ -2,41 +2,32 @@
 
 namespace seregazhuk\tests;
 
-use seregazhuk\PinterestBot\ApiRequest;
+use seregazhuk\PinterestBot\Providers\Pinners;
 
-class PinnersTest extends BotTest
+class PinnersTest extends ProviderTest
 {
-    public function testGetAccountName()
-    {
-        $accountName                                                      = 'test';
-        $res['resource_data_cache'][1]['resource']['options']['username'] = $accountName;
-        $mock                                                             = $this->getMock(ApiRequest::class,
-            ['exec', 'isLoggedIn']);
-        $mock->expects($this->at(1))->method('exec')->willReturn($res);
-        $mock->method('isLoggedIn')->willReturn(true);
-        $this->setProperty('api', $mock);
 
-        $this->assertEquals($accountName, $this->bot->getAccountName());
-        $this->assertNull($this->bot->getAccountName());
+    /**
+     * @var Pinners
+     */
+    protected $provider;
+
+
+    protected function setUp()
+    {
+        $this->provider = new Pinners($this->createRequestMock());
+        parent::setUp();
     }
 
-    public function testFollowAndUnfollowUser()
+    public function testFollow()
     {
-        $mock = $this->getMock(ApiRequest::class, ['exec', 'isLoggedIn']);
-        $mock->expects($this->at(1))->method('exec')->willReturn([]);
-        $mock->expects($this->at(3))->method('exec')->willReturn([]);
-        $mock->method('isLoggedIn')->willReturn(true);
-
-        $this->setProperty('api', $mock);
-
-        $this->assertTrue($this->bot->followUser(1111));
-        $this->assertTrue($this->bot->unFollowUser(1111));
-
-        $this->assertFalse($this->bot->followUser(1111));
-        $this->assertFalse($this->bot->unFollowUser(1111));
-
+        $response = ['body' => 'result'];
+        $mock     = $this->createRequestMock();
+        $mock->method('exec')->willReturn(json_encode($response));
+        $this->setProperty('request', $mock);
+        $this->assertTrue($this->provider->follow(1));
+        $this->assertTrue($this->provider->unFollow(1));
     }
-
 
     public function testGetUserData()
     {
@@ -44,32 +35,33 @@ class PinnersTest extends BotTest
         $res['resource']['options']['bookmarks'] = $expected['bookmarks'];
         $res['resource_response']['data']        = $expected['data'];
 
-        $mock = $this->getMock(ApiRequest::class, ['exec', 'isLoggedIn']);
-        $mock->expects($this->at(1))->method('exec')->willReturn($res);
-        $mock->expects($this->at(3))->method('exec')->willReturn(['resource_response' => []]);
+        $mock = $this->createRequestMock();
+        $mock->method('exec')->willReturn($res);
+        $this->setProperty('request', $mock);
 
-        $mock->method('isLoggedIn')->willReturn(true);
-
-        $this->setProperty('api', $mock);
-
-        $data = $this->bot->getUserData('test_user', 'http://example.com', 'http://example.com');
+        $data = $this->provider->getUserData('test_user', 'request://example.com', 'request://example.com');
         $this->assertEquals($expected, $data);
-
-        $data = $this->bot->getUserData('test_user', 'http://example.com', 'http://example.com', 'my_bookmarks');
-        $this->assertEquals([], $data);
     }
 
-    public function testGetUserInfo()
+    public function testInfo()
     {
         $res['resource_response'] = ['data' => ['name' => 'test']];
-        $mock                     = $this->getMock(ApiRequest::class, ['exec', 'isLoggedIn']);
+        $mock = $this->createRequestMock();
         $mock->method('exec')->willReturn($res);
-        $mock->method('isLoggedIn')->willReturn(true);
-
-        $this->setProperty('api', $mock);
-
-        $data = $this->bot->getUserInfo($this->bot->username);
+        $this->setProperty('request', $mock);
+        $data = $this->provider->info('username');
         $this->assertEquals($res['resource_response']['data'], $data);
+    }
+
+    public function testMyAccountName()
+    {
+        $accountName                                                      = 'test';
+        $res['resource_data_cache'][1]['resource']['options']['username'] = $accountName;
+        $mock                                                             = $this->createRequestMock();
+        $mock->expects($this->at(1))->method('exec')->willReturn($res);
+        $this->setProperty('request', $mock);
+        $this->assertEquals($accountName, $this->provider->myAccountName());
+        $this->assertNull($this->provider->myAccountName());
     }
 
 
@@ -99,16 +91,14 @@ class PinnersTest extends BotTest
      */
     public function testGetFollowers($response)
     {
-        $mock = $this->getMock(ApiRequest::class, ['exec', 'isLoggedIn']);
-        $mock->expects($this->at(1))
+        $mock = $this->createRequestMock();
+        $mock->expects($this->at(0))
             ->method('exec')
             ->willReturn($response);
-
-        $mock->expects($this->at(2))
+        $mock->expects($this->at(1))
             ->method('exec')
             ->willReturn(['resource_response' => ['data' => []]]);
-
-        $mock->expects($this->at(3))
+        $mock->expects($this->at(2))
             ->method('exec')
             ->willReturn([
                 'resource_response' => [
@@ -117,42 +107,35 @@ class PinnersTest extends BotTest
                     ],
                 ],
             ]);
-
-        $mock->method('isLoggedIn')->willReturn(true);
-        $this->setProperty('api', $mock);
-
-        $followers = $this->bot->getFollowers($this->bot->username);
+        $this->setProperty('request', $mock);
+        $followers = $this->provider->followers('username');
         $this->assertCount(2, iterator_to_array($followers)[0]);
-
-        $followers = $this->bot->getFollowers($this->bot->username);
+        $followers = $this->provider->followers('username');
         $this->assertEmpty(iterator_to_array($followers));
-
     }
 
     /**
      * @dataProvider getFollowResponse
+     * @param array $response
      */
     public function testGetFollowing($response)
     {
-        $mock = $this->getMock(ApiRequest::class, ['exec', 'isLoggedIn']);
-        $mock->expects($this->at(1))
+        $mock = $this->createRequestMock();
+        $mock->expects($this->at(0))
             ->method('exec')
             ->willReturn($response);
-
-        $mock->expects($this->at(2))
+        $mock->expects($this->at(1))
             ->method('exec')
             ->willReturn(['resource_response' => ['data' => []]]);
 
-        $mock->method('isLoggedIn')->willReturn(true);
-        $this->setProperty('api', $mock);
-
-        $following = $this->bot->getFollowing($this->bot->username);
+        $this->setProperty('request', $mock);
+        $following = $this->provider->following('username');
         $this->assertCount(2, iterator_to_array($following)[0]);
     }
 
-    public function testPinnerPins()
+    public function testPins()
     {
-        $res = [
+        $res  = [
             'resource'          => [
                 'options' => [
                     'bookmarks' => ['my_bookmarks'],
@@ -164,19 +147,31 @@ class PinnersTest extends BotTest
                     ['id' => 2],
                 ],
             ],
-
         ];
-
-        $mock = $this->getMock(ApiRequest::class, ['exec', 'isLoggedIn']);
-        $mock->expects($this->at(1))
+        $mock = $this->createRequestMock();
+        $mock->expects($this->at(0))
             ->method('exec')
             ->willReturn($res);
-
-        $mock->method('isLoggedIn')->willReturn(true);
-        $this->setProperty('api', $mock);
-
-        $pins = $this->bot->getUserPins($this->bot->username, 1);
+        $this->setProperty('request', $mock);
+        $pins = $this->provider->pins('username', 1);
         $expectedResultsNum = count($res['resource_response']['data']);
         $this->assertCount($expectedResultsNum, iterator_to_array($pins)[0]);
+    }
+
+    public function testSearch()
+    {
+
+        $response['module']['tree']['data']['results'] = [
+            ['id' => 1],
+            ['id' => 2],
+        ];
+
+        $expectedResultsNum = count($response['module']['tree']['data']['results']);
+        $mock               = $this->createRequestMock();
+
+        $mock->method('exec')->willReturn($response);
+        $this->setProperty('request', $mock);
+        $res = iterator_to_array($this->provider->search('dogs'), 1);
+        $this->assertCount($expectedResultsNum, $res[0]);
     }
 }

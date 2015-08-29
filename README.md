@@ -13,7 +13,7 @@ get user followers. Function returns generator object with api results as batche
 every iteration. By default functions return all pinterest result batches, but you can 
 pass batches num as second argument. For example, 
 ```php 
-$bot->searchPins('query', 2)
+$bot->pins->search('query', 2)
 ```
 will return only 2 batches of search results.
 
@@ -31,82 +31,74 @@ php composer.phar require "seregazhuk/pinterest-bot:*"
 
 ```php 
 use seregazhuk\PinterestBot\PinterestBot;
-use seregazhuk\PinterestBot\ApiRequest;
 
 // pass useragent string to request object
-$api = new ApiRequest("Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36");
-$bot = new PinterestBot('mypinterestlogin', 'mypinterestpassword', $api);
+$bot = new PinterestBot('mypinterestlogin', 'mypinterestpassword');
 $bot->login();
 ```
 
 Next, get your list of boards:
 
 ```php
-$boards = $bot->getBoards();
+$boards = $bot->boards->my();
 ```
 
 ## Pins
 
 Get pin info by its id.
 ```php
-$info = $bot->getPinInfo(1234567890);
+$info = $bot->pins->info(1234567890);
 ```
 
 Create new pin. Accepts image url, board id, where to post image, description and preview url.
 
 ```php
-$pinId = $bot->pin('http://exmaple.com/image.jpg', $boards[0]['id'], 'pin description');
+$pinId = $bot->pins->create('http://exmaple.com/image.jpg', $boards[0]['id'], 'pin description');
 ```
     
 Repin other pin by its id.
 ```php
-$bot->repin($pinId, $boards[0]['id'], 'my repin');
+$bot->pins->repin($pinId, $boards[0]['id'], 'my repin');
 ``` 
 Delete pin by id.
 ```php
-$bot->deletePin($pinId);
+$bot->pins->delete($pinId);
 ```   
 Like/dislike pin by id.
 ```php
-$bot->likePin($pinId);
-$bot->unLikePin($pinId);
+$bot->pins->like($pinId);
+$bot->pins->unLike($pinId);
 ```
 Write a comment.
 ```php
-$bot->commentPin($pinId, 'your comment');
+$bot->pins->comment($pinId, 'your comment');
 ```
-Get all pins by username. Uses pinterest api pagination. Function returns pins batch every iteration.
-```php
-foreach($bot->getUserPins('username') as $pinsBatch)
-{
-	// ...
-}
-```    
+
 ## Pinners
 
 Get your account name
 ```php
-$bot->getAccountName(); 
+$bot->pinners->myAccountName(); 
 ```	
 Follow/unfollow user by ID
 ```php
-$bot->followUser($userId);
-$bot->unFollowUser($userId);
+$bot->pinners->follow($userId);
+$bot->pinners->unfollow($userId);
 ```	
 Get user info by username
 ```php
-$userData = $bot->getUserInfo($username);
+$userData = $bot->pinners->info($username);
 ```	
 Get user following. Uses pinterest api pagination.
 ```php
-foreach($bot->getFollowing('username') as $followingBatch)
+foreach($bot->pinners->following('username') as $followingBatch)
 {
 	// ...
 }
 ```
 Get user followers. Uses pinterest api pagination.
 ```php
-foreach($bot->getFollowers('username') as $followersBatch)
+foreach($bot->pinners->followers('username') as $followersBatch)
 {
 	// ...
 }
@@ -114,34 +106,33 @@ foreach($bot->getFollowers('username') as $followersBatch)
 ## Boards
 Follow/unfollow board by ID
 ```php
-$bot->followBoard($boardId);
-$bot->unFollowBoard($boardId);
+$bot->boards->follow($boardId);
+$bot->boards->unfollow($boardId);
 ```
 
 ## Interests
 Follow/unfollow interest by ID
 ```php
-$bot->followInterest($interestId);
-$bot->unFollowInterest($interestId);
+$bot->interests->follow($interestId);
+$bot->interests->unfollow($interestId);
 ```
 
 ## Search
 
 Search functions use pinterest pagination in fetching results and return generator.
 ```php
-foreach($bot->searchPins('query') as $pinsBatch)
+foreach($bot->pins->search('query') as $pinsBatch)
 {
 	// ...
 }
 
-foreach($bot->searchPinners('query') as $pinnersBatch)
+foreach($bot->pinners->search('query') as $pinnersBatch)
 {
 	// ...
 }
 
-foreach($bot->searchBoards('query') as $boardsBatch);
+foreach($bot->pinners->search('query') as $boardsBatch);
 {
 	// ...
 }
 ```
-Questions?  Email me:  seregazhuk88@gmail.com
