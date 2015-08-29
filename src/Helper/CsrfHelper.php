@@ -2,7 +2,6 @@
 
 namespace seregazhuk\PinterestBot\Helpers;
 
-
 class CsrfHelper
 {
     /**
