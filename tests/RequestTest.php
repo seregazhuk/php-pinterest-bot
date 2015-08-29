@@ -11,7 +11,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
     /**
      * @var Request;
      */
-    protected $Request;
+    protected $request;
 
 
     /**
@@ -27,8 +27,8 @@ class RequestTest extends PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->Request    = new Request(new Http());
-        $this->reflection = new \ReflectionClass($this->Request);
+        $this->request    = new Request(new Http());
+        $this->reflection = new \ReflectionClass($this->request);
     }
 
     public function getProperty($property)
@@ -36,7 +36,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
         $property = $this->reflection->getProperty($property);
         $property->setAccessible(true);
 
-        return $property->getValue($this->Request);
+        return $property->getValue($this->request);
     }
 
 
@@ -45,12 +45,12 @@ class RequestTest extends PHPUnit_Framework_TestCase
         $property = $this->reflection->getProperty($property);
         $property->setAccessible(true);
 
-        $property->setValue($this->Request, $value);
+        $property->setValue($this->request, $value);
     }
 
     protected function tearDown()
     {
-        $this->Request    = null;
+        $this->request = null;
         $this->mock       = null;
         $this->reflection = null;
     }
@@ -62,9 +62,9 @@ class RequestTest extends PHPUnit_Framework_TestCase
             'message'        => 'Not found',
         ];
 
-        $this->Request->checkErrorInResponse($response);
-        $this->assertEquals($response['api_error_code'], $this->Request->lastApiErrorCode);
-        $this->assertEquals($response['message'], $this->Request->lastApiErrorMsg);
+        $this->request->checkErrorInResponse($response);
+        $this->assertEquals($response['api_error_code'], $this->request->lastApiErrorCode);
+        $this->assertEquals($response['message'], $this->request->lastApiErrorMsg);
     }
 
     /**
@@ -72,17 +72,18 @@ class RequestTest extends PHPUnit_Framework_TestCase
      */
     public function testLogIn()
     {
-        $this->Request->setLoggedIn();
-        $this->assertTrue($this->Request->checkLoggedIn());
+        $this->request->setLoggedIn();
+        $this->assertTrue($this->request->checkLoggedIn());
         $token = $this->getProperty('csrfToken');
         $this->assertNotEquals(Request::DEFAULT_CSRFTOKEN, $token);
+        $this->assertTrue($this->request->isLoggedIn());
 
-        $this->Request->clearToken();
+        $this->request->clearToken();
         $token = $this->getProperty('csrfToken');
         $this->assertEquals(Request::DEFAULT_CSRFTOKEN, $token);
 
         $this->setProperty('loggedIn', false);
-        $this->Request->checkLoggedIn();
+        $this->request->checkLoggedIn();
     }
 
     public function testExec()
@@ -91,11 +92,11 @@ class RequestTest extends PHPUnit_Framework_TestCase
         $response = ['body' => 'text'];
         $httpMock->method('execute')->willReturn(json_encode($response));
         $this->setProperty('http', $httpMock);
-        $res = $this->Request->exec('http://example.com', 'a=b');
+        $res = $this->request->exec('http://example.com', 'a=b');
         $this->assertEquals($response, $res);
 
-        $this->Request->clearToken();
-        $res = $this->Request->exec('http://example.com', 'a=b');
+        $this->request->clearToken();
+        $res = $this->request->exec('http://example.com', 'a=b');
         $this->assertEquals($response, $res);
     }
 
@@ -128,7 +129,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
         $mock->method('execute')->willReturn(json_encode($response));
         $response['module']['tree']['data']['results'] = [];
         $this->setProperty('http', $mock);
-        $res = $this->Request->_search('cats', Request::SEARCH_PINS_SCOPE, []);
+        $res = $this->request->_search('cats', Request::SEARCH_PINS_SCOPE, []);
         $this->assertEquals($expected, $res);
     }
 
@@ -140,8 +141,8 @@ class RequestTest extends PHPUnit_Framework_TestCase
         $mock->expects($this->at(2))->method('execute')->willReturn(null);
 
         $this->setProperty('http', $mock);
-        $this->assertTrue($this->Request->followMethodCall(1, Request::BOARD_ENTITY_ID, 'ur'));
-        $this->assertFalse($this->Request->followMethodCall(1, Request::INTEREST_ENTITY_ID, 'ur'));
+        $this->assertTrue($this->request->followMethodCall(1, Request::BOARD_ENTITY_ID, 'ur'));
+        $this->assertFalse($this->request->followMethodCall(1, Request::INTEREST_ENTITY_ID, 'ur'));
 
     }
 }
