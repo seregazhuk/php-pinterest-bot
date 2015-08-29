@@ -161,6 +161,9 @@ class Pinners extends Provider
      */
     public function login($username, $password)
     {
+        if ($this->request->isLoggedIn()) {
+            return true;
+        }
         $post       = PinnerHelper::createLoginRequest($username, $password);
         $postString = UrlHelper::buildRequestString($post);
         $this->request->clearToken();

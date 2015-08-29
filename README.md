@@ -74,6 +74,11 @@ Write a comment.
 $bot->pins->comment($pinId, 'your comment');
 ```
 
+Delete a comment.
+```php
+$bot->pins->deleteComment($pinId, $commentId);
+```
+
 ## Pinners
 
 Get your account name

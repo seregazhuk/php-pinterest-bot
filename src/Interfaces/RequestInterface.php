@@ -61,4 +61,12 @@ interface RequestInterface
      * @param array $response
      */
     public function checkErrorInResponse($response);
+
+    /**
+     * Get log status
+     *
+     * @return bool
+     */
+    public function isLoggedIn();
+
 }

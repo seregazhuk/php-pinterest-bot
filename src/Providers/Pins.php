@@ -67,24 +67,39 @@ class Pins extends Provider
         return PinHelper::checkMethodCallResult($res);
     }
 
+    /**
+     * Writes comment for pin with current id
+     *
+     * @param integer $pinId
+     * @param integer $commentId
+     * @return bool
+     */
+    public function deleteComment($pinId, $commentId)
+    {
+        $this->request->checkLoggedIn();
+        $post       = PinHelper::createCommentDeleteRequest($pinId, $commentId);
+        $postString = UrlHelper::buildRequestString($post);
+        $res        = $this->request->exec(UrlHelper::RESOURCE_COMMENT_DELETE_PIN, $postString);
+
+        return PinHelper::checkMethodCallResult($res);
+    }
+
 
     /**
      * Create pin. Returns created pin ID
      *
      * @param string $imageUrl
-     * @param string $imagePreview
      * @param int    $boardId
      * @param string $description
      * @return bool|int
      */
-    public function create($imageUrl, $boardId, $description = "", $imagePreview = "")
+    public function create($imageUrl, $boardId, $description = "")
     {
         $this->request->checkLoggedIn();
-        $post       = PinHelper::createPinCreationRequest($imageUrl, $boardId, $description, $imagePreview);
+        $post = PinHelper::createPinCreationRequest($imageUrl, $boardId, $description);
         $postString = UrlHelper::buildRequestString($post);
         $res        = $this->request->exec(UrlHelper::RESOURCE_CREATE_PIN, $postString);
         $this->request->checkErrorInResponse($res);
-
         return PinHelper::parsePinCreateResponse($res);
     }
 

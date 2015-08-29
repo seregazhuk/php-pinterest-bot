@@ -32,12 +32,14 @@ class Http implements HttpInterface
 
     /**
      * Initializes curl resource
+
      *
-     * @access public
+*@access public
+     * @param string $url
      */
-    public function create()
+    public function init($url)
     {
-        $this->curl = curl_init();
+        $this->curl = curl_init($url);
     }
 
     /**

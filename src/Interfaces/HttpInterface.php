@@ -4,6 +4,15 @@ namespace seregazhuk\PinterestBot\Interfaces;
 
 interface HttpInterface
 {
+
+    /**
+     * Initializes curl resource
+     *
+     * @access public
+     * @param string $url
+     */
+    public function init($url);
+
     /**
      * Sets an option in the curl instance
      *

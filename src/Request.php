@@ -70,7 +70,11 @@ class Request implements RequestInterface
     public function __construct(HttpInterface $http)
     {
         $this->http      = $http;
-        $this->cookieJar = tempnam(sys_get_temp_dir(), self::COOKIE_NAME);
+        $this->cookieJar = self::COOKIE_NAME;
+
+        if (file_exists($this->cookieJar)) {
+            $this->setLoggedIn();
+        }
     }
 
 
@@ -169,13 +173,12 @@ class Request implements RequestInterface
     public function exec($resourceUrl, $postString = "")
     {
         $url     = UrlHelper::buildApiUrl($resourceUrl);
-        $options = $this->makeHttpOptions($url, $postString);
-        print_r($options);
-        $this->http->create();
+        $options = $this->makeHttpOptions($postString);
+        $this->http->init($url);
         $this->http->setOptions($options);
+
         $res = $this->http->execute();
         $this->http->close();
-
         return json_decode($res, true);
     }
 
@@ -183,17 +186,17 @@ class Request implements RequestInterface
     /**
      * Adds necessary curl options for query
      *
-     * @param string $resourceUrl URL
      * @param string $postString  POST query string
      * @return array
      */
-    protected function makeHttpOptions($resourceUrl, $postString = "")
+    protected function makeHttpOptions($postString = "")
     {
         $options = [
-            CURLOPT_URL            => $resourceUrl,
             CURLOPT_USERAGENT      => $this->useragent,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_ENCODING       => 'gzip,deflate',
         ];
 
         $headers   = $this->requestHeaders;
@@ -201,7 +204,10 @@ class Request implements RequestInterface
         if ($this->csrfToken == self::DEFAULT_CSRFTOKEN) {
             $options[CURLOPT_REFERER] = UrlHelper::LOGIN_REF_URL;
             $headers[]                = 'Cookie: csrftoken=' . self::DEFAULT_CSRFTOKEN . ';';
+        } else {
+            $options[CURLOPT_REFERER] = UrlHelper::URL_BASE;
         }
+
         $options[CURLOPT_HTTPHEADER] = $headers;
 
         if ( ! empty($postString)) {
@@ -209,11 +215,8 @@ class Request implements RequestInterface
             $options[CURLOPT_POSTFIELDS] = $postString;
         }
 
-        if ($this->csrfToken != self::DEFAULT_CSRFTOKEN) {
-            $options[CURLOPT_COOKIEFILE] = $this->cookieJar;
-        } else {
-            $options[CURLOPT_COOKIEJAR] = $this->cookieJar;
-        }
+        $options[CURLOPT_COOKIEFILE] = $this->cookieJar;
+        $options[CURLOPT_COOKIEJAR]  = $this->cookieJar;
 
         return $options;
     }
@@ -238,4 +241,13 @@ class Request implements RequestInterface
         $this->loggedIn  = true;
     }
 
+    /**
+     * Get log status
+     *
+     * @return bool
+     */
+    public function isLoggedIn()
+    {
+        return $this->loggedIn;
+    }
 }

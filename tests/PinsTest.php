@@ -37,9 +37,13 @@ class PinsTest extends ProviderTest
         $res['resource_response'] = [];
         $mock                     = $this->createRequestMock();
         $mock->expects($this->at(1))->method('exec')->willReturn($res);
+        $mock->expects($this->at(5))->method('exec')->willReturn($res);
         $this->setProperty('request', $mock);
         $this->assertTrue($this->provider->comment(1111, 'comment text'));
         $this->assertFalse($this->provider->comment(1111, 'comment text'));
+
+        $this->assertTrue($this->provider->deleteComment(1111, 1111));
+        $this->assertFalse($this->provider->deleteComment(1111, 1111));
     }
 
 

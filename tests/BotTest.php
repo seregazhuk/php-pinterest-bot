@@ -71,7 +71,7 @@ class BotTest extends PHPUnit_Framework_TestCase
      */
     public function testLogin()
     {
-        $mock = $this->getMock(Request::class, ['exec'], [new Http()]);
+        $mock = $this->getMock(Request::class, ['exec', 'setLoggedIn'], [new Http()]);
         $mock->expects($this->at(0))->method('exec')->willReturn(true);
         $this->setProperty('request', $mock);
         $this->assertTrue($this->bot->login());
