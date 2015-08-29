@@ -1,10 +1,6 @@
 <?php
 
-
 namespace seregazhuk\PinterestBot\Helpers;
-
-
-use seregazhuk\PinterestBot\Interfaces\ApiInterface;
 
 class PinnerHelper
 {

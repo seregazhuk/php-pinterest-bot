@@ -2,7 +2,6 @@
 
 namespace seregazhuk\PinterestBot\Helpers;
 
-
 class PaginationHelper
 {
     /**
@@ -21,7 +20,6 @@ class PaginationHelper
     {
         $batchesNum = 0;
         do {
-
             if ($batchesLimit && $batchesNum >= $batchesLimit) {
                 break;
             }
@@ -30,7 +28,6 @@ class PaginationHelper
             $res   = call_user_func_array([$obj, $function], $params);
 
             if (isset($res['data']) && ! empty($res['data'])) {
-
                 if (isset($res['data'][0]['type']) && $res['data'][0]['type'] == 'module') {
                     array_shift($res['data']);
                 }

@@ -2,7 +2,6 @@
 
 namespace seregazhuk\PinterestBot\Helpers;
 
-
 class PinHelper
 {
     /**
@@ -192,7 +191,7 @@ class PinHelper
 
             "options" => [
                 "field_set_key"               => "detailed",
-                "fetch_visual_search_objects" => true,
+                "fetch_visualsearchCall_objects" => true,
                 "id"                          => $pinId,
                 "allow_stale"                 => true,
             ],

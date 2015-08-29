@@ -15,7 +15,6 @@ class CsrfHelper
         }
 
         foreach (file($file) as $line) {
-
             $line = trim($line);
 
             if ($line == "" or substr($line, 0, 2) == "# ") {

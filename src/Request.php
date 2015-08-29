@@ -39,12 +39,11 @@ class Request implements RequestInterface
      */
     protected $http;
     protected $loggedIn;
-    public    $csrfToken = "";
+    protected $cookieJar;
 
+    public $csrfToken = "";
     public $lastApiErrorCode;
     public $lastApiErrorMsg;
-
-    protected $cookieJar;
 
 
     /**
@@ -153,7 +152,7 @@ class Request implements RequestInterface
      * @param array $bookmarks
      * @return array
      */
-    public function _search($query, $scope, $bookmarks = [])
+    public function searchCall($query, $scope, $bookmarks = [])
     {
         $url = UrlHelper::getSearchUrl(! empty($bookmarks));
         $get = SearchHelper::createSearchRequest($query, $scope, $bookmarks);
@@ -179,6 +178,7 @@ class Request implements RequestInterface
 
         $res = $this->http->execute();
         $this->http->close();
+
         return json_decode($res, true);
     }
 
@@ -186,7 +186,7 @@ class Request implements RequestInterface
     /**
      * Adds necessary curl options for query
      *
-     * @param string $postString  POST query string
+     * @param string $postString POST query string
      * @return array
      */
     protected function makeHttpOptions($postString = "")

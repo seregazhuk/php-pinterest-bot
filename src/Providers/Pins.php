@@ -168,7 +168,7 @@ class Pins extends Provider
     {
         return PaginationHelper::getPaginatedData(
             $this->request,
-            '_search',
+            'searchCall',
             [
                 'query' => $query,
                 'scope' => Request::SEARCH_PINS_SCOPE,

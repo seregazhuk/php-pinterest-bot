@@ -129,7 +129,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
         $mock->method('execute')->willReturn(json_encode($response));
         $response['module']['tree']['data']['results'] = [];
         $this->setProperty('http', $mock);
-        $res = $this->request->_search('cats', Request::SEARCH_PINS_SCOPE, []);
+        $res = $this->request->searchCall('cats', Request::SEARCH_PINS_SCOPE, []);
         $this->assertEquals($expected, $res);
     }
 

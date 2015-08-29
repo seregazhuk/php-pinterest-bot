@@ -45,7 +45,7 @@ interface RequestInterface
      * @param array $bookmarks
      * @return array
      */
-    public function _search($query, $scope, $bookmarks = []);
+    public function searchCall($query, $scope, $bookmarks = []);
 
     /**
      * Clear token information
@@ -68,5 +68,4 @@ interface RequestInterface
      * @return bool
      */
     public function isLoggedIn();
-
 }

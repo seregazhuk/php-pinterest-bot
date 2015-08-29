@@ -73,5 +73,4 @@ interface HttpInterface
      * @return string
      */
     public function execute();
-
 }

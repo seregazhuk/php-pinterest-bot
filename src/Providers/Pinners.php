@@ -159,7 +159,7 @@ class Pinners extends Provider
     {
         return PaginationHelper::getPaginatedData(
             $this->request,
-            '_search',
+            'searchCall',
             [
                 'query' => $query,
                 'scope' => Request::SEARCH_PEOPLE_SCOPE,
