@@ -79,10 +79,7 @@ class Pinners extends Provider
      */
     public function info($username)
     {
-        $res = $this->getUserData($username,
-            UrlHelper::RESOURCE_USER_INFO,
-            "/$username/"
-        );
+        $res = $this->getUserData($username, UrlHelper::RESOURCE_USER_INFO, "/$username/");
 
         return isset($res['data']) ? $res['data'] : null;
     }
@@ -96,7 +93,8 @@ class Pinners extends Provider
      */
     public function followers($username, $batchesLimit = 0)
     {
-        return PaginationHelper::getPaginatedData($this, 'getUserData',
+        return PaginationHelper::getPaginatedData(
+            $this, 'getUserData',
             [
                 'username'  => $username,
                 'url'       => UrlHelper::RESOURCE_USER_FOLLOWERS,
@@ -114,7 +112,8 @@ class Pinners extends Provider
      */
     public function following($username, $batchesLimit = 0)
     {
-        return PaginationHelper::getPaginatedData($this, 'getUserData',
+        return PaginationHelper::getPaginatedData(
+            $this, 'getUserData',
             [
                 'username'  => $username,
                 'url'       => UrlHelper::RESOURCE_USER_FOLLOWING,
@@ -132,7 +131,8 @@ class Pinners extends Provider
      */
     public function pins($username, $batchesLimit = 0)
     {
-        return PaginationHelper::getPaginatedData($this, 'getUserData',
+        return PaginationHelper::getPaginatedData(
+            $this, 'getUserData',
             ['username' => $username, 'url' => UrlHelper::RESOURCE_USER_PINS, 'sourceUrl' => "/$username/pins/"],
             $batchesLimit);
     }
@@ -147,7 +147,8 @@ class Pinners extends Provider
      */
     public function search($query, $batchesLimit = 0)
     {
-        return PaginationHelper::getPaginatedData($this->request, '_search',
+        return PaginationHelper::getPaginatedData(
+            $this->request, '_search',
             ['query' => $query, 'scope' => Request::SEARCH_PEOPLE_SCOPE],
             $batchesLimit);
     }
