@@ -49,6 +49,28 @@ class PinHelper
         ];
     }
 
+    /**
+     * Create Pinterest API request form commenting pin
+     *
+     * @param int $pinId
+     * @param int $commentId
+     * @return array
+     */
+    public static function createCommentDeleteRequest($pinId, $commentId)
+    {
+        $dataJson = [
+            "options" => [
+                "pin_id"     => $pinId,
+                "comment_id" => $commentId,
+            ],
+            "context" => [],
+        ];
+
+        return [
+            "source_url" => "/pin/{$pinId}/",
+            "data"       => json_encode($dataJson, JSON_FORCE_OBJECT),
+        ];
+    }
 
     /**
      * Checks result of PIN-methods
@@ -70,25 +92,24 @@ class PinHelper
      *
      * @param string $description
      * @param string $imageUrl
-     * @param string $imagePreview
      * @param int    $boardId
      * @return array
      */
-    public static function createPinCreationRequest($imageUrl, $boardId, $description = "", $imagePreview = "")
+    public static function createPinCreationRequest($imageUrl, $boardId, $description = "")
     {
         $dataJson = [
             "options" => [
                 "method"      => "scraped",
                 "description" => $description,
                 "link"        => $imageUrl,
-                "image_url"   => $imagePreview,
+                "image_url"   => $imageUrl,
                 "board_id"    => $boardId,
             ],
             "context" => new \stdClass(),
         ];
 
         return [
-            "source_url" => "/pin/find/?url=" . $imageUrl,
+            "source_url" => "/pin/create/bookmarklet/?url=" . urlencode($imageUrl),
             "data"       => json_encode($dataJson, JSON_FORCE_OBJECT),
         ];
     }
