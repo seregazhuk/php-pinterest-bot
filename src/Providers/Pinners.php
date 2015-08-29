@@ -101,7 +101,8 @@ class Pinners extends Provider
                 'url'       => UrlHelper::RESOURCE_USER_FOLLOWERS,
                 'sourceUrl' => "/$username/followers/",
             ],
-            $batchesLimit);
+            $batchesLimit
+        );
     }
 
     /**
@@ -121,7 +122,8 @@ class Pinners extends Provider
                 'url'       => UrlHelper::RESOURCE_USER_FOLLOWING,
                 'sourceUrl' => "/$username/following/",
             ],
-            $batchesLimit);
+            $batchesLimit
+        );
     }
 
     /**
@@ -141,7 +143,8 @@ class Pinners extends Provider
                 'url'       => UrlHelper::RESOURCE_USER_PINS,
                 'sourceUrl' => "/$username/pins/",
             ],
-            $batchesLimit);
+            $batchesLimit
+        );
     }
 
 
@@ -161,7 +164,8 @@ class Pinners extends Provider
                 'query' => $query,
                 'scope' => Request::SEARCH_PEOPLE_SCOPE,
             ],
-            $batchesLimit);
+            $batchesLimit
+        );
     }
 
     /**

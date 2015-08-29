@@ -166,9 +166,14 @@ class Pins extends Provider
      */
     public function search($query, $batchesLimit = 0)
     {
-        return PaginationHelper::getPaginatedData($this->request, '_search',
-            ['query' => $query, 'scope' => Request::SEARCH_PINS_SCOPE],
-            $batchesLimit);
+        return PaginationHelper::getPaginatedData(
+            $this->request,
+            '_search',
+            [
+                'query' => $query,
+                'scope' => Request::SEARCH_PINS_SCOPE,
+            ],
+            $batchesLimit
+        );
     }
-
 }

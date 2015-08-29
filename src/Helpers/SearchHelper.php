@@ -2,7 +2,6 @@
 
 namespace seregazhuk\PinterestBot\Helpers;
 
-
 class SearchHelper
 {
     /**
@@ -53,7 +52,8 @@ class SearchHelper
 
     protected static function createBookMarkedSearchRequest($requestData, $bookmarks)
     {
-        $dataJson["options"] = array_merge($requestData['options'],
+        $dataJson["options"] = array_merge(
+            $requestData['options'],
             [
                 "bookmarks" => $bookmarks,
                 "layout"    => null,
@@ -126,5 +126,4 @@ class SearchHelper
 
         return [];
     }
-
 }

@@ -17,8 +17,11 @@ class Interests extends Provider
     {
         $this->request->checkLoggedIn();
 
-        return $this->request->followMethodCall($interestId, Request::INTEREST_ENTITY_ID,
-            UrlHelper::RESOURCE_FOLLOW_INTEREST);
+        return $this->request->followMethodCall(
+            $interestId,
+            Request::INTEREST_ENTITY_ID,
+            UrlHelper::RESOURCE_FOLLOW_INTEREST
+        );
     }
 
     /**
@@ -31,7 +34,10 @@ class Interests extends Provider
     {
         $this->request->checkLoggedIn();
 
-        return $this->request->followMethodCall($interestId, Request::INTEREST_ENTITY_ID,
-            UrlHelper::RESOURCE_UNFOLLOW_INTEREST);
+        return $this->request->followMethodCall(
+            $interestId,
+            Request::INTEREST_ENTITY_ID,
+            UrlHelper::RESOURCE_UNFOLLOW_INTEREST
+        );
     }
 }
