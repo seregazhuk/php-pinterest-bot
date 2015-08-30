@@ -13,13 +13,10 @@ class PinHelper
      */
     public static function createCommentRequest($pinId, $text)
     {
-        $dataJson                    = self::createPinRequestData($pinId);
+        $dataJson = self::createPinRequest($pinId);
         $dataJson["options"]["text"] = $text;
 
-        return [
-            "source_url" => "/pin/{$pinId}/",
-            "data"       => json_encode($dataJson, JSON_FORCE_OBJECT),
-        ];
+        return self::createPinRequestData($dataJson);
     }
 
     /**
@@ -31,13 +28,10 @@ class PinHelper
      */
     public static function createCommentDeleteRequest($pinId, $commentId)
     {
-        $dataJson                          = self::createPinRequestData($pinId);
+        $dataJson = self::createPinRequest($pinId);
         $dataJson["options"]["comment_id"] = $commentId;
 
-        return [
-            "source_url" => "/pin/{$pinId}/",
-            "data"       => json_encode($dataJson, JSON_FORCE_OBJECT),
-        ];
+        return self::createPinRequestData($dataJson);
     }
 
     /**
@@ -76,10 +70,7 @@ class PinHelper
             "context" => new \stdClass(),
         ];
 
-        return [
-            "source_url" => "/pin/create/bookmarklet/?url=" . urlencode($imageUrl),
-            "data"       => json_encode($dataJson, JSON_FORCE_OBJECT),
-        ];
+        return self::createPinRequestData($dataJson, "/pin/create/bookmarklet/?url=" . urlencode($imageUrl));
     }
 
 
@@ -104,10 +95,7 @@ class PinHelper
             "context" => [],
         ];
 
-        return [
-            "source_url" => "/pin/{$repinId}/",
-            "data"       => json_encode($dataJson, JSON_FORCE_OBJECT),
-        ];
+        return self::createPinRequestData($dataJson);
     }
 
 
@@ -135,20 +123,17 @@ class PinHelper
     public static function createInfoRequest($pinId)
     {
         $dataJson = [
-
             "options" => [
                 "field_set_key" => "detailed",
                 "fetch_visualsearchCall_objects" => true,
                 "id"            => $pinId,
+                "pin_id" => $pinId,
                 "allow_stale"   => true,
             ],
             "context" => new \StdClass(),
         ];
 
-        return [
-            "source_url" => "/pin/$pinId/",
-            "data"       => json_encode($dataJson, JSON_FORCE_OBJECT),
-        ];
+        return self::createPinRequestData($dataJson);
     }
 
     /**
@@ -174,7 +159,7 @@ class PinHelper
      * @param $pinId
      * @return array
      */
-    public static function createPinRequestData($pinId)
+    public static function createPinRequest($pinId)
     {
         return [
             "options" => [
@@ -192,11 +177,25 @@ class PinHelper
      */
     public static function createSimplePinRequest($pinId)
     {
-        $dataJson = self::createPinRequestData($pinId);
+        $dataJson = self::createPinRequest($pinId);
+
+        return self::createPinRequestData($dataJson);
+    }
+
+    /**
+     * @param string|null $sourceUrl
+     * @param array       $data
+     * @return array
+     */
+    public static function createPinRequestData($data, $sourceUrl = null)
+    {
+        if ( ! $sourceUrl) {
+            $sourceUrl = "/pin/{$data["options"]["pin_id"]}/";
+        }
 
         return [
-            "source_url" => "/pin/{$pinId}/",
-            "data"       => json_encode($dataJson, JSON_FORCE_OBJECT),
+            "source_url" => $sourceUrl,
+            "data"       => json_encode($data, JSON_FORCE_OBJECT),
         ];
     }
 }
