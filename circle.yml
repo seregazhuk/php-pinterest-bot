@@ -1,0 +1,18 @@
+## Customize the test machine
+machine:
+
+  timezone:
+    Europe/Moscow
+  php:
+    version:
+      5.5
+
+  environment:
+    CIRCLE_ENV: test
+
+## Customize dependencies
+dependencies:
+  pre:
+    - composer self-update
+    - composer install --prefer-source --no-interaction --dev
+    - composer dump-autoload
