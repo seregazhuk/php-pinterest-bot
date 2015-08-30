@@ -152,7 +152,7 @@ class Pins extends Provider
     public function info($pinId)
     {
         $get = PinHelper::createInfoRequest($pinId);
-        $url = UrlHelper::RESOURCE_PIN_INFO . '?' . UrlHelper::buildRequestString($get);
+        $url = UrlHelper::RESOURCE_PIN_INFO.'?'.UrlHelper::buildRequestString($get);
         $res = $this->request->exec($url);
 
         return PinHelper::parsePinInfoResponse($res);

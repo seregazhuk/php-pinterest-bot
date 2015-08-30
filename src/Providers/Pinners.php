@@ -50,7 +50,7 @@ class Pinners extends Provider
     {
         $get       = PinnerHelper::createUserDataRequest($username, $sourceUrl, $bookmarks);
         $getString = UrlHelper::buildRequestString($get);
-        $res       = $this->request->exec($url . '?' . $getString, $username);
+        $res       = $this->request->exec($url.'?'.$getString, $username);
         $this->request->checkErrorInResponse($res);
 
         return PinnerHelper::checkUserDataResponse($res);
