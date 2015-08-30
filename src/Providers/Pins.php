@@ -144,7 +144,6 @@ class Pins extends Provider
 
     /**
      * Get information of pin by PinID
-
      *
 *@param $pinId
      * @return array|null
@@ -160,7 +159,6 @@ class Pins extends Provider
 
     /**
      * Search pins by search query
-
      *
 *@param string $query
      * @param int    $batchesLimit

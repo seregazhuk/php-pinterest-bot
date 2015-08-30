@@ -9,7 +9,6 @@ class PaginationHelper
      * default generator will return all pagination results.
      * To limit result batches, set $batchesLimit. Call function
      * of object to get data.
-
      *
 *@param mixed  $obj
      * @param string $function

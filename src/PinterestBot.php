@@ -10,7 +10,6 @@ use seregazhuk\PinterestBot\Providers\Interests;
 
 /**
  * Class PinterestBot
-
  *
 *@package Pinterest
  * @property string    $username
@@ -41,8 +40,7 @@ class PinterestBot
 
     /**
      * A array containing the cached providers
-
-*
+     *
 * @var array
      */
     private $providers = [];
