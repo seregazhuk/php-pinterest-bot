@@ -155,9 +155,9 @@ class Request implements RequestInterface
      */
     public function searchCall($query, $scope, $bookmarks = [])
     {
-        $url = UrlHelper::getSearchUrl( ! empty($bookmarks));
+        $url = UrlHelper::getSearchUrl(! empty($bookmarks));
         $get = SearchHelper::createSearchRequest($query, $scope, $bookmarks);
-        $url = $url.'?'.UrlHelper::buildRequestString($get);
+        $url = $url . '?' . UrlHelper::buildRequestString($get);
         $res = $this->exec($url);
 
         return SearchHelper::parseSearchResponse($res, ! empty($bookmarks));
@@ -165,9 +165,8 @@ class Request implements RequestInterface
 
     /**
      * Executes search to API with pagination.
-
      *
-*@param string $query
+     * @param string $query
      * @param int    $batchesLimit
      * @return \Iterator
      */
@@ -222,10 +221,10 @@ class Request implements RequestInterface
         ];
 
         $headers   = $this->requestHeaders;
-        $headers[] = 'X-CSRFToken: '.$this->csrfToken;
+        $headers[] = 'X-CSRFToken: ' . $this->csrfToken;
         if ($this->csrfToken == self::DEFAULT_CSRFTOKEN) {
             $options[CURLOPT_REFERER] = UrlHelper::LOGIN_REF_URL;
-            $headers[]                = 'Cookie: csrftoken='.self::DEFAULT_CSRFTOKEN.';';
+            $headers[] = 'Cookie: csrftoken=' . self::DEFAULT_CSRFTOKEN . ';';
         } else {
             $options[CURLOPT_REFERER] = UrlHelper::URL_BASE;
         }
