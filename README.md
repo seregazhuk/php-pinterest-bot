@@ -1,6 +1,7 @@
 # Pinterest Bot for PHP
 
 [![Build Status](https://travis-ci.org/seregazhuk/php-pinterest-bot.svg)](https://travis-ci.org/seregazhuk/php-pinterest-bot)
+[![Circle CI](https://circleci.com/gh/seregazhuk/php-pinterest-bot.svg?style=svg)](https://circleci.com/gh/seregazhuk/php-pinterest-bot)
 [![Code Climate](https://codeclimate.com/github/seregazhuk/php-pinterest-bot/badges/gpa.svg)](https://codeclimate.com/github/seregazhuk/php-pinterest-bot)
 [![Test Coverage](https://codeclimate.com/github/seregazhuk/php-pinterest-bot/badges/coverage.svg)](https://codeclimate.com/github/seregazhuk/php-pinterest-bot/coverage)
 
