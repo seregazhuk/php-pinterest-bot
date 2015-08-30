@@ -42,9 +42,11 @@ class SearchHelper
 
     protected static function createSimpleSearchRequest($requestData)
     {
-        $dataJson['module'] = [
+        $dataJson = [
+            'module' => [
             "name"    => "SearchPage",
             "options" => $requestData['options'],
+            ]
         ];
 
         return $dataJson;
@@ -52,14 +54,16 @@ class SearchHelper
 
     protected static function createBookMarkedSearchRequest($requestData, $bookmarks)
     {
-        $dataJson["options"] = array_merge(
-            $requestData['options'],
-            [
-                "bookmarks" => $bookmarks,
-                "layout"    => null,
-                "places"    => false,
-            ]
-        );
+        $dataJson = [
+            "options" => array_merge(
+                $requestData['options'],
+                [
+                    "bookmarks" => $bookmarks,
+                    "layout"    => null,
+                    "places"    => false,
+                ]
+            ),
+        ];
 
         return $dataJson;
     }

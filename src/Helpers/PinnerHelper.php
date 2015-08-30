@@ -44,12 +44,7 @@ class PinnerHelper
      */
     public static function createUserDataRequest($username, $sourceUrl, $bookmarks)
     {
-        $dataJson = [
-            "options" => [
-                "username" => $username,
-            ],
-            "context" => new \stdClass(),
-        ];
+        $dataJson = self::createPinnerRequestData($username);
 
         if ( ! empty($bookmarks)) {
             $dataJson["options"]["bookmarks"] = $bookmarks;
@@ -86,13 +81,8 @@ class PinnerHelper
      */
     public static function createLoginRequest($username, $password)
     {
-        $dataJson = [
-            "options" => [
-                "username_or_email" => $username,
-                "password"          => $password,
-            ],
-            "context" => [],
-        ];
+        $dataJson                        = self::createPinnerRequestData($username);
+        $dataJson["options"]["password"] = $password;
 
         return [
             "source_url" => "/login/",
@@ -113,5 +103,21 @@ class PinnerHelper
         } else {
             return true;
         }
+    }
+
+    /**
+     * Creates common Pinner request data by username
+     *
+     * @param $username
+     * @return array
+     */
+    protected static function createPinnerRequestData($username)
+    {
+        return [
+            "options" => [
+                "username_or_email" => $username,
+            ],
+            "context" => new \stdClass(),
+        ];
     }
 }

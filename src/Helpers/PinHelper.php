@@ -12,12 +12,7 @@ class PinHelper
      */
     public static function createLikeRequest($pinId)
     {
-        $dataJson = [
-            "options" => [
-                "pin_id" => $pinId,
-            ],
-            "context" => [],
-        ];
+        $dataJson = self::createPinRequestData($pinId);
 
         return [
             "source_url" => "/pin/{$pinId}/",
@@ -34,13 +29,8 @@ class PinHelper
      */
     public static function createCommentRequest($pinId, $text)
     {
-        $dataJson = [
-            "options" => [
-                "pin_id" => $pinId,
-                "text"   => $text,
-            ],
-            "context" => [],
-        ];
+        $dataJson                    = self::createPinRequestData($pinId);
+        $dataJson["options"]["text"] = $text;
 
         return [
             "source_url" => "/pin/{$pinId}/",
@@ -57,13 +47,8 @@ class PinHelper
      */
     public static function createCommentDeleteRequest($pinId, $commentId)
     {
-        $dataJson = [
-            "options" => [
-                "pin_id"     => $pinId,
-                "comment_id" => $commentId,
-            ],
-            "context" => [],
-        ];
+        $dataJson                          = self::createPinRequestData($pinId);
+        $dataJson["options"]["comment_id"] = $commentId;
 
         return [
             "source_url" => "/pin/{$pinId}/",
@@ -165,13 +150,7 @@ class PinHelper
      */
     public static function createDeleteRequest($pinId)
     {
-
-        $dataJson = [
-            "options" => [
-                "id" => $pinId,
-            ],
-            "context" => new \stdClass(),
-        ];
+        $dataJson = self::createPinRequestData($pinId);
 
         return [
             "source_url" => "/pin/{$pinId}/",
@@ -212,12 +191,28 @@ class PinHelper
      */
     public static function parsePinInfoResponse($res)
     {
-        if ($res) {
+        if ( ! empty($res)) {
             if (isset($res['resource_response']['data'])) {
                 return $res['resource_response']['data'];
             }
         }
 
         return null;
+    }
+
+    /**
+     * Creates common pin request data by PinId
+     *
+     * @param $pinId
+     * @return array
+     */
+    protected static function createPinRequestData($pinId)
+    {
+        return [
+            "options" => [
+                "pin_id" => $pinId,
+            ],
+            "context" => [],
+        ];
     }
 }

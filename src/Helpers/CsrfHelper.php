@@ -17,19 +17,18 @@ class CsrfHelper
         foreach (file($file) as $line) {
             $line = trim($line);
 
-            if ($line == "" or substr($line, 0, 2) == "# ") {
+            if ($line == "" || substr($line, 0, 2) == "# ") {
                 continue;
             }
 
-            list($domain, $tailmatch, $path, $secure, $expires, $name, $value) = explode("\t", $line);
+            $data = explode("\t", $line);
 
-            if ($name == "csrftoken") {
-                return $value;
+            if ($data[6] == "csrftoken") {
+                return $data[7];
             }
 
         }
 
         return null;
-
     }
 }

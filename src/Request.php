@@ -164,10 +164,11 @@ class Request implements RequestInterface
 
     /**
      * Executes request to Pinterest API
+
      *
-     * @param string $resourceUrl
+*@param string $resourceUrl
      * @param string $postString
-     * @return string
+     * @return array
      */
     public function exec($resourceUrl, $postString = "")
     {

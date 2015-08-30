@@ -80,7 +80,7 @@ class Http implements HttpInterface
      */
     public function hasErrors()
     {
-        return curl_errno($this->curl);
+        return curl_errno($this->curl) ? true : false;
     }
 
     /**
