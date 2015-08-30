@@ -178,7 +178,6 @@ class PinHelper
     public static function createSimplePinRequest($pinId)
     {
         $dataJson = self::createPinRequest($pinId);
-
         return self::createPinRequestData($dataJson);
     }
 
@@ -189,7 +188,7 @@ class PinHelper
      */
     public static function createPinRequestData($data, $sourceUrl = null)
     {
-        if ( ! $sourceUrl) {
+        if ($sourceUrl === null) {
             $sourceUrl = "/pin/{$data["options"]["pin_id"]}/";
         }
 
