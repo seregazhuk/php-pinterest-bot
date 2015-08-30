@@ -61,7 +61,7 @@ class Pinners extends Provider
      * @param  string $resourceUrl
      * @param  string $sourceUrl
      * @param int     $batchesLimit
-     * @return \Generator
+     * @return \Iterator
      */
     public function getPaginatedUserData($username, $resourceUrl, $sourceUrl, $batchesLimit = 0)
     {
@@ -107,10 +107,11 @@ class Pinners extends Provider
 
     /**
      * Get pinner followers
+
      *
-     * @param string $username
+*@param string $username
      * @param int    $batchesLimit
-     * @return \Generator
+     * @return \Iterator
      */
     public function followers($username, $batchesLimit = 0)
     {
@@ -124,10 +125,11 @@ class Pinners extends Provider
 
     /**
      * Get pinner following other pinners
+
      *
-     * @param string $username
+*@param string $username
      * @param int    $batchesLimit
-     * @return \Generator
+     * @return \Iterator
      */
     public function following($username, $batchesLimit = 0)
     {
@@ -141,10 +143,11 @@ class Pinners extends Provider
 
     /**
      * Get pinner pins
+
      *
-     * @param string $username
+*@param string $username
      * @param int    $batchesLimit
-     * @return \Generator
+     * @return \Iterator
      */
     public function pins($username, $batchesLimit = 0)
     {
@@ -159,10 +162,11 @@ class Pinners extends Provider
 
     /**
      * Search pinners by search query
+
      *
-     * @param string $query
+*@param string $query
      * @param int    $batchesLimit
-     * @return \Generator
+     * @return \Iterator
      */
     public function search($query, $batchesLimit = 0)
     {

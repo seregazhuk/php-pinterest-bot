@@ -29,10 +29,11 @@ class Boards extends Provider
 
     /**
      * Search boards by search query
+
      *
-     * @param string $query
+*@param string $query
      * @param int    $batchesLimit
-     * @return \Generator
+     * @return \Iterator
      */
     public function search($query, $batchesLimit = 0)
     {

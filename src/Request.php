@@ -165,10 +165,11 @@ class Request implements RequestInterface
 
     /**
      * Executes search to API with pagination.
+
      *
-     * @param string $query
+*@param string $query
      * @param int    $batchesLimit
-     * @return \Generator
+     * @return \Iterator
      */
     public function searchWithPagination($query, $scope, $batchesLimit)
     {
