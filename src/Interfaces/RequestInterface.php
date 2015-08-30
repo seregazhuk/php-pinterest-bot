@@ -29,9 +29,8 @@ interface RequestInterface
 
     /**
      * Executes request to Pinterest API
-
      *
-*@param string $resourceUrl
+     * @param string $resourceUrl
      * @param string $postString
      * @return array
      */
@@ -69,4 +68,13 @@ interface RequestInterface
      * @return bool
      */
     public function isLoggedIn();
+
+    /**
+     * Executes search to API with pagination.
+     *
+     * @param string $query
+     * @param int    $batchesLimit
+     * @return \Generator
+     */
+    public function searchWithPagination($query, $scope, $batchesLimit);
 }

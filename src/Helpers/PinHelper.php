@@ -5,22 +5,6 @@ namespace seregazhuk\PinterestBot\Helpers;
 class PinHelper
 {
     /**
-     * Creates Pinterest API request for like/unlike pin
-     *
-     * @param int $pinId
-     * @return array
-     */
-    public static function createLikeRequest($pinId)
-    {
-        $dataJson = self::createPinRequestData($pinId);
-
-        return [
-            "source_url" => "/pin/{$pinId}/",
-            "data"       => json_encode($dataJson, JSON_FORCE_OBJECT),
-        ];
-    }
-
-    /**
      * Create Pinterest API request form commenting pin
      *
      * @param int    $pinId
@@ -143,22 +127,6 @@ class PinHelper
     }
 
     /**
-     * Creates Pinterest API request to delete pin by its ID
-     *
-     * @param int $pinId
-     * @return array
-     */
-    public static function createDeleteRequest($pinId)
-    {
-        $dataJson = self::createPinRequestData($pinId);
-
-        return [
-            "source_url" => "/pin/{$pinId}/",
-            "data"       => json_encode($dataJson, JSON_FORCE_OBJECT),
-        ];
-    }
-
-    /**
      * Creates Pinterest API request to get Pin info
      *
      * @param int $pinId
@@ -169,10 +137,10 @@ class PinHelper
         $dataJson = [
 
             "options" => [
-                "field_set_key"               => "detailed",
+                "field_set_key" => "detailed",
                 "fetch_visualsearchCall_objects" => true,
-                "id"                          => $pinId,
-                "allow_stale"                 => true,
+                "id"            => $pinId,
+                "allow_stale"   => true,
             ],
             "context" => new \StdClass(),
         ];
@@ -206,13 +174,29 @@ class PinHelper
      * @param $pinId
      * @return array
      */
-    protected static function createPinRequestData($pinId)
+    public static function createPinRequestData($pinId)
     {
         return [
             "options" => [
                 "pin_id" => $pinId,
             ],
             "context" => [],
+        ];
+    }
+
+    /**
+     * Creates simple Pin request by PinId (used by delete and like requests)
+     *
+     * @param $pinId
+     * @return array
+     */
+    public static function createSimplePinRequest($pinId)
+    {
+        $dataJson = self::createPinRequestData($pinId);
+
+        return [
+            "source_url" => "/pin/{$pinId}/",
+            "data"       => json_encode($dataJson, JSON_FORCE_OBJECT),
         ];
     }
 }

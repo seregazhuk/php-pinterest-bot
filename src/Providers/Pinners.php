@@ -157,15 +157,7 @@ class Pinners extends Provider
      */
     public function search($query, $batchesLimit = 0)
     {
-        return PaginationHelper::getPaginatedData(
-            $this->request,
-            'searchCall',
-            [
-                'query' => $query,
-                'scope' => Request::SEARCH_PEOPLE_SCOPE,
-            ],
-            $batchesLimit
-        );
+        return $this->request->searchWithPagination($query, Request::SEARCH_PEOPLE_SCOPE, $batchesLimit);
     }
 
     /**

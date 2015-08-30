@@ -7,6 +7,7 @@ use seregazhuk\PinterestBot\Helpers\UrlHelper;
 use seregazhuk\PinterestBot\Helpers\SearchHelper;
 use seregazhuk\PinterestBot\Interfaces\RequestInterface;
 use seregazhuk\PinterestBot\Helpers\CsrfHelper;
+use seregazhuk\PinterestBot\Helpers\PaginationHelper;
 
 /**
  * Class Request
@@ -147,9 +148,9 @@ class Request implements RequestInterface
     /**
      * Executes search to API. Query - search string.
      *
-     * @param       $query
-     * @param       $scope
-     * @param array $bookmarks
+     * @param string $query
+     * @param string $scope
+     * @param array  $bookmarks
      * @return array
      */
     public function searchCall($query, $scope, $bookmarks = [])
@@ -163,10 +164,29 @@ class Request implements RequestInterface
     }
 
     /**
-     * Executes request to Pinterest API
-
+     * Executes search to API with pagination.
      *
-*@param string $resourceUrl
+     * @param string $query
+     * @param int    $batchesLimit
+     * @return \Generator
+     */
+    public function searchWithPagination($query, $scope, $batchesLimit)
+    {
+        return PaginationHelper::getPaginatedData(
+            $this,
+            'searchCall',
+            [
+                'query' => $query,
+                'scope' => $scope,
+            ],
+            $batchesLimit
+        );
+    }
+
+    /**
+     * Executes request to Pinterest API
+     *
+     * @param string $resourceUrl
      * @param string $postString
      * @return array
      */

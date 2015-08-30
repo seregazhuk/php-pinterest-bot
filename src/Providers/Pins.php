@@ -43,7 +43,7 @@ class Pins extends Provider
     protected function likePinMethodCall($pinId, $url)
     {
         $this->request->checkLoggedIn();
-        $post       = PinHelper::createLikeRequest($pinId);
+        $post = PinHelper::createSimplePinRequest($pinId);
         $postString = URlHelper::buildRequestString($post);
         $res        = $this->request->exec($url, $postString);
 
@@ -134,7 +134,7 @@ class Pins extends Provider
     {
         $this->request->checkLoggedIn();
 
-        $post       = PinHelper::createDeleteRequest($pinId);
+        $post = PinHelper::createSimplePinRequest($pinId);
         $postString = UrlHelper::buildRequestString($post);
         $res        = $this->request->exec(UrlHelper::RESOURCE_DELETE_PIN, $postString);
         $this->request->checkErrorInResponse($res);
@@ -144,9 +144,10 @@ class Pins extends Provider
 
     /**
      * Get information of pin by PinID
+
      *
-     * @param $pinId
-     * @return array|null;
+*@param $pinId
+     * @return array|null
      */
     public function info($pinId)
     {
@@ -166,14 +167,6 @@ class Pins extends Provider
      */
     public function search($query, $batchesLimit = 0)
     {
-        return PaginationHelper::getPaginatedData(
-            $this->request,
-            'searchCall',
-            [
-                'query' => $query,
-                'scope' => Request::SEARCH_PINS_SCOPE,
-            ],
-            $batchesLimit
-        );
+        return $this->request->searchWithPagination($query, Request::SEARCH_PINS_SCOPE, $batchesLimit);
     }
 }

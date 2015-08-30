@@ -36,10 +36,7 @@ class Boards extends Provider
      */
     public function search($query, $batchesLimit = 0)
     {
-        return PaginationHelper::getPaginatedData(
-            $this->request, 'searchCall',
-            ['query' => $query, 'scope' => Request::SEARCH_BOARDS_SCOPES],
-            $batchesLimit);
+        return $this->request->searchWithPagination($query, Request::SEARCH_BOARDS_SCOPES, $batchesLimit);
     }
 
 

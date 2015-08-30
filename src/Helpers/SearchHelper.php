@@ -72,7 +72,7 @@ class SearchHelper
      * Parses Pinterest search API response for data and bookmarks
      * for next pagination page
      *
-     * @param string $res
+     * @param array $res
      * @param bool   $bookmarksUsed
      * @return array|null
      */
