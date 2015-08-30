@@ -3,6 +3,7 @@
 [![Build Status](https://travis-ci.org/seregazhuk/php-pinterest-bot.svg)](https://travis-ci.org/seregazhuk/php-pinterest-bot)
 [![Circle CI](https://circleci.com/gh/seregazhuk/php-pinterest-bot.svg?style=shield)](https://circleci.com/gh/seregazhuk/php-pinterest-bot)
 [![Code Climate](https://codeclimate.com/github/seregazhuk/php-pinterest-bot/badges/gpa.svg)](https://codeclimate.com/github/seregazhuk/php-pinterest-bot)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/seregazhuk/php-pinterest-bot/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/seregazhuk/php-pinterest-bot/?branch=master)
 [![Test Coverage](https://codeclimate.com/github/seregazhuk/php-pinterest-bot/badges/coverage.svg)](https://codeclimate.com/github/seregazhuk/php-pinterest-bot/coverage)
 
 This PHP class will help you to work with your Pinterest account. You don't
