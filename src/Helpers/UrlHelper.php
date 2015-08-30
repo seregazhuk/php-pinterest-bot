@@ -51,7 +51,7 @@ class UrlHelper
      */
     public static function buildApiUrl($resourceUrl)
     {
-        return self::URL_BASE . $resourceUrl;
+        return self::URL_BASE.$resourceUrl;
     }
 
     /**

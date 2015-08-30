@@ -81,7 +81,7 @@ class PinterestBot
     public function __get($provider)
     {
         $provider = strtolower($provider);
-        $class    = self::PROVIDERS_NAMESPACE . ucfirst($provider);
+        $class    = self::PROVIDERS_NAMESPACE.ucfirst($provider);
         // Check if an instance has already been initiated
         if ( ! isset($this->providers[$provider])) {
             // Check endpoint existence
