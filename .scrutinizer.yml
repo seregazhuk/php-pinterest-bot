@@ -2,9 +2,6 @@ build:
     environment:
         php:
             version: 5.5.0
-             ini:
-                'date.timezone': 'Europe/Moscow'
-
 checks:
     php: true
 
