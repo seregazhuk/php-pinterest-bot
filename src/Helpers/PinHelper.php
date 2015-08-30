@@ -70,7 +70,7 @@ class PinHelper
             "context" => new \stdClass(),
         ];
 
-        return self::createPinRequestData($dataJson, "/pin/create/bookmarklet/?url=" . urlencode($imageUrl));
+        return self::createPinRequestData($dataJson, "/pin/create/bookmarklet/?url=".urlencode($imageUrl));
     }
 
 
