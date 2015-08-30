@@ -29,7 +29,6 @@ class Boards extends Provider
 
     /**
      * Search boards by search query
-
      *
 *@param string $query
      * @param int    $batchesLimit
