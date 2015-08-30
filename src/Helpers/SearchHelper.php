@@ -22,7 +22,7 @@ class SearchHelper
             "show_scope_selector" => true,
             "query"               => $query,
         ];
-        $dataJson   = [
+        $dataJson = [
             "options" => $options,
             "context" => new \stdClass(),
         ];
@@ -34,7 +34,7 @@ class SearchHelper
         }
 
         return [
-            "source_url"  => "/search/$scope/?q=" . $query,
+            "source_url"  => "/search/$scope/?q=".$query,
             "data"        => json_encode($dataJson),
             "module_path" => urlencode($modulePath),
         ];

@@ -21,7 +21,7 @@ class Boards extends Provider
 
         $get       = BoardHelper::createBoardsInfoRequest();
         $getString = UrlHelper::buildRequestString($get);
-        $res       = $this->request->exec(UrlHelper::RESOURCE_GET_BOARDS . "?{$getString}");
+        $res       = $this->request->exec(UrlHelper::RESOURCE_GET_BOARDS."?{$getString}");
 
         return BoardHelper::parseBoardsInfoResponse($res);
     }
