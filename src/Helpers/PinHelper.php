@@ -192,6 +192,6 @@ class PinHelper extends RequestHelper
             $sourceUrl = "/pin/{$data["options"]["pin_id"]}/";
         }
 
-        return parent::createRequestData($data, $sourceUrl);
+        return self::createRequestData($data, $sourceUrl);
     }
 }

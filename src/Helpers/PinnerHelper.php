@@ -50,7 +50,7 @@ class PinnerHelper extends RequestHelper
             $dataJson["options"]["bookmarks"] = $bookmarks;
         }
 
-        return parent::createRequestData($dataJson, $sourceUrl);
+        return self::createRequestData($dataJson, $sourceUrl);
 
     }
 
@@ -81,7 +81,7 @@ class PinnerHelper extends RequestHelper
         $dataJson                        = self::createPinnerRequestData($username);
         $dataJson["options"]["password"] = $password;
 
-        return parent::createRequestData($dataJson, "/login/");
+        return self::createRequestData($dataJson, "/login/");
     }
 
     /**
