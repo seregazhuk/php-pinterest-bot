@@ -102,7 +102,7 @@ class PinnerHelper extends RequestHelper
     /**
      * Creates common Pinner request data by username
      *
-     * @param $username
+     * @param string $username
      * @return array
      */
     protected static function createPinnerRequestData($username)
