@@ -1,6 +1,6 @@
 <?php
 
-namespace Pinterest\Helpers;
+namespace seregazhuk\PinterestBot\Helpers;
 
 class RequestHelper
 {

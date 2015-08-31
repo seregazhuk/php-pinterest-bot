@@ -5,7 +5,6 @@ namespace seregazhuk\PinterestBot\Providers;
 use seregazhuk\PinterestBot\Request;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
 use seregazhuk\PinterestBot\Helpers\PinHelper;
-use seregazhuk\PinterestBot\Helpers\PaginationHelper;
 
 class Pins extends Provider
 {

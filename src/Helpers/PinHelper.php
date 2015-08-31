@@ -2,8 +2,6 @@
 
 namespace seregazhuk\PinterestBot\Helpers;
 
-use Pinterest\Helpers\RequestHelper;
-
 class PinHelper extends RequestHelper
 {
     /**
