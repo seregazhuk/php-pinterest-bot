@@ -2,7 +2,9 @@
 
 namespace seregazhuk\PinterestBot\Helpers;
 
-class PinnerHelper
+use Pinterest\Helpers\RequestHelper;
+
+class PinnerHelper extends RequestHelper
 {
     /**
      * Checks Pinterest API pinners response, and parses data
@@ -50,10 +52,7 @@ class PinnerHelper
             $dataJson["options"]["bookmarks"] = $bookmarks;
         }
 
-        return [
-            "source_url" => $sourceUrl,
-            "data"       => json_encode($dataJson, true),
-        ];
+        return parent::createRequestData($dataJson, $sourceUrl);
 
     }
 
@@ -84,10 +83,7 @@ class PinnerHelper
         $dataJson                        = self::createPinnerRequestData($username);
         $dataJson["options"]["password"] = $password;
 
-        return [
-            "source_url" => "/login/",
-            "data"       => json_encode($dataJson, JSON_FORCE_OBJECT),
-        ];
+        return parent::createRequestData($dataJson, "/login/");
     }
 
     /**

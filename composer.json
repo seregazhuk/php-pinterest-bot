@@ -27,7 +27,6 @@
 	},
 	"require-dev": {
 		"phpunit/phpunit": "*",
-		"mikey179/vfsStream": "*",
 		"codeclimate/php-test-reporter": "dev-master"
 	},
 	"authors": [

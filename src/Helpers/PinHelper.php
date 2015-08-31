@@ -2,7 +2,9 @@
 
 namespace seregazhuk\PinterestBot\Helpers;
 
-class PinHelper
+use Pinterest\Helpers\RequestHelper;
+
+class PinHelper extends RequestHelper
 {
     /**
      * Create Pinterest API request form commenting pin
@@ -192,9 +194,6 @@ class PinHelper
             $sourceUrl = "/pin/{$data["options"]["pin_id"]}/";
         }
 
-        return [
-            "source_url" => $sourceUrl,
-            "data"       => json_encode($data, JSON_FORCE_OBJECT),
-        ];
+        return parent::createRequestData($data, $sourceUrl);
     }
 }
