@@ -191,7 +191,7 @@ class PinHelper extends RequestHelper
     {
         if ($sourceUrl === null) {
             reset($data);
-            $sourceUrl = "/pin/" . end($data["options"]) . "/";
+            $sourceUrl = "/pin/".end($data["options"])."/";
         }
 
         return self::createRequestData($data, $sourceUrl);
