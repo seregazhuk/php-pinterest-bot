@@ -13,7 +13,7 @@ class PinHelper extends RequestHelper
      */
     public static function createCommentRequest($pinId, $text)
     {
-        $dataJson = self::createPinRequest($pinId);
+        $dataJson = self::createPinRequest($pinId, 'pin_id');
         $dataJson["options"]["text"] = $text;
 
         return self::createPinRequestData($dataJson);
@@ -28,7 +28,7 @@ class PinHelper extends RequestHelper
      */
     public static function createCommentDeleteRequest($pinId, $commentId)
     {
-        $dataJson = self::createPinRequest($pinId);
+        $dataJson = self::createPinRequest($pinId, 'pin_id');
         $dataJson["options"]["comment_id"] = $commentId;
 
         return self::createPinRequestData($dataJson);
@@ -156,14 +156,15 @@ class PinHelper extends RequestHelper
     /**
      * Creates common pin request data by PinId
      *
-     * @param $pinId
+     * @param int    $pinId
+     * @param string $template
      * @return array
      */
-    public static function createPinRequest($pinId)
+    public static function createPinRequest($pinId, $template = 'id')
     {
         return [
             "options" => [
-                "pin_id" => $pinId,
+                "$template" => $pinId,
             ],
             "context" => [],
         ];
@@ -189,7 +190,8 @@ class PinHelper extends RequestHelper
     public static function createPinRequestData($data, $sourceUrl = null)
     {
         if ($sourceUrl === null) {
-            $sourceUrl = "/pin/{$data["options"]["pin_id"]}/";
+            reset($data);
+            $sourceUrl = "/pin/" . end($data["options"]) . "/";
         }
 
         return self::createRequestData($data, $sourceUrl);

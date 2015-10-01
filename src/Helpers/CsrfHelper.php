@@ -23,12 +23,12 @@ class CsrfHelper
 
             $data = explode("\t", $line);
 
-            if ($data[6] == "csrftoken") {
-                return $data[7];
+            if ($data[5] == "csrftoken") {
+
+                return $data[6];
             }
 
         }
-
         return null;
     }
 }

@@ -96,9 +96,12 @@ class Pins extends Provider
     {
         $this->request->checkLoggedIn();
         $post = PinHelper::createPinCreationRequest($imageUrl, $boardId, $description);
+
         $postString = UrlHelper::buildRequestString($post);
-        $res        = $this->request->exec(UrlHelper::RESOURCE_CREATE_PIN, $postString);
+
+        $res = $this->request->exec(UrlHelper::RESOURCE_CREATE_PIN, $postString);
         $this->request->checkErrorInResponse($res);
+
         return PinHelper::parsePinCreateResponse($res);
     }
 
@@ -144,13 +147,13 @@ class Pins extends Provider
     /**
      * Get information of pin by PinID
      *
-*@param $pinId
+     * @param $pinId
      * @return array|null
      */
     public function info($pinId)
     {
         $get = PinHelper::createInfoRequest($pinId);
-        $url = UrlHelper::RESOURCE_PIN_INFO.'?'.UrlHelper::buildRequestString($get);
+        $url = UrlHelper::RESOURCE_PIN_INFO . '?' . UrlHelper::buildRequestString($get);
         $res = $this->request->exec($url);
 
         return PinHelper::parsePinInfoResponse($res);
@@ -159,7 +162,7 @@ class Pins extends Provider
     /**
      * Search pins by search query
      *
-*@param string $query
+     * @param string $query
      * @param int    $batchesLimit
      * @return \Iterator
      */
