@@ -72,7 +72,7 @@ interface RequestInterface
     /**
      * Executes search to API with pagination.
      *
-*@param string $query
+     * @param string $query
      * @param int    $batchesLimit
      * @return \Iterator
      */

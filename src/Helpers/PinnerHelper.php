@@ -2,6 +2,8 @@
 
 namespace seregazhuk\PinterestBot\Helpers;
 
+use seregazhuk\PinterestBot\Exceptions\AuthException;
+
 class PinnerHelper extends RequestHelper
 {
     /**
@@ -86,14 +88,16 @@ class PinnerHelper extends RequestHelper
 
     /**
      * Parses Pintrest Api response after login
-     *
-     * @param              $res
+
+*
+*@param array $res
      * @return bool
+     * @throws AuthException
      */
     public static function parseLoginResponse($res)
     {
-        if ($res === null) {
-            return false;
+        if (isset($res['resource_response']['error'])) {
+            throw new AuthException($res['resource_response']['error']['message']);
         } else {
             return true;
         }

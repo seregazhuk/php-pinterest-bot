@@ -4,8 +4,13 @@ namespace seregazhuk\PinterestBot\Helpers;
 
 class CsrfHelper
 {
+    const TOKEN_NAME = 'csrftoken';
+
     /**
      * Get a CSRF token from the given cookie file
+     *
+     * @param string $file
+     * @return string
      */
     public static function getCsrfToken($file)
     {
@@ -23,8 +28,7 @@ class CsrfHelper
 
             $data = explode("\t", $line);
 
-            if ($data[5] == "csrftoken") {
-
+            if ($data[5] == self::TOKEN_NAME) {
                 return $data[6];
             }
 
