@@ -88,8 +88,7 @@ class PinnerHelper extends RequestHelper
 
     /**
      * Parses Pintrest Api response after login
-
-*
+     *
 *@param array $res
      * @return bool
      * @throws AuthException
