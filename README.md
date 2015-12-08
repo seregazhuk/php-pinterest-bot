@@ -35,7 +35,6 @@ php composer.phar require "seregazhuk/pinterest-bot:*"
 ```php 
 use seregazhuk\PinterestBot\PinterestBot;
 
-// pass useragent string to request object
 $bot = new PinterestBot('mypinterestlogin', 'mypinterestpassword');
 $bot->login();
 ```
