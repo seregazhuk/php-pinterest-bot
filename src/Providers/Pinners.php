@@ -48,9 +48,9 @@ class Pinners extends Provider
      */
     public function getUserData($username, $url, $sourceUrl, $bookmarks = [])
     {
-        $get       = PinnerHelper::createUserDataRequest($username, $sourceUrl, $bookmarks);
+        $get = PinnerHelper::createUserDataRequest($username, $sourceUrl, $bookmarks);
         $getString = UrlHelper::buildRequestString($get);
-        $res       = $this->request->exec($url.'?'.$getString, $username);
+        $res = $this->request->exec($url . '?' . $getString, $username);
         $this->request->checkErrorInResponse($res);
 
         return PinnerHelper::checkUserDataResponse($res);
@@ -107,9 +107,8 @@ class Pinners extends Provider
 
     /**
      * Get pinner followers
-
      *
-*@param string $username
+     * @param string $username
      * @param int    $batchesLimit
      * @return \Iterator
      */
@@ -125,9 +124,8 @@ class Pinners extends Provider
 
     /**
      * Get pinner following other pinners
-
      *
-*@param string $username
+     * @param string $username
      * @param int    $batchesLimit
      * @return \Iterator
      */
@@ -143,9 +141,8 @@ class Pinners extends Provider
 
     /**
      * Get pinner pins
-
      *
-*@param string $username
+     * @param string $username
      * @param int    $batchesLimit
      * @return \Iterator
      */
@@ -162,9 +159,8 @@ class Pinners extends Provider
 
     /**
      * Search pinners by search query
-
      *
-*@param string $query
+     * @param string $query
      * @param int    $batchesLimit
      * @return \Iterator
      */
@@ -185,7 +181,7 @@ class Pinners extends Provider
         if ($this->request->isLoggedIn()) {
             return true;
         }
-        $post       = PinnerHelper::createLoginRequest($username, $password);
+        $post = PinnerHelper::createLoginRequest($username, $password);
         $postString = UrlHelper::buildRequestString($post);
         $this->request->clearToken();
         $res = PinnerHelper::parseLoginResponse($this->request->exec(UrlHelper::RESOURCE_LOGIN, $postString));

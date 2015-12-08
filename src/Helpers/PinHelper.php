@@ -70,7 +70,7 @@ class PinHelper extends RequestHelper
             "context" => new \stdClass(),
         ];
 
-        return self::createPinRequestData($dataJson, "/pin/create/bookmarklet/?url=".urlencode($imageUrl));
+        return self::createPinRequestData($dataJson, "/pin/create/bookmarklet/?url=" . urlencode($imageUrl));
     }
 
 
@@ -124,11 +124,11 @@ class PinHelper extends RequestHelper
     {
         $dataJson = [
             "options" => [
-                "field_set_key" => "detailed",
+                "field_set_key"                  => "detailed",
                 "fetch_visualsearchCall_objects" => true,
-                "id"            => $pinId,
-                "pin_id" => $pinId,
-                "allow_stale"   => true,
+                "id"                             => $pinId,
+                "pin_id"                         => $pinId,
+                "allow_stale"                    => true,
             ],
             "context" => new \StdClass(),
         ];
@@ -191,7 +191,7 @@ class PinHelper extends RequestHelper
     {
         if ($sourceUrl === null) {
             reset($data);
-            $sourceUrl = "/pin/".end($data["options"])."/";
+            $sourceUrl = "/pin/" . end($data["options"]) . "/";
         }
 
         return self::createRequestData($data, $sourceUrl);

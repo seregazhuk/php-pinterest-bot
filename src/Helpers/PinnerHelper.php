@@ -80,17 +80,20 @@ class PinnerHelper extends RequestHelper
      */
     public static function createLoginRequest($username, $password)
     {
-        $dataJson                        = self::createPinnerRequestData($username);
-        $dataJson["options"]["password"] = $password;
-
+        $dataJson = [
+            "options" => [
+                "username_or_email" => $username,
+                "password"          => $password
+            ],
+            "context" => new \stdClass(),
+        ];
         return self::createRequestData($dataJson, "/login/");
     }
 
     /**
      * Parses Pintrest Api response after login
-
-*
-*@param array $res
+     *
+     * @param array $res
      * @return bool
      * @throws AuthException
      */
@@ -113,7 +116,7 @@ class PinnerHelper extends RequestHelper
     {
         return [
             "options" => [
-                "username_or_email" => $username,
+                "username" => $username,
             ],
             "context" => new \stdClass(),
         ];
