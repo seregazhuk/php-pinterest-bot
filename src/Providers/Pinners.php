@@ -66,14 +66,11 @@ class Pinners extends Provider
     public function getPaginatedUserData($username, $resourceUrl, $sourceUrl, $batchesLimit = 0)
     {
         return PaginationHelper::getPaginatedData(
-            $this,
-            'getUserData',
-            [
-                'username'  => $username,
-                'url'       => $resourceUrl,
-                'sourceUrl' => $sourceUrl,
-            ],
-            $batchesLimit
+            $this, 'getUserData', [
+            'username'  => $username,
+            'url'       => $resourceUrl,
+            'sourceUrl' => $sourceUrl,
+        ], $batchesLimit
         );
     }
 
@@ -115,10 +112,7 @@ class Pinners extends Provider
     public function followers($username, $batchesLimit = 0)
     {
         return $this->getPaginatedUserData(
-            $username,
-            UrlHelper::RESOURCE_USER_FOLLOWERS,
-            "/$username/followers/",
-            $batchesLimit
+            $username, UrlHelper::RESOURCE_USER_FOLLOWERS, "/$username/followers/", $batchesLimit
         );
     }
 
@@ -132,10 +126,7 @@ class Pinners extends Provider
     public function following($username, $batchesLimit = 0)
     {
         return $this->getPaginatedUserData(
-            $username,
-            UrlHelper::RESOURCE_USER_FOLLOWING,
-            "/$username/following/",
-            $batchesLimit
+            $username, UrlHelper::RESOURCE_USER_FOLLOWING, "/$username/following/", $batchesLimit
         );
     }
 
@@ -149,10 +140,7 @@ class Pinners extends Provider
     public function pins($username, $batchesLimit = 0)
     {
         return $this->getPaginatedUserData(
-            $username,
-            UrlHelper::RESOURCE_USER_PINS,
-            "/$username/pins/",
-            $batchesLimit
+            $username, UrlHelper::RESOURCE_USER_PINS, "/$username/pins/", $batchesLimit
         );
     }
 

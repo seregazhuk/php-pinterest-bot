@@ -159,7 +159,6 @@ class Request implements RequestInterface
         $get = SearchHelper::createSearchRequest($query, $scope, $bookmarks);
         $url = $url.'?'.UrlHelper::buildRequestString($get);
         $res = $this->exec($url);
-
         return SearchHelper::parseSearchResponse($res, ! empty($bookmarks));
     }
 

@@ -46,9 +46,9 @@ class SearchHelper
             'module' => [
                 "name"    => "SearchPage",
                 "options" => $requestData['options'],
-            ]
+            ],
+            "options" => $requestData['options'],
         ];
-
         return $dataJson;
     }
 
@@ -99,6 +99,7 @@ class SearchHelper
     public static function parseSimpledSearchResponse($res)
     {
         $bookmarks = [];
+
         if (isset($res['module']['tree']['resource']['options']['bookmarks'][0])) {
             $bookmarks = $res['module']['tree']['resource']['options']['bookmarks'][0];
         }
@@ -121,11 +122,13 @@ class SearchHelper
     {
 
         if ( ! empty($res['resource_response']['data'])) {
-            return [
+            $res = [
                 'data'      => $res['resource_response']['data'],
                 'bookmarks' => $res['resource']['options']['bookmarks'],
             ];
+            return $res;
         }
+
 
         return [];
     }
