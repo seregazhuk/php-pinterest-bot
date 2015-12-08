@@ -13,7 +13,7 @@ class RequestHelper
     {
         return [
             "source_url" => $sourceUrl,
-            "data"       => json_encode($data, JSON_FORCE_OBJECT),
+            "data"       => json_encode($data),
         ];
     }
 }
