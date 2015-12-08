@@ -48,9 +48,9 @@ class Pinners extends Provider
      */
     public function getUserData($username, $url, $sourceUrl, $bookmarks = [])
     {
-        $get       = PinnerHelper::createUserDataRequest($username, $sourceUrl, $bookmarks);
+        $get = PinnerHelper::createUserDataRequest($username, $sourceUrl, $bookmarks);
         $getString = UrlHelper::buildRequestString($get);
-        $res       = $this->request->exec($url.'?'.$getString, $username);
+        $res = $this->request->exec($url . '?' . $getString, $username);
         $this->request->checkErrorInResponse($res);
 
         return PinnerHelper::checkUserDataResponse($res);
@@ -66,14 +66,11 @@ class Pinners extends Provider
     public function getPaginatedUserData($username, $resourceUrl, $sourceUrl, $batchesLimit = 0)
     {
         return PaginationHelper::getPaginatedData(
-            $this,
-            'getUserData',
-            [
-                'username'  => $username,
-                'url'       => $resourceUrl,
-                'sourceUrl' => $sourceUrl,
-            ],
-            $batchesLimit
+            $this, 'getUserData', [
+            'username'  => $username,
+            'url'       => $resourceUrl,
+            'sourceUrl' => $sourceUrl,
+        ], $batchesLimit
         );
     }
 
@@ -107,64 +104,51 @@ class Pinners extends Provider
 
     /**
      * Get pinner followers
-
      *
-*@param string $username
+     * @param string $username
      * @param int    $batchesLimit
      * @return \Iterator
      */
     public function followers($username, $batchesLimit = 0)
     {
         return $this->getPaginatedUserData(
-            $username,
-            UrlHelper::RESOURCE_USER_FOLLOWERS,
-            "/$username/followers/",
-            $batchesLimit
+            $username, UrlHelper::RESOURCE_USER_FOLLOWERS, "/$username/followers/", $batchesLimit
         );
     }
 
     /**
      * Get pinner following other pinners
-
      *
-*@param string $username
+     * @param string $username
      * @param int    $batchesLimit
      * @return \Iterator
      */
     public function following($username, $batchesLimit = 0)
     {
         return $this->getPaginatedUserData(
-            $username,
-            UrlHelper::RESOURCE_USER_FOLLOWING,
-            "/$username/following/",
-            $batchesLimit
+            $username, UrlHelper::RESOURCE_USER_FOLLOWING, "/$username/following/", $batchesLimit
         );
     }
 
     /**
      * Get pinner pins
-
      *
-*@param string $username
+     * @param string $username
      * @param int    $batchesLimit
      * @return \Iterator
      */
     public function pins($username, $batchesLimit = 0)
     {
         return $this->getPaginatedUserData(
-            $username,
-            UrlHelper::RESOURCE_USER_PINS,
-            "/$username/pins/",
-            $batchesLimit
+            $username, UrlHelper::RESOURCE_USER_PINS, "/$username/pins/", $batchesLimit
         );
     }
 
 
     /**
      * Search pinners by search query
-
      *
-*@param string $query
+     * @param string $query
      * @param int    $batchesLimit
      * @return \Iterator
      */
@@ -185,7 +169,7 @@ class Pinners extends Provider
         if ($this->request->isLoggedIn()) {
             return true;
         }
-        $post       = PinnerHelper::createLoginRequest($username, $password);
+        $post = PinnerHelper::createLoginRequest($username, $password);
         $postString = UrlHelper::buildRequestString($post);
         $this->request->clearToken();
         $res = PinnerHelper::parseLoginResponse($this->request->exec(UrlHelper::RESOURCE_LOGIN, $postString));

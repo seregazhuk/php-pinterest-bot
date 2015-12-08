@@ -19,9 +19,9 @@ class Boards extends Provider
     {
         $this->request->checkLoggedIn();
 
-        $get       = BoardHelper::createBoardsInfoRequest();
+        $get = BoardHelper::createBoardsInfoRequest();
         $getString = UrlHelper::buildRequestString($get);
-        $res       = $this->request->exec(UrlHelper::RESOURCE_GET_BOARDS."?{$getString}");
+        $res = $this->request->exec(UrlHelper::RESOURCE_GET_BOARDS . "?{$getString}");
 
         return BoardHelper::parseBoardsInfoResponse($res);
     }
@@ -30,7 +30,7 @@ class Boards extends Provider
     /**
      * Search boards by search query
      *
-*@param string $query
+     * @param string $query
      * @param int    $batchesLimit
      * @return \Iterator
      */

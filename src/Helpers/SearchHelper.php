@@ -33,7 +33,7 @@ class SearchHelper
             $dataJson = self::createBookMarkedSearchRequest($dataJson, $bookmarks);
         }
 
-        return [
+        return  [
             "source_url"  => "/search/$scope/?q=".$query,
             "data"        => json_encode($dataJson),
             "module_path" => urlencode($modulePath),
@@ -44,11 +44,11 @@ class SearchHelper
     {
         $dataJson = [
             'module' => [
-            "name"    => "SearchPage",
+                "name"    => "SearchPage",
+                "options" => $requestData['options'],
+            ],
             "options" => $requestData['options'],
-            ]
         ];
-
         return $dataJson;
     }
 
@@ -100,6 +100,7 @@ class SearchHelper
     public static function parseSimpledSearchResponse($res)
     {
         $bookmarks = [];
+
         if (isset($res['module']['tree']['resource']['options']['bookmarks'][0])) {
             $bookmarks = $res['module']['tree']['resource']['options']['bookmarks'][0];
         }
@@ -122,11 +123,13 @@ class SearchHelper
     {
 
         if ( ! empty($res['resource_response']['data'])) {
-            return [
+            $res = [
                 'data'      => $res['resource_response']['data'],
                 'bookmarks' => $res['resource']['options']['bookmarks'],
             ];
+            return $res;
         }
+
 
         return [];
     }

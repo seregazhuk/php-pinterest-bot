@@ -10,7 +10,7 @@ class PaginationHelper
      * To limit result batches, set $batchesLimit. Call function
      * of object to get data.
      *
-*@param mixed  $obj
+     * @param mixed  $obj
      * @param string $function
      * @param array  $params
      * @param int    $batchesLimit
@@ -25,7 +25,7 @@ class PaginationHelper
             }
 
             $items = [];
-            $res   = call_user_func_array([$obj, $function], $params);
+            $res = call_user_func_array([$obj, $function], $params);
 
             if (isset($res['data']) && ! empty($res['data'])) {
                 if (isset($res['data'][0]['type']) && $res['data'][0]['type'] == 'module') {
