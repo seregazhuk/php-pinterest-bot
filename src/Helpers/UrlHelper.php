@@ -51,7 +51,7 @@ class UrlHelper
      */
     public static function buildApiUrl($resourceUrl)
     {
-        return self::URL_BASE.$resourceUrl;
+        return self::URL_BASE . $resourceUrl;
     }
 
     /**
@@ -63,9 +63,7 @@ class UrlHelper
     public static function fixEncoding($str)
     {
         return str_replace(
-            ["%28", "%29", "%7E"],
-            ["(", ")", "~"],
-            $str
+            ["%28", "%29", "%7E"], ["(", ")", "~"], $str
         );
     }
 

@@ -15,7 +15,7 @@ class SearchHelper
     public static function createSearchRequest($query, $scope, $bookmarks = [])
     {
         $modulePath = 'App(module=[object Object])';
-        $options    = [
+        $options = [
             "restrict"            => null,
             "scope"               => $scope,
             "constraint_string"   => null,
@@ -34,7 +34,7 @@ class SearchHelper
         }
 
         return [
-            "source_url"  => "/search/$scope/?q=".$query,
+            "source_url"  => "/search/$scope/?q=" . $query,
             "data"        => json_encode($dataJson),
             "module_path" => urlencode($modulePath),
         ];
@@ -44,8 +44,8 @@ class SearchHelper
     {
         $dataJson = [
             'module' => [
-            "name"    => "SearchPage",
-            "options" => $requestData['options'],
+                "name"    => "SearchPage",
+                "options" => $requestData['options'],
             ]
         ];
 
@@ -56,8 +56,7 @@ class SearchHelper
     {
         $dataJson = [
             "options" => array_merge(
-                $requestData['options'],
-                [
+                $requestData['options'], [
                     "bookmarks" => $bookmarks,
                     "layout"    => null,
                     "places"    => false,
@@ -73,7 +72,7 @@ class SearchHelper
      * for next pagination page
      *
      * @param array $res
-     * @param bool   $bookmarksUsed
+     * @param bool  $bookmarksUsed
      * @return array|null
      */
     public static function parseSearchResponse($res, $bookmarksUsed)
