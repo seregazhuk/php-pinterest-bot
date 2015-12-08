@@ -7,6 +7,7 @@ use seregazhuk\PinterestBot\Providers\Pinners;
 use seregazhuk\PinterestBot\Providers\Pins;
 use seregazhuk\PinterestBot\Providers\Boards;
 use seregazhuk\PinterestBot\Providers\Interests;
+use seregazhuk\PinterestBot\Providers\Conversations;
 
 /**
  * Class PinterestBot
@@ -18,6 +19,7 @@ use seregazhuk\PinterestBot\Providers\Interests;
  * @property Pins      $pins
  * @property Boards    $boards
  * @property Interests $interests
+ * @property Conversations $conversations
  */
 class PinterestBot
 {
