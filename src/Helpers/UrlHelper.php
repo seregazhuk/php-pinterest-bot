@@ -14,7 +14,7 @@ class UrlHelper
     const RESOURCE_REPIN                  = "/resource/RepinResource/create/";
     const RESOURCE_USER_FOLLOWERS         = "/resource/UserFollowersResource/get/";
     const RESOURCE_DELETE_PIN             = "/resource/PinResource/delete/";
-    const RESOURCE_FOLLOW_USER            = '/resource/UserFollowResource/create/';
+    const RESOURCE_FOLLOW_USER            = "/resource/UserFollowResource/create/";
     const RESOURCE_UNFOLLOW_USER          = "/resource/UserFollowResource/delete/";
     const RESOURCE_SEARCH                 = "/resource/BaseSearchResource/get/";
     const RESOURCE_SEARCH_WITH_PAGINATION = "/resource/SearchResource/get/";
@@ -25,11 +25,11 @@ class UrlHelper
     const RESOURCE_UNLIKE_PIN             = "/resource/PinLikeResource2/delete/";
     const RESOURCE_COMMENT_PIN            = "/resource/PinCommentResource/create/";
     const RESOURCE_COMMENT_DELETE_PIN     = "/resource/PinCommentResource/delete/";
-    const RESOURCE_PIN_INFO               = "/resource/PinResource/get";
-    const RESOURCE_FOLLOW_BOARD           = "resource/BoardFollowResource/create/";
-    const RESOURCE_UNFOLLOW_BOARD         = "resource/BoardFollowResource/delete/";
-    const RESOURCE_FOLLOW_INTEREST        = "resource/InterestFollowResource/create/";
-    const RESOURCE_UNFOLLOW_INTEREST      = "resource/InterestFollowResource/delete/";
+    const RESOURCE_PIN_INFO               = "/resource/PinResource/get/";
+    const RESOURCE_FOLLOW_BOARD           = "/resource/BoardFollowResource/create/";
+    const RESOURCE_UNFOLLOW_BOARD         = "/resource/BoardFollowResource/delete/";
+    const RESOURCE_FOLLOW_INTEREST        = "/resource/InterestFollowResource/create/";
+    const RESOURCE_UNFOLLOW_INTEREST      = "/resource/InterestFollowResource/delete/";
 
     const URL_BASE      = 'https://www.pinterest.com/';
     const LOGIN_REF_URL = "https://www.pinterest.com/login/";
@@ -51,7 +51,7 @@ class UrlHelper
      */
     public static function buildApiUrl($resourceUrl)
     {
-        return self::URL_BASE . $resourceUrl;
+        return self::URL_BASE . ltrim($resourceUrl, '/');
     }
 
     /**
