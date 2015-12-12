@@ -12,20 +12,19 @@ use seregazhuk\PinterestBot\Providers\Conversations;
 /**
  * Class PinterestBot
  *
-*@package Pinterest
- * @property string    $username
- * @property string    $password
- * @property Pinners   $pinners
- * @property Pins      $pins
- * @property Boards    $boards
- * @property Interests $interests
+ * @package Pinterest
+ * @property string        $username
+ * @property string        $password
+ * @property Pinners       $pinners
+ * @property Pins          $pins
+ * @property Boards        $boards
+ * @property Interests     $interests
  * @property Conversations $conversations
  */
 class PinterestBot
 {
-    public $username;
-    public $password;
-
+    protected $username;
+    protected $password;
     protected $loggedIn = false;
 
     const PROVIDERS_NAMESPACE = "seregazhuk\\PinterestBot\\Providers\\";
@@ -43,7 +42,7 @@ class PinterestBot
     /**
      * A array containing the cached providers
      *
-* @var array
+     * @var array
      */
     private $providers = [];
 
@@ -61,15 +60,8 @@ class PinterestBot
      */
     public function login()
     {
-        if ( ! $this->username || ! $this->password) {
-            throw new \LogicException('You must set username and password to login.');
-        }
-
+        $this->_check_credentials();
         $res = $this->pinners->login($this->username, $this->password);
-        if ($res) {
-            $this->request->setLoggedIn();
-        }
-
         return $res;
     }
 
@@ -81,20 +73,41 @@ class PinterestBot
     public function __get($provider)
     {
         $provider = strtolower($provider);
-        $class    = self::PROVIDERS_NAMESPACE.ucfirst($provider);
+
         // Check if an instance has already been initiated
         if ( ! isset($this->providers[$provider])) {
-            // Check endpoint existence
-            if ( ! class_exists($class)) {
-                throw new InvalidRequestException;
-            }
-            // Create a reflection of the called class
-            $ref = new \ReflectionClass($class);
-            $obj = $ref->newInstanceArgs([$this->request]);
-
-            $this->providers[$provider] = $obj;
+            $this->_addProvider($provider);
         }
 
         return $this->providers[$provider];
+    }
+
+    /**
+     * @param string $provider
+     * @throws InvalidRequestException
+     */
+    protected function _addProvider($provider)
+    {
+        $class = self::PROVIDERS_NAMESPACE . ucfirst($provider);
+
+        if ( ! class_exists($class)) {
+            throw new InvalidRequestException;
+        }
+
+        // Create a reflection of the called class
+        $ref = new \ReflectionClass($class);
+        $obj = $ref->newInstanceArgs([$this->request]);
+
+        $this->providers[$provider] = $obj;
+    }
+
+    /**
+     * @throws \LogicException
+     */
+    protected function _check_credentials()
+    {
+        if ( ! $this->username || ! $this->password) {
+            throw new \LogicException('You must set username and password to login.');
+        }
     }
 }
