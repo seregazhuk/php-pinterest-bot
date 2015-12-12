@@ -124,6 +124,12 @@ $bot->interests->follow($interestId);
 $bot->interests->unfollow($interestId);
 ```
 
+## Conversations
+Write a message to user
+```php
+$bot->conversations->sendMessage($userId, 'message text');
+```
+
 ## Search
 
 Search functions use pinterest pagination in fetching results and return generator.
