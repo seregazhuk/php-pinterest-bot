@@ -22,8 +22,8 @@ class Conversations extends Provider
                 "user_ids" => array(
                     $userId,
                 ),
-                "emails" => array(),
-                "text" => $text,
+                "emails"   => array(),
+                "text"     => $text,
             ),
             "context" => new \stdClass(),
         );
@@ -35,9 +35,9 @@ class Conversations extends Provider
         );
 
         $postString = UrlHelper::buildRequestString($post);
-        $res        = $this->request->exec(UrlHelper::RESOURCE_SEND_MESSAGE, $postString);
+        $res = $this->request->exec(UrlHelper::RESOURCE_SEND_MESSAGE, $postString);
 
-        if ($res === null || !isset($res['resource_response']) || $res['resource_response']['error'] !== null) {
+        if ($res === null || ! isset($res['resource_response']) || $res['resource_response']['error'] !== null) {
             return false;
         }
 

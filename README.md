@@ -123,6 +123,12 @@ Follow/unfollow interest by ID
 $bot->interests->follow($interestId);
 $bot->interests->unfollow($interestId);
 ```
+##Conversations
+Write a message to user
+
+```php
+$bot->conversations->sendMessage($userId, 'message text');
+```
 
 ## Search
 
