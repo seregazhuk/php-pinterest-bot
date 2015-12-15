@@ -13,7 +13,7 @@ class Boards extends Provider
     /**
      * Get all logged-in user boards
      *
-     * @return array|null
+     * @return array|bool
      */
     public function my()
     {
@@ -23,7 +23,7 @@ class Boards extends Provider
         $getString = UrlHelper::buildRequestString($get);
         $res = $this->request->exec(UrlHelper::RESOURCE_GET_BOARDS . "?{$getString}");
 
-        return BoardHelper::parseBoardsInfoResponse($res);
+        return BoardHelper::getDataFromResponse($res, 'all_boards');
     }
 
 

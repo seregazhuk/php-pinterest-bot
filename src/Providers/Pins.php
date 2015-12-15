@@ -102,7 +102,7 @@ class Pins extends Provider
         $res = $this->request->exec(UrlHelper::RESOURCE_CREATE_PIN, $postString);
         $this->request->checkErrorInResponse($res);
 
-        return PinHelper::parsePinCreateResponse($res);
+        return PinHelper::getDataFromResponse($res, 'id');
     }
 
     /**
@@ -122,7 +122,7 @@ class Pins extends Provider
         $res        = $this->request->exec(UrlHelper::RESOURCE_REPIN, $postString);
         $this->request->checkErrorInResponse($res);
 
-        return PinHelper::parsePinCreateResponse($res);
+        return PinHelper::getDataFromResponse($res, 'id');
     }
 
 
@@ -148,7 +148,7 @@ class Pins extends Provider
      * Get information of pin by PinID
      *
      * @param $pinId
-     * @return array|null
+     * @return array|bool
      */
     public function info($pinId)
     {
@@ -156,7 +156,7 @@ class Pins extends Provider
         $url = UrlHelper::RESOURCE_PIN_INFO.'?'.UrlHelper::buildRequestString($get);
         $res = $this->request->exec($url);
 
-        return PinHelper::parsePinInfoResponse($res);
+        return PinHelper::getDataFromResponse($res);
     }
 
     /**

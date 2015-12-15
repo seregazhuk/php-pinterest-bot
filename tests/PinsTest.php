@@ -94,7 +94,7 @@ class PinsTest extends ProviderTest
         $mock->expects($this->at(1))->method('exec')->willReturn(['resource_response' => []]);
         $this->setProperty('request', $mock);
         $this->assertNotNull($this->provider->info(1));
-        $this->assertNull($this->provider->info(1));
+        $this->assertFalse($this->provider->info(1));
     }
 
     public function testSearch()

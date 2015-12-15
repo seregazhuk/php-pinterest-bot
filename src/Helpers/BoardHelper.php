@@ -2,7 +2,7 @@
 
 namespace seregazhuk\PinterestBot\Helpers;
 
-class BoardHelper
+class BoardHelper extends RequestHelper
 {
     /**
      * Creates Pinterest API request to get boards info
@@ -25,20 +25,5 @@ class BoardHelper
             "description" => "",
             "data"        => json_encode($dataJson, JSON_FORCE_OBJECT),
         ];
-    }
-
-    /**
-     * Parses Pinterest API response for boards info
-     *
-     * @param array $res
-     * @return null|array
-     */
-    public static function parseBoardsInfoResponse($res)
-    {
-        if (isset($res['resource_response']['data']['all_boards'])) {
-            return $res['resource_response']['data']['all_boards'];
-        }
-
-        return null;
     }
 }

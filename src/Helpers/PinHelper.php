@@ -100,21 +100,6 @@ class PinHelper extends RequestHelper
 
 
     /**
-     * Parses pin create response
-     *
-     * @param $response
-     * @return bool
-     */
-    public static function parsePinCreateResponse($response)
-    {
-        if (isset($response['resource_response']['data']['id'])) {
-            return $response['resource_response']['data']['id'];
-        }
-
-        return false;
-    }
-
-    /**
      * Creates Pinterest API request to get Pin info
      *
      * @param int $pinId
@@ -134,21 +119,6 @@ class PinHelper extends RequestHelper
         ];
 
         return self::createPinRequestData($dataJson);
-    }
-
-    /**
-     * Parses Pinterest API response with pin information
-     *
-     * @param array $res
-     * @return null|array
-     */
-    public static function parsePinInfoResponse($res)
-    {
-        if (isset($res['resource_response']['data'])) {
-            return $res['resource_response']['data'];
-        }
-
-        return null;
     }
 
     /**

@@ -20,7 +20,7 @@ class PinnerHelper extends RequestHelper
         }
 
         $bookmarks = self::_getBookmarksFromResponse($res);
-        if ($data = self::_getDataFromResponse($res)) {
+        if ($data = self::getDataFromResponse($res)) {
             return ['data' => $data, 'bookmarks' => $bookmarks];
         }
 
@@ -123,19 +123,6 @@ class PinnerHelper extends RequestHelper
     {
         if (isset($response['resource']['options']['bookmarks'][0])) {
             return [$response['resource']['options']['bookmarks'][0]];
-        }
-        return null;
-    }
-
-    /**
-     * Parse data from response
-     * @param $response
-     * @return array|null
-     */
-    protected static function _getDataFromResponse($response)
-    {
-        if (isset($response['resource_response']['data'])) {
-            return $response['resource_response']['data'];
         }
         return null;
     }

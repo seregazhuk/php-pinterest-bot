@@ -63,7 +63,7 @@ class BoardsTest extends ProviderTest
         $mock->method('exec')->willReturn(json_encode($res));
         $this->setProperty('request', $mock);
         $boards = $this->provider->my();
-        $this->assertNull($boards);
+        $this->assertFalse($boards);
     }
 
 }
