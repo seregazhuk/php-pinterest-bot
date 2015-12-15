@@ -144,10 +144,8 @@ class PinHelper extends RequestHelper
      */
     public static function parsePinInfoResponse($res)
     {
-        if ( ! empty($res)) {
-            if (isset($res['resource_response']['data'])) {
-                return $res['resource_response']['data'];
-            }
+        if (isset($res['resource_response']['data'])) {
+            return $res['resource_response']['data'];
         }
 
         return null;

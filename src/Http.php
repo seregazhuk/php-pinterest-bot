@@ -33,7 +33,7 @@ class Http implements HttpInterface
     /**
      * Initializes curl resource
      *
-*@access public
+     * @access public
      * @param string $url
      */
     public function init($url)

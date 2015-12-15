@@ -17,22 +17,14 @@ class PinnerHelper extends RequestHelper
     {
         if ($res === null) {
             return [];
-        } else {
-
-            if (isset($res['resource']['options']['bookmarks'][0])) {
-                $bookmarks = [$res['resource']['options']['bookmarks'][0]];
-            } else {
-                $bookmarks = null;
-            }
-
-            if (isset($res['resource_response']['data'])) {
-                $data = $res['resource_response']['data'];
-
-                return ['data' => $data, 'bookmarks' => $bookmarks];
-            } else {
-                return [];
-            }
         }
+
+        $bookmarks = self::_getBookmarksFromResponse($res);
+        if ($data = self::_getDataFromResponse($res)) {
+            return ['data' => $data, 'bookmarks' => $bookmarks];
+        }
+
+        return [];
     }
 
     /**
@@ -101,9 +93,9 @@ class PinnerHelper extends RequestHelper
     {
         if (isset($res['resource_response']['error'])) {
             throw new AuthException($res['resource_response']['error']['message']);
-        } else {
-            return true;
         }
+
+        return true;
     }
 
     /**
@@ -120,5 +112,31 @@ class PinnerHelper extends RequestHelper
             ],
             "context" => new \stdClass(),
         ];
+    }
+
+    /**
+     * Parse bookmarks from response
+     * @param array $response
+     * @return string|null
+     */
+    protected static function _getBookmarksFromResponse($response)
+    {
+        if (isset($response['resource']['options']['bookmarks'][0])) {
+            return [$response['resource']['options']['bookmarks'][0]];
+        }
+        return null;
+    }
+
+    /**
+     * Parse data from response
+     * @param $response
+     * @return array|null
+     */
+    protected static function _getDataFromResponse($response)
+    {
+        if (isset($response['resource_response']['data'])) {
+            return $response['resource_response']['data'];
+        }
+        return null;
     }
 }

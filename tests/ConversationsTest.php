@@ -29,10 +29,12 @@ class ConversationsTest extends ProviderTest
 
         $mock = $this->createRequestMock();
         $mock->expects($this->at(1))->method('exec')->willReturn($res);
+        $mock->expects($this->at(2))->method('exec')->willReturn(null);
         $this->setProperty('request', $mock);
 
         $userId = '0000000000000';
         $message = 'test';
         $this->assertTrue($this->provider->sendMessage($userId, $message));
+        $this->assertFalse($this->provider->sendMessage($userId, $message));
     }
 }

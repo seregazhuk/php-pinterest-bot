@@ -8,6 +8,7 @@ use seregazhuk\PinterestBot\Providers\Pins;
 use seregazhuk\PinterestBot\Providers\Boards;
 use seregazhuk\PinterestBot\Providers\Interests;
 use seregazhuk\PinterestBot\Providers\Conversations;
+use seregazhuk\PinterestBot\Providers\Provider;
 
 /**
  * Class PinterestBot
@@ -28,7 +29,6 @@ class PinterestBot
     protected $loggedIn = false;
 
     const PROVIDERS_NAMESPACE = "seregazhuk\\PinterestBot\\Providers\\";
-
     const MAX_PAGINATED_ITEMS = 100;
 
     public function __construct($username, $password)
@@ -67,8 +67,7 @@ class PinterestBot
 
     /**
      * @param string $provider
-     * @return mixed
-     * @throws InvalidRequestException
+     * @return Provider
      */
     public function __get($provider)
     {

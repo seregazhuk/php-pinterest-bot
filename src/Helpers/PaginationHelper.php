@@ -20,14 +20,12 @@ class PaginationHelper
     {
         $batchesNum = 0;
         do {
-            if ($batchesLimit && $batchesNum >= $batchesLimit) {
-                break;
-            }
+            if (self::reachBatchesLimit($batchesLimit, $batchesNum))  break;
 
             $items = [];
             $res = call_user_func_array([$obj, $function], $params);
 
-            if (isset($res['data']) && ! empty($res['data'])) {
+            if (self::_responseHasData($res)) {
                 if (isset($res['data'][0]['type']) && $res['data'][0]['type'] == 'module') {
                     array_shift($res['data']);
                 }
@@ -38,15 +36,30 @@ class PaginationHelper
                 $params['bookmarks'] = $res['bookmarks'];
             }
 
-            if (empty($items)) {
-                return;
-            }
+            if (empty($items)) return;
 
             $batchesNum++;
             yield $items;
+        } while (self::_responseHasData($res));
+    }
 
+    /**
+     * @param array $res
+     * @return bool
+     */
+    protected static function _responseHasData($res)
+    {
+        return isset($res['data']) && ! empty($res['data']);
+    }
 
-        } while (isset($res['data']) && ! empty($res['data']));
-
+    /**
+     * Check if we get batches limit in pagination
+     * @param int $batchesLimit
+     * @param int $batchesNum
+     * @return bool
+     */
+    protected static function reachBatchesLimit($batchesLimit, $batchesNum)
+    {
+        return $batchesLimit && $batchesNum >= $batchesLimit;
     }
 }

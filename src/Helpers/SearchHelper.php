@@ -77,15 +77,9 @@ class SearchHelper
      */
     public static function parseSearchResponse($res, $bookmarksUsed)
     {
-        if ($res === null) {
-            return [];
-        }
+        if ($res === null || ! $bookmarksUsed) return self::parseSimpledSearchResponse($res);
 
-        if ( ! $bookmarksUsed) {
-            return self::parseSimpledSearchResponse($res);
-        } else {
-            return self::parseBookMarkedSearchResponse($res);
-        }
+        return self::parseBookMarkedSearchResponse($res);
     }
 
 
@@ -120,7 +114,6 @@ class SearchHelper
      */
     public static function parseBookMarkedSearchResponse($res)
     {
-
         if ( ! empty($res['resource_response']['data'])) {
             $res = [
                 'data'      => $res['resource_response']['data'],
@@ -128,7 +121,6 @@ class SearchHelper
             ];
             return $res;
         }
-
 
         return [];
     }
