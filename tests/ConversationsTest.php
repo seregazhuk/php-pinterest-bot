@@ -37,4 +37,26 @@ class ConversationsTest extends ProviderTest
         $this->assertTrue($this->provider->sendMessage($userId, $message));
         $this->assertFalse($this->provider->sendMessage($userId, $message));
     }
+
+    public function testLast()
+    {
+        $lastConversations = array(
+            "1" => ["result"],
+        );
+
+        $res = array(
+            'resource_response' => array(
+                'data' => $lastConversations,
+                'error' => null,
+            ),
+        );
+
+        $mock = $this->createRequestMock();
+        $mock->expects($this->at(1))->method('exec')->willReturn($res);
+        $mock->expects($this->at(2))->method('exec')->willReturn(null);
+        $this->setProperty('request', $mock);
+
+        $this->assertEquals($lastConversations, $this->provider->last());
+        $this->assertFalse($this->provider->last());
+    }
 }

@@ -3,9 +3,8 @@
 namespace seregazhuk\PinterestBot\Providers;
 
 use seregazhuk\PinterestBot\Request;
-use seregazhuk\PinterestBot\Helpers\BoardHelper;
+use seregazhuk\PinterestBot\Helpers\Providers\BoardHelper;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
-use seregazhuk\PinterestBot\Helpers\PaginationHelper;
 
 class Boards extends Provider
 {
@@ -38,7 +37,6 @@ class Boards extends Provider
     {
         return $this->request->searchWithPagination($query, Request::SEARCH_BOARDS_SCOPES, $batchesLimit);
     }
-
 
     /**
      * Follow board by boardID

@@ -1,6 +1,6 @@
 <?php
 
-namespace seregazhuk\PinterestBot\Helpers;
+namespace seregazhuk\PinterestBot\Helpers\Providers;
 
 class PinHelper extends RequestHelper
 {
@@ -32,21 +32,6 @@ class PinHelper extends RequestHelper
         $dataJson["options"]["comment_id"] = $commentId;
 
         return self::createPinRequestData($dataJson);
-    }
-
-    /**
-     * Checks result of PIN-methods
-     *
-     * @param array $res
-     * @return bool
-     */
-    public static function checkMethodCallResult($res)
-    {
-        if ($res !== null && isset($res['resource_response'])) {
-            return true;
-        } else {
-            return false;
-        }
     }
 
     /**

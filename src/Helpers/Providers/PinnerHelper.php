@@ -1,31 +1,11 @@
 <?php
 
-namespace seregazhuk\PinterestBot\Helpers;
+namespace seregazhuk\PinterestBot\Helpers\Providers;
 
 use seregazhuk\PinterestBot\Exceptions\AuthException;
 
 class PinnerHelper extends RequestHelper
 {
-    /**
-     * Checks Pinterest API pinners response, and parses data
-     * with bookmarks info from it.
-     *
-     * @param array $res
-     * @return array
-     */
-    public static function checkUserDataResponse($res)
-    {
-        if ($res === null) {
-            return [];
-        }
-
-        $bookmarks = self::_getBookmarksFromResponse($res);
-        if ($data = self::getDataFromResponse($res)) {
-            return ['data' => $data, 'bookmarks' => $bookmarks];
-        }
-
-        return [];
-    }
 
     /**
      * Creates Pinterest API request to get user info according to
@@ -40,12 +20,7 @@ class PinnerHelper extends RequestHelper
     {
         $dataJson = self::createPinnerRequestData($username);
 
-        if ( ! empty($bookmarks)) {
-            $dataJson["options"]["bookmarks"] = $bookmarks;
-        }
-
-        return self::createRequestData($dataJson, $sourceUrl);
-
+        return self::createRequestData($dataJson, $sourceUrl, $bookmarks);
     }
 
     /**
@@ -91,7 +66,7 @@ class PinnerHelper extends RequestHelper
      */
     public static function parseLoginResponse($res)
     {
-        if (isset($res['resource_response']['error'])) {
+        if (self::checkMethodCallResult($res)) {
             throw new AuthException($res['resource_response']['error']['message']);
         }
 
@@ -114,16 +89,4 @@ class PinnerHelper extends RequestHelper
         ];
     }
 
-    /**
-     * Parse bookmarks from response
-     * @param array $response
-     * @return string|null
-     */
-    protected static function _getBookmarksFromResponse($response)
-    {
-        if (isset($response['resource']['options']['bookmarks'][0])) {
-            return [$response['resource']['options']['bookmarks'][0]];
-        }
-        return null;
-    }
 }
