@@ -57,20 +57,22 @@ class Pinners extends Provider
     }
 
     /**
-     * @param  string $username
-     * @param  string $resourceUrl
-     * @param  string $sourceUrl
+     * @param string $username
+     * @param string $resourceUrl
+     * @param string $sourceUrl
      * @param int     $batchesLimit
      * @return \Iterator
      */
     public function getPaginatedUserData($username, $resourceUrl, $sourceUrl, $batchesLimit = 0)
     {
         return PaginationHelper::getPaginatedData(
-            $this, 'getUserData', [
-            'username'  => $username,
-            'url'       => $resourceUrl,
-            'sourceUrl' => $sourceUrl,
-        ], $batchesLimit
+            [$this, 'getUserData'],
+            [
+                'username'  => $username,
+                'url'       => $resourceUrl,
+                'sourceUrl' => $sourceUrl,
+            ],
+            $batchesLimit
         );
     }
 

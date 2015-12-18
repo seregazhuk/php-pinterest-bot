@@ -172,8 +172,7 @@ class Request implements RequestInterface
     public function searchWithPagination($query, $scope, $batchesLimit)
     {
         return PaginationHelper::getPaginatedData(
-            $this,
-            'searchCall',
+            [$this, 'searchCall'],
             [
                 'query' => $query,
                 'scope' => $scope,
