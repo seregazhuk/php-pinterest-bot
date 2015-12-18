@@ -5,7 +5,7 @@ namespace seregazhuk\PinterestBot\Providers;
 use seregazhuk\PinterestBot\Request;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
 use seregazhuk\PinterestBot\Helpers\PaginationHelper;
-use seregazhuk\PinterestBot\Helpers\PinnerHelper;
+use seregazhuk\PinterestBot\Helpers\Providers\PinnerHelper;
 
 class Pinners extends Provider
 {
@@ -53,7 +53,7 @@ class Pinners extends Provider
         $res = $this->request->exec($url . '?' . $getString, $username);
         $this->request->checkErrorInResponse($res);
 
-        return PinnerHelper::checkUserDataResponse($res);
+        return PinnerHelper::parsePaginatedResponse($res);
     }
 
     /**

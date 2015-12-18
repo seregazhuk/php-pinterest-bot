@@ -130,6 +130,11 @@ Write a message to user
 $bot->conversations->sendMessage($userId, 'message text');
 ```
 
+Get array of last conversations
+```php
+$conversations = $bot->conversations->last();
+```
+
 ## Search
 
 Search functions use pinterest pagination in fetching results and return generator.

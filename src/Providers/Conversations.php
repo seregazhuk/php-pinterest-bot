@@ -2,6 +2,7 @@
 namespace seregazhuk\PinterestBot\Providers;
 
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
+use seregazhuk\PinterestBot\Helpers\Providers\ConversationHelper;
 
 class Conversations extends Provider
 {
@@ -16,7 +17,6 @@ class Conversations extends Provider
     public function sendMessage($userId, $text)
     {
         $this->request->checkLoggedIn();
-
         $data = array(
             "options" => array(
                 "user_ids" => array(
@@ -28,19 +28,28 @@ class Conversations extends Provider
             "context" => new \stdClass(),
         );
 
-        $dataJson = json_encode($data);
+        $request = ConversationHelper::createRequestData($data);
 
-        $post = array(
-            'data' => $dataJson,
-        );
-
-        $postString = UrlHelper::buildRequestString($post);
+        $postString = UrlHelper::buildRequestString($request);
         $res = $this->request->exec(UrlHelper::RESOURCE_SEND_MESSAGE, $postString);
 
-        if ($res === null || ! isset($res['resource_response']) || $res['resource_response']['error'] !== null) {
-            return false;
-        }
+        return ConversationHelper::checkMethodCallResult($res);
+    }
 
-        return true;
+    /**
+     * Get last user conversations
+     * @return array|bool
+     */
+    public function last()
+    {
+        $this->request->checkLoggedIn();
+        $request = [
+            "options" => [],
+            "context" => new \stdClass()
+        ];
+        $data = ConversationHelper::createRequestData($request, '/');
+        $query = UrlHelper::buildRequestString($data);
+        $res = $this->request->exec(UrlHelper::RESOURCE_GET_LAST_CONVERSATIONS . '?' . $query);
+        return ConversationHelper::getDataFromResponse($res);
     }
 }
