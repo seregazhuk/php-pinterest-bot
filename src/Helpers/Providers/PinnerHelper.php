@@ -3,6 +3,7 @@
 namespace seregazhuk\PinterestBot\Helpers\Providers;
 
 use seregazhuk\PinterestBot\Exceptions\AuthException;
+use seregazhuk\PinterestBot\Helpers\RequestHelper;
 
 class PinnerHelper extends RequestHelper
 {

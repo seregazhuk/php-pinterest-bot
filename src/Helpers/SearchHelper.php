@@ -2,8 +2,10 @@
 
 namespace seregazhuk\PinterestBot\Helpers;
 
-class SearchHelper
+class SearchHelper extends RequestHelper
 {
+    const MODULE_SEARCH_PAGE = "SearchPage";
+
     /**
      * Creates Pinterest API search request
      *
@@ -14,56 +16,29 @@ class SearchHelper
      */
     public static function createSearchRequest($query, $scope, $bookmarks = [])
     {
-        $modulePath = 'App(module=[object Object])';
         $options = [
-            "restrict"            => null,
-            "scope"               => $scope,
-            "constraint_string"   => null,
-            "show_scope_selector" => true,
-            "query"               => $query,
-        ];
-        $dataJson = [
-            "options" => $options,
+            "scope" => $scope,
+            "query" => $query,
         ];
 
-        if (empty($bookmarks)) {
-            $dataJson = self::createSimpleSearchRequest($dataJson);
+        $dataJson = ["options" => $options];
+
+        if ( ! empty($bookmarks)) {
+            $dataJson['options']['bookmarks'] = $bookmarks;
         } else {
-            $dataJson = self::createBookMarkedSearchRequest($dataJson, $bookmarks);
+            $dataJson = array_merge(
+                $dataJson, [
+                'module' => [
+                    "name"    => self::MODULE_SEARCH_PAGE,
+                    "options" => $options,
+                ],
+            ]
+            );
         }
 
-        return [
-            "source_url"  => "/search/$scope/?q=" . $query,
-            "data"        => json_encode($dataJson),
-            "module_path" => urlencode($modulePath),
-        ];
-    }
-
-    protected static function createSimpleSearchRequest($requestData)
-    {
-        $dataJson = [
-            'module' => [
-                "name"    => "SearchPage",
-                "options" => $requestData['options'],
-            ],
-            "options" => $requestData['options'],
-        ];
-        return $dataJson;
-    }
-
-    protected static function createBookMarkedSearchRequest($requestData, $bookmarks)
-    {
-        $dataJson = [
-            "options" => array_merge(
-                $requestData['options'], [
-                    "bookmarks" => $bookmarks,
-                    "layout"    => null,
-                    "places"    => false,
-                ]
-            ),
-        ];
-
-        return $dataJson;
+        return self::createRequestData(
+            $dataJson, "/search/$scope/?q=" . $query
+        );
     }
 
     /**
@@ -76,11 +51,12 @@ class SearchHelper
      */
     public static function parseSearchResponse($res, $bookmarksUsed)
     {
-        if ($res === null || ! $bookmarksUsed) return self::parseSimpledSearchResponse($res);
+        if ($res === null || ! $bookmarksUsed) {
+            return self::parseSimpledSearchResponse($res);
+        }
 
-        return self::parseBookMarkedSearchResponse($res);
+        return self::parsePaginatedResponse($res);
     }
-
 
     /**
      * Parses simple Pinterest search API response
@@ -99,26 +75,6 @@ class SearchHelper
 
         if ( ! empty($res['module']['tree']['data']['results'])) {
             return ['data' => $res['module']['tree']['data']['results'], 'bookmarks' => [$bookmarks]];
-        }
-
-        return [];
-    }
-
-    /**
-     * Parses Pinterest search API response
-     * on request without bookmarks
-     *
-     * @param $res
-     * @return array
-     */
-    public static function parseBookMarkedSearchResponse($res)
-    {
-        if ( ! empty($res['resource_response']['data'])) {
-            $res = [
-                'data'      => $res['resource_response']['data'],
-                'bookmarks' => $res['resource']['options']['bookmarks'],
-            ];
-            return $res;
         }
 
         return [];

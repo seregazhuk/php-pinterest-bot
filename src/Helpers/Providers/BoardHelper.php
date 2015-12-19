@@ -2,6 +2,8 @@
 
 namespace seregazhuk\PinterestBot\Helpers\Providers;
 
+use seregazhuk\PinterestBot\Helpers\RequestHelper;
+
 class BoardHelper extends RequestHelper
 {
     /**
