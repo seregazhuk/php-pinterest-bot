@@ -10,7 +10,7 @@ class CsrfHelper
      * Get a CSRF token from the given cookie file
      *
      * @param string $file
-     * @return string
+     * @return string|null
      */
     public static function getTokenFromFile($file)
     {
@@ -39,7 +39,7 @@ class CsrfHelper
         }
 
         preg_match('/' . self::TOKEN_NAME . '\s(\w*)/', $line, $matches);
-        if ($matches) {
+        if ( ! empty($matches)) {
             return $matches[1];
         }
 
