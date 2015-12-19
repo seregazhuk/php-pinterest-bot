@@ -14,11 +14,10 @@ class PinsTest extends ProviderTest
 
     public function testLikeAndUnlike()
     {
-        $res['resource_response'] = [];
-        $mock = $this->createRequestMock();
-        $mock->expects($this->at(1))->method('exec')->willReturn($res);
-        $mock->expects($this->at(3))->method('exec')->willReturn($res);
-        $this->setProperty($this->provider, 'request', $mock);
+        $response = $this->createApiResponse();
+        $this->mock->expects($this->at(1))->method('exec')->willReturn($response);
+        $this->mock->expects($this->at(3))->method('exec')->willReturn($response);
+        $this->setProperty($this->provider, 'request', $this->mock);
         $this->assertTrue($this->provider->like(1111));
         $this->assertTrue($this->provider->unLike(1111));
         $this->assertFalse($this->provider->like(1111));
@@ -28,10 +27,9 @@ class PinsTest extends ProviderTest
     public function testComment()
     {
         $response = $this->createApiResponse();
-        $mock = $this->createRequestMock();
-        $mock->expects($this->at(1))->method('exec')->willReturn($response);
-        $mock->expects($this->at(5))->method('exec')->willReturn($response);
-        $this->setProperty($this->provider, 'request', $mock);
+        $this->mock->expects($this->at(1))->method('exec')->willReturn($response);
+        $this->mock->expects($this->at(5))->method('exec')->willReturn($response);
+        $this->setProperty($this->provider, 'request', $this->mock);
         $this->assertTrue($this->provider->comment(1111, 'comment text'));
         $this->assertFalse($this->provider->comment(1111, 'comment text'));
 
@@ -42,9 +40,8 @@ class PinsTest extends ProviderTest
     public function testPin()
     {
         $response = $this->createPinCreationResponse();
-        $mock = $this->createRequestMock();
-        $mock->expects($this->at(1))->method('exec')->willReturn($response);
-        $this->setProperty($this->provider, 'request', $mock);
+        $this->mock->expects($this->at(1))->method('exec')->willReturn($response);
+        $this->setProperty($this->provider, 'request', $this->mock);
 
         $pinSource = 'http://example.com/image.jpg';
         $pinDescription = 'Pin Description';
@@ -56,9 +53,8 @@ class PinsTest extends ProviderTest
     public function testRepin()
     {
         $response = $this->createPinCreationResponse();
-        $mock = $this->createRequestMock();
-        $mock->expects($this->at(1))->method('exec')->willReturn($response);
-        $this->setProperty($this->provider, 'request', $mock);
+        $this->mock->expects($this->at(1))->method('exec')->willReturn($response);
+        $this->setProperty($this->provider, 'request', $this->mock);
 
         $repinId = 11;
         $pinDescription = 'Pin Description';
@@ -71,9 +67,8 @@ class PinsTest extends ProviderTest
     public function testDeletePin()
     {
         $response = $this->createApiResponse();
-        $mock = $this->createRequestMock();
-        $mock->expects($this->at(1))->method('exec')->willReturn($response);
-        $this->setProperty($this->provider, 'request', $mock);
+        $this->mock->expects($this->at(1))->method('exec')->willReturn($response);
+        $this->setProperty($this->provider, 'request', $this->mock);
         $this->assertNotFalse($this->provider->delete(1));
         $this->assertFalse($this->provider->delete(1));
     }
@@ -81,27 +76,23 @@ class PinsTest extends ProviderTest
     public function testGetPinInfo()
     {
         $response = $this->createApiResponse();
-        $mock = $this->createRequestMock();
-        $mock->expects($this->at(0))->method('exec')->willReturn($response);
-        $mock->expects($this->at(1))->method('exec')->willReturn($response);
-        $this->setProperty($this->provider, 'request', $mock);
+        $this->mock->expects($this->at(0))->method('exec')->willReturn($response);
+        $this->mock->expects($this->at(1))->method('exec')->willReturn($response);
+        $this->setProperty($this->provider, 'request', $this->mock);
         $this->assertNotNull($this->provider->info(1));
         $this->assertFalse($this->provider->info(1));
     }
 
     public function testSearch()
     {
-
         $response['module']['tree']['data']['results'] = [
             ['id' => 1],
             ['id' => 2],
         ];
 
         $expectedResultsNum = count($response['module']['tree']['data']['results']);
-        $mock = $this->createRequestMock();
-
-        $mock->method('exec')->willReturn($response);
-        $this->setProperty($this->provider, 'request', $mock);
+        $this->mock->method('exec')->willReturn($response);
+        $this->setProperty($this->provider, 'request', $this->mock);
         $res = iterator_to_array($this->provider->search('dogs'), 1);
         $this->assertCount($expectedResultsNum, $res[0]);
     }

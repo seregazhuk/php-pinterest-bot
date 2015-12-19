@@ -9,12 +9,10 @@ class ConversationsTest extends ProviderTest
 
     public function testSendMessage()
     {
-        $res = $this->createMessageSendResponse();
-
-        $mock = $this->createRequestMock();
-        $mock->expects($this->at(1))->method('exec')->willReturn($res);
-        $mock->expects($this->at(2))->method('exec')->willReturn(null);
-        $this->setProperty($this->provider, 'request', $mock);
+        $response = $this->createMessageSendResponse();
+        $this->mock->expects($this->at(1))->method('exec')->willReturn($response);
+        $this->mock->expects($this->at(2))->method('exec')->willReturn(null);
+        $this->setProperty($this->provider, 'request', $this->mock);
 
         $userId = '0000000000000';
         $message = 'test';
@@ -35,10 +33,9 @@ class ConversationsTest extends ProviderTest
             )
         );
 
-        $mock = $this->createRequestMock();
-        $mock->expects($this->at(1))->method('exec')->willReturn($res);
-        $mock->expects($this->at(2))->method('exec')->willReturn(null);
-        $this->setProperty($this->provider, 'request', $mock);
+        $this->mock->expects($this->at(1))->method('exec')->willReturn($res);
+        $this->mock->expects($this->at(2))->method('exec')->willReturn(null);
+        $this->setProperty($this->provider, 'request', $this->mock);
 
         $this->assertEquals($lastConversations, $this->provider->last());
         $this->assertFalse($this->provider->last());
@@ -53,7 +50,6 @@ class ConversationsTest extends ProviderTest
             'data'  => array("id" => "0000000000000"),
             'error' => null,
         );
-
         return $this->createApiResponse($data);
     }
 }

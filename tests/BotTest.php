@@ -2,68 +2,33 @@
 
 namespace seregazhuk\tests;
 
+use Mockable;
+use ReflectionClass;
 use seregazhuk\PinterestBot\Http;
 use seregazhuk\PinterestBot\PinterestBot;
 use PHPUnit_Framework_TestCase;
 use seregazhuk\PinterestBot\Request;
+use seregazhuk\tests\helpers\ReflectionHelper;
 
 class BotTest extends PHPUnit_Framework_TestCase
 {
+    use ReflectionHelper;
+
     /**
      * @var PinterestBot;
      */
     protected $bot;
 
-    /**
-     * @var \Mockable
-     */
-    protected $mock;
-
-    /**
-     * @var \ReflectionClass
-     */
-    protected $reflection;
-
     protected function setUp()
     {
         $this->bot = new PinterestBot('test', 'test');
-        $this->reflection = new \ReflectionClass($this->bot);
+        $this->reflection = new ReflectionClass($this->bot);
     }
 
     protected function tearDown()
     {
         $this->bot        = null;
         $this->reflection = null;
-    }
-
-    public function getProperty($property)
-    {
-        $property = $this->reflection->getProperty($property);
-        $property->setAccessible(true);
-
-        return $property->getValue($this->bot);
-    }
-
-    /**
-     * Call protected methods of PinterestBot class
-     *
-     * @param string $name
-     * @param array  $args
-     * @return mixed
-     */
-    public function invokeMethod($name, $args)
-    {
-        $method = $this->reflection->getMethod($name);
-        $method->setAccessible(true);
-
-        return $method->invokeArgs($this->bot, $args);
-    }
-
-    public function setProperty($property, $value)
-    {
-        $property = $this->reflection->getProperty($property);
-        $property->setAccessible(true);
-        $property->setValue($this->bot, $value);
     }
 
     /**
@@ -76,13 +41,13 @@ class BotTest extends PHPUnit_Framework_TestCase
         $mock->expects($this->at(0))->method('isLoggedIn')->willReturn(true);
         $mock->expects($this->at(1))->method('isLoggedIn')->willReturn(false);
 
-        $this->setProperty('request', $mock);
+        $this->setProperty($this->bot, 'request', $mock);
         $this->assertTrue($this->bot->login());
 
-        $this->setProperty('request', $mock);
+        $this->setProperty($this->bot, 'request', $mock);
         $this->assertTrue($this->bot->login());
 
-        $this->setProperty('username', null);
+        $this->setProperty($this->bot, 'username', null);
         $this->assertFalse($this->bot->login());
     }
 

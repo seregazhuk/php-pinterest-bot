@@ -21,18 +21,16 @@ class RequestTest extends PHPUnit_Framework_TestCase
      */
     public $mock;
 
-
     protected function setUp()
     {
-        $this->request    = new Request(new Http());
+        $this->request = new Request(new Http());
         $this->reflection = new \ReflectionClass($this->request);
     }
-
 
     protected function tearDown()
     {
         $this->request = null;
-        $this->mock       = null;
+        $this->mock = null;
         $this->reflection = null;
     }
 
@@ -106,7 +104,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
             'data'      => $response['module']['tree']['data']['results'],
             'bookmarks' => $response['module']['tree']['resource']['options']['bookmarks'],
         ];
-        $mock     = $this->getMock(Http::class, ['execute']);
+        $mock = $this->getMock(Http::class, ['execute']);
         $mock->method('execute')->willReturn(json_encode($response));
         $response['module']['tree']['data']['results'] = [];
         $this->setProperty($this->request, 'http', $mock);
@@ -117,7 +115,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
     public function testFollowMethodCall()
     {
         $response = ['body' => 'result'];
-        $mock     = $this->getMock(Http::class, ['setOptions', 'execute', 'close']);
+        $mock = $this->getMock(Http::class, ['setOptions', 'execute', 'close']);
         $mock->expects($this->at(1))->method('execute')->willReturn(json_encode($response));
         $mock->expects($this->at(2))->method('execute')->willReturn(null);
 

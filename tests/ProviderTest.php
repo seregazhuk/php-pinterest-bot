@@ -44,6 +44,7 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
     {
         $this->createProviderInstance();
         $this->reflection = new ReflectionClass($this->provider);
+        $this->mock = $this->createRequestMock();
         parent::setUp();
     }
 
