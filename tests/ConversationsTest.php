@@ -18,14 +18,7 @@ class ConversationsTest extends ProviderTest
 
     public function testSendMessage()
     {
-        $res = array(
-            'resource_response' => array(
-                'data' => array(
-                    "id" => "0000000000000",
-                ),
-                'error' => null,
-            ),
-        );
+        $res = $this->createMessageSendResponse();
 
         $mock = $this->createRequestMock();
         $mock->expects($this->at(1))->method('exec')->willReturn($res);
@@ -44,11 +37,11 @@ class ConversationsTest extends ProviderTest
             "1" => ["result"],
         );
 
-        $res = array(
-            'resource_response' => array(
+        $res = $this->createApiResponse(
+            array(
                 'data' => $lastConversations,
                 'error' => null,
-            ),
+            )
         );
 
         $mock = $this->createRequestMock();
@@ -58,5 +51,18 @@ class ConversationsTest extends ProviderTest
 
         $this->assertEquals($lastConversations, $this->provider->last());
         $this->assertFalse($this->provider->last());
+    }
+
+    /**
+     * @return array
+     */
+    protected function createMessageSendResponse()
+    {
+        $data = array(
+            'data'  => array("id" => "0000000000000"),
+            'error' => null,
+        );
+
+        return $this->createApiResponse($data);
     }
 }

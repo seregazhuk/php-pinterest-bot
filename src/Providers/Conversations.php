@@ -19,13 +19,10 @@ class Conversations extends Provider
         $this->request->checkLoggedIn();
         $data = array(
             "options" => array(
-                "user_ids" => array(
-                    $userId,
-                ),
+                "user_ids" => array($userId),
                 "emails"   => array(),
                 "text"     => $text,
             ),
-            "context" => new \stdClass(),
         );
 
         $request = ConversationHelper::createRequestData($data);
@@ -43,11 +40,7 @@ class Conversations extends Provider
     public function last()
     {
         $this->request->checkLoggedIn();
-        $request = [
-            "options" => [],
-            "context" => new \stdClass()
-        ];
-        $data = ConversationHelper::createRequestData($request, '/');
+        $data = ConversationHelper::createRequestData();
         $query = UrlHelper::buildRequestString($data);
         $res = $this->request->exec(UrlHelper::RESOURCE_GET_LAST_CONVERSATIONS . '?' . $query);
         return ConversationHelper::getDataFromResponse($res);

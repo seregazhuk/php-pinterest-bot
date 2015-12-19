@@ -10,11 +10,17 @@ class RequestHelper
      * @param array        $bookmarks
      * @return array
      */
-    public static function createRequestData($data, $sourceUrl = null, $bookmarks = [])
+    public static function createRequestData($data = [], $sourceUrl = '/', $bookmarks = [])
     {
+        if (empty($data)) {
+            $data = self::createEmptyRequestData();
+        }
+
         if ( ! empty($bookmarks)) {
             $data["options"]["bookmarks"] = $bookmarks;
         }
+
+        $data["context"] = new \stdClass();
 
         return [
             "source_url" => $sourceUrl,
@@ -36,8 +42,10 @@ class RequestHelper
             if ($key) {
                 return array_key_exists($key, $data) ? $data[$key] : false;
             }
+
             return $data;
         }
+
         return false;
     }
 
@@ -51,6 +59,7 @@ class RequestHelper
         if (isset($response['resource']['options']['bookmarks'][0])) {
             return [$response['resource']['options']['bookmarks'][0]];
         }
+
         return null;
     }
 
@@ -88,6 +97,14 @@ class RequestHelper
         }
 
         return [];
+    }
+
+    /**
+     * @return array
+     */
+    protected static function createEmptyRequestData()
+    {
+        return array('options' => []);
     }
 
 }

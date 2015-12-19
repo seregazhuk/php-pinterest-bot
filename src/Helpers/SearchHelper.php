@@ -24,7 +24,6 @@ class SearchHelper
         ];
         $dataJson = [
             "options" => $options,
-            "context" => new \stdClass(),
         ];
 
         if (empty($bookmarks)) {

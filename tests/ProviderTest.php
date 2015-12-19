@@ -26,7 +26,7 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
     protected $reflection;
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit_Framework_MockObject_MockObject|Request
      */
     protected function createRequestMock()
     {
@@ -65,4 +65,15 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
 
         $property->setValue($this->provider, $value);
     }
+
+    /**
+     * Creates a response from Pinterest
+     * @param array $data
+     * @return array
+     */
+    protected function createApiResponse($data = [])
+    {
+        return array('resource_response' => $data);
+    }
+
 }

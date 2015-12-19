@@ -256,7 +256,7 @@ class Request implements RequestInterface
      */
     public function setLoggedIn()
     {
-        $this->csrfToken = CsrfHelper::getCsrfToken($this->cookieJar);
+        $this->csrfToken = CsrfHelper::getTokenFromFile($this->cookieJar);
         if ($this->csrfToken) {
             $this->loggedIn = true;
         }

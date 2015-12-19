@@ -52,7 +52,6 @@ class PinnerHelper extends RequestHelper
                 "username_or_email" => $username,
                 "password"          => $password
             ],
-            "context" => new \stdClass(),
         ];
         return self::createRequestData($dataJson, "/login/");
     }
@@ -85,7 +84,6 @@ class PinnerHelper extends RequestHelper
             "options" => [
                 "username" => $username,
             ],
-            "context" => new \stdClass(),
         ];
     }
 

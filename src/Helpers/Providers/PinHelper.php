@@ -52,7 +52,6 @@ class PinHelper extends RequestHelper
                 "image_url"   => $imageUrl,
                 "board_id"    => $boardId,
             ],
-            "context" => new \stdClass(),
         ];
 
         return self::createPinRequestData($dataJson, "/pin/create/bookmarklet/?url=" . urlencode($imageUrl));
@@ -100,7 +99,6 @@ class PinHelper extends RequestHelper
                 "pin_id"                         => $pinId,
                 "allow_stale"                    => true,
             ],
-            "context" => new \StdClass(),
         ];
 
         return self::createPinRequestData($dataJson);

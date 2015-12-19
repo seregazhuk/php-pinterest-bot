@@ -41,7 +41,7 @@ class Boards extends Provider
     /**
      * Follow board by boardID
      *
-     * @param $boardId
+     * @param int $boardId
      * @return bool
      */
     public function follow($boardId)
@@ -54,7 +54,7 @@ class Boards extends Provider
     /**
      * Unfollow board by boardID
      *
-     * @param $boardId
+     * @param int $boardId
      * @return bool
      */
     public function unFollow($boardId)
