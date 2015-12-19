@@ -6,25 +6,14 @@ use seregazhuk\PinterestBot\Providers\Pinners;
 
 class PinnersTest extends ProviderTest
 {
-
-    /**
-     * @var Pinners
-     */
-    protected $provider;
-
-
-    protected function setUp()
-    {
-        $this->provider = new Pinners($this->createRequestMock());
-        parent::setUp();
-    }
+    protected $providerClass = Pinners::class;
 
     public function testFollow()
     {
         $response = ['body' => 'result'];
         $mock     = $this->createRequestMock();
         $mock->method('exec')->willReturn(json_encode($response));
-        $this->setProperty('request', $mock);
+        $this->setProperty($this->provider, 'request', $mock);
         $this->assertTrue($this->provider->follow(1));
         $this->assertTrue($this->provider->unFollow(1));
     }
@@ -37,7 +26,7 @@ class PinnersTest extends ProviderTest
 
         $mock = $this->createRequestMock();
         $mock->method('exec')->willReturn($res);
-        $this->setProperty('request', $mock);
+        $this->setProperty($this->provider, 'request', $mock);
 
         $data = $this->provider->getUserData('test_user', 'request://example.com', 'request://example.com');
         $this->assertEquals($expected, $data);
@@ -48,7 +37,7 @@ class PinnersTest extends ProviderTest
         $res['resource_response'] = ['data' => ['name' => 'test']];
         $mock = $this->createRequestMock();
         $mock->method('exec')->willReturn($res);
-        $this->setProperty('request', $mock);
+        $this->setProperty($this->provider, 'request', $mock);
         $data = $this->provider->info('username');
         $this->assertEquals($res['resource_response']['data'], $data);
     }
@@ -59,11 +48,10 @@ class PinnersTest extends ProviderTest
         $res['resource_data_cache'][1]['resource']['options']['username'] = $accountName;
         $mock                                                             = $this->createRequestMock();
         $mock->expects($this->at(1))->method('exec')->willReturn($res);
-        $this->setProperty('request', $mock);
+        $this->setProperty($this->provider, 'request', $mock);
         $this->assertEquals($accountName, $this->provider->myAccountName());
         $this->assertNull($this->provider->myAccountName());
     }
-
 
     /**
      * Simple response for follow functions
@@ -88,6 +76,7 @@ class PinnersTest extends ProviderTest
 
     /**
      * @dataProvider getFollowResponse
+     * @param $response
      */
     public function testGetFollowers($response)
     {
@@ -107,7 +96,7 @@ class PinnersTest extends ProviderTest
                     ],
                 ],
             ]);
-        $this->setProperty('request', $mock);
+        $this->setProperty($this->provider, 'request', $mock);
         $followers = $this->provider->followers('username');
         $this->assertCount(2, iterator_to_array($followers)[0]);
         $followers = $this->provider->followers('username');
@@ -128,7 +117,7 @@ class PinnersTest extends ProviderTest
             ->method('exec')
             ->willReturn(['resource_response' => ['data' => []]]);
 
-        $this->setProperty('request', $mock);
+        $this->setProperty($this->provider, 'request', $mock);
         $following = $this->provider->following('username');
         $this->assertCount(2, iterator_to_array($following)[0]);
     }
@@ -152,7 +141,7 @@ class PinnersTest extends ProviderTest
         $mock->expects($this->at(0))
             ->method('exec')
             ->willReturn($res);
-        $this->setProperty('request', $mock);
+        $this->setProperty($this->provider, 'request', $mock);
         $pins = $this->provider->pins('username', 1);
         $expectedResultsNum = count($res['resource_response']['data']);
         $this->assertCount($expectedResultsNum, iterator_to_array($pins)[0]);
@@ -170,7 +159,7 @@ class PinnersTest extends ProviderTest
         $mock               = $this->createRequestMock();
 
         $mock->method('exec')->willReturn($response);
-        $this->setProperty('request', $mock);
+        $this->setProperty($this->provider, 'request', $mock);
         $res = iterator_to_array($this->provider->search('dogs'), 1);
         $this->assertCount($expectedResultsNum, $res[0]);
     }

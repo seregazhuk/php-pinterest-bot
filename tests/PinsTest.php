@@ -6,17 +6,11 @@ use seregazhuk\PinterestBot\Providers\Pins;
 
 class PinsTest extends ProviderTest
 {
-
     /**
      * @var Pins
      */
     protected $provider;
-
-    protected function setUp()
-    {
-        $this->provider = new Pins($this->createRequestMock());
-        parent::setUp();
-    }
+    protected $providerClass = Pins::class;
 
     public function testLikeAndUnlike()
     {
@@ -24,7 +18,7 @@ class PinsTest extends ProviderTest
         $mock = $this->createRequestMock();
         $mock->expects($this->at(1))->method('exec')->willReturn($res);
         $mock->expects($this->at(3))->method('exec')->willReturn($res);
-        $this->setProperty('request', $mock);
+        $this->setProperty($this->provider, 'request', $mock);
         $this->assertTrue($this->provider->like(1111));
         $this->assertTrue($this->provider->unLike(1111));
         $this->assertFalse($this->provider->like(1111));
@@ -37,7 +31,7 @@ class PinsTest extends ProviderTest
         $mock = $this->createRequestMock();
         $mock->expects($this->at(1))->method('exec')->willReturn($response);
         $mock->expects($this->at(5))->method('exec')->willReturn($response);
-        $this->setProperty('request', $mock);
+        $this->setProperty($this->provider, 'request', $mock);
         $this->assertTrue($this->provider->comment(1111, 'comment text'));
         $this->assertFalse($this->provider->comment(1111, 'comment text'));
 
@@ -50,7 +44,7 @@ class PinsTest extends ProviderTest
         $response = $this->createPinCreationResponse();
         $mock = $this->createRequestMock();
         $mock->expects($this->at(1))->method('exec')->willReturn($response);
-        $this->setProperty('request', $mock);
+        $this->setProperty($this->provider, 'request', $mock);
 
         $pinSource = 'http://example.com/image.jpg';
         $pinDescription = 'Pin Description';
@@ -64,7 +58,7 @@ class PinsTest extends ProviderTest
         $response = $this->createPinCreationResponse();
         $mock = $this->createRequestMock();
         $mock->expects($this->at(1))->method('exec')->willReturn($response);
-        $this->setProperty('request', $mock);
+        $this->setProperty($this->provider, 'request', $mock);
 
         $repinId = 11;
         $pinDescription = 'Pin Description';
@@ -79,7 +73,7 @@ class PinsTest extends ProviderTest
         $response = $this->createApiResponse();
         $mock = $this->createRequestMock();
         $mock->expects($this->at(1))->method('exec')->willReturn($response);
-        $this->setProperty('request', $mock);
+        $this->setProperty($this->provider, 'request', $mock);
         $this->assertNotFalse($this->provider->delete(1));
         $this->assertFalse($this->provider->delete(1));
     }
@@ -90,7 +84,7 @@ class PinsTest extends ProviderTest
         $mock = $this->createRequestMock();
         $mock->expects($this->at(0))->method('exec')->willReturn($response);
         $mock->expects($this->at(1))->method('exec')->willReturn($response);
-        $this->setProperty('request', $mock);
+        $this->setProperty($this->provider, 'request', $mock);
         $this->assertNotNull($this->provider->info(1));
         $this->assertFalse($this->provider->info(1));
     }
@@ -107,7 +101,7 @@ class PinsTest extends ProviderTest
         $mock = $this->createRequestMock();
 
         $mock->method('exec')->willReturn($response);
-        $this->setProperty('request', $mock);
+        $this->setProperty($this->provider, 'request', $mock);
         $res = iterator_to_array($this->provider->search('dogs'), 1);
         $this->assertCount($expectedResultsNum, $res[0]);
     }

@@ -5,19 +5,16 @@ namespace szhuk\tests;
 use seregazhuk\PinterestBot\Request;
 use PHPUnit_Framework_TestCase;
 use seregazhuk\PinterestBot\Http;
+use seregazhuk\tests\helpers\ReflectionHelper;
 
 class RequestTest extends PHPUnit_Framework_TestCase
 {
+    use ReflectionHelper;
+
     /**
      * @var Request;
      */
     protected $request;
-
-
-    /**
-     * @var \ReflectionClass
-     */
-    protected $reflection;
 
     /**
      * Mock
@@ -31,22 +28,6 @@ class RequestTest extends PHPUnit_Framework_TestCase
         $this->reflection = new \ReflectionClass($this->request);
     }
 
-    public function getProperty($property)
-    {
-        $property = $this->reflection->getProperty($property);
-        $property->setAccessible(true);
-
-        return $property->getValue($this->request);
-    }
-
-
-    public function setProperty($property, $value)
-    {
-        $property = $this->reflection->getProperty($property);
-        $property->setAccessible(true);
-
-        $property->setValue($this->request, $value);
-    }
 
     protected function tearDown()
     {
@@ -74,15 +55,15 @@ class RequestTest extends PHPUnit_Framework_TestCase
     {
         $this->request->setLoggedIn();
         $this->assertTrue($this->request->checkLoggedIn());
-        $token = $this->getProperty('csrfToken');
+        $token = $this->getProperty('csrfToken', $this->request);
         $this->assertNotEquals(Request::DEFAULT_CSRFTOKEN, $token);
         $this->assertTrue($this->request->isLoggedIn());
 
         $this->request->clearToken();
-        $token = $this->getProperty('csrfToken');
+        $token = $this->getProperty('csrfToken', $this->request);
         $this->assertEquals(Request::DEFAULT_CSRFTOKEN, $token);
 
-        $this->setProperty('loggedIn', false);
+        $this->setProperty($this->request, 'loggedIn', false);
         $this->request->checkLoggedIn();
     }
 
@@ -91,7 +72,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
         $httpMock = $this->getMock(Http::class, ['setOptions', 'execute', 'close']);
         $response = ['body' => 'text'];
         $httpMock->method('execute')->willReturn(json_encode($response));
-        $this->setProperty('http', $httpMock);
+        $this->setProperty($this->request, 'http', $httpMock);
         $res = $this->request->exec('http://example.com', 'a=b');
         $this->assertEquals($response, $res);
 
@@ -128,7 +109,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
         $mock     = $this->getMock(Http::class, ['execute']);
         $mock->method('execute')->willReturn(json_encode($response));
         $response['module']['tree']['data']['results'] = [];
-        $this->setProperty('http', $mock);
+        $this->setProperty($this->request, 'http', $mock);
         $res = $this->request->searchCall('cats', Request::SEARCH_PINS_SCOPE, []);
         $this->assertEquals($expected, $res);
     }
@@ -140,7 +121,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
         $mock->expects($this->at(1))->method('execute')->willReturn(json_encode($response));
         $mock->expects($this->at(2))->method('execute')->willReturn(null);
 
-        $this->setProperty('http', $mock);
+        $this->setProperty($this->request, 'http', $mock);
         $this->assertTrue($this->request->followMethodCall(1, Request::BOARD_ENTITY_ID, 'ur'));
         $this->assertFalse($this->request->followMethodCall(1, Request::INTEREST_ENTITY_ID, 'ur'));
 

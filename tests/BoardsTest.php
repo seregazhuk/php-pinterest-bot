@@ -10,14 +10,7 @@ class BoardsTest extends ProviderTest
     /**
      * @var Boards
      */
-    protected $provider;
-
-
-    protected function setUp()
-    {
-        $this->provider = new Boards($this->createRequestMock());
-        parent::setUp();
-    }
+    protected $providerClass = Boards::class;
 
     public function testSearch()
     {
@@ -29,7 +22,7 @@ class BoardsTest extends ProviderTest
         $expectedResultsNum = count($response['module']['tree']['data']['results']);
         $mock               = $this->createRequestMock();
         $mock->method('exec')->willReturn($response);
-        $this->setProperty('request', $mock);
+        $this->setProperty($this->provider, 'request', $mock);
         $res = iterator_to_array($this->provider->search('dogs'), 1);
         $this->assertCount($expectedResultsNum, $res[0]);
     }
@@ -39,7 +32,7 @@ class BoardsTest extends ProviderTest
         $mock = $this->createRequestMock();
         $mock->expects($this->at(1))->method('exec')->willReturn([]);
         $mock->expects($this->at(3))->method('exec')->willReturn([]);
-        $this->setProperty('request', $mock);
+        $this->setProperty($this->provider, 'request', $mock);
         $this->assertTrue($this->provider->follow(1111));
         $this->assertTrue($this->provider->unFollow(1111));
         $this->assertFalse($this->provider->follow(1111));
@@ -52,14 +45,14 @@ class BoardsTest extends ProviderTest
         $res['resource_response']['data']['all_boards'] = $initBoards;
         $mock                                           = $this->createRequestMock();
         $mock->method('exec')->willReturn($res);
-        $this->setProperty('request', $mock);
+        $this->setProperty($this->provider, 'request', $mock);
         $boards = $this->provider->my();
         $this->assertEquals($initBoards, $boards);
         $res = null;
 
         $mock = $this->createRequestMock();
         $mock->method('exec')->willReturn(json_encode($res));
-        $this->setProperty('request', $mock);
+        $this->setProperty($this->provider, 'request', $mock);
         $boards = $this->provider->my();
         $this->assertFalse($boards);
     }
