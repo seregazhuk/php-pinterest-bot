@@ -23,6 +23,7 @@ class BotTest extends PHPUnit_Framework_TestCase
     {
         $this->bot = new PinterestBot('test', 'test');
         $this->reflection = new ReflectionClass($this->bot);
+        $this->setReflectedObject($this->bot);
     }
 
     protected function tearDown()
@@ -41,13 +42,13 @@ class BotTest extends PHPUnit_Framework_TestCase
         $mock->expects($this->at(0))->method('isLoggedIn')->willReturn(true);
         $mock->expects($this->at(1))->method('isLoggedIn')->willReturn(false);
 
-        $this->setProperty($this->bot, 'request', $mock);
+        $this->setProperty('request', $mock);
         $this->assertTrue($this->bot->login());
 
-        $this->setProperty($this->bot, 'request', $mock);
+        $this->setProperty('request', $mock);
         $this->assertTrue($this->bot->login());
 
-        $this->setProperty($this->bot, 'username', null);
+        $this->setProperty('username', null);
         $this->assertFalse($this->bot->login());
     }
 

@@ -13,7 +13,7 @@ class InterestsTest extends ProviderTest
         $this->mock->expects($this->at(1))->method('exec')->willReturn([]);
         $this->mock->expects($this->at(3))->method('exec')->willReturn([]);
 
-        $this->setProperty($this->provider, 'request', $this->mock);
+        $this->setProperty('request', $this->mock);
 
         $this->assertTrue($this->provider->follow(1111));
         $this->assertTrue($this->provider->unFollow(1111));

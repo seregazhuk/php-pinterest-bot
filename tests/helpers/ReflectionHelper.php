@@ -11,29 +11,37 @@ trait ReflectionHelper
      */
     protected $reflection;
 
+    protected $reflectedObject;
+
     /**
      * @param $property
-     * @param $reflectedObject
      * @return mixed
      */
-    public function getProperty($property, $reflectedObject)
+    public function getProperty($property)
     {
         $property = $this->reflection->getProperty($property);
         $property->setAccessible(true);
 
-        return $property->getValue($reflectedObject);
+        return $property->getValue($this->reflectedObject);
     }
 
     /**
-     * @param $reflectedObject
      * @param $property
      * @param $value
      */
-    public function setProperty($reflectedObject, $property, $value)
+    public function setProperty($property, $value)
     {
         $property = $this->reflection->getProperty($property);
         $property->setAccessible(true);
 
-        $property->setValue($reflectedObject, $value);
+        $property->setValue($this->reflectedObject, $value);
+    }
+
+    /**
+     * @param mixed $reflectedObject
+     */
+    public function setReflectedObject($reflectedObject)
+    {
+        $this->reflectedObject = $reflectedObject;
     }
 }

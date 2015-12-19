@@ -25,6 +25,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
     {
         $this->request = new Request(new Http());
         $this->reflection = new \ReflectionClass($this->request);
+        $this->setReflectedObject($this->request);
     }
 
     protected function tearDown()
@@ -53,24 +54,24 @@ class RequestTest extends PHPUnit_Framework_TestCase
     {
         $this->request->setLoggedIn();
         $this->assertTrue($this->request->checkLoggedIn());
-        $token = $this->getProperty('csrfToken', $this->request);
+        $token = $this->getProperty('csrfToken');
         $this->assertNotEquals(Request::DEFAULT_CSRFTOKEN, $token);
         $this->assertTrue($this->request->isLoggedIn());
 
         $this->request->clearToken();
-        $token = $this->getProperty('csrfToken', $this->request);
+        $token = $this->getProperty('csrfToken');
         $this->assertEquals(Request::DEFAULT_CSRFTOKEN, $token);
 
-        $this->setProperty($this->request, 'loggedIn', false);
+        $this->setProperty('loggedIn', false);
         $this->request->checkLoggedIn();
     }
 
     public function testExec()
     {
         $httpMock = $this->getMock(Http::class, ['setOptions', 'execute', 'close']);
-        $response = ['body' => 'text'];
+        $response = $this->createSuccessResponse();
         $httpMock->method('execute')->willReturn(json_encode($response));
-        $this->setProperty($this->request, 'http', $httpMock);
+        $this->setProperty('http', $httpMock);
         $res = $this->request->exec('http://example.com', 'a=b');
         $this->assertEquals($response, $res);
 
@@ -107,21 +108,28 @@ class RequestTest extends PHPUnit_Framework_TestCase
         $mock = $this->getMock(Http::class, ['execute']);
         $mock->method('execute')->willReturn(json_encode($response));
         $response['module']['tree']['data']['results'] = [];
-        $this->setProperty($this->request, 'http', $mock);
+        $this->setProperty('http', $mock);
         $res = $this->request->searchCall('cats', Request::SEARCH_PINS_SCOPE, []);
         $this->assertEquals($expected, $res);
     }
 
     public function testFollowMethodCall()
     {
-        $response = ['body' => 'result'];
+        $response = $this->createSuccessResponse();
         $mock = $this->getMock(Http::class, ['setOptions', 'execute', 'close']);
         $mock->expects($this->at(1))->method('execute')->willReturn(json_encode($response));
         $mock->expects($this->at(2))->method('execute')->willReturn(null);
 
-        $this->setProperty($this->request, 'http', $mock);
+        $this->setProperty('http', $mock);
         $this->assertTrue($this->request->followMethodCall(1, Request::BOARD_ENTITY_ID, 'ur'));
         $this->assertFalse($this->request->followMethodCall(1, Request::INTEREST_ENTITY_ID, 'ur'));
+    }
 
+    /**
+     * @return array
+     */
+    protected function createSuccessResponse()
+    {
+        return ['body' => 'result'];
     }
 }

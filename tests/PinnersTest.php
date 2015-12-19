@@ -12,7 +12,7 @@ class PinnersTest extends ProviderTest
     {
         $response = ['body' => 'result'];
         $this->mock->method('exec')->willReturn(json_encode($response));
-        $this->setProperty($this->provider, 'request', $this->mock);
+        $this->setProperty('request', $this->mock);
         $this->assertTrue($this->provider->follow(1));
         $this->assertTrue($this->provider->unFollow(1));
     }
@@ -24,7 +24,7 @@ class PinnersTest extends ProviderTest
         $res['resource_response']['data']        = $expected['data'];
 
         $this->mock->method('exec')->willReturn($res);
-        $this->setProperty($this->provider, 'request', $this->mock);
+        $this->setProperty('request', $this->mock);
 
         $data = $this->provider->getUserData('test_user', 'request://example.com', 'request://example.com');
         $this->assertEquals($expected, $data);
@@ -34,7 +34,7 @@ class PinnersTest extends ProviderTest
     {
         $res['resource_response'] = ['data' => ['name' => 'test']];
         $this->mock->method('exec')->willReturn($res);
-        $this->setProperty($this->provider, 'request', $this->mock);
+        $this->setProperty('request', $this->mock);
         $data = $this->provider->info('username');
         $this->assertEquals($res['resource_response']['data'], $data);
     }
@@ -44,7 +44,7 @@ class PinnersTest extends ProviderTest
         $accountName                                                      = 'test';
         $res['resource_data_cache'][1]['resource']['options']['username'] = $accountName;
         $this->mock->expects($this->at(1))->method('exec')->willReturn($res);
-        $this->setProperty($this->provider, 'request', $this->mock);
+        $this->setProperty('request', $this->mock);
         $this->assertEquals($accountName, $this->provider->myAccountName());
         $this->assertNull($this->provider->myAccountName());
     }
@@ -91,7 +91,7 @@ class PinnersTest extends ProviderTest
                     ],
                 ],
             ]);
-        $this->setProperty($this->provider, 'request', $this->mock);
+        $this->setProperty('request', $this->mock);
         $followers = $this->provider->followers('username');
         $this->assertCount(2, iterator_to_array($followers)[0]);
         $followers = $this->provider->followers('username');
@@ -111,7 +111,7 @@ class PinnersTest extends ProviderTest
             ->method('exec')
             ->willReturn(['resource_response' => ['data' => []]]);
 
-        $this->setProperty($this->provider, 'request', $this->mock);
+        $this->setProperty('request', $this->mock);
         $following = $this->provider->following('username');
         $this->assertCount(2, iterator_to_array($following)[0]);
     }
@@ -134,7 +134,7 @@ class PinnersTest extends ProviderTest
         $this->mock->expects($this->at(0))
             ->method('exec')
             ->willReturn($res);
-        $this->setProperty($this->provider, 'request', $this->mock);
+        $this->setProperty('request', $this->mock);
         $pins = $this->provider->pins('username', 1);
         $expectedResultsNum = count($res['resource_response']['data']);
         $this->assertCount($expectedResultsNum, iterator_to_array($pins)[0]);
@@ -142,7 +142,6 @@ class PinnersTest extends ProviderTest
 
     public function testSearch()
     {
-
         $response['module']['tree']['data']['results'] = [
             ['id' => 1],
             ['id' => 2],
@@ -151,7 +150,7 @@ class PinnersTest extends ProviderTest
         $expectedResultsNum = count($response['module']['tree']['data']['results']);
 
         $this->mock->method('exec')->willReturn($response);
-        $this->setProperty($this->provider, 'request', $this->mock);
+        $this->setProperty('request', $this->mock);
         $res = iterator_to_array($this->provider->search('dogs'), 1);
         $this->assertCount($expectedResultsNum, $res[0]);
     }
