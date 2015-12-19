@@ -37,7 +37,7 @@ class SearchHelper extends RequestHelper
         }
 
         return self::createRequestData(
-            $dataJson, "/search/$scope/?q=" . $query
+            $dataJson, "/search/$scope/?q=".$query
         );
     }
 
