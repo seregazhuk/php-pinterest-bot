@@ -13,5 +13,5 @@ machine:
 ## Customize dependencies
 dependencies:
   pre:
-    - composer install --prefer-source --no-interaction --dev
+    - composer install --prefer-source --no-interaction
     - composer dump-autoload
