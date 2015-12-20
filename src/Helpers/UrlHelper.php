@@ -53,7 +53,7 @@ class UrlHelper
      */
     public static function buildApiUrl($resourceUrl)
     {
-        return self::URL_BASE . ltrim($resourceUrl, '/');
+        return self::URL_BASE.ltrim($resourceUrl, '/');
     }
 
     /**
