@@ -166,8 +166,6 @@ class PinnersTest extends ProviderTest
         $this->mock->method('exec')->willReturn($response);
         $this->setProperty('request', $this->mock);
         $res = iterator_to_array($this->provider->search('dogs'), 1);
-        print_r($res);
-        die();
         $this->assertCount($expectedResultsNum, $res[0]);
     }
 }

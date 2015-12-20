@@ -27,7 +27,7 @@ trait SearchHelper
         $get = $this->createSearchRequest($query, $scope, $bookmarks);
         $url = $url.'?'.UrlHelper::buildRequestString($get);
         $response = $this->request->exec($url);
-        return $this->response->parseSearchResponse($response, empty($bookmarks));
+        return $this->response->parseSearchResponse($response, !empty($bookmarks));
     }
 
     /**

@@ -20,7 +20,7 @@ use seregazhuk\PinterestBot\Providers\Provider;
  * @property Mockable        $mock
  * @property ReflectionClass $reflection
  */
-class ProviderTest extends PHPUnit_Framework_TestCase
+abstract class ProviderTest extends PHPUnit_Framework_TestCase
 {
     use ReflectionHelper, ResponseHelper;
 
@@ -97,7 +97,7 @@ class ProviderTest extends PHPUnit_Framework_TestCase
     //        $res = $this->provider->searchCall('cats', Request::SEARCH_PINS_SCOPE, []);
     //        $this->assertEquals($expected, $res);
     //}
-
+    //
     //public function testSearchWithoutBookmarks()
     //{
     //    $response = $this->createSuccessApiResponse();
