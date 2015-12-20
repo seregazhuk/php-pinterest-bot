@@ -2,13 +2,15 @@
 
 namespace seregazhuk\PinterestBot\Providers;
 
+use seregazhuk\PinterestBot\Helpers\SearchHelper;
 use seregazhuk\PinterestBot\Request;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
-use seregazhuk\PinterestBot\Helpers\ResponseHelper;
 use seregazhuk\PinterestBot\Helpers\Providers\PinHelper;
 
 class Pins extends Provider
 {
+    use SearchHelper;
+
     /**
      * Likes pin with current ID
      *
@@ -160,6 +162,6 @@ class Pins extends Provider
      */
     public function search($query, $batchesLimit = 0)
     {
-        return $this->request->searchWithPagination($query, Request::SEARCH_PINS_SCOPE, $batchesLimit);
+        return $this->searchWithPagination($query, Request::SEARCH_PINS_SCOPE, $batchesLimit);
     }
 }

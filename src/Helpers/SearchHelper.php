@@ -2,10 +2,15 @@
 
 namespace seregazhuk\PinterestBot\Helpers;
 
+use seregazhuk\PinterestBot\Response;
+
 trait SearchHelper
 {
     use PaginationHelper;
 
+    /**
+     * @var Response;
+     */
     protected $moduleSearchPage = "SearchPage";
 
     /**
@@ -22,8 +27,7 @@ trait SearchHelper
         $get = $this->createSearchRequest($query, $scope, $bookmarks);
         $url = $url.'?'.UrlHelper::buildRequestString($get);
         $response = $this->request->exec($url);
-
-        return $this->response->getPaginationData($response);
+        return $this->response->parseSearchResponse($response, empty($bookmarks));
     }
 
     /**
@@ -74,7 +78,7 @@ trait SearchHelper
             );
         }
 
-        return $this->createRequestData(
+        return RequestHelper::createRequestData(
             $dataJson, "/search/$scope/?q=".$query
         );
     }

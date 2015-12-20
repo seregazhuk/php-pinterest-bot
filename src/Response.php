@@ -100,7 +100,6 @@ class Response implements ResponseInterface
      *
      * @param array $response
      * @return array
-     * @internal param array $response
      */
     public function getPaginationData($response)
     {
@@ -124,7 +123,7 @@ class Response implements ResponseInterface
      * @param bool  $bookmarksUsed
      * @return array|null
      */
-    public function parseSearchResponse($response, $bookmarksUsed)
+    public function parseSearchResponse($response, $bookmarksUsed = true)
     {
         if ($response === null || ! $bookmarksUsed) {
             return self::parseSimpledSearchResponse($response);
@@ -143,7 +142,6 @@ class Response implements ResponseInterface
     public function parseSimpledSearchResponse($response)
     {
         $bookmarks = [];
-
         if (isset($response['module']['tree']['resource']['options']['bookmarks'][0])) {
             $bookmarks = $response['module']['tree']['resource']['options']['bookmarks'][0];
         }
