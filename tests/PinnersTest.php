@@ -90,9 +90,11 @@ class PinnersTest extends ProviderTest
         $this->mock->expects($this->at(0))
             ->method('exec')
             ->willReturn($response);
+
         $this->mock->expects($this->at(1))
             ->method('exec')
             ->willReturn(['resource_response' => ['data' => []]]);
+
         $this->mock->expects($this->at(2))
             ->method('exec')
             ->willReturn([

@@ -11,33 +11,44 @@ trait PaginationHelper
      * of object to get data.
      *
      * @param callable $callback
-     * @param array  $params
-     * @param int    $batchesLimit
+     * @param array    $params
+     * @param int      $batchesLimit
      * @return \Iterator
      */
     public function getPaginatedData($callback, $params, $batchesLimit = 0)
     {
         $batchesNum = 0;
         do {
-            if (self::reachBatchesLimit($batchesLimit, $batchesNum))  break;
+            $response = self::getPaginatedResponse($callback, $params);
+            $items = self::getDataFromPaginatedResponse($response);
 
-            $items = [];
-            $res = call_user_func_array($callback, $params);
-
-            if (self::_responseHasData($res)) {
-                $res = self::_clearResponseFromMetaData($res);
-                $items = $res['data'];
+            if (empty($items)) {
+                return;
             }
 
-            if (empty($items)) return;
-
-            if (isset($res['bookmarks'])) {
-                $params['bookmarks'] = $res['bookmarks'];
-            }
-
+            $params['bookmarks'] = self::getBookMarks($response);
             $batchesNum++;
             yield $items;
-        } while (self::_responseHasData($res));
+        } while ( ! self::reachBatchesLimit($batchesLimit, $batchesNum));
+    }
+
+    protected function getPaginatedResponse(callable $callback, array $params)
+    {
+        $response = call_user_func_array($callback, $params);
+        if (self::_responseHasData($response)) {
+            return self::_clearResponseFromMetaData($response);
+        }
+    }
+
+    protected function getDataFromPaginatedResponse($response)
+    {
+        if (self::_responseHasData($response)) {
+            $res = self::_clearResponseFromMetaData($response);
+
+            return $res['data'];
+        }
+
+        return [];
     }
 
     /**
@@ -69,8 +80,19 @@ trait PaginationHelper
     {
         if (isset($res['data'][0]['type']) && $res['data'][0]['type'] == 'module') {
             array_shift($res['data']);
+
             return $res;
         }
+
         return $res;
+    }
+
+    /**
+     * @param $response
+     * @return array
+     */
+    protected function getBookMarks($response)
+    {
+        return isset($response['bookmarks']) ? $response['bookmarks'] : [];
     }
 }

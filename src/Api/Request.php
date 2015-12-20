@@ -176,7 +176,6 @@ class Request implements RequestInterface
      */
     public function isLoggedIn()
     {
-        echo "triger\n";
         return $this->loggedIn;
     }
 
