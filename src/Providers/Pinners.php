@@ -4,11 +4,13 @@ namespace seregazhuk\PinterestBot\Providers;
 
 use seregazhuk\PinterestBot\Request;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
-use seregazhuk\PinterestBot\Helpers\PaginationHelper;
+use seregazhuk\PinterestBot\Helpers\SearchHelper;
 use seregazhuk\PinterestBot\Helpers\Providers\PinnerHelper;
 
 class Pinners extends Provider
 {
+    use SearchHelper;
+
     /**
      * Follow user by user_id
      *
@@ -19,7 +21,8 @@ class Pinners extends Provider
     {
         $this->request->checkLoggedIn();
 
-        return $this->request->followMethodCall($userId, Request::PINNER_ENTITY_ID, UrlHelper::RESOURCE_FOLLOW_USER);
+        $response = $this->request->followMethodCall($userId, Request::PINNER_ENTITY_ID, UrlHelper::RESOURCE_FOLLOW_USER);
+        return $this->response->checkErrorInResponse($response);
     }
 
     /**
@@ -32,7 +35,8 @@ class Pinners extends Provider
     {
         $this->request->checkLoggedIn();
 
-        return $this->request->followMethodCall($userId, Request::PINNER_ENTITY_ID, UrlHelper::RESOURCE_UNFOLLOW_USER);
+        $response = $this->request->followMethodCall($userId, Request::PINNER_ENTITY_ID, UrlHelper::RESOURCE_UNFOLLOW_USER);
+        return $this->response->checkErrorInResponse($response);
     }
 
     /**
@@ -50,10 +54,8 @@ class Pinners extends Provider
     {
         $get = PinnerHelper::createUserDataRequest($username, $sourceUrl, $bookmarks);
         $getString = UrlHelper::buildRequestString($get);
-        $res = $this->request->exec($url . '?' . $getString, $username);
-        $this->request->checkErrorInResponse($res);
-
-        return PinnerHelper::parsePaginatedResponse($res);
+        $response = $this->request->exec($url . '?' . $getString, $username);
+        return $this->response->getPaginationData($response);
     }
 
     /**
@@ -65,7 +67,7 @@ class Pinners extends Provider
      */
     public function getPaginatedUserData($username, $resourceUrl, $sourceUrl, $batchesLimit = 0)
     {
-        return PaginationHelper::getPaginatedData(
+        return $this->getPaginatedData(
             [$this, 'getUserData'],
             [
                 'username'  => $username,
@@ -100,7 +102,6 @@ class Pinners extends Provider
     public function info($username)
     {
         $res = $this->getUserData($username, UrlHelper::RESOURCE_USER_INFO, "/$username/");
-
         return isset($res['data']) ? $res['data'] : null;
     }
 
@@ -156,7 +157,7 @@ class Pinners extends Provider
      */
     public function search($query, $batchesLimit = 0)
     {
-        return $this->request->searchWithPagination($query, Request::SEARCH_PEOPLE_SCOPE, $batchesLimit);
+        return $this->searchWithPagination($query, Request::SEARCH_PEOPLE_SCOPE, $batchesLimit);
     }
 
     /**
@@ -175,11 +176,11 @@ class Pinners extends Provider
         $post = PinnerHelper::createLoginRequest($username, $password);
         $postString = UrlHelper::buildRequestString($post);
         $this->request->clearToken();
-        $res = PinnerHelper::parseLoginResponse($this->request->exec(UrlHelper::RESOURCE_LOGIN, $postString));
-        if ($res) {
+        $response = $this->response->checkErrorInResponse($this->request->exec(UrlHelper::RESOURCE_LOGIN, $postString));
+        if ($response) {
             $this->request->setLoggedIn();
         }
 
-        return $res;
+        return $response;
     }
 }

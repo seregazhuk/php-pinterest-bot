@@ -4,11 +4,13 @@ namespace seregazhuk\tests;
 
 use Mockable;
 use ReflectionClass;
-use seregazhuk\PinterestBot\Request;
-use seregazhuk\PinterestBot\Providers\Provider;
-use seregazhuk\PinterestBot\Http;
 use PHPUnit_Framework_TestCase;
+use seregazhuk\PinterestBot\Http;
+use seregazhuk\PinterestBot\Request;
+use seregazhuk\PinterestBot\Response;
+use seregazhuk\tests\helpers\ResponseHelper;
 use seregazhuk\tests\helpers\ReflectionHelper;
+use seregazhuk\PinterestBot\Providers\Provider;
 
 /**
  * Class ProviderTest
@@ -18,12 +20,12 @@ use seregazhuk\tests\helpers\ReflectionHelper;
  * @property Mockable        $mock
  * @property ReflectionClass $reflection
  */
-abstract class ProviderTest extends PHPUnit_Framework_TestCase
+class ProviderTest extends PHPUnit_Framework_TestCase
 {
-    use ReflectionHelper;
+    use ReflectionHelper, ResponseHelper;
 
     protected $provider;
-    protected $providerClass;
+    protected $providerClass = Provider::class;
     protected $mock;
 
     /**
@@ -46,6 +48,7 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
         $this->reflection = new ReflectionClass($this->provider);
         $this->mock = $this->createRequestMock();
         $this->setReflectedObject($this->provider);
+        $this->setProperty('request', $this->mock);
         parent::setUp();
     }
 
@@ -55,19 +58,75 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
         $this->reflection = null;
     }
 
-    /**
-     * Creates a response from Pinterest
-     * @param array $data
-     * @return array
-     */
-    protected function createApiResponse($data = [])
-    {
-        return array('resource_response' => $data);
-    }
 
     protected function createProviderInstance()
     {
         $providerReflection = new ReflectionClass($this->providerClass);
-        $this->provider = $providerReflection->newInstanceArgs([$this->createRequestMock()]);
+        $this->provider = $providerReflection->newInstanceArgs(
+            [$this->createRequestMock(), new Response()]);
     }
+
+    //public function testSearch()
+    //{
+    //        $response = $this->createSuccessApiResponse();
+    //        $response = array_merge($response, [
+    //            'module'   => [
+    //                'tree' => [
+    //                    'data'     => [
+    //                        'results' => [
+    //                            'my_first_result',
+    //                        ],
+    //                    ],
+    //                    'resource' => [
+    //                        'options' => [
+    //                            'bookmarks' => ['my_bookmarks'],
+    //                        ],
+    //                    ],
+    //                ],
+    //            ],
+    //            'resource' => [
+    //                'options' => ['bookmarks' => 'my_bookmarks'],
+    //            ],
+    //        ]);
+    //        $expected = [
+    //            'data'      => $response['module']['tree']['data']['results'],
+    //            'bookmarks' => $response['module']['tree']['resource']['options']['bookmarks'],
+    //        ];
+    //        $this->mock->method('exec')->willReturn($response);
+    //        $response['module']['tree']['data']['results'] = [];
+    //        $res = $this->provider->searchCall('cats', Request::SEARCH_PINS_SCOPE, []);
+    //        $this->assertEquals($expected, $res);
+    //}
+
+    //public function testSearchWithoutBookmarks()
+    //{
+    //    $response = $this->createSuccessApiResponse();
+    //    $response = array_merge($response, [
+    //        'module'   => [
+    //            'tree' => [
+    //                'data'     => [
+    //                    'results' => [
+    //                        'my_first_result',
+    //                    ],
+    //                ],
+    //                'resource' => [
+    //                    'options' => [
+    //                        'bookmarks' => ['my_bookmarks'],
+    //                    ],
+    //                ],
+    //            ],
+    //        ],
+    //        'resource' => [
+    //            'options' => ['bookmarks' => 'my_bookmarks'],
+    //        ],
+    //    ]);
+    //    $expected = [
+    //        'data'      => $response['module']['tree']['data']['results'],
+    //        'bookmarks' => $response['module']['tree']['resource']['options']['bookmarks'],
+    //    ];
+    //    $this->mock->method('exec')->willReturn($response);
+    //    $response['module']['tree']['data']['results'] = [];
+    //    $res = $this->provider->searchCall('cats', Request::SEARCH_PINS_SCOPE, []);
+    //    $this->assertEquals($expected, $res);
+    //}
 }

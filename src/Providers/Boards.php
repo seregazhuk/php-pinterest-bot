@@ -3,8 +3,9 @@
 namespace seregazhuk\PinterestBot\Providers;
 
 use seregazhuk\PinterestBot\Request;
-use seregazhuk\PinterestBot\Helpers\Providers\BoardHelper;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
+use seregazhuk\PinterestBot\Helpers\ResponseHelper;
+use seregazhuk\PinterestBot\Helpers\Providers\BoardHelper;
 
 class Boards extends Provider
 {
@@ -20,11 +21,10 @@ class Boards extends Provider
 
         $get = BoardHelper::createBoardsInfoRequest();
         $getString = UrlHelper::buildRequestString($get);
-        $res = $this->request->exec(UrlHelper::RESOURCE_GET_BOARDS . "?{$getString}");
+        $response = $this->request->exec(UrlHelper::RESOURCE_GET_BOARDS."?{$getString}");
 
-        return BoardHelper::getDataFromResponse($res, 'all_boards');
+        return $this->response->getData($response, 'all_boards');
     }
-
 
     /**
      * Search boards by search query
@@ -48,7 +48,8 @@ class Boards extends Provider
     {
         $this->request->checkLoggedIn();
 
-        return $this->request->followMethodCall($boardId, Request::BOARD_ENTITY_ID, UrlHelper::RESOURCE_FOLLOW_BOARD);
+        $response = $this->request->followMethodCall($boardId, Request::BOARD_ENTITY_ID, UrlHelper::RESOURCE_FOLLOW_BOARD);
+        return $this->response->checkResponse($response);
     }
 
     /**
@@ -61,6 +62,7 @@ class Boards extends Provider
     {
         $this->request->checkLoggedIn();
 
-        return $this->request->followMethodCall($boardId, Request::BOARD_ENTITY_ID, UrlHelper::RESOURCE_UNFOLLOW_BOARD);
+        $response = $this->request->followMethodCall($boardId, Request::BOARD_ENTITY_ID, UrlHelper::RESOURCE_UNFOLLOW_BOARD);
+        return $this->response->checkResponse($response);
     }
 }

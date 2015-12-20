@@ -2,9 +2,47 @@
 
 namespace seregazhuk\PinterestBot\Helpers;
 
-class SearchHelper extends RequestHelper
+trait SearchHelper
 {
-    const MODULE_SEARCH_PAGE = "SearchPage";
+    use PaginationHelper;
+
+    protected $moduleSearchPage = "SearchPage";
+
+    /**
+     * Executes search to API. Query - search string.
+     *
+     * @param string $query
+     * @param string $scope
+     * @param array  $bookmarks
+     * @return array
+     */
+    public function searchCall($query, $scope, $bookmarks = [])
+    {
+        $url = UrlHelper::getSearchUrl(! empty($bookmarks));
+        $get = $this->createSearchRequest($query, $scope, $bookmarks);
+        $url = $url.'?'.UrlHelper::buildRequestString($get);
+        $response = $this->request->exec($url);
+
+        return $this->response->getPaginationData($response);
+    }
+
+    /**
+     * Executes search to API with pagination.
+     *
+     * @param string $query
+     * @param string $scope
+     * @param int    $batchesLimit
+     * @return \Iterator
+     */
+    public function searchWithPagination($query, $scope, $batchesLimit)
+    {
+        return $this->getPaginatedData(
+            [$this, 'searchCall'], [
+            'query' => $query,
+            'scope' => $scope,
+        ], $batchesLimit
+        );
+    }
 
     /**
      * Creates Pinterest API search request
@@ -14,7 +52,7 @@ class SearchHelper extends RequestHelper
      * @param array $bookmarks
      * @return array
      */
-    public static function createSearchRequest($query, $scope, $bookmarks = [])
+    public function createSearchRequest($query, $scope, $bookmarks = [])
     {
         $options = [
             "scope" => $scope,
@@ -29,54 +67,15 @@ class SearchHelper extends RequestHelper
             $dataJson = array_merge(
                 $dataJson, [
                 'module' => [
-                    "name"    => self::MODULE_SEARCH_PAGE,
+                    "name"    => $this->moduleSearchPage,
                     "options" => $options,
                 ],
             ]
             );
         }
 
-        return self::createRequestData(
+        return $this->createRequestData(
             $dataJson, "/search/$scope/?q=".$query
         );
-    }
-
-    /**
-     * Parses Pinterest search API response for data and bookmarks
-     * for next pagination page
-     *
-     * @param array $res
-     * @param bool  $bookmarksUsed
-     * @return array|null
-     */
-    public static function parseSearchResponse($res, $bookmarksUsed)
-    {
-        if ($res === null || ! $bookmarksUsed) {
-            return self::parseSimpledSearchResponse($res);
-        }
-
-        return self::parsePaginatedResponse($res);
-    }
-
-    /**
-     * Parses simple Pinterest search API response
-     * on request with bookmarks
-     *
-     * @param $res
-     * @return array
-     */
-    public static function parseSimpledSearchResponse($res)
-    {
-        $bookmarks = [];
-
-        if (isset($res['module']['tree']['resource']['options']['bookmarks'][0])) {
-            $bookmarks = $res['module']['tree']['resource']['options']['bookmarks'][0];
-        }
-
-        if ( ! empty($res['module']['tree']['data']['results'])) {
-            return ['data' => $res['module']['tree']['data']['results'], 'bookmarks' => [$bookmarks]];
-        }
-
-        return [];
     }
 }

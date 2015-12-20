@@ -15,7 +15,7 @@ class PinHelper extends RequestHelper
      */
     public static function createCommentRequest($pinId, $text)
     {
-        $dataJson = self::createPinRequest($pinId, 'pin_id');
+        $dataJson = self::createPinIdRequest($pinId);
         $dataJson["options"]["text"] = $text;
 
         return self::createPinRequestData($dataJson);
@@ -30,7 +30,7 @@ class PinHelper extends RequestHelper
      */
     public static function createCommentDeleteRequest($pinId, $commentId)
     {
-        $dataJson = self::createPinRequest($pinId, 'pin_id');
+        $dataJson = self::createPinIdRequest($pinId);
         $dataJson["options"]["comment_id"] = $commentId;
 
         return self::createPinRequestData($dataJson);
@@ -96,7 +96,6 @@ class PinHelper extends RequestHelper
         $dataJson = [
             "options" => [
                 "field_set_key"                  => "detailed",
-                "fetch_visualsearchCall_objects" => true,
                 "id"                             => $pinId,
                 "pin_id"                         => $pinId,
                 "allow_stale"                    => true,
@@ -126,7 +125,7 @@ class PinHelper extends RequestHelper
     /**
      * Creates simple Pin request by PinId (used by delete and like requests)
      *
-     * @param $pinId
+     * @param int $pinId
      * @return array
      */
     public static function createSimplePinRequest($pinId)
@@ -148,5 +147,14 @@ class PinHelper extends RequestHelper
         }
 
         return self::createRequestData($data, $sourceUrl);
+    }
+
+    /**
+     * @param $pinId
+     * @return array
+     */
+    public static function createPinIdRequest($pinId)
+    {
+        return self::createPinRequest($pinId, 'pin_id');
     }
 }

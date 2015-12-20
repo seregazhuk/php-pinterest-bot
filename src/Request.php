@@ -2,6 +2,7 @@
 
 namespace seregazhuk\PinterestBot;
 
+use seregazhuk\PinterestBot\Helpers\ResponseHelper;
 use seregazhuk\PinterestBot\Interfaces\HttpInterface;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
 use seregazhuk\PinterestBot\Helpers\SearchHelper;
@@ -16,7 +17,7 @@ use seregazhuk\PinterestBot\Helpers\PaginationHelper;
  * @property resource $ch
  * @property bool     $loggedIn
  * @property string   $useragent
- * @property int      $lastApiErrorCode
+ * @property int      $lastApiError
  * @property string   $lastApiErrorMsg
  * @property string   $csrfToken
  * @property string   $cookieJar
@@ -42,10 +43,8 @@ class Request implements RequestInterface
     protected $loggedIn;
     protected $cookieJar;
 
-    public $csrfToken = "";
-    public $lastApiErrorCode;
-    public $lastApiErrorMsg;
-
+    public    $csrfToken = "";
+    protected $lastApiError;
 
     /**
      * Common headers needed for every query
@@ -69,14 +68,13 @@ class Request implements RequestInterface
      */
     public function __construct(HttpInterface $http)
     {
-        $this->http      = $http;
+        $this->http = $http;
         $this->cookieJar = self::COOKIE_NAME;
 
         if (file_exists($this->cookieJar)) {
             $this->setLoggedIn();
         }
     }
-
 
     /**
      * Executes api call for follow or unfollow user
@@ -99,17 +97,11 @@ class Request implements RequestInterface
             $dataJson["options"]["interest_list"] = "favorited";
         }
 
-        $post       = [
+        $post = [
             "data" => json_encode($dataJson, JSON_FORCE_OBJECT),
         ];
         $postString = UrlHelper::buildRequestString($post);
-        $res        = $this->exec($url, $postString);
-
-        if ($res === null) {
-            return false;
-        }
-
-        return true;
+        return $this->exec($url, $postString);
     }
 
     /**
@@ -127,59 +119,6 @@ class Request implements RequestInterface
         return true;
     }
 
-    /**
-     * Check for error info in api response and save
-     * it.
-     *
-     * @param array $response
-     */
-    public function checkErrorInResponse($response)
-    {
-        $this->lastApiErrorCode = null;
-        $this->lastApiErrorMsg  = null;
-
-        if (isset($response['api_error_code']) && isset($response['message'])) {
-            $this->lastApiErrorCode = $response['api_error_code'];
-            $this->lastApiErrorMsg  = $response['message'];
-        }
-    }
-
-
-    /**
-     * Executes search to API. Query - search string.
-     *
-     * @param string $query
-     * @param string $scope
-     * @param array  $bookmarks
-     * @return array
-     */
-    public function searchCall($query, $scope, $bookmarks = [])
-    {
-        $url = UrlHelper::getSearchUrl( ! empty($bookmarks));
-        $get = SearchHelper::createSearchRequest($query, $scope, $bookmarks);
-        $url = $url.'?'.UrlHelper::buildRequestString($get);
-        $res = $this->exec($url);
-        return SearchHelper::parseSearchResponse($res, ! empty($bookmarks));
-    }
-
-    /**
-     * Executes search to API with pagination.
-     *
-     * @param string $query
-     * @param int    $batchesLimit
-     * @return \Iterator
-     */
-    public function searchWithPagination($query, $scope, $batchesLimit)
-    {
-        return PaginationHelper::getPaginatedData(
-            [$this, 'searchCall'],
-            [
-                'query' => $query,
-                'scope' => $scope,
-            ],
-            $batchesLimit
-        );
-    }
 
     /**
      * Executes request to Pinterest API
@@ -190,7 +129,7 @@ class Request implements RequestInterface
      */
     public function exec($resourceUrl, $postString = "")
     {
-        $url     = UrlHelper::buildApiUrl($resourceUrl);
+        $url = UrlHelper::buildApiUrl($resourceUrl);
         $options = $this->makeHttpOptions($postString);
         $this->http->init($url);
         $this->http->setOptions($options);
@@ -200,7 +139,6 @@ class Request implements RequestInterface
 
         return json_decode($res, true);
     }
-
 
     /**
      * Adds necessary curl options for query
@@ -218,7 +156,7 @@ class Request implements RequestInterface
             CURLOPT_ENCODING       => 'gzip,deflate',
         ];
 
-        $headers   = $this->requestHeaders;
+        $headers = $this->requestHeaders;
         $headers[] = 'X-CSRFToken: '.$this->csrfToken;
         if ($this->csrfToken == self::DEFAULT_CSRFTOKEN) {
             $options[CURLOPT_REFERER] = UrlHelper::LOGIN_REF_URL;
@@ -230,16 +168,15 @@ class Request implements RequestInterface
         $options[CURLOPT_HTTPHEADER] = $headers;
 
         if ( ! empty($postString)) {
-            $options[CURLOPT_POST]       = true;
+            $options[CURLOPT_POST] = true;
             $options[CURLOPT_POSTFIELDS] = $postString;
         }
 
         $options[CURLOPT_COOKIEFILE] = $this->cookieJar;
-        $options[CURLOPT_COOKIEJAR]  = $this->cookieJar;
+        $options[CURLOPT_COOKIEJAR] = $this->cookieJar;
 
         return $options;
     }
-
 
     /**
      * Clear token information

@@ -6,15 +6,29 @@ use seregazhuk\PinterestBot\Providers\Pinners;
 
 class PinnersTest extends ProviderTest
 {
+    /**
+     * @var Pinners
+     */
+    protected $provider;
     protected $providerClass = Pinners::class;
 
     public function testFollow()
     {
-        $response = ['body' => 'result'];
-        $this->mock->method('exec')->willReturn(json_encode($response));
+        $response = $this->createSuccessApiResponse();
+
+        $this->mock->method('exec')->willReturn($response);
         $this->setProperty('request', $this->mock);
         $this->assertTrue($this->provider->follow(1));
-        $this->assertTrue($this->provider->unFollow(1));
+        $this->assertTrue($this->provider->follow(1));
+    }
+
+    public function testUnFollow()
+    {
+        $response = $this->createSuccessApiResponse();
+        $this->mock->method('exec')->willReturn($response);
+        $this->setProperty('request', $this->mock);
+        $this->assertTrue($this->provider->unfollow(1));
+        $this->assertTrue($this->provider->unfollow(1));
     }
 
     public function testGetUserData()
@@ -32,17 +46,17 @@ class PinnersTest extends ProviderTest
 
     public function testInfo()
     {
-        $res['resource_response'] = ['data' => ['name' => 'test']];
-        $this->mock->method('exec')->willReturn($res);
+        $response = $this->createApiResponse(['data' => ['name' => 'test']]);
+        $this->mock->method('exec')->willReturn($response);
         $this->setProperty('request', $this->mock);
         $data = $this->provider->info('username');
-        $this->assertEquals($res['resource_response']['data'], $data);
+        $this->assertEquals($response['resource_response']['data'], $data);
     }
 
     public function testMyAccountName()
     {
-        $accountName                                                      = 'test';
-        $res['resource_data_cache'][1]['resource']['options']['username'] = $accountName;
+        $accountName = 'test';
+        $res['resource_data'][1]['resource']['options']['username'] = $accountName;
         $this->mock->expects($this->at(1))->method('exec')->willReturn($res);
         $this->setProperty('request', $this->mock);
         $this->assertEquals($accountName, $this->provider->myAccountName());
@@ -152,6 +166,8 @@ class PinnersTest extends ProviderTest
         $this->mock->method('exec')->willReturn($response);
         $this->setProperty('request', $this->mock);
         $res = iterator_to_array($this->provider->search('dogs'), 1);
+        print_r($res);
+        die();
         $this->assertCount($expectedResultsNum, $res[0]);
     }
 }

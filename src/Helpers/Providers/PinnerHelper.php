@@ -2,8 +2,9 @@
 
 namespace seregazhuk\PinterestBot\Helpers\Providers;
 
-use seregazhuk\PinterestBot\Exceptions\AuthException;
 use seregazhuk\PinterestBot\Helpers\RequestHelper;
+use seregazhuk\PinterestBot\Helpers\ResponseHelper;
+use seregazhuk\PinterestBot\Exceptions\AuthException;
 
 class PinnerHelper extends RequestHelper
 {
@@ -32,8 +33,8 @@ class PinnerHelper extends RequestHelper
      */
     public static function parseAccountNameResponse($res)
     {
-        if (isset($res['resource_data_cache'][1]['resource']['options']['username'])) {
-            return $res['resource_data_cache'][1]['resource']['options']['username'];
+        if (isset($res['resource_data'][1]['resource']['options']['username'])) {
+            return $res['resource_data'][1]['resource']['options']['username'];
         }
 
         return null;
@@ -66,7 +67,7 @@ class PinnerHelper extends RequestHelper
      */
     public static function parseLoginResponse($res)
     {
-        if (self::checkMethodCallResult($res)) {
+        if (ResponseHelper::notEmpty($res)) {
             throw new AuthException($res['resource_response']['error']['message']);
         }
 

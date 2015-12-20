@@ -2,13 +2,13 @@
 
 namespace seregazhuk\PinterestBot;
 
-use seregazhuk\PinterestBot\Exceptions\InvalidRequestException;
-use seregazhuk\PinterestBot\Providers\Pinners;
 use seregazhuk\PinterestBot\Providers\Pins;
 use seregazhuk\PinterestBot\Providers\Boards;
+use seregazhuk\PinterestBot\Providers\Pinners;
+use seregazhuk\PinterestBot\Providers\Provider;
 use seregazhuk\PinterestBot\Providers\Interests;
 use seregazhuk\PinterestBot\Providers\Conversations;
-use seregazhuk\PinterestBot\Providers\Provider;
+use seregazhuk\PinterestBot\Exceptions\InvalidRequestException;
 
 /**
  * Class PinterestBot
@@ -28,6 +28,25 @@ class PinterestBot
     protected $password;
     protected $loggedIn = false;
 
+    /**
+     * A array containing the cached providers
+     *
+     * @var array
+     */
+    private $providers = [];
+
+    /**
+     * References to the request and response classes that travels
+     * through the application
+     *
+     * @var Request
+     */
+    protected $request;
+    /**
+     * @var Response
+     */
+    protected $response;
+
     const PROVIDERS_NAMESPACE = "seregazhuk\\PinterestBot\\Providers\\";
     const MAX_PAGINATED_ITEMS = 100;
 
@@ -37,23 +56,8 @@ class PinterestBot
         $this->password = $password;
 
         $this->request = new Request(new Http());
+        $this->response = new Response();
     }
-
-    /**
-     * A array containing the cached providers
-     *
-     * @var array
-     */
-    private $providers = [];
-
-    /**
-     * A reference to the request class which travels
-     * through the application
-     *
-     * @var Request
-     */
-    public $request;
-
 
     /**
      * Login and parsing csrfToken from cookies if success
@@ -62,6 +66,7 @@ class PinterestBot
     {
         $this->_check_credentials();
         $res = $this->pinners->login($this->username, $this->password);
+
         return $res;
     }
 
@@ -87,7 +92,7 @@ class PinterestBot
      */
     protected function _addProvider($provider)
     {
-        $class = self::PROVIDERS_NAMESPACE . ucfirst($provider);
+        $class = self::PROVIDERS_NAMESPACE.ucfirst($provider);
 
         if ( ! class_exists($class)) {
             throw new InvalidRequestException;
@@ -95,7 +100,7 @@ class PinterestBot
 
         // Create a reflection of the called class
         $ref = new \ReflectionClass($class);
-        $obj = $ref->newInstanceArgs([$this->request]);
+        $obj = $ref->newInstanceArgs([$this->request, $this->response]);
 
         $this->providers[$provider] = $obj;
     }

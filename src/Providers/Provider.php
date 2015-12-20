@@ -2,7 +2,11 @@
 
 namespace seregazhuk\PinterestBot\Providers;
 
+use seregazhuk\PinterestBot\Helpers\PaginationHelper;
+use seregazhuk\PinterestBot\Helpers\SearchHelper;
+use seregazhuk\PinterestBot\Helpers\UrlHelper;
 use seregazhuk\PinterestBot\Interfaces\RequestInterface;
+use seregazhuk\PinterestBot\Interfaces\ResponseInterface;
 
 /**
  * Class Provider
@@ -17,12 +21,16 @@ class Provider
      * @var RequestInterface
      */
     protected $request;
+    protected $response;
 
     /**
      * @param  RequestInterface $request
+     * @param ResponseInterface $response
      */
-    public function __construct(RequestInterface $request)
+    public function __construct(RequestInterface $request, ResponseInterface $response)
     {
         $this->request = $request;
+        $this->response = $response;
     }
+
 }
