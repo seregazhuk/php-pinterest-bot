@@ -15,8 +15,7 @@ class PinHelper
      */
     public static function createCommentRequest($pinId, $text)
     {
-        $dataJson = self::createPinIdRequest($pinId);
-        $dataJson["options"]["text"] = $text;
+        $dataJson = self::createPinIdRequest($pinId, ["text" => $text]);
 
         return self::createPinRequestData($dataJson);
     }
@@ -30,8 +29,7 @@ class PinHelper
      */
     public static function createCommentDeleteRequest($pinId, $commentId)
     {
-        $dataJson = self::createPinIdRequest($pinId);
-        $dataJson["options"]["comment_id"] = $commentId;
+        $dataJson = self::createPinIdRequest($pinId, ["comment_id" => $commentId]);
 
         return self::createPinRequestData($dataJson);
     }
@@ -56,9 +54,8 @@ class PinHelper
             ],
         ];
 
-        return self::createPinRequestData($dataJson, "/pin/create/bookmarklet/?url=" . urlencode($imageUrl));
+        return self::createPinRequestData($dataJson, "/pin/create/bookmarklet/?url=".urlencode($imageUrl));
     }
-
 
     /**
      * Creates Pinterest API request for Pin repin
@@ -84,7 +81,6 @@ class PinHelper
         return self::createPinRequestData($dataJson);
     }
 
-
     /**
      * Creates Pinterest API request to get Pin info
      *
@@ -95,10 +91,10 @@ class PinHelper
     {
         $dataJson = [
             "options" => [
-                "field_set_key"                  => "detailed",
-                "id"                             => $pinId,
-                "pin_id"                         => $pinId,
-                "allow_stale"                    => true,
+                "field_set_key" => "detailed",
+                "id"            => $pinId,
+                "pin_id"        => $pinId,
+                "allow_stale"   => true,
             ],
         ];
 
@@ -110,16 +106,22 @@ class PinHelper
      *
      * @param int    $pinId
      * @param string $template
+     * @param array  $options
      * @return array
      */
-    public static function createPinRequest($pinId, $template = 'id')
+    public static function createPinRequest($pinId, $template = 'id', $options = array())
     {
-        return [
-            "options" => [
-                "$template" => $pinId,
-            ],
+        $options = array_merge(
+            ["$template" => $pinId],
+            $options
+        );
+
+        $result = [
+            "options" => $options,
             "context" => [],
         ];
+
+        return $result;
     }
 
     /**
@@ -131,6 +133,7 @@ class PinHelper
     public static function createSimplePinRequest($pinId)
     {
         $dataJson = self::createPinRequest($pinId);
+
         return self::createPinRequestData($dataJson);
     }
 
@@ -143,18 +146,19 @@ class PinHelper
     {
         if ($sourceUrl === null) {
             reset($data);
-            $sourceUrl = "/pin/" . end($data["options"]) . "/";
+            $sourceUrl = "/pin/".end($data["options"])."/";
         }
 
         return Request::createRequestData($data, $sourceUrl);
     }
 
     /**
-     * @param $pinId
+     * @param       $pinId
+     * @param array $options
      * @return array
      */
-    public static function createPinIdRequest($pinId)
+    public static function createPinIdRequest($pinId, $options = array())
     {
-        return self::createPinRequest($pinId, 'pin_id');
+        return self::createPinRequest($pinId, 'pin_id', $options);
     }
 }
