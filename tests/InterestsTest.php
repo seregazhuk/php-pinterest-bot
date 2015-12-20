@@ -16,12 +16,13 @@ class InterestsTest extends ProviderTest
     protected $provider;
     protected $providerClass = Interests::class;
 
-    public function testFollowAndUnFollow()
+    public function testFollow()
     {
         $request = $this->createSuccessApiResponse();
+        $error = $this->createErrorApiResponse();
 
         $this->mock->expects($this->at(1))->method('exec')->willReturn($request);
-        $this->mock->expects($this->at(3))->method('exec')->willReturn(null);
+        $this->mock->expects($this->at(3))->method('exec')->willReturn($error);
 
         $this->assertTrue($this->provider->follow(1111));
         $this->assertFalse($this->provider->follow(1111));
@@ -29,10 +30,11 @@ class InterestsTest extends ProviderTest
 
     public function testUnFollow()
     {
-        $request = $this->createApiResponse(['data' =>'success']);
+        $request = $this->createSuccessApiResponse();
+        $error = $this->createErrorApiResponse();
 
         $this->mock->expects($this->at(1))->method('exec')->willReturn($request);
-        $this->mock->expects($this->at(3))->method('exec')->willReturn(null);
+        $this->mock->expects($this->at(3))->method('exec')->willReturn($error);
 
         $this->assertTrue($this->provider->unFollow(1111));
         $this->assertFalse($this->provider->unFollow(1111));

@@ -2,8 +2,11 @@
 
 namespace seregazhuk\PinterestBot\Api\Providers;
 
+use seregazhuk\PinterestBot\Api\Request;
+use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Interfaces\RequestInterface;
 use seregazhuk\PinterestBot\Interfaces\ResponseInterface;
+use seregazhuk\PinterestBot\Helpers\Providers\ProviderHelper;
 
 /**
  * Class Provider
@@ -12,6 +15,7 @@ use seregazhuk\PinterestBot\Interfaces\ResponseInterface;
  */
 class Provider
 {
+    use ProviderHelper;
     /**
      * Instance of the API RequestInterface
      *
@@ -30,4 +34,19 @@ class Provider
         $this->response = $response;
     }
 
+    /**
+     * @return Request
+     */
+    protected function getRequest()
+    {
+        return $this->request;
+    }
+
+    /**
+     * @return Response
+     */
+    protected function getResponse()
+    {
+        return $this->response;
+    }
 }

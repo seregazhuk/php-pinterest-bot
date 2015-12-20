@@ -3,40 +3,14 @@
 namespace seregazhuk\PinterestBot\Api\Providers;
 
 use seregazhuk\PinterestBot\Api\Request;
-use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
-use seregazhuk\PinterestBot\Helpers\SearchHelper;
 use seregazhuk\PinterestBot\Helpers\Requests\PinnerHelper;
+use seregazhuk\PinterestBot\Helpers\Providers\FollowHelper;
+use seregazhuk\PinterestBot\Helpers\Providers\SearchHelper;
 
-class Pinners extends SearchProvider
+class Pinners extends Provider
 {
-    /**
-     * Follow user by user_id
-     *
-     * @param integer $userId
-     * @return bool
-     */
-    public function follow($userId)
-    {
-        $this->request->checkLoggedIn();
-
-        $response = $this->request->followMethodCall($userId, Request::PINNER_ENTITY_ID, UrlHelper::RESOURCE_FOLLOW_USER);
-        return $this->response->checkErrorInResponse($response);
-    }
-
-    /**
-     * Unfollow user by user_id
-     *
-     * @param integer $userId
-     * @return bool
-     */
-    public function unFollow($userId)
-    {
-        $this->request->checkLoggedIn();
-
-        $response = $this->request->followMethodCall($userId, Request::PINNER_ENTITY_ID, UrlHelper::RESOURCE_UNFOLLOW_USER);
-        return $this->response->checkErrorInResponse($response);
-    }
+    use SearchHelper, FollowHelper;
 
     /**
      * Get different user data, for example, followers, following, pins.
@@ -53,7 +27,8 @@ class Pinners extends SearchProvider
     {
         $get = PinnerHelper::createUserDataRequest($username, $sourceUrl, $bookmarks);
         $getString = UrlHelper::buildRequestString($get);
-        $response = $this->request->exec($url . '?' . $getString, $username);
+        $response = $this->request->exec($url.'?'.$getString, $username);
+
         return $this->response->getPaginationData($response);
     }
 
@@ -61,19 +36,17 @@ class Pinners extends SearchProvider
      * @param string $username
      * @param string $resourceUrl
      * @param string $sourceUrl
-     * @param int     $batchesLimit
+     * @param int    $batchesLimit
      * @return \Iterator
      */
     public function getPaginatedUserData($username, $resourceUrl, $sourceUrl, $batchesLimit = 0)
     {
         return $this->getPaginatedData(
-            [$this, 'getUserData'],
-            [
-                'username'  => $username,
-                'url'       => $resourceUrl,
-                'sourceUrl' => $sourceUrl,
-            ],
-            $batchesLimit
+            [$this, 'getUserData'], [
+            'username'  => $username,
+            'url'       => $resourceUrl,
+            'sourceUrl' => $sourceUrl,
+        ], $batchesLimit
         );
     }
 
@@ -101,6 +74,7 @@ class Pinners extends SearchProvider
     public function info($username)
     {
         $res = $this->getUserData($username, UrlHelper::RESOURCE_USER_INFO, "/$username/");
+
         return isset($res['data']) ? $res['data'] : null;
     }
 
@@ -173,5 +147,20 @@ class Pinners extends SearchProvider
     protected function getScope()
     {
         return 'people';
+    }
+
+    function getEntityIdName()
+    {
+        return Request::PINNER_ENTITY_ID;
+    }
+
+    function getFollowUrl()
+    {
+        return UrlHelper::RESOURCE_FOLLOW_USER;
+    }
+
+    function getUnfFollowUrl()
+    {
+        return UrlHelper::RESOURCE_UNFOLLOW_USER;
     }
 }

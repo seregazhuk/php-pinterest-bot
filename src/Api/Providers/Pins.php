@@ -3,11 +3,13 @@
 namespace seregazhuk\PinterestBot\Api\Providers;
 
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
-use seregazhuk\PinterestBot\Helpers\SearchHelper;
 use seregazhuk\PinterestBot\Helpers\Requests\PinHelper;
+use seregazhuk\PinterestBot\Helpers\Providers\SearchHelper;
 
-class Pins extends SearchProvider
+class Pins extends Provider
 {
+    use SearchHelper;
+
     /**
      * Likes pin with current ID
      *
@@ -57,7 +59,7 @@ class Pins extends SearchProvider
     public function comment($pinId, $text)
     {
         $this->request->checkLoggedIn();
-        $post = PinHelper::createCommentRequest($pinId, $text);
+        $post = PinHelper::createCommentRequest($pinId, ["text" => $text]);
         $postString = UrlHelper::buildRequestString($post);
         $response = $this->request->exec(UrlHelper::RESOURCE_COMMENT_PIN, $postString);
         return $this->response->getData($response);
@@ -73,7 +75,7 @@ class Pins extends SearchProvider
     public function deleteComment($pinId, $commentId)
     {
         $this->request->checkLoggedIn();
-        $post = PinHelper::createCommentDeleteRequest($pinId, $commentId);
+        $post = PinHelper::createCommentRequest($pinId, ["comment_id" => $commentId]);
         $postString = UrlHelper::buildRequestString($post);
         $response = $this->request->exec(UrlHelper::RESOURCE_COMMENT_DELETE_PIN, $postString);
 
@@ -147,7 +149,6 @@ class Pins extends SearchProvider
 
         return $this->response->checkResponse($response);
     }
-
 
     protected function getScope()
     {

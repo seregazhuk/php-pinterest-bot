@@ -7,29 +7,15 @@ use seregazhuk\PinterestBot\Api\Request;
 class PinHelper
 {
     /**
-     * Create Pinterest API request form commenting pin
+     * Create Pinterest API request form commenting/deleting comment pin
      *
-     * @param int    $pinId
-     * @param string $text
+     * @param int   $pinId
+     * @param array $data
      * @return array
      */
-    public static function createCommentRequest($pinId, $text)
+    public static function createCommentRequest($pinId, $data)
     {
-        $dataJson = self::createPinIdRequest($pinId, ["text" => $text]);
-
-        return self::createPinRequestData($dataJson);
-    }
-
-    /**
-     * Create Pinterest API request form commenting pin
-     *
-     * @param int $pinId
-     * @param int $commentId
-     * @return array
-     */
-    public static function createCommentDeleteRequest($pinId, $commentId)
-    {
-        $dataJson = self::createPinIdRequest($pinId, ["comment_id" => $commentId]);
+        $dataJson = self::createPinIdRequest($pinId, $data);
 
         return self::createPinRequestData($dataJson);
     }
@@ -112,8 +98,7 @@ class PinHelper
     public static function createPinRequest($pinId, $template = 'id', $options = array())
     {
         $options = array_merge(
-            ["$template" => $pinId],
-            $options
+            ["$template" => $pinId], $options
         );
 
         $result = [

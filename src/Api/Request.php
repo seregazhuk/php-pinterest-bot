@@ -70,7 +70,7 @@ class Request implements RequestInterface
      * @param int    $entityId
      * @param string $entityName
      * @param string $url
-     * @return bool
+     * @return array
      */
     public function followMethodCall($entityId, $entityName, $url)
     {

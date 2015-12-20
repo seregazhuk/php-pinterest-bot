@@ -2,13 +2,16 @@
 
 namespace seregazhuk\PinterestBot\Api\Providers;
 
+use seregazhuk\PinterestBot\Helpers\Providers\FollowHelper;
+use seregazhuk\PinterestBot\Helpers\Providers\SearchHelper;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
-use seregazhuk\PinterestBot\Helpers\SearchHelper;
 use seregazhuk\PinterestBot\Helpers\Requests\BoardHelper;
 
-class Boards extends SearchProvider
+class Boards extends Provider
 {
+    use SearchHelper, FollowHelper;
+
     /**
      * Get all logged-in user boards
      *
@@ -25,36 +28,23 @@ class Boards extends SearchProvider
         return $this->response->getData($response, 'all_boards');
     }
 
-    /**
-     * Follow board by boardID
-     *
-     * @param int $boardId
-     * @return bool
-     */
-    public function follow($boardId)
-    {
-        $this->request->checkLoggedIn();
-
-        $response = $this->request->followMethodCall($boardId, Request::BOARD_ENTITY_ID, UrlHelper::RESOURCE_FOLLOW_BOARD);
-        return $this->response->checkResponse($response);
-    }
-
-    /**
-     * Unfollow board by boardID
-     *
-     * @param int $boardId
-     * @return bool
-     */
-    public function unFollow($boardId)
-    {
-        $this->request->checkLoggedIn();
-
-        $response = $this->request->followMethodCall($boardId, Request::BOARD_ENTITY_ID, UrlHelper::RESOURCE_UNFOLLOW_BOARD);
-        return $this->response->checkResponse($response);
-    }
-
     protected function getScope()
     {
         return 'boards';
+    }
+
+    function getEntityIdName()
+    {
+        return Request::BOARD_ENTITY_ID;
+    }
+
+    function getFollowUrl()
+    {
+        return UrlHelper::RESOURCE_FOLLOW_BOARD;
+    }
+
+    function getUnfFollowUrl()
+    {
+        return UrlHelper::RESOURCE_UNFOLLOW_BOARD;
     }
 }
