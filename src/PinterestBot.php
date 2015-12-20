@@ -2,12 +2,17 @@
 
 namespace seregazhuk\PinterestBot;
 
-use seregazhuk\PinterestBot\Providers\Pins;
-use seregazhuk\PinterestBot\Providers\Boards;
-use seregazhuk\PinterestBot\Providers\Pinners;
-use seregazhuk\PinterestBot\Providers\Provider;
-use seregazhuk\PinterestBot\Providers\Interests;
-use seregazhuk\PinterestBot\Providers\Conversations;
+use LogicException;
+use ReflectionClass;
+use seregazhuk\PinterestBot\Api\Http;
+use seregazhuk\PinterestBot\Api\Request;
+use seregazhuk\PinterestBot\Api\Response;
+use seregazhuk\PinterestBot\Api\Providers\Pins;
+use seregazhuk\PinterestBot\Api\Providers\Boards;
+use seregazhuk\PinterestBot\Api\Providers\Pinners;
+use seregazhuk\PinterestBot\Api\Providers\Provider;
+use seregazhuk\PinterestBot\Api\Providers\Interests;
+use seregazhuk\PinterestBot\Api\Providers\Conversations;
 use seregazhuk\PinterestBot\Exceptions\InvalidRequestException;
 
 /**
@@ -47,7 +52,7 @@ class PinterestBot
      */
     protected $response;
 
-    const PROVIDERS_NAMESPACE = "seregazhuk\\PinterestBot\\Providers\\";
+    const PROVIDERS_NAMESPACE = "seregazhuk\\PinterestBot\\Api\\Providers\\";
     const MAX_PAGINATED_ITEMS = 100;
 
     public function __construct($username, $password)
@@ -99,19 +104,27 @@ class PinterestBot
         }
 
         // Create a reflection of the called class
-        $ref = new \ReflectionClass($class);
+        $ref = new ReflectionClass($class);
         $obj = $ref->newInstanceArgs([$this->request, $this->response]);
 
         $this->providers[$provider] = $obj;
     }
 
     /**
-     * @throws \LogicException
+     * @throws LogicException
      */
     protected function _check_credentials()
     {
         if ( ! $this->username || ! $this->password) {
-            throw new \LogicException('You must set username and password to login.');
+            throw new LogicException('You must set username and password to login.');
         }
+    }
+
+    /**
+     * @return array
+     */
+    public function getLastError()
+    {
+        return $this->response->getLastError();
     }
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace seregazhuk\PinterestBot\Helpers\Providers;
+namespace seregazhuk\PinterestBot\Helpers\Requests;
 
-use seregazhuk\PinterestBot\Helpers\RequestHelper;
+use seregazhuk\PinterestBot\Api\Request;
 
-class PinHelper extends RequestHelper
+class PinHelper
 {
     /**
      * Create Pinterest API request form commenting pin
@@ -146,7 +146,7 @@ class PinHelper extends RequestHelper
             $sourceUrl = "/pin/" . end($data["options"]) . "/";
         }
 
-        return self::createRequestData($data, $sourceUrl);
+        return Request::createRequestData($data, $sourceUrl);
     }
 
     /**

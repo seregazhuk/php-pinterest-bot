@@ -2,7 +2,8 @@
 
 namespace seregazhuk\PinterestBot\Helpers;
 
-use seregazhuk\PinterestBot\Response;
+use seregazhuk\PinterestBot\Api\Request;
+use seregazhuk\PinterestBot\Api\Response;
 
 trait SearchHelper
 {
@@ -27,23 +28,23 @@ trait SearchHelper
         $get = $this->createSearchRequest($query, $scope, $bookmarks);
         $url = $url.'?'.UrlHelper::buildRequestString($get);
         $response = $this->request->exec($url);
-        return $this->response->parseSearchResponse($response, !empty($bookmarks));
+
+        return $this->response->parseSearchResponse($response, ! empty($bookmarks));
     }
 
     /**
      * Executes search to API with pagination.
      *
      * @param string $query
-     * @param string $scope
      * @param int    $batchesLimit
      * @return \Iterator
      */
-    public function searchWithPagination($query, $scope, $batchesLimit)
+    public function searchWithPagination($query, $batchesLimit)
     {
         return $this->getPaginatedData(
             [$this, 'searchCall'], [
             'query' => $query,
-            'scope' => $scope,
+            'scope' => $this->getScope(),
         ], $batchesLimit
         );
     }
@@ -70,16 +71,30 @@ trait SearchHelper
         } else {
             $dataJson = array_merge(
                 $dataJson, [
-                'module' => [
-                    "name"    => $this->moduleSearchPage,
-                    "options" => $options,
-                ],
-            ]
+                    'module' => [
+                        "name"    => $this->moduleSearchPage,
+                        "options" => $options,
+                    ],
+                ]
             );
         }
 
-        return RequestHelper::createRequestData(
+        return Request::createRequestData(
             $dataJson, "/search/$scope/?q=".$query
         );
     }
+
+    /**
+     * Search entities by search query
+     *
+     * @param string $query
+     * @param int    $batchesLimit
+     * @return \Iterator
+     */
+    public function search($query, $batchesLimit = 0)
+    {
+        return $this->searchWithPagination($query, $batchesLimit);
+    }
+
+    abstract protected function getScope();
 }

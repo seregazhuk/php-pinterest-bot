@@ -1,14 +1,11 @@
 <?php
 
-namespace seregazhuk\PinterestBot;
+namespace seregazhuk\PinterestBot\Api;
 
-use seregazhuk\PinterestBot\Helpers\ResponseHelper;
 use seregazhuk\PinterestBot\Interfaces\HttpInterface;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
-use seregazhuk\PinterestBot\Helpers\SearchHelper;
 use seregazhuk\PinterestBot\Interfaces\RequestInterface;
 use seregazhuk\PinterestBot\Helpers\CsrfHelper;
-use seregazhuk\PinterestBot\Helpers\PaginationHelper;
 
 /**
  * Class Request
@@ -16,9 +13,7 @@ use seregazhuk\PinterestBot\Helpers\PaginationHelper;
  * @package Pinterest
  * @property resource $ch
  * @property bool     $loggedIn
- * @property string   $useragent
- * @property int      $lastApiError
- * @property string   $lastApiErrorMsg
+ * @property string   $userAgent
  * @property string   $csrfToken
  * @property string   $cookieJar
  */
@@ -28,13 +23,7 @@ class Request implements RequestInterface
     const BOARD_ENTITY_ID    = 'board_id';
     const PINNER_ENTITY_ID   = 'user_id';
 
-    const SEARCH_PINS_SCOPE    = 'pins';
-    const SEARCH_PEOPLE_SCOPE  = 'people';
-    const SEARCH_BOARDS_SCOPES = 'boards';
-
-    const DEFAULT_CSRFTOKEN = '1234';
-
-    protected $useragent = 'Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0';
+    protected $userAgent = 'Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0';
     const COOKIE_NAME = 'pinterest_cookie';
     /**
      * @var Http
@@ -44,7 +33,6 @@ class Request implements RequestInterface
     protected $cookieJar;
 
     public    $csrfToken = "";
-    protected $lastApiError;
 
     /**
      * Common headers needed for every query
@@ -97,10 +85,9 @@ class Request implements RequestInterface
             $dataJson["options"]["interest_list"] = "favorited";
         }
 
-        $post = [
-            "data" => json_encode($dataJson, JSON_FORCE_OBJECT),
-        ];
+        $post = ["data" => json_encode($dataJson, JSON_FORCE_OBJECT)];
         $postString = UrlHelper::buildRequestString($post);
+
         return $this->exec($url, $postString);
     }
 
@@ -118,7 +105,6 @@ class Request implements RequestInterface
 
         return true;
     }
-
 
     /**
      * Executes request to Pinterest API
@@ -148,32 +134,17 @@ class Request implements RequestInterface
      */
     protected function makeHttpOptions($postString = "")
     {
-        $options = [
-            CURLOPT_USERAGENT      => $this->useragent,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_SSL_VERIFYPEER => false,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_ENCODING       => 'gzip,deflate',
-        ];
+        $options = $this->getDefaultHttpOptions();
 
-        $headers = $this->requestHeaders;
-        $headers[] = 'X-CSRFToken: '.$this->csrfToken;
-        if ($this->csrfToken == self::DEFAULT_CSRFTOKEN) {
+        if ($this->csrfToken == CsrfHelper::DEFAULT_TOKEN) {
             $options[CURLOPT_REFERER] = UrlHelper::LOGIN_REF_URL;
-            $headers[] = 'Cookie: csrftoken='.self::DEFAULT_CSRFTOKEN.';';
-        } else {
-            $options[CURLOPT_REFERER] = UrlHelper::URL_BASE;
+            $headers[] = CsrfHelper::getDefaultCookie();
         }
-
-        $options[CURLOPT_HTTPHEADER] = $headers;
 
         if ( ! empty($postString)) {
             $options[CURLOPT_POST] = true;
             $options[CURLOPT_POSTFIELDS] = $postString;
         }
-
-        $options[CURLOPT_COOKIEFILE] = $this->cookieJar;
-        $options[CURLOPT_COOKIEJAR] = $this->cookieJar;
 
         return $options;
     }
@@ -185,7 +156,7 @@ class Request implements RequestInterface
      */
     public function clearToken()
     {
-        $this->csrfToken = self::DEFAULT_CSRFTOKEN;
+        $this->csrfToken = CsrfHelper::DEFAULT_TOKEN;
     }
 
     /**
@@ -206,6 +177,67 @@ class Request implements RequestInterface
      */
     public function isLoggedIn()
     {
+        echo "triger\n";
         return $this->loggedIn;
+    }
+
+    /**
+     * @param array|object $data
+     * @param string|null  $sourceUrl
+     * @param array        $bookmarks
+     * @return array
+     */
+    public static function createRequestData($data = [], $sourceUrl = '/', $bookmarks = [])
+    {
+        if (empty($data)) {
+            $data = self::createEmptyRequestData();
+        }
+
+        if ( ! empty($bookmarks)) {
+            $data["options"]["bookmarks"] = $bookmarks;
+        }
+
+        $data["context"] = new \stdClass();
+
+        return [
+            "source_url" => $sourceUrl,
+            "data"       => json_encode($data),
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    protected static function createEmptyRequestData()
+    {
+        return array('options' => []);
+    }
+
+    /**
+     * @return array
+     */
+    protected function getDefaultHttpOptions()
+    {
+        $options = [
+            CURLOPT_USERAGENT      => $this->userAgent,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_ENCODING       => 'gzip,deflate',
+            CURLOPT_HTTPHEADER     => $this->getDefaultHttpHeaders(),
+            CURLOPT_REFERER        => UrlHelper::URL_BASE,
+            CURLOPT_COOKIEFILE     => $this->cookieJar,
+            CURLOPT_COOKIEJAR      => $this->cookieJar,
+        ];
+
+        return $options;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getDefaultHttpHeaders()
+    {
+        return array_merge($this->requestHeaders, ['X-CSRFToken: '.$this->csrfToken]);
     }
 }

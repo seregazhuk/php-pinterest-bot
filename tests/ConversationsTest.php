@@ -1,7 +1,7 @@
 <?php
 namespace seregazhuk\tests;
 
-use seregazhuk\PinterestBot\Providers\Conversations;
+use seregazhuk\PinterestBot\Api\Providers\Conversations;
 
 class ConversationsTest extends ProviderTest
 {
@@ -17,7 +17,6 @@ class ConversationsTest extends ProviderTest
 
         $this->mock->expects($this->at(1))->method('exec')->willReturn($response);
         $this->mock->expects($this->at(3))->method('exec')->willReturn(null);
-        $this->setProperty('request', $this->mock);
 
         $userId = '0000000000000';
         $message = 'test';
@@ -40,7 +39,6 @@ class ConversationsTest extends ProviderTest
 
         $this->mock->expects($this->at(1))->method('exec')->willReturn($res);
         $this->mock->expects($this->at(3))->method('exec')->willReturn(null);
-        $this->setProperty('request', $this->mock);
 
         $this->assertEquals($lastConversations, $this->provider->last());
         $this->assertFalse($this->provider->last());

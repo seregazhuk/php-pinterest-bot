@@ -1,10 +1,7 @@
 <?php
 
-namespace seregazhuk\PinterestBot\Providers;
+namespace seregazhuk\PinterestBot\Api\Providers;
 
-use seregazhuk\PinterestBot\Helpers\PaginationHelper;
-use seregazhuk\PinterestBot\Helpers\SearchHelper;
-use seregazhuk\PinterestBot\Helpers\UrlHelper;
 use seregazhuk\PinterestBot\Interfaces\RequestInterface;
 use seregazhuk\PinterestBot\Interfaces\ResponseInterface;
 

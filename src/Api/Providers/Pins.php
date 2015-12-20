@@ -1,11 +1,10 @@
 <?php
 
-namespace seregazhuk\PinterestBot\Providers;
+namespace seregazhuk\PinterestBot\Api\Providers;
 
-use seregazhuk\PinterestBot\Helpers\SearchHelper;
-use seregazhuk\PinterestBot\Request;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
-use seregazhuk\PinterestBot\Helpers\Providers\PinHelper;
+use seregazhuk\PinterestBot\Helpers\SearchHelper;
+use seregazhuk\PinterestBot\Helpers\Requests\PinHelper;
 
 class Pins extends Provider
 {
@@ -47,8 +46,7 @@ class Pins extends Provider
         $post = PinHelper::createPinRequestData($data);
         $postString = URlHelper::buildRequestString($post);
         $response = $this->request->exec($url, $postString);
-
-        return $this->response->checkResponse($response);
+        return $this->response->checkErrorInResponse($response);
     }
 
     /**
@@ -56,7 +54,7 @@ class Pins extends Provider
      *
      * @param integer $pinId
      * @param string  $text Comment
-     * @return bool
+     * @return array
      */
     public function comment($pinId, $text)
     {
@@ -64,8 +62,7 @@ class Pins extends Provider
         $post = PinHelper::createCommentRequest($pinId, $text);
         $postString = UrlHelper::buildRequestString($post);
         $response = $this->request->exec(UrlHelper::RESOURCE_COMMENT_PIN, $postString);
-
-        return $this->response->checkResponse($response);
+        return $this->response->getData($response);
     }
 
     /**
@@ -82,7 +79,7 @@ class Pins extends Provider
         $postString = UrlHelper::buildRequestString($post);
         $response = $this->request->exec(UrlHelper::RESOURCE_COMMENT_DELETE_PIN, $postString);
 
-        return $this->response->checkResponse($response);
+        return $this->response->checkErrorInResponse($response);
     }
 
     /**
@@ -153,15 +150,9 @@ class Pins extends Provider
         return $this->response->checkResponse($response);
     }
 
-    /**
-     * Search pins by search query
-     *
-     * @param string $query
-     * @param int    $batchesLimit
-     * @return \Iterator
-     */
-    public function search($query, $batchesLimit = 0)
+
+    protected function getScope()
     {
-        return $this->searchWithPagination($query, Request::SEARCH_PINS_SCOPE, $batchesLimit);
+        return 'pins';
     }
 }

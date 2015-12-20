@@ -2,12 +2,12 @@
 
 namespace seregazhuk\tests;
 
-use Mockable;
 use ReflectionClass;
-use seregazhuk\PinterestBot\Http;
-use seregazhuk\PinterestBot\PinterestBot;
 use PHPUnit_Framework_TestCase;
-use seregazhuk\PinterestBot\Request;
+use seregazhuk\PinterestBot\Api\Http;
+use seregazhuk\PinterestBot\Api\Request;
+use seregazhuk\PinterestBot\Api\Response;
+use seregazhuk\PinterestBot\PinterestBot;
 use seregazhuk\tests\helpers\ReflectionHelper;
 
 class BotTest extends PHPUnit_Framework_TestCase
@@ -28,25 +28,29 @@ class BotTest extends PHPUnit_Framework_TestCase
 
     protected function tearDown()
     {
-        $this->bot        = null;
+        $this->bot = null;
         $this->reflection = null;
+    }
+
+    public function testValidLogin()
+    {
+        $mock = $this->getMock(Request::class, ['exec', 'setLoggedIn', 'isLoggedIn'], [new Http()]);
+        $mock->method('exec')->willReturn(true);
+        $mock->method('isLoggedIn')->willReturn(true);
+        $this->setProperty('request', $mock);
+
+        $this->assertTrue($this->bot->login());
     }
 
     /**
      * @expectedException \LogicException
      */
-    public function testLogin()
+    public function testLoginFails()
     {
         $mock = $this->getMock(Request::class, ['exec', 'setLoggedIn', 'isLoggedIn'], [new Http()]);
         $mock->method('exec')->willReturn(true);
-        $mock->expects($this->at(0))->method('isLoggedIn')->willReturn(true);
-        $mock->expects($this->at(1))->method('isLoggedIn')->willReturn(false);
-
+        $mock->method('isLoggedIn')->willReturn(true);
         $this->setProperty('request', $mock);
-        $this->assertTrue($this->bot->login());
-
-        $this->setProperty('request', $mock);
-        $this->assertTrue($this->bot->login());
 
         $this->setProperty('username', null);
         $this->assertFalse($this->bot->login());
@@ -58,6 +62,15 @@ class BotTest extends PHPUnit_Framework_TestCase
     public function testWrongProvider()
     {
         $this->bot->badProvider;
+    }
+
+    public function testGetLastResponseError()
+    {
+        $error = 'expected_error';
+        $mock = $this->getMock(Response::class, ['getLastError']);
+        $mock->method('getLastError')->willReturn($error);
+        $this->setProperty('response', $mock);
+        $this->assertEquals($error, $this->bot->getLastError());
     }
 
 }

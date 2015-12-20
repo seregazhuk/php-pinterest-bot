@@ -3,8 +3,9 @@
 namespace szhuk\tests;
 
 use PHPUnit_Framework_TestCase;
-use seregazhuk\PinterestBot\Http;
-use seregazhuk\PinterestBot\Request;
+use seregazhuk\PinterestBot\Api\Http;
+use seregazhuk\PinterestBot\Api\Request;
+use seregazhuk\PinterestBot\Helpers\CsrfHelper;
 use seregazhuk\tests\helpers\ResponseHelper;
 use seregazhuk\tests\helpers\ReflectionHelper;
 
@@ -44,12 +45,12 @@ class RequestTest extends PHPUnit_Framework_TestCase
         $this->request->setLoggedIn();
         $this->assertTrue($this->request->checkLoggedIn());
         $token = $this->getProperty('csrfToken');
-        $this->assertNotEquals(Request::DEFAULT_CSRFTOKEN, $token);
+        $this->assertNotEquals(CsrfHelper::DEFAULT_TOKEN, $token);
         $this->assertTrue($this->request->isLoggedIn());
 
         $this->request->clearToken();
         $token = $this->getProperty('csrfToken');
-        $this->assertEquals(Request::DEFAULT_CSRFTOKEN, $token);
+        $this->assertEquals(CsrfHelper::DEFAULT_TOKEN, $token);
 
         $this->setProperty('loggedIn', false);
         $this->request->checkLoggedIn();
@@ -69,17 +70,16 @@ class RequestTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($response, $res);
     }
 
+    public function testFollowMethodCall()
+    {
+        $response = $this->createSuccessApiResponse();
+        $mock = $this->getMock(Http::class, ['setOptions', 'execute', 'close']);
+        $mock->expects($this->at(1))->method('execute')->willReturn(json_encode($response));
+        $mock->expects($this->at(2))->method('execute')->willReturn(null);
 
-    //public function testFollowMethodCall()
-    //{
-    //    $response = $this->createSuccessApiResponse();
-    //    $mock = $this->getMock(Http::class, ['setOptions', 'execute', 'close']);
-    //    $mock->expects($this->at(1))->method('execute')->willReturn(json_encode($response));
-    //    $mock->expects($this->at(2))->method('execute')->willReturn(null);
-    //
-    //    $this->setProperty('http', $mock);
-    //    $this->assertTrue($this->request->followMethodCall(1, Request::BOARD_ENTITY_ID, 'ur'));
-    //    $this->assertFalse($this->request->followMethodCall(1, Request::INTEREST_ENTITY_ID, 'ur'));
-    //}
+        $this->setProperty('http', $mock);
+        $this->assertEquals($response, $this->request->followMethodCall(1, Request::BOARD_ENTITY_ID, 'ur'));
+        $this->assertNull($this->request->followMethodCall(1, Request::INTEREST_ENTITY_ID, 'ur'));
+    }
 
 }

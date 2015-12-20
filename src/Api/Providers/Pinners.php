@@ -1,11 +1,11 @@
 <?php
 
-namespace seregazhuk\PinterestBot\Providers;
+namespace seregazhuk\PinterestBot\Api\Providers;
 
-use seregazhuk\PinterestBot\Request;
+use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
 use seregazhuk\PinterestBot\Helpers\SearchHelper;
-use seregazhuk\PinterestBot\Helpers\Providers\PinnerHelper;
+use seregazhuk\PinterestBot\Helpers\Requests\PinnerHelper;
 
 class Pinners extends Provider
 {
@@ -147,19 +147,6 @@ class Pinners extends Provider
         );
     }
 
-
-    /**
-     * Search pinners by search query
-     *
-     * @param string $query
-     * @param int    $batchesLimit
-     * @return \Iterator
-     */
-    public function search($query, $batchesLimit = 0)
-    {
-        return $this->searchWithPagination($query, Request::SEARCH_PEOPLE_SCOPE, $batchesLimit);
-    }
-
     /**
      * Login as pinner
      *
@@ -176,11 +163,16 @@ class Pinners extends Provider
         $post = PinnerHelper::createLoginRequest($username, $password);
         $postString = UrlHelper::buildRequestString($post);
         $this->request->clearToken();
-        $response = $this->response->checkErrorInResponse($this->request->exec(UrlHelper::RESOURCE_LOGIN, $postString));
-        if ($response) {
+        $result = $this->response->checkErrorInResponse($this->request->exec(UrlHelper::RESOURCE_LOGIN, $postString));
+        if ($result) {
             $this->request->setLoggedIn();
         }
 
-        return $response;
+        return $result;
+    }
+
+    protected function getScope()
+    {
+        return 'people';
     }
 }

@@ -1,14 +1,15 @@
 <?php
 
-namespace seregazhuk\PinterestBot\Providers;
+namespace seregazhuk\PinterestBot\Api\Providers;
 
-use seregazhuk\PinterestBot\Request;
+use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
-use seregazhuk\PinterestBot\Helpers\ResponseHelper;
-use seregazhuk\PinterestBot\Helpers\Providers\BoardHelper;
+use seregazhuk\PinterestBot\Helpers\SearchHelper;
+use seregazhuk\PinterestBot\Helpers\Requests\BoardHelper;
 
 class Boards extends Provider
 {
+    use SearchHelper;
 
     /**
      * Get all logged-in user boards
@@ -24,18 +25,6 @@ class Boards extends Provider
         $response = $this->request->exec(UrlHelper::RESOURCE_GET_BOARDS."?{$getString}");
 
         return $this->response->getData($response, 'all_boards');
-    }
-
-    /**
-     * Search boards by search query
-     *
-     * @param string $query
-     * @param int    $batchesLimit
-     * @return \Iterator
-     */
-    public function search($query, $batchesLimit = 0)
-    {
-        return $this->request->searchWithPagination($query, Request::SEARCH_BOARDS_SCOPES, $batchesLimit);
     }
 
     /**
@@ -64,5 +53,10 @@ class Boards extends Provider
 
         $response = $this->request->followMethodCall($boardId, Request::BOARD_ENTITY_ID, UrlHelper::RESOURCE_UNFOLLOW_BOARD);
         return $this->response->checkResponse($response);
+    }
+
+    protected function getScope()
+    {
+        return 'boards';
     }
 }

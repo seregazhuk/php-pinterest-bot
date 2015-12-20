@@ -1,6 +1,6 @@
 <?php
 
-namespace seregazhuk\PinterestBot;
+namespace seregazhuk\PinterestBot\Api;
 
 use seregazhuk\PinterestBot\Interfaces\ResponseInterface;
 
@@ -69,7 +69,7 @@ class Response implements ResponseInterface
     {
         $this->lastError = null;
 
-        if (isset($response['resource_response']['error']) && !empty($response['resource_response']['error'])) {
+        if (isset($response['resource_response']['error']) && ! empty($response['resource_response']['error'])) {
             $this->lastError = $response['resource_response']['error'];
             return false;
         }
@@ -151,5 +151,13 @@ class Response implements ResponseInterface
         }
 
         return [];
+    }
+
+    /**
+     * @return array
+     */
+    public function getLastError()
+    {
+        return $this->lastError;
     }
 }

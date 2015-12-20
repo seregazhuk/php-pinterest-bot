@@ -1,14 +1,11 @@
 <?php
 
-namespace seregazhuk\PinterestBot\Helpers\Providers;
+namespace seregazhuk\PinterestBot\Helpers\Requests;
 
-use seregazhuk\PinterestBot\Helpers\RequestHelper;
-use seregazhuk\PinterestBot\Helpers\ResponseHelper;
-use seregazhuk\PinterestBot\Exceptions\AuthException;
+use seregazhuk\PinterestBot\Api\Request;
 
-class PinnerHelper extends RequestHelper
+class PinnerHelper
 {
-
     /**
      * Creates Pinterest API request to get user info according to
      * username, API url and bookmarks for pagination
@@ -20,9 +17,13 @@ class PinnerHelper extends RequestHelper
      */
     public static function createUserDataRequest($username, $sourceUrl, $bookmarks)
     {
-        $dataJson = self::createPinnerRequestData($username);
+        $dataJson = [
+            "options" => [
+                "username" => $username,
+            ]
+        ];
 
-        return self::createRequestData($dataJson, $sourceUrl, $bookmarks);
+        return Request::createRequestData($dataJson, $sourceUrl, $bookmarks);
     }
 
     /**
@@ -55,38 +56,6 @@ class PinnerHelper extends RequestHelper
                 "password"          => $password
             ],
         ];
-        return self::createRequestData($dataJson, "/login/");
+        return Request::createRequestData($dataJson, "/login/");
     }
-
-    /**
-     * Parses Pintrest Api response after login
-     *
-     * @param array $res
-     * @return bool
-     * @throws AuthException
-     */
-    public static function parseLoginResponse($res)
-    {
-        if (ResponseHelper::notEmpty($res)) {
-            throw new AuthException($res['resource_response']['error']['message']);
-        }
-
-        return true;
-    }
-
-    /**
-     * Creates common Pinner request data by username
-     *
-     * @param string $username
-     * @return array
-     */
-    protected static function createPinnerRequestData($username)
-    {
-        return [
-            "options" => [
-                "username" => $username,
-            ],
-        ];
-    }
-
 }

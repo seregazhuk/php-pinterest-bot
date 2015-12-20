@@ -2,7 +2,7 @@
 
 namespace seregazhuk\tests;
 
-use seregazhuk\PinterestBot\Providers\Boards;
+use seregazhuk\PinterestBot\Api\Providers\Boards;
 
 class BoardsTest extends ProviderTest
 {
