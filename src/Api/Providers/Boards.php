@@ -7,10 +7,8 @@ use seregazhuk\PinterestBot\Helpers\UrlHelper;
 use seregazhuk\PinterestBot\Helpers\SearchHelper;
 use seregazhuk\PinterestBot\Helpers\Requests\BoardHelper;
 
-class Boards extends Provider
+class Boards extends SearchProvider
 {
-    use SearchHelper;
-
     /**
      * Get all logged-in user boards
      *

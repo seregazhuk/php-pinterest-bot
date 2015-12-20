@@ -6,10 +6,8 @@ use seregazhuk\PinterestBot\Helpers\UrlHelper;
 use seregazhuk\PinterestBot\Helpers\SearchHelper;
 use seregazhuk\PinterestBot\Helpers\Requests\PinHelper;
 
-class Pins extends Provider
+class Pins extends SearchProvider
 {
-    use SearchHelper;
-
     /**
      * Likes pin with current ID
      *

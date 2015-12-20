@@ -3,14 +3,13 @@
 namespace seregazhuk\PinterestBot\Api\Providers;
 
 use seregazhuk\PinterestBot\Api\Request;
+use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
 use seregazhuk\PinterestBot\Helpers\SearchHelper;
 use seregazhuk\PinterestBot\Helpers\Requests\PinnerHelper;
 
-class Pinners extends Provider
+class Pinners extends SearchProvider
 {
-    use SearchHelper;
-
     /**
      * Follow user by user_id
      *

@@ -12,7 +12,7 @@ class Response implements ResponseInterface
     protected $response;
 
     /**
-     * @var array
+     * @var array|null
      */
     protected $lastError;
 
@@ -80,7 +80,7 @@ class Response implements ResponseInterface
     /**
      * Parse bookmarks from response
      * @param array $response
-     * @return string|null
+     * @return array|null
      */
     public function getBookmarksFromResponse($response)
     {

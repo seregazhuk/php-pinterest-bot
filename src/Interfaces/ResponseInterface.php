@@ -32,7 +32,7 @@ interface ResponseInterface
     /**
      * Parse bookmarks from response
      * @param array $response
-     * @return string|null
+     * @return array|null
      */
     public function getBookmarksFromResponse($response);
 
@@ -51,4 +51,14 @@ interface ResponseInterface
      * @return mixed
      */
     public function checkResponse($response);
+
+    /**
+     * Parses Pinterest search API response for data and bookmarks
+     * for next pagination page
+     *
+     * @param array $response
+     * @param bool  $bookmarksUsed
+     * @return array|null
+     */
+    public function parseSearchResponse($response, $bookmarksUsed = true);
 }

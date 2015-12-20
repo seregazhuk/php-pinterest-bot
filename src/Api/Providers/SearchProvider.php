@@ -1,18 +1,20 @@
 <?php
 
-namespace seregazhuk\PinterestBot\Helpers;
+namespace seregazhuk\PinterestBot\Api\Providers;
 
 use seregazhuk\PinterestBot\Api\Request;
-use seregazhuk\PinterestBot\Api\Response;
+use seregazhuk\PinterestBot\Helpers\UrlHelper;
+use seregazhuk\PinterestBot\Helpers\PaginationHelper;
 
-trait SearchHelper
+abstract class SearchProvider extends Provider
 {
     use PaginationHelper;
+    protected $moduleSearchPage = "SearchPage";
 
     /**
-     * @var Response;
+     * @return string
      */
-    protected $moduleSearchPage = "SearchPage";
+    abstract protected function getScope();
 
     /**
      * Executes search to API. Query - search string.
@@ -95,6 +97,4 @@ trait SearchHelper
     {
         return $this->searchWithPagination($query, $batchesLimit);
     }
-
-    abstract protected function getScope();
 }

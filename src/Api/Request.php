@@ -2,10 +2,10 @@
 
 namespace seregazhuk\PinterestBot\Api;
 
-use seregazhuk\PinterestBot\Interfaces\HttpInterface;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
-use seregazhuk\PinterestBot\Interfaces\RequestInterface;
 use seregazhuk\PinterestBot\Helpers\CsrfHelper;
+use seregazhuk\PinterestBot\Interfaces\HttpInterface;
+use seregazhuk\PinterestBot\Interfaces\RequestInterface;
 
 /**
  * Class Request
@@ -26,7 +26,7 @@ class Request implements RequestInterface
     protected $userAgent = 'Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0';
     const COOKIE_NAME = 'pinterest_cookie';
     /**
-     * @var Http
+     * @var HttpInterface
      */
     protected $http;
     protected $loggedIn;
@@ -137,8 +137,7 @@ class Request implements RequestInterface
         $options = $this->getDefaultHttpOptions();
 
         if ($this->csrfToken == CsrfHelper::DEFAULT_TOKEN) {
-            $options[CURLOPT_REFERER] = UrlHelper::LOGIN_REF_URL;
-            $headers[] = CsrfHelper::getDefaultCookie();
+            $options = $this->addDefaultCsrfInfo($options);
         }
 
         if ( ! empty($postString)) {
@@ -239,5 +238,17 @@ class Request implements RequestInterface
     protected function getDefaultHttpHeaders()
     {
         return array_merge($this->requestHeaders, ['X-CSRFToken: '.$this->csrfToken]);
+    }
+
+    /**
+     * @param $options
+     * @return mixed
+     */
+    protected function addDefaultCsrfInfo($options)
+    {
+        $options[CURLOPT_REFERER] = UrlHelper::LOGIN_REF_URL;
+        $options[CURLOPT_HTTPHEADER][] = CsrfHelper::getDefaultCookie();
+
+        return $options;
     }
 }
