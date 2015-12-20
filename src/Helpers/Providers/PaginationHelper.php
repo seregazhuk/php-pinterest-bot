@@ -35,15 +35,17 @@ trait PaginationHelper
     protected function getPaginatedResponse(callable $callback, array $params)
     {
         $response = call_user_func_array($callback, $params);
-        if (self::_responseHasData($response)) {
-            return self::_clearResponseFromMetaData($response);
+        if (self::responseHasData($response)) {
+            return self::clearResponseFromMetaData($response);
         }
+
+        return [];
     }
 
     protected function getDataFromPaginatedResponse($response)
     {
-        if (self::_responseHasData($response)) {
-            $res = self::_clearResponseFromMetaData($response);
+        if (self::responseHasData($response)) {
+            $res = self::clearResponseFromMetaData($response);
 
             return $res['data'];
         }
@@ -55,7 +57,7 @@ trait PaginationHelper
      * @param array $res
      * @return bool
      */
-    protected function _responseHasData($res)
+    protected function responseHasData($res)
     {
         return isset($res['data']) && ! empty($res['data']);
     }
@@ -76,12 +78,10 @@ trait PaginationHelper
      * @param array $res
      * @return array mixed
      */
-    protected function _clearResponseFromMetaData($res)
+    protected function clearResponseFromMetaData($res)
     {
         if (isset($res['data'][0]['type']) && $res['data'][0]['type'] == 'module') {
             array_shift($res['data']);
-
-            return $res;
         }
 
         return $res;
