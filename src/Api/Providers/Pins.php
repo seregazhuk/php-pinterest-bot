@@ -35,8 +35,8 @@ class Pins extends Provider
     /**
      * Calls pinterest API to like or unlike Pin by ID
      *
-     * @param $pinId
-     * @param $url
+     * @param int    $pinId
+     * @param string $url
      * @return bool
      */
     protected function likePinMethodCall($pinId, $url)
@@ -150,6 +150,9 @@ class Pins extends Provider
         return $this->response->checkResponse($response);
     }
 
+    /**
+     * @return string
+     */
     protected function getScope()
     {
         return 'pins';
