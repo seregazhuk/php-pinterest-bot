@@ -1,39 +1,16 @@
 <?php
 
-namespace seregazhuk\PinterestBot\Providers;
+namespace seregazhuk\PinterestBot\Api\Providers;
 
-use seregazhuk\PinterestBot\Request;
+use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
-use seregazhuk\PinterestBot\Helpers\PaginationHelper;
-use seregazhuk\PinterestBot\Helpers\Providers\PinnerHelper;
+use seregazhuk\PinterestBot\Helpers\Requests\PinnerHelper;
+use seregazhuk\PinterestBot\Helpers\Providers\FollowHelper;
+use seregazhuk\PinterestBot\Helpers\Providers\SearchHelper;
 
 class Pinners extends Provider
 {
-    /**
-     * Follow user by user_id
-     *
-     * @param integer $userId
-     * @return bool
-     */
-    public function follow($userId)
-    {
-        $this->request->checkLoggedIn();
-
-        return $this->request->followMethodCall($userId, Request::PINNER_ENTITY_ID, UrlHelper::RESOURCE_FOLLOW_USER);
-    }
-
-    /**
-     * Unfollow user by user_id
-     *
-     * @param integer $userId
-     * @return bool
-     */
-    public function unFollow($userId)
-    {
-        $this->request->checkLoggedIn();
-
-        return $this->request->followMethodCall($userId, Request::PINNER_ENTITY_ID, UrlHelper::RESOURCE_UNFOLLOW_USER);
-    }
+    use SearchHelper, FollowHelper;
 
     /**
      * Get different user data, for example, followers, following, pins.
@@ -50,29 +27,26 @@ class Pinners extends Provider
     {
         $get = PinnerHelper::createUserDataRequest($username, $sourceUrl, $bookmarks);
         $getString = UrlHelper::buildRequestString($get);
-        $res = $this->request->exec($url . '?' . $getString, $username);
-        $this->request->checkErrorInResponse($res);
+        $response = $this->request->exec($url.'?'.$getString, $username);
 
-        return PinnerHelper::parsePaginatedResponse($res);
+        return $this->response->getPaginationData($response);
     }
 
     /**
      * @param string $username
      * @param string $resourceUrl
      * @param string $sourceUrl
-     * @param int     $batchesLimit
+     * @param int    $batchesLimit
      * @return \Iterator
      */
     public function getPaginatedUserData($username, $resourceUrl, $sourceUrl, $batchesLimit = 0)
     {
-        return PaginationHelper::getPaginatedData(
-            [$this, 'getUserData'],
-            [
-                'username'  => $username,
-                'url'       => $resourceUrl,
-                'sourceUrl' => $sourceUrl,
-            ],
-            $batchesLimit
+        return $this->getPaginatedData(
+            [$this, 'getUserData'], [
+            'username'  => $username,
+            'url'       => $resourceUrl,
+            'sourceUrl' => $sourceUrl,
+        ], $batchesLimit
         );
     }
 
@@ -146,19 +120,6 @@ class Pinners extends Provider
         );
     }
 
-
-    /**
-     * Search pinners by search query
-     *
-     * @param string $query
-     * @param int    $batchesLimit
-     * @return \Iterator
-     */
-    public function search($query, $batchesLimit = 0)
-    {
-        return $this->request->searchWithPagination($query, Request::SEARCH_PEOPLE_SCOPE, $batchesLimit);
-    }
-
     /**
      * Login as pinner
      *
@@ -175,11 +136,31 @@ class Pinners extends Provider
         $post = PinnerHelper::createLoginRequest($username, $password);
         $postString = UrlHelper::buildRequestString($post);
         $this->request->clearToken();
-        $res = PinnerHelper::parseLoginResponse($this->request->exec(UrlHelper::RESOURCE_LOGIN, $postString));
-        if ($res) {
+        $result = $this->response->checkErrorInResponse($this->request->exec(UrlHelper::RESOURCE_LOGIN, $postString));
+        if ($result) {
             $this->request->setLoggedIn();
         }
 
-        return $res;
+        return $result;
+    }
+
+    protected function getScope()
+    {
+        return 'people';
+    }
+
+    protected function getEntityIdName()
+    {
+        return Request::PINNER_ENTITY_ID;
+    }
+
+    protected function getFollowUrl()
+    {
+        return UrlHelper::RESOURCE_FOLLOW_USER;
+    }
+
+    protected function getUnfFollowUrl()
+    {
+        return UrlHelper::RESOURCE_UNFOLLOW_USER;
     }
 }

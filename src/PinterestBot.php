@@ -2,13 +2,18 @@
 
 namespace seregazhuk\PinterestBot;
 
+use LogicException;
+use ReflectionClass;
+use seregazhuk\PinterestBot\Api\Http;
+use seregazhuk\PinterestBot\Api\Request;
+use seregazhuk\PinterestBot\Api\Response;
+use seregazhuk\PinterestBot\Api\Providers\Pins;
+use seregazhuk\PinterestBot\Api\Providers\Boards;
+use seregazhuk\PinterestBot\Api\Providers\Pinners;
+use seregazhuk\PinterestBot\Api\Providers\Provider;
+use seregazhuk\PinterestBot\Api\Providers\Interests;
+use seregazhuk\PinterestBot\Api\Providers\Conversations;
 use seregazhuk\PinterestBot\Exceptions\InvalidRequestException;
-use seregazhuk\PinterestBot\Providers\Pinners;
-use seregazhuk\PinterestBot\Providers\Pins;
-use seregazhuk\PinterestBot\Providers\Boards;
-use seregazhuk\PinterestBot\Providers\Interests;
-use seregazhuk\PinterestBot\Providers\Conversations;
-use seregazhuk\PinterestBot\Providers\Provider;
 
 /**
  * Class PinterestBot
@@ -28,17 +33,6 @@ class PinterestBot
     protected $password;
     protected $loggedIn = false;
 
-    const PROVIDERS_NAMESPACE = "seregazhuk\\PinterestBot\\Providers\\";
-    const MAX_PAGINATED_ITEMS = 100;
-
-    public function __construct($username, $password)
-    {
-        $this->username = $username;
-        $this->password = $password;
-
-        $this->request = new Request(new Http());
-    }
-
     /**
      * A array containing the cached providers
      *
@@ -47,13 +41,28 @@ class PinterestBot
     private $providers = [];
 
     /**
-     * A reference to the request class which travels
+     * References to the request and response classes that travels
      * through the application
      *
      * @var Request
      */
-    public $request;
+    protected $request;
+    /**
+     * @var Response
+     */
+    protected $response;
 
+    const PROVIDERS_NAMESPACE = "seregazhuk\\PinterestBot\\Api\\Providers\\";
+    const MAX_PAGINATED_ITEMS = 100;
+
+    public function __construct($username, $password)
+    {
+        $this->username = $username;
+        $this->password = $password;
+
+        $this->request = new Request(new Http());
+        $this->response = new Response();
+    }
 
     /**
      * Login and parsing csrfToken from cookies if success
@@ -62,6 +71,7 @@ class PinterestBot
     {
         $this->_check_credentials();
         $res = $this->pinners->login($this->username, $this->password);
+
         return $res;
     }
 
@@ -87,26 +97,34 @@ class PinterestBot
      */
     protected function _addProvider($provider)
     {
-        $class = self::PROVIDERS_NAMESPACE . ucfirst($provider);
+        $class = self::PROVIDERS_NAMESPACE.ucfirst($provider);
 
         if ( ! class_exists($class)) {
             throw new InvalidRequestException;
         }
 
         // Create a reflection of the called class
-        $ref = new \ReflectionClass($class);
-        $obj = $ref->newInstanceArgs([$this->request]);
+        $ref = new ReflectionClass($class);
+        $obj = $ref->newInstanceArgs([$this->request, $this->response]);
 
         $this->providers[$provider] = $obj;
     }
 
     /**
-     * @throws \LogicException
+     * @throws LogicException
      */
     protected function _check_credentials()
     {
         if ( ! $this->username || ! $this->password) {
-            throw new \LogicException('You must set username and password to login.');
+            throw new LogicException('You must set username and password to login.');
         }
+    }
+
+    /**
+     * @return array
+     */
+    public function getLastError()
+    {
+        return $this->response->getLastError();
     }
 }

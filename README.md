@@ -55,7 +55,7 @@ $info = $bot->pins->info(1234567890);
 Create new pin. Accepts image url, board id, where to post image, description and preview url.
 
 ```php
-$pinId = $bot->pins->create('http://exmaple.com/image.jpg', $boards[0]['id'], 'pin description');
+$pinId = $bot->pins->createApiResponse('http://exmaple.com/image.jpg', $boards[0]['id'], 'pin description');
 ```
     
 Repin other pin by its id.
@@ -73,7 +73,9 @@ $bot->pins->unLike($pinId);
 ```
 Write a comment.
 ```php
-$bot->pins->comment($pinId, 'your comment');
+$result = $bot->pins->comment($pinId, 'your comment'); 
+// Result contains info about written comment. For example,
+// comment_id if you want to delete it.
 ```
 
 Delete a comment.
@@ -149,8 +151,15 @@ foreach($bot->pinners->search('query') as $pinnersBatch)
 	// ...
 }
 
-foreach($bot->pinners->search('query') as $boardsBatch);
+foreach($bot->boards->search('query') as $boardsBatch);
 {
 	// ...
 }
+```
+
+## Errors handling
+You can check for occurred errors after requests with method *getLastError()*:
+```php
+$error = $bot->getLastError();
+print_r($error);
 ```

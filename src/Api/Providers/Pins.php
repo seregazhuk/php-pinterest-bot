@@ -1,13 +1,15 @@
 <?php
 
-namespace seregazhuk\PinterestBot\Providers;
+namespace seregazhuk\PinterestBot\Api\Providers;
 
-use seregazhuk\PinterestBot\Request;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
-use seregazhuk\PinterestBot\Helpers\Providers\PinHelper;
+use seregazhuk\PinterestBot\Helpers\Requests\PinHelper;
+use seregazhuk\PinterestBot\Helpers\Providers\SearchHelper;
 
 class Pins extends Provider
 {
+    use SearchHelper;
+
     /**
      * Likes pin with current ID
      *
@@ -18,7 +20,6 @@ class Pins extends Provider
     {
         return $this->likePinMethodCall($pinId, UrlHelper::RESOURCE_LIKE_PIN);
     }
-
 
     /**
      * Removes your like from pin with current ID
@@ -31,7 +32,6 @@ class Pins extends Provider
         return $this->likePinMethodCall($pinId, UrlHelper::RESOURCE_UNLIKE_PIN);
     }
 
-
     /**
      * Calls pinterest API to like or unlike Pin by ID
      *
@@ -42,11 +42,11 @@ class Pins extends Provider
     protected function likePinMethodCall($pinId, $url)
     {
         $this->request->checkLoggedIn();
-        $post = PinHelper::createSimplePinRequest($pinId);
+        $data = PinHelper::createPinIdRequest($pinId);
+        $post = PinHelper::createPinRequestData($data);
         $postString = URlHelper::buildRequestString($post);
-        $res        = $this->request->exec($url, $postString);
-
-        return PinHelper::checkMethodCallResult($res);
+        $response = $this->request->exec($url, $postString);
+        return $this->response->checkErrorInResponse($response);
     }
 
     /**
@@ -54,16 +54,15 @@ class Pins extends Provider
      *
      * @param integer $pinId
      * @param string  $text Comment
-     * @return bool
+     * @return array
      */
     public function comment($pinId, $text)
     {
         $this->request->checkLoggedIn();
-        $post       = PinHelper::createCommentRequest($pinId, $text);
+        $post = PinHelper::createCommentRequest($pinId, ["text" => $text]);
         $postString = UrlHelper::buildRequestString($post);
-        $res        = $this->request->exec(UrlHelper::RESOURCE_COMMENT_PIN, $postString);
-
-        return PinHelper::checkMethodCallResult($res);
+        $response = $this->request->exec(UrlHelper::RESOURCE_COMMENT_PIN, $postString);
+        return $this->response->getData($response);
     }
 
     /**
@@ -76,13 +75,12 @@ class Pins extends Provider
     public function deleteComment($pinId, $commentId)
     {
         $this->request->checkLoggedIn();
-        $post       = PinHelper::createCommentDeleteRequest($pinId, $commentId);
+        $post = PinHelper::createCommentRequest($pinId, ["comment_id" => $commentId]);
         $postString = UrlHelper::buildRequestString($post);
-        $res        = $this->request->exec(UrlHelper::RESOURCE_COMMENT_DELETE_PIN, $postString);
+        $response = $this->request->exec(UrlHelper::RESOURCE_COMMENT_DELETE_PIN, $postString);
 
-        return PinHelper::checkMethodCallResult($res);
+        return $this->response->checkErrorInResponse($response);
     }
-
 
     /**
      * Create pin. Returns created pin ID
@@ -96,13 +94,10 @@ class Pins extends Provider
     {
         $this->request->checkLoggedIn();
         $post = PinHelper::createPinCreationRequest($imageUrl, $boardId, $description);
-
         $postString = UrlHelper::buildRequestString($post);
-
         $res = $this->request->exec(UrlHelper::RESOURCE_CREATE_PIN, $postString);
-        $this->request->checkErrorInResponse($res);
 
-        return PinHelper::getDataFromResponse($res, 'id');
+        return $this->response->getData($res, 'id');
     }
 
     /**
@@ -117,14 +112,12 @@ class Pins extends Provider
     {
         $this->request->checkLoggedIn();
 
-        $post       = PinHelper::createRepinRequest($repinId, $boardId, $description);
+        $post = PinHelper::createRepinRequest($repinId, $boardId, $description);
         $postString = UrlHelper::buildRequestString($post);
-        $res        = $this->request->exec(UrlHelper::RESOURCE_REPIN, $postString);
-        $this->request->checkErrorInResponse($res);
+        $res = $this->request->exec(UrlHelper::RESOURCE_REPIN, $postString);
 
-        return PinHelper::getDataFromResponse($res, 'id');
+        return $this->response->getData($res, 'id');
     }
-
 
     /**
      * Delete pin
@@ -138,10 +131,8 @@ class Pins extends Provider
 
         $post = PinHelper::createSimplePinRequest($pinId);
         $postString = UrlHelper::buildRequestString($post);
-        $res        = $this->request->exec(UrlHelper::RESOURCE_DELETE_PIN, $postString);
-        $this->request->checkErrorInResponse($res);
-
-        return $res ? true : false;
+        $response = $this->request->exec(UrlHelper::RESOURCE_DELETE_PIN, $postString);
+        return $this->response->checkResponse($response);
     }
 
     /**
@@ -154,20 +145,13 @@ class Pins extends Provider
     {
         $get = PinHelper::createInfoRequest($pinId);
         $url = UrlHelper::RESOURCE_PIN_INFO.'?'.UrlHelper::buildRequestString($get);
-        $res = $this->request->exec($url);
+        $response = $this->request->exec($url);
 
-        return PinHelper::getDataFromResponse($res);
+        return $this->response->checkResponse($response);
     }
 
-    /**
-     * Search pins by search query
-     *
-     * @param string $query
-     * @param int    $batchesLimit
-     * @return \Iterator
-     */
-    public function search($query, $batchesLimit = 0)
+    protected function getScope()
     {
-        return $this->request->searchWithPagination($query, Request::SEARCH_PINS_SCOPE, $batchesLimit);
+        return 'pins';
     }
 }

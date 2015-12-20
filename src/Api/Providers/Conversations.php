@@ -1,8 +1,8 @@
 <?php
-namespace seregazhuk\PinterestBot\Providers;
+namespace seregazhuk\PinterestBot\Api\Providers;
 
+use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
-use seregazhuk\PinterestBot\Helpers\Providers\ConversationHelper;
 
 class Conversations extends Provider
 {
@@ -25,12 +25,12 @@ class Conversations extends Provider
             ),
         );
 
-        $request = ConversationHelper::createRequestData($data);
+        $request = Request::createRequestData($data);
 
         $postString = UrlHelper::buildRequestString($request);
-        $res = $this->request->exec(UrlHelper::RESOURCE_SEND_MESSAGE, $postString);
+        $response = $this->request->exec(UrlHelper::RESOURCE_SEND_MESSAGE, $postString);
 
-        return ConversationHelper::checkMethodCallResult($res);
+        return $this->response->checkResponse($response);
     }
 
     /**
@@ -40,9 +40,10 @@ class Conversations extends Provider
     public function last()
     {
         $this->request->checkLoggedIn();
-        $data = ConversationHelper::createRequestData();
+        $data = Request::createRequestData();
         $query = UrlHelper::buildRequestString($data);
-        $res = $this->request->exec(UrlHelper::RESOURCE_GET_LAST_CONVERSATIONS . '?' . $query);
-        return ConversationHelper::getDataFromResponse($res);
+        $response = $this->request->exec(UrlHelper::RESOURCE_GET_LAST_CONVERSATIONS.'?'.$query);
+
+        return $this->response->getData($response);
     }
 }

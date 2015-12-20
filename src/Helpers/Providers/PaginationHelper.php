@@ -1,8 +1,8 @@
 <?php
 
-namespace seregazhuk\PinterestBot\Helpers;
+namespace seregazhuk\PinterestBot\Helpers\Providers;
 
-class PaginationHelper
+trait PaginationHelper
 {
     /**
      * Iterate through results of Api function call. By
@@ -15,7 +15,7 @@ class PaginationHelper
      * @param int    $batchesLimit
      * @return \Iterator
      */
-    public static function getPaginatedData($callback, $params, $batchesLimit = 0)
+    public function getPaginatedData($callback, $params, $batchesLimit = 0)
     {
         $batchesNum = 0;
         do {
@@ -44,7 +44,7 @@ class PaginationHelper
      * @param array $res
      * @return bool
      */
-    protected static function _responseHasData($res)
+    protected function _responseHasData($res)
     {
         return isset($res['data']) && ! empty($res['data']);
     }
@@ -55,7 +55,7 @@ class PaginationHelper
      * @param int $batchesNum
      * @return bool
      */
-    protected static function reachBatchesLimit($batchesLimit, $batchesNum)
+    protected function reachBatchesLimit($batchesLimit, $batchesNum)
     {
         return $batchesLimit && $batchesNum >= $batchesLimit;
     }
@@ -65,7 +65,7 @@ class PaginationHelper
      * @param array $res
      * @return array mixed
      */
-    protected static function _clearResponseFromMetaData($res)
+    protected function _clearResponseFromMetaData($res)
     {
         if (isset($res['data'][0]['type']) && $res['data'][0]['type'] == 'module') {
             array_shift($res['data']);

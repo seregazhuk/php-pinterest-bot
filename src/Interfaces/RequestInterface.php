@@ -17,7 +17,7 @@ interface RequestInterface
      * @param int    $entityId
      * @param string $entityName
      * @param string $url
-     * @return bool
+     * @return array
      */
     public function followMethodCall($entityId, $entityName, $url);
 
@@ -38,29 +38,11 @@ interface RequestInterface
 
 
     /**
-     * Executes search to API. Query - search string.
-     *
-     * @param       $query
-     * @param       $scope
-     * @param array $bookmarks
-     * @return array
-     */
-    public function searchCall($query, $scope, $bookmarks = []);
-
-    /**
      * Clear token information
      *
      * @return mixed
      */
     public function clearToken();
-
-    /**
-     * Check for error info in api response and save
-     * it.
-     *
-     * @param array $response
-     */
-    public function checkErrorInResponse($response);
 
     /**
      * Get log status
@@ -69,12 +51,4 @@ interface RequestInterface
      */
     public function isLoggedIn();
 
-    /**
-     * Executes search to API with pagination.
-     *
-     * @param string $query
-     * @param int    $batchesLimit
-     * @return \Iterator
-     */
-    public function searchWithPagination($query, $scope, $batchesLimit);
 }

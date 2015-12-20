@@ -2,19 +2,32 @@
 
 namespace seregazhuk\tests;
 
-use seregazhuk\PinterestBot\Providers\Pinners;
+use seregazhuk\PinterestBot\Api\Providers\Pinners;
 
 class PinnersTest extends ProviderTest
 {
+    /**
+     * @var Pinners
+     */
+    protected $provider;
     protected $providerClass = Pinners::class;
 
     public function testFollow()
     {
-        $response = ['body' => 'result'];
-        $this->mock->method('exec')->willReturn(json_encode($response));
-        $this->setProperty('request', $this->mock);
+        $response = $this->createSuccessApiResponse();
+        $this->mock->method('exec')->willReturn($response);
+
         $this->assertTrue($this->provider->follow(1));
-        $this->assertTrue($this->provider->unFollow(1));
+        $this->assertTrue($this->provider->follow(1));
+    }
+
+    public function testUnFollow()
+    {
+        $response = $this->createSuccessApiResponse();
+        $this->mock->method('exec')->willReturn($response);
+
+        $this->assertTrue($this->provider->unfollow(1));
+        $this->assertTrue($this->provider->unfollow(1));
     }
 
     public function testGetUserData()
@@ -22,9 +35,7 @@ class PinnersTest extends ProviderTest
         $expected                                = ['data' => ['info' => ''], 'bookmarks' => ['booksmarks_string']];
         $res['resource']['options']['bookmarks'] = $expected['bookmarks'];
         $res['resource_response']['data']        = $expected['data'];
-
         $this->mock->method('exec')->willReturn($res);
-        $this->setProperty('request', $this->mock);
 
         $data = $this->provider->getUserData('test_user', 'request://example.com', 'request://example.com');
         $this->assertEquals($expected, $data);
@@ -32,19 +43,19 @@ class PinnersTest extends ProviderTest
 
     public function testInfo()
     {
-        $res['resource_response'] = ['data' => ['name' => 'test']];
-        $this->mock->method('exec')->willReturn($res);
-        $this->setProperty('request', $this->mock);
+        $response = $this->createApiResponse(['data' => ['name' => 'test']]);
+        $this->mock->method('exec')->willReturn($response);
+
         $data = $this->provider->info('username');
-        $this->assertEquals($res['resource_response']['data'], $data);
+        $this->assertEquals($response['resource_response']['data'], $data);
     }
 
     public function testMyAccountName()
     {
-        $accountName                                                      = 'test';
-        $res['resource_data_cache'][1]['resource']['options']['username'] = $accountName;
+        $accountName = 'test';
+        $res['resource_data'][1]['resource']['options']['username'] = $accountName;
         $this->mock->expects($this->at(1))->method('exec')->willReturn($res);
-        $this->setProperty('request', $this->mock);
+
         $this->assertEquals($accountName, $this->provider->myAccountName());
         $this->assertNull($this->provider->myAccountName());
     }
@@ -91,7 +102,7 @@ class PinnersTest extends ProviderTest
                     ],
                 ],
             ]);
-        $this->setProperty('request', $this->mock);
+
         $followers = $this->provider->followers('username');
         $this->assertCount(2, iterator_to_array($followers)[0]);
         $followers = $this->provider->followers('username');
@@ -111,7 +122,6 @@ class PinnersTest extends ProviderTest
             ->method('exec')
             ->willReturn(['resource_response' => ['data' => []]]);
 
-        $this->setProperty('request', $this->mock);
         $following = $this->provider->following('username');
         $this->assertCount(2, iterator_to_array($following)[0]);
     }
@@ -134,7 +144,7 @@ class PinnersTest extends ProviderTest
         $this->mock->expects($this->at(0))
             ->method('exec')
             ->willReturn($res);
-        $this->setProperty('request', $this->mock);
+
         $pins = $this->provider->pins('username', 1);
         $expectedResultsNum = count($res['resource_response']['data']);
         $this->assertCount($expectedResultsNum, iterator_to_array($pins)[0]);
@@ -148,10 +158,25 @@ class PinnersTest extends ProviderTest
         ];
 
         $expectedResultsNum = count($response['module']['tree']['data']['results']);
-
         $this->mock->method('exec')->willReturn($response);
-        $this->setProperty('request', $this->mock);
+
         $res = iterator_to_array($this->provider->search('dogs'), 1);
         $this->assertCount($expectedResultsNum, $res[0]);
+    }
+
+    public function testOkLogin()
+    {
+        $response = $this->createSuccessApiResponse();
+        $this->mock->method('isLoggedIn')->willReturn(false);
+        $this->mock->method('exec')->willReturn($response);
+        $this->assertTrue($this->provider->login('test', 'test'));
+    }
+
+    public function testLoginFails()
+    {
+        $response = $this->createErrorApiResponse();
+        $this->mock->method('isLoggedIn')->willReturn(false);
+        $this->mock->method('exec')->willReturn($response);
+        $this->assertFalse($this->provider->login('test', 'test'));
     }
 }

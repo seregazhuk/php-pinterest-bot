@@ -2,13 +2,14 @@
 
 namespace seregazhuk\tests;
 
-use seregazhuk\PinterestBot\Providers\Boards;
+use seregazhuk\PinterestBot\Api\Providers\Boards;
 
 class BoardsTest extends ProviderTest
 {
     /**
      * @var Boards
      */
+    protected $provider;
     protected $providerClass = Boards::class;
 
     public function testSearch()
@@ -25,16 +26,29 @@ class BoardsTest extends ProviderTest
         $this->assertCount($expectedResultsNum, $res[0]);
     }
 
-    public function testFollowAndUnfollow()
+    public function testFollow()
     {
-        $this->mock->expects($this->at(1))->method('exec')->willReturn([]);
-        $this->mock->expects($this->at(3))->method('exec')->willReturn([]);
+        $response = $this->createSuccessApiResponse();
+        $error = $this->createErrorApiResponse();
+
+        $this->mock->expects($this->at(1))->method('exec')->willReturn($response);
+        $this->mock->expects($this->at(3))->method('exec')->willReturn($error);
         $this->setProperty('request', $this->mock);
 
         $this->assertTrue($this->provider->follow(1));
-        $this->assertTrue($this->provider->unFollow(1));
-
         $this->assertFalse($this->provider->follow(1));
+    }
+
+    public function testUnFollow()
+    {
+        $response = $this->createSuccessApiResponse();
+        $error = $this->createErrorApiResponse();
+
+        $this->mock->expects($this->at(1))->method('exec')->willReturn($response);
+        $this->mock->expects($this->at(3))->method('exec')->willReturn($error);
+        $this->setProperty('request', $this->mock);
+
+        $this->assertTrue($this->provider->unFollow(1));
         $this->assertFalse($this->provider->unFollow(1));
     }
 

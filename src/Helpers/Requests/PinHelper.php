@@ -1,37 +1,21 @@
 <?php
 
-namespace seregazhuk\PinterestBot\Helpers\Providers;
+namespace seregazhuk\PinterestBot\Helpers\Requests;
 
-use seregazhuk\PinterestBot\Helpers\RequestHelper;
+use seregazhuk\PinterestBot\Api\Request;
 
-class PinHelper extends RequestHelper
+class PinHelper
 {
     /**
-     * Create Pinterest API request form commenting pin
+     * Create Pinterest API request form commenting/deleting comment pin
      *
-     * @param int    $pinId
-     * @param string $text
+     * @param int   $pinId
+     * @param array $data
      * @return array
      */
-    public static function createCommentRequest($pinId, $text)
+    public static function createCommentRequest($pinId, $data)
     {
-        $dataJson = self::createPinRequest($pinId, 'pin_id');
-        $dataJson["options"]["text"] = $text;
-
-        return self::createPinRequestData($dataJson);
-    }
-
-    /**
-     * Create Pinterest API request form commenting pin
-     *
-     * @param int $pinId
-     * @param int $commentId
-     * @return array
-     */
-    public static function createCommentDeleteRequest($pinId, $commentId)
-    {
-        $dataJson = self::createPinRequest($pinId, 'pin_id');
-        $dataJson["options"]["comment_id"] = $commentId;
+        $dataJson = self::createPinIdRequest($pinId, $data);
 
         return self::createPinRequestData($dataJson);
     }
@@ -56,9 +40,8 @@ class PinHelper extends RequestHelper
             ],
         ];
 
-        return self::createPinRequestData($dataJson, "/pin/create/bookmarklet/?url=" . urlencode($imageUrl));
+        return self::createPinRequestData($dataJson, "/pin/create/bookmarklet/?url=".urlencode($imageUrl));
     }
-
 
     /**
      * Creates Pinterest API request for Pin repin
@@ -84,7 +67,6 @@ class PinHelper extends RequestHelper
         return self::createPinRequestData($dataJson);
     }
 
-
     /**
      * Creates Pinterest API request to get Pin info
      *
@@ -95,11 +77,10 @@ class PinHelper extends RequestHelper
     {
         $dataJson = [
             "options" => [
-                "field_set_key"                  => "detailed",
-                "fetch_visualsearchCall_objects" => true,
-                "id"                             => $pinId,
-                "pin_id"                         => $pinId,
-                "allow_stale"                    => true,
+                "field_set_key" => "detailed",
+                "id"            => $pinId,
+                "pin_id"        => $pinId,
+                "allow_stale"   => true,
             ],
         ];
 
@@ -111,27 +92,33 @@ class PinHelper extends RequestHelper
      *
      * @param int    $pinId
      * @param string $template
+     * @param array  $options
      * @return array
      */
-    public static function createPinRequest($pinId, $template = 'id')
+    public static function createPinRequest($pinId, $template = 'id', $options = array())
     {
-        return [
-            "options" => [
-                "$template" => $pinId,
-            ],
+        $options = array_merge(
+            ["$template" => $pinId], $options
+        );
+
+        $result = [
+            "options" => $options,
             "context" => [],
         ];
+
+        return $result;
     }
 
     /**
      * Creates simple Pin request by PinId (used by delete and like requests)
      *
-     * @param $pinId
+     * @param int $pinId
      * @return array
      */
     public static function createSimplePinRequest($pinId)
     {
         $dataJson = self::createPinRequest($pinId);
+
         return self::createPinRequestData($dataJson);
     }
 
@@ -144,9 +131,19 @@ class PinHelper extends RequestHelper
     {
         if ($sourceUrl === null) {
             reset($data);
-            $sourceUrl = "/pin/" . end($data["options"]) . "/";
+            $sourceUrl = "/pin/".end($data["options"])."/";
         }
 
-        return self::createRequestData($data, $sourceUrl);
+        return Request::createRequestData($data, $sourceUrl);
+    }
+
+    /**
+     * @param       $pinId
+     * @param array $options
+     * @return array
+     */
+    public static function createPinIdRequest($pinId, $options = array())
+    {
+        return self::createPinRequest($pinId, 'pin_id', $options);
     }
 }

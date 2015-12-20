@@ -1,10 +1,8 @@
 <?php
 
-namespace seregazhuk\PinterestBot\Helpers\Providers;
+namespace seregazhuk\PinterestBot\Helpers\Requests;
 
-use seregazhuk\PinterestBot\Helpers\RequestHelper;
-
-class BoardHelper extends RequestHelper
+class BoardHelper
 {
     /**
      * Creates Pinterest API request to get boards info

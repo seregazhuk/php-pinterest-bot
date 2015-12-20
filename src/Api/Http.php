@@ -1,6 +1,6 @@
 <?php
 
-namespace seregazhuk\PinterestBot;
+namespace seregazhuk\PinterestBot\Api;
 
 use seregazhuk\PinterestBot\Interfaces\HttpInterface;
 use seregazhuk\PinterestBot\Helpers\CsrfHelper;
@@ -125,16 +125,5 @@ class Http implements HttpInterface
     public function execute()
     {
         return curl_exec($this->curl);
-    }
-
-
-    /**
-     * Checks if API
-     *
-     * @return mixed
-     */
-    public function isLoggedIn()
-    {
-        return $this->loggedIn;
     }
 }

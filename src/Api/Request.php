@@ -1,13 +1,11 @@
 <?php
 
-namespace seregazhuk\PinterestBot;
+namespace seregazhuk\PinterestBot\Api;
 
-use seregazhuk\PinterestBot\Interfaces\HttpInterface;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
-use seregazhuk\PinterestBot\Helpers\SearchHelper;
-use seregazhuk\PinterestBot\Interfaces\RequestInterface;
 use seregazhuk\PinterestBot\Helpers\CsrfHelper;
-use seregazhuk\PinterestBot\Helpers\PaginationHelper;
+use seregazhuk\PinterestBot\Interfaces\HttpInterface;
+use seregazhuk\PinterestBot\Interfaces\RequestInterface;
 
 /**
  * Class Request
@@ -15,9 +13,7 @@ use seregazhuk\PinterestBot\Helpers\PaginationHelper;
  * @package Pinterest
  * @property resource $ch
  * @property bool     $loggedIn
- * @property string   $useragent
- * @property int      $lastApiErrorCode
- * @property string   $lastApiErrorMsg
+ * @property string   $userAgent
  * @property string   $csrfToken
  * @property string   $cookieJar
  */
@@ -27,25 +23,16 @@ class Request implements RequestInterface
     const BOARD_ENTITY_ID    = 'board_id';
     const PINNER_ENTITY_ID   = 'user_id';
 
-    const SEARCH_PINS_SCOPE    = 'pins';
-    const SEARCH_PEOPLE_SCOPE  = 'people';
-    const SEARCH_BOARDS_SCOPES = 'boards';
-
-    const DEFAULT_CSRFTOKEN = '1234';
-
-    protected $useragent = 'Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0';
+    protected $userAgent = 'Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0';
     const COOKIE_NAME = 'pinterest_cookie';
     /**
-     * @var Http
+     * @var HttpInterface
      */
     protected $http;
     protected $loggedIn;
     protected $cookieJar;
 
-    public $csrfToken = "";
-    public $lastApiErrorCode;
-    public $lastApiErrorMsg;
-
+    public    $csrfToken = "";
 
     /**
      * Common headers needed for every query
@@ -69,7 +56,7 @@ class Request implements RequestInterface
      */
     public function __construct(HttpInterface $http)
     {
-        $this->http      = $http;
+        $this->http = $http;
         $this->cookieJar = self::COOKIE_NAME;
 
         if (file_exists($this->cookieJar)) {
@@ -77,14 +64,13 @@ class Request implements RequestInterface
         }
     }
 
-
     /**
      * Executes api call for follow or unfollow user
      *
      * @param int    $entityId
      * @param string $entityName
      * @param string $url
-     * @return bool
+     * @return array
      */
     public function followMethodCall($entityId, $entityName, $url)
     {
@@ -99,17 +85,10 @@ class Request implements RequestInterface
             $dataJson["options"]["interest_list"] = "favorited";
         }
 
-        $post       = [
-            "data" => json_encode($dataJson, JSON_FORCE_OBJECT),
-        ];
+        $post = ["data" => json_encode($dataJson, JSON_FORCE_OBJECT)];
         $postString = UrlHelper::buildRequestString($post);
-        $res        = $this->exec($url, $postString);
 
-        if ($res === null) {
-            return false;
-        }
-
-        return true;
+        return $this->exec($url, $postString);
     }
 
     /**
@@ -128,60 +107,6 @@ class Request implements RequestInterface
     }
 
     /**
-     * Check for error info in api response and save
-     * it.
-     *
-     * @param array $response
-     */
-    public function checkErrorInResponse($response)
-    {
-        $this->lastApiErrorCode = null;
-        $this->lastApiErrorMsg  = null;
-
-        if (isset($response['api_error_code']) && isset($response['message'])) {
-            $this->lastApiErrorCode = $response['api_error_code'];
-            $this->lastApiErrorMsg  = $response['message'];
-        }
-    }
-
-
-    /**
-     * Executes search to API. Query - search string.
-     *
-     * @param string $query
-     * @param string $scope
-     * @param array  $bookmarks
-     * @return array
-     */
-    public function searchCall($query, $scope, $bookmarks = [])
-    {
-        $url = UrlHelper::getSearchUrl( ! empty($bookmarks));
-        $get = SearchHelper::createSearchRequest($query, $scope, $bookmarks);
-        $url = $url.'?'.UrlHelper::buildRequestString($get);
-        $res = $this->exec($url);
-        return SearchHelper::parseSearchResponse($res, ! empty($bookmarks));
-    }
-
-    /**
-     * Executes search to API with pagination.
-     *
-     * @param string $query
-     * @param int    $batchesLimit
-     * @return \Iterator
-     */
-    public function searchWithPagination($query, $scope, $batchesLimit)
-    {
-        return PaginationHelper::getPaginatedData(
-            [$this, 'searchCall'],
-            [
-                'query' => $query,
-                'scope' => $scope,
-            ],
-            $batchesLimit
-        );
-    }
-
-    /**
      * Executes request to Pinterest API
      *
      * @param string $resourceUrl
@@ -190,7 +115,7 @@ class Request implements RequestInterface
      */
     public function exec($resourceUrl, $postString = "")
     {
-        $url     = UrlHelper::buildApiUrl($resourceUrl);
+        $url = UrlHelper::buildApiUrl($resourceUrl);
         $options = $this->makeHttpOptions($postString);
         $this->http->init($url);
         $this->http->setOptions($options);
@@ -201,7 +126,6 @@ class Request implements RequestInterface
         return json_decode($res, true);
     }
 
-
     /**
      * Adds necessary curl options for query
      *
@@ -210,36 +134,19 @@ class Request implements RequestInterface
      */
     protected function makeHttpOptions($postString = "")
     {
-        $options = [
-            CURLOPT_USERAGENT      => $this->useragent,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_SSL_VERIFYPEER => false,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_ENCODING       => 'gzip,deflate',
-        ];
+        $options = $this->getDefaultHttpOptions();
 
-        $headers   = $this->requestHeaders;
-        $headers[] = 'X-CSRFToken: '.$this->csrfToken;
-        if ($this->csrfToken == self::DEFAULT_CSRFTOKEN) {
-            $options[CURLOPT_REFERER] = UrlHelper::LOGIN_REF_URL;
-            $headers[] = 'Cookie: csrftoken='.self::DEFAULT_CSRFTOKEN.';';
-        } else {
-            $options[CURLOPT_REFERER] = UrlHelper::URL_BASE;
+        if ($this->csrfToken == CsrfHelper::DEFAULT_TOKEN) {
+            $options = $this->addDefaultCsrfInfo($options);
         }
 
-        $options[CURLOPT_HTTPHEADER] = $headers;
-
         if ( ! empty($postString)) {
-            $options[CURLOPT_POST]       = true;
+            $options[CURLOPT_POST] = true;
             $options[CURLOPT_POSTFIELDS] = $postString;
         }
 
-        $options[CURLOPT_COOKIEFILE] = $this->cookieJar;
-        $options[CURLOPT_COOKIEJAR]  = $this->cookieJar;
-
         return $options;
     }
-
 
     /**
      * Clear token information
@@ -248,7 +155,7 @@ class Request implements RequestInterface
      */
     public function clearToken()
     {
-        $this->csrfToken = self::DEFAULT_CSRFTOKEN;
+        $this->csrfToken = CsrfHelper::DEFAULT_TOKEN;
     }
 
     /**
@@ -269,6 +176,79 @@ class Request implements RequestInterface
      */
     public function isLoggedIn()
     {
+        echo "triger\n";
         return $this->loggedIn;
+    }
+
+    /**
+     * @param array|object $data
+     * @param string|null  $sourceUrl
+     * @param array        $bookmarks
+     * @return array
+     */
+    public static function createRequestData($data = [], $sourceUrl = '/', $bookmarks = [])
+    {
+        if (empty($data)) {
+            $data = self::createEmptyRequestData();
+        }
+
+        if ( ! empty($bookmarks)) {
+            $data["options"]["bookmarks"] = $bookmarks;
+        }
+
+        $data["context"] = new \stdClass();
+
+        return [
+            "source_url" => $sourceUrl,
+            "data"       => json_encode($data),
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    protected static function createEmptyRequestData()
+    {
+        return array('options' => []);
+    }
+
+    /**
+     * @return array
+     */
+    protected function getDefaultHttpOptions()
+    {
+        $options = [
+            CURLOPT_USERAGENT      => $this->userAgent,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_ENCODING       => 'gzip,deflate',
+            CURLOPT_HTTPHEADER     => $this->getDefaultHttpHeaders(),
+            CURLOPT_REFERER        => UrlHelper::URL_BASE,
+            CURLOPT_COOKIEFILE     => $this->cookieJar,
+            CURLOPT_COOKIEJAR      => $this->cookieJar,
+        ];
+
+        return $options;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getDefaultHttpHeaders()
+    {
+        return array_merge($this->requestHeaders, ['X-CSRFToken: '.$this->csrfToken]);
+    }
+
+    /**
+     * @param $options
+     * @return mixed
+     */
+    protected function addDefaultCsrfInfo($options)
+    {
+        $options[CURLOPT_REFERER] = UrlHelper::LOGIN_REF_URL;
+        $options[CURLOPT_HTTPHEADER][] = CsrfHelper::getDefaultCookie();
+
+        return $options;
     }
 }
