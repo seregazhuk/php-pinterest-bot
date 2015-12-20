@@ -149,17 +149,17 @@ class Pinners extends Provider
         return 'people';
     }
 
-    function getEntityIdName()
+    protected function getEntityIdName()
     {
         return Request::PINNER_ENTITY_ID;
     }
 
-    function getFollowUrl()
+    protected function getFollowUrl()
     {
         return UrlHelper::RESOURCE_FOLLOW_USER;
     }
 
-    function getUnfFollowUrl()
+    protected function getUnfFollowUrl()
     {
         return UrlHelper::RESOURCE_UNFOLLOW_USER;
     }

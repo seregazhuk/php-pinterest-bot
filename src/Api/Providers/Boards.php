@@ -33,17 +33,17 @@ class Boards extends Provider
         return 'boards';
     }
 
-    function getEntityIdName()
+    protected function getEntityIdName()
     {
         return Request::BOARD_ENTITY_ID;
     }
 
-    function getFollowUrl()
+    protected function getFollowUrl()
     {
         return UrlHelper::RESOURCE_FOLLOW_BOARD;
     }
 
-    function getUnfFollowUrl()
+    protected function getUnfFollowUrl()
     {
         return UrlHelper::RESOURCE_UNFOLLOW_BOARD;
     }

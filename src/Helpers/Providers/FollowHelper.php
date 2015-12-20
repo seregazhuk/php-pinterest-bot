@@ -42,9 +42,9 @@ trait FollowHelper
         return $this->getResponse()->checkErrorInResponse($response);
     }
 
-    abstract function getEntityIdName();
+    abstract protected function getEntityIdName();
 
-    abstract function getFollowUrl();
+    abstract protected function getFollowUrl();
 
-    abstract function getUnfFollowUrl();
+    abstract protected function getUnfFollowUrl();
 }

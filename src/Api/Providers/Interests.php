@@ -10,17 +10,17 @@ class Interests extends Provider
 {
     use FollowHelper;
 
-    function getEntityIdName()
+    protected function getEntityIdName()
     {
         return Request::INTEREST_ENTITY_ID;
     }
 
-    function getFollowUrl()
+    protected function getFollowUrl()
     {
         return UrlHelper::RESOURCE_FOLLOW_INTEREST;
     }
 
-    function getUnfFollowUrl()
+    protected function getUnfFollowUrl()
     {
         return UrlHelper::RESOURCE_UNFOLLOW_INTEREST;
     }
