@@ -109,9 +109,14 @@ foreach($bot->pinners->followers('username') as $followersBatch)
 ```
 ## Boards
 
-Get all user's boards. Here you can get board id, for further functions.
+Get all user's boards 
 ```php
 $boards = $bot->boards->forUser($username);
+```
+
+Get full board info by boardName and userName. Here you can get board id, for further functions.
+```php
+$info = $bot->boards->info($username, $board);
 ```
 
 Follow/unfollow board by ID
