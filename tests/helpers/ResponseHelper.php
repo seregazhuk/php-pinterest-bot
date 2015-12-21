@@ -32,4 +32,18 @@ trait ResponseHelper
         ];
     }
 
+    /**
+     * @return array
+     */
+    protected function createPaginatedResponse()
+    {
+        return [
+            'resource_response' => [
+                'data' => [
+                    ['id' => 1],
+                    ['id' => 2],
+                ],
+            ],
+        ];
+    }
 }

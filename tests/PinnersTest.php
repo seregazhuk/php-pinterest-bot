@@ -60,33 +60,9 @@ class PinnersTest extends ProviderTest
         $this->assertNull($this->provider->myAccountName());
     }
 
-    /**
-     * Simple response for follow functions
-     *
-     * @return array
-     */
-    public function getFollowResponse()
+    public function testGetFollowers()
     {
-        return [
-            'response' => [
-                [
-                    'resource_response' => [
-                        'data' => [
-                            ['id' => 1],
-                            ['id' => 2],
-                        ],
-                    ],
-                ],
-            ],
-        ];
-    }
-
-    /**
-     * @dataProvider getFollowResponse
-     * @param $response
-     */
-    public function testGetFollowers($response)
-    {
+        $response = $this->createPaginatedResponse();
         $this->mock->expects($this->at(0))
             ->method('exec')
             ->willReturn($response);
@@ -111,12 +87,9 @@ class PinnersTest extends ProviderTest
         $this->assertEmpty(iterator_to_array($followers));
     }
 
-    /**
-     * @dataProvider getFollowResponse
-     * @param array $response
-     */
-    public function testGetFollowing($response)
+    public function testGetFollowing()
     {
+        $response = $this->createPaginatedResponse();
         $this->mock->expects($this->at(0))
             ->method('exec')
             ->willReturn($response);

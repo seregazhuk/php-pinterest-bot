@@ -21,7 +21,7 @@ class BoardsTest extends ProviderTest
 
         $expectedResultsNum = count($response['module']['tree']['data']['results']);
         $this->mock->method('exec')->willReturn($response);
-        $this->setProperty('request', $this->mock);
+
         $res = iterator_to_array($this->provider->search('dogs'), 1);
         $this->assertCount($expectedResultsNum, $res[0]);
     }
@@ -33,7 +33,6 @@ class BoardsTest extends ProviderTest
 
         $this->mock->expects($this->at(1))->method('exec')->willReturn($response);
         $this->mock->expects($this->at(3))->method('exec')->willReturn($error);
-        $this->setProperty('request', $this->mock);
 
         $this->assertTrue($this->provider->follow(1));
         $this->assertFalse($this->provider->follow(1));
@@ -46,27 +45,54 @@ class BoardsTest extends ProviderTest
 
         $this->mock->expects($this->at(1))->method('exec')->willReturn($response);
         $this->mock->expects($this->at(3))->method('exec')->willReturn($error);
-        $this->setProperty('request', $this->mock);
 
         $this->assertTrue($this->provider->unFollow(1));
         $this->assertFalse($this->provider->unFollow(1));
     }
 
-    //public function testMy()
-    //{
-    //    $initBoards                                     = ['first', 'second'];
-    //    $res['resource_response']['data']['all_boards'] = $initBoards;
-    //    $this->mock->method('exec')->willReturn($res);
-    //    $this->setProperty('request', $this->mock);
-    //    $boards = $this->provider->my();
-    //    $this->assertEquals($initBoards, $boards);
-    //    $res = null;
-    //
-    //    $this->mock = $this->createRequestMock();
-    //    $this->mock->method('exec')->willReturn(json_encode($res));
-    //    $this->setProperty('request', $this->mock);
-    //    $boards = $this->provider->my();
-    //    $this->assertFalse($boards);
-    //}
+    public function testGetBoardForUser()
+    {
+        $boards = ['data' => 'boards'];
+        $response = $this->createApiResponse($boards);
+        $this->mock->expects($this->at(0))->method('exec')->willReturn($response);
 
+        $this->assertEquals($boards['data'], $this->provider->forUser(1));
+        $this->assertFalse($this->provider->forUser(1));
+    }
+
+    public function testGetBoardInfo()
+    {
+        $response = $this->createApiResponse(['data' => 'info']);
+        $this->mock->expects($this->at(0))->method('exec')->willReturn($response);
+
+        $this->assertEquals('info', $this->provider->info('username', 'board'));
+        $this->assertFalse($this->provider->info('username', 'board'));
+    }
+
+    public function testGetPins()
+    {
+        $response = $this->createPaginatedResponse();
+        $this->mock->expects($this->at(0))
+            ->method('exec')
+            ->willReturn($response);
+
+        $this->mock->expects($this->at(1))
+            ->method('exec')
+            ->willReturn(['resource_response' => ['data' => []]]);
+
+        $this->mock->expects($this->at(2))
+            ->method('exec')
+            ->willReturn([
+                'resource_response' => [
+                    'data' => [
+                        ['type' => 'module'],
+                    ],
+                ],
+            ]);
+
+        $pins = $this->provider->pins(1);
+        $this->assertCount(2, iterator_to_array($pins)[0]);
+        $pins = $this->provider->pins(0);
+        $this->assertEmpty(iterator_to_array($pins));
+    }
 }
