@@ -39,6 +39,32 @@ $bot = new PinterestBot('mypinterestlogin', 'mypinterestpassword');
 $bot->login();
 ```
 
+## Boards
+
+Get all user's boards 
+```php
+$boards = $bot->boards->forUser($username);
+```
+
+Get full board info by boardName and userName. Here you can get board id, for further functions
+(for examaple, pin creating or following boards).
+```php
+$info = $bot->boards->info($username, $board);
+```
+
+Follow/unfollow board by ID
+```php
+$bot->boards->follow($boardId);
+$bot->boards->unfollow($boardId);
+```
+
+Get all pins for board by ID
+```php
+foreach($bot->boards->pins($boardId) as $pinsBatch)
+{
+    // ...
+}
+```
 
 ## Pins
 
@@ -105,31 +131,6 @@ Get user followers. Uses pinterest api pagination.
 foreach($bot->pinners->followers('username') as $followersBatch)
 {
 	// ...
-}
-```
-## Boards
-
-Get all user's boards 
-```php
-$boards = $bot->boards->forUser($username);
-```
-
-Get full board info by boardName and userName. Here you can get board id, for further functions.
-```php
-$info = $bot->boards->info($username, $board);
-```
-
-Follow/unfollow board by ID
-```php
-$bot->boards->follow($boardId);
-$bot->boards->unfollow($boardId);
-```
-
-Get all pins for board by ID
-```php
-foreach($bot->boards->pins($boardId) as $pinsBatch)
-{
-    // ...
 }
 ```
 
