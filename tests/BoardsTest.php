@@ -52,21 +52,21 @@ class BoardsTest extends ProviderTest
         $this->assertFalse($this->provider->unFollow(1));
     }
 
-    public function testMy()
-    {
-        $initBoards                                     = ['first', 'second'];
-        $res['resource_response']['data']['all_boards'] = $initBoards;
-        $this->mock->method('exec')->willReturn($res);
-        $this->setProperty('request', $this->mock);
-        $boards = $this->provider->my();
-        $this->assertEquals($initBoards, $boards);
-        $res = null;
-
-        $this->mock = $this->createRequestMock();
-        $this->mock->method('exec')->willReturn(json_encode($res));
-        $this->setProperty('request', $this->mock);
-        $boards = $this->provider->my();
-        $this->assertFalse($boards);
-    }
+    //public function testMy()
+    //{
+    //    $initBoards                                     = ['first', 'second'];
+    //    $res['resource_response']['data']['all_boards'] = $initBoards;
+    //    $this->mock->method('exec')->willReturn($res);
+    //    $this->setProperty('request', $this->mock);
+    //    $boards = $this->provider->my();
+    //    $this->assertEquals($initBoards, $boards);
+    //    $res = null;
+    //
+    //    $this->mock = $this->createRequestMock();
+    //    $this->mock->method('exec')->willReturn(json_encode($res));
+    //    $this->setProperty('request', $this->mock);
+    //    $boards = $this->provider->my();
+    //    $this->assertFalse($boards);
+    //}
 
 }
