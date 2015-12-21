@@ -9,7 +9,9 @@ class UrlHelper
 {
     const RESOURCE_GET_ACCOUNT_NAME       = 'https://www.pinterest.com/';
     const RESOURCE_LOGIN                  = '/resource/UserSessionResource/create/';
-    const RESOURCE_GET_BOARDS             = '/resource/BoardPickerBoardsResource/get/';
+    const RESOURCE_GET_BOARDS             = '/resource/BoardsResource/get/';
+    const RESOURCE_GET_BOARD_FEED         = '/resource/BoardFeedResource/get/';
+    const RESOURCE_PROFILE_BOARDS         = '/resource/ProfileBoardsResource/get/';
     const RESOURCE_CREATE_PIN             = '/resource/PinResource/create/';
     const RESOURCE_REPIN                  = '/resource/RepinResource/create/';
     const RESOURCE_USER_FOLLOWERS         = '/resource/UserFollowersResource/get/';

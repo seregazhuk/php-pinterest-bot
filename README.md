@@ -39,11 +39,6 @@ $bot = new PinterestBot('mypinterestlogin', 'mypinterestpassword');
 $bot->login();
 ```
 
-Next, get your list of boards:
-
-```php
-$boards = $bot->boards->my();
-```
 
 ## Pins
 
@@ -113,10 +108,29 @@ foreach($bot->pinners->followers('username') as $followersBatch)
 }
 ```
 ## Boards
+
+Get all user's boards 
+```php
+$boards = $bot->boards->forUser($username);
+```
+
+Get full board info by boardName and userName. Here you can get board id, for further functions.
+```php
+$info = $bot->boards->info($username, $board);
+```
+
 Follow/unfollow board by ID
 ```php
 $bot->boards->follow($boardId);
 $bot->boards->unfollow($boardId);
+```
+
+Get all pins for board by ID
+```php
+foreach($bot->boards->pins($boardId) as $pinsBatch)
+{
+    // ...
+}
 ```
 
 ## Interests

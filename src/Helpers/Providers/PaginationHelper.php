@@ -21,14 +21,14 @@ trait PaginationHelper
         do {
             $response = self::getPaginatedResponse($callback, $params);
             $items = self::getDataFromPaginatedResponse($response);
+            if (empty($items)) return;
 
-            if (empty($items)) {
-                return;
-            }
-
-            $params['bookmarks'] = self::getBookMarks($response);
             $batchesNum++;
             yield $items;
+
+            $params['bookmarks'] = self::getBookMarks($response);
+            if ($this->checkEndBookMarks($params['bookmarks'])) return;
+
         } while ( ! self::reachBatchesLimit($batchesLimit, $batchesNum));
     }
 
@@ -94,5 +94,10 @@ trait PaginationHelper
     protected function getBookMarks($response)
     {
         return isset($response['bookmarks']) ? $response['bookmarks'] : [];
+    }
+
+    protected function checkEndBookMarks($bookmarks)
+    {
+        return ! empty($bookmarks) && $bookmarks[0] == '-end-';
     }
 }
