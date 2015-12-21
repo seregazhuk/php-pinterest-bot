@@ -21,13 +21,17 @@ trait PaginationHelper
         do {
             $response = self::getPaginatedResponse($callback, $params);
             $items = self::getDataFromPaginatedResponse($response);
-            if (empty($items)) return;
+            if (empty($items)) {
+                return;
+            }
 
             $batchesNum++;
             yield $items;
 
             $params['bookmarks'] = self::getBookMarks($response);
-            if ($this->checkEndBookMarks($params['bookmarks'])) return;
+            if ($this->checkEndBookMarks($params['bookmarks'])) {
+                return;
+            }
 
         } while ( ! self::reachBatchesLimit($batchesLimit, $batchesNum));
     }
