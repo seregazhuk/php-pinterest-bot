@@ -35,8 +35,13 @@ php composer.phar require "seregazhuk/pinterest-bot:*"
 ```php 
 use seregazhuk\PinterestBot\PinterestBot;
 
+// login
 $bot = new PinterestBot('mypinterestlogin', 'mypinterestpassword');
 $bot->login();
+
+// get lists of your boards 
+$boards = $bot->boards->forUser('yourUserName');
+$bot->pins->create('http://exmaple.com/image.jpg', $boards[0]['id'], 'pin description');
 ```
 
 ## Boards
@@ -76,7 +81,7 @@ $info = $bot->pins->info(1234567890);
 Create new pin. Accepts image url, board id, where to post image, description and preview url.
 
 ```php
-$pinId = $bot->pins->createApiResponse('http://exmaple.com/image.jpg', $boards[0]['id'], 'pin description');
+$pinId = $bot->pins->create('http://exmaple.com/image.jpg', $boards[0]['id'], 'pin description');
 ```
     
 Repin other pin by its id.
