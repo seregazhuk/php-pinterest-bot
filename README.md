@@ -57,7 +57,7 @@ Get full board info by boardName and userName. Here you can get board id, for fu
 $info = $bot->boards->info($username, $board);
 ```
 
-Create a new board. As third parameter you can pass privacy. It is 'public' by default, or 'secret' if private.
+Create a new board. As third parameter you can pass privacy. It is *public* by default, or *secret* if private.
 ```php
 // create a public board
 $bot->boards->create('name', 'description');
