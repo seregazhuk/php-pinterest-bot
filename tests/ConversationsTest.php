@@ -11,7 +11,8 @@ class ConversationsTest extends ProviderTest
     protected $provider;
     protected $providerClass = Conversations::class;
 
-    public function testSendMessage()
+    /** @test */
+    public function sendMessage()
     {
         $response = $this->createMessageSendResponse();
 
@@ -24,7 +25,8 @@ class ConversationsTest extends ProviderTest
         $this->assertFalse($this->provider->sendMessage($userId, $message));
     }
 
-    public function testLast()
+    /** @test */
+    public function getLastConversation()
     {
         $lastConversations = array(
             "1" => ["result"],

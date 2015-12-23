@@ -37,11 +37,31 @@ class RequestTest extends PHPUnit_Framework_TestCase
         $this->reflection = null;
     }
 
+    /** @test */
+    public function logInSuccess()
+    {
+        $this->request->setLoggedIn();
+        $this->assertTrue($this->request->checkLoggedIn());
+        $token = $this->getProperty('csrfToken');
+        $this->assertNotEquals(CsrfHelper::DEFAULT_TOKEN, $token);
+        $this->assertTrue($this->request->isLoggedIn());
+
+        $this->request->clearToken();
+        $token = $this->getProperty('csrfToken');
+        $this->assertEquals(CsrfHelper::DEFAULT_TOKEN, $token);
+
+
+    }
+
     /**
+     * @test
      * @expectedException \LogicException
      */
-    public function testLogIn()
+    public function logInFails()
     {
+        $this->setProperty('loggedIn', false);
+        $this->request->checkLoggedIn();
+
         $this->request->setLoggedIn();
         $this->assertTrue($this->request->checkLoggedIn());
         $token = $this->getProperty('csrfToken');
@@ -56,7 +76,8 @@ class RequestTest extends PHPUnit_Framework_TestCase
         $this->request->checkLoggedIn();
     }
 
-    public function testExec()
+    /** @test */
+    public function executeRequestToPinterestApi()
     {
         $httpMock = $this->getMock(Http::class, ['setOptions', 'execute', 'close']);
         $response = $this->createSuccessApiResponse();
@@ -70,7 +91,8 @@ class RequestTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($response, $res);
     }
 
-    public function testFollowMethodCall()
+    /** @test */
+    public function executeFollowRequestToPinterestApi()
     {
         $response = $this->createSuccessApiResponse();
         $mock = $this->getMock(Http::class, ['setOptions', 'execute', 'close']);

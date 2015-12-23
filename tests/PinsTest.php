@@ -12,7 +12,8 @@ class PinsTest extends ProviderTest
     protected $provider;
     protected $providerClass = Pins::class;
 
-    public function testLikeAndUnlike()
+    /** @test */
+    public function likeAPin()
     {
         $response = $this->createApiResponse();
         $error = $this->createErrorApiResponse();
@@ -24,7 +25,8 @@ class PinsTest extends ProviderTest
         $this->assertFalse($this->provider->like(1111));
     }
 
-    public function testUnlike()
+    /** @test */
+    public function unlikeAPin()
     {
         $response = $this->createApiResponse();
         $error = $this->createErrorApiResponse();
@@ -36,8 +38,8 @@ class PinsTest extends ProviderTest
         $this->assertFalse($this->provider->unLike(1111));
     }
 
-
-    public function testCreateComment()
+    /** @test */
+    public function createCommentForPin()
     {
         $response = $this->createApiResponse();
         $error = $this->createErrorApiResponse();
@@ -49,7 +51,8 @@ class PinsTest extends ProviderTest
         $this->assertFalse($this->provider->comment(1111, 'comment text'));
     }
 
-    public function testDeleteComment()
+    /** @test */
+    public function deleteCommentFromPin()
     {
         $response = $this->createApiResponse();
         $error = $this->createErrorApiResponse();
@@ -61,7 +64,8 @@ class PinsTest extends ProviderTest
         $this->assertFalse($this->provider->deleteComment(1111, 1111));
     }
 
-    public function testPin()
+    /** @test */
+    public function createANewPin()
     {
         $response = $this->createPinCreationResponse();
         $this->mock->expects($this->at(1))->method('exec')->willReturn($response);
@@ -73,7 +77,8 @@ class PinsTest extends ProviderTest
         $this->assertFalse($this->provider->create($pinSource, $boardId, $pinDescription));
     }
 
-    public function testRepin()
+    /** @test */
+    public function createARepin()
     {
         $response = $this->createPinCreationResponse();
         $this->mock->expects($this->at(1))->method('exec')->willReturn($response);
@@ -86,7 +91,8 @@ class PinsTest extends ProviderTest
         $this->assertFalse($this->provider->repin($repinId, $boardId, $pinDescription));
     }
 
-    public function testDeletePin()
+    /** @test */
+    public function deletePin()
     {
         $response = $this->createApiResponse();
         $this->mock->expects($this->at(1))->method('exec')->willReturn($response);
@@ -95,7 +101,8 @@ class PinsTest extends ProviderTest
         $this->assertFalse($this->provider->delete(1));
     }
 
-    public function testGetPinInfo()
+    /** @test */
+    public function getPinInfo()
     {
         $response = $this->createApiResponse();
         $this->mock->expects($this->at(0))->method('exec')->willReturn($response);
@@ -105,7 +112,8 @@ class PinsTest extends ProviderTest
         $this->assertFalse($this->provider->info(1));
     }
 
-    public function testSearch()
+    /** @test */
+    public function searchForPins()
     {
         $response['module']['tree']['data']['results'] = [
             ['id' => 1],

@@ -16,7 +16,8 @@ class InterestsTest extends ProviderTest
     protected $provider;
     protected $providerClass = Interests::class;
 
-    public function testFollow()
+    /** @test */
+    public function followInterest()
     {
         $request = $this->createSuccessApiResponse();
         $error = $this->createErrorApiResponse();
@@ -28,7 +29,8 @@ class InterestsTest extends ProviderTest
         $this->assertFalse($this->provider->follow(1111));
     }
 
-    public function testUnFollow()
+    /** @test */
+    public function unFollowInterest()
     {
         $request = $this->createSuccessApiResponse();
         $error = $this->createErrorApiResponse();

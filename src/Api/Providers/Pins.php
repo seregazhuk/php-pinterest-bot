@@ -54,7 +54,7 @@ class Pins extends Provider
      *
      * @param integer $pinId
      * @param string  $text Comment
-     * @return array
+     * @return array|bool
      */
     public function comment($pinId, $text)
     {

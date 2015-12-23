@@ -32,7 +32,8 @@ class BotTest extends PHPUnit_Framework_TestCase
         $this->reflection = null;
     }
 
-    public function testValidLogin()
+    /** @test */
+    public function successLogin()
     {
         $mock = $this->getMock(Request::class, ['exec', 'setLoggedIn', 'isLoggedIn'], [new Http()]);
         $mock->method('exec')->willReturn(true);
@@ -43,9 +44,10 @@ class BotTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @test
      * @expectedException \LogicException
      */
-    public function testLoginFails()
+    public function loginFails()
     {
         $mock = $this->getMock(Request::class, ['exec', 'setLoggedIn', 'isLoggedIn'], [new Http()]);
         $mock->method('exec')->willReturn(true);
@@ -57,14 +59,16 @@ class BotTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @test
      * @expectedException \Exception
      */
-    public function testWrongProvider()
+    public function getWrongProvider()
     {
         $this->bot->badProvider;
     }
 
-    public function testGetLastResponseError()
+    /** @test */
+    public function getLastResponseError()
     {
         $error = 'expected_error';
         $mock = $this->getMock(Response::class, ['getLastError']);

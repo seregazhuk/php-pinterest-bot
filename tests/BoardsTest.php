@@ -12,7 +12,8 @@ class BoardsTest extends ProviderTest
     protected $provider;
     protected $providerClass = Boards::class;
 
-    public function testSearch()
+    /** @test */
+    public function searchForBoards()
     {
         $response['module']['tree']['data']['results'] = [
             ['id' => 1],
@@ -26,7 +27,8 @@ class BoardsTest extends ProviderTest
         $this->assertCount($expectedResultsNum, $res[0]);
     }
 
-    public function testFollow()
+    /** @ test */
+    public function followBoard()
     {
         $response = $this->createSuccessApiResponse();
         $error = $this->createErrorApiResponse();
@@ -38,7 +40,8 @@ class BoardsTest extends ProviderTest
         $this->assertFalse($this->provider->follow(1));
     }
 
-    public function testUnFollow()
+    /** @test */
+    public function unFollowBoard()
     {
         $response = $this->createSuccessApiResponse();
         $error = $this->createErrorApiResponse();
@@ -50,7 +53,8 @@ class BoardsTest extends ProviderTest
         $this->assertFalse($this->provider->unFollow(1));
     }
 
-    public function testGetBoardForUser()
+    /** @test */
+    public function getBoardsForSpecifiedUser()
     {
         $boards = ['data' => 'boards'];
         $response = $this->createApiResponse($boards);
@@ -60,7 +64,8 @@ class BoardsTest extends ProviderTest
         $this->assertFalse($this->provider->forUser(1));
     }
 
-    public function testGetBoardInfo()
+    /** @test */
+    public function getBoardInfo()
     {
         $response = $this->createApiResponse(['data' => 'info']);
         $this->mock->expects($this->at(0))->method('exec')->willReturn($response);
@@ -69,7 +74,8 @@ class BoardsTest extends ProviderTest
         $this->assertFalse($this->provider->info('username', 'board'));
     }
 
-    public function testGetPins()
+    /** @test */
+    public function getPinsFromBoard()
     {
         $response = $this->createPaginatedResponse();
         $this->mock->expects($this->at(0))
@@ -96,7 +102,8 @@ class BoardsTest extends ProviderTest
         $this->assertEmpty(iterator_to_array($pins));
     }
 
-    public function testDelete()
+    /** @test */
+    public function deleteBoard()
     {
         $response = $this->createSuccessApiResponse();
         $error = $this->createErrorApiResponse();
@@ -108,7 +115,8 @@ class BoardsTest extends ProviderTest
         $this->assertFalse($this->provider->delete(1111));
     }
 
-    public function testCreate()
+    /** @test */
+    public function createBoard()
     {
         $response = $this->createSuccessApiResponse();
         $error = $this->createErrorApiResponse();
