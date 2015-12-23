@@ -96,9 +96,9 @@ class BoardsTest extends ProviderTest
         $this->assertEmpty(iterator_to_array($pins));
     }
 
-    public function delete()
+    public function testDelete()
     {
-        $response = $this->createApiResponse();
+        $response = $this->createSuccessApiResponse();
         $error = $this->createErrorApiResponse();
 
         $this->mock->expects($this->at(1))->method('exec')->willReturn($response);
@@ -108,9 +108,9 @@ class BoardsTest extends ProviderTest
         $this->assertFalse($this->provider->delete(1111));
     }
 
-    public function create()
+    public function testCreate()
     {
-        $response = $this->createApiResponse();
+        $response = $this->createSuccessApiResponse();
         $error = $this->createErrorApiResponse();
 
         $this->mock->expects($this->at(1))->method('exec')->willReturn($response);
