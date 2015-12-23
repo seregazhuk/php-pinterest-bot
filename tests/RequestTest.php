@@ -37,44 +37,6 @@ class RequestTest extends PHPUnit_Framework_TestCase
         $this->reflection = null;
     }
 
-    /** @test */
-    public function logInSuccess()
-    {
-        $this->request->setLoggedIn();
-        $this->assertTrue($this->request->checkLoggedIn());
-        $token = $this->getProperty('csrfToken');
-        $this->assertNotEquals(CsrfHelper::DEFAULT_TOKEN, $token);
-        $this->assertTrue($this->request->isLoggedIn());
-
-        $this->request->clearToken();
-        $token = $this->getProperty('csrfToken');
-        $this->assertEquals(CsrfHelper::DEFAULT_TOKEN, $token);
-
-
-    }
-
-    /**
-     * @test
-     * @expectedException \LogicException
-     */
-    public function logInFails()
-    {
-        $this->setProperty('loggedIn', false);
-        $this->request->checkLoggedIn();
-
-        $this->request->setLoggedIn();
-        $this->assertTrue($this->request->checkLoggedIn());
-        $token = $this->getProperty('csrfToken');
-        $this->assertNotEquals(CsrfHelper::DEFAULT_TOKEN, $token);
-        $this->assertTrue($this->request->isLoggedIn());
-
-        $this->request->clearToken();
-        $token = $this->getProperty('csrfToken');
-        $this->assertEquals(CsrfHelper::DEFAULT_TOKEN, $token);
-
-        $this->setProperty('loggedIn', false);
-        $this->request->checkLoggedIn();
-    }
 
     /** @test */
     public function executeRequestToPinterestApi()

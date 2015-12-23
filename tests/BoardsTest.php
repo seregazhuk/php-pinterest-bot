@@ -27,7 +27,7 @@ class BoardsTest extends ProviderTest
         $this->assertCount($expectedResultsNum, $res[0]);
     }
 
-    /** @ test */
+    /** @test */
     public function followBoard()
     {
         $response = $this->createSuccessApiResponse();
