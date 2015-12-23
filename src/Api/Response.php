@@ -29,6 +29,19 @@ class Response implements ResponseInterface
             return false;
         }
 
+        return $this->parseData($response, $key);
+    }
+
+    /**
+     * Parse data from Pinterest Api response.
+     * Data stores in ['resource_response']['data'] array
+     *
+     * @param $response
+     * @param $key
+     * @return bool|array
+     */
+    protected function parseData($response, $key)
+    {
         if (isset($response['resource_response']['data'])) {
             $data = $response['resource_response']['data'];
 

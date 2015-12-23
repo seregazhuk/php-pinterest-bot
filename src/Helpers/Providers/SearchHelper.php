@@ -60,25 +60,8 @@ trait SearchHelper
      */
     public function createSearchRequest($query, $scope, $bookmarks = [])
     {
-        $options = [
-            "scope" => $scope,
-            "query" => $query,
-        ];
-
-        $dataJson = ["options" => $options];
-
-        if ( ! empty($bookmarks)) {
-            $dataJson['options']['bookmarks'] = $bookmarks;
-        } else {
-            $dataJson = array_merge(
-                $dataJson, [
-                    'module' => [
-                        "name"    => $this->moduleSearchPage,
-                        "options" => $options,
-                    ],
-                ]
-            );
-        }
+        $options = ["scope" => $scope, "query" => $query];
+        $dataJson = $this->appendBookMarks($bookmarks, $options);
 
         return Request::createRequestData(
             $dataJson, "/search/$scope/?q=".$query
@@ -95,5 +78,31 @@ trait SearchHelper
     public function search($query, $batchesLimit = 0)
     {
         return $this->searchWithPagination($query, $batchesLimit);
+    }
+
+    /**
+     * @param $bookmarks
+     * @param $options
+     * @return array
+     */
+    protected function appendBookMarks($bookmarks, $options)
+    {
+        $dataJson = ['options' => $options];
+        if ( ! empty($bookmarks)) {
+            $dataJson['options']['bookmarks'] = $bookmarks;
+
+            return $dataJson;
+        } else {
+            $dataJson = array_merge(
+                $dataJson, [
+                    'module' => [
+                        "name"    => $this->moduleSearchPage,
+                        "options" => $options,
+                    ],
+                ]
+            );
+
+            return $dataJson;
+        }
     }
 }
