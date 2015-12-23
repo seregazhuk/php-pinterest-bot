@@ -95,4 +95,28 @@ class BoardsTest extends ProviderTest
         $pins = $this->provider->pins(0);
         $this->assertEmpty(iterator_to_array($pins));
     }
+
+    public function delete()
+    {
+        $response = $this->createApiResponse();
+        $error = $this->createErrorApiResponse();
+
+        $this->mock->expects($this->at(1))->method('exec')->willReturn($response);
+        $this->mock->expects($this->at(3))->method('exec')->willReturn($error);
+
+        $this->assertTrue($this->provider->delete(1111));
+        $this->assertFalse($this->provider->delete(1111));
+    }
+
+    public function create()
+    {
+        $response = $this->createApiResponse();
+        $error = $this->createErrorApiResponse();
+
+        $this->mock->expects($this->at(1))->method('exec')->willReturn($response);
+        $this->mock->expects($this->at(3))->method('exec')->willReturn($error);
+
+        $this->assertTrue($this->provider->create('test', 'test'));
+        $this->assertFalse($this->provider->delete('test', 'test'));
+    }
 }
