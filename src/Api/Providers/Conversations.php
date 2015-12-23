@@ -16,21 +16,12 @@ class Conversations extends Provider
      */
     public function sendMessage($userId, $text)
     {
-        $this->request->checkLoggedIn();
-        $data = array(
-            "options" => array(
-                "user_ids" => array($userId),
-                "emails"   => array(),
-                "text"     => $text,
-            ),
+        $requestOptions = array(
+            "user_ids" => array($userId),
+            "emails"   => array(),
+            "text"     => $text,
         );
-
-        $request = Request::createRequestData($data);
-
-        $postString = UrlHelper::buildRequestString($request);
-        $response = $this->request->exec(UrlHelper::RESOURCE_SEND_MESSAGE, $postString);
-
-        return $this->response->checkResponse($response);
+        return $this->callPostRequest($requestOptions, UrlHelper::RESOURCE_SEND_MESSAGE, true);
     }
 
     /**

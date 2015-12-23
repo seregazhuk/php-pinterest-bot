@@ -106,18 +106,7 @@ class Boards extends Provider
      */
     public function delete($boardId)
     {
-        $this->request->checkLoggedIn();
-        $post = Request::createRequestData(
-            [
-                'options' => [
-                    'board_id' => $boardId
-                ]
-            ]
-        );
-        $postString = UrlHelper::buildRequestString($post);
-        $response = $this->request->exec(UrlHelper::RESOURCE_DELETE_BOARD, $postString);
-
-        return $this->response->checkResponse($response);
+        return $this->callPostRequest(['board_id' => $boardId], UrlHelper::RESOURCE_DELETE_BOARD, true);
     }
 
     /**
@@ -130,20 +119,13 @@ class Boards extends Provider
      */
     public function create($name, $description, $privacy = 'public')
     {
-        $this->request->checkLoggedIn();
-        $post = Request::createRequestData(
-            [
-                'options' => [
-                    'name'        => $name,
-                    'description' => $description,
-                    'privacy'     => $privacy,
-                ]
-            ]
-        );
-        $postString = UrlHelper::buildRequestString($post);
-        $response = $this->request->exec(UrlHelper::RESOURCE_CREATE_BOARD, $postString);
+        $requestOptions = [
+            'name'        => $name,
+            'description' => $description,
+            'privacy'     => $privacy,
+        ];
 
-        return $this->response->checkResponse($response);
+        return $this->callPostRequest($requestOptions, UrlHelper::RESOURCE_CREATE_BOARD, true);
     }
 
     /**
