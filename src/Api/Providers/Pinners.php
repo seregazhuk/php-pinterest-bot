@@ -144,21 +144,36 @@ class Pinners extends Provider
         return $result;
     }
 
+    /**
+     * Search scope
+     *
+     * @return string
+     */
     protected function getScope()
     {
         return 'people';
     }
+
 
     protected function getEntityIdName()
     {
         return Request::PINNER_ENTITY_ID;
     }
 
+    /**
+     * Follow resource
+     *
+     * @return string
+     */
     protected function getFollowUrl()
     {
         return UrlHelper::RESOURCE_FOLLOW_USER;
     }
 
+    /**
+     * UnFollow resource
+     * @return string
+     */
     protected function getUnfFollowUrl()
     {
         return UrlHelper::RESOURCE_UNFOLLOW_USER;

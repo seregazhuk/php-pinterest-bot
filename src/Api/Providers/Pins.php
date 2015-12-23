@@ -2,8 +2,8 @@
 
 namespace seregazhuk\PinterestBot\Api\Providers;
 
+use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
-use seregazhuk\PinterestBot\Helpers\Requests\PinHelper;
 use seregazhuk\PinterestBot\Helpers\Providers\SearchHelper;
 
 class Pins extends Provider
@@ -33,20 +33,15 @@ class Pins extends Provider
     }
 
     /**
-     * Calls pinterest API to like or unlike Pin by ID
+     * Calls Pinterest API to like or unlike Pin by ID
      *
      * @param int    $pinId
-     * @param string $url
+     * @param string $resourceUrl
      * @return bool
      */
-    protected function likePinMethodCall($pinId, $url)
+    protected function likePinMethodCall($pinId, $resourceUrl)
     {
-        $this->request->checkLoggedIn();
-        $data = PinHelper::createPinIdRequest($pinId);
-        $post = PinHelper::createPinRequestData($data);
-        $postString = URlHelper::buildRequestString($post);
-        $response = $this->request->exec($url, $postString);
-        return $this->response->checkErrorInResponse($response);
+        return $this->callPostRequest(['pin_id' => $pinId], $resourceUrl, true);
     }
 
     /**
@@ -58,11 +53,9 @@ class Pins extends Provider
      */
     public function comment($pinId, $text)
     {
-        $this->request->checkLoggedIn();
-        $post = PinHelper::createCommentRequest($pinId, ["text" => $text]);
-        $postString = UrlHelper::buildRequestString($post);
-        $response = $this->request->exec(UrlHelper::RESOURCE_COMMENT_PIN, $postString);
-        return $this->response->getData($response);
+        $requestOptions = ['pin_id' => $pinId, 'test' => $text];
+
+        return $this->callPostRequest($requestOptions, UrlHelper::RESOURCE_COMMENT_PIN, true, true);
     }
 
     /**
@@ -74,12 +67,9 @@ class Pins extends Provider
      */
     public function deleteComment($pinId, $commentId)
     {
-        $this->request->checkLoggedIn();
-        $post = PinHelper::createCommentRequest($pinId, ["comment_id" => $commentId]);
-        $postString = UrlHelper::buildRequestString($post);
-        $response = $this->request->exec(UrlHelper::RESOURCE_COMMENT_DELETE_PIN, $postString);
+        $requestOptions = ["pin_id" => $pinId, "comment_id" => $commentId];
 
-        return $this->response->checkErrorInResponse($response);
+        return $this->callPostRequest($requestOptions, UrlHelper::RESOURCE_COMMENT_DELETE_PIN, true);
     }
 
     /**
@@ -92,12 +82,15 @@ class Pins extends Provider
      */
     public function create($imageUrl, $boardId, $description = "")
     {
-        $this->request->checkLoggedIn();
-        $post = PinHelper::createPinCreationRequest($imageUrl, $boardId, $description);
-        $postString = UrlHelper::buildRequestString($post);
-        $res = $this->request->exec(UrlHelper::RESOURCE_CREATE_PIN, $postString);
+        $requestOptions = [
+            "method"      => "scraped",
+            "description" => $description,
+            "link"        => $imageUrl,
+            "image_url"   => $imageUrl,
+            "board_id"    => $boardId,
+        ];
 
-        return $this->response->getData($res, 'id');
+        return $this->callPostRequest($requestOptions, UrlHelper::RESOURCE_CREATE_PIN, true, true);
     }
 
     /**
@@ -110,13 +103,15 @@ class Pins extends Provider
      */
     public function repin($repinId, $boardId, $description = "")
     {
-        $this->request->checkLoggedIn();
+        $requestOptions = [
+            "board_id"    => $boardId,
+            "description" => stripslashes($description),
+            "link"        => stripslashes($repinId),
+            "is_video"    => null,
+            "pin_id"      => $repinId,
+        ];
 
-        $post = PinHelper::createRepinRequest($repinId, $boardId, $description);
-        $postString = UrlHelper::buildRequestString($post);
-        $res = $this->request->exec(UrlHelper::RESOURCE_REPIN, $postString);
-
-        return $this->response->getData($res, 'id');
+        return $this->callPostRequest($requestOptions, UrlHelper::RESOURCE_REPIN, true, true);
     }
 
     /**
@@ -127,12 +122,7 @@ class Pins extends Provider
      */
     public function delete($pinId)
     {
-        $this->request->checkLoggedIn();
-
-        $post = PinHelper::createSimplePinRequest($pinId);
-        $postString = UrlHelper::buildRequestString($post);
-        $response = $this->request->exec(UrlHelper::RESOURCE_DELETE_PIN, $postString);
-        return $this->response->checkResponse($response);
+        return $this->callPostRequest(['id' => $pinId], UrlHelper::RESOURCE_DELETE_PIN, true);
     }
 
     /**
@@ -143,8 +133,17 @@ class Pins extends Provider
      */
     public function info($pinId)
     {
-        $get = PinHelper::createInfoRequest($pinId);
-        $url = UrlHelper::RESOURCE_PIN_INFO.'?'.UrlHelper::buildRequestString($get);
+        $requestOptions = [
+            "field_set_key" => "detailed",
+            "id"            => $pinId,
+            "pin_id"        => $pinId,
+            "allow_stale"   => true
+        ];
+
+        $data = array("options" => $requestOptions);
+        $request = Request::createRequestData($data);
+
+        $url = UrlHelper::RESOURCE_PIN_INFO.'?'.UrlHelper::buildRequestString($request);
         $response = $this->request->exec($url);
 
         return $this->response->checkResponse($response);
