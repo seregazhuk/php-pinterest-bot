@@ -43,6 +43,8 @@ class Provider
     }
 
     /**
+     * Executes a POST request to Pinterest API
+     *
      * @param array  $requestOptions
      * @param string $resourceUrl
      * @param bool   $checkLogin
