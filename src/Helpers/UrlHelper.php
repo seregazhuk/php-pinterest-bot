@@ -7,31 +7,60 @@ namespace seregazhuk\PinterestBot\Helpers;
  */
 class UrlHelper
 {
-    const RESOURCE_GET_ACCOUNT_NAME       = 'https://www.pinterest.com/';
-    const RESOURCE_LOGIN                  = '/resource/UserSessionResource/create/';
-    const RESOURCE_GET_BOARDS             = '/resource/BoardsResource/get/';
-    const RESOURCE_GET_BOARD_FEED         = '/resource/BoardFeedResource/get/';
-    const RESOURCE_PROFILE_BOARDS         = '/resource/ProfileBoardsResource/get/';
-    const RESOURCE_CREATE_PIN             = '/resource/PinResource/create/';
-    const RESOURCE_REPIN                  = '/resource/RepinResource/create/';
-    const RESOURCE_USER_FOLLOWERS         = '/resource/UserFollowersResource/get/';
-    const RESOURCE_DELETE_PIN             = '/resource/PinResource/delete/';
-    const RESOURCE_FOLLOW_USER            = '/resource/UserFollowResource/create/';
-    const RESOURCE_UNFOLLOW_USER          = '/resource/UserFollowResource/delete/';
+
+    /**
+     * Login
+     */
+    const RESOURCE_LOGIN            = '/resource/UserSessionResource/create/';
+    const RESOURCE_GET_ACCOUNT_NAME = 'https://www.pinterest.com/';
+
+    /**
+     * Boards
+     */
+    const RESOURCE_GET_BOARDS     = '/resource/BoardsResource/get/';
+    const RESOURCE_GET_BOARD_FEED = '/resource/BoardFeedResource/get/';
+    const RESOURCE_PROFILE_BOARDS = '/resource/ProfileBoardsResource/get/';
+    const RESOURCE_FOLLOW_BOARD   = '/resource/BoardFollowResource/create/';
+    const RESOURCE_UNFOLLOW_BOARD = '/resource/BoardFollowResource/delete/';
+    const RESOURCE_DELETE_BOARD   = '/resource/BoardResource/delete/';
+    const RESOURCE_CREATE_BOARD   = '/resource/BoardResource/create/';
+    /**
+     * Pins
+     */
+    const RESOURCE_CREATE_PIN         = '/resource/PinResource/create/';
+    const RESOURCE_REPIN              = '/resource/RepinResource/create/';
+    const RESOURCE_USER_FOLLOWERS     = '/resource/UserFollowersResource/get/';
+    const RESOURCE_DELETE_PIN         = '/resource/PinResource/delete/';
+    const RESOURCE_LIKE_PIN           = '/resource/PinLikeResource2/create/';
+    const RESOURCE_UNLIKE_PIN         = '/resource/PinLikeResource2/delete/';
+    const RESOURCE_COMMENT_PIN        = '/resource/PinCommentResource/create/';
+    const RESOURCE_COMMENT_DELETE_PIN = '/resource/PinCommentResource/delete/';
+    const RESOURCE_PIN_INFO           = '/resource/PinResource/get/';
+
+    /**
+     * Pinners
+     */
+    const RESOURCE_FOLLOW_USER    = '/resource/UserFollowResource/create/';
+    const RESOURCE_UNFOLLOW_USER  = '/resource/UserFollowResource/delete/';
+    const RESOURCE_USER_INFO      = '/resource/UserResource/get/';
+    const RESOURCE_USER_FOLLOWING = '/resource/UserFollowingResource/get/';
+    const RESOURCE_USER_PINS      = '/resource/UserPinsResource/get/';
+
+    /**
+     * Search
+     */
     const RESOURCE_SEARCH                 = '/resource/BaseSearchResource/get/';
     const RESOURCE_SEARCH_WITH_PAGINATION = '/resource/SearchResource/get/';
-    const RESOURCE_USER_INFO              = '/resource/UserResource/get/';
-    const RESOURCE_USER_FOLLOWING         = '/resource/UserFollowingResource/get/';
-    const RESOURCE_USER_PINS              = '/resource/UserPinsResource/get/';
-    const RESOURCE_LIKE_PIN               = '/resource/PinLikeResource2/create/';
-    const RESOURCE_UNLIKE_PIN             = '/resource/PinLikeResource2/delete/';
-    const RESOURCE_COMMENT_PIN            = '/resource/PinCommentResource/create/';
-    const RESOURCE_COMMENT_DELETE_PIN     = '/resource/PinCommentResource/delete/';
-    const RESOURCE_PIN_INFO               = '/resource/PinResource/get/';
-    const RESOURCE_FOLLOW_BOARD           = '/resource/BoardFollowResource/create/';
-    const RESOURCE_UNFOLLOW_BOARD         = '/resource/BoardFollowResource/delete/';
-    const RESOURCE_FOLLOW_INTEREST        = '/resource/InterestFollowResource/create/';
-    const RESOURCE_UNFOLLOW_INTEREST      = '/resource/InterestFollowResource/delete/';
+
+    /**
+     * Interests
+     */
+    const RESOURCE_FOLLOW_INTEREST   = '/resource/InterestFollowResource/create/';
+    const RESOURCE_UNFOLLOW_INTEREST = '/resource/InterestFollowResource/delete/';
+
+    /**
+     * Conversations
+     */
     const RESOURCE_SEND_MESSAGE           = '/resource/ConversationsResource/create/';
     const RESOURCE_GET_LAST_CONVERSATIONS = 'resource/ConversationsResource/get/';
 

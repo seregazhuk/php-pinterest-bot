@@ -52,6 +52,20 @@ Get full board info by boardName and userName. Here you can get board id, for fu
 $info = $bot->boards->info($username, $board);
 ```
 
+Create a new board. As third parameter you can pass privacy. It is 'public' by default, or 'secret' if private.
+```php
+// create a public board
+$bot->boards->create('name', 'description');
+
+// create a private board
+$bot->boards->create('name', 'description', 'secret');
+```
+
+Delete board by id
+```php
+$bot->boards->delete($boardId);
+```
+
 Follow/unfollow board by ID
 ```php
 $bot->boards->follow($boardId);

@@ -98,6 +98,59 @@ class Boards extends Provider
         return $this->response->getData($response);
     }
 
+    /**
+     * Delete your board by ID
+     *
+     * @param int $boardId
+     * @return array|bool
+     */
+    public function delete($boardId)
+    {
+        $this->request->checkLoggedIn();
+        $post = Request::createRequestData(
+            [
+                'options' => [
+                    'board_id' => $boardId
+                ]
+            ]
+        );
+        $postString = UrlHelper::buildRequestString($post);
+        $response = $this->request->exec(UrlHelper::RESOURCE_DELETE_BOARD, $postString);
+
+        return $this->response->checkResponse($response);
+    }
+
+    /**
+     * Create a new board
+     *
+     * @param string $name
+     * @param string $description
+     * @param string $privacy Can be 'public' or 'secret'. 'public by default.
+     * @return array|bool
+     */
+    public function create($name, $description, $privacy = 'public')
+    {
+        $this->request->checkLoggedIn();
+        $post = Request::createRequestData(
+            [
+                'options' => [
+                    'name'        => $name,
+                    'description' => $description,
+                    'privacy'     => $privacy,
+                ]
+            ]
+        );
+        $postString = UrlHelper::buildRequestString($post);
+        $response = $this->request->exec(UrlHelper::RESOURCE_CREATE_BOARD, $postString);
+
+        return $this->response->checkResponse($response);
+    }
+
+    /**
+     * Search scope
+     *
+     * @return string
+     */
     protected function getScope()
     {
         return 'boards';
@@ -108,11 +161,20 @@ class Boards extends Provider
         return Request::BOARD_ENTITY_ID;
     }
 
+    /**
+     * Follow resource
+     *
+     * @return string
+     */
     protected function getFollowUrl()
     {
         return UrlHelper::RESOURCE_FOLLOW_BOARD;
     }
 
+    /**
+     * UnFollow resource
+     * @return string
+     */
     protected function getUnfFollowUrl()
     {
         return UrlHelper::RESOURCE_UNFOLLOW_BOARD;
