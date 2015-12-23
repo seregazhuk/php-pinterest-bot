@@ -73,6 +73,8 @@ foreach($bot->boards->pins($boardId) as $pinsBatch)
 
 ## Pins
 
+Notice! Try not to be very aggressive when pinning or commetning pins, or pinterest will gonna ban you.
+
 Get pin info by its id.
 ```php
 $info = $bot->pins->info(1234567890);
