@@ -2,9 +2,7 @@
 
 namespace seregazhuk\PinterestBot\Api;
 
-use seregazhuk\PinterestBot\Interfaces\HttpInterface;
-use seregazhuk\PinterestBot\Helpers\CsrfHelper;
-use seregazhuk\PinterestBot\Helpers\UrlHelper;
+use seregazhuk\PinterestBot\Contracts\HttpInterface;
 
 /**
  * Class Http

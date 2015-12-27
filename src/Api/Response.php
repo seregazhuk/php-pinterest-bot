@@ -2,7 +2,7 @@
 
 namespace seregazhuk\PinterestBot\Api;
 
-use seregazhuk\PinterestBot\Interfaces\ResponseInterface;
+use seregazhuk\PinterestBot\Contracts\ResponseInterface;
 
 class Response implements ResponseInterface
 {

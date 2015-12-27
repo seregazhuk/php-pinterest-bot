@@ -5,14 +5,14 @@ namespace seregazhuk\PinterestBot\Api\Providers;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
-use seregazhuk\PinterestBot\Interfaces\RequestInterface;
-use seregazhuk\PinterestBot\Interfaces\ResponseInterface;
+use seregazhuk\PinterestBot\Contracts\RequestInterface;
+use seregazhuk\PinterestBot\Contracts\ResponseInterface;
 use seregazhuk\PinterestBot\Helpers\Providers\ProviderHelper;
 
 /**
  * Class Provider
  *
- * @package seregazhuk\PinterestBot\Interfaces
+ * @package seregazhuk\PinterestBot\Contracts
  */
 class Provider
 {
