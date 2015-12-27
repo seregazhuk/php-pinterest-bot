@@ -13,7 +13,7 @@ use seregazhuk\PinterestBot\Helpers\UrlHelper;
  * @property string $cookieJar
  * @property string $cookePath
  */
-class Http implements HttpInterface
+class CurlDecorator implements HttpInterface
 {
 
     protected $http;

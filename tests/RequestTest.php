@@ -3,7 +3,7 @@
 namespace szhuk\tests;
 
 use PHPUnit_Framework_TestCase;
-use seregazhuk\PinterestBot\Api\Http;
+use seregazhuk\PinterestBot\Api\CurlDecorator;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Helpers\CsrfHelper;
 use seregazhuk\tests\helpers\ResponseHelper;
@@ -25,7 +25,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->request = new Request(new Http());
+        $this->request = new Request(new CurlDecorator());
         $this->reflection = new \ReflectionClass($this->request);
         $this->setReflectedObject($this->request);
     }
@@ -41,7 +41,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
     /** @test */
     public function executeRequestToPinterestApi()
     {
-        $httpMock = $this->getMock(Http::class, ['setOptions', 'execute', 'close']);
+        $httpMock = $this->getMock(CurlDecorator::class, ['setOptions', 'execute', 'close']);
         $response = $this->createSuccessApiResponse();
         $httpMock->method('execute')->willReturn(json_encode($response));
         $this->setProperty('http', $httpMock);
@@ -57,7 +57,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
     public function executeFollowRequestToPinterestApi()
     {
         $response = $this->createSuccessApiResponse();
-        $mock = $this->getMock(Http::class, ['setOptions', 'execute', 'close']);
+        $mock = $this->getMock(CurlDecorator::class, ['setOptions', 'execute', 'close']);
         $mock->expects($this->at(1))->method('execute')->willReturn(json_encode($response));
         $mock->expects($this->at(2))->method('execute')->willReturn(null);
 
