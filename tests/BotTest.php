@@ -4,7 +4,7 @@ namespace seregazhuk\tests;
 
 use ReflectionClass;
 use PHPUnit_Framework_TestCase;
-use seregazhuk\PinterestBot\Api\CurlDecorator;
+use seregazhuk\PinterestBot\Api\CurlAdaptor;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\PinterestBot;
@@ -35,7 +35,7 @@ class BotTest extends PHPUnit_Framework_TestCase
     /** @test */
     public function successLogin()
     {
-        $mock = $this->getMock(Request::class, ['exec', 'setLoggedIn', 'isLoggedIn'], [new CurlDecorator()]);
+        $mock = $this->getMock(Request::class, ['exec', 'setLoggedIn', 'isLoggedIn'], [new CurlAdaptor()]);
         $mock->method('exec')->willReturn(true);
         $mock->method('isLoggedIn')->willReturn(true);
         $this->setProperty('request', $mock);
@@ -49,7 +49,7 @@ class BotTest extends PHPUnit_Framework_TestCase
      */
     public function loginFails()
     {
-        $mock = $this->getMock(Request::class, ['exec', 'setLoggedIn', 'isLoggedIn'], [new CurlDecorator()]);
+        $mock = $this->getMock(Request::class, ['exec', 'setLoggedIn', 'isLoggedIn'], [new CurlAdaptor()]);
         $mock->method('exec')->willReturn(true);
         $mock->method('isLoggedIn')->willReturn(true);
         $this->setProperty('request', $mock);

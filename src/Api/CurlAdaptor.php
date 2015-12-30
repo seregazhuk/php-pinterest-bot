@@ -11,7 +11,7 @@ use seregazhuk\PinterestBot\Contracts\HttpInterface;
  * @property string $cookieJar
  * @property string $cookePath
  */
-class CurlDecorator implements HttpInterface
+class CurlAdaptor implements HttpInterface
 {
 
     protected $http;

@@ -6,7 +6,7 @@ use Mockable;
 use ReflectionClass;
 use PHPUnit_Framework_TestCase;
 use seregazhuk\PinterestBot\Api\Response;
-use seregazhuk\PinterestBot\Api\CurlDecorator;
+use seregazhuk\PinterestBot\Api\CurlAdaptor;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\tests\helpers\ResponseHelper;
 use seregazhuk\tests\helpers\ReflectionHelper;
@@ -34,7 +34,7 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
     protected function createRequestMock()
     {
         $methods = array_merge(['exec', 'checkLoggedIn', 'isLoggedIn']);
-        $requestMock = $this->getMockBuilder(Request::class)->setMethods($methods)->setConstructorArgs([new CurlDecorator()])
+        $requestMock = $this->getMockBuilder(Request::class)->setMethods($methods)->setConstructorArgs([new CurlAdaptor()])
             ->getMock();
         $requestMock->method('checkLoggedIn')->willReturn(true);
 
