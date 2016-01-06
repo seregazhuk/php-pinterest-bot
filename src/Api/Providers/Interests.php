@@ -4,11 +4,11 @@ namespace seregazhuk\PinterestBot\Api\Providers;
 
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
-use seregazhuk\PinterestBot\Helpers\Providers\FollowHelper;
+use seregazhuk\PinterestBot\Helpers\Providers\Traits\FollowTrait;
 
 class Interests extends Provider
 {
-    use FollowHelper;
+    use FollowTrait;
 
     protected function getEntityIdName()
     {

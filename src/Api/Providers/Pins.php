@@ -4,11 +4,11 @@ namespace seregazhuk\PinterestBot\Api\Providers;
 
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
-use seregazhuk\PinterestBot\Helpers\Providers\SearchHelper;
+use seregazhuk\PinterestBot\Helpers\Providers\Traits\SearchTrait;
 
 class Pins extends Provider
 {
-    use SearchHelper;
+    use SearchTrait;
 
     /**
      * Likes pin with current ID

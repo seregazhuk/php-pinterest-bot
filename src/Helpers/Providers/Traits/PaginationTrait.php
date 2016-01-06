@@ -1,8 +1,8 @@
 <?php
 
-namespace seregazhuk\PinterestBot\Helpers\Providers;
+namespace seregazhuk\PinterestBot\Helpers\Providers\Traits;
 
-trait PaginationHelper
+trait PaginationTrait
 {
     /**
      * Iterate through results of Api function call. By

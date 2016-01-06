@@ -5,12 +5,12 @@ namespace seregazhuk\PinterestBot\Api\Providers;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
 use seregazhuk\PinterestBot\Helpers\Requests\PinnerHelper;
-use seregazhuk\PinterestBot\Helpers\Providers\FollowHelper;
-use seregazhuk\PinterestBot\Helpers\Providers\SearchHelper;
+use seregazhuk\PinterestBot\Helpers\Providers\Traits\SearchTrait;
+use seregazhuk\PinterestBot\Helpers\Providers\Traits\FollowTrait;
 
 class Pinners extends Provider
 {
-    use SearchHelper, FollowHelper;
+    use SearchTrait, FollowTrait;
 
     /**
      * Get different user data, for example, followers, following, pins.

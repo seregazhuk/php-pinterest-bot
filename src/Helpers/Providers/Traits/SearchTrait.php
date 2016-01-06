@@ -1,14 +1,14 @@
 <?php
 
-namespace seregazhuk\PinterestBot\Helpers\Providers;
+namespace seregazhuk\PinterestBot\Helpers\Providers\Traits;
 
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
 
-trait SearchHelper
+trait SearchTrait
 {
-    use ProviderHelper, PaginationHelper;
-    protected $moduleSearchPage = "SearchPage";
+    use ProviderTrait, PaginationTrait;
+    private $moduleSearchPage = "SearchPage";
 
     /**
      * @return string

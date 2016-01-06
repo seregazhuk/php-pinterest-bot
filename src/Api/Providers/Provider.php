@@ -7,7 +7,7 @@ use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
 use seregazhuk\PinterestBot\Contracts\RequestInterface;
 use seregazhuk\PinterestBot\Contracts\ResponseInterface;
-use seregazhuk\PinterestBot\Helpers\Providers\ProviderHelper;
+use seregazhuk\PinterestBot\Helpers\Providers\Traits\ProviderTrait;
 
 /**
  * Class Provider
@@ -16,7 +16,7 @@ use seregazhuk\PinterestBot\Helpers\Providers\ProviderHelper;
  */
 class Provider
 {
-    use ProviderHelper;
+    use ProviderTrait;
 
     /**
      * Instance of the API RequestInterface

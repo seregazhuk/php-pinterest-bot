@@ -4,12 +4,12 @@ namespace seregazhuk\PinterestBot\Api\Providers;
 
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
-use seregazhuk\PinterestBot\Helpers\Providers\SearchHelper;
-use seregazhuk\PinterestBot\Helpers\Providers\FollowHelper;
+use seregazhuk\PinterestBot\Helpers\Providers\Traits\FollowTrait;
+use seregazhuk\PinterestBot\Helpers\Providers\Traits\SearchTrait;
 
 class Boards extends Provider
 {
-    use SearchHelper, FollowHelper;
+    use SearchTrait, FollowTrait;
 
     /**
      * Get boards for user by username

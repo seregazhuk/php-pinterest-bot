@@ -1,10 +1,10 @@
 <?php
 
-namespace seregazhuk\PinterestBot\Helpers\Providers;
+namespace seregazhuk\PinterestBot\Helpers\Providers\Traits;
 
-trait FollowHelper
+trait FollowTrait
 {
-    use ProviderHelper;
+    use ProviderTrait;
 
     /**
      * Follow user by user_id
