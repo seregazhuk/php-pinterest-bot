@@ -43,7 +43,7 @@ class ProvidersContainer
     public function getProvider($provider)
     {
         // Check if an instance has already been initiated
-        if (!isset($this->providers[$provider])) {
+        if ( ! isset($this->providers[$provider])) {
             $this->addProvider($provider);
         }
 
@@ -56,9 +56,9 @@ class ProvidersContainer
      */
     private function addProvider($provider)
     {
-        $class = self::PROVIDERS_NAMESPACE . ucfirst($provider);
+        $class = self::PROVIDERS_NAMESPACE.ucfirst($provider);
 
-        if (!class_exists($class)) {
+        if ( ! class_exists($class)) {
             throw new WrongProviderException;
         }
 
