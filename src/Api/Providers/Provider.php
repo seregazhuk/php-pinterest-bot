@@ -14,7 +14,7 @@ use seregazhuk\PinterestBot\Helpers\Providers\Traits\ProviderTrait;
  *
  * @package seregazhuk\PinterestBot\Contracts
  */
-class Provider
+abstract class Provider
 {
     use ProviderTrait;
 
