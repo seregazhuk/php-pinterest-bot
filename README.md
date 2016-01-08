@@ -33,6 +33,8 @@ php composer.phar require "seregazhuk/pinterest-bot:*"
 ## Quick Start
 
 ```php 
+// You may need to amend this path to locate composer's autoloader
+require('vendor/autoload.php'); 
 use seregazhuk\PinterestBot\PinterestBot;
 
 // login
