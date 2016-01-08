@@ -5,6 +5,7 @@ namespace seregazhuk\PinterestBot;
 use LogicException;
 use ReflectionClass;
 use seregazhuk\PinterestBot\Api\CurlAdaptor;
+use seregazhuk\PinterestBot\Api\ProvidersContainer;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Api\Providers\Pins;
@@ -13,7 +14,6 @@ use seregazhuk\PinterestBot\Api\Providers\Pinners;
 use seregazhuk\PinterestBot\Api\Providers\Provider;
 use seregazhuk\PinterestBot\Api\Providers\Interests;
 use seregazhuk\PinterestBot\Api\Providers\Conversations;
-use seregazhuk\PinterestBot\Exceptions\InvalidRequestException;
 
 /**
  * Class PinterestBot
@@ -33,11 +33,9 @@ class PinterestBot
     protected $password;
 
     /**
-     * A array containing the cached providers
-     *
-     * @var array
+     * @var ProvidersContainer
      */
-    private $providers = [];
+    private $providersContainer;
 
     /**
      * References to the request and response classes that travels
@@ -51,9 +49,6 @@ class PinterestBot
      */
     protected $response;
 
-    const PROVIDERS_NAMESPACE = "seregazhuk\\PinterestBot\\Api\\Providers\\";
-    const MAX_PAGINATED_ITEMS = 100;
-
     public function __construct($username, $password)
     {
         $this->username = $username;
@@ -61,6 +56,8 @@ class PinterestBot
 
         $this->request = new Request(new CurlAdaptor());
         $this->response = new Response();
+
+        $this->providersContainer = new ProvidersContainer($this->request, $this->response);
     }
 
     /**
@@ -82,31 +79,7 @@ class PinterestBot
     {
         $provider = strtolower($provider);
 
-        // Check if an instance has already been initiated
-        if ( ! isset($this->providers[$provider])) {
-            $this->_addProvider($provider);
-        }
-
-        return $this->providers[$provider];
-    }
-
-    /**
-     * @param string $provider
-     * @throws InvalidRequestException
-     */
-    protected function _addProvider($provider)
-    {
-        $class = self::PROVIDERS_NAMESPACE.ucfirst($provider);
-
-        if ( ! class_exists($class)) {
-            throw new InvalidRequestException;
-        }
-
-        // Create a reflection of the called class
-        $ref = new ReflectionClass($class);
-        $obj = $ref->newInstanceArgs([$this->request, $this->response]);
-
-        $this->providers[$provider] = $obj;
+        return $this->providersContainer->getProvider($provider);
     }
 
     /**

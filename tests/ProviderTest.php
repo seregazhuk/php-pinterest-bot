@@ -3,6 +3,7 @@
 namespace seregazhuk\tests;
 
 use Mockable;
+use PHPUnit_Framework_MockObject_MockObject;
 use ReflectionClass;
 use PHPUnit_Framework_TestCase;
 use seregazhuk\PinterestBot\Api\Request;
@@ -15,9 +16,9 @@ use seregazhuk\PinterestBot\Api\Providers\Provider;
 /**
  * Class ProviderTest
  * @package seregazhuk\tests
- * @property Provider        $provider
- * @property string          $providerClass
- * @property Mockable        $mock
+ * @property Provider $provider
+ * @property string $providerClass
+ * @property PHPUnit_Framework_MockObject_MockObject $mock
  * @property ReflectionClass $reflection
  */
 abstract class ProviderTest extends PHPUnit_Framework_TestCase
@@ -29,7 +30,7 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
     protected $mock;
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Request
+     * @return PHPUnit_Framework_MockObject_MockObject|Request
      */
     protected function createRequestMock()
     {

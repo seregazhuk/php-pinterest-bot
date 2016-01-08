@@ -27,7 +27,8 @@
 	},
 	"require-dev": {
 		"phpunit/phpunit": "*",
-		"codeclimate/php-test-reporter": "dev-master"
+        "codeclimate/php-test-reporter": "dev-master",
+        "mockery/mockery": "^0.9.4"
 	},
 	"authors": [
 		{

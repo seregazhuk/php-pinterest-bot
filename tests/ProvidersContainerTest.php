@@ -1,0 +1,36 @@
+<?php
+
+use seregazhuk\PinterestBot\Api\Request;
+use seregazhuk\PinterestBot\Api\Response;
+use seregazhuk\PinterestBot\Api\ProvidersContainer;
+
+class ProvidersContainerTest extends PHPUnit_Framework_TestCase
+{
+    /**
+     * @var ProvidersContainer
+     */
+    private $container;
+
+    public function setUp()
+    {
+        $response = Mockery::mock(Response::class);
+        $request = Mockery::mock(Request::class);
+        $this->container = new ProvidersContainer($request, $response);
+    }
+
+    /** @test */
+    public function getValidProvider()
+    {
+        $provider = $this->container->getProvider('pinners');
+        $this->assertNotEmpty($provider);
+    }
+
+    /**
+     * @test
+     * @expectedException \seregazhuk\PinterestBot\Exceptions\WrongProviderException
+     */
+    public function getWrongProvider()
+    {
+        $this->container->getProvider('unknown');
+    }
+}

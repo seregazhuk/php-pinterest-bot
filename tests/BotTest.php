@@ -4,10 +4,8 @@ namespace seregazhuk\tests;
 
 use ReflectionClass;
 use PHPUnit_Framework_TestCase;
-use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\PinterestBot;
-use seregazhuk\PinterestBot\Api\CurlAdaptor;
 use seregazhuk\tests\helpers\ReflectionHelper;
 
 class BotTest extends PHPUnit_Framework_TestCase
@@ -30,41 +28,6 @@ class BotTest extends PHPUnit_Framework_TestCase
     {
         $this->bot = null;
         $this->reflection = null;
-    }
-
-    /** @test */
-    public function successLogin()
-    {
-        $mock = $this->getMock(Request::class, ['exec', 'setLoggedIn', 'isLoggedIn'], [new CurlAdaptor()]);
-        $mock->method('exec')->willReturn(true);
-        $mock->method('isLoggedIn')->willReturn(true);
-        $this->setProperty('request', $mock);
-
-        $this->assertTrue($this->bot->login());
-    }
-
-    /**
-     * @test
-     * @expectedException \LogicException
-     */
-    public function loginFails()
-    {
-        $mock = $this->getMock(Request::class, ['exec', 'setLoggedIn', 'isLoggedIn'], [new CurlAdaptor()]);
-        $mock->method('exec')->willReturn(true);
-        $mock->method('isLoggedIn')->willReturn(true);
-        $this->setProperty('request', $mock);
-
-        $this->setProperty('username', null);
-        $this->assertFalse($this->bot->login());
-    }
-
-    /**
-     * @test
-     * @expectedException \Exception
-     */
-    public function getWrongProvider()
-    {
-        $this->bot->badProvider;
     }
 
     /** @test */
