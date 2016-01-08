@@ -3,9 +3,8 @@
 namespace szhuk\tests;
 
 use PHPUnit_Framework_TestCase;
-use seregazhuk\PinterestBot\Api\CurlAdaptor;
 use seregazhuk\PinterestBot\Api\Request;
-use seregazhuk\PinterestBot\Helpers\CsrfHelper;
+use seregazhuk\PinterestBot\Api\CurlAdaptor;
 use seregazhuk\tests\helpers\ResponseHelper;
 use seregazhuk\tests\helpers\ReflectionHelper;
 

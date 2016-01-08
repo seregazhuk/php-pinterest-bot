@@ -31,7 +31,6 @@ class PinterestBot
 {
     protected $username;
     protected $password;
-    protected $loggedIn = false;
 
     /**
      * A array containing the cached providers
@@ -69,7 +68,7 @@ class PinterestBot
      */
     public function login()
     {
-        $this->_check_credentials();
+        $this->_checkCredentials();
         $res = $this->pinners->login($this->username, $this->password);
 
         return $res;
@@ -113,7 +112,7 @@ class PinterestBot
     /**
      * @throws LogicException
      */
-    protected function _check_credentials()
+    protected function _checkCredentials()
     {
         if ( ! $this->username || ! $this->password) {
             throw new LogicException('You must set username and password to login.');

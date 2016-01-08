@@ -4,10 +4,10 @@ namespace seregazhuk\tests;
 
 use ReflectionClass;
 use PHPUnit_Framework_TestCase;
-use seregazhuk\PinterestBot\Api\CurlAdaptor;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\PinterestBot;
+use seregazhuk\PinterestBot\Api\CurlAdaptor;
 use seregazhuk\tests\helpers\ReflectionHelper;
 
 class BotTest extends PHPUnit_Framework_TestCase

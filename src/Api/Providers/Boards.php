@@ -18,11 +18,7 @@ class Boards extends Provider
      */
     public function forUser($username)
     {
-        $get = Request::createRequestData(
-            [
-                'options' => ["username" => $username],
-            ]
-        );
+        $get = Request::createRequestData(['options' => ["username" => $username]]);
 
         return $this->boardsGetCall($get, UrlHelper::RESOURCE_GET_BOARDS);
     }
@@ -65,16 +61,14 @@ class Boards extends Provider
     }
 
     /**
-     * @param int   $boardId
+     * @param int $boardId
      * @param array $bookmarks
      * @return array|bool
      */
     protected function getPinsFromBoard($boardId, $bookmarks = [])
     {
         $get = Request::createRequestData(
-            [
-                'options' => ['board_id' => $boardId],
-            ], '', $bookmarks
+            ['options' => ['board_id' => $boardId]], '', $bookmarks
         );
 
         return $this->boardsGetCall($get, UrlHelper::RESOURCE_GET_BOARD_FEED, true);
@@ -82,15 +76,15 @@ class Boards extends Provider
 
     /**
      * Run GET api request to boards resource
-     * @param array  $query
+     * @param array $query
      * @param string $url
-     * @param bool   $pagination
+     * @param bool $pagination
      * @return array|bool
      */
     protected function boardsGetCall($query, $url, $pagination = false)
     {
         $getString = UrlHelper::buildRequestString($query);
-        $response = $this->request->exec($url."?{$getString}");
+        $response = $this->request->exec($url . "?{$getString}");
         if ($pagination) {
             return $this->response->getPaginationData($response);
         }

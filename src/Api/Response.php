@@ -24,7 +24,6 @@ class Response implements ResponseInterface
      */
     public function getData($response, $key = null)
     {
-
         if ( ! $this->checkErrorInResponse($response)) {
             return false;
         }
