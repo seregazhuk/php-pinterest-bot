@@ -27,7 +27,7 @@ API requires CURL extension and PHP 5.5 or above.
 ## Installation
 Via composer:
 ```
-php composer.phar require "seregazhuk/pinterest-bot:*"
+composer require "seregazhuk/pinterest-bot:*"
 ```
 
 ## Quick Start
