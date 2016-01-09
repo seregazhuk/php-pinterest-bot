@@ -64,7 +64,7 @@ class UrlHelper
     const RESOURCE_SEND_MESSAGE           = '/resource/ConversationsResource/create/';
     const RESOURCE_GET_LAST_CONVERSATIONS = 'resource/ConversationsResource/get/';
 
-    const URL_BASE      = 'https://www.pinterest.com/';
+    const URL_BASE = 'https://nl.pinterest.com/';
     const LOGIN_REF_URL = 'https://www.pinterest.com/login/';
 
     /**
