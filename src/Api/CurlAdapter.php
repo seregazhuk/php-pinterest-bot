@@ -5,13 +5,13 @@ namespace seregazhuk\PinterestBot\Api;
 use seregazhuk\PinterestBot\Contracts\HttpInterface;
 
 /**
- * Class CurlAdaptor
+ * Class CurlAdapter
  *
  * @package seregazhuk\PinterestBot
  * @property string $cookieJar
  * @property string $cookePath
  */
-class CurlAdaptor implements HttpInterface
+class CurlAdapter implements HttpInterface
 {
 
     protected $http;

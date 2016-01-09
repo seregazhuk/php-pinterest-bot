@@ -8,7 +8,7 @@ use ReflectionClass;
 use PHPUnit_Framework_TestCase;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
-use seregazhuk\PinterestBot\Api\CurlAdaptor;
+use seregazhuk\PinterestBot\Api\CurlAdapter;
 use seregazhuk\tests\helpers\ResponseHelper;
 use seregazhuk\tests\helpers\ReflectionHelper;
 use seregazhuk\PinterestBot\Api\Providers\Provider;
@@ -35,7 +35,7 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
     protected function createRequestMock()
     {
         $methods = array_merge(['exec', 'checkLoggedIn', 'isLoggedIn']);
-        $requestMock = $this->getMockBuilder(Request::class)->setMethods($methods)->setConstructorArgs([new CurlAdaptor()])
+        $requestMock = $this->getMockBuilder(Request::class)->setMethods($methods)->setConstructorArgs([new CurlAdapter()])
             ->getMock();
         $requestMock->method('checkLoggedIn')->willReturn(true);
 

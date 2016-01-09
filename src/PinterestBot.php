@@ -4,7 +4,7 @@ namespace seregazhuk\PinterestBot;
 
 use LogicException;
 use ReflectionClass;
-use seregazhuk\PinterestBot\Api\CurlAdaptor;
+use seregazhuk\PinterestBot\Api\CurlAdapter;
 use seregazhuk\PinterestBot\Api\ProvidersContainer;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
@@ -54,7 +54,7 @@ class PinterestBot
         $this->username = $username;
         $this->password = $password;
 
-        $this->request = new Request(new CurlAdaptor());
+        $this->request = new Request(new CurlAdapter());
         $this->response = new Response();
 
         $this->providersContainer = new ProvidersContainer($this->request, $this->response);
