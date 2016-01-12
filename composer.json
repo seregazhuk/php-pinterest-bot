@@ -11,10 +11,15 @@
 	"license": "Mit",
 	"autoload": {
 		"psr-4": {
-            "seregazhuk\\PinterestBot\\": "src",
-            "seregazhuk\\tests\\": "tests"
+            "seregazhuk\\PinterestBot\\": "src"
 		}
 	},
+    "autoload-dev": {
+        "psr-4": {
+            "seregazhuk\\PinterestBot\\": "src",
+            "seregazhuk\\tests\\": "tests"
+        }
+    },
 	"repositories": [
 		{
 			"type": "vcs",
