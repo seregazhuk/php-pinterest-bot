@@ -3,20 +3,18 @@
 namespace seregazhuk\PinterestBot;
 
 use LogicException;
-use ReflectionClass;
-use seregazhuk\PinterestBot\Api\CurlAdapter;
-use seregazhuk\PinterestBot\Api\ProvidersContainer;
-use seregazhuk\PinterestBot\Api\Request;
-use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Api\Providers\Pins;
 use seregazhuk\PinterestBot\Api\Providers\Boards;
 use seregazhuk\PinterestBot\Api\Providers\Pinners;
 use seregazhuk\PinterestBot\Api\Providers\Provider;
 use seregazhuk\PinterestBot\Api\Providers\Interests;
+use seregazhuk\PinterestBot\Contracts\RequestInterface;
 use seregazhuk\PinterestBot\Api\Providers\Conversations;
+use seregazhuk\PinterestBot\Contracts\ResponseInterface;
+use seregazhuk\PinterestBot\Contracts\ProvidersContainerInterface;
 
 /**
- * Class PinterestBot
+ * Class Bot
  *
  * @package Pinterest
  * @property string        $username
@@ -27,13 +25,13 @@ use seregazhuk\PinterestBot\Api\Providers\Conversations;
  * @property Interests     $interests
  * @property Conversations $conversations
  */
-class PinterestBot
+class Bot
 {
     protected $username;
     protected $password;
 
     /**
-     * @var ProvidersContainer
+     * @var ProvidersContainerInterface
      */
     private $providersContainer;
 
@@ -41,30 +39,32 @@ class PinterestBot
      * References to the request and response classes that travels
      * through the application
      *
-     * @var Request
+     * @var RequestInterface
      */
     protected $request;
     /**
-     * @var Response
+     * @var RequestInterface
      */
     protected $response;
 
-    public function __construct($username = '', $password = '')
+    public function __construct(RequestInterface $request, ResponseInterface $response, ProvidersContainerInterface $providersContainer)
     {
-        $this->username = $username;
-        $this->password = $password;
-
-        $this->request = new Request(new CurlAdapter());
-        $this->response = new Response();
-
-        $this->providersContainer = new ProvidersContainer($this->request, $this->response);
+        $this->request = $request;
+        $this->response = $response;
+        $this->providersContainer = $providersContainer;
     }
 
     /**
      * Login and parsing csrfToken from cookies if success
+     * @param $username
+     * @param $password
+     * @return bool
      */
-    public function login()
+    public function login($username, $password)
     {
+        $this->username = $username;
+        $this->password = $password;
+
         $this->_checkCredentials();
         $res = $this->pinners->login($this->username, $this->password);
 

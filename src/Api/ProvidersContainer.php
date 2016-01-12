@@ -4,11 +4,12 @@ namespace seregazhuk\PinterestBot\Api;
 
 use ReflectionClass;
 use seregazhuk\PinterestBot\Api\Providers\Provider;
+use seregazhuk\PinterestBot\Contracts\ProvidersContainerInterface;
 use seregazhuk\PinterestBot\Contracts\RequestInterface;
 use seregazhuk\PinterestBot\Contracts\ResponseInterface;
 use seregazhuk\PinterestBot\Exceptions\WrongProviderException;
 
-class ProvidersContainer
+class ProvidersContainer implements ProvidersContainerInterface
 {
     /**
      * @var RequestInterface
