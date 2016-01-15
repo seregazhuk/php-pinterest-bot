@@ -25,9 +25,6 @@ use seregazhuk\PinterestBot\Contracts\ProvidersContainerInterface;
  */
 class Bot
 {
-    protected $username;
-    protected $password;
-
     /**
      * @var ProvidersContainerInterface
      */
@@ -43,17 +40,14 @@ class Bot
 
     /**
      * Login and parsing csrfToken from cookies if success
-     * @param $username
-     * @param $password
+     * @param string $username
+     * @param string $password
      * @return bool
      */
     public function login($username, $password)
     {
-        $this->username = $username;
-        $this->password = $password;
-
-        $this->_checkCredentials();
-        $res = $this->pinners->login($this->username, $this->password);
+        $this->_checkCredentials($username, $password);
+        $res = $this->pinners->login($username, $password);
 
         return $res;
     }
@@ -70,11 +64,13 @@ class Bot
     }
 
     /**
-     * @throws LogicException
+     * Validated password and login
+     * @param string $username
+     * @param string $password
      */
-    protected function _checkCredentials()
+    protected function _checkCredentials($username, $password)
     {
-        if ( ! $this->username || ! $this->password) {
+        if (!$username || !$password) {
             throw new LogicException('You must set username and password to login.');
         }
     }
