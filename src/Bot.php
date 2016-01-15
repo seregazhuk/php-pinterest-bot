@@ -33,23 +33,17 @@ class Bot
     public function __construct(ProvidersContainerInterface $providersContainer)
     {
         $this->providersContainer = $providersContainer;
-
-        $this->request = $providersContainer->getRequest();
-        $this->response = $providersContainer->getResponse();
     }
 
     /**
-     * Login and parsing csrfToken from cookies if success
+     * Proxy method to pinners login
      * @param string $username
      * @param string $password
      * @return bool
      */
     public function login($username, $password)
     {
-        $this->_checkCredentials($username, $password);
-        $res = $this->pinners->login($username, $password);
-
-        return $res;
+        return $this->pinners->login($username, $password);
     }
 
     /**
@@ -61,18 +55,6 @@ class Bot
         $provider = strtolower($provider);
 
         return $this->providersContainer->getProvider($provider);
-    }
-
-    /**
-     * Validated password and login
-     * @param string $username
-     * @param string $password
-     */
-    protected function _checkCredentials($username, $password)
-    {
-        if (!$username || !$password) {
-            throw new LogicException('You must set username and password to login.');
-        }
     }
 
     /**

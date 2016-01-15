@@ -2,6 +2,7 @@
 
 namespace seregazhuk\PinterestBot\Api\Providers;
 
+use LogicException;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
 use seregazhuk\PinterestBot\Helpers\Requests\PinnerHelper;
@@ -133,6 +134,8 @@ class Pinners extends Provider
             return true;
         }
 
+        $this->_checkCredentials($username, $password);
+
         $post = PinnerHelper::createLoginRequest($username, $password);
         $postString = UrlHelper::buildRequestString($post);
         $this->request->clearToken();
@@ -142,6 +145,18 @@ class Pinners extends Provider
         }
 
         return $result;
+    }
+
+    /**
+     * Validates password and login
+     * @param string $username
+     * @param string $password
+     */
+    protected function _checkCredentials($username, $password)
+    {
+        if (!$username || !$password) {
+            throw new LogicException('You must set username and password to login.');
+        }
     }
 
     /**
