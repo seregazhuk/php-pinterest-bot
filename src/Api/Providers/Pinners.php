@@ -2,6 +2,7 @@
 
 namespace seregazhuk\PinterestBot\Api\Providers;
 
+use Iterator;
 use LogicException;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
@@ -38,7 +39,7 @@ class Pinners extends Provider
      * @param string $resourceUrl
      * @param string $sourceUrl
      * @param int    $batchesLimit
-     * @return \Iterator
+     * @return Iterator
      */
     public function getPaginatedUserData($username, $resourceUrl, $sourceUrl, $batchesLimit = 0)
     {
@@ -84,7 +85,7 @@ class Pinners extends Provider
      *
      * @param string $username
      * @param int    $batchesLimit
-     * @return \Iterator
+     * @return Iterator
      */
     public function followers($username, $batchesLimit = 0)
     {
@@ -98,7 +99,7 @@ class Pinners extends Provider
      *
      * @param string $username
      * @param int    $batchesLimit
-     * @return \Iterator
+     * @return Iterator
      */
     public function following($username, $batchesLimit = 0)
     {
@@ -112,7 +113,7 @@ class Pinners extends Provider
      *
      * @param string $username
      * @param int    $batchesLimit
-     * @return \Iterator
+     * @return Iterator
      */
     public function pins($username, $batchesLimit = 0)
     {

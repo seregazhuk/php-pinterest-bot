@@ -18,7 +18,6 @@ class ProvidersContainer implements ProvidersContainerInterface
      * @var RequestInterface
      */
     protected $request;
-
     /**
      * @var ResponseInterface
      */

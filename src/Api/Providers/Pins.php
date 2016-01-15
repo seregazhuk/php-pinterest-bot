@@ -128,7 +128,7 @@ class Pins extends Provider
     /**
      * Get information of pin by PinID
      *
-     * @param $pinId
+     * @param int $pinId
      * @return array|bool
      */
     public function info($pinId)
