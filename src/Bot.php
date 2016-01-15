@@ -8,9 +8,7 @@ use seregazhuk\PinterestBot\Api\Providers\Boards;
 use seregazhuk\PinterestBot\Api\Providers\Pinners;
 use seregazhuk\PinterestBot\Api\Providers\Provider;
 use seregazhuk\PinterestBot\Api\Providers\Interests;
-use seregazhuk\PinterestBot\Contracts\RequestInterface;
 use seregazhuk\PinterestBot\Api\Providers\Conversations;
-use seregazhuk\PinterestBot\Contracts\ResponseInterface;
 use seregazhuk\PinterestBot\Contracts\ProvidersContainerInterface;
 
 /**
@@ -35,23 +33,12 @@ class Bot
      */
     private $providersContainer;
 
-    /**
-     * References to the request and response classes that travels
-     * through the application
-     *
-     * @var RequestInterface
-     */
-    protected $request;
-    /**
-     * @var RequestInterface
-     */
-    protected $response;
-
-    public function __construct(RequestInterface $request, ResponseInterface $response, ProvidersContainerInterface $providersContainer)
+    public function __construct(ProvidersContainerInterface $providersContainer)
     {
-        $this->request = $request;
-        $this->response = $response;
         $this->providersContainer = $providersContainer;
+
+        $this->request = $providersContainer->getRequest();
+        $this->response = $providersContainer->getResponse();
     }
 
     /**
@@ -97,6 +84,6 @@ class Bot
      */
     public function getLastError()
     {
-        return $this->response->getLastError();
+        return $this->providersContainer->getResponse()->getLastError();
     }
 }

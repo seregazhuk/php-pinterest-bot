@@ -12,6 +12,9 @@ use seregazhuk\PinterestBot\Exceptions\WrongProviderException;
 class ProvidersContainer implements ProvidersContainerInterface
 {
     /**
+     * References to the request and response classes that travels
+     * through the application
+     *
      * @var RequestInterface
      */
     protected $request;
@@ -68,5 +71,21 @@ class ProvidersContainer implements ProvidersContainerInterface
         $obj = $ref->newInstanceArgs([$this->request, $this->response]);
 
         $this->providers[$provider] = $obj;
+    }
+
+    /**
+     * @return RequestInterface
+     */
+    public function getRequest()
+    {
+        return $this->request;
+    }
+
+    /**
+     * @return ResponseInterface
+     */
+    public function getResponse()
+    {
+        return $this->response;
     }
 }

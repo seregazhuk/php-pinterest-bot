@@ -16,7 +16,7 @@ class PinterestBot
         $response = new Response();
         $providersContainer = new ProvidersContainer($request, $response);
 
-        return new Bot($request, $response, $providersContainer);
+        return new Bot($providersContainer);
     }
 
     private function __construct()

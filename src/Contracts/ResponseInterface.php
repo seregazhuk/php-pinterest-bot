@@ -61,4 +61,10 @@ interface ResponseInterface
      * @return array|null
      */
     public function parseSearchResponse($response, $bookmarksUsed = true);
+
+    /**
+     * Returns last error in response
+     * @return array
+     */
+    public function getLastError();
 }
