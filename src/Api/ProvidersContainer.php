@@ -4,17 +4,20 @@ namespace seregazhuk\PinterestBot\Api;
 
 use ReflectionClass;
 use seregazhuk\PinterestBot\Api\Providers\Provider;
+use seregazhuk\PinterestBot\Contracts\ProvidersContainerInterface;
 use seregazhuk\PinterestBot\Contracts\RequestInterface;
 use seregazhuk\PinterestBot\Contracts\ResponseInterface;
 use seregazhuk\PinterestBot\Exceptions\WrongProviderException;
 
-class ProvidersContainer
+class ProvidersContainer implements ProvidersContainerInterface
 {
     /**
+     * References to the request and response classes that travels
+     * through the application
+     *
      * @var RequestInterface
      */
     protected $request;
-
     /**
      * @var ResponseInterface
      */
@@ -42,6 +45,8 @@ class ProvidersContainer
      */
     public function getProvider($provider)
     {
+        $provider = strtolower($provider);
+
         // Check if an instance has already been initiated
         if ( ! isset($this->providers[$provider])) {
             $this->addProvider($provider);
@@ -67,5 +72,21 @@ class ProvidersContainer
         $obj = $ref->newInstanceArgs([$this->request, $this->response]);
 
         $this->providers[$provider] = $obj;
+    }
+
+    /**
+     * @return RequestInterface
+     */
+    public function getRequest()
+    {
+        return $this->request;
+    }
+
+    /**
+     * @return ResponseInterface
+     */
+    public function getResponse()
+    {
+        return $this->response;
     }
 }

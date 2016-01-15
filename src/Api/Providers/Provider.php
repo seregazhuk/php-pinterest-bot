@@ -56,6 +56,7 @@ abstract class Provider
         if ($checkLogin) {
             $this->request->checkLoggedIn();
         }
+
         $data = array("options" => $requestOptions);
         $request = Request::createRequestData($data);
 
@@ -68,7 +69,6 @@ abstract class Provider
 
         return $this->response->checkResponse($response);
     }
-
 
     /**
      * @return Request

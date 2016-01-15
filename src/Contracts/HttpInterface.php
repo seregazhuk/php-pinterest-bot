@@ -4,7 +4,6 @@ namespace seregazhuk\PinterestBot\Contracts;
 
 interface HttpInterface
 {
-
     /**
      * Initializes curl resource
      *
@@ -19,7 +18,7 @@ interface HttpInterface
      * @access public
      * @param  string $option
      * @param  string $value
-     * @return $this
+     * @return static
      */
     public function setOption($option, $value);
 
@@ -28,7 +27,7 @@ interface HttpInterface
      *
      * @access public
      * @param  array $options
-     * @return $this
+     * @return static
      */
     public function setOptions(array $options = []);
 

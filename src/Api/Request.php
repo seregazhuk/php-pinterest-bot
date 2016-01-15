@@ -32,7 +32,7 @@ class Request implements RequestInterface
     protected $loggedIn;
     protected $cookieJar;
 
-    public    $csrfToken = "";
+    public $csrfToken = "";
 
     /**
      * Common headers needed for every query
@@ -149,8 +149,6 @@ class Request implements RequestInterface
 
     /**
      * Clear token information
-     *
-     * @return mixed
      */
     public function clearToken()
     {

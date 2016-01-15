@@ -24,6 +24,7 @@ class UrlHelper
     const RESOURCE_UNFOLLOW_BOARD = '/resource/BoardFollowResource/delete/';
     const RESOURCE_DELETE_BOARD   = '/resource/BoardResource/delete/';
     const RESOURCE_CREATE_BOARD   = '/resource/BoardResource/create/';
+
     /**
      * Pins
      */
@@ -68,7 +69,7 @@ class UrlHelper
     const LOGIN_REF_URL = 'https://www.pinterest.com/login/';
 
     /**
-     * @param $request
+     * @param array $request
      * @return mixed
      */
     public static function buildRequestString($request)
@@ -90,7 +91,7 @@ class UrlHelper
     /**
      * Fix URL-encoding for some characters
      *
-     * @param $str string
+     * @param string $str
      * @return string
      */
     public static function fixEncoding($str)

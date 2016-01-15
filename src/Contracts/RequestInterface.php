@@ -39,13 +39,11 @@ interface RequestInterface
 
     /**
      * Clear token information
-     *
-     * @return mixed
      */
     public function clearToken();
 
     /**
-     * Get log status
+     * Get logged in status
      *
      * @return bool
      */

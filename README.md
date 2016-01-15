@@ -35,16 +35,20 @@ composer require "seregazhuk/pinterest-bot:*"
 ```php 
 // You may need to amend this path to locate composer's autoloader
 require('vendor/autoload.php'); 
-use seregazhuk\PinterestBot\PinterestBot;
+
+use seregazhuk\PinterestBot\Factories\PinterestBot;
+
+$bot = PinterestBot::create();
 
 // login
-$bot = new PinterestBot('mypinterestlogin', 'mypinterestpassword');
-$bot->login();
+$bot->login('mypinterestlogin', 'mypinterestpassword');
 
 // get lists of your boards 
 $boards = $bot->boards->forUser('yourUserName');
 $bot->pins->create('http://exmaple.com/image.jpg', $boards[0]['id'], 'pin description');
 ```
+
+Or you may skip login, if you want. It is only required for such operations as likes, follows and making pins.
 
 ## Boards
 

@@ -2,6 +2,8 @@
 
 namespace seregazhuk\PinterestBot\Api\Providers;
 
+use Iterator;
+use LogicException;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
 use seregazhuk\PinterestBot\Helpers\Requests\PinnerHelper;
@@ -37,7 +39,7 @@ class Pinners extends Provider
      * @param string $resourceUrl
      * @param string $sourceUrl
      * @param int    $batchesLimit
-     * @return \Iterator
+     * @return Iterator
      */
     public function getPaginatedUserData($username, $resourceUrl, $sourceUrl, $batchesLimit = 0)
     {
@@ -83,7 +85,7 @@ class Pinners extends Provider
      *
      * @param string $username
      * @param int    $batchesLimit
-     * @return \Iterator
+     * @return Iterator
      */
     public function followers($username, $batchesLimit = 0)
     {
@@ -97,7 +99,7 @@ class Pinners extends Provider
      *
      * @param string $username
      * @param int    $batchesLimit
-     * @return \Iterator
+     * @return Iterator
      */
     public function following($username, $batchesLimit = 0)
     {
@@ -111,7 +113,7 @@ class Pinners extends Provider
      *
      * @param string $username
      * @param int    $batchesLimit
-     * @return \Iterator
+     * @return Iterator
      */
     public function pins($username, $batchesLimit = 0)
     {
@@ -133,6 +135,8 @@ class Pinners extends Provider
             return true;
         }
 
+        $this->_checkCredentials($username, $password);
+
         $post = PinnerHelper::createLoginRequest($username, $password);
         $postString = UrlHelper::buildRequestString($post);
         $this->request->clearToken();
@@ -142,6 +146,18 @@ class Pinners extends Provider
         }
 
         return $result;
+    }
+
+    /**
+     * Validates password and login
+     * @param string $username
+     * @param string $password
+     */
+    protected function _checkCredentials($username, $password)
+    {
+        if (!$username || !$password) {
+            throw new LogicException('You must set username and password to login.');
+        }
     }
 
     /**

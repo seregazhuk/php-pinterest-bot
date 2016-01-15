@@ -13,14 +13,6 @@ use seregazhuk\PinterestBot\Contracts\HttpInterface;
  */
 class CurlAdapter implements HttpInterface
 {
-
-    protected $http;
-    protected $options;
-    protected $loggedIn;
-
-    public $cookieJar;
-    public $cookiePath;
-
     /**
      * Contains the curl instance
      *
@@ -45,7 +37,7 @@ class CurlAdapter implements HttpInterface
      * @access public
      * @param  string $option
      * @param  string $value
-     * @return $this
+     * @return static
      */
     public function setOption($option, $value)
     {
@@ -59,7 +51,7 @@ class CurlAdapter implements HttpInterface
      *
      * @access public
      * @param  array $options
-     * @return $this
+     * @return static
      */
     public function setOptions(array $options = [])
     {

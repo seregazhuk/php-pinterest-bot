@@ -18,7 +18,7 @@ class Response implements ResponseInterface
 
     /**
      * Check if specified data exists in response
-     * @param      $response
+     * @param array $response
      * @param null $key
      * @return array|bool
      */
@@ -35,8 +35,8 @@ class Response implements ResponseInterface
      * Parse data from Pinterest Api response.
      * Data stores in ['resource_response']['data'] array
      *
-     * @param $response
-     * @param $key
+     * @param array $response
+     * @param string $key
      * @return bool|array
      */
     protected function parseData($response, $key)
@@ -148,7 +148,7 @@ class Response implements ResponseInterface
      * Parses simple Pinterest search API response
      * on request with bookmarks
      *
-     * @param $response
+     * @param array $response
      * @return array
      */
     public function parseSimpledSearchResponse($response)
