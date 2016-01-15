@@ -6,6 +6,7 @@ class CsrfHelper
 {
     const TOKEN_NAME = 'csrftoken';
     const DEFAULT_TOKEN = '1234';
+
     /**
      * Get a CSRF token from the given cookie file
      *
@@ -46,6 +47,9 @@ class CsrfHelper
         return false;
     }
 
+    /**
+     * @return string
+     */
     public static function getDefaultCookie()
     {
         return 'Cookie: csrftoken='.CsrfHelper::DEFAULT_TOKEN.';';

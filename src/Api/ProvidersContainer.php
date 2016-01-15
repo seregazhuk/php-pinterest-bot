@@ -45,6 +45,8 @@ class ProvidersContainer implements ProvidersContainerInterface
      */
     public function getProvider($provider)
     {
+        $provider = strtolower($provider);
+
         // Check if an instance has already been initiated
         if ( ! isset($this->providers[$provider])) {
             $this->addProvider($provider);

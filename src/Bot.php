@@ -52,8 +52,6 @@ class Bot
      */
     public function __get($provider)
     {
-        $provider = strtolower($provider);
-
         return $this->providersContainer->getProvider($provider);
     }
 
