@@ -20,11 +20,11 @@ use seregazhuk\PinterestBot\Contracts\RequestInterface;
 class Request implements RequestInterface
 {
     const INTEREST_ENTITY_ID = 'interest_id';
-    const BOARD_ENTITY_ID    = 'board_id';
-    const PINNER_ENTITY_ID   = 'user_id';
+    const BOARD_ENTITY_ID = 'board_id';
+    const COOKIE_NAME = 'pinterest_cookie';
+    const PINNER_ENTITY_ID = 'user_id';
 
     protected $userAgent = 'Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0';
-    const COOKIE_NAME = 'pinterest_cookie';
     /**
      * @var HttpInterface
      */
@@ -52,6 +52,7 @@ class Request implements RequestInterface
 
     /**
      * @param HttpInterface $http
+     * todo: add UserAgent as param
      */
     public function __construct(HttpInterface $http)
     {
@@ -237,7 +238,7 @@ class Request implements RequestInterface
     }
 
     /**
-     * @param $options
+     * @param array $options
      * @return mixed
      */
     protected function addDefaultCsrfInfo($options)

@@ -15,8 +15,6 @@ use seregazhuk\PinterestBot\Contracts\ProvidersContainerInterface;
  * Class Bot
  *
  * @package Pinterest
- * @property string        $username
- * @property string        $password
  * @property Pinners       $pinners
  * @property Pins          $pins
  * @property Boards        $boards
