@@ -10,9 +10,17 @@ use seregazhuk\PinterestBot\Api\ProvidersContainer;
 
 class PinterestBot
 {
-    public static function create()
+    /**
+     * Initializes Bot instance and all
+     * its dependencies
+     *
+     * @param string|null $userAgent
+     *
+     * @return Bot
+     */
+    public static function create($userAgent = null)
     {
-        $request = new Request(new CurlAdapter());
+        $request = new Request(new CurlAdapter(), $userAgent);
         $response = new Response();
         $providersContainer = new ProvidersContainer($request, $response);
 

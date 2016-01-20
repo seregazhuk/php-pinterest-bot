@@ -52,11 +52,14 @@ class Request implements RequestInterface
 
     /**
      * @param HttpInterface $http
-     * todo: add UserAgent as param
+     * @param string|null $userAgent
      */
-    public function __construct(HttpInterface $http)
+    public function __construct(HttpInterface $http, $userAgent = null)
     {
         $this->http = $http;
+        if ($userAgent) {
+            $this->userAgent = $userAgent;
+        }
         $this->cookieJar = self::COOKIE_NAME;
 
         if (file_exists($this->cookieJar)) {
