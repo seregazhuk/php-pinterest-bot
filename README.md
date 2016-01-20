@@ -205,3 +205,10 @@ You can check for occurred errors after requests with method *getLastError()*:
 $error = $bot->getLastError();
 print_r($error);
 ```
+
+## Custom settings
+You can set UserAgent string for bot like this:
+```php
+$userAgent = 'Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0';
+$bot = PinterestBot::create($userAgent);
+```
