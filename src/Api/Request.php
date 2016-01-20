@@ -57,7 +57,7 @@ class Request implements RequestInterface
     public function __construct(HttpInterface $http, $userAgent = null)
     {
         $this->http = $http;
-        if ($userAgent) {
+        if ($userAgent !== null) {
             $this->userAgent = $userAgent;
         }
         $this->cookieJar = self::COOKIE_NAME;
