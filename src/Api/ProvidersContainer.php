@@ -61,17 +61,30 @@ class ProvidersContainer implements ProvidersContainerInterface
      */
     private function addProvider($provider)
     {
-        $class = self::PROVIDERS_NAMESPACE.ucfirst($provider);
+        $className = self::PROVIDERS_NAMESPACE . ucfirst($provider);
 
-        if ( ! class_exists($class)) {
-            throw new WrongProviderException;
+        if (!class_exists($className)) {
+            throw new WrongProviderException("Provider $className not found.");
         }
 
-        // Create a reflection of the called class
-        $ref = new ReflectionClass($class);
-        $obj = $ref->newInstanceArgs([$this->request, $this->response]);
+        $this->providers[$provider] = $this->buildProvider($className);
+    }
 
-        $this->providers[$provider] = $obj;
+    /**
+     * Build Provider object with reflection API
+     *
+     * @param string $className
+     * @return object
+     * @throws WrongProviderException
+     */
+    private function buildProvider($className)
+    {
+        $ref = new ReflectionClass($className);
+        if (!$ref->isInstantiable()) {
+            throw new WrongProviderException('Provider class is not instantiable.');
+        }
+
+        return $ref->newInstanceArgs([$this->request, $this->response]);
     }
 
     /**
