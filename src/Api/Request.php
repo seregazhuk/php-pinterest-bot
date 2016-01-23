@@ -43,6 +43,7 @@ class Request implements RequestInterface
         'Accept: application/json, text/javascript, */*; q=0.01',
         'Accept-Language: en-US,en;q=0.5',
         'DNT: 1',
+        'Host: nl.pinterest.com',
         'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
         'X-Pinterest-AppState: active',
         'X-NEW-APP: 1',
@@ -122,7 +123,6 @@ class Request implements RequestInterface
         $options = $this->makeHttpOptions($postString);
         $this->http->init($url);
         $this->http->setOptions($options);
-
         $res = $this->http->execute();
         $this->http->close();
 
@@ -246,7 +246,7 @@ class Request implements RequestInterface
      */
     protected function addDefaultCsrfInfo($options)
     {
-        $options[CURLOPT_REFERER] = UrlHelper::LOGIN_REF_URL;
+        $options[CURLOPT_REFERER] = UrlHelper::URL_BASE;
         $options[CURLOPT_HTTPHEADER][] = CsrfHelper::getDefaultCookie();
 
         return $options;
