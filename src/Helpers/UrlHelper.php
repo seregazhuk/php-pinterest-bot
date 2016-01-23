@@ -66,7 +66,6 @@ class UrlHelper
     const RESOURCE_GET_LAST_CONVERSATIONS = 'resource/ConversationsResource/get/';
 
     const URL_BASE = 'https://nl.pinterest.com/';
-    const LOGIN_REF_URL = 'https://www.pinterest.com/login/';
 
     /**
      * @param array $request
