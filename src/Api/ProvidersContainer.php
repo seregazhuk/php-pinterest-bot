@@ -61,9 +61,9 @@ class ProvidersContainer implements ProvidersContainerInterface
      */
     private function addProvider($provider)
     {
-        $className = self::PROVIDERS_NAMESPACE . ucfirst($provider);
+        $className = self::PROVIDERS_NAMESPACE.ucfirst($provider);
 
-        if (!class_exists($className)) {
+        if ( ! class_exists($className)) {
             throw new WrongProviderException("Provider $className not found.");
         }
 

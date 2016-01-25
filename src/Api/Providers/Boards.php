@@ -84,7 +84,7 @@ class Boards extends Provider
     protected function boardsGetCall($query, $url, $pagination = false)
     {
         $getString = UrlHelper::buildRequestString($query);
-        $response = $this->request->exec($url . "?{$getString}");
+        $response = $this->request->exec($url."?{$getString}");
         if ($pagination) {
             return $this->response->getPaginationData($response);
         }
