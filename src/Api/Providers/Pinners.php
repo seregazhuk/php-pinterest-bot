@@ -112,8 +112,8 @@ class Pinners extends Provider
     /**
      * Login as pinner
      *
-     * @param $username
-     * @param $password
+     * @param string $username
+     * @param string $password
      * @return bool
      */
     public function login($username, $password)
