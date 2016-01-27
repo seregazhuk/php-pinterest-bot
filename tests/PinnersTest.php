@@ -55,17 +55,6 @@ class PinnersTest extends ProviderTest
     }
 
     /** @test */
-    public function getMyAccountName()
-    {
-        $accountName = 'test';
-        $res['resource_data'][1]['resource']['options']['username'] = $accountName;
-        $this->mock->expects($this->at(1))->method('exec')->willReturn($res);
-
-        $this->assertEquals($accountName, $this->provider->myAccountName());
-        $this->assertNull($this->provider->myAccountName());
-    }
-
-    /** @test */
     public function getUserFollowers()
     {
         $response = $this->createPaginatedResponse();
@@ -79,7 +68,7 @@ class PinnersTest extends ProviderTest
                     'data' => [
                         ['type' => 'module'],
                     ],
-                    ],
+                ],
             ]
         );
 

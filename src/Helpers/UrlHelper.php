@@ -12,7 +12,6 @@ class UrlHelper
      * Login
      */
     const RESOURCE_LOGIN            = '/resource/UserSessionResource/create/';
-    const RESOURCE_GET_ACCOUNT_NAME = 'https://www.pinterest.com/';
 
     /**
      * Boards
