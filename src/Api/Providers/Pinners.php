@@ -119,7 +119,6 @@ class Pinners extends Provider
     public function login($username, $password)
     {
         if ($this->request->isLoggedIn()) {
-            var_dump('logged');
             return true;
         }
 
