@@ -62,10 +62,6 @@ class Request implements RequestInterface
             $this->userAgent = $userAgent;
         }
         $this->cookieJar = self::COOKIE_NAME;
-
-        if (file_exists($this->cookieJar)) {
-            $this->setLoggedIn();
-        }
     }
 
     /**

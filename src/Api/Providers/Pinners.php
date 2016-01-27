@@ -53,19 +53,6 @@ class Pinners extends Provider
     }
 
     /**
-     * Get the logged-in account username
-     *
-     * @return array|null
-     */
-    public function myAccountName()
-    {
-        $this->request->checkLoggedIn();
-        $res = $this->request->exec(UrlHelper::RESOURCE_GET_ACCOUNT_NAME);
-
-        return PinnerHelper::parseAccountNameResponse($res);
-    }
-
-    /**
      * Get user info
      * If username param is not specified, will
      * return info for logged user
@@ -132,6 +119,7 @@ class Pinners extends Provider
     public function login($username, $password)
     {
         if ($this->request->isLoggedIn()) {
+            var_dump('logged');
             return true;
         }
 
