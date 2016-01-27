@@ -2,6 +2,7 @@
 
 namespace seregazhuk\PinterestBot\Api\Providers;
 
+use Iterator;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
 use seregazhuk\PinterestBot\Helpers\Providers\Traits\FollowTrait;
@@ -120,6 +121,55 @@ class Boards extends Provider
         ];
 
         return $this->callPostRequest($requestOptions, UrlHelper::RESOURCE_CREATE_BOARD, true);
+    }
+
+    /**
+     * @param $boardId
+     * @param string $url
+     * @param string $sourceUrl
+     * @param array $bookmarks
+     * @return array
+     * @internal param string $username
+     */
+    public function getBoardData($boardId, $url, $sourceUrl, $bookmarks = [])
+    {
+        $get = Request::createRequestData(['options' => ['board_id' => $boardId]], $sourceUrl, $bookmarks);
+        $getString = UrlHelper::buildRequestString($get);
+        $response = $this->request->exec($url . '?' . $getString);
+
+        return $this->response->getPaginationData($response);
+    }
+
+    /**
+     * @param $boardId
+     * @param string $resourceUrl
+     * @param string $sourceUrl
+     * @param int $batchesLimit
+     * @return Iterator
+     */
+    public function getPaginatedUserData($boardId, $resourceUrl, $sourceUrl, $batchesLimit = 0)
+    {
+        return $this->getPaginatedData(
+            [$this, 'getBoardData'], [
+            'boardId'   => $boardId,
+            'url'       => $resourceUrl,
+            'sourceUrl' => $sourceUrl,
+        ], $batchesLimit
+        );
+    }
+
+    /**
+     * Get board followers
+     *
+     * @param $boardId
+     * @param int $batchesLimit
+     * @return Iterator
+     */
+    public function followers($boardId, $batchesLimit = 0)
+    {
+        return $this->getPaginatedUserData(
+            $boardId, UrlHelper::RESOURCE_BOARD_FOLLOWERS, "", $batchesLimit
+        );
     }
 
     /**
