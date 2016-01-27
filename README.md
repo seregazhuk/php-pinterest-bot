@@ -133,10 +133,6 @@ $bot->pins->deleteComment($pinId, $commentId);
 
 ## Pinners
 
-Get your account name
-```php
-$bot->pinners->myAccountName(); 
-```	
 Follow/unfollow user by ID
 ```php
 $bot->pinners->follow($userId);
