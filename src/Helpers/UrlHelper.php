@@ -11,7 +11,7 @@ class UrlHelper
     /**
      * Login
      */
-    const RESOURCE_LOGIN            = '/resource/UserSessionResource/create/';
+    const RESOURCE_LOGIN = '/resource/UserSessionResource/create/';
 
     /**
      * Boards
