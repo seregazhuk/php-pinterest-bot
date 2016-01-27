@@ -91,6 +91,14 @@ foreach($bot->boards->pins($boardId) as $pinsBatch)
 }
 ```
 
+Get board followers. Uses pinterest api pagination.
+```php
+foreach($bot->boards->followers($boardId) as $followersBatch)
+{
+	// ...
+}
+```
+
 ## Pins
 
 Notice! Try not to be very aggressive when pinning or commetning pins, or pinterest will gonna ban you.

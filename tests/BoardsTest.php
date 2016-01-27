@@ -54,6 +54,30 @@ class BoardsTest extends ProviderTest
     }
 
     /** @test */
+    public function getBoardFollowers()
+    {
+        $response = $this->createPaginatedResponse();
+        $this->mock->expects($this->at(0))->method('exec')->willReturn($response);
+
+        $this->mock->expects($this->at(1))->method('exec')->willReturn(['resource_response' => ['data' => []]]);
+
+        $this->mock->expects($this->at(2))->method('exec')->willReturn(
+            [
+                'resource_response' => [
+                    'data' => [
+                        ['type' => 'module'],
+                    ],
+                ],
+            ]
+        );
+
+        $followers = $this->provider->followers(111);
+        $this->assertCount(2, iterator_to_array($followers)[0]);
+        $followers = $this->provider->followers(111);
+        $this->assertEmpty(iterator_to_array($followers));
+    }
+
+    /** @test */
     public function getBoardsForSpecifiedUser()
     {
         $boards = ['data' => 'boards'];

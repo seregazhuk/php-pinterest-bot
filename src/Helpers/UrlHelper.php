@@ -16,13 +16,14 @@ class UrlHelper
     /**
      * Boards
      */
-    const RESOURCE_GET_BOARDS     = '/resource/BoardsResource/get/';
+    const RESOURCE_GET_BOARDS = '/resource/BoardsResource/get/';
     const RESOURCE_GET_BOARD_FEED = '/resource/BoardFeedResource/get/';
     const RESOURCE_PROFILE_BOARDS = '/resource/ProfileBoardsResource/get/';
-    const RESOURCE_FOLLOW_BOARD   = '/resource/BoardFollowResource/create/';
+    const RESOURCE_FOLLOW_BOARD = '/resource/BoardFollowResource/create/';
     const RESOURCE_UNFOLLOW_BOARD = '/resource/BoardFollowResource/delete/';
-    const RESOURCE_DELETE_BOARD   = '/resource/BoardResource/delete/';
-    const RESOURCE_CREATE_BOARD   = '/resource/BoardResource/create/';
+    const RESOURCE_DELETE_BOARD = '/resource/BoardResource/delete/';
+    const RESOURCE_CREATE_BOARD = '/resource/BoardResource/create/';
+    const RESOURCE_BOARD_FOLLOWERS = '/resource/BoardFollowersResource/get/';
 
     /**
      * Pins

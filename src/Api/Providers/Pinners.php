@@ -27,9 +27,10 @@ class Pinners extends Provider
      */
     public function getUserData($username, $url, $sourceUrl, $bookmarks = [])
     {
-        $get = PinnerHelper::createUserDataRequest($username, $sourceUrl, $bookmarks);
+        $data = ['options' => ['username' => $username]];
+        $get = Request::createRequestData($data, $sourceUrl, $bookmarks);
         $getString = UrlHelper::buildRequestString($get);
-        $response = $this->request->exec($url.'?'.$getString, $username);
+        $response = $this->request->exec($url . '?' . $getString);
 
         return $this->response->getPaginationData($response);
     }
