@@ -135,7 +135,7 @@ class Boards extends Provider
     {
         $get = Request::createRequestData(['options' => ['board_id' => $boardId]], $sourceUrl, $bookmarks);
         $getString = UrlHelper::buildRequestString($get);
-        $response = $this->request->exec($url . '?' . $getString);
+        $response = $this->request->exec($url.'?'.$getString);
 
         return $this->response->getPaginationData($response);
     }
