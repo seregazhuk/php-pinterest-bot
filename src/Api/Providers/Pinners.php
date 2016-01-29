@@ -17,27 +17,6 @@ class Pinners extends Provider
     use SearchTrait, FollowTrait, FollowersTrait;
 
     /**
-     * Get different user data, for example, followers, following, pins.
-     * Collects data while paginating with bookmarks through pinterest results.
-     * Return array. Key data - for results and key bookmarks - for pagination.
-     *
-     * @param string $username
-     * @param string $url
-     * @param string $sourceUrl
-     * @param array $bookmarks
-     * @return array
-     */
-    public function getUserData($username, $url, $sourceUrl, $bookmarks = [])
-    {
-        $data = ['options' => ['username' => $username]];
-        $get = Request::createRequestData($data, $sourceUrl, $bookmarks);
-        $getString = UrlHelper::buildRequestString($get);
-        $response = $this->request->exec($url.'?'.$getString);
-
-        return $this->response->getPaginationData($response);
-    }
-
-    /**
      * Get user info
      * If username param is not specified, will
      * return info for logged user
@@ -47,9 +26,10 @@ class Pinners extends Provider
      */
     public function info($username)
     {
-        $res = $this->getUserData($username, UrlHelper::RESOURCE_USER_INFO, "/$username/");
+        $res = $this->getPaginatedData($username, UrlHelper::RESOURCE_USER_INFO, "/$username/", 1);
+        $res = iterator_to_array($res);
 
-        return isset($res['data']) ? $res['data'] : null;
+        return !empty($res) ? $res[0] : null;
     }
 
     /**
