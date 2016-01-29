@@ -61,13 +61,9 @@ class Pinners extends Provider
      */
     public function followers($username, $batchesLimit = 0)
     {
-        $data = [
-            ['username' => $username],
-            UrlHelper::RESOURCE_USER_FOLLOWERS,
-            "/$username/followers/"
-        ];
-
-        return Pagination::getPaginatedData([$this, 'getData'], $data, $batchesLimit);
+        return $this->getPaginatedData(
+            $username, UrlHelper::RESOURCE_USER_FOLLOWERS, "/$username/followers/", $batchesLimit
+        );
     }
 
     /**
@@ -79,13 +75,9 @@ class Pinners extends Provider
      */
     public function following($username, $batchesLimit = 0)
     {
-        $data = [
-            ['username' => $username],
-            UrlHelper::RESOURCE_USER_FOLLOWING,
-            "/$username/following/"
-        ];
-
-        return Pagination::getPaginatedData([$this, 'getData'], $data, $batchesLimit);
+        return $this->getPaginatedData(
+            $username, UrlHelper::RESOURCE_USER_FOLLOWING, "/$username/following/", $batchesLimit
+        );
     }
 
     /**
@@ -97,13 +89,9 @@ class Pinners extends Provider
      */
     public function pins($username, $batchesLimit = 0)
     {
-        $data = [
-            ['username' => $username],
-            UrlHelper::RESOURCE_USER_PINS,
-            "/$username/$username/"
-        ];
-
-        return Pagination::getPaginatedData([$this, 'getData'], $data, $batchesLimit);
+        return $this->getPaginatedData(
+            $username, UrlHelper::RESOURCE_USER_PINS, "/$username/$username/", $batchesLimit
+        );
     }
 
     /**
@@ -176,5 +164,23 @@ class Pinners extends Provider
     protected function getUnfFollowUrl()
     {
         return UrlHelper::RESOURCE_UNFOLLOW_USER;
+    }
+
+    /**
+     * @param string $username
+     * @param string $url
+     * @param string $sourceUrl
+     * @param integer $batchesLimit
+     * @return Iterator
+     */
+    protected function getPaginatedData($username, $url, $sourceUrl, $batchesLimit)
+    {
+        $data = [
+            ['username' => $username],
+            $url,
+            $sourceUrl
+        ];
+
+        return Pagination::getPaginatedData([$this, 'getData'], $data, $batchesLimit);
     }
 }
