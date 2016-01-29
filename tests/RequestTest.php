@@ -3,6 +3,7 @@
 namespace szhuk\tests;
 
 use PHPUnit_Framework_TestCase;
+use ReflectionClass;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\CurlAdapter;
 use seregazhuk\tests\helpers\ResponseHelper;
@@ -25,7 +26,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->request = new Request(new CurlAdapter());
-        $this->reflection = new \ReflectionClass($this->request);
+        $this->reflection = new ReflectionClass($this->request);
         $this->setReflectedObject($this->request);
     }
 

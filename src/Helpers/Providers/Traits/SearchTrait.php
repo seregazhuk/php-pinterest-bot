@@ -3,11 +3,13 @@
 namespace seregazhuk\PinterestBot\Helpers\Providers\Traits;
 
 use seregazhuk\PinterestBot\Api\Request;
+use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
 
 trait SearchTrait
 {
-    use ProviderTrait, PaginationTrait;
+    use ProviderTrait;
+
     private $moduleSearchPage = "SearchPage";
 
     /**
@@ -42,7 +44,7 @@ trait SearchTrait
      */
     public function searchWithPagination($query, $batchesLimit)
     {
-        return $this->getPaginatedData(
+        return Pagination::getPaginatedData(
             [$this, 'searchCall'], [
             'query' => $query,
             'scope' => $this->getScope(),
