@@ -23,7 +23,7 @@ trait FollowersTrait
         $data['options'] = $data;
         $get = Request::createRequestData($data, $sourceUrl, $bookmarks);
         $getString = UrlHelper::buildRequestString($get);
-        $response = $this->getRequest()->exec($url . '?' . $getString);
+        $response = $this->getRequest()->exec($url.'?'.$getString);
 
         return $this->getResponse()->getPaginationData($response);
     }
