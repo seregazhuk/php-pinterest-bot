@@ -32,7 +32,7 @@ class Pinners extends Provider
         $data = ['options' => ['username' => $username]];
         $get = Request::createRequestData($data, $sourceUrl, $bookmarks);
         $getString = UrlHelper::buildRequestString($get);
-        $response = $this->request->exec($url . '?' . $getString);
+        $response = $this->request->exec($url.'?'.$getString);
 
         return $this->response->getPaginationData($response);
     }
@@ -109,8 +109,8 @@ class Pinners extends Provider
     /**
      * Login as pinner
      *
-     * @param $username
-     * @param $password
+     * @param string $username
+     * @param string $password
      * @return bool
      */
     public function login($username, $password)
@@ -139,7 +139,7 @@ class Pinners extends Provider
      */
     protected function _checkCredentials($username, $password)
     {
-        if (!$username || !$password) {
+        if ( ! $username || ! $password) {
             throw new LogicException('You must set username and password to login.');
         }
     }
