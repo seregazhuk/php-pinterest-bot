@@ -21,7 +21,7 @@ class CsrfHelper
 
         foreach (file($file) as $line) {
 
-            if ($token = self::_parseLineForToken($line)) {
+            if ($token = self::parseLineForToken($line)) {
                 return $token;
             }
         }
@@ -33,7 +33,7 @@ class CsrfHelper
      * @param string $line
      * @return bool
      */
-    protected static function _parseLineForToken($line)
+    protected static function parseLineForToken($line)
     {
         if (empty(strstr($line, self::TOKEN_NAME))) {
             return false;

@@ -123,7 +123,7 @@ class Pinners extends Provider
             return true;
         }
 
-        $this->_checkCredentials($username, $password);
+        $this->checkCredentials($username, $password);
 
         $post = PinnerHelper::createLoginRequest($username, $password);
         $postString = UrlHelper::buildRequestString($post);
@@ -141,7 +141,7 @@ class Pinners extends Provider
      * @param string $username
      * @param string $password
      */
-    protected function _checkCredentials($username, $password)
+    protected function checkCredentials($username, $password)
     {
         if ( ! $username || ! $password) {
             throw new LogicException('You must set username and password to login.');
