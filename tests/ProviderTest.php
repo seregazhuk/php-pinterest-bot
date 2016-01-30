@@ -35,8 +35,7 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
     protected function createRequestMock()
     {
         $methods = array_merge(['exec', 'checkLoggedIn', 'isLoggedIn']);
-        $requestMock = $this->getMockBuilder(Request::class)->setMethods($methods)->setConstructorArgs([new CurlAdapter()])
-            ->getMock();
+        $requestMock = $this->getMockBuilder(Request::class)->setMethods($methods)->setConstructorArgs([new CurlAdapter()])->getMock();
         $requestMock->method('checkLoggedIn')->willReturn(true);
 
         return $requestMock;
@@ -54,15 +53,15 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
 
     protected function tearDown()
     {
-        $this->provider   = null;
+        $this->provider = null;
         $this->reflection = null;
     }
-
 
     protected function createProviderInstance()
     {
         $providerReflection = new ReflectionClass($this->providerClass);
         $this->provider = $providerReflection->newInstanceArgs(
-            [$this->createRequestMock(), new Response()]);
+            [$this->createRequestMock(), new Response()]
+        );
     }
 }

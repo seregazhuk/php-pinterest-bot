@@ -1,8 +1,8 @@
 <?php
 
-namespace seregazhuk\PinterestBot\Helpers\Providers\Traits;
+namespace seregazhuk\PinterestBot\Helpers;
 
-trait PaginationTrait
+class Pagination
 {
     /**
      * Iterate through results of Api function call. By
@@ -15,7 +15,7 @@ trait PaginationTrait
      * @param int      $batchesLimit
      * @return \Iterator
      */
-    public function getPaginatedData($callback, $params, $batchesLimit = 0)
+    public static function getPaginatedData($callback, $params, $batchesLimit = 0)
     {
         $batchesNum = 0;
         do {
@@ -29,14 +29,14 @@ trait PaginationTrait
             yield $items;
 
             $params['bookmarks'] = self::getBookMarks($response);
-            if ($this->checkEndBookMarks($params['bookmarks'])) {
+            if (self::checkEndBookMarks($params['bookmarks'])) {
                 return;
             }
 
         } while ( ! self::reachBatchesLimit($batchesLimit, $batchesNum));
     }
 
-    protected function getPaginatedResponse(callable $callback, array $params)
+    protected static function getPaginatedResponse(callable $callback, array $params)
     {
         $response = call_user_func_array($callback, $params);
         if (self::responseHasData($response)) {
@@ -46,7 +46,7 @@ trait PaginationTrait
         return [];
     }
 
-    protected function getDataFromPaginatedResponse($response)
+    protected static function getDataFromPaginatedResponse($response)
     {
         if (self::responseHasData($response)) {
             $res = self::clearResponseFromMetaData($response);
@@ -61,7 +61,7 @@ trait PaginationTrait
      * @param array $res
      * @return bool
      */
-    protected function responseHasData($res)
+    protected static function responseHasData($res)
     {
         return isset($res['data']) && ! empty($res['data']);
     }
@@ -72,7 +72,7 @@ trait PaginationTrait
      * @param int $batchesNum
      * @return bool
      */
-    protected function reachBatchesLimit($batchesLimit, $batchesNum)
+    protected static function reachBatchesLimit($batchesLimit, $batchesNum)
     {
         return $batchesLimit && $batchesNum >= $batchesLimit;
     }
@@ -82,7 +82,7 @@ trait PaginationTrait
      * @param array $res
      * @return array mixed
      */
-    protected function clearResponseFromMetaData($res)
+    protected static function clearResponseFromMetaData($res)
     {
         if (isset($res['data'][0]['type']) && $res['data'][0]['type'] == 'module') {
             array_shift($res['data']);
@@ -95,12 +95,12 @@ trait PaginationTrait
      * @param $response
      * @return array
      */
-    protected function getBookMarks($response)
+    protected static function getBookMarks($response)
     {
         return isset($response['bookmarks']) ? $response['bookmarks'] : [];
     }
 
-    protected function checkEndBookMarks($bookmarks)
+    protected static function checkEndBookMarks($bookmarks)
     {
         return ! empty($bookmarks) && $bookmarks[0] == '-end-';
     }
