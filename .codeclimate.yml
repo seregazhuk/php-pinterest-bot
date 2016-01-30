@@ -1,9 +1,9 @@
-#languages:
-#  PHP: true
-
 engines:
   phpcodesniffer:
     enabled: true
+  phpmd:
+    enabled: true
+
 
 ratings:
   paths:
