@@ -29,7 +29,7 @@ class Pinners extends Provider
         $res = $this->getPaginatedData($username, UrlHelper::RESOURCE_USER_INFO, "/$username/", 1);
         $res = iterator_to_array($res);
 
-        return !empty($res) ? $res[0] : null;
+        return ! empty($res) ? $res[0] : null;
     }
 
     /**
