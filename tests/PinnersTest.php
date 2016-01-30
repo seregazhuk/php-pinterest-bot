@@ -33,18 +33,6 @@ class PinnersTest extends ProviderTest
     }
 
     /** @test */
-    public function getUserData()
-    {
-        $expected = ['data' => ['info' => ''], 'bookmarks' => ['booksmarks_string']];
-        $res['resource']['options']['bookmarks'] = $expected['bookmarks'];
-        $res['resource_response']['data'] = $expected['data'];
-        $this->mock->method('exec')->willReturn($res);
-
-        $data = $this->provider->getUserData('test_user', 'request://example.com', 'request://example.com');
-        $this->assertEquals($expected, $data);
-    }
-
-    /** @test */
     public function getUserInfo()
     {
         $response = $this->createApiResponse(['data' => ['name' => 'test']]);

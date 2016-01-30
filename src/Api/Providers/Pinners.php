@@ -5,6 +5,8 @@ namespace seregazhuk\PinterestBot\Api\Providers;
 use Iterator;
 use LogicException;
 use seregazhuk\PinterestBot\Api\Request;
+use seregazhuk\PinterestBot\Helpers\Pagination;
+use seregazhuk\PinterestBot\Helpers\Providers\Traits\FollowersTrait;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
 use seregazhuk\PinterestBot\Helpers\Requests\PinnerHelper;
 use seregazhuk\PinterestBot\Helpers\Providers\Traits\SearchTrait;
@@ -12,46 +14,7 @@ use seregazhuk\PinterestBot\Helpers\Providers\Traits\FollowTrait;
 
 class Pinners extends Provider
 {
-    use SearchTrait, FollowTrait;
-
-    /**
-     * Get different user data, for example, followers, following, pins.
-     * Collects data while paginating with bookmarks through pinterest results.
-     * Return array. Key data - for results and key bookmarks - for pagination.
-     *
-     * @param string $username
-     * @param string $url
-     * @param string $sourceUrl
-     * @param array  $bookmarks
-     * @return array
-     */
-    public function getUserData($username, $url, $sourceUrl, $bookmarks = [])
-    {
-        $data = ['options' => ['username' => $username]];
-        $get = Request::createRequestData($data, $sourceUrl, $bookmarks);
-        $getString = UrlHelper::buildRequestString($get);
-        $response = $this->request->exec($url.'?'.$getString);
-
-        return $this->response->getPaginationData($response);
-    }
-
-    /**
-     * @param string $username
-     * @param string $resourceUrl
-     * @param string $sourceUrl
-     * @param int    $batchesLimit
-     * @return Iterator
-     */
-    public function getPaginatedUserData($username, $resourceUrl, $sourceUrl, $batchesLimit = 0)
-    {
-        return $this->getPaginatedData(
-            [$this, 'getUserData'], [
-            'username'  => $username,
-            'url'       => $resourceUrl,
-            'sourceUrl' => $sourceUrl,
-        ], $batchesLimit
-        );
-    }
+    use SearchTrait, FollowTrait, FollowersTrait;
 
     /**
      * Get user info
@@ -63,21 +26,22 @@ class Pinners extends Provider
      */
     public function info($username)
     {
-        $res = $this->getUserData($username, UrlHelper::RESOURCE_USER_INFO, "/$username/");
+        $res = $this->getPaginatedData($username, UrlHelper::RESOURCE_USER_INFO, "/$username/", 1);
+        $res = iterator_to_array($res);
 
-        return isset($res['data']) ? $res['data'] : null;
+        return !empty($res) ? $res[0] : null;
     }
 
     /**
      * Get pinner followers
      *
      * @param string $username
-     * @param int    $batchesLimit
+     * @param int $batchesLimit
      * @return Iterator
      */
     public function followers($username, $batchesLimit = 0)
     {
-        return $this->getPaginatedUserData(
+        return $this->getPaginatedData(
             $username, UrlHelper::RESOURCE_USER_FOLLOWERS, "/$username/followers/", $batchesLimit
         );
     }
@@ -86,12 +50,12 @@ class Pinners extends Provider
      * Get pinner following other pinners
      *
      * @param string $username
-     * @param int    $batchesLimit
+     * @param int $batchesLimit
      * @return Iterator
      */
     public function following($username, $batchesLimit = 0)
     {
-        return $this->getPaginatedUserData(
+        return $this->getPaginatedData(
             $username, UrlHelper::RESOURCE_USER_FOLLOWING, "/$username/following/", $batchesLimit
         );
     }
@@ -100,13 +64,13 @@ class Pinners extends Provider
      * Get pinner pins
      *
      * @param string $username
-     * @param int    $batchesLimit
+     * @param int $batchesLimit
      * @return Iterator
      */
     public function pins($username, $batchesLimit = 0)
     {
-        return $this->getPaginatedUserData(
-            $username, UrlHelper::RESOURCE_USER_PINS, "/$username/pins/", $batchesLimit
+        return $this->getPaginatedData(
+            $username, UrlHelper::RESOURCE_USER_PINS, "/$username/$username/", $batchesLimit
         );
     }
 
@@ -158,7 +122,6 @@ class Pinners extends Provider
         return 'people';
     }
 
-
     protected function getEntityIdName()
     {
         return Request::PINNER_ENTITY_ID;
@@ -181,5 +144,23 @@ class Pinners extends Provider
     protected function getUnfFollowUrl()
     {
         return UrlHelper::RESOURCE_UNFOLLOW_USER;
+    }
+
+    /**
+     * @param string $username
+     * @param string $url
+     * @param string $sourceUrl
+     * @param integer $batchesLimit
+     * @return Iterator
+     */
+    protected function getPaginatedData($username, $url, $sourceUrl, $batchesLimit)
+    {
+        $data = [
+            ['username' => $username],
+            $url,
+            $sourceUrl
+        ];
+
+        return Pagination::getPaginatedData([$this, 'getData'], $data, $batchesLimit);
     }
 }

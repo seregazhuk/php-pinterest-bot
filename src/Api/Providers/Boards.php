@@ -4,13 +4,15 @@ namespace seregazhuk\PinterestBot\Api\Providers;
 
 use Iterator;
 use seregazhuk\PinterestBot\Api\Request;
+use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
 use seregazhuk\PinterestBot\Helpers\Providers\Traits\FollowTrait;
 use seregazhuk\PinterestBot\Helpers\Providers\Traits\SearchTrait;
+use seregazhuk\PinterestBot\Helpers\Providers\Traits\FollowersTrait;
 
 class Boards extends Provider
 {
-    use SearchTrait, FollowTrait;
+    use SearchTrait, FollowTrait, FollowersTrait;
 
     /**
      * Get boards for user by username
@@ -53,7 +55,7 @@ class Boards extends Provider
      */
     public function pins($boardId, $batchesLimit = 0)
     {
-        return $this->getPaginatedData(
+        return Pagination::getPaginatedData(
             [$this, 'getPinsFromBoard'], [
             'boardId' => $boardId,
         ], $batchesLimit
@@ -66,7 +68,7 @@ class Boards extends Provider
      * @param array $bookmarks
      * @return array|bool
      */
-    protected function getPinsFromBoard($boardId, $bookmarks = [])
+    public function getPinsFromBoard($boardId, $bookmarks = [])
     {
         $get = Request::createRequestData(
             ['options' => ['board_id' => $boardId]], '', $bookmarks
@@ -124,41 +126,6 @@ class Boards extends Provider
     }
 
     /**
-     * @param $boardId
-     * @param string $url
-     * @param string $sourceUrl
-     * @param array $bookmarks
-     * @return array
-     * @internal param string $username
-     */
-    public function getBoardData($boardId, $url, $sourceUrl, $bookmarks = [])
-    {
-        $get = Request::createRequestData(['options' => ['board_id' => $boardId]], $sourceUrl, $bookmarks);
-        $getString = UrlHelper::buildRequestString($get);
-        $response = $this->request->exec($url.'?'.$getString);
-
-        return $this->response->getPaginationData($response);
-    }
-
-    /**
-     * @param $boardId
-     * @param string $resourceUrl
-     * @param string $sourceUrl
-     * @param int $batchesLimit
-     * @return Iterator
-     */
-    public function getPaginatedUserData($boardId, $resourceUrl, $sourceUrl, $batchesLimit = 0)
-    {
-        return $this->getPaginatedData(
-            [$this, 'getBoardData'], [
-            'boardId'   => $boardId,
-            'url'       => $resourceUrl,
-            'sourceUrl' => $sourceUrl,
-        ], $batchesLimit
-        );
-    }
-
-    /**
      * Get board followers
      *
      * @param $boardId
@@ -167,8 +134,8 @@ class Boards extends Provider
      */
     public function followers($boardId, $batchesLimit = 0)
     {
-        return $this->getPaginatedUserData(
-            $boardId, UrlHelper::RESOURCE_BOARD_FOLLOWERS, "", $batchesLimit
+        return $this->getFollowData(
+            ['board_id' => $boardId], UrlHelper::RESOURCE_BOARD_FOLLOWERS, "", $batchesLimit
         );
     }
 
