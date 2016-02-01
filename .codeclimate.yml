@@ -1,3 +1,6 @@
+languages:
+  PHP: true
+
 engines:
   phpcodesniffer:
     enabled: true

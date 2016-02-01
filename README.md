@@ -22,7 +22,7 @@ will return only 2 batches of search results.
 
 ## Dependencies
 
-API requires CURL extension and PHP 5.5 or above.
+Library requires CURL extension and PHP 5.5 or above.
 
 ## Installation
 Via composer:
