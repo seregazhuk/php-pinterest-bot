@@ -2,6 +2,7 @@
 
 namespace seregazhuk\tests;
 
+use LogicException;
 use Mockable;
 use PHPUnit_Framework_MockObject_MockObject;
 use ReflectionClass;

@@ -16,6 +16,11 @@ class Pinners extends Provider
 {
     use SearchTrait, FollowTrait, FollowersTrait;
 
+    protected $loginRequired = [
+        'follow',
+        'unFollow'
+    ];
+
     /**
      * Get user info
      * If username param is not specified, will

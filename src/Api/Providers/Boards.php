@@ -16,7 +16,9 @@ class Boards extends Provider
 
     protected $loginRequired = [
         'delete',
-        'create'
+        'create',
+        'follow',
+        'unFollow'
     ];
 
     /**
