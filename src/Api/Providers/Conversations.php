@@ -6,6 +6,8 @@ use seregazhuk\PinterestBot\Helpers\UrlHelper;
 
 class Conversations extends Provider
 {
+    protected $loginRequired = ['last', 'sendMessage'];
+
     /**
      * Send message to a user
      *
@@ -21,7 +23,8 @@ class Conversations extends Provider
             "emails"   => array(),
             "text"     => $text,
         );
-        return $this->callPostRequest($requestOptions, UrlHelper::RESOURCE_SEND_MESSAGE, true);
+
+        return $this->callPostRequest($requestOptions, UrlHelper::RESOURCE_SEND_MESSAGE);
     }
 
     /**

@@ -18,8 +18,8 @@ class PinsTest extends ProviderTest
         $response = $this->createApiResponse();
         $error = $this->createErrorApiResponse();
 
-        $this->mock->expects($this->at(1))->method('exec')->willReturn($response);
-        $this->mock->expects($this->at(3))->method('exec')->willReturn($error);
+        $this->mock->expects($this->at(0))->method('exec')->willReturn($response);
+        $this->mock->expects($this->at(1))->method('exec')->willReturn($error);
 
         $this->assertTrue($this->provider->like(1111));
         $this->assertFalse($this->provider->like(1111));
@@ -31,8 +31,8 @@ class PinsTest extends ProviderTest
         $response = $this->createApiResponse();
         $error = $this->createErrorApiResponse();
 
-        $this->mock->expects($this->at(1))->method('exec')->willReturn($response);
-        $this->mock->expects($this->at(3))->method('exec')->willReturn($error);
+        $this->mock->expects($this->at(0))->method('exec')->willReturn($response);
+        $this->mock->expects($this->at(1))->method('exec')->willReturn($error);
         $this->setProperty('request', $this->mock);
         $this->assertTrue($this->provider->unLike(1111));
         $this->assertFalse($this->provider->unLike(1111));
@@ -44,8 +44,8 @@ class PinsTest extends ProviderTest
         $response = $this->createApiResponse();
         $error = $this->createErrorApiResponse();
 
-        $this->mock->expects($this->at(1))->method('exec')->willReturn($response);
-        $this->mock->expects($this->at(3))->method('exec')->willReturn($error);
+        $this->mock->expects($this->at(0))->method('exec')->willReturn($response);
+        $this->mock->expects($this->at(1))->method('exec')->willReturn($error);
 
         $this->assertNotEmpty($this->provider->comment(1111, 'comment text'));
         $this->assertFalse($this->provider->comment(1111, 'comment text'));
@@ -57,8 +57,8 @@ class PinsTest extends ProviderTest
         $response = $this->createApiResponse();
         $error = $this->createErrorApiResponse();
 
-        $this->mock->expects($this->at(1))->method('exec')->willReturn($response);
-        $this->mock->expects($this->at(3))->method('exec')->willReturn($error);
+        $this->mock->expects($this->at(0))->method('exec')->willReturn($response);
+        $this->mock->expects($this->at(1))->method('exec')->willReturn($error);
 
         $this->assertTrue($this->provider->deleteComment(1111, 1111));
         $this->assertFalse($this->provider->deleteComment(1111, 1111));
@@ -68,7 +68,7 @@ class PinsTest extends ProviderTest
     public function createANewPin()
     {
         $response = $this->createPinCreationResponse();
-        $this->mock->expects($this->at(1))->method('exec')->willReturn($response);
+        $this->mock->expects($this->at(0))->method('exec')->willReturn($response);
 
         $pinSource = 'http://example.com/image.jpg';
         $pinDescription = 'Pin Description';
@@ -81,11 +81,11 @@ class PinsTest extends ProviderTest
     public function createARepin()
     {
         $response = $this->createPinCreationResponse();
-        $this->mock->expects($this->at(1))->method('exec')->willReturn($response);
+        $this->mock->expects($this->at(0))->method('exec')->willReturn($response);
 
+        $boardId = 1;
         $repinId = 11;
         $pinDescription = 'Pin Description';
-        $boardId = 1;
 
         $this->assertNotFalse($this->provider->repin($repinId, $boardId, $pinDescription));
         $this->assertFalse($this->provider->repin($repinId, $boardId, $pinDescription));
@@ -95,7 +95,7 @@ class PinsTest extends ProviderTest
     public function deletePin()
     {
         $response = $this->createApiResponse();
-        $this->mock->expects($this->at(1))->method('exec')->willReturn($response);
+        $this->mock->expects($this->at(0))->method('exec')->willReturn($response);
 
         $this->assertNotFalse($this->provider->delete(1));
         $this->assertFalse($this->provider->delete(1));

@@ -70,7 +70,10 @@ class UrlHelper
      */
     const RESOURCE_UPDATE_USER_SETTINGS = '/resource/UserSettingsResource/update/';
 
-
+    /**
+     * News
+     */
+    const RESOURCE_GET_LATEST_NEWS = '/resource/NetworkStoriesResource/get/';
     const URL_BASE = 'https://nl.pinterest.com/';
 
     /**
