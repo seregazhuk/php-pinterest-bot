@@ -203,7 +203,7 @@ foreach($bot->boards->search('query') as $boardsBatch);
 }
 ```
 
-## User
+## User Settings
 Change profile. Available settings are: *last_name*, *first_name*, *username*, *about*, *location* and *website_url*.
 ```php
 $bot->user->profile(['first_name'=>'My_name']);

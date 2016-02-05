@@ -2,6 +2,7 @@
 
 namespace szhuk\tests;
 
+use LogicException;
 use PHPUnit_Framework_TestCase;
 use ReflectionClass;
 use seregazhuk\PinterestBot\Api\Request;
@@ -37,6 +38,21 @@ class RequestTest extends PHPUnit_Framework_TestCase
         $this->reflection = null;
     }
 
+    /**
+     * @test
+     * @expectedException LogicException
+     */
+    public function checkLoggedInFailure()
+    {
+        $this->assertFalse($this->request->checkLoggedIn());
+    }
+
+    /** @test */
+    public function checkLoggedInSuccess()
+    {
+        $this->setProperty('loggedIn', true);
+        $this->assertTrue($this->request->checkLoggedIn());
+    }
 
     /** @test */
     public function executeRequestToPinterestApi()
@@ -65,5 +81,4 @@ class RequestTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($response, $this->request->followMethodCall(1, Request::BOARD_ENTITY_ID, 'ur'));
         $this->assertNull($this->request->followMethodCall(1, Request::INTEREST_ENTITY_ID, 'ur'));
     }
-
 }

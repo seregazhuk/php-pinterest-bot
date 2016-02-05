@@ -25,6 +25,12 @@ class ProvidersContainerTest extends PHPUnit_Framework_TestCase
         $this->assertNotEmpty($provider);
     }
 
+    /** @test */
+    public function getRequest()
+    {
+        $this->assertInstanceOf(Request::class, $this->container->getRequest());
+    }
+
     /**
      * @test
      * @expectedException \seregazhuk\PinterestBot\Exceptions\WrongProviderException
