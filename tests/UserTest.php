@@ -18,7 +18,7 @@ class UserTest extends ProviderTest
 
 
     /** @test */
-    public function edit()
+    public function profile()
     {
         $response = $this->createSuccessApiResponse();
         $error = $this->createErrorApiResponse();
@@ -27,8 +27,8 @@ class UserTest extends ProviderTest
         $this->mock->expects($this->at(1))->method('exec')->willReturn($error);
 
         $params = ['name'=>'name'];
-        $this->assertTrue($this->provider->edit($params));
-        $this->assertFalse($this->provider->edit($params));
+        $this->assertTrue($this->provider->profile($params));
+        $this->assertFalse($this->provider->profile($params));
     }
 }
 
