@@ -21,7 +21,7 @@ class News extends Provider
         $request = Request::createRequestData($data);
 
         $getString = UrlHelper::buildRequestString($request);
-        $response = $this->request->exec(UrlHelper::RESOURCE_GET_LATEST_NEWS . "?{$getString}");
+        $response = $this->request->exec(UrlHelper::RESOURCE_GET_LATEST_NEWS."?{$getString}");
 
         return $this->response->getData($response);
     }
