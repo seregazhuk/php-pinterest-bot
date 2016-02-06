@@ -203,6 +203,19 @@ foreach($bot->boards->search('query') as $boardsBatch);
 }
 ```
 
+## User Settings
+Change profile. Available settings are: *last_name*, *first_name*, *username*, *about*, *location* and *website_url*:
+```php
+$bot->user->profile(['first_name'=>'My_name']);
+```
+
+## News
+Get latest user's news:
+```php
+$news = $bot->news->latest();
+```
+
+
 ## Errors handling
 You can check for occurred errors after requests with method *getLastError()*:
 ```php

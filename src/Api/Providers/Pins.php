@@ -10,6 +10,16 @@ class Pins extends Provider
 {
     use SearchTrait;
 
+    protected $loginRequired = [
+        'like',
+        'unLike',
+        'comment',
+        'deleteComment',
+        'create',
+        'repin',
+        'delete'
+    ];
+
     /**
      * Likes pin with current ID
      *
@@ -41,7 +51,7 @@ class Pins extends Provider
      */
     protected function likePinMethodCall($pinId, $resourceUrl)
     {
-        return $this->callPostRequest(['pin_id' => $pinId], $resourceUrl, true);
+        return $this->callPostRequest(['pin_id' => $pinId], $resourceUrl);
     }
 
     /**
@@ -55,7 +65,7 @@ class Pins extends Provider
     {
         $requestOptions = ['pin_id' => $pinId, 'test' => $text];
 
-        return $this->callPostRequest($requestOptions, UrlHelper::RESOURCE_COMMENT_PIN, true, true);
+        return $this->callPostRequest($requestOptions, UrlHelper::RESOURCE_COMMENT_PIN, true);
     }
 
     /**
@@ -69,7 +79,7 @@ class Pins extends Provider
     {
         $requestOptions = ["pin_id" => $pinId, "comment_id" => $commentId];
 
-        return $this->callPostRequest($requestOptions, UrlHelper::RESOURCE_COMMENT_DELETE_PIN, true);
+        return $this->callPostRequest($requestOptions, UrlHelper::RESOURCE_COMMENT_DELETE_PIN);
     }
 
     /**
@@ -90,7 +100,7 @@ class Pins extends Provider
             "board_id"    => $boardId,
         ];
 
-        return $this->callPostRequest($requestOptions, UrlHelper::RESOURCE_CREATE_PIN, true, true);
+        return $this->callPostRequest($requestOptions, UrlHelper::RESOURCE_CREATE_PIN, true);
     }
 
     /**
@@ -111,7 +121,7 @@ class Pins extends Provider
             "pin_id"      => $repinId,
         ];
 
-        return $this->callPostRequest($requestOptions, UrlHelper::RESOURCE_REPIN, true, true);
+        return $this->callPostRequest($requestOptions, UrlHelper::RESOURCE_REPIN, true);
     }
 
     /**
@@ -122,7 +132,7 @@ class Pins extends Provider
      */
     public function delete($pinId)
     {
-        return $this->callPostRequest(['id' => $pinId], UrlHelper::RESOURCE_DELETE_PIN, true);
+        return $this->callPostRequest(['id' => $pinId], UrlHelper::RESOURCE_DELETE_PIN);
     }
 
     /**

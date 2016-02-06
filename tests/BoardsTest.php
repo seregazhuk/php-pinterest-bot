@@ -132,8 +132,8 @@ class BoardsTest extends ProviderTest
         $response = $this->createSuccessApiResponse();
         $error = $this->createErrorApiResponse();
 
-        $this->mock->expects($this->at(1))->method('exec')->willReturn($response);
-        $this->mock->expects($this->at(3))->method('exec')->willReturn($error);
+        $this->mock->expects($this->at(0))->method('exec')->willReturn($response);
+        $this->mock->expects($this->at(1))->method('exec')->willReturn($error);
 
         $this->assertTrue($this->provider->delete(1111));
         $this->assertFalse($this->provider->delete(1111));
@@ -145,8 +145,8 @@ class BoardsTest extends ProviderTest
         $response = $this->createSuccessApiResponse();
         $error = $this->createErrorApiResponse();
 
-        $this->mock->expects($this->at(1))->method('exec')->willReturn($response);
-        $this->mock->expects($this->at(3))->method('exec')->willReturn($error);
+        $this->mock->expects($this->at(0))->method('exec')->willReturn($response);
+        $this->mock->expects($this->at(1))->method('exec')->willReturn($error);
 
         $this->assertTrue($this->provider->create('test', 'test'));
         $this->assertFalse($this->provider->delete('test', 'test'));

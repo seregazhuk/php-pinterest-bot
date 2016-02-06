@@ -16,8 +16,8 @@ class ConversationsTest extends ProviderTest
     {
         $response = $this->createMessageSendResponse();
 
-        $this->mock->expects($this->at(1))->method('exec')->willReturn($response);
-        $this->mock->expects($this->at(3))->method('exec')->willReturn(null);
+        $this->mock->expects($this->at(0))->method('exec')->willReturn($response);
+        $this->mock->expects($this->at(1))->method('exec')->willReturn(null);
 
         $userId = '0000000000000';
         $message = 'test';

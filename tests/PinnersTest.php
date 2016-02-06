@@ -2,6 +2,7 @@
 
 namespace seregazhuk\tests;
 
+use LogicException;
 use seregazhuk\PinterestBot\Api\Providers\Pinners;
 
 class PinnersTest extends ProviderTest
@@ -113,6 +114,22 @@ class PinnersTest extends ProviderTest
 
         $res = iterator_to_array($this->provider->search('dogs'), 1);
         $this->assertCount($expectedResultsNum, $res[0]);
+    }
+
+    /**
+     * @test
+     * @expectedException LogicException
+     */
+    public function loginWithEmptyCredentials()
+    {
+        $this->provider->login('', '');
+    }
+
+    /** @test */
+    public function loginWhenAlreadyLogged()
+    {
+        $this->mock->method('isLoggedIn')->willReturn(true);
+        $this->assertTrue($this->provider->login('test', 'test'));
     }
 
     /** @test */

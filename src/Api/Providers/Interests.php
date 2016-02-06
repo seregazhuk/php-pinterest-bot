@@ -10,6 +10,11 @@ class Interests extends Provider
 {
     use FollowTrait;
 
+    protected $loginRequired = [
+        'follow',
+        'unFollow'
+    ];
+
     protected function getEntityIdName()
     {
         return Request::INTEREST_ENTITY_ID;

@@ -19,6 +19,12 @@ abstract class Provider
     use ProviderTrait;
 
     /**
+     * List of methods that require logged status
+     * @var array
+     */
+    protected $loginRequired = [];
+
+    /**
      * Instance of the API RequestInterface
      *
      * @var RequestInterface
@@ -47,16 +53,11 @@ abstract class Provider
      *
      * @param array  $requestOptions
      * @param string $resourceUrl
-     * @param bool   $checkLogin
      * @param bool   $returnData
      * @return mixed
      */
-    public function callPostRequest($requestOptions, $resourceUrl, $checkLogin = false, $returnData = null)
+    public function callPostRequest($requestOptions, $resourceUrl, $returnData = null)
     {
-        if ($checkLogin) {
-            $this->request->checkLoggedIn();
-        }
-
         $data = array("options" => $requestOptions);
         $request = Request::createRequestData($data);
 
@@ -69,6 +70,35 @@ abstract class Provider
 
         return $this->response->checkResponse($response);
     }
+
+    /**
+     * Run login check before every method if needed
+     * @param $method
+     * @param $arguments
+     * @return mixed
+     */
+    public function __call($method, $arguments)
+    {
+
+        if (method_exists($this, $method)) {
+            $this->checkMethodForLoginNeed($method);
+
+            return call_user_func_array(array($this, $method), $arguments);
+        }
+    }
+
+    /**
+     * Checks if method requires login
+     *
+     * @param $method
+     */
+    protected function checkMethodForLoginNeed($method)
+    {
+        if (in_array($method, $this->loginRequired)) {
+            $this->request->checkLoggedIn();
+        }
+    }
+
 
     /**
      * @return Request

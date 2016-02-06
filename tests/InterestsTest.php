@@ -19,10 +19,10 @@ class InterestsTest extends ProviderTest
     /** @test */
     public function followInterest()
     {
-        $request = $this->createSuccessApiResponse();
+        $response = $this->createSuccessApiResponse();
         $error = $this->createErrorApiResponse();
 
-        $this->mock->expects($this->at(1))->method('exec')->willReturn($request);
+        $this->mock->expects($this->at(1))->method('exec')->willReturn($response);
         $this->mock->expects($this->at(3))->method('exec')->willReturn($error);
 
         $this->assertTrue($this->provider->follow(1111));

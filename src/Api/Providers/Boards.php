@@ -14,6 +14,13 @@ class Boards extends Provider
 {
     use SearchTrait, FollowTrait, FollowersTrait;
 
+    protected $loginRequired = [
+        'delete',
+        'create',
+        'follow',
+        'unFollow'
+    ];
+
     /**
      * Get boards for user by username
      * @param string $username
@@ -103,7 +110,7 @@ class Boards extends Provider
      */
     public function delete($boardId)
     {
-        return $this->callPostRequest(['board_id' => $boardId], UrlHelper::RESOURCE_DELETE_BOARD, true);
+        return $this->callPostRequest(['board_id' => $boardId], UrlHelper::RESOURCE_DELETE_BOARD);
     }
 
     /**
@@ -122,7 +129,7 @@ class Boards extends Provider
             'privacy'     => $privacy,
         ];
 
-        return $this->callPostRequest($requestOptions, UrlHelper::RESOURCE_CREATE_BOARD, true);
+        return $this->callPostRequest($requestOptions, UrlHelper::RESOURCE_CREATE_BOARD);
     }
 
     /**
