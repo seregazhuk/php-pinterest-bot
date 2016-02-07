@@ -29,6 +29,7 @@ class Conversations extends Provider
 
     /**
      * Get last user conversations
+     *
      * @return array|bool
      */
     public function last()

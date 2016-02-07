@@ -23,6 +23,7 @@ class Boards extends Provider
 
     /**
      * Get boards for user by username
+     *
      * @param string $username
      * @return array|bool
      */
@@ -35,6 +36,7 @@ class Boards extends Provider
 
     /**
      * Get info about user's board
+     *
      * @param string $username
      * @param string $board
      * @return array|bool
@@ -55,22 +57,26 @@ class Boards extends Provider
     }
 
     /**
-     * Get pins form board by boardId
+     * Get pins from board by boardId
+     *
      * @param int $boardId
      * @param int $batchesLimit
-     * @return \Iterator
+     * @return Iterator
      */
     public function pins($boardId, $batchesLimit = 0)
     {
         return Pagination::getPaginatedData(
-            [$this, 'getPinsFromBoard'], [
-            'boardId' => $boardId,
-        ], $batchesLimit
+            [$this, 'getPinsFromBoard'], 
+            ['boardId' => $boardId], 
+            $batchesLimit
         );
 
     }
 
     /**
+     * Low-level function to get pins from board by its Id.
+     * Is used in getPaginatedData as callback.
+     *
      * @param int $boardId
      * @param array $bookmarks
      * @return array|bool
@@ -86,6 +92,7 @@ class Boards extends Provider
 
     /**
      * Run GET api request to boards resource
+     *
      * @param array $query
      * @param string $url
      * @param bool $pagination
@@ -118,7 +125,7 @@ class Boards extends Provider
      *
      * @param string $name
      * @param string $description
-     * @param string $privacy Can be 'public' or 'secret'. 'public by default.
+     * @param string $privacy Can be 'public' or 'secret'. 'public' by default.
      * @return array|bool
      */
     public function create($name, $description, $privacy = 'public')

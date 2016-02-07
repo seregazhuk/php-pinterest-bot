@@ -73,6 +73,7 @@ abstract class Provider
 
     /**
      * Run login check before every method if needed
+     *
      * @param $method
      * @param $arguments
      * @return mixed

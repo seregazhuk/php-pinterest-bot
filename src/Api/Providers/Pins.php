@@ -55,7 +55,7 @@ class Pins extends Provider
     }
 
     /**
-     * Writes comment for pin with current id
+     * Write a comment for a pin with current id
      *
      * @param integer $pinId
      * @param string  $text Comment
@@ -69,7 +69,7 @@ class Pins extends Provider
     }
 
     /**
-     * Writes comment for pin with current id
+     * Delete a comment for a pin with current id
      *
      * @param integer $pinId
      * @param integer $commentId
@@ -83,7 +83,7 @@ class Pins extends Provider
     }
 
     /**
-     * Create pin. Returns created pin ID
+     * Create a pin. Returns created pin ID
      *
      * @param string $imageUrl
      * @param int    $boardId
@@ -104,7 +104,7 @@ class Pins extends Provider
     }
 
     /**
-     * Repin
+     * Make a repin
      *
      * @param int    $repinId
      * @param int    $boardId
@@ -125,7 +125,7 @@ class Pins extends Provider
     }
 
     /**
-     * Delete pin
+     * Delete a pin
      *
      * @param int $pinId
      * @return bool
@@ -136,7 +136,7 @@ class Pins extends Provider
     }
 
     /**
-     * Get information of pin by PinID
+     * Get information of a pin by PinID
      *
      * @param int $pinId
      * @return array|bool

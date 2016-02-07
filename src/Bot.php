@@ -17,6 +17,7 @@ use seregazhuk\PinterestBot\Contracts\ProvidersContainerInterface;
  * Class Bot
  *
  * @package Pinterest
+ *
  * @property Pins $pins
  * @property News $news
  * @property User $user
@@ -32,6 +33,9 @@ class Bot
      */
     private $providersContainer;
 
+    /**
+     * @param ProvidersContainerInterface
+     */ 
     public function __construct(ProvidersContainerInterface $providersContainer)
     {
         $this->providersContainer = $providersContainer;
@@ -39,8 +43,10 @@ class Bot
 
     /**
      * Proxy method to pinners login
+     *
      * @param string $username
      * @param string $password
+     *
      * @return bool
      */
     public function login($username, $password)
@@ -49,6 +55,8 @@ class Bot
     }
 
     /**
+     * Magic method to access different providers
+     *
      * @param string $provider
      * @return Provider
      */
@@ -58,6 +66,7 @@ class Bot
     }
 
     /**
+     * Proxy method to Request object
      * @return array
      */
     public function getLastError()

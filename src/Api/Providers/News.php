@@ -11,6 +11,7 @@ class News extends Provider
 
     /**
      * Get user's latest news array
+     *
      * @return array
      */
     public function latest()

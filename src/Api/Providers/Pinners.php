@@ -22,7 +22,7 @@ class Pinners extends Provider
     ];
 
     /**
-     * Get user info
+     * Get user info.
      * If username param is not specified, will
      * return info for logged user
      *
@@ -107,6 +107,7 @@ class Pinners extends Provider
 
     /**
      * Validates password and login
+     *
      * @param string $username
      * @param string $password
      */
@@ -152,6 +153,9 @@ class Pinners extends Provider
     }
 
     /**
+     * Wrapper over Pagination::getPaginatedData for 
+     * high-level functions, such as 'following', 'pins' and others.
+     *
      * @param string $username
      * @param string $url
      * @param string $sourceUrl
