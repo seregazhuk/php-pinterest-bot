@@ -39,6 +39,10 @@ class ProvidersContainer implements ProvidersContainerInterface
     }
 
     /**
+     * Gets provider object by name. If there is no such provider
+     * in providers array, it will try to create it, then save
+     * it, and then return.
+     *
      * @param string $provider
      * @return Provider
      * @throws WrongProviderException
@@ -56,6 +60,9 @@ class ProvidersContainer implements ProvidersContainerInterface
     }
 
     /**
+     * Creates provider by class name, and if success saves
+     * it to providers array. Provider class must be in PROVIDERS_NAMESPACE.
+     *
      * @param string $provider
      * @throws WrongProviderException
      */
@@ -71,7 +78,7 @@ class ProvidersContainer implements ProvidersContainerInterface
     }
 
     /**
-     * Build Provider object with reflection API
+     * Build Provider object with reflection API.
      *
      * @param string $className
      * @return object

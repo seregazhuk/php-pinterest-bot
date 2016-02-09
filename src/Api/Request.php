@@ -31,6 +31,7 @@ class Request implements RequestInterface
     protected $http;
     protected $loggedIn;
     protected $cookieJar;
+    protected $options;
 
     public $csrfToken = "";
 
@@ -116,12 +117,9 @@ class Request implements RequestInterface
     public function exec($resourceUrl, $postString = "")
     {
         $url = UrlHelper::buildApiUrl($resourceUrl);
-        $options = $this->makeHttpOptions($postString);
-        $this->http->init($url);
-        $this->http->setOptions($options);
-        $res = $this->http->execute();
-        $this->http->close();
+        $res = $this->http->init($url)->setOptions($this->makeHttpOptions($postString))->execute();
 
+        $this->http->close();
         return json_decode($res, true);
     }
 
@@ -149,14 +147,19 @@ class Request implements RequestInterface
 
     /**
      * Clear token information
+     * @return $this
      */
     public function clearToken()
     {
         $this->csrfToken = CsrfHelper::DEFAULT_TOKEN;
+
+        return $this;
     }
 
     /**
      * Mark api as logged
+     *
+     * @return $this
      */
     public function setLoggedIn()
     {
@@ -164,6 +167,8 @@ class Request implements RequestInterface
         if ( ! empty($this->csrfToken)) {
             $this->loggedIn = true;
         }
+
+        return $this;
     }
 
     /**
@@ -213,7 +218,7 @@ class Request implements RequestInterface
      */
     protected function getDefaultHttpOptions()
     {
-        $options = [
+        return [
             CURLOPT_USERAGENT      => $this->userAgent,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_SSL_VERIFYPEER => false,
@@ -224,8 +229,6 @@ class Request implements RequestInterface
             CURLOPT_COOKIEFILE     => $this->cookieJar,
             CURLOPT_COOKIEJAR      => $this->cookieJar,
         ];
-
-        return $options;
     }
 
     /**

@@ -59,6 +59,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
     {
         $httpMock = $this->getMock(CurlAdapter::class, ['setOptions', 'execute', 'close']);
         $response = $this->createSuccessApiResponse();
+        $httpMock->method('setOptions')->will($this->returnSelf());
         $httpMock->method('execute')->willReturn(json_encode($response));
         $this->setProperty('http', $httpMock);
         $res = $this->request->exec('http://example.com', 'a=b');
@@ -74,6 +75,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
     {
         $response = $this->createSuccessApiResponse();
         $mock = $this->getMock(CurlAdapter::class, ['setOptions', 'execute', 'close']);
+        $mock->method('setOptions')->will($this->returnSelf());
         $mock->expects($this->at(1))->method('execute')->willReturn(json_encode($response));
         $mock->expects($this->at(2))->method('execute')->willReturn(null);
 

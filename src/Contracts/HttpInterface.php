@@ -9,6 +9,7 @@ interface HttpInterface
      *
      * @access public
      * @param string $url
+     * @return $this
      */
     public function init($url);
 
