@@ -25,10 +25,14 @@ class CurlAdapter implements HttpInterface
      *
      * @access public
      * @param string $url
+     *
+     * @return $this
      */
     public function init($url)
     {
         $this->curl = curl_init($url);
+
+        return $this;
     }
 
     /**
