@@ -2,8 +2,11 @@ build:
     environment:
         php:
             version: 5.5.0
+
 checks:
-    php: true
+    php:
+        code_rating: true
+        duplication: true
 
 filter:
     excluded_paths:
