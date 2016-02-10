@@ -22,8 +22,8 @@ class InterestsTest extends ProviderTest
         $response = $this->createSuccessApiResponse();
         $error = $this->createErrorApiResponse();
 
-        $this->mock->expects($this->at(1))->method('exec')->willReturn($response);
-        $this->mock->expects($this->at(3))->method('exec')->willReturn($error);
+        $this->mock->shouldReceive('followMethodCall')->once()->andReturn($response);
+        $this->mock->shouldReceive('followMethodCall')->once()->andReturn($error);
 
         $this->assertTrue($this->provider->follow(1111));
         $this->assertFalse($this->provider->follow(1111));
@@ -35,8 +35,8 @@ class InterestsTest extends ProviderTest
         $request = $this->createSuccessApiResponse();
         $error = $this->createErrorApiResponse();
 
-        $this->mock->expects($this->at(1))->method('exec')->willReturn($request);
-        $this->mock->expects($this->at(3))->method('exec')->willReturn($error);
+        $this->mock->shouldReceive('followMethodCall')->once()->andReturn($request);
+        $this->mock->shouldReceive('followMethodCall')->once()->andReturn($error);
 
         $this->assertTrue($this->provider->unFollow(1111));
         $this->assertFalse($this->provider->unFollow(1111));

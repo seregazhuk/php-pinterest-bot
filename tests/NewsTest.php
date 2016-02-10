@@ -20,8 +20,8 @@ class NewsTest extends ProviderTest
         $response = $this->createApiResponse($news);
         $error = $this->createErrorApiResponse();
 
-        $this->mock->expects($this->at(1))->method('exec')->willReturn($response);
-        $this->mock->expects($this->at(2))->method('exec')->willReturn($error);
+        $this->mock->shouldReceive('exec')->once()->andReturn($response);
+        $this->mock->shouldReceive('exec')->once()->andReturn($error);
 
         $this->assertEquals('news', $this->provider->latest());
         $this->assertFalse($this->provider->latest());

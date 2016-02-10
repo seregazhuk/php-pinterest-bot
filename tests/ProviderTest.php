@@ -4,6 +4,7 @@ namespace seregazhuk\tests;
 
 use LogicException;
 use Mockable;
+use Mockery;
 use PHPUnit_Framework_MockObject_MockObject;
 use ReflectionClass;
 use PHPUnit_Framework_TestCase;
@@ -35,9 +36,9 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
      */
     protected function createRequestMock()
     {
-        $methods = array_merge(['exec', 'checkLoggedIn', 'isLoggedIn']);
-        $requestMock = $this->getMockBuilder(Request::class)->setMethods($methods)->setConstructorArgs([new CurlAdapter()])->getMock();
-        $requestMock->method('checkLoggedIn')->willReturn(true);
+        $methods = array_merge(['exec', 'checkLoggedIn', 'isLoggedIn', 'followMethodCall']);
+        $requestMock = Mockery::mock(Request::class)->shouldReceive($methods)->getMock();
+        $requestMock->shouldReceive('checkLoggedIn')->andReturn(true);
 
         return $requestMock;
     }
@@ -54,6 +55,7 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
 
     protected function tearDown()
     {
+        Mockery::close();
         $this->provider = null;
         $this->reflection = null;
     }

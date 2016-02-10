@@ -23,8 +23,8 @@ class UserTest extends ProviderTest
         $response = $this->createSuccessApiResponse();
         $error = $this->createErrorApiResponse();
 
-        $this->mock->expects($this->at(0))->method('exec')->willReturn($response);
-        $this->mock->expects($this->at(1))->method('exec')->willReturn($error);
+        $this->mock->shouldReceive('exec')->once()->andReturn($response);
+        $this->mock->shouldReceive('exec')->once()->andReturn($error);
 
         $params = ['name'=>'name'];
         $this->assertTrue($this->provider->profile($params));
