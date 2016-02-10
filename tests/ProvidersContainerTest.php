@@ -18,6 +18,11 @@ class ProvidersContainerTest extends PHPUnit_Framework_TestCase
         $this->container = new ProvidersContainer($request, $response);
     }
 
+    public function tearDown()
+    {
+        Mockery::close();
+    }
+
     /** @test */
     public function getValidProvider()
     {

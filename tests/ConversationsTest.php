@@ -16,8 +16,8 @@ class ConversationsTest extends ProviderTest
     {
         $response = $this->createMessageSendResponse();
 
-        $this->mock->expects($this->at(0))->method('exec')->willReturn($response);
-        $this->mock->expects($this->at(1))->method('exec')->willReturn(null);
+        $this->mock->shouldReceive('exec')->once()->andReturn($response);
+        $this->mock->shouldReceive('exec')->once()->andReturnNull();
 
         $userId = '0000000000000';
         $message = 'test';
@@ -39,8 +39,8 @@ class ConversationsTest extends ProviderTest
             )
         );
 
-        $this->mock->expects($this->at(1))->method('exec')->willReturn($res);
-        $this->mock->expects($this->at(3))->method('exec')->willReturn(null);
+        $this->mock->shouldReceive('exec')->once()->andReturn($res);
+        $this->mock->shouldReceive('exec')->once()->andReturnNull();
 
         $this->assertEquals($lastConversations, $this->provider->last());
         $this->assertFalse($this->provider->last());

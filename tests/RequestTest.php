@@ -3,10 +3,12 @@
 namespace szhuk\tests;
 
 use LogicException;
+use Mockery;
 use PHPUnit_Framework_TestCase;
 use ReflectionClass;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\CurlAdapter;
+use seregazhuk\PinterestBot\Contracts\HttpInterface;
 use seregazhuk\tests\helpers\ResponseHelper;
 use seregazhuk\tests\helpers\ReflectionHelper;
 
@@ -33,6 +35,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
 
     protected function tearDown()
     {
+        Mockery::close();
         $this->request = null;
         $this->mock = null;
         $this->reflection = null;
@@ -57,10 +60,10 @@ class RequestTest extends PHPUnit_Framework_TestCase
     /** @test */
     public function executeRequestToPinterestApi()
     {
-        $httpMock = $this->getMock(CurlAdapter::class, ['setOptions', 'execute', 'close']);
+        $httpMock = $this->getHttpMock();
+
         $response = $this->createSuccessApiResponse();
-        $httpMock->method('setOptions')->will($this->returnSelf());
-        $httpMock->method('execute')->willReturn(json_encode($response));
+        $httpMock->shouldReceive('execute')->andReturn(json_encode($response));
         $this->setProperty('http', $httpMock);
         $res = $this->request->exec('http://example.com', 'a=b');
         $this->assertEquals($response, $res);
@@ -74,13 +77,25 @@ class RequestTest extends PHPUnit_Framework_TestCase
     public function executeFollowRequestToPinterestApi()
     {
         $response = $this->createSuccessApiResponse();
-        $mock = $this->getMock(CurlAdapter::class, ['setOptions', 'execute', 'close']);
-        $mock->method('setOptions')->will($this->returnSelf());
-        $mock->expects($this->at(1))->method('execute')->willReturn(json_encode($response));
-        $mock->expects($this->at(2))->method('execute')->willReturn(null);
+        $mock = $this->getHttpMock();
+        $mock->shouldReceive('execute')->once()->andReturn(json_encode($response));
+        $mock->shouldReceive('execute')->once()->andReturnNull();
 
         $this->setProperty('http', $mock);
         $this->assertEquals($response, $this->request->followMethodCall(1, Request::BOARD_ENTITY_ID, 'ur'));
         $this->assertNull($this->request->followMethodCall(1, Request::INTEREST_ENTITY_ID, 'ur'));
+    }
+
+    /**
+     * @return Mockery\Mock
+     */
+    protected function getHttpMock()
+    {
+        $mock = Mockery::mock(HttpInterface::class)->shouldDeferMissing();
+        $mock->shouldReceive('init')->andReturnSelf();
+        $mock->shouldReceive('setOptions')->andReturnSelf();
+        $mock->shouldReceive('close');
+
+        return $mock;
     }
 }

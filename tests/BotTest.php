@@ -2,6 +2,7 @@
 
 namespace seregazhuk\tests;
 
+use Mockery;
 use ReflectionClass;
 use PHPUnit_Framework_TestCase;
 use seregazhuk\PinterestBot\Api\CurlAdapter;
@@ -30,6 +31,7 @@ class BotTest extends PHPUnit_Framework_TestCase
 
     protected function tearDown()
     {
+        Mockery::close();
         $this->bot = null;
         $this->reflection = null;
     }
@@ -38,9 +40,7 @@ class BotTest extends PHPUnit_Framework_TestCase
     public function getLastResponseError()
     {
         $error = 'expected_error';
-
-        $mock = $this->getMock(Response::class, ['getLastError']);
-        $mock->method('getLastError')->willReturn($error);
+        $mock = Mockery::mock(Response::class)->shouldReceive('getLastError')->andReturn($error)->getMock();
 
         $request = new Request(new CurlAdapter());
         $providersContainer = new ProvidersContainer($request, $mock);

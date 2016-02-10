@@ -17,7 +17,7 @@ class PinnersTest extends ProviderTest
     public function followUser()
     {
         $response = $this->createSuccessApiResponse();
-        $this->mock->method('exec')->willReturn($response);
+        $this->mock->shouldReceive('followMethodCall')->andReturn($response);
 
         $this->assertTrue($this->provider->follow(1));
         $this->assertTrue($this->provider->follow(1));
@@ -27,7 +27,7 @@ class PinnersTest extends ProviderTest
     public function unFollowUser()
     {
         $response = $this->createSuccessApiResponse();
-        $this->mock->method('exec')->willReturn($response);
+        $this->mock->shouldReceive('followMethodCall')->andReturn($response);
 
         $this->assertTrue($this->provider->unfollow(1));
         $this->assertTrue($this->provider->unfollow(1));
@@ -37,7 +37,7 @@ class PinnersTest extends ProviderTest
     public function getUserInfo()
     {
         $response = $this->createApiResponse(['data' => ['name' => 'test']]);
-        $this->mock->method('exec')->willReturn($response);
+        $this->mock->shouldReceive('exec')->andReturn($response);
 
         $data = $this->provider->info('username');
         $this->assertEquals($response['resource_response']['data'], $data);
@@ -47,11 +47,11 @@ class PinnersTest extends ProviderTest
     public function getUserFollowers()
     {
         $response = $this->createPaginatedResponse();
-        $this->mock->expects($this->at(0))->method('exec')->willReturn($response);
+        $this->mock->shouldReceive('exec')->once()->andReturn($response);
 
-        $this->mock->expects($this->at(1))->method('exec')->willReturn(['resource_response' => ['data' => []]]);
+        $this->mock->shouldReceive('exec')->once()->andReturn(['resource_response' => ['data' => []]]);
 
-        $this->mock->expects($this->at(2))->method('exec')->willReturn(
+        $this->mock->shouldReceive('exec')->once()->andReturn(
             [
                 'resource_response' => [
                     'data' => [
@@ -71,8 +71,8 @@ class PinnersTest extends ProviderTest
     public function getFollowingUsers()
     {
         $response = $this->createPaginatedResponse();
-        $this->mock->expects($this->at(0))->method('exec')->willReturn($response);
-        $this->mock->expects($this->at(1))->method('exec')->willReturn(['resource_response' => ['data' => []]]);
+        $this->mock->shouldReceive('exec')->once()->andReturn($response);
+        $this->mock->shouldReceive('exec')->once()->andReturn(['resource_response' => ['data' => []]]);
 
         $following = $this->provider->following('username');
         $this->assertCount(2, iterator_to_array($following)[0]);
@@ -94,7 +94,7 @@ class PinnersTest extends ProviderTest
                 ],
             ],
         ];
-        $this->mock->expects($this->at(0))->method('exec')->willReturn($res);
+        $this->mock->shouldReceive('exec')->once()->andReturn($res);
 
         $pins = $this->provider->pins('username', 1);
         $expectedResultsNum = count($res['resource_response']['data']);
@@ -110,7 +110,7 @@ class PinnersTest extends ProviderTest
         ];
 
         $expectedResultsNum = count($response['module']['tree']['data']['results']);
-        $this->mock->method('exec')->willReturn($response);
+        $this->mock->shouldReceive('exec')->twice()->andReturn($response);
 
         $res = iterator_to_array($this->provider->search('dogs'), 1);
         $this->assertCount($expectedResultsNum, $res[0]);
@@ -128,7 +128,7 @@ class PinnersTest extends ProviderTest
     /** @test */
     public function loginWhenAlreadyLogged()
     {
-        $this->mock->method('isLoggedIn')->willReturn(true);
+        $this->mock->shouldReceive('isLoggedIn')->andReturn(true);
         $this->assertTrue($this->provider->login('test', 'test'));
     }
 
@@ -136,8 +136,11 @@ class PinnersTest extends ProviderTest
     public function successLogin()
     {
         $response = $this->createSuccessApiResponse();
-        $this->mock->method('isLoggedIn')->willReturn(false);
-        $this->mock->method('exec')->willReturn($response);
+        $this->mock->shouldReceive('isLoggedIn')->andReturn(false);
+        $this->mock->shouldReceive('exec')->andReturn($response);
+        $this->mock->shouldReceive('clearToken');
+        $this->mock->shouldReceive('setLoggedIn');
+
         $this->assertTrue($this->provider->login('test', 'test'));
     }
 
@@ -145,8 +148,10 @@ class PinnersTest extends ProviderTest
     public function loginFails()
     {
         $response = $this->createErrorApiResponse();
-        $this->mock->method('isLoggedIn')->willReturn(false);
-        $this->mock->method('exec')->willReturn($response);
+        $this->mock->shouldReceive('isLoggedIn')->andReturn(false);
+        $this->mock->shouldReceive('exec')->andReturn($response);
+        $this->mock->shouldReceive('clearToken');
+
         $this->assertFalse($this->provider->login('test', 'test'));
     }
 }
