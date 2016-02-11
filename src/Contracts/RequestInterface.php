@@ -5,13 +5,6 @@ namespace seregazhuk\PinterestBot\Contracts;
 interface RequestInterface
 {
     /**
-     * Checks if current api user is logged in
-     *
-     * @return bool
-     */
-    public function checkLoggedIn();
-
-    /**
      * Executes api call for follow or unfollow pinner, interest or board
      *
      * @param int    $entityId

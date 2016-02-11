@@ -6,7 +6,7 @@ interface ResponseInterface
 {
     /**
      * Check if specified data exists in response
-     * @param      $response
+     * @param array|null $response
      * @param null $key
      * @return array|bool
      */

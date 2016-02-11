@@ -18,7 +18,7 @@ class Response implements ResponseInterface
 
     /**
      * Check if specified data exists in response
-     * @param array $response
+     * @param array|null $response
      * @param null $key
      * @return array|bool
      */
