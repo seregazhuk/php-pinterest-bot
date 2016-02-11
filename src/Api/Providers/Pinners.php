@@ -5,6 +5,7 @@ namespace seregazhuk\PinterestBot\Api\Providers;
 use Iterator;
 use LogicException;
 use seregazhuk\PinterestBot\Api\Request;
+use seregazhuk\PinterestBot\Exceptions\AuthException;
 use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Helpers\Providers\Traits\FollowersTrait;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
@@ -85,6 +86,7 @@ class Pinners extends Provider
      * @param string $username
      * @param string $password
      * @return bool
+     * @throws AuthException
      */
     public function login($username, $password)
     {
@@ -97,11 +99,13 @@ class Pinners extends Provider
         $post = PinnerHelper::createLoginRequest($username, $password);
         $postString = UrlHelper::buildRequestString($post);
         $this->request->clearToken();
-        $result = $this->response->checkErrorInResponse($this->request->exec(UrlHelper::RESOURCE_LOGIN, $postString));
-        if ($result) {
-            $this->request->setLoggedIn();
-        }
 
+        $response = $this->request->exec(UrlHelper::RESOURCE_LOGIN, $postString);
+        $result = $this->response->checkErrorInResponse($response);
+        if (!$result) {
+            throw new AuthException($this->response->getLastError()['message']);
+        }
+        $this->request->setLoggedIn();
         return $result;
     }
 
