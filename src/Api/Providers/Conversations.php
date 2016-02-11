@@ -34,7 +34,6 @@ class Conversations extends Provider
      */
     public function last()
     {
-        $this->request->checkLoggedIn();
         $data = Request::createRequestData();
         $query = UrlHelper::buildRequestString($data);
         $response = $this->request->exec(UrlHelper::RESOURCE_GET_LAST_CONVERSATIONS.'?'.$query);

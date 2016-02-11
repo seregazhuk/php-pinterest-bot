@@ -5,6 +5,7 @@ namespace seregazhuk\PinterestBot\Api\Providers;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
+use seregazhuk\PinterestBot\Exceptions\AuthException;
 use seregazhuk\PinterestBot\Contracts\RequestInterface;
 use seregazhuk\PinterestBot\Contracts\ResponseInterface;
 use seregazhuk\PinterestBot\Helpers\Providers\Traits\ProviderTrait;
@@ -82,24 +83,25 @@ abstract class Provider
     {
 
         if (method_exists($this, $method)) {
-            $this->checkMethodForLoginNeed($method);
+            $this->checkMethodForLoginRequired($method);
 
             return call_user_func_array(array($this, $method), $arguments);
         }
     }
 
     /**
-     * Checks if method requires login
+     * Checks if method requires login and if true,
+     * checks logged in status.
      *
      * @param $method
+     * @throws AuthException if is not logged in
      */
-    protected function checkMethodForLoginNeed($method)
+    protected function checkMethodForLoginRequired($method)
     {
-        if (in_array($method, $this->loginRequired)) {
-            $this->request->checkLoggedIn();
+        if (in_array($method, $this->loginRequired) && !$this->request->isLoggedIn()) {
+            throw new AuthException("You must log in before.");
         }
     }
-
 
     /**
      * @return Request
