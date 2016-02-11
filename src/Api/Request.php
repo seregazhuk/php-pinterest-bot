@@ -93,21 +93,6 @@ class Request implements RequestInterface
     }
 
     /**
-     * Checks if bot is logged in
-     *
-     * @throws \LogicException if is not logged in
-     * @return bool
-     */
-    public function checkLoggedIn()
-    {
-        if ( ! $this->loggedIn) {
-            throw new \LogicException("You must log in before.");
-        }
-
-        return true;
-    }
-
-    /**
      * Executes request to Pinterest API
      *
      * @param string $resourceUrl

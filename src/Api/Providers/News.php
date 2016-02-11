@@ -16,8 +16,6 @@ class News extends Provider
      */
     public function latest()
     {
-        $this->request->checkLoggedIn();
-
         $data = ["options" => ['allow_state' => true]];
         $request = Request::createRequestData($data);
 

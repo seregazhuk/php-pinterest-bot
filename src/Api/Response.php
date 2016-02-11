@@ -65,6 +65,10 @@ class Response implements ResponseInterface
         return ! empty($this->getData($response));
     }
 
+    /**
+     * @param array $response
+     * @return bool
+     */
     public function checkResponse($response)
     {
         return ($this->notEmpty($response) && $this->checkErrorInResponse($response));

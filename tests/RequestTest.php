@@ -41,20 +41,18 @@ class RequestTest extends PHPUnit_Framework_TestCase
         $this->reflection = null;
     }
 
-    /**
-     * @test
-     * @expectedException LogicException
-     */
+    /** @test */
     public function checkLoggedInFailure()
     {
-        $this->assertFalse($this->request->checkLoggedIn());
+        $this->setProperty('loggedIn', false);
+        $this->assertFalse($this->request->isLoggedIn());
     }
 
     /** @test */
     public function checkLoggedInSuccess()
     {
         $this->setProperty('loggedIn', true);
-        $this->assertTrue($this->request->checkLoggedIn());
+        $this->assertTrue($this->request->isLoggedIn());
     }
 
     /** @test */

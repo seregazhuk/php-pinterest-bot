@@ -36,7 +36,6 @@ trait FollowTrait
      */
     protected function followCall($entityId, $resourceUrl)
     {
-        $this->getRequest()->checkLoggedIn();
         $response = $this->getRequest()->followMethodCall($entityId, $this->getEntityIdName(), $resourceUrl);
 
         return $this->getResponse()->checkErrorInResponse($response);
