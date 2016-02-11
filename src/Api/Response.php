@@ -18,7 +18,7 @@ class Response implements ResponseInterface
 
     /**
      * Check if specified data exists in response
-     * @param array|null $response
+     * @param array $response
      * @param null $key
      * @return array|bool
      */
@@ -65,6 +65,10 @@ class Response implements ResponseInterface
         return ! empty($this->getData($response));
     }
 
+    /**
+     * @param array $response
+     * @return bool
+     */
     public function checkResponse($response)
     {
         return ($this->notEmpty($response) && $this->checkErrorInResponse($response));
