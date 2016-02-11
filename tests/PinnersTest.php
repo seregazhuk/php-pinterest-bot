@@ -122,13 +122,14 @@ class PinnersTest extends ProviderTest
      */
     public function loginWithEmptyCredentials()
     {
+        $this->mock->shouldReceive('isLoggedIn')->once()->andReturn(false);
         $this->provider->login('', '');
     }
 
     /** @test */
     public function loginWhenAlreadyLogged()
     {
-        $this->mock->shouldReceive('isLoggedIn')->andReturn(true);
+        $this->mock->shouldReceive('isLoggedIn')->once()->andReturn(true);
         $this->assertTrue($this->provider->login('test', 'test'));
     }
 
@@ -138,13 +139,16 @@ class PinnersTest extends ProviderTest
         $response = $this->createSuccessApiResponse();
         $this->mock->shouldReceive('isLoggedIn')->andReturn(false);
         $this->mock->shouldReceive('exec')->andReturn($response);
-        $this->mock->shouldReceive('clearToken');
-        $this->mock->shouldReceive('setLoggedIn');
+        $this->mock->shouldReceive('clearToken')->once();
+        $this->mock->shouldReceive('setLoggedIn')->once();
 
         $this->assertTrue($this->provider->login('test', 'test'));
     }
 
-    /** @test */
+    /**
+     * @test
+     * @expectedException \seregazhuk\PinterestBot\Exceptions\AuthException
+     */
     public function loginFails()
     {
         $response = $this->createErrorApiResponse();
@@ -152,6 +156,6 @@ class PinnersTest extends ProviderTest
         $this->mock->shouldReceive('exec')->andReturn($response);
         $this->mock->shouldReceive('clearToken');
 
-        $this->assertFalse($this->provider->login('test', 'test'));
+        $this->provider->login('test', 'test');
     }
 }

@@ -117,7 +117,8 @@ class Request implements RequestInterface
     public function exec($resourceUrl, $postString = "")
     {
         $url = UrlHelper::buildApiUrl($resourceUrl);
-        $res = $this->http->init($url)->setOptions($this->makeHttpOptions($postString))->execute();
+        $this->makeHttpOptions($postString);
+        $res = $this->http->init($url)->setOptions($this->options)->execute();
 
         $this->http->close();
         return json_decode($res, true);
@@ -127,22 +128,22 @@ class Request implements RequestInterface
      * Adds necessary curl options for query
      *
      * @param string $postString POST query string
-     * @return array
+     * @return $this
      */
     protected function makeHttpOptions($postString = "")
     {
-        $options = $this->getDefaultHttpOptions();
+        $this->setDefaultHttpOptions();
 
         if ($this->csrfToken == CsrfHelper::DEFAULT_TOKEN) {
-            $options = $this->addDefaultCsrfInfo($options);
+            $this->options = $this->addDefaultCsrfInfo($this->options);
         }
 
         if ( ! empty($postString)) {
-            $options[CURLOPT_POST] = true;
-            $options[CURLOPT_POSTFIELDS] = $postString;
+            $this->options[CURLOPT_POST] = true;
+            $this->options[CURLOPT_POSTFIELDS] = $postString;
         }
 
-        return $options;
+        return $this;
     }
 
     /**
@@ -216,9 +217,9 @@ class Request implements RequestInterface
     /**
      * @return array
      */
-    protected function getDefaultHttpOptions()
+    protected function setDefaultHttpOptions()
     {
-        return [
+        $this->options = [
             CURLOPT_USERAGENT      => $this->userAgent,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_SSL_VERIFYPEER => false,

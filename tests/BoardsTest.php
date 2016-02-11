@@ -83,7 +83,7 @@ class BoardsTest extends ProviderTest
         $boards = ['data' => 'boards'];
         $response = $this->createApiResponse($boards);
         $this->mock->shouldReceive('exec')->once()->andReturn($response);
-        $this->mock->shouldReceive('exec')->once()->andReturn(null);
+        $this->mock->shouldReceive('exec')->once()->andReturnNull();
 
         $this->assertEquals($boards['data'], $this->provider->forUser(1));
         $this->assertFalse($this->provider->forUser(1));
@@ -94,7 +94,7 @@ class BoardsTest extends ProviderTest
     {
         $response = $this->createApiResponse(['data' => 'info']);
         $this->mock->shouldReceive('exec')->once()->andReturn($response);
-        $this->mock->shouldReceive('exec')->once()->andReturn(null);
+        $this->mock->shouldReceive('exec')->once()->andReturnNull();
 
         $this->assertEquals('info', $this->provider->info('username', 'board'));
         $this->assertFalse($this->provider->info('username', 'board'));

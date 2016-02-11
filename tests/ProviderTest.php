@@ -2,16 +2,14 @@
 
 namespace seregazhuk\tests;
 
-use LogicException;
-use Mockable;
 use Mockery;
-use PHPUnit_Framework_MockObject_MockObject;
+use Mockery\MockInterface;
 use ReflectionClass;
 use PHPUnit_Framework_TestCase;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
-use seregazhuk\PinterestBot\Api\CurlAdapter;
 use seregazhuk\tests\helpers\ResponseHelper;
+use PHPUnit_Framework_MockObject_MockObject;
 use seregazhuk\tests\helpers\ReflectionHelper;
 use seregazhuk\PinterestBot\Api\Providers\Provider;
 
@@ -20,7 +18,7 @@ use seregazhuk\PinterestBot\Api\Providers\Provider;
  * @package seregazhuk\tests
  * @property Provider $provider
  * @property string $providerClass
- * @property PHPUnit_Framework_MockObject_MockObject $mock
+ * @property MockInterface $mock
  * @property ReflectionClass $reflection
  */
 abstract class ProviderTest extends PHPUnit_Framework_TestCase
@@ -32,7 +30,7 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
     protected $mock;
 
     /**
-     * @return PHPUnit_Framework_MockObject_MockObject|Request
+     * @return $this|Request
      */
     protected function createRequestMock()
     {
@@ -40,16 +38,14 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
         $requestMock = Mockery::mock(Request::class)->shouldReceive($methods)->getMock();
         $requestMock->shouldReceive('checkLoggedIn')->andReturn(true);
 
-        return $requestMock;
+        $this->mock = $requestMock;
+
+        return $this;
     }
 
     protected function setUp()
     {
-        $this->createProviderInstance();
-        $this->reflection = new ReflectionClass($this->provider);
-        $this->mock = $this->createRequestMock();
-        $this->setReflectedObject($this->provider);
-        $this->setProperty('request', $this->mock);
+        $this->createRequestMock()->createProviderInstance()->setUpReflection();
         parent::setUp();
     }
 
@@ -60,11 +56,28 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
         $this->reflection = null;
     }
 
+    /**
+     * @return $this
+     */
     protected function createProviderInstance()
     {
         $providerReflection = new ReflectionClass($this->providerClass);
         $this->provider = $providerReflection->newInstanceArgs(
-            [$this->createRequestMock(), new Response()]
+            [$this->mock, new Response()]
         );
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function setUpReflection()
+    {
+        $this->reflection = new ReflectionClass($this->provider);
+        $this->setReflectedObject($this->provider);
+        $this->setProperty('request', $this->mock);
+
+        return $this;
     }
 }
