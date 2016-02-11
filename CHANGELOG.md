@@ -1,3 +1,7 @@
+## 2016-02-11
+- Throws exception when login fails
+- Tests refactoring
+
 ## 2016-02-06
 
 - Providers refactoring (loginRequired check before every method call added)
