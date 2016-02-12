@@ -98,7 +98,7 @@ abstract class Provider
      */
     protected function checkMethodForLoginRequired($method)
     {
-        if (in_array($method, $this->loginRequired) && !$this->request->isLoggedIn()) {
+        if (in_array($method, $this->loginRequired) && ! $this->request->isLoggedIn()) {
             throw new AuthException("You must log in before.");
         }
     }
