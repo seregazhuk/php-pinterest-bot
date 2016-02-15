@@ -4,6 +4,10 @@ namespace seregazhuk\tests;
 
 use seregazhuk\PinterestBot\Api\Providers\Pins;
 
+/**
+ * Class PinsTest
+ * @package seregazhuk\tests
+ */
 class PinsTest extends ProviderTest
 {
     /**

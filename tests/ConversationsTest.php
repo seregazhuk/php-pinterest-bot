@@ -3,12 +3,19 @@ namespace seregazhuk\tests;
 
 use seregazhuk\PinterestBot\Api\Providers\Conversations;
 
+/**
+ * Class ConversationsTest
+ * @package seregazhuk\tests
+ */
 class ConversationsTest extends ProviderTest
 {
     /**
      * @var Conversations
      */
     protected $provider;
+    /**
+     * @var
+     */
     protected $providerClass = Conversations::class;
 
     /** @test */

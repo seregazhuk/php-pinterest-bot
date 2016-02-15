@@ -12,6 +12,10 @@ use seregazhuk\PinterestBot\Contracts\HttpInterface;
 use seregazhuk\tests\helpers\ResponseHelper;
 use seregazhuk\tests\helpers\ReflectionHelper;
 
+/**
+ * Class RequestTest
+ * @package szhuk\tests
+ */
 class RequestTest extends PHPUnit_Framework_TestCase
 {
     use ReflectionHelper, ResponseHelper;
