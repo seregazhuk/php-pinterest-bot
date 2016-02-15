@@ -102,7 +102,7 @@ class Pinners extends Provider
 
         $response = $this->request->exec(UrlHelper::RESOURCE_LOGIN, $postString);
         $result = $this->response->checkErrorInResponse($response);
-        if (!$result) {
+        if ( ! $result) {
             throw new AuthException($this->response->getLastError()['message']);
         }
         $this->request->setLoggedIn();
