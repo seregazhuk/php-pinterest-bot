@@ -5,12 +5,20 @@ namespace seregazhuk\tests;
 use LogicException;
 use seregazhuk\PinterestBot\Api\Providers\Pinners;
 
+/**
+ * Class PinnersTest
+ * @package seregazhuk\tests
+ */
 class PinnersTest extends ProviderTest
 {
     /**
      * @var Pinners
      */
     protected $provider;
+
+    /**
+     * @var
+     */
     protected $providerClass = Pinners::class;
 
     /** @test */

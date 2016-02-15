@@ -13,6 +13,10 @@ use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Factories\PinterestBot;
 use seregazhuk\tests\helpers\ReflectionHelper;
 
+/**
+ * Class BotTest
+ * @package seregazhuk\tests
+ */
 class BotTest extends PHPUnit_Framework_TestCase
 {
     use ReflectionHelper;

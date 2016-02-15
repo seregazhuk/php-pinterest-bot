@@ -4,6 +4,9 @@ use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Api\ProvidersContainer;
 
+/**
+ * Class ProvidersContainerTest
+ */
 class ProvidersContainerTest extends PHPUnit_Framework_TestCase
 {
     /**
