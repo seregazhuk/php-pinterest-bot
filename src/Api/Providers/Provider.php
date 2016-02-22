@@ -4,7 +4,6 @@ namespace seregazhuk\PinterestBot\Api\Providers;
 
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
-use seregazhuk\PinterestBot\Helpers\UrlHelper;
 use seregazhuk\PinterestBot\Exceptions\AuthException;
 use seregazhuk\PinterestBot\Contracts\RequestInterface;
 use seregazhuk\PinterestBot\Contracts\ResponseInterface;
@@ -60,9 +59,7 @@ abstract class Provider
     public function callPostRequest($requestOptions, $resourceUrl, $returnData = null)
     {
         $data = array("options" => $requestOptions);
-        $request = Request::createRequestData($data);
-
-        $postString = UrlHelper::buildRequestString($request);
+        $postString = Request::createQuery($data);
         $response = $this->request->exec($resourceUrl, $postString);
 
         if ($returnData) {
@@ -81,7 +78,6 @@ abstract class Provider
      */
     public function __call($method, $arguments)
     {
-
         if (method_exists($this, $method)) {
             $this->checkMethodForLoginRequired($method);
 

@@ -103,9 +103,7 @@ class Request implements RequestInterface
     {
         $url = UrlHelper::buildApiUrl($resourceUrl);
         $this->makeHttpOptions($postString);
-        $res = $this->http->init($url)->setOptions($this->options)->execute();
-
-        $this->http->close();
+        $res = $this->http->execute($url, $this->options);
         return json_decode($res, true);
     }
 
@@ -168,12 +166,27 @@ class Request implements RequestInterface
     }
 
     /**
+     * Create request string
+     *
+     * @param array $data
+     * @param string $sourceUrl
+     * @param array $bookmarks
+     * @return string
+     */
+    public static function createQuery(array $data = [], $sourceUrl = '/', $bookmarks = [])
+    {
+        $request = Request::createRequestData($data, $sourceUrl, $bookmarks);
+
+        return UrlHelper::buildRequestString($request);
+    }
+
+    /**
      * @param array|object $data
      * @param string|null  $sourceUrl
      * @param array        $bookmarks
      * @return array
      */
-    public static function createRequestData($data = [], $sourceUrl = '/', $bookmarks = [])
+    public static function createRequestData(array $data = [], $sourceUrl = '/', $bookmarks = [])
     {
         if (empty($data)) {
             $data = self::createEmptyRequestData();

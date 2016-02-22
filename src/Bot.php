@@ -34,8 +34,8 @@ class Bot
     private $providersContainer;
 
     /**
-     * @param ProvidersContainerInterface
-     */ 
+     * @param ProvidersContainerInterface $providersContainer
+     */
     public function __construct(ProvidersContainerInterface $providersContainer)
     {
         $this->providersContainer = $providersContainer;
