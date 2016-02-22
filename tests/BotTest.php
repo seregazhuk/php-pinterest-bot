@@ -19,27 +19,6 @@ use seregazhuk\tests\helpers\ReflectionHelper;
  */
 class BotTest extends PHPUnit_Framework_TestCase
 {
-    use ReflectionHelper;
-
-    /**
-     * @var Bot
-     */
-    protected $bot;
-
-    protected function setUp()
-    {
-        $this->bot = PinterestBot::create();
-        $this->reflection = new ReflectionClass($this->bot);
-        $this->setReflectedObject($this->bot);
-    }
-
-    protected function tearDown()
-    {
-        Mockery::close();
-        $this->bot = null;
-        $this->reflection = null;
-    }
-
     /** @test */
     public function getLastResponseError()
     {

@@ -61,7 +61,6 @@ class RequestTest extends PHPUnit_Framework_TestCase
         $http = $this->getHttpMock();
         $http->shouldReceive('execute')->once()->andReturn(json_encode($response));
         $http->shouldReceive('execute')->once()->andReturnNull();
-
         $request = $this->createRequestObject($http);
 
         $res = $request->exec('http://example.com', 'a=b');

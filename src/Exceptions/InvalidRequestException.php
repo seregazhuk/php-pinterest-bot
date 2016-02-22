@@ -2,7 +2,9 @@
 
 namespace seregazhuk\PinterestBot\Exceptions;
 
-class InvalidRequestException extends \Exception
+use Exception;
+
+class InvalidRequestException extends Exception
 {
 
 }
