@@ -5,35 +5,6 @@ namespace seregazhuk\PinterestBot\Contracts;
 interface HttpInterface
 {
     /**
-     * Initializes curl resource
-     *
-     * @access public
-     * @param string $url
-     * @return $this
-     */
-    public function init($url);
-
-    /**
-     * Sets an option in the curl instance
-     *
-     * @access public
-     * @param  string $option
-     * @param  string $value
-     * @return static
-     */
-    public function setOption($option, $value);
-
-    /**
-     * Sets multiple options at the same time
-     *
-     * @access public
-     * @param  array $options
-     * @return static
-     */
-    public function setOptions(array $options = []);
-
-
-    /**
      * Check if the curl request ended up with errors
      *
      * @access public
@@ -50,27 +21,11 @@ interface HttpInterface
     public function getErrors();
 
     /**
-     * Get curl info key
-     *
-     * @access public
-     * @param  string $key
-     * @return string
-     */
-    public function getInfo($key);
-
-    /**
-     * Close the curl resource
-     *
-     * @access public
-     * @return void
-     */
-    public function close();
-
-
-    /**
      * Executes curl request
      *
+     * @param string $url
+     * @param array $options
      * @return string
      */
-    public function execute();
+    public function execute($url, array $options = []);
 }

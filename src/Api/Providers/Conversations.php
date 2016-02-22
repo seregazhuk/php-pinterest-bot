@@ -34,9 +34,9 @@ class Conversations extends Provider
      */
     public function last()
     {
-        $data = Request::createRequestData();
-        $query = UrlHelper::buildRequestString($data);
-        $response = $this->request->exec(UrlHelper::RESOURCE_GET_LAST_CONVERSATIONS.'?'.$query);
+        $response = $this->request->exec(
+            UrlHelper::RESOURCE_GET_LAST_CONVERSATIONS . '?' . Request::createQuery()
+        );
 
         return $this->response->getData($response);
     }

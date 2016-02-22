@@ -28,27 +28,13 @@ class CurlAdapter implements HttpInterface
      *
      * @return $this
      */
-    public function init($url)
+    protected function init($url)
     {
         $this->curl = curl_init($url);
 
         return $this;
     }
 
-    /**
-     * Sets an option in the curl instance
-     *
-     * @access public
-     * @param  string $option
-     * @param  string $value
-     * @return static
-     */
-    public function setOption($option, $value)
-    {
-        curl_setopt($this->curl, $option, $value);
-
-        return $this;
-    }
 
     /**
      * Sets multiple options at the same time
@@ -57,7 +43,7 @@ class CurlAdapter implements HttpInterface
      * @param  array $options
      * @return static
      */
-    public function setOptions(array $options = [])
+    protected function setOptions(array $options = [])
     {
         curl_setopt_array($this->curl, $options);
 
@@ -88,36 +74,29 @@ class CurlAdapter implements HttpInterface
     }
 
     /**
-     * Get curl info key
-     *
-     * @access public
-     * @param  string $key
-     * @return string
-     */
-    public function getInfo($key)
-    {
-        return curl_getinfo($this->curl, $key);
-    }
-
-    /**
      * Close the curl resource
      *
      * @access public
      * @return void
      */
-    public function close()
+    protected function close()
     {
         curl_close($this->curl);
     }
 
-
     /**
      * Executes curl request
      *
+     * @param string $url
+     * @param array $options
      * @return array
      */
-    public function execute()
+    public function execute($url, array $options = [])
     {
-        return curl_exec($this->curl);
+        $this->init($url)->setOptions($options);
+        $res = curl_exec($this->curl);
+        $this->close();
+
+        return $res;
     }
 }

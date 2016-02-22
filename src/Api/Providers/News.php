@@ -17,10 +17,8 @@ class News extends Provider
     public function latest()
     {
         $data = ["options" => ['allow_state' => true]];
-        $request = Request::createRequestData($data);
-
-        $getString = UrlHelper::buildRequestString($request);
-        $response = $this->request->exec(UrlHelper::RESOURCE_GET_LATEST_NEWS."?{$getString}");
+        $query = Request::createQuery($data);
+        $response = $this->request->exec(UrlHelper::RESOURCE_GET_LATEST_NEWS . "?{$query}");
 
         return $this->response->getData($response);
     }

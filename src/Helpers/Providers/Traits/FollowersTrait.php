@@ -21,9 +21,7 @@ trait FollowersTrait
     public function getData($data, $url, $sourceUrl, $bookmarks = [])
     {
         $data['options'] = $data;
-        $get = Request::createRequestData($data, $sourceUrl, $bookmarks);
-        $getString = UrlHelper::buildRequestString($get);
-        $response = $this->getRequest()->exec($url.'?'.$getString);
+        $response = $this->getRequest()->exec($url . '?' . Request::createQuery($data, $sourceUrl, $bookmarks));
 
         return $this->getResponse()->getPaginationData($response);
     }
