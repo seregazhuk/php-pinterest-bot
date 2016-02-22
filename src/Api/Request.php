@@ -104,8 +104,6 @@ class Request implements RequestInterface
         $url = UrlHelper::buildApiUrl($resourceUrl);
         $this->makeHttpOptions($postString);
         $res = $this->http->execute($url, $this->options);
-
-        $this->http->close();
         return json_decode($res, true);
     }
 

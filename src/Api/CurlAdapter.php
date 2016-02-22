@@ -89,7 +89,7 @@ class CurlAdapter implements HttpInterface
      *
      * @param string $url
      * @param array $options
-     * @return array
+     * @return string
      */
     public function execute($url, array $options = [])
     {
