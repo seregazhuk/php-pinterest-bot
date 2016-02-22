@@ -2,7 +2,9 @@
 
 namespace seregazhuk\PinterestBot\Exceptions;
 
-class WrongProviderException extends \Exception
+use Exception;
+
+class WrongProviderException extends Exception
 {
 
 }
