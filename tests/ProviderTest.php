@@ -25,8 +25,9 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
 {
     use ReflectionHelper, ResponseHelper;
 
+    protected $httpMockMethods = ['exec', 'checkLoggedIn', 'isLoggedIn', 'followMethodCall'];
     protected $provider;
-    protected $providerClass = Provider::class;
+    protected $providerClass   = Provider::class;
     protected $mock;
 
     /**
@@ -34,10 +35,9 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
      */
     protected function createRequestMock()
     {
-        $methods = array_merge(['exec', 'checkLoggedIn', 'isLoggedIn', 'followMethodCall']);
-        $requestMock = Mockery::mock(Request::class)->shouldReceive($methods)->getMock();
-        $requestMock->shouldReceive('checkLoggedIn')->andReturn(true);
+        $requestMock = Mockery::mock(Request::class)->shouldReceive($this->httpMockMethods)->getMock();
 
+        $requestMock->shouldReceive('checkLoggedIn')->andReturn(true);
         $this->mock = $requestMock;
 
         return $this;
@@ -46,6 +46,7 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->createRequestMock()->createProviderInstance()->setUpReflection();
+
         parent::setUp();
     }
 
