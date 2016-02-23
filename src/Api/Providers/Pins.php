@@ -151,7 +151,7 @@ class Pins extends Provider
         ];
 
         $data = array("options" => $requestOptions);
-        $url = UrlHelper::RESOURCE_PIN_INFO . '?' . Request::createQuery($data);
+        $url = UrlHelper::RESOURCE_PIN_INFO.'?'.Request::createQuery($data);
         $response = $this->request->exec($url);
 
         return $this->response->checkResponse($response);
