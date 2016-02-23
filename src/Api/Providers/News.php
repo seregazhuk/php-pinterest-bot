@@ -18,7 +18,7 @@ class News extends Provider
     {
         $data = ["options" => ['allow_state' => true]];
         $query = Request::createQuery($data);
-        $response = $this->request->exec(UrlHelper::RESOURCE_GET_LATEST_NEWS . "?{$query}");
+        $response = $this->request->exec(UrlHelper::RESOURCE_GET_LATEST_NEWS."?{$query}");
 
         return $this->response->getData($response);
     }
