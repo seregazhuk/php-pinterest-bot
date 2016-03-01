@@ -186,7 +186,8 @@ $pinId = 123456789;
 $bot->conversations->sendMessage($userId, 'message text', $pinId);
 ```
 
-Send email. Email param may be string or array of emails.
+### Send email
+Email param may be string or array of emails.
 ```php
 $bot->conversations->sendEmail('mail@domain.com', 'message text');
 ```
