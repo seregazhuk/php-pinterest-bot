@@ -21,7 +21,7 @@ class Conversations extends Provider
      */
     public function sendMessage($userId = [], $text, $pinId = null)
     {
-        $userId = is_array($userId) ?: array($userId);
+        $userId = is_array($userId) ? $userId : array($userId);
 
         return $this->callSendMessage($userId, $text, $pinId);
     }
@@ -29,7 +29,7 @@ class Conversations extends Provider
     /**
      * Send email
      *
-     * @param array $emails
+     * @param array|int $emails
      * @param string $text
      * @param int|null $pinId
      * @return bool
@@ -37,7 +37,7 @@ class Conversations extends Provider
      */
     public function sendEmail($emails = [], $text, $pinId = null)
     {
-        $emails = is_array($emails) ?: array($emails);
+        $emails = is_array($emails) ? $emails : array($emails);
 
         return $this->callSendMessage([], $text, $pinId, $emails);
     }
