@@ -172,11 +172,21 @@ $bot->interests->follow($interestId);
 $bot->interests->unfollow($interestId);
 ```
 ##Conversations
-Write a message to user
+
+### Write a message
+Write a message to user by id. You may specify one user by id, or pass an array of user ids. 
 
 ```php
 $bot->conversations->sendMessage($userId, 'message text');
 ```
+
+Add pin by id to message
+```php
+$pinId = 123456789;
+$bot->conversations->sendMessage($userId, 'message text', $pinId);
+```
+
+Send email
 
 Get array of last conversations
 ```php

@@ -33,6 +33,20 @@ class ConversationsTest extends ProviderTest
     }
 
     /** @test */
+    public function sendEmail()
+    {
+        $response = $this->createMessageSendResponse();
+
+        $this->mock->shouldReceive('exec')->once()->andReturn($response);
+        $this->mock->shouldReceive('exec')->once()->andReturnNull();
+
+        $email = 'test@email.com';
+        $message = 'test';
+        $this->assertTrue($this->provider->sendEmail($email, $message));
+        $this->assertFalse($this->provider->sendEmail($email, $message));
+    }
+
+    /** @test */
     public function getLastConversation()
     {
         $lastConversations = array(
