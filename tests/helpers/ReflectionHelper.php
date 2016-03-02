@@ -11,6 +11,9 @@ trait ReflectionHelper
      */
     protected $reflection;
 
+    /**
+     * @var Object
+     */
     protected $reflectedObject;
 
     /**

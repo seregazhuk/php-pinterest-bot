@@ -3,6 +3,7 @@
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Api\ProvidersContainer;
+use seregazhuk\PinterestBot\Exceptions\WrongProviderException;
 
 /**
  * Class ProvidersContainerTest
@@ -39,12 +40,10 @@ class ProvidersContainerTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(Request::class, $this->container->getRequest());
     }
 
-    /**
-     * @test
-     * @expectedException \seregazhuk\PinterestBot\Exceptions\WrongProviderException
-     */
+    /** @test */
     public function getWrongProvider()
     {
+        $this->expectException(WrongProviderException::class);
         $this->container->getProvider('unknown');
     }
 }
