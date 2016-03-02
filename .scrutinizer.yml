@@ -3,8 +3,22 @@ build:
         php:
             version: 5.6.16
 
+    dependencies:
+        before:
+
+before_commands:
+  - 'composer install --prefer-source --no-interaction --dev'
+
 checks:
     php:
+       php:
+        uppercase_constants: true
+        return_doc_comments: true
+        remove_extra_empty_lines: true
+        properties_in_camelcaps: true
+        parameters_in_camelcaps: true
+        parameter_doc_comments: true
+        classes_in_camel_caps: true
         code_rating: true
         duplication: true
 
