@@ -1,7 +1,7 @@
 build:
     environment:
         php:
-            version: 5.5.0
+            version: 5.6.16
 
 checks:
     php:
