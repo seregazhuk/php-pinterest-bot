@@ -31,7 +31,7 @@ class CsrfHelper
 
     /**
      * @param string $line
-     * @return bool
+     * @return false|string
      */
     protected static function parseLineForToken($line)
     {
