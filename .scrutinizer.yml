@@ -3,11 +3,8 @@ build:
         php:
             version: 5.6.16
 
-    dependencies:
-        before:
-
 before_commands:
-  - 'composer install --prefer-source --no-interaction --dev'
+  - composer install --prefer-source --no-interaction --dev
 
 checks:
    php:
