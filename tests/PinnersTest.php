@@ -4,6 +4,7 @@ namespace seregazhuk\tests;
 
 use LogicException;
 use seregazhuk\PinterestBot\Api\Providers\Pinners;
+use seregazhuk\PinterestBot\Exceptions\AuthException;
 
 /**
  * Class PinnersTest
@@ -25,20 +26,26 @@ class PinnersTest extends ProviderTest
     public function followUser()
     {
         $response = $this->createSuccessApiResponse();
-        $this->mock->shouldReceive('followMethodCall')->andReturn($response);
+        $error = $this->createErrorApiResponse();
+
+        $this->mock->shouldReceive('followMethodCall')->once()->andReturn($response);
+        $this->mock->shouldReceive('followMethodCall')->once()->andReturn($error);
 
         $this->assertTrue($this->provider->follow(1));
-        $this->assertTrue($this->provider->follow(1));
+        $this->assertFalse($this->provider->follow(1));
     }
 
     /** @test */
     public function unFollowUser()
     {
         $response = $this->createSuccessApiResponse();
-        $this->mock->shouldReceive('followMethodCall')->andReturn($response);
+        $error = $this->createErrorApiResponse();
+
+        $this->mock->shouldReceive('followMethodCall')->once()->andReturn($response);
+        $this->mock->shouldReceive('followMethodCall')->once()->andReturn($error);
 
         $this->assertTrue($this->provider->unfollow(1));
-        $this->assertTrue($this->provider->unfollow(1));
+        $this->assertFalse($this->provider->unfollow(1));
     }
 
     /** @test */
@@ -124,12 +131,10 @@ class PinnersTest extends ProviderTest
         $this->assertCount($expectedResultsNum, $res[0]);
     }
 
-    /**
-     * @test
-     * @expectedException LogicException
-     */
+    /** @test */
     public function loginWithEmptyCredentials()
     {
+        $this->expectException(LogicException::class);
         $this->mock->shouldReceive('isLoggedIn')->once()->andReturn(false);
         $this->provider->login('', '');
     }
@@ -153,12 +158,11 @@ class PinnersTest extends ProviderTest
         $this->assertTrue($this->provider->login('test', 'test'));
     }
 
-    /**
-     * @test
-     * @expectedException \seregazhuk\PinterestBot\Exceptions\AuthException
-     */
+    /** @test */
     public function loginFails()
     {
+        $this->expectException(AuthException::class);
+
         $response = $this->createErrorApiResponse();
         $this->mock->shouldReceive('isLoggedIn')->andReturn(false);
         $this->mock->shouldReceive('exec')->andReturn($response);

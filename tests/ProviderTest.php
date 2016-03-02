@@ -3,20 +3,18 @@
 namespace seregazhuk\tests;
 
 use Mockery;
-use Mockery\MockInterface;
 use ReflectionClass;
+use Mockery\MockInterface;
 use PHPUnit_Framework_TestCase;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\tests\helpers\ResponseHelper;
-use PHPUnit_Framework_MockObject_MockObject;
 use seregazhuk\tests\helpers\ReflectionHelper;
 use seregazhuk\PinterestBot\Api\Providers\Provider;
 
 /**
  * Class ProviderTest
  * @package seregazhuk\tests
- * @property Provider $provider
  * @property string $providerClass
  * @property MockInterface $mock
  * @property ReflectionClass $reflection
@@ -26,8 +24,16 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
     use ReflectionHelper, ResponseHelper;
 
     protected $httpMockMethods = ['exec', 'checkLoggedIn', 'isLoggedIn', 'followMethodCall'];
-    protected $provider;
     protected $providerClass   = Provider::class;
+
+    /**
+     * @var Provider
+     */
+    protected $provider;
+
+    /**
+     * @var MockInterface
+     */
     protected $mock;
 
     /**
@@ -36,7 +42,6 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
     protected function createRequestMock()
     {
         $requestMock = Mockery::mock(Request::class)->shouldReceive($this->httpMockMethods)->getMock();
-
         $requestMock->shouldReceive('checkLoggedIn')->andReturn(true);
         $this->mock = $requestMock;
 
