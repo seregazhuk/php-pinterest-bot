@@ -1,4 +1,5 @@
 <?php
+
 namespace seregazhuk\PinterestBot\Api\Providers;
 
 use seregazhuk\PinterestBot\Api\Request;
@@ -10,73 +11,77 @@ class Conversations extends Provider
     protected $loginRequired = ['last', 'sendMessage', 'sendEmail'];
 
     /**
-     * Send message to a user
+     * Send message to a user.
      *
      * @param array|int $userId
-     * @param string $text
-     * @param int|null $pinId
-     * @return bool
+     * @param string    $text
+     * @param int|null  $pinId
      *
      * @throws InvalidRequestException
+     *
+     * @return bool
      */
-    public function sendMessage($userId = [], $text, $pinId = null)
+    public function sendMessage($userId, $text, $pinId = null)
     {
-        $userId = is_array($userId) ? $userId : array($userId);
+        $userId = is_array($userId) ? $userId : [$userId];
 
         return $this->callSendMessage($userId, $text, $pinId);
     }
 
     /**
-     * Send email
+     * Send email.
      *
      * @param array|int $emails
-     * @param string $text
-     * @param int|null $pinId
-     * @return bool
+     * @param string    $text
+     * @param int|null  $pinId
+     *
      * @throws InvalidRequestException
+     *
+     * @return bool
      */
-    public function sendEmail($emails = [], $text, $pinId = null)
+    public function sendEmail($emails, $text, $pinId = null)
     {
-        $emails = is_array($emails) ? $emails : array($emails);
+        $emails = is_array($emails) ? $emails : [$emails];
 
         return $this->callSendMessage([], $text, $pinId, $emails);
     }
 
     /**
-     * Get last user conversations
+     * Get last user conversations.
      *
      * @return array|bool
      */
     public function last()
     {
         $response = $this->request->exec(
-            UrlHelper::RESOURCE_GET_LAST_CONVERSATIONS . '?' . Request::createQuery()
+            UrlHelper::RESOURCE_GET_LAST_CONVERSATIONS.'?'.Request::createQuery()
         );
 
         return $this->response->getData($response);
     }
 
     /**
-     * @param array $userId
+     * @param array  $userId
      * @param string $text
-     * @param int $pinId
-     * @param array $emails
-     * @return bool
+     * @param int    $pinId
+     * @param array  $emails
      *
      * @throws InvalidRequestException
+     *
+     * @return bool
      */
-    protected function callSendMessage($userId = [], $text, $pinId, $emails = [])
+    protected function callSendMessage($userId, $text, $pinId, $emails = [])
     {
         if (empty($userId) && empty($emails)) {
             throw new InvalidRequestException('You must specify user_ids or emails to send message.');
         }
 
-        $requestOptions = array(
+        $requestOptions = [
             'pin'      => $pinId,
             'text'     => $text,
             'emails'   => $emails,
             'user_ids' => $userId,
-        );
+        ];
 
         return $this->callPostRequest($requestOptions, UrlHelper::RESOURCE_SEND_MESSAGE);
     }

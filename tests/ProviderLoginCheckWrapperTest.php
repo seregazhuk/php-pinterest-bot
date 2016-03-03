@@ -2,7 +2,6 @@
 
 namespace seregazhuk\tests;
 
-use Mockery;
 use seregazhuk\PinterestBot\Api\CurlAdapter;
 use seregazhuk\PinterestBot\Api\Providers\Provider;
 use seregazhuk\PinterestBot\Api\Providers\ProviderLoginCheckWrapper;
@@ -13,9 +12,9 @@ use seregazhuk\PinterestBot\Exceptions\InvalidRequestException;
 
 class ProviderLoginCheckWrapperTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
-     * For not logged in request
+     * For not logged in request.
+     *
      * @test
      */
     public function failWhenLoginIsRequired()

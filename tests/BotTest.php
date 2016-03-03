@@ -3,19 +3,15 @@
 namespace seregazhuk\tests;
 
 use Mockery;
-use ReflectionClass;
 use PHPUnit_Framework_TestCase;
 use seregazhuk\PinterestBot\Api\CurlAdapter;
 use seregazhuk\PinterestBot\Api\ProvidersContainer;
 use seregazhuk\PinterestBot\Api\Request;
-use seregazhuk\PinterestBot\Bot;
 use seregazhuk\PinterestBot\Api\Response;
-use seregazhuk\PinterestBot\Factories\PinterestBot;
-use seregazhuk\tests\helpers\ReflectionHelper;
+use seregazhuk\PinterestBot\Bot;
 
 /**
- * Class BotTest
- * @package seregazhuk\tests
+ * Class BotTest.
  */
 class BotTest extends PHPUnit_Framework_TestCase
 {
@@ -32,5 +28,4 @@ class BotTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals($error, $bot->getLastError());
     }
-
 }

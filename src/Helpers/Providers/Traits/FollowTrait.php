@@ -7,9 +7,10 @@ trait FollowTrait
     use ProviderTrait;
 
     /**
-     * Follow user by user_id
+     * Follow user by user_id.
      *
      * @param $entityId
+     *
      * @return bool
      */
     public function follow($entityId)
@@ -18,9 +19,10 @@ trait FollowTrait
     }
 
     /**
-     * UnFollow user by user_id
+     * UnFollow user by user_id.
      *
      * @param $entityId
+     *
      * @return bool
      */
     public function unFollow($entityId)
@@ -29,9 +31,11 @@ trait FollowTrait
     }
 
     /**
-     * Make api call for follow/unfollow a entity (user/board)
+     * Make api call for follow/unfollow a entity (user/board).
+     *
      * @param int    $entityId
      * @param string $resourceUrl
+     *
      * @return bool
      */
     protected function followCall($entityId, $resourceUrl)

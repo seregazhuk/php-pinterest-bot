@@ -1,13 +1,13 @@
-<?php 
+<?php
+
 
 namespace seregazhuk\tests;
 
 use seregazhuk\PinterestBot\Api\Providers\User;
 
 /**
- * Class UserTest
- * @package seregazhuk\tests
- */ 
+ * Class UserTest.
+ */
 class UserTest extends ProviderTest
 {
     /**
@@ -15,7 +15,6 @@ class UserTest extends ProviderTest
      */
     protected $provider;
     protected $providerClass = User::class;
-
 
     /** @test */
     public function editProfile()
@@ -26,9 +25,8 @@ class UserTest extends ProviderTest
         $this->mock->shouldReceive('exec')->once()->andReturn($response);
         $this->mock->shouldReceive('exec')->once()->andReturn($error);
 
-        $params = ['name'=>'name'];
+        $params = ['name' => 'name'];
         $this->assertTrue($this->provider->profile($params));
         $this->assertFalse($this->provider->profile($params));
     }
 }
-

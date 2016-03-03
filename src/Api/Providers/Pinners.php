@@ -8,10 +8,10 @@ use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Exceptions\AuthException;
 use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Helpers\Providers\Traits\FollowersTrait;
-use seregazhuk\PinterestBot\Helpers\UrlHelper;
-use seregazhuk\PinterestBot\Helpers\Requests\PinnerHelper;
-use seregazhuk\PinterestBot\Helpers\Providers\Traits\SearchTrait;
 use seregazhuk\PinterestBot\Helpers\Providers\Traits\FollowTrait;
+use seregazhuk\PinterestBot\Helpers\Providers\Traits\SearchTrait;
+use seregazhuk\PinterestBot\Helpers\Requests\PinnerHelper;
+use seregazhuk\PinterestBot\Helpers\UrlHelper;
 
 class Pinners extends Provider
 {
@@ -19,15 +19,16 @@ class Pinners extends Provider
 
     protected $loginRequired = [
         'follow',
-        'unFollow'
+        'unFollow',
     ];
 
     /**
      * Get user info.
      * If username param is not specified, will
-     * return info for logged user
+     * return info for logged user.
      *
      * @param string $username
+     *
      * @return null|array
      */
     public function info($username)
@@ -35,14 +36,15 @@ class Pinners extends Provider
         $res = $this->getPaginatedData($username, UrlHelper::RESOURCE_USER_INFO, "/$username/", 1);
         $res = iterator_to_array($res);
 
-        return ! empty($res) ? $res[0] : null;
+        return !empty($res) ? $res[0] : null;
     }
 
     /**
-     * Get pinner followers
+     * Get pinner followers.
      *
      * @param string $username
-     * @param int $batchesLimit
+     * @param int    $batchesLimit
+     *
      * @return Iterator
      */
     public function followers($username, $batchesLimit = 0)
@@ -53,10 +55,11 @@ class Pinners extends Provider
     }
 
     /**
-     * Get pinner following other pinners
+     * Get pinner following other pinners.
      *
      * @param string $username
-     * @param int $batchesLimit
+     * @param int    $batchesLimit
+     *
      * @return Iterator
      */
     public function following($username, $batchesLimit = 0)
@@ -67,10 +70,11 @@ class Pinners extends Provider
     }
 
     /**
-     * Get pinner pins
+     * Get pinner pins.
      *
      * @param string $username
-     * @param int $batchesLimit
+     * @param int    $batchesLimit
+     *
      * @return Iterator
      */
     public function pins($username, $batchesLimit = 0)
@@ -81,12 +85,14 @@ class Pinners extends Provider
     }
 
     /**
-     * Login as pinner
+     * Login as pinner.
      *
      * @param string $username
      * @param string $password
-     * @return bool
+     *
      * @throws AuthException
+     *
+     * @return bool
      */
     public function login($username, $password)
     {
@@ -102,28 +108,29 @@ class Pinners extends Provider
 
         $response = $this->request->exec(UrlHelper::RESOURCE_LOGIN, $postString);
         $result = $this->response->checkErrorInResponse($response);
-        if ( ! $result) {
+        if (!$result) {
             throw new AuthException($this->response->getLastError()['message']);
         }
         $this->request->setLoggedIn();
+
         return $result;
     }
 
     /**
-     * Validates password and login
+     * Validates password and login.
      *
      * @param string $username
      * @param string $password
      */
     protected function checkCredentials($username, $password)
     {
-        if ( ! $username || ! $password) {
+        if (!$username || !$password) {
             throw new LogicException('You must set username and password to login.');
         }
     }
 
     /**
-     * Search scope
+     * Search scope.
      *
      * @return string
      */
@@ -138,7 +145,7 @@ class Pinners extends Provider
     }
 
     /**
-     * Follow resource
+     * Follow resource.
      *
      * @return string
      */
@@ -148,7 +155,8 @@ class Pinners extends Provider
     }
 
     /**
-     * UnFollow resource
+     * UnFollow resource.
+     *
      * @return string
      */
     protected function getUnfFollowUrl()
@@ -157,13 +165,14 @@ class Pinners extends Provider
     }
 
     /**
-     * Wrapper over Pagination::getPaginatedData for 
+     * Wrapper over Pagination::getPaginatedData for
      * high-level functions, such as 'following', 'pins' and others.
      *
      * @param string $username
      * @param string $url
      * @param string $sourceUrl
-     * @param integer $batchesLimit
+     * @param int    $batchesLimit
+     *
      * @return Iterator
      */
     protected function getPaginatedData($username, $url, $sourceUrl, $batchesLimit)
@@ -171,7 +180,7 @@ class Pinners extends Provider
         $data = [
             ['username' => $username],
             $url,
-            $sourceUrl
+            $sourceUrl,
         ];
 
         return Pagination::getPaginatedData([$this, 'getData'], $data, $batchesLimit);

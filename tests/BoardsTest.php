@@ -5,8 +5,7 @@ namespace seregazhuk\tests;
 use seregazhuk\PinterestBot\Api\Providers\Boards;
 
 /**
- * Class BoardsTest
- * @package seregazhuk\tests
+ * Class BoardsTest.
  */
 class BoardsTest extends ProviderTest
 {

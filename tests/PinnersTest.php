@@ -7,8 +7,7 @@ use seregazhuk\PinterestBot\Api\Providers\Pinners;
 use seregazhuk\PinterestBot\Exceptions\AuthException;
 
 /**
- * Class PinnersTest
- * @package seregazhuk\tests
+ * Class PinnersTest.
  */
 class PinnersTest extends ProviderTest
 {
