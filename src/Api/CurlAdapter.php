@@ -5,25 +5,23 @@ namespace seregazhuk\PinterestBot\Api;
 use seregazhuk\PinterestBot\Contracts\HttpInterface;
 
 /**
- * Class CurlAdapter
+ * Class CurlAdapter.
  *
- * @package seregazhuk\PinterestBot
  * @property string $cookieJar
  * @property string $cookePath
  */
 class CurlAdapter implements HttpInterface
 {
     /**
-     * Contains the curl instance
+     * Contains the curl instance.
      *
      * @var resource
      */
     private $curl;
 
     /**
-     * Initializes curl resource
+     * Initializes curl resource.
      *
-     * @access public
      * @param string $url
      *
      * @return $this
@@ -35,12 +33,11 @@ class CurlAdapter implements HttpInterface
         return $this;
     }
 
-
     /**
-     * Sets multiple options at the same time
+     * Sets multiple options at the same time.
      *
-     * @access public
-     * @param  array $options
+     * @param array $options
+     *
      * @return static
      */
     protected function setOptions(array $options = [])
@@ -50,12 +47,10 @@ class CurlAdapter implements HttpInterface
         return $this;
     }
 
-
     /**
-     * Check if the curl request ended up with errors
+     * Check if the curl request ended up with errors.
      *
-     * @access public
-     * @return boolean
+     * @return bool
      */
     public function hasErrors()
     {
@@ -63,9 +58,8 @@ class CurlAdapter implements HttpInterface
     }
 
     /**
-     * Get curl errors
+     * Get curl errors.
      *
-     * @access public
      * @return string
      */
     public function getErrors()
@@ -74,9 +68,8 @@ class CurlAdapter implements HttpInterface
     }
 
     /**
-     * Close the curl resource
+     * Close the curl resource.
      *
-     * @access public
      * @return void
      */
     protected function close()
@@ -85,10 +78,11 @@ class CurlAdapter implements HttpInterface
     }
 
     /**
-     * Executes curl request
+     * Executes curl request.
      *
      * @param string $url
-     * @param array $options
+     * @param array  $options
+     *
      * @return string
      */
     public function execute($url, array $options = [])

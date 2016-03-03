@@ -12,12 +12,13 @@ trait ReflectionHelper
     protected $reflection;
 
     /**
-     * @var Object
+     * @var object
      */
     protected $reflectedObject;
 
     /**
      * @param $property
+     *
      * @return mixed
      */
     public function getProperty($property)

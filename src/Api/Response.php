@@ -17,14 +17,16 @@ class Response implements ResponseInterface
     protected $lastError;
 
     /**
-     * Check if specified data exists in response
+     * Check if specified data exists in response.
+     *
      * @param array $response
-     * @param null $key
+     * @param null  $key
+     *
      * @return array|bool
      */
     public function getData($response, $key = null)
     {
-        if ( ! $this->checkErrorInResponse($response)) {
+        if (!$this->checkErrorInResponse($response)) {
             return false;
         }
 
@@ -33,10 +35,11 @@ class Response implements ResponseInterface
 
     /**
      * Parse data from Pinterest Api response.
-     * Data stores in ['resource_response']['data'] array
+     * Data stores in ['resource_response']['data'] array.
      *
-     * @param array $response
+     * @param array  $response
      * @param string $key
+     *
      * @return bool|array
      */
     protected function parseData($response, $key)
@@ -55,23 +58,25 @@ class Response implements ResponseInterface
     }
 
     /**
-     * Checks if response is not empty
+     * Checks if response is not empty.
      *
      * @param array $response
+     *
      * @return bool
      */
     public function notEmpty($response)
     {
-        return ! empty($this->getData($response));
+        return !empty($this->getData($response));
     }
 
     /**
      * @param array $response
+     *
      * @return bool
      */
     public function checkResponse($response)
     {
-        return ($this->notEmpty($response) && $this->checkErrorInResponse($response));
+        return $this->notEmpty($response) && $this->checkErrorInResponse($response);
     }
 
     /**
@@ -79,14 +84,16 @@ class Response implements ResponseInterface
      * it.
      *
      * @param array $response
+     *
      * @return bool
      */
     public function checkErrorInResponse($response)
     {
         $this->lastError = null;
 
-        if (isset($response['resource_response']['error']) && ! empty($response['resource_response']['error'])) {
+        if (isset($response['resource_response']['error']) && !empty($response['resource_response']['error'])) {
             $this->lastError = $response['resource_response']['error'];
+
             return false;
         }
 
@@ -94,20 +101,20 @@ class Response implements ResponseInterface
     }
 
     /**
-     * Parse bookmarks from response
+     * Parse bookmarks from response.
+     *
      * @param array $response
+     *
      * @return array|null
      */
     public function getBookmarksFromResponse($response)
     {
-        if ( ! $this->checkErrorInResponse($response)) {
-            return null;
+        if (!$this->checkErrorInResponse($response)) {
+            return;
         }
         if (isset($response['resource']['options']['bookmarks'][0])) {
             return [$response['resource']['options']['bookmarks'][0]];
         }
-
-        return null;
     }
 
     /**
@@ -115,11 +122,12 @@ class Response implements ResponseInterface
      * with bookmarks info from it.
      *
      * @param array $response
+     *
      * @return array
      */
     public function getPaginationData($response)
     {
-        if ( ! $this->checkResponse($response)) {
+        if (!$this->checkResponse($response)) {
             return [];
         }
 
@@ -133,15 +141,16 @@ class Response implements ResponseInterface
 
     /**
      * Parses Pinterest search API response for data and bookmarks
-     * for next pagination page
+     * for next pagination page.
      *
      * @param array $response
      * @param bool  $bookmarksUsed
+     *
      * @return array|null
      */
     public function parseSearchResponse($response, $bookmarksUsed = true)
     {
-        if ($response === null || ! $bookmarksUsed) {
+        if ($response === null || !$bookmarksUsed) {
             return self::parseSimpledSearchResponse($response);
         }
 
@@ -150,9 +159,10 @@ class Response implements ResponseInterface
 
     /**
      * Parses simple Pinterest search API response
-     * on request with bookmarks
+     * on request with bookmarks.
      *
      * @param array $response
+     *
      * @return array
      */
     public function parseSimpledSearchResponse($response)
@@ -162,7 +172,7 @@ class Response implements ResponseInterface
             $bookmarks = $response['module']['tree']['resource']['options']['bookmarks'][0];
         }
 
-        if ( ! empty($response['module']['tree']['data']['results'])) {
+        if (!empty($response['module']['tree']['data']['results'])) {
             return ['data' => $response['module']['tree']['data']['results'], 'bookmarks' => [$bookmarks]];
         }
 

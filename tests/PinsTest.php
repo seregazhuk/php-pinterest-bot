@@ -5,8 +5,7 @@ namespace seregazhuk\tests;
 use seregazhuk\PinterestBot\Api\Providers\Pins;
 
 /**
- * Class PinsTest
- * @package seregazhuk\tests
+ * Class PinsTest.
  */
 class PinsTest extends ProviderTest
 {
@@ -135,22 +134,25 @@ class PinsTest extends ProviderTest
     }
 
     /**
-     * Creates a pin creation response from Pinterest
+     * Creates a pin creation response from Pinterest.
+     *
      * @return array
      */
     protected function createPinCreationResponse()
     {
-        $data = array('data' => array('id' => 1));
+        $data = ['data' => ['id' => 1]];
 
         return $this->createApiResponse($data);
     }
 
     /**
-     * Creates a response from Pinterest
+     * Creates a response from Pinterest.
+     *
      * @param array $data
+     *
      * @return array
      */
-    protected function createApiResponse($data = ['data'=>'success'])
+    protected function createApiResponse($data = ['data' => 'success'])
     {
         return parent::createApiResponse($data);
     }

@@ -4,8 +4,8 @@ namespace seregazhuk\PinterestBot\Api\Providers;
 
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
 
-class User extends Provider {
-
+class User extends Provider
+{
     protected $loginRequired = ['profile'];
 
     /**
@@ -14,11 +14,11 @@ class User extends Provider {
      * 'last_name', 'first_name', 'username', 'about', 'location' and 'website_url'.
      *
      * @param array $userInfo
+     *
      * @return mixed
      */
     public function profile($userInfo)
     {
         return $this->callPostRequest($userInfo, UrlHelper::RESOURCE_UPDATE_USER_SETTINGS);
     }
-
 }

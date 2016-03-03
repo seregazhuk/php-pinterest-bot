@@ -10,13 +10,13 @@ class News extends Provider
     protected $loginRequired = ['latest'];
 
     /**
-     * Get user's latest news array
+     * Get user's latest news array.
      *
      * @return array
      */
     public function latest()
     {
-        $data = ["options" => ['allow_state' => true]];
+        $data = ['options' => ['allow_state' => true]];
         $query = Request::createQuery($data);
         $response = $this->request->exec(UrlHelper::RESOURCE_GET_LATEST_NEWS."?{$query}");
 

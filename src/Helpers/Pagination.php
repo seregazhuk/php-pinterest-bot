@@ -13,6 +13,7 @@ class Pagination
      * @param callable $callback
      * @param array    $params
      * @param int      $batchesLimit
+     *
      * @return \Iterator
      */
     public static function getPaginatedData($callback, $params, $batchesLimit = 0)
@@ -32,8 +33,7 @@ class Pagination
             if (self::checkEndBookMarks($params['bookmarks'])) {
                 return;
             }
-
-        } while ( ! self::reachBatchesLimit($batchesLimit, $batchesNum));
+        } while (!self::reachBatchesLimit($batchesLimit, $batchesNum));
     }
 
     protected static function getPaginatedResponse(callable $callback, array $params)
@@ -59,17 +59,20 @@ class Pagination
 
     /**
      * @param array $res
+     *
      * @return bool
      */
     protected static function responseHasData($res)
     {
-        return isset($res['data']) && ! empty($res['data']);
+        return isset($res['data']) && !empty($res['data']);
     }
 
     /**
-     * Check if we get batches limit in pagination
+     * Check if we get batches limit in pagination.
+     *
      * @param int $batchesLimit
      * @param int $batchesNum
+     *
      * @return bool
      */
     protected static function reachBatchesLimit($batchesLimit, $batchesNum)
@@ -78,8 +81,10 @@ class Pagination
     }
 
     /**
-     * Remove 'module' data from response
+     * Remove 'module' data from response.
+     *
      * @param array $res
+     *
      * @return array mixed
      */
     protected static function clearResponseFromMetaData($res)
@@ -93,6 +98,7 @@ class Pagination
 
     /**
      * @param $response
+     *
      * @return array
      */
     protected static function getBookMarks($response)
@@ -102,6 +108,6 @@ class Pagination
 
     protected static function checkEndBookMarks($bookmarks)
     {
-        return ! empty($bookmarks) && $bookmarks[0] == '-end-';
+        return !empty($bookmarks) && $bookmarks[0] == '-end-';
     }
 }
