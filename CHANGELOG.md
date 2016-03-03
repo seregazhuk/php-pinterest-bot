@@ -1,4 +1,16 @@
-## 2016-03-01
+# Change Log
+All notable changes to this project will be documented in this file.
+
+## [2.4.2] - 2016-03-03
+### Fixed:
+- Login requirements check for some methods
+
+## [2.4.1] - 2016-03-01
+### Fixed:
+- sendMessage, sendMail array bugs fix
+
+## [2.4.0] - 2016-03-01
+### Added:
 1. Changes in sendMessage:
 	- Many users at once
 	- Add pin to message

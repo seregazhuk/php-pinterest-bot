@@ -25,9 +25,10 @@
 		"ext-curl": "*"
 	},
 	"require-dev": {
-        "phpunit/phpunit": "*",
         "codeclimate/php-test-reporter": "dev-master",
-        "mockery/mockery": "*"
+        "mockery/mockery": "*",
+        "phpunit/phpunit": "*",
+        "humbug/humbug": "dev-master"
 	},
 	"authors": [
 		{

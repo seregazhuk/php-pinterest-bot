@@ -4,7 +4,6 @@ namespace seregazhuk\PinterestBot\Api\Providers;
 
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
-use seregazhuk\PinterestBot\Exceptions\AuthException;
 use seregazhuk\PinterestBot\Contracts\RequestInterface;
 use seregazhuk\PinterestBot\Contracts\ResponseInterface;
 use seregazhuk\PinterestBot\Helpers\Providers\Traits\ProviderTrait;
@@ -56,7 +55,7 @@ abstract class Provider
      * @param bool   $returnData
      * @return mixed
      */
-    public function callPostRequest($requestOptions, $resourceUrl, $returnData = null)
+    public function callPostRequest($requestOptions, $resourceUrl, $returnData = false)
     {
         $data = array("options" => $requestOptions);
         $postString = Request::createQuery($data);
@@ -70,39 +69,9 @@ abstract class Provider
     }
 
     /**
-     * Run login check before every method if needed
-     *
-     * @param $method
-     * @param $arguments
-     * @return mixed
-     */
-    public function __call($method, $arguments)
-    {
-        if (method_exists($this, $method)) {
-            $this->checkMethodForLoginRequired($method);
-
-            return call_user_func_array(array($this, $method), $arguments);
-        }
-    }
-
-    /**
-     * Checks if method requires login and if true,
-     * checks logged in status.
-     *
-     * @param $method
-     * @throws AuthException if is not logged in
-     */
-    protected function checkMethodForLoginRequired($method)
-    {
-        if (in_array($method, $this->loginRequired) && ! $this->request->isLoggedIn()) {
-            throw new AuthException("You must log in before.");
-        }
-    }
-
-    /**
      * @return Request
      */
-    protected function getRequest()
+    public function getRequest()
     {
         return $this->request;
     }
@@ -110,8 +79,17 @@ abstract class Provider
     /**
      * @return Response
      */
-    protected function getResponse()
+    public function getResponse()
     {
         return $this->response;
+    }
+
+    /**
+     * @param string $method
+     * @return bool
+     */
+    public function checkMethodRequiresLogin($method)
+    {
+        return in_array($method, $this->loginRequired);
     }
 }

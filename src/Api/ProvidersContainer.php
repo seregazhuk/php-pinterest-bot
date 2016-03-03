@@ -8,6 +8,7 @@ use seregazhuk\PinterestBot\Contracts\RequestInterface;
 use seregazhuk\PinterestBot\Contracts\ResponseInterface;
 use seregazhuk\PinterestBot\Exceptions\WrongProviderException;
 use seregazhuk\PinterestBot\Contracts\ProvidersContainerInterface;
+use seregazhuk\PinterestBot\Api\Providers\ProviderLoginCheckWrapper;
 
 class ProvidersContainer implements ProvidersContainerInterface
 {
@@ -91,7 +92,9 @@ class ProvidersContainer implements ProvidersContainerInterface
             throw new WrongProviderException("Provider $className is not instantiable.");
         }
 
-        return $ref->newInstanceArgs([$this->request, $this->response]);
+        $provider = $ref->newInstanceArgs([$this->request, $this->response]);
+
+        return new ProviderLoginCheckWrapper($provider);
     }
 
     /**

@@ -18,9 +18,7 @@ class User extends Provider {
      */
     public function profile($userInfo)
     {
-        return $this->callPostRequest(
-            $userInfo, UrlHelper::RESOURCE_UPDATE_USER_SETTINGS
-        );
+        return $this->callPostRequest($userInfo, UrlHelper::RESOURCE_UPDATE_USER_SETTINGS);
     }
 
 }
