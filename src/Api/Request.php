@@ -2,15 +2,14 @@
 
 namespace seregazhuk\PinterestBot\Api;
 
-use seregazhuk\PinterestBot\Helpers\UrlHelper;
-use seregazhuk\PinterestBot\Helpers\CsrfHelper;
 use seregazhuk\PinterestBot\Contracts\HttpInterface;
 use seregazhuk\PinterestBot\Contracts\RequestInterface;
+use seregazhuk\PinterestBot\Helpers\CsrfHelper;
+use seregazhuk\PinterestBot\Helpers\UrlHelper;
 
 /**
- * Class Request
+ * Class Request.
  *
- * @package Pinterest
  * @property resource $ch
  * @property bool     $loggedIn
  * @property string   $userAgent
@@ -33,10 +32,10 @@ class Request implements RequestInterface
     protected $cookieJar;
     protected $options;
 
-    public $csrfToken = "";
+    public $csrfToken = '';
 
     /**
-     * Common headers needed for every query
+     * Common headers needed for every query.
      *
      * @var array
      */
@@ -54,7 +53,7 @@ class Request implements RequestInterface
 
     /**
      * @param HttpInterface $http
-     * @param string|null $userAgent
+     * @param string|null   $userAgent
      */
     public function __construct(HttpInterface $http, $userAgent = null)
     {
@@ -66,54 +65,58 @@ class Request implements RequestInterface
     }
 
     /**
-     * Executes api call for follow or unfollow user
+     * Executes api call for follow or unfollow user.
      *
      * @param int    $entityId
      * @param string $entityName
      * @param string $url
+     *
      * @return array
      */
     public function followMethodCall($entityId, $entityName, $url)
     {
         $dataJson = [
-            "options" => [
+            'options' => [
                 $entityName => $entityId,
             ],
-            "context" => [],
+            'context' => [],
         ];
 
         if ($entityName == self::INTEREST_ENTITY_ID) {
-            $dataJson["options"]["interest_list"] = "favorited";
+            $dataJson['options']['interest_list'] = 'favorited';
         }
 
-        $post = ["data" => json_encode($dataJson, JSON_FORCE_OBJECT)];
+        $post = ['data' => json_encode($dataJson, JSON_FORCE_OBJECT)];
         $postString = UrlHelper::buildRequestString($post);
 
         return $this->exec($url, $postString);
     }
 
     /**
-     * Executes request to Pinterest API
+     * Executes request to Pinterest API.
      *
      * @param string $resourceUrl
      * @param string $postString
+     *
      * @return array
      */
-    public function exec($resourceUrl, $postString = "")
+    public function exec($resourceUrl, $postString = '')
     {
         $url = UrlHelper::buildApiUrl($resourceUrl);
         $this->makeHttpOptions($postString);
         $res = $this->http->execute($url, $this->options);
+
         return json_decode($res, true);
     }
 
     /**
-     * Adds necessary curl options for query
+     * Adds necessary curl options for query.
      *
      * @param string $postString POST query string
+     *
      * @return $this
      */
-    protected function makeHttpOptions($postString = "")
+    protected function makeHttpOptions($postString = '')
     {
         $this->setDefaultHttpOptions();
 
@@ -121,7 +124,7 @@ class Request implements RequestInterface
             $this->options = $this->addDefaultCsrfInfo($this->options);
         }
 
-        if ( ! empty($postString)) {
+        if (!empty($postString)) {
             $this->options[CURLOPT_POST] = true;
             $this->options[CURLOPT_POSTFIELDS] = $postString;
         }
@@ -130,7 +133,8 @@ class Request implements RequestInterface
     }
 
     /**
-     * Clear token information
+     * Clear token information.
+     *
      * @return $this
      */
     public function clearToken()
@@ -141,14 +145,14 @@ class Request implements RequestInterface
     }
 
     /**
-     * Mark api as logged
+     * Mark api as logged.
      *
      * @return $this
      */
     public function setLoggedIn()
     {
         $this->csrfToken = CsrfHelper::getTokenFromFile($this->cookieJar);
-        if ( ! empty($this->csrfToken)) {
+        if (!empty($this->csrfToken)) {
             $this->loggedIn = true;
         }
 
@@ -156,7 +160,7 @@ class Request implements RequestInterface
     }
 
     /**
-     * Get log status
+     * Get log status.
      *
      * @return bool
      */
@@ -166,16 +170,17 @@ class Request implements RequestInterface
     }
 
     /**
-     * Create request string
+     * Create request string.
      *
-     * @param array $data
+     * @param array  $data
      * @param string $sourceUrl
-     * @param array $bookmarks
+     * @param array  $bookmarks
+     *
      * @return string
      */
     public static function createQuery(array $data = [], $sourceUrl = '/', $bookmarks = [])
     {
-        $request = Request::createRequestData($data, $sourceUrl, $bookmarks);
+        $request = self::createRequestData($data, $sourceUrl, $bookmarks);
 
         return UrlHelper::buildRequestString($request);
     }
@@ -184,6 +189,7 @@ class Request implements RequestInterface
      * @param array|object $data
      * @param string|null  $sourceUrl
      * @param array        $bookmarks
+     *
      * @return array
      */
     public static function createRequestData(array $data = [], $sourceUrl = '/', $bookmarks = [])
@@ -192,15 +198,15 @@ class Request implements RequestInterface
             $data = self::createEmptyRequestData();
         }
 
-        if ( ! empty($bookmarks)) {
-            $data["options"]["bookmarks"] = $bookmarks;
+        if (!empty($bookmarks)) {
+            $data['options']['bookmarks'] = $bookmarks;
         }
 
-        $data["context"] = new \stdClass();
+        $data['context'] = new \stdClass();
 
         return [
-            "source_url" => $sourceUrl,
-            "data"       => json_encode($data),
+            'source_url' => $sourceUrl,
+            'data'       => json_encode($data),
         ];
     }
 
@@ -209,7 +215,7 @@ class Request implements RequestInterface
      */
     protected static function createEmptyRequestData()
     {
-        return array('options' => []);
+        return ['options' => []];
     }
 
     /**
@@ -240,6 +246,7 @@ class Request implements RequestInterface
 
     /**
      * @param array $options
+     *
      * @return mixed
      */
     protected function addDefaultCsrfInfo($options)

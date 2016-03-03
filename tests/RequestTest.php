@@ -2,23 +2,18 @@
 
 namespace szhuk\tests;
 
-use LogicException;
 use Mockery;
-use org\bovigo\vfs\vfsStream;
-use org\bovigo\vfs\vfsStreamDirectory;
-use org\bovigo\vfs\vfsStreamWrapper;
 use PHPUnit_Framework_TestCase;
 use ReflectionClass;
-use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\CurlAdapter;
+use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Contracts\HttpInterface;
 use seregazhuk\PinterestBot\Helpers\CsrfHelper;
-use seregazhuk\tests\helpers\ResponseHelper;
 use seregazhuk\tests\helpers\ReflectionHelper;
+use seregazhuk\tests\helpers\ResponseHelper;
 
 /**
- * Class RequestTest
- * @package szhuk\tests
+ * Class RequestTest.
  */
 class RequestTest extends PHPUnit_Framework_TestCase
 {
@@ -26,7 +21,8 @@ class RequestTest extends PHPUnit_Framework_TestCase
 
     /**
      * @param HttpInterface $http
-     * @param string $userAgentString
+     * @param string        $userAgentString
+     *
      * @return Request
      */
     protected function createRequestObject(HttpInterface $http = null, $userAgentString = '')
@@ -99,6 +95,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
     protected function getHttpMock()
     {
         $mock = Mockery::mock(HttpInterface::class);
+
         return $mock;
     }
 
@@ -131,10 +128,10 @@ class RequestTest extends PHPUnit_Framework_TestCase
             'source_url' => '/',
             'data'       => json_encode(
                 [
-                    "options" => [],
-                    "context" => new \stdClass()
+                    'options' => [],
+                    'context' => new \stdClass(),
                 ]
-            )
+            ),
         ];
 
         $object = $this->createRequestObject();
@@ -172,8 +169,8 @@ class RequestTest extends PHPUnit_Framework_TestCase
     /** @test */
     public function setLoggedIn()
     {
-        $cookieFile = __DIR__ . '/../' . Request::COOKIE_NAME;
-        $token = "WfdvEjNSLYiykJHDIx4sGSpCS8OhUld0";
+        $cookieFile = __DIR__.'/../'.Request::COOKIE_NAME;
+        $token = 'WfdvEjNSLYiykJHDIx4sGSpCS8OhUld0';
         file_put_contents(
             $cookieFile, ".pinterest.com	TRUE	/	TRUE	1488295594	csrftoken	$token"
         );

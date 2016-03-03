@@ -8,6 +8,7 @@ interface ProvidersContainerInterface
 {
     /**
      * @param string $provider
+     *
      * @return Provider
      */
     public function getProvider($provider);

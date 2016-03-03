@@ -9,36 +9,35 @@ use seregazhuk\PinterestBot\Contracts\ResponseInterface;
 use seregazhuk\PinterestBot\Helpers\Providers\Traits\ProviderTrait;
 
 /**
- * Class Provider
- *
- * @package seregazhuk\PinterestBot\Contracts
+ * Class Provider.
  */
 abstract class Provider
 {
     use ProviderTrait;
 
     /**
-     * List of methods that require logged status
+     * List of methods that require logged status.
+     *
      * @var array
      */
     protected $loginRequired = [];
 
     /**
-     * Instance of the API RequestInterface
+     * Instance of the API RequestInterface.
      *
      * @var RequestInterface
      */
     protected $request;
 
     /**
-     * Instance of the API ResponseInterface
+     * Instance of the API ResponseInterface.
      *
      * @var ResponseInterface
      */
     protected $response;
 
     /**
-     * @param RequestInterface $request
+     * @param RequestInterface  $request
      * @param ResponseInterface $response
      */
     public function __construct(RequestInterface $request, ResponseInterface $response)
@@ -48,16 +47,17 @@ abstract class Provider
     }
 
     /**
-     * Executes a POST request to Pinterest API
+     * Executes a POST request to Pinterest API.
      *
      * @param array  $requestOptions
      * @param string $resourceUrl
      * @param bool   $returnData
+     *
      * @return mixed
      */
     public function callPostRequest($requestOptions, $resourceUrl, $returnData = false)
     {
-        $data = array("options" => $requestOptions);
+        $data = ['options' => $requestOptions];
         $postString = Request::createQuery($data);
         $response = $this->request->exec($resourceUrl, $postString);
 
@@ -86,6 +86,7 @@ abstract class Provider
 
     /**
      * @param string $method
+     *
      * @return bool
      */
     public function checkMethodRequiresLogin($method)

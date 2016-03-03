@@ -18,21 +18,22 @@ class ProviderLoginCheckWrapper
     }
 
     /**
-     * Run login check before every method if needed
+     * Run login check before every method if needed.
      *
      * @param $method
      * @param $arguments
-     * @return mixed|null
-     * @throws AuthException
      *
+     * @throws AuthException
      * @throws InvalidRequestException
+     *
+     * @return mixed|null
      */
     public function __call($method, $arguments)
     {
         if (method_exists($this->provider, $method)) {
             $this->checkMethodForLoginRequired($method);
 
-            return call_user_func_array(array($this->provider, $method), $arguments);
+            return call_user_func_array([$this->provider, $method], $arguments);
         }
         throw new InvalidRequestException("Method $method does'n exist.");
     }
@@ -42,6 +43,7 @@ class ProviderLoginCheckWrapper
      * checks logged in status.
      *
      * @param $method
+     *
      * @throws AuthException if is not logged in
      */
     protected function checkMethodForLoginRequired($method)
@@ -50,7 +52,7 @@ class ProviderLoginCheckWrapper
         $methodRequiresLogin = $this->provider->checkMethodRequiresLogin($method);
 
         if ($methodRequiresLogin && !$isLoggedIn) {
-            throw new AuthException("You must log in before.");
+            throw new AuthException('You must log in before.');
         }
     }
 }
