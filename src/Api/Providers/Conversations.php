@@ -61,7 +61,7 @@ class Conversations extends Provider
      * @param string $text
      * @param int $pinId
      * @param array $emails
-     * @return mixed
+     * @return bool
      *
      * @throws InvalidRequestException
      */

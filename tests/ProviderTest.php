@@ -63,7 +63,7 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return static
+     * @return self
      */
     protected function createProviderInstance()
     {

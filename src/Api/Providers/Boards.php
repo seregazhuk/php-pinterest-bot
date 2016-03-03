@@ -113,7 +113,7 @@ class Boards extends Provider
      * Delete your board by ID
      *
      * @param int $boardId
-     * @return array|bool
+     * @return bool
      */
     public function delete($boardId)
     {
@@ -126,7 +126,7 @@ class Boards extends Provider
      * @param string $name
      * @param string $description
      * @param string $privacy Can be 'public' or 'secret'. 'public' by default.
-     * @return array|bool
+     * @return bool
      */
     public function create($name, $description, $privacy = 'public')
     {
