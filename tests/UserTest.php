@@ -1,6 +1,5 @@
 <?php
 
-
 namespace seregazhuk\tests;
 
 use seregazhuk\PinterestBot\Api\Providers\User;
