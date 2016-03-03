@@ -3,26 +3,27 @@
 namespace seregazhuk\tests\helpers;
 
 /**
- * Class ResponseHelper
+ * Class ResponseHelper.
  *
  * Helper for creating different dummy responses for testing
- *
- * @package seregazhuk\tests\helpers
  */
 trait ResponseHelper
 {
     /**
-     * Create a dummy response from Pinterest
+     * Create a dummy response from Pinterest.
+     *
      * @param array $data
+     *
      * @return array
      */
     protected function createApiResponse($data = [])
     {
-        return array('resource_response' => $data);
+        return ['resource_response' => $data];
     }
 
     /**
-     * Create a success dummy response
+     * Create a success dummy response.
+     *
      * @return array
      */
     protected function createSuccessApiResponse()
@@ -31,7 +32,8 @@ trait ResponseHelper
     }
 
     /**
-     * Create an error dummy response
+     * Create an error dummy response.
+     *
      * @return array
      */
     protected function createErrorApiResponse()
@@ -39,14 +41,15 @@ trait ResponseHelper
         return $this->createApiResponse(
             [
                 'error' => [
-                    'message' => 'error'
-                ]
+                    'message' => 'error',
+                ],
             ]
         );
     }
 
     /**
-     * Create a not found dummy response
+     * Create a not found dummy response.
+     *
      * @return array
      */
     protected function createNotFoundApiResponse()
@@ -58,7 +61,8 @@ trait ResponseHelper
     }
 
     /**
-     * Create a dummy paginated response
+     * Create a dummy paginated response.
+     *
      * @return array
      */
     protected function createPaginatedResponse()

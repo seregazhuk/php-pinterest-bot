@@ -8,29 +8,28 @@ class CsrfHelper
     const DEFAULT_TOKEN = '1234';
 
     /**
-     * Get a CSRF token from the given cookie file
+     * Get a CSRF token from the given cookie file.
      *
      * @param string $file
+     *
      * @return string|null
      */
     public static function getTokenFromFile($file)
     {
-        if ( ! file_exists($file)) {
-            return null;
+        if (!file_exists($file)) {
+            return;
         }
 
         foreach (file($file) as $line) {
-
             if ($token = self::parseLineForToken($line)) {
                 return $token;
             }
         }
-
-        return null;
     }
 
     /**
      * @param string $line
+     *
      * @return false|string
      */
     protected static function parseLineForToken($line)
@@ -40,7 +39,7 @@ class CsrfHelper
         }
 
         preg_match('/'.self::TOKEN_NAME.'\s(\w*)/', $line, $matches);
-        if ( ! empty($matches)) {
+        if (!empty($matches)) {
             return $matches[1];
         }
 
@@ -52,7 +51,6 @@ class CsrfHelper
      */
     public static function getDefaultCookie()
     {
-        return 'Cookie: csrftoken='.CsrfHelper::DEFAULT_TOKEN.';';
+        return 'Cookie: csrftoken='.self::DEFAULT_TOKEN.';';
     }
-
 }

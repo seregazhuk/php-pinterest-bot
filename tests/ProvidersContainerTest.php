@@ -4,13 +4,13 @@ namespace seregazhuk\tests;
 
 use Mockery;
 use PHPUnit_Framework_TestCase;
+use seregazhuk\PinterestBot\Api\ProvidersContainer;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
-use seregazhuk\PinterestBot\Api\ProvidersContainer;
 use seregazhuk\PinterestBot\Exceptions\WrongProviderException;
 
 /**
- * Class ProvidersContainerTest
+ * Class ProvidersContainerTest.
  */
 class ProvidersContainerTest extends PHPUnit_Framework_TestCase
 {

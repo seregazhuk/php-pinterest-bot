@@ -5,8 +5,7 @@ namespace seregazhuk\tests;
 use seregazhuk\PinterestBot\Api\Providers\News;
 
 /**
- * Class NewsTest
- * @package seregazhuk\tests
+ * Class NewsTest.
  */
 class NewsTest extends ProviderTest
 {

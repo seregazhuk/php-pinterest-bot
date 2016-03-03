@@ -2,21 +2,19 @@
 
 namespace seregazhuk\PinterestBot;
 
-use LogicException;
-use seregazhuk\PinterestBot\Api\Providers\News;
-use seregazhuk\PinterestBot\Api\Providers\Pins;
 use seregazhuk\PinterestBot\Api\Providers\Boards;
-use seregazhuk\PinterestBot\Api\Providers\Pinners;
-use seregazhuk\PinterestBot\Api\Providers\Provider;
-use seregazhuk\PinterestBot\Api\Providers\Interests;
 use seregazhuk\PinterestBot\Api\Providers\Conversations;
+use seregazhuk\PinterestBot\Api\Providers\Interests;
+use seregazhuk\PinterestBot\Api\Providers\News;
+use seregazhuk\PinterestBot\Api\Providers\Pinners;
+use seregazhuk\PinterestBot\Api\Providers\Pins;
+use seregazhuk\PinterestBot\Api\Providers\Provider;
 use seregazhuk\PinterestBot\Api\Providers\User;
 use seregazhuk\PinterestBot\Contracts\ProvidersContainerInterface;
 
 /**
- * Class Bot
+ * Class Bot.
  *
- * @package Pinterest
  *
  * @property Pins $pins
  * @property News $news
@@ -42,7 +40,7 @@ class Bot
     }
 
     /**
-     * Proxy method to pinners login
+     * Proxy method to pinners login.
      *
      * @param string $username
      * @param string $password
@@ -55,9 +53,10 @@ class Bot
     }
 
     /**
-     * Magic method to access different providers
+     * Magic method to access different providers.
      *
      * @param string $provider
+     *
      * @return Provider
      */
     public function __get($provider)
@@ -66,7 +65,8 @@ class Bot
     }
 
     /**
-     * Proxy method to Request object
+     * Proxy method to Request object.
+     *
      * @return array
      */
     public function getLastError()

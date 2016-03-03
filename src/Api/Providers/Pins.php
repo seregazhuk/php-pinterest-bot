@@ -3,8 +3,8 @@
 namespace seregazhuk\PinterestBot\Api\Providers;
 
 use seregazhuk\PinterestBot\Api\Request;
-use seregazhuk\PinterestBot\Helpers\UrlHelper;
 use seregazhuk\PinterestBot\Helpers\Providers\Traits\SearchTrait;
+use seregazhuk\PinterestBot\Helpers\UrlHelper;
 
 class Pins extends Provider
 {
@@ -17,13 +17,14 @@ class Pins extends Provider
         'deleteComment',
         'create',
         'repin',
-        'delete'
+        'delete',
     ];
 
     /**
-     * Likes pin with current ID
+     * Likes pin with current ID.
      *
-     * @param integer $pinId
+     * @param int $pinId
+     *
      * @return bool
      */
     public function like($pinId)
@@ -32,9 +33,10 @@ class Pins extends Provider
     }
 
     /**
-     * Removes your like from pin with current ID
+     * Removes your like from pin with current ID.
      *
-     * @param integer $pinId
+     * @param int $pinId
+     *
      * @return bool
      */
     public function unLike($pinId)
@@ -43,10 +45,11 @@ class Pins extends Provider
     }
 
     /**
-     * Calls Pinterest API to like or unlike Pin by ID
+     * Calls Pinterest API to like or unlike Pin by ID.
      *
      * @param int    $pinId
      * @param string $resourceUrl
+     *
      * @return bool
      */
     protected function likePinMethodCall($pinId, $resourceUrl)
@@ -55,10 +58,11 @@ class Pins extends Provider
     }
 
     /**
-     * Write a comment for a pin with current id
+     * Write a comment for a pin with current id.
      *
-     * @param integer $pinId
-     * @param string  $text Comment
+     * @param int    $pinId
+     * @param string $text  Comment
+     *
      * @return array|bool
      */
     public function comment($pinId, $text)
@@ -69,65 +73,69 @@ class Pins extends Provider
     }
 
     /**
-     * Delete a comment for a pin with current id
+     * Delete a comment for a pin with current id.
      *
-     * @param integer $pinId
-     * @param integer $commentId
+     * @param int $pinId
+     * @param int $commentId
+     *
      * @return bool
      */
     public function deleteComment($pinId, $commentId)
     {
-        $requestOptions = ["pin_id" => $pinId, "comment_id" => $commentId];
+        $requestOptions = ['pin_id' => $pinId, 'comment_id' => $commentId];
 
         return $this->callPostRequest($requestOptions, UrlHelper::RESOURCE_COMMENT_DELETE_PIN);
     }
 
     /**
-     * Create a pin. Returns created pin ID
+     * Create a pin. Returns created pin ID.
      *
      * @param string $imageUrl
      * @param int    $boardId
      * @param string $description
+     *
      * @return bool|int
      */
-    public function create($imageUrl, $boardId, $description = "")
+    public function create($imageUrl, $boardId, $description = '')
     {
         $requestOptions = [
-            "method"      => "scraped",
-            "description" => $description,
-            "link"        => $imageUrl,
-            "image_url"   => $imageUrl,
-            "board_id"    => $boardId,
+            'method'      => 'scraped',
+            'description' => $description,
+            'link'        => $imageUrl,
+            'image_url'   => $imageUrl,
+            'board_id'    => $boardId,
         ];
 
         return $this->callPostRequest($requestOptions, UrlHelper::RESOURCE_CREATE_PIN, true);
     }
 
     /**
-     * Make a repin
+     * Make a repin.
      *
      * @param int    $repinId
      * @param int    $boardId
      * @param string $description
+     *
      * @return bool|int
      */
-    public function repin($repinId, $boardId, $description = "")
+    public function repin($repinId, $boardId, $description = '')
     {
         $requestOptions = [
-            "board_id"    => $boardId,
-            "description" => stripslashes($description),
-            "link"        => stripslashes($repinId),
-            "is_video"    => null,
-            "pin_id"      => $repinId,
+            'board_id'    => $boardId,
+            'description' => stripslashes($description),
+            'link'        => stripslashes($repinId),
+            'is_video'    => null,
+            'pin_id'      => $repinId,
         ];
 
         return $this->callPostRequest($requestOptions, UrlHelper::RESOURCE_REPIN, true);
     }
 
     /**
-     * Delete a pin
+     * Delete a pin.
      *
      * @param int $pinId
+     *
      * @return bool
      */
     public function delete($pinId)
@@ -136,22 +144,23 @@ class Pins extends Provider
     }
 
     /**
-     * Get information of a pin by PinID
+     * Get information of a pin by PinID.
      *
      * @param int $pinId
+     *
      * @return array|bool
      */
     public function info($pinId)
     {
         $requestOptions = [
-            "field_set_key" => "detailed",
-            "id"            => $pinId,
-            "pin_id"        => $pinId,
-            "allow_stale"   => true
+            'field_set_key' => 'detailed',
+            'id'            => $pinId,
+            'pin_id'        => $pinId,
+            'allow_stale'   => true,
         ];
 
-        $data = array("options" => $requestOptions);
-        $url = UrlHelper::RESOURCE_PIN_INFO . '?' . Request::createQuery($data);
+        $data = ['options' => $requestOptions];
+        $url = UrlHelper::RESOURCE_PIN_INFO.'?'.Request::createQuery($data);
         $response = $this->request->exec($url);
 
         return $this->response->checkResponse($response);

@@ -1,12 +1,12 @@
 <?php
+
 namespace seregazhuk\tests;
 
 use seregazhuk\PinterestBot\Api\Providers\Conversations;
 use seregazhuk\PinterestBot\Exceptions\InvalidRequestException;
 
 /**
- * Class ConversationsTest
- * @package seregazhuk\tests
+ * Class ConversationsTest.
  */
 class ConversationsTest extends ProviderTest
 {
@@ -64,15 +64,15 @@ class ConversationsTest extends ProviderTest
     /** @test */
     public function getLastConversation()
     {
-        $lastConversations = array(
-            "1" => ["result"],
-        );
+        $lastConversations = [
+            '1' => ['result'],
+        ];
 
         $res = $this->createApiResponse(
-            array(
-                'data' => $lastConversations,
+            [
+                'data'  => $lastConversations,
                 'error' => null,
-            )
+            ]
         );
 
         $this->mock->shouldReceive('exec')->once()->andReturn($res);
@@ -87,10 +87,11 @@ class ConversationsTest extends ProviderTest
      */
     protected function createMessageSendResponse()
     {
-        $data = array(
-            'data'  => array("id" => "0000000000000"),
+        $data = [
+            'data'  => ['id' => '0000000000000'],
             'error' => null,
-        );
+        ];
+
         return $this->createApiResponse($data);
     }
 }

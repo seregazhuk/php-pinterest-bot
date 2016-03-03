@@ -5,10 +5,10 @@ namespace seregazhuk\PinterestBot\Api\Providers;
 use Iterator;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Helpers\Pagination;
-use seregazhuk\PinterestBot\Helpers\UrlHelper;
+use seregazhuk\PinterestBot\Helpers\Providers\Traits\FollowersTrait;
 use seregazhuk\PinterestBot\Helpers\Providers\Traits\FollowTrait;
 use seregazhuk\PinterestBot\Helpers\Providers\Traits\SearchTrait;
-use seregazhuk\PinterestBot\Helpers\Providers\Traits\FollowersTrait;
+use seregazhuk\PinterestBot\Helpers\UrlHelper;
 
 class Boards extends Provider
 {
@@ -18,27 +18,29 @@ class Boards extends Provider
         'delete',
         'create',
         'follow',
-        'unFollow'
+        'unFollow',
     ];
 
     /**
-     * Get boards for user by username
+     * Get boards for user by username.
      *
      * @param string $username
+     *
      * @return array|bool
      */
     public function forUser($username)
     {
-        $get = Request::createRequestData(['options' => ["username" => $username]]);
+        $get = Request::createRequestData(['options' => ['username' => $username]]);
 
         return $this->boardsGetCall($get, UrlHelper::RESOURCE_GET_BOARDS);
     }
 
     /**
-     * Get info about user's board
+     * Get info about user's board.
      *
      * @param string $username
      * @param string $board
+     *
      * @return array|bool
      */
     public function info($username, $board)
@@ -48,7 +50,7 @@ class Boards extends Provider
                 'options' => [
                     'username'      => $username,
                     'slug'          => $board,
-                    'field_set_key' => 'detailed'
+                    'field_set_key' => 'detailed',
                 ],
             ]
         );
@@ -57,28 +59,29 @@ class Boards extends Provider
     }
 
     /**
-     * Get pins from board by boardId
+     * Get pins from board by boardId.
      *
      * @param int $boardId
      * @param int $batchesLimit
+     *
      * @return Iterator
      */
     public function pins($boardId, $batchesLimit = 0)
     {
         return Pagination::getPaginatedData(
-            [$this, 'getPinsFromBoard'], 
-            ['boardId' => $boardId], 
+            [$this, 'getPinsFromBoard'],
+            ['boardId' => $boardId],
             $batchesLimit
         );
-
     }
 
     /**
      * Low-level function to get pins from board by its Id.
      * Is used in getPaginatedData as callback.
      *
-     * @param int $boardId
+     * @param int   $boardId
      * @param array $bookmarks
+     *
      * @return array|bool
      */
     public function getPinsFromBoard($boardId, $bookmarks = [])
@@ -91,11 +94,12 @@ class Boards extends Provider
     }
 
     /**
-     * Run GET api request to boards resource
+     * Run GET api request to boards resource.
      *
-     * @param array $query
+     * @param array  $query
      * @param string $url
-     * @param bool $pagination
+     * @param bool   $pagination
+     *
      * @return array|bool
      */
     protected function boardsGetCall($query, $url, $pagination = false)
@@ -110,9 +114,10 @@ class Boards extends Provider
     }
 
     /**
-     * Delete your board by ID
+     * Delete your board by ID.
      *
      * @param int $boardId
+     *
      * @return bool
      */
     public function delete($boardId)
@@ -121,11 +126,12 @@ class Boards extends Provider
     }
 
     /**
-     * Create a new board
+     * Create a new board.
      *
      * @param string $name
      * @param string $description
-     * @param string $privacy Can be 'public' or 'secret'. 'public' by default.
+     * @param string $privacy     Can be 'public' or 'secret'. 'public' by default.
+     *
      * @return bool
      */
     public function create($name, $description, $privacy = 'public')
@@ -140,21 +146,22 @@ class Boards extends Provider
     }
 
     /**
-     * Get board followers
+     * Get board followers.
      *
      * @param $boardId
      * @param int $batchesLimit
+     *
      * @return Iterator
      */
     public function followers($boardId, $batchesLimit = 0)
     {
         return $this->getFollowData(
-            ['board_id' => $boardId], UrlHelper::RESOURCE_BOARD_FOLLOWERS, "", $batchesLimit
+            ['board_id' => $boardId], UrlHelper::RESOURCE_BOARD_FOLLOWERS, '', $batchesLimit
         );
     }
 
     /**
-     * Search scope
+     * Search scope.
      *
      * @return string
      */
@@ -169,7 +176,7 @@ class Boards extends Provider
     }
 
     /**
-     * Follow resource
+     * Follow resource.
      *
      * @return string
      */
@@ -179,7 +186,8 @@ class Boards extends Provider
     }
 
     /**
-     * UnFollow resource
+     * UnFollow resource.
+     *
      * @return string
      */
     protected function getUnfFollowUrl()

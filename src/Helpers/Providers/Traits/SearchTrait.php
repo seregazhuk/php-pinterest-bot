@@ -10,7 +10,7 @@ trait SearchTrait
 {
     use ProviderTrait;
 
-    private $moduleSearchPage = "SearchPage";
+    private $moduleSearchPage = 'SearchPage';
 
     /**
      * @return string
@@ -23,16 +23,17 @@ trait SearchTrait
      * @param string $query
      * @param string $scope
      * @param array  $bookmarks
+     *
      * @return array
      */
     public function searchCall($query, $scope, $bookmarks = [])
     {
-        $url = UrlHelper::getSearchUrl(! empty($bookmarks));
+        $url = UrlHelper::getSearchUrl(!empty($bookmarks));
         $get = $this->createSearchRequest($query, $scope, $bookmarks);
         $url = $url.'?'.UrlHelper::buildRequestString($get);
         $response = $this->getRequest()->exec($url);
 
-        return $this->getResponse()->parseSearchResponse($response, ! empty($bookmarks));
+        return $this->getResponse()->parseSearchResponse($response, !empty($bookmarks));
     }
 
     /**
@@ -40,6 +41,7 @@ trait SearchTrait
      *
      * @param string $query
      * @param int    $batchesLimit
+     *
      * @return \Iterator
      */
     public function searchWithPagination($query, $batchesLimit)
@@ -53,16 +55,17 @@ trait SearchTrait
     }
 
     /**
-     * Creates Pinterest API search request
+     * Creates Pinterest API search request.
      *
      * @param       $query
      * @param       $scope
      * @param array $bookmarks
+     *
      * @return array
      */
     public function createSearchRequest($query, $scope, $bookmarks = [])
     {
-        $options = ["scope" => $scope, "query" => $query];
+        $options = ['scope' => $scope, 'query' => $query];
         $dataJson = $this->appendBookMarks($bookmarks, $options);
 
         return Request::createRequestData(
@@ -71,10 +74,11 @@ trait SearchTrait
     }
 
     /**
-     * Search entities by search query
+     * Search entities by search query.
      *
      * @param string $query
      * @param int    $batchesLimit
+     *
      * @return \Iterator
      */
     public function search($query, $batchesLimit = 0)
@@ -85,12 +89,13 @@ trait SearchTrait
     /**
      * @param $bookmarks
      * @param $options
+     *
      * @return array
      */
     protected function appendBookMarks($bookmarks, $options)
     {
         $dataJson = ['options' => $options];
-        if ( ! empty($bookmarks)) {
+        if (!empty($bookmarks)) {
             $dataJson['options']['bookmarks'] = $bookmarks;
 
             return $dataJson;
@@ -98,8 +103,8 @@ trait SearchTrait
             $dataJson = array_merge(
                 $dataJson, [
                     'module' => [
-                        "name"    => $this->moduleSearchPage,
-                        "options" => $options,
+                        'name'    => $this->moduleSearchPage,
+                        'options' => $options,
                     ],
                 ]
             );

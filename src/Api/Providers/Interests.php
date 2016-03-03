@@ -3,8 +3,8 @@
 namespace seregazhuk\PinterestBot\Api\Providers;
 
 use seregazhuk\PinterestBot\Api\Request;
-use seregazhuk\PinterestBot\Helpers\UrlHelper;
 use seregazhuk\PinterestBot\Helpers\Providers\Traits\FollowTrait;
+use seregazhuk\PinterestBot\Helpers\UrlHelper;
 
 class Interests extends Provider
 {
@@ -12,7 +12,7 @@ class Interests extends Provider
 
     protected $loginRequired = [
         'follow',
-        'unFollow'
+        'unFollow',
     ];
 
     protected function getEntityIdName()
