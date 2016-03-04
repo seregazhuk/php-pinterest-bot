@@ -8,7 +8,7 @@
 [![StyleCI](https://styleci.io/repos/39557985/shield)](https://styleci.io/repos/39557985)
 [![Total Downloads](https://poser.pugx.org/seregazhuk/pinterest-bot/downloads)](https://packagist.org/packages/seregazhuk/pinterest-bot)
 
-This PHP class will help you to work with your Pinterest account. You don't
+This PHP library will help you to work with your Pinterest account. You don't
 need to register application in Pintererst to get access token for api. Use
 only your account login and password.
 
