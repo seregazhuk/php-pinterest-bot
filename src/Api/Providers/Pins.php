@@ -91,9 +91,10 @@ class Pins extends Provider
      * Create a pin. Returns created pin ID.
      *
      * @param string $imageUrl
-     * @param int $boardId
+     * @param int    $boardId
      * @param string $description
      * @param string $link
+     *
      * @return bool|int
      */
     public function create($imageUrl, $boardId, $description = '', $link = '')
