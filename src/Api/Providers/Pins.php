@@ -93,15 +93,16 @@ class Pins extends Provider
      * @param string $imageUrl
      * @param int    $boardId
      * @param string $description
+     * @param string $link
      *
      * @return bool|int
      */
-    public function create($imageUrl, $boardId, $description = '')
+    public function create($imageUrl, $boardId, $description = '', $link = '')
     {
         $requestOptions = [
             'method'      => 'scraped',
             'description' => $description,
-            'link'        => $imageUrl,
+            'link'        => empty($link) ? $imageUrl : $link,
             'image_url'   => $imageUrl,
             'board_id'    => $boardId,
         ];

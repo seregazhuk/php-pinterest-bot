@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [2.5.1] - 2016-03-12
+### Added:
+- Specify link when creating pin as third argument
+
 ## [2.4.2] - 2016-03-03
 ### Fixed:
 - Login requirements check for some methods
