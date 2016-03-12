@@ -115,6 +115,11 @@ Create new pin. Accepts image url, board id, where to post image, description an
 $pinId = $bot->pins->create('http://exmaple.com/image.jpg', $boards[0]['id'], 'pin description');
 ```
     
+You can specify a link for pin (source) as fourth argument. If not set, link is equal to image url.    
+```php
+$pinId = $bot->pins->create('http://exmaple.com/image.jpg', $boards[0]['id'], 'pin description', 'http://site.com);
+```
+    
 Repin other pin by its id.
 ```php
 $bot->pins->repin($pinId, $boards[0]['id'], 'my repin');
