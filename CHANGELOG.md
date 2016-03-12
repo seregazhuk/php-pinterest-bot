@@ -1,7 +1,7 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [2.5.1] - 2016-03-12
+## [2.5.0] - 2016-03-12
 ### Added:
 - Specify link when creating pin as third argument
 
