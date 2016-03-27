@@ -3,14 +3,14 @@
 namespace seregazhuk\tests;
 
 use Mockery;
+use ReflectionClass;
 use Mockery\MockInterface;
 use PHPUnit_Framework_TestCase;
-use ReflectionClass;
-use seregazhuk\PinterestBot\Api\Providers\Provider;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
-use seregazhuk\tests\Helpers\ReflectionHelper;
 use seregazhuk\tests\Helpers\ResponseHelper;
+use seregazhuk\tests\Helpers\ReflectionHelper;
+use seregazhuk\PinterestBot\Api\Providers\Provider;
 
 /**
  * Class ProviderTest.
