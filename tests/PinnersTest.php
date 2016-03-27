@@ -3,6 +3,7 @@
 namespace seregazhuk\tests;
 
 use LogicException;
+use seregazhuk\tests\Helpers\FollowResponseHelper;
 use seregazhuk\PinterestBot\Api\Providers\Pinners;
 use seregazhuk\PinterestBot\Exceptions\AuthException;
 
@@ -11,6 +12,7 @@ use seregazhuk\PinterestBot\Exceptions\AuthException;
  */
 class PinnersTest extends ProviderTest
 {
+    use FollowResponseHelper;
     /**
      * @var Pinners
      */
@@ -24,26 +26,20 @@ class PinnersTest extends ProviderTest
     /** @test */
     public function followUser()
     {
-        $response = $this->createSuccessApiResponse();
-        $error = $this->createErrorApiResponse();
-
-        $this->mock->shouldReceive('followMethodCall')->once()->andReturn($response);
-        $this->mock->shouldReceive('followMethodCall')->once()->andReturn($error);
-
+        $this->setFollowSuccessResponse();
         $this->assertTrue($this->provider->follow(1));
+
+        $this->setFollowErrorResponse();
         $this->assertFalse($this->provider->follow(1));
     }
 
     /** @test */
     public function unFollowUser()
     {
-        $response = $this->createSuccessApiResponse();
-        $error = $this->createErrorApiResponse();
-
-        $this->mock->shouldReceive('followMethodCall')->once()->andReturn($response);
-        $this->mock->shouldReceive('followMethodCall')->once()->andReturn($error);
-
+        $this->setFollowSuccessResponse();
         $this->assertTrue($this->provider->unfollow(1));
+
+        $this->setFollowErrorResponse();
         $this->assertFalse($this->provider->unfollow(1));
     }
 
@@ -51,7 +47,7 @@ class PinnersTest extends ProviderTest
     public function getUserInfo()
     {
         $response = $this->createApiResponse(['data' => ['name' => 'test']]);
-        $this->mock->shouldReceive('exec')->andReturn($response);
+        $this->setResponse($response);
 
         $data = $this->provider->info('username');
         $this->assertEquals($response['resource_response']['data'], $data);
@@ -61,12 +57,9 @@ class PinnersTest extends ProviderTest
     public function getUserFollowers()
     {
         $response = $this->createPaginatedResponse();
-        $this->mock->shouldReceive('exec')->once()->andReturn($response);
-
-        $this->mock->shouldReceive('exec')->once()->andReturn(['resource_response' => ['data' => []]]);
-
-        $this->mock->shouldReceive('exec')->once()->andReturn(
-            [
+        $this->setResponse($response);
+        $this->setResponse(['resource_response' => ['data' => []]]);
+        $this->setResponse([
                 'resource_response' => [
                     'data' => [
                         ['type' => 'module'],
@@ -77,6 +70,7 @@ class PinnersTest extends ProviderTest
 
         $followers = $this->provider->followers('username');
         $this->assertCount(2, iterator_to_array($followers)[0]);
+
         $followers = $this->provider->followers('username');
         $this->assertEmpty(iterator_to_array($followers));
     }
@@ -85,8 +79,8 @@ class PinnersTest extends ProviderTest
     public function getFollowingUsers()
     {
         $response = $this->createPaginatedResponse();
-        $this->mock->shouldReceive('exec')->once()->andReturn($response);
-        $this->mock->shouldReceive('exec')->once()->andReturn(['resource_response' => ['data' => []]]);
+        $this->setResponse($response);
+        $this->setResponse(['resource_response' => ['data' => []]]);
 
         $following = $this->provider->following('username');
         $this->assertCount(2, iterator_to_array($following)[0]);
@@ -108,7 +102,7 @@ class PinnersTest extends ProviderTest
                 ],
             ],
         ];
-        $this->mock->shouldReceive('exec')->once()->andReturn($res);
+        $this->setResponse($res);
 
         $pins = $this->provider->pins('username', 1);
         $expectedResultsNum = count($res['resource_response']['data']);
@@ -124,7 +118,7 @@ class PinnersTest extends ProviderTest
         ];
 
         $expectedResultsNum = count($response['module']['tree']['data']['results']);
-        $this->mock->shouldReceive('exec')->twice()->andReturn($response);
+        $this->setResponse($response, 2);
 
         $res = iterator_to_array($this->provider->search('dogs'), 1);
         $this->assertCount($expectedResultsNum, $res[0]);

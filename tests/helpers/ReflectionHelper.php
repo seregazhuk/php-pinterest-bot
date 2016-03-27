@@ -1,6 +1,6 @@
 <?php
 
-namespace seregazhuk\tests\helpers;
+namespace seregazhuk\tests\Helpers;
 
 use ReflectionClass;
 
