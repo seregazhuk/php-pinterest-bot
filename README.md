@@ -7,7 +7,7 @@
 [![Test Coverage](https://codeclimate.com/github/seregazhuk/php-pinterest-bot/badges/coverage.svg)](https://codeclimate.com/github/seregazhuk/php-pinterest-bot/coverage)
 [![Total Downloads](https://poser.pugx.org/seregazhuk/pinterest-bot/downloads)](https://packagist.org/packages/seregazhuk/pinterest-bot)
 
-This PHP class will help you to work with your Pinterest account. You don't
+This PHP library will help you to work with your Pinterest account. You don't
 need to register application in Pintererst to get access token for api. Use
 only your account login and password.
 
@@ -116,7 +116,7 @@ $pinId = $bot->pins->create('http://exmaple.com/image.jpg', $boards[0]['id'], 'p
     
 You can specify a link for pin (source) as fourth argument. If not set, link is equal to image url.    
 ```php
-$pinId = $bot->pins->create('http://exmaple.com/image.jpg', $boards[0]['id'], 'pin description', 'http://site.com);
+$pinId = $bot->pins->create('http://exmaple.com/image.jpg', $boards[0]['id'], 'pin description', 'http://site.com');
 ```
     
 Repin other pin by its id.
@@ -191,7 +191,8 @@ $pinId = 123456789;
 $bot->conversations->sendMessage($userId, 'message text', $pinId);
 ```
 
-Send email. Email param may be string or array of emails.
+### Send email
+Email param may be string or array of emails.
 ```php
 $bot->conversations->sendEmail('mail@domain.com', 'message text');
 ```
