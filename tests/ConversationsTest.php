@@ -24,12 +24,13 @@ class ConversationsTest extends ProviderTest
     {
         $response = $this->createMessageSendResponse();
 
-        $this->mock->shouldReceive('exec')->once()->andReturn($response);
-        $this->mock->shouldReceive('exec')->once()->andReturnNull();
-
         $userId = '0000000000000';
         $message = 'test';
+
+        $this->setResponse($response);        
         $this->assertTrue($this->provider->sendMessage($userId, $message));
+
+        $this->setResponse(null);
         $this->assertFalse($this->provider->sendMessage($userId, $message));
     }
 
@@ -37,13 +38,13 @@ class ConversationsTest extends ProviderTest
     public function sendEmail()
     {
         $response = $this->createMessageSendResponse();
-
-        $this->mock->shouldReceive('exec')->once()->andReturn($response);
-        $this->mock->shouldReceive('exec')->once()->andReturnNull();
-
         $email = 'test@email.com';
         $message = 'test';
+
+        $this->setResponse($response);        
         $this->assertTrue($this->provider->sendEmail($email, $message));
+
+        $this->setResponse(null);
         $this->assertFalse($this->provider->sendEmail($email, $message));
     }
 
@@ -75,10 +76,10 @@ class ConversationsTest extends ProviderTest
             ]
         );
 
-        $this->mock->shouldReceive('exec')->once()->andReturn($res);
-        $this->mock->shouldReceive('exec')->once()->andReturnNull();
-
+        $this->setResponse($res);
         $this->assertEquals($lastConversations, $this->provider->last());
+        
+        $this->setResponse(null);
         $this->assertFalse($this->provider->last());
     }
 

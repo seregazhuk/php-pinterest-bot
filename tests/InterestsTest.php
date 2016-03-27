@@ -2,6 +2,7 @@
 
 namespace seregazhuk\tests;
 
+use seregazhuk\tests\Helpers\FollowResponseHelper;
 use seregazhuk\PinterestBot\Api\Providers\Interests;
 
 /**
@@ -9,6 +10,8 @@ use seregazhuk\PinterestBot\Api\Providers\Interests;
  */
 class InterestsTest extends ProviderTest
 {
+    use FollowResponseHelper;
+
     /**
      * @var Interests
      */
@@ -21,26 +24,20 @@ class InterestsTest extends ProviderTest
     /** @test */
     public function followInterest()
     {
-        $response = $this->createSuccessApiResponse();
-        $error = $this->createErrorApiResponse();
-
-        $this->mock->shouldReceive('followMethodCall')->once()->andReturn($response);
-        $this->mock->shouldReceive('followMethodCall')->once()->andReturn($error);
-
+        $this->setFollowSuccessResponse();
         $this->assertTrue($this->provider->follow(1111));
+
+        $this->setFollowErrorResponse();
         $this->assertFalse($this->provider->follow(1111));
     }
 
     /** @test */
     public function unFollowInterest()
     {
-        $request = $this->createSuccessApiResponse();
-        $error = $this->createErrorApiResponse();
-
-        $this->mock->shouldReceive('followMethodCall')->once()->andReturn($request);
-        $this->mock->shouldReceive('followMethodCall')->once()->andReturn($error);
-
+        $this->setFollowSuccessResponse();
         $this->assertTrue($this->provider->unFollow(1111));
+
+        $this->setFollowErrorResponse();
         $this->assertFalse($this->provider->unFollow(1111));
     }
 }

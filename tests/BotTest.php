@@ -4,11 +4,11 @@ namespace seregazhuk\tests;
 
 use Mockery;
 use PHPUnit_Framework_TestCase;
-use seregazhuk\PinterestBot\Api\CurlAdapter;
-use seregazhuk\PinterestBot\Api\ProvidersContainer;
+use seregazhuk\PinterestBot\Bot;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
-use seregazhuk\PinterestBot\Bot;
+use seregazhuk\PinterestBot\Api\CurlAdapter;
+use seregazhuk\PinterestBot\Api\ProvidersContainer;
 
 /**
  * Class BotTest.

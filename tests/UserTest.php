@@ -1,6 +1,5 @@
 <?php
 
-
 namespace seregazhuk\tests;
 
 use seregazhuk\PinterestBot\Api\Providers\User;
@@ -19,14 +18,11 @@ class UserTest extends ProviderTest
     /** @test */
     public function editProfile()
     {
-        $response = $this->createSuccessApiResponse();
-        $error = $this->createErrorApiResponse();
-
-        $this->mock->shouldReceive('exec')->once()->andReturn($response);
-        $this->mock->shouldReceive('exec')->once()->andReturn($error);
-
+        $this->setSuccessResponse();
         $params = ['name' => 'name'];
         $this->assertTrue($this->provider->profile($params));
+
+        $this->setErrorResponse();
         $this->assertFalse($this->provider->profile($params));
     }
 }

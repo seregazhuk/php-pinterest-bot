@@ -18,52 +18,40 @@ class PinsTest extends ProviderTest
     /** @test */
     public function likeAPin()
     {
-        $response = $this->createApiResponse();
-        $error = $this->createErrorApiResponse();
-
-        $this->mock->shouldReceive('exec')->once()->andReturn($response);
-        $this->mock->shouldReceive('exec')->once()->andReturn($error);
-
+        $this->setSuccessResponse();
         $this->assertTrue($this->provider->like(1111));
+
+        $this->setErrorResponse();
         $this->assertFalse($this->provider->like(1111));
     }
 
     /** @test */
     public function unlikeAPin()
     {
-        $response = $this->createApiResponse();
-        $error = $this->createErrorApiResponse();
-
-        $this->mock->shouldReceive('exec')->once()->andReturn($response);
-        $this->mock->shouldReceive('exec')->once()->andReturn($error);
-        $this->setProperty('request', $this->mock);
+        $this->setSuccessResponse();
         $this->assertTrue($this->provider->unLike(1111));
+
+        $this->setErrorResponse();
         $this->assertFalse($this->provider->unLike(1111));
     }
 
     /** @test */
     public function createCommentForPin()
     {
-        $response = $this->createApiResponse();
-        $error = $this->createErrorApiResponse();
-
-        $this->mock->shouldReceive('exec')->once()->andReturn($response);
-        $this->mock->shouldReceive('exec')->once()->andReturn($error);
-
+        $this->setSuccessResponse();
         $this->assertNotEmpty($this->provider->comment(1111, 'comment text'));
+
+        $this->setErrorResponse();
         $this->assertFalse($this->provider->comment(1111, 'comment text'));
     }
 
     /** @test */
     public function deleteCommentFromPin()
     {
-        $response = $this->createApiResponse();
-        $error = $this->createErrorApiResponse();
-
-        $this->mock->shouldReceive('exec')->once()->andReturn($response);
-        $this->mock->shouldReceive('exec')->once()->andReturn($error);
-
+        $this->setSuccessResponse();
         $this->assertTrue($this->provider->deleteComment(1111, 1111));
+
+        $this->setErrorResponse();
         $this->assertFalse($this->provider->deleteComment(1111, 1111));
     }
 
@@ -71,13 +59,14 @@ class PinsTest extends ProviderTest
     public function createANewPin()
     {
         $response = $this->createPinCreationResponse();
-        $this->mock->shouldReceive('exec')->once()->andReturn($response);
-        $this->mock->shouldReceive('exec')->once()->andReturnNull();
+        $this->setResponse($response);
 
         $pinSource = 'http://example.com/image.jpg';
         $pinDescription = 'Pin Description';
         $boardId = 1;
         $this->assertNotFalse($this->provider->create($pinSource, $boardId, $pinDescription));
+
+        $this->setResponse(null);
         $this->assertFalse($this->provider->create($pinSource, $boardId, $pinDescription));
     }
 
@@ -85,14 +74,15 @@ class PinsTest extends ProviderTest
     public function createARepin()
     {
         $response = $this->createPinCreationResponse();
-        $this->mock->shouldReceive('exec')->once()->andReturn($response);
-        $this->mock->shouldReceive('exec')->once()->andReturnNull();
+        $this->setResponse($response);
 
         $boardId = 1;
         $repinId = 11;
         $pinDescription = 'Pin Description';
 
         $this->assertNotFalse($this->provider->repin($repinId, $boardId, $pinDescription));
+        
+        $this->setErrorResponse();
         $this->assertFalse($this->provider->repin($repinId, $boardId, $pinDescription));
     }
 
@@ -100,10 +90,10 @@ class PinsTest extends ProviderTest
     public function deletePin()
     {
         $response = $this->createApiResponse();
-        $this->mock->shouldReceive('exec')->once()->andReturn($response);
-        $this->mock->shouldReceive('exec')->once()->andReturnNull();
-
+        $this->setResponse($response);
         $this->assertNotFalse($this->provider->delete(1));
+
+        $this->setResponse(null);
         $this->assertFalse($this->provider->delete(1));
     }
 
@@ -111,10 +101,10 @@ class PinsTest extends ProviderTest
     public function getPinInfo()
     {
         $response = $this->createApiResponse();
-        $this->mock->shouldReceive('exec')->once()->andReturn($response);
-        $this->mock->shouldReceive('exec')->once()->andReturnNull();
-
+        $this->setResponse($response);
         $this->assertNotNull($this->provider->info(1));
+
+        $this->setResponse(null);
         $this->assertFalse($this->provider->info(1));
     }
 
@@ -127,7 +117,7 @@ class PinsTest extends ProviderTest
         ];
 
         $expectedResultsNum = count($response['module']['tree']['data']['results']);
-        $this->mock->shouldReceive('exec')->twice()->andReturn($response);
+        $this->setResponse($response, 2);
 
         $res = iterator_to_array($this->provider->search('dogs'), 1);
         $this->assertCount($expectedResultsNum, $res[0]);

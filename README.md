@@ -5,7 +5,6 @@
 [![Code Climate](https://codeclimate.com/github/seregazhuk/php-pinterest-bot/badges/gpa.svg)](https://codeclimate.com/github/seregazhuk/php-pinterest-bot)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/seregazhuk/php-pinterest-bot/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/seregazhuk/php-pinterest-bot/?branch=master)
 [![Test Coverage](https://codeclimate.com/github/seregazhuk/php-pinterest-bot/badges/coverage.svg)](https://codeclimate.com/github/seregazhuk/php-pinterest-bot/coverage)
-[![StyleCI](https://styleci.io/repos/39557985/shield)](https://styleci.io/repos/39557985)
 [![Total Downloads](https://poser.pugx.org/seregazhuk/pinterest-bot/downloads)](https://packagist.org/packages/seregazhuk/pinterest-bot)
 
 This PHP library will help you to work with your Pinterest account. You don't
