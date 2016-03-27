@@ -27,7 +27,7 @@ class ConversationsTest extends ProviderTest
         $userId = '0000000000000';
         $message = 'test';
 
-        $this->setResponse($response);        
+        $this->setResponse($response);
         $this->assertTrue($this->provider->sendMessage($userId, $message));
 
         $this->setResponse(null);
@@ -41,7 +41,7 @@ class ConversationsTest extends ProviderTest
         $email = 'test@email.com';
         $message = 'test';
 
-        $this->setResponse($response);        
+        $this->setResponse($response);
         $this->assertTrue($this->provider->sendEmail($email, $message));
 
         $this->setResponse(null);
@@ -78,7 +78,7 @@ class ConversationsTest extends ProviderTest
 
         $this->setResponse($res);
         $this->assertEquals($lastConversations, $this->provider->last());
-        
+
         $this->setResponse(null);
         $this->assertFalse($this->provider->last());
     }

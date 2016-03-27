@@ -2,9 +2,8 @@
 
 namespace seregazhuk\tests\Helpers;
 
-trait FollowResponseHelper 
+trait FollowResponseHelper
 {
-
     protected function setFollowErrorResponse()
     {
         return $this->setResponse(
@@ -12,12 +11,10 @@ trait FollowResponseHelper
         );
     }
 
-
     protected function setFollowSuccessResponse()
     {
         return $this->setResponse(
             $this->createSuccessApiResponse(), 1, 'followMethodCall'
         );
     }
-
 }

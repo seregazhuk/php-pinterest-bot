@@ -2,8 +2,8 @@
 
 namespace seregazhuk\tests;
 
-use seregazhuk\tests\Helpers\FollowResponseHelper;
 use seregazhuk\PinterestBot\Api\Providers\Interests;
+use seregazhuk\tests\Helpers\FollowResponseHelper;
 
 /**
  * Class InterestsTest.

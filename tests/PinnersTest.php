@@ -3,9 +3,9 @@
 namespace seregazhuk\tests;
 
 use LogicException;
-use seregazhuk\tests\Helpers\FollowResponseHelper;
 use seregazhuk\PinterestBot\Api\Providers\Pinners;
 use seregazhuk\PinterestBot\Exceptions\AuthException;
+use seregazhuk\tests\Helpers\FollowResponseHelper;
 
 /**
  * Class PinnersTest.

@@ -94,7 +94,7 @@ class BoardsTest extends ProviderTest
 
         $this->setResponse($response);
         $this->assertEquals('info', $this->provider->info('username', 'board'));
-        
+
         $this->setResponse(null);
         $this->assertFalse($this->provider->info('username', 'board'));
     }
@@ -124,10 +124,10 @@ class BoardsTest extends ProviderTest
     /** @test */
     public function deleteBoard()
     {
-        $this->setSuccessResponse(); 
+        $this->setSuccessResponse();
         $this->assertTrue($this->provider->delete(1111));
 
-        $this->setErrorResponse();        
+        $this->setErrorResponse();
         $this->assertFalse($this->provider->delete(1111));
     }
 
