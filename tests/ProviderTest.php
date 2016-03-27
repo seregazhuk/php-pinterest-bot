@@ -3,14 +3,14 @@
 namespace seregazhuk\tests;
 
 use Mockery;
-use ReflectionClass;
 use Mockery\MockInterface;
 use PHPUnit_Framework_TestCase;
+use ReflectionClass;
+use seregazhuk\PinterestBot\Api\Providers\Provider;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
-use seregazhuk\tests\Helpers\ResponseHelper;
 use seregazhuk\tests\Helpers\ReflectionHelper;
-use seregazhuk\PinterestBot\Api\Providers\Provider;
+use seregazhuk\tests\Helpers\ResponseHelper;
 
 /**
  * Class ProviderTest.
@@ -87,8 +87,8 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
         return $this;
     }
 
-   protected function setResponse($response, $times = 1, $method = 'exec')
-    {        
+    protected function setResponse($response, $times = 1, $method = 'exec')
+    {
         $this->mock->shouldReceive($method)->times($times)->andReturn($response);
     }
 
@@ -101,5 +101,4 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
     {
         $this->setResponse($this->createErrorApiResponse());
     }
-
 }
