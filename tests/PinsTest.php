@@ -81,7 +81,7 @@ class PinsTest extends ProviderTest
         $pinDescription = 'Pin Description';
 
         $this->assertNotFalse($this->provider->repin($repinId, $boardId, $pinDescription));
-        
+
         $this->setErrorResponse();
         $this->assertFalse($this->provider->repin($repinId, $boardId, $pinDescription));
     }
