@@ -133,6 +133,37 @@ class Request implements RequestInterface
     }
 
     /**
+     * @return array
+     */
+    protected function setDefaultHttpOptions()
+    {
+        $this->options = [
+            CURLOPT_USERAGENT      => $this->userAgent,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_ENCODING       => 'gzip,deflate',
+            CURLOPT_HTTPHEADER     => $this->getDefaultHttpHeaders(),
+            CURLOPT_REFERER        => UrlHelper::URL_BASE,
+            CURLOPT_COOKIEFILE     => $this->cookieJar,
+            CURLOPT_COOKIEJAR      => $this->cookieJar,
+        ];
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return mixed
+     */
+    protected function addDefaultCsrfInfo($options)
+    {
+        $options[CURLOPT_REFERER] = UrlHelper::URL_BASE;
+        $options[CURLOPT_HTTPHEADER][] = CsrfHelper::getDefaultCookie();
+
+        return $options;
+    }
+    
+    /**
      * Clear token information.
      *
      * @return $this
@@ -221,39 +252,8 @@ class Request implements RequestInterface
     /**
      * @return array
      */
-    protected function setDefaultHttpOptions()
-    {
-        $this->options = [
-            CURLOPT_USERAGENT      => $this->userAgent,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_SSL_VERIFYPEER => false,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_ENCODING       => 'gzip,deflate',
-            CURLOPT_HTTPHEADER     => $this->getDefaultHttpHeaders(),
-            CURLOPT_REFERER        => UrlHelper::URL_BASE,
-            CURLOPT_COOKIEFILE     => $this->cookieJar,
-            CURLOPT_COOKIEJAR      => $this->cookieJar,
-        ];
-    }
-
-    /**
-     * @return array
-     */
     protected function getDefaultHttpHeaders()
     {
         return array_merge($this->requestHeaders, ['X-CSRFToken: '.$this->csrfToken]);
-    }
-
-    /**
-     * @param array $options
-     *
-     * @return mixed
-     */
-    protected function addDefaultCsrfInfo($options)
-    {
-        $options[CURLOPT_REFERER] = UrlHelper::URL_BASE;
-        $options[CURLOPT_HTTPHEADER][] = CsrfHelper::getDefaultCookie();
-
-        return $options;
     }
 }

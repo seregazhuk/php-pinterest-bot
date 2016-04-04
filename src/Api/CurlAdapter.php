@@ -20,6 +20,23 @@ class CurlAdapter implements HttpInterface
     private $curl;
 
     /**
+     * Executes curl request.
+     *
+     * @param string $url
+     * @param array $options
+     *
+     * @return string
+     */
+    public function execute($url, array $options = [])
+    {
+        $this->init($url)->setOptions($options);
+        $res = curl_exec($this->curl);
+        $this->close();
+
+        return $res;
+    }
+    
+    /**
      * Initializes curl resource.
      *
      * @param string $url
@@ -75,22 +92,5 @@ class CurlAdapter implements HttpInterface
     protected function close()
     {
         curl_close($this->curl);
-    }
-
-    /**
-     * Executes curl request.
-     *
-     * @param string $url
-     * @param array  $options
-     *
-     * @return string
-     */
-    public function execute($url, array $options = [])
-    {
-        $this->init($url)->setOptions($options);
-        $res = curl_exec($this->curl);
-        $this->close();
-
-        return $res;
     }
 }

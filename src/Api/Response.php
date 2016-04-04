@@ -109,12 +109,30 @@ class Response implements ResponseInterface
      */
     public function getBookmarksFromResponse($response)
     {
-        if (!$this->checkErrorInResponse($response)) {
-            return;
-        }
-        if (isset($response['resource']['options']['bookmarks'][0])) {
+        if ($this->checkErrorInResponse($response) && isset($response['resource']['options']['bookmarks'][0])) {
             return [$response['resource']['options']['bookmarks'][0]];
         }
+
+        return null;
+    }
+
+
+    /**
+     * Parses Pinterest search API response for data and bookmarks
+     * for next pagination page.
+     *
+     * @param array $response
+     * @param bool  $bookmarksUsed
+     *
+     * @return array|null
+     */
+    public function parseSearchResponse($response, $bookmarksUsed = true)
+    {
+        if ($response === null || !$bookmarksUsed) {
+            return self::parseSimpledSearchResponse($response);
+        }
+
+        return $this->getPaginationData($response);
     }
 
     /**
@@ -137,24 +155,6 @@ class Response implements ResponseInterface
         }
 
         return [];
-    }
-
-    /**
-     * Parses Pinterest search API response for data and bookmarks
-     * for next pagination page.
-     *
-     * @param array $response
-     * @param bool  $bookmarksUsed
-     *
-     * @return array|null
-     */
-    public function parseSearchResponse($response, $bookmarksUsed = true)
-    {
-        if ($response === null || !$bookmarksUsed) {
-            return self::parseSimpledSearchResponse($response);
-        }
-
-        return $this->getPaginationData($response);
     }
 
     /**
