@@ -3,12 +3,12 @@
 namespace seregazhuk\PinterestBot\Api\Providers;
 
 use seregazhuk\PinterestBot\Api\Request;
-use seregazhuk\PinterestBot\Helpers\Providers\Traits\FollowTrait;
+use seregazhuk\PinterestBot\Helpers\Providers\Traits\Followable;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
 
 class Interests extends Provider
 {
-    use FollowTrait;
+    use Followable;
 
     protected $loginRequired = [
         'follow',

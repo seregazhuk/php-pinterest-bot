@@ -3,12 +3,12 @@
 namespace seregazhuk\PinterestBot\Api\Providers;
 
 use seregazhuk\PinterestBot\Api\Request;
-use seregazhuk\PinterestBot\Helpers\Providers\Traits\SearchTrait;
+use seregazhuk\PinterestBot\Helpers\Providers\Traits\Searchable;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
 
 class Pins extends Provider
 {
-    use SearchTrait;
+    use Searchable;
 
     protected $loginRequired = [
         'like',

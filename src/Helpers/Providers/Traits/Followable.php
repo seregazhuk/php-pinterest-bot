@@ -2,7 +2,7 @@
 
 namespace seregazhuk\PinterestBot\Helpers\Providers\Traits;
 
-trait FollowTrait
+trait Followable
 {
     use ProviderTrait;
 

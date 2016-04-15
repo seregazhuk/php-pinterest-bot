@@ -7,15 +7,15 @@ use LogicException;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Exceptions\AuthException;
 use seregazhuk\PinterestBot\Helpers\Pagination;
-use seregazhuk\PinterestBot\Helpers\Providers\Traits\FollowersTrait;
-use seregazhuk\PinterestBot\Helpers\Providers\Traits\FollowTrait;
-use seregazhuk\PinterestBot\Helpers\Providers\Traits\SearchTrait;
+use seregazhuk\PinterestBot\Helpers\Providers\Traits\HasFollowers;
+use seregazhuk\PinterestBot\Helpers\Providers\Traits\Followable;
+use seregazhuk\PinterestBot\Helpers\Providers\Traits\Searchable;
 use seregazhuk\PinterestBot\Helpers\Requests\PinnerHelper;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
 
 class Pinners extends Provider
 {
-    use SearchTrait, FollowTrait, FollowersTrait;
+    use Searchable, Followable, HasFollowers;
 
     protected $loginRequired = [
         'follow',

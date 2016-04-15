@@ -6,7 +6,7 @@ use Iterator;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Helpers\Pagination;
 
-trait FollowersTrait
+trait HasFollowers
 {
     use ProviderTrait;
 

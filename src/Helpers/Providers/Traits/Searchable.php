@@ -6,7 +6,7 @@ use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
 
-trait SearchTrait
+trait Searchable
 {
     use ProviderTrait;
 
