@@ -2,8 +2,6 @@
 
 namespace seregazhuk\PinterestBot\Exceptions;
 
-use Exception;
-
-class AuthException extends Exception
+class AuthException extends PinterestBotException
 {
 }
