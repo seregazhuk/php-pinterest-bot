@@ -61,7 +61,7 @@ class Request implements RequestInterface
         if ($userAgent !== null) {
             $this->userAgent = $userAgent;
         }
-        $this->cookieJar = self::COOKIE_NAME;
+        $this->cookieJar = tempnam(sys_get_temp_dir(), self::COOKIE_NAME);
     }
 
     /**
