@@ -4,6 +4,7 @@ namespace seregazhuk\PinterestBot\Api;
 
 use seregazhuk\PinterestBot\Contracts\HttpInterface;
 use seregazhuk\PinterestBot\Contracts\RequestInterface;
+use seregazhuk\PinterestBot\Exceptions\AuthException;
 use seregazhuk\PinterestBot\Helpers\CsrfHelper;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
 
@@ -177,16 +178,16 @@ class Request implements RequestInterface
 
     /**
      * Mark api as logged.
-     *
      * @return $this
+     * @throws AuthException
      */
     public function setLoggedIn()
     {
         $this->csrfToken = CsrfHelper::getTokenFromFile($this->cookieJar);
-        if (!empty($this->csrfToken)) {
-            $this->loggedIn = true;
+        if (empty($this->csrfToken)) {
+            throw new AuthException('Cannot parse token from cookies.');
         }
-
+        $this->loggedIn = true;
         return $this;
     }
 
