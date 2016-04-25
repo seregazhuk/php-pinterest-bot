@@ -253,3 +253,8 @@ You can set UserAgent string for bot like this:
 $userAgent = 'Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0';
 $bot = PinterestBot::create($userAgent);
 ```
+
+## How can I thank you?
+Why not star the github repo? I'd love the attention!
+
+Thanks! 
