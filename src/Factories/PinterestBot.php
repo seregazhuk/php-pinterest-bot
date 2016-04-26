@@ -14,14 +14,14 @@ class PinterestBot
      * Initializes Bot instance and all
      * its dependencies.
      *
-     * @param string|null $userAgent
+     * @param string $userAgent
      *
      * @return Bot
      */
-    public static function create($userAgent = null)
+    public static function create($userAgent = "")
     {
         $request = new Request(new CurlAdapter());
-        if ($userAgent) {
+        if (!empty($userAgent)) {
             $request->setUserAgent($userAgent);
         }
         
