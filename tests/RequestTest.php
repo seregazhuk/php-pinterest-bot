@@ -104,10 +104,8 @@ class RequestTest extends PHPUnit_Framework_TestCase
     {
         $userAgentString = 'UserAgentString';
 
-        $this->createRequestObject();
-        $this->assertEmpty($this->getProperty('userAgent'));
-
-        $this->createRequestObject(new CurlAdapter(), $userAgentString);
+        $request = $this->createRequestObject(new CurlAdapter());
+        $request->setUserAgent($userAgentString);
         $this->assertEquals($userAgentString, $this->getProperty('userAgent'));
     }
 

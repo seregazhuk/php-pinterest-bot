@@ -20,7 +20,11 @@ class PinterestBot
      */
     public static function create($userAgent = null)
     {
-        $request = new Request(new CurlAdapter(), $userAgent);
+        $request = new Request(new CurlAdapter());
+        if ($userAgent) {
+            $request->setUserAgent($userAgent);
+        }
+        
         $response = new Response();
         $providersContainer = new ProvidersContainer($request, $response);
 

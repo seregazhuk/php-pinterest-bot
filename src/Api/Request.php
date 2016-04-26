@@ -54,14 +54,10 @@ class Request implements RequestInterface
 
     /**
      * @param HttpInterface $http
-     * @param string|null   $userAgent
      */
-    public function __construct(HttpInterface $http, $userAgent = null)
+    public function __construct(HttpInterface $http)
     {
         $this->http = $http;
-        if ($userAgent !== null) {
-            $this->userAgent = $userAgent;
-        }
         $this->cookieJar = tempnam(sys_get_temp_dir(), self::COOKIE_NAME);
     }
 
@@ -199,6 +195,19 @@ class Request implements RequestInterface
     public function isLoggedIn()
     {
         return $this->loggedIn;
+    }
+
+    /**
+     * @param $userAgent
+     * @return $this
+     */
+    public function setUserAgent($userAgent)
+    {
+        if ($userAgent !== null) {
+            $this->userAgent = $userAgent;
+        }
+
+        return $this;
     }
 
     /**
