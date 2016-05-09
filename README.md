@@ -1,7 +1,7 @@
 # Pinterest Bot for PHP
 
 <p align="center">
-    <img src="image.jpg" alt="Pinterest PHP Bot">
+    <img src="logo.jpg" alt="Pinterest PHP Bot">
 </p>
 
 <p align="center">
@@ -15,14 +15,13 @@
 
 This PHP library will help you to work with your Pinterest account without using any API account credentials. 
 
-To have an access to Pinterest API you need to go to developers.pinterest.com and register as a developer, 
-then register your application, then wait for confirmation, and only then you will get an access token. With this 
-library you are already to go. Just use only your account login and password, like you do it in your browser. 
-But even your account is not required, if your don't use such operations as creating pins, writing comments or sending
-messages!
+To have an access to Pinterest API you need to go to <a target="_blank" href="http://developers.pinterest.com">developers.pinterest.com</a> 
+and register as a developer, then register your application, then wait for confirmation, and only then you 
+will get an access token. With this library you are already ready to go. Just use only your 
+account login and password, like you do it in your browser. But even your account is not required, 
+if your don't use such operations as creating pins, writing comments or sending messages!
 
 ## Dependencies
-
 Library requires CURL extension and PHP 5.6 or above.
 
 ## Installation
