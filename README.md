@@ -13,10 +13,9 @@
 	<a href="https://packagist.org/packages/seregazhuk/pinterest-bot"><img src="https://camo.githubusercontent.com/8957462146926452326740b5c6255bbdb3abea67/68747470733a2f2f706f7365722e707567782e6f72672f7365726567617a68756b2f70696e7465726573742d626f742f646f776e6c6f616473" alt="Total Downloads" data-canonical-src="https://poser.pugx.org/seregazhuk/pinterest-bot/downloads" style="max-width:100%;"></a>
 </p>
 
-This PHP library will help you to work with your Pinterest account like with API calls, but without using any 
-API account credentials. 
+This PHP library will help you to work with your Pinterest account without using any API account credentials. 
 
-To have access to Pinterest API you need to go to developers.pinterest.com and register as a developer, 
+To have an access to Pinterest API you need to go to developers.pinterest.com and register as a developer, 
 then register your application, then wait for confirmation, and only then you will get an access token. With this 
 library you are already to go. Just use only your account login and password, like you do it in your browser. 
 But even your account is not required, if your don't use such operations as creating pins, writing comments or sending
