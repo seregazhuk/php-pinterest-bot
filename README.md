@@ -1,7 +1,7 @@
 # Pinterest Bot for PHP
 
 <p align="center">
-    <img src="img.jpg" alt="Pinterest PHP Bot">
+    <img src="image.jpg" alt="Pinterest PHP Bot">
 </p>
 
 <p align="center">
