@@ -45,6 +45,8 @@ $bot->login('mypinterestlogin', 'mypinterestpassword');
 
 // get lists of your boards 
 $boards = $bot->boards->forUser('yourUserName');
+
+// create a pin
 $bot->pins->create('http://exmaple.com/image.jpg', $boards[0]['id'], 'pin description');
 ```
 
