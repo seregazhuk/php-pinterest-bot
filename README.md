@@ -1,24 +1,26 @@
 # Pinterest Bot for PHP
 
-[![Build Status](https://travis-ci.org/seregazhuk/php-pinterest-bot.svg)](https://travis-ci.org/seregazhuk/php-pinterest-bot)
-[![Circle CI](https://circleci.com/gh/seregazhuk/php-pinterest-bot.svg?style=shield)](https://circleci.com/gh/seregazhuk/php-pinterest-bot)
-[![Code Climate](https://codeclimate.com/github/seregazhuk/php-pinterest-bot/badges/gpa.svg)](https://codeclimate.com/github/seregazhuk/php-pinterest-bot)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/seregazhuk/php-pinterest-bot/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/seregazhuk/php-pinterest-bot/?branch=master)
-[![Test Coverage](https://codeclimate.com/github/seregazhuk/php-pinterest-bot/badges/coverage.svg)](https://codeclimate.com/github/seregazhuk/php-pinterest-bot/coverage)
-[![Total Downloads](https://poser.pugx.org/seregazhuk/pinterest-bot/downloads)](https://packagist.org/packages/seregazhuk/pinterest-bot)
+<p align="center">
+    <img src="img.png" alt="Pinterest PHP Bot">
+</p>
 
-This PHP library will help you to work with your Pinterest account. You don't
-need to register application in Pintererst to get access token for api. Use
-only your account login and password.
+<p align="center">
+	[![Build Status](https://travis-ci.org/seregazhuk/php-pinterest-bot.svg)](https://travis-ci.org/seregazhuk/php-pinterest-bot)
+	[![Circle CI](https://circleci.com/gh/seregazhuk/php-pinterest-bot.svg?style=shield)](https://circleci.com/gh/seregazhuk/php-pinterest-bot)
+	[![Code Climate](https://codeclimate.com/github/seregazhuk/php-pinterest-bot/badges/gpa.svg)](https://codeclimate.com/github/seregazhuk/php-pinterest-bot)
+	[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/seregazhuk/php-pinterest-bot/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/seregazhuk/php-pinterest-bot/?branch=master)
+	[![Test Coverage](https://codeclimate.com/github/seregazhuk/php-pinterest-bot/badges/coverage.svg)](https://codeclimate.com/github/seregazhuk/php-pinterest-bot/coverage)
+	[![Total Downloads](https://poser.pugx.org/seregazhuk/pinterest-bot/downloads)](https://packagist.org/packages/seregazhuk/pinterest-bot)
+</p>
 
-Some functions use pinterest navigation through results, for example,
-get user followers. Function returns generator object with api results as batches in 
-every iteration. By default functions return all pinterest result batches, but you can 
-pass batches num as second argument. For example, 
-```php 
-$bot->pins->search('query', 2)
-```
-will return only 2 batches of search results.
+This PHP library will help you to work with your Pinterest account like with API calls, but without using any 
+API account credentials. 
+
+To have access to Pinterest API you need to go to developers.pinterest.com and register as a developer, 
+then register your application, then wait for confirmation, and only then you will get an access token. With this 
+library you are already to go. Just use only your account login and password, like you do it in your browser. 
+But even your account is not required, if your don't use such operations as creating pins, writing comments or sending
+messages!
 
 ## Dependencies
 
@@ -49,6 +51,15 @@ $bot->pins->create('http://exmaple.com/image.jpg', $boards[0]['id'], 'pin descri
 ```
 
 Or you may skip login, if you want. It is only required for such operations as likes, follows and making pins.
+
+*Note*: Some functions use pinterest navigation through results, for example,
+get user followers or search queries. These functions return a generator object with api results as batches in 
+every iteration. By default functions return all pinterest result batches, but you can 
+pass batches num as a second argument. For example, 
+```php 
+$bot->pins->search('query', 2)
+```
+will return only 2 batches of search results.
 
 ## Boards
 
