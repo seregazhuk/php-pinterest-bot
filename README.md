@@ -21,6 +21,19 @@ will get an access token. With this library you are already ready to go. Just us
 account login and password, like you do it in your browser. But even your account is not required, 
 if your don't use such operations as creating pins, writing comments or sending messages!
 
+- [Dependencies](#dependencies)
+- [Installation](#installation)
+- [Quick Start](#quick-start)
+- [Boards](#boards)
+- [Pins](#pins)
+- [Pinners](#pinners)
+- [Interests](#interests)
+- [Search](#search)
+- [User Settings](#user-settings)
+- [News](#news)
+- [Errors handling](#errors-handling)
+- [Custom settings](#custom-settings)
+
 ## Dependencies
 Library requires CURL extension and PHP 5.6 or above.
 
