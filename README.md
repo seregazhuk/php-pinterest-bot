@@ -147,6 +147,15 @@ Repin other pin by its id.
 ```php
 $bot->pins->repin($pinId, $boards[0]['id'], 'my repin');
 ``` 
+
+Update pin by id. You can change pin's description, link or board.
+```php
+// change description and link
+$bot->pins->update($pinId, 'new description', 'new link');
+// change board
+$bot->pins->update($pinId, 'new description', 'new link', $newBoardId);
+``` 
+
 Delete pin by id.
 ```php
 $bot->pins->delete($pinId);

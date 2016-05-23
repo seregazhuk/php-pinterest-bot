@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [2.5.2] - 2016-05-23
+### Added: 
+- Edit pin by id (change description, link and board)
+
 ## [2.5.1] - 2016-04-22
 ### Fixed:
 - Cookie file now is placed in os PHP temporary directory
