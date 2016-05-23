@@ -130,6 +130,18 @@ class Pins extends Provider
 
         return $this->callPostRequest($requestOptions, UrlHelper::RESOURCE_UPDATE_PIN, true);
     }
+
+    /**
+     * Moves pin to a new board
+     *
+     * @param int $pindId
+     * @param int $boardId
+     * @return mixed
+     */
+    public function moveToBoard($pindId, $boardId)
+    {
+        return $this->edit($pindId, '', '', $boardId);
+    }
     
     /**
      * Make a repin.
