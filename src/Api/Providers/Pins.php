@@ -111,7 +111,7 @@ class Pins extends Provider
     }
 
     /**
-     * Update pin by ID. You can move pin to a new board by setting this board id.
+     * Edit pin by ID. You can move pin to a new board by setting this board id.
      *
      * @param int $pindId
      * @param string $description
@@ -119,7 +119,7 @@ class Pins extends Provider
      * @param int|null $boardId
      * @return mixed
      */
-    public function update($pindId, $description = '', $link = '', $boardId = null)
+    public function edit($pindId, $description = '', $link = '', $boardId = null)
     {
         $requestOptions = [
             'id'          => $pindId,
