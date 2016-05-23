@@ -111,6 +111,27 @@ class Pins extends Provider
     }
 
     /**
+     * Update pin by ID. You can move pin to a new board by setting this board id.
+     *
+     * @param int $pindId
+     * @param string $description
+     * @param string $link
+     * @param int|null $boardId
+     * @return mixed
+     */
+    public function update($pindId, $description = '', $link = '', $boardId = null)
+    {
+        $requestOptions = [
+            'id'          => $pindId,
+            'description' => $description,
+            'link'        => $link,
+            'board_id'    => $boardId,
+        ];
+
+        return $this->callPostRequest($requestOptions, UrlHelper::RESOURCE_UPDATE_PIN, true);
+    }
+    
+    /**
      * Make a repin.
      *
      * @param int    $repinId
