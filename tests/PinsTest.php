@@ -87,14 +87,14 @@ class PinsTest extends ProviderTest
     }
 
     /** @test */
-    public function updatePin()
+    public function editPin()
     {
         $response = $this->createApiResponse();
         $this->setResponse($response);
-        $this->assertNotFalse($this->provider->update(1));
+        $this->assertNotFalse($this->provider->edit(1, 'new', 'changed'));
 
         $this->setResponse(null);
-        $this->assertFalse($this->provider->update(1));
+        $this->assertFalse($this->provider->edit(1, 'new', 'changed'));
     }
 
     /** @test */
