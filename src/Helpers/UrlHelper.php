@@ -28,6 +28,7 @@ class UrlHelper
      * Pins.
      */
     const RESOURCE_CREATE_PIN = '/resource/PinResource/create/';
+    const RESOURCE_UPDATE_PIN = '/resource/PinResource/update/';
     const RESOURCE_REPIN = '/resource/RepinResource/create/';
     const RESOURCE_USER_FOLLOWERS = '/resource/UserFollowersResource/get/';
     const RESOURCE_DELETE_PIN = '/resource/PinResource/delete/';

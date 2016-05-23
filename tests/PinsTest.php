@@ -87,6 +87,17 @@ class PinsTest extends ProviderTest
     }
 
     /** @test */
+    public function updatePin()
+    {
+        $response = $this->createApiResponse();
+        $this->setResponse($response);
+        $this->assertNotFalse($this->provider->update(1));
+
+        $this->setResponse(null);
+        $this->assertFalse($this->provider->update(1));
+    }
+
+    /** @test */
     public function deletePin()
     {
         $response = $this->createApiResponse();
