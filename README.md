@@ -157,7 +157,7 @@ $bot->pins->edit($pinId, 'new description', 'new link', $newBoardId);
 ``` 
 
 Move pin to a new board.
-```
+```php
 // change board
 $bot->pins->moveToBoard($pinId, $newBoardId);
 ```
