@@ -156,6 +156,12 @@ $bot->pins->edit($pinId, 'new description', 'new link');
 $bot->pins->edit($pinId, 'new description', 'new link', $newBoardId);
 ``` 
 
+Move pin to a new board.
+```
+// change board
+$bot->pins->moveToBoard($pinId, $newBoardId);
+```
+
 Delete pin by id.
 ```php
 $bot->pins->delete($pinId);
