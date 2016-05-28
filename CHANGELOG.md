@@ -1,6 +1,12 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [2.6.0] - 2016-05-23
+### Updated:
+ - Pagination refactoring
+ - Requests refactoring
+ - version up due to previous features
+
 ## [2.5.2] - 2016-05-23
 ### Added: 
 - Edit pin by id (change description, link and board)
