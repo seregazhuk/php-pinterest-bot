@@ -44,9 +44,8 @@ class Pagination
             $batchesNum++;
             yield $results;
 
-            if ($this->checkEndBookMarks()) {
+            if ($this->checkEndBookMarks())
                 return;
-            }
         } while (!$this->reachBatchesLimit($batchesLimit, $batchesNum));
     }
 
