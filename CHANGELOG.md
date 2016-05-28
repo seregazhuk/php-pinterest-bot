@@ -1,11 +1,16 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [2.6.0] - 2016-05-23
+## [2.6.0] - 2016-05-28
 ### Updated:
  - Pagination refactoring
  - Requests refactoring
  - version up due to previous features
+
+## [2.5.3] - 2016-05-28
+### Added: 
+- Edit profile image
+- Get pins from specific source
 
 ## [2.5.2] - 2016-05-23
 ### Added: 
