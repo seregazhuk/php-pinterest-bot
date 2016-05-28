@@ -74,6 +74,12 @@ class UrlHelper
      * News.
      */
     const RESOURCE_GET_LATEST_NEWS = '/resource/NetworkStoriesResource/get/';
+
+    /**
+     * Uploads
+     */
+    const IMAGE_UPLOAD = '/upload-image/';
+
     const URL_BASE = 'https://nl.pinterest.com/';
 
     /**

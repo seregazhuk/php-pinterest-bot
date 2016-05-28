@@ -157,7 +157,7 @@ $bot->pins->edit($pinId, 'new description', 'new link', $newBoardId);
 ``` 
 
 Move pin to a new board.
-```
+```php
 // change board
 $bot->pins->moveToBoard($pinId, $newBoardId);
 ```
@@ -267,9 +267,18 @@ foreach($bot->boards->search('query') as $boardsBatch);
 ```
 
 ## User Settings
-Change profile. Available settings are: *last_name*, *first_name*, *username*, *about*, *location* and *website_url*:
+Change profile. Available settings are: *last_name*, *first_name*, *username*, *about*, *location*, *website_url* and
+*profile_image*:
 ```php
 $bot->user->profile(['first_name'=>'My_name']);
+```
+
+You can change your profile avatar by setting *profile_image* key with a path to image:  
+```php
+$bot->user->profile([
+	'first_name'=>'My_name',
+	'profile_image'=>$path_to_file
+]);
 ```
 
 ## News
