@@ -93,7 +93,7 @@ class Boards extends Provider
     /**
      * Run GET api request to boards resource.
      *
-     * @param array  $query
+     * @param string $query
      * @param string $url
      * @param bool   $pagination
      *
