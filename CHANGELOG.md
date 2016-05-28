@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 ### Updated:
  - Pagination refactoring
  - Requests refactoring
- - version up due to previous features
+ - version up due to the previous features
 
 ## [2.5.3] - 2016-05-28
 ### Added: 
