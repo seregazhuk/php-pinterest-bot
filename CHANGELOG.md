@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [2.5.4] - 2016-05-28
+### Added: 
+- Edit profile image
+- Get pins from specific source
+
 ## [2.5.2] - 2016-05-23
 ### Added: 
 - Edit pin by id (change description, link and board)
