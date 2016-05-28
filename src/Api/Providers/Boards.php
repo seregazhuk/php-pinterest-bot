@@ -30,7 +30,7 @@ class Boards extends Provider
      */
     public function forUser($username)
     {
-        $get = Request::createRequestData(['options' => ['username' => $username]]);
+        $get = Request::createQuery(['options' => ['username' => $username]]);
 
         return $this->boardsGetCall($get, UrlHelper::RESOURCE_GET_BOARDS);
     }
@@ -45,7 +45,7 @@ class Boards extends Provider
      */
     public function info($username, $board)
     {
-        $get = Request::createRequestData(
+        $get = Request::createQuery(
             [
                 'options' => [
                     'username'      => $username,
@@ -68,17 +68,14 @@ class Boards extends Provider
      */
     public function pins($boardId, $batchesLimit = 0)
     {
-        return Pagination::getPaginatedData(
-            [$this, 'getPinsFromBoard'],
+        return (new Pagination($this))->getPaginatedData(
+            'getPinsFromBoard',
             ['boardId' => $boardId],
             $batchesLimit
         );
     }
 
     /**
-     * Low-level function to get pins from board by its Id.
-     * Is used in getPaginatedData as callback.
-     *
      * @param int   $boardId
      * @param array $bookmarks
      *
@@ -86,7 +83,7 @@ class Boards extends Provider
      */
     public function getPinsFromBoard($boardId, $bookmarks = [])
     {
-        $get = Request::createRequestData(
+        $get = Request::createQuery(
             ['options' => ['board_id' => $boardId]], '', $bookmarks
         );
 
@@ -104,8 +101,7 @@ class Boards extends Provider
      */
     protected function boardsGetCall($query, $url, $pagination = false)
     {
-        $getString = UrlHelper::buildRequestString($query);
-        $response = $this->request->exec($url."?{$getString}");
+        $response = $this->request->exec($url . "?{$query}");
         if ($pagination) {
             return $this->response->getPaginationData($response);
         }

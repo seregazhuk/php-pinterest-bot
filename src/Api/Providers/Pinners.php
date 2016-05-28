@@ -5,13 +5,13 @@ namespace seregazhuk\PinterestBot\Api\Providers;
 use Iterator;
 use LogicException;
 use seregazhuk\PinterestBot\Api\Request;
-use seregazhuk\PinterestBot\Exceptions\AuthException;
+use seregazhuk\PinterestBot\Helpers\UrlHelper;
 use seregazhuk\PinterestBot\Helpers\Pagination;
-use seregazhuk\PinterestBot\Helpers\Providers\Traits\HasFollowers;
+use seregazhuk\PinterestBot\Exceptions\AuthException;
+use seregazhuk\PinterestBot\Helpers\Requests\PinnerHelper;
 use seregazhuk\PinterestBot\Helpers\Providers\Traits\Followable;
 use seregazhuk\PinterestBot\Helpers\Providers\Traits\Searchable;
-use seregazhuk\PinterestBot\Helpers\Requests\PinnerHelper;
-use seregazhuk\PinterestBot\Helpers\UrlHelper;
+use seregazhuk\PinterestBot\Helpers\Providers\Traits\HasFollowers;
 
 class Pinners extends Provider
 {
@@ -33,7 +33,7 @@ class Pinners extends Provider
      */
     public function info($username)
     {
-        $res = $this->getPaginatedData($username, UrlHelper::RESOURCE_USER_INFO, "/$username/", 1);
+        $res = $this->paginate($username, UrlHelper::RESOURCE_USER_INFO, "/$username/", 1);
         $res = iterator_to_array($res);
 
         return !empty($res) ? $res[0] : null;
@@ -49,7 +49,7 @@ class Pinners extends Provider
      */
     public function followers($username, $batchesLimit = 0)
     {
-        return $this->getPaginatedData(
+        return $this->paginate(
             $username, UrlHelper::RESOURCE_USER_FOLLOWERS, "/$username/followers/", $batchesLimit
         );
     }
@@ -64,7 +64,7 @@ class Pinners extends Provider
      */
     public function following($username, $batchesLimit = 0)
     {
-        return $this->getPaginatedData(
+        return $this->paginate(
             $username, UrlHelper::RESOURCE_USER_FOLLOWING, "/$username/following/", $batchesLimit
         );
     }
@@ -79,7 +79,7 @@ class Pinners extends Provider
      */
     public function pins($username, $batchesLimit = 0)
     {
-        return $this->getPaginatedData(
+        return $this->paginate(
             $username, UrlHelper::RESOURCE_USER_PINS, "/$username/$username/", $batchesLimit
         );
     }
@@ -102,8 +102,7 @@ class Pinners extends Provider
 
         $this->checkCredentials($username, $password);
 
-        $post = PinnerHelper::createLoginRequest($username, $password);
-        $postString = UrlHelper::buildRequestString($post);
+        $postString = PinnerHelper::createLoginQuery($username, $password);
         $this->request->clearToken();
 
         $response = $this->request->exec(UrlHelper::RESOURCE_LOGIN, $postString);
@@ -165,9 +164,6 @@ class Pinners extends Provider
     }
 
     /**
-     * Wrapper over Pagination::getPaginatedData for
-     * high-level functions, such as 'following', 'pins' and others.
-     *
      * @param string $username
      * @param string $url
      * @param string $sourceUrl
@@ -175,14 +171,15 @@ class Pinners extends Provider
      *
      * @return Iterator
      */
-    protected function getPaginatedData($username, $url, $sourceUrl, $batchesLimit)
+    public function paginate($username, $url, $sourceUrl, $batchesLimit)
     {
-        $data = [
-            ['username' => $username],
-            $url,
-            $sourceUrl,
+        $params = [
+            'data'      => ['username' => $username],
+            'url'       => $url,
+            'sourceUrl' => $sourceUrl,
+            'bookmarks' => []
         ];
 
-        return Pagination::getPaginatedData([$this, 'getData'], $data, $batchesLimit);
+        return (new Pagination($this))->getPaginatedData('getPaginatedData', $params, $batchesLimit);
     }
 }

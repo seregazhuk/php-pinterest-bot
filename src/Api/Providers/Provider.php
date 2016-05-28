@@ -68,14 +68,6 @@ abstract class Provider
         return $this->response->checkResponse($response);
     }
 
-    public function execPaginatedRequest($data, $url, $sourceUrl, $bookmarks = [])
-    {
-        $data['options'] = $data;
-        $response = $this->getRequest()->exec($url . '?' . Request::createQuery($data, $sourceUrl, $bookmarks));
-
-        return $this->getResponse()->getPaginationData($response);
-    }
-
     /**
      * @return Request
      */
@@ -100,5 +92,13 @@ abstract class Provider
     public function checkMethodRequiresLogin($method)
     {
         return in_array($method, $this->loginRequired);
+    }
+
+    public function getPaginatedData($data, $url, $sourceUrl, $bookmarks = [])
+    {
+        $data['options'] = $data;
+        $response = $this->getRequest()->exec($url . '?' . Request::createQuery($data, $sourceUrl, $bookmarks));
+
+        return $this->getResponse()->getPaginationData($response);
     }
 }
