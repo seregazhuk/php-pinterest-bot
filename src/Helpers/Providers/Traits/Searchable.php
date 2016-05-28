@@ -45,12 +45,12 @@ trait Searchable
      */
     public function searchWithPagination($query, $batchesLimit)
     {
-        return (new Pagination($this))->getPaginatedData(
-            'searchCall', [
-            'query' => $query,
-            'scope' => $this->getScope(),
-        ], $batchesLimit
-        );
+        return (new Pagination($this))->run(
+                'searchCall', [
+                'query' => $query,
+                'scope' => $this->getScope(),
+            ], $batchesLimit
+            );
     }
 
     /**

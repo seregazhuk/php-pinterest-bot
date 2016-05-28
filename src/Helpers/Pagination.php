@@ -27,12 +27,12 @@ class Pagination
      * To limit result batches, set $batchesLimit. Call function
      * of object to get data.
      *
-     * @param array    $params
-     * @param int      $batchesLimit
-     *
+     * @param string $method
+     * @param array $params
+     * @param int $batchesLimit
      * @return \Iterator
      */
-    public function getPaginatedData($method, $params, $batchesLimit = 0)
+    public function run($method, $params, $batchesLimit = 0)
     {
         $batchesNum = 0;
         do {

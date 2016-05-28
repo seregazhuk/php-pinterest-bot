@@ -177,9 +177,8 @@ class Pinners extends Provider
             'data'      => ['username' => $username],
             'url'       => $url,
             'sourceUrl' => $sourceUrl,
-            'bookmarks' => []
         ];
 
-        return (new Pagination($this))->getPaginatedData('getPaginatedData', $params, $batchesLimit);
+        return (new Pagination($this))->run('getPaginatedData', $params, $batchesLimit);
     }
 }

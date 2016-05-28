@@ -212,29 +212,13 @@ class Pins extends Provider
      */
     public function fromSource($source, $batchesLimit = 0)
     {
-        return $this->paginate(
-            $source, UrlHelper::RESOURCE_DOMAIN_FEED, "/source/$source/", $batchesLimit
-        );
-    }
-
-    /**
-     * @param string $source
-     * @param string $url
-     * @param string $sourceUrl
-     * @param int $batchesLimit
-     *
-     * @return Iterator
-     */
-    public function paginate($source, $url, $sourceUrl, $batchesLimit)
-    {
         $params = [
             'data'      => ['domain' => $source],
-            'url'       => $url,
-            'sourceUrl' => $sourceUrl,
-            'bookmarks' => []
+            'url'       => UrlHelper::RESOURCE_DOMAIN_FEED,
+            'sourceUrl' => "/source/$source/",
         ];
 
-        return (new Pagination($this))->getPaginatedData('getPaginatedData', $params, $batchesLimit);
+        return (new Pagination($this))->run('getPaginatedData', $params, $batchesLimit);
     }
     
     /**
