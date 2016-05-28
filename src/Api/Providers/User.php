@@ -26,6 +26,7 @@ class User extends Provider
         if (isset($userInfo['profile_image'])) {
             $userInfo['profile_image_url'] = $this->upload($userInfo['profile_image']);
         }
-        return $this->callPostRequest($userInfo, UrlHelper::RESOURCE_UPDATE_USER_SETTINGS);
+
+        return $this->execPostRequest($userInfo, UrlHelper::RESOURCE_UPDATE_USER_SETTINGS);
     }
 }

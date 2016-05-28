@@ -129,7 +129,7 @@ class Response implements ResponseInterface
     public function parseSearchResponse($response, $bookmarksUsed = true)
     {
         if ($response === null || !$bookmarksUsed) {
-            return self::parseSimpledSearchResponse($response);
+            return $this->parseSimpledSearchResponse($response);
         }
 
         return $this->getPaginationData($response);
@@ -150,7 +150,7 @@ class Response implements ResponseInterface
         }
 
         $bookmarks = $this->getBookmarksFromResponse($response);
-        if ($data = self::getData($response)) {
+        if ($data = $this->getData($response)) {
             return ['data' => $data, 'bookmarks' => $bookmarks];
         }
 

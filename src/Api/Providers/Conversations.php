@@ -3,8 +3,8 @@
 namespace seregazhuk\PinterestBot\Api\Providers;
 
 use seregazhuk\PinterestBot\Api\Request;
-use seregazhuk\PinterestBot\Exceptions\InvalidRequestException;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
+use seregazhuk\PinterestBot\Exceptions\InvalidRequestException;
 
 class Conversations extends Provider
 {
@@ -83,6 +83,6 @@ class Conversations extends Provider
             'user_ids' => $userId,
         ];
 
-        return $this->callPostRequest($requestOptions, UrlHelper::RESOURCE_SEND_MESSAGE);
+        return $this->execPostRequest($requestOptions, UrlHelper::RESOURCE_SEND_MESSAGE);
     }
 }

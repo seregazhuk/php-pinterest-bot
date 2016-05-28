@@ -4,11 +4,11 @@ namespace seregazhuk\PinterestBot\Api\Providers;
 
 use Iterator;
 use seregazhuk\PinterestBot\Api\Request;
-use seregazhuk\PinterestBot\Helpers\Pagination;
-use seregazhuk\PinterestBot\Helpers\Providers\Traits\HasFollowers;
-use seregazhuk\PinterestBot\Helpers\Providers\Traits\Followable;
-use seregazhuk\PinterestBot\Helpers\Providers\Traits\Searchable;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
+use seregazhuk\PinterestBot\Helpers\Pagination;
+use seregazhuk\PinterestBot\Helpers\Providers\Traits\Searchable;
+use seregazhuk\PinterestBot\Helpers\Providers\Traits\Followable;
+use seregazhuk\PinterestBot\Helpers\Providers\Traits\HasFollowers;
 
 class Boards extends Provider
 {
@@ -122,7 +122,7 @@ class Boards extends Provider
      */
     public function delete($boardId)
     {
-        return $this->callPostRequest(['board_id' => $boardId], UrlHelper::RESOURCE_DELETE_BOARD);
+        return $this->execPostRequest(['board_id' => $boardId], UrlHelper::RESOURCE_DELETE_BOARD);
     }
 
     /**
@@ -142,7 +142,7 @@ class Boards extends Provider
             'privacy'     => $privacy,
         ];
 
-        return $this->callPostRequest($requestOptions, UrlHelper::RESOURCE_CREATE_BOARD);
+        return $this->execPostRequest($requestOptions, UrlHelper::RESOURCE_CREATE_BOARD);
     }
 
     /**

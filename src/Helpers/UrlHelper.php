@@ -37,6 +37,7 @@ class UrlHelper
     const RESOURCE_COMMENT_PIN = '/resource/PinCommentResource/create/';
     const RESOURCE_COMMENT_DELETE_PIN = '/resource/PinCommentResource/delete/';
     const RESOURCE_PIN_INFO = '/resource/PinResource/get/';
+    const RESOURCE_DOMAIN_FEED = '/resource/DomainFeedResource/get';
 
     /**
      * Pinners.
