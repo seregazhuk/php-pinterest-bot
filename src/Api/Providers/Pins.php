@@ -2,9 +2,11 @@
 
 namespace seregazhuk\PinterestBot\Api\Providers;
 
+use Iterator;
 use seregazhuk\PinterestBot\Api\Request;
-use seregazhuk\PinterestBot\Helpers\Providers\Traits\Searchable;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
+use seregazhuk\PinterestBot\Helpers\Pagination;
+use seregazhuk\PinterestBot\Helpers\Providers\Traits\Searchable;
 
 class Pins extends Provider
 {
@@ -54,7 +56,7 @@ class Pins extends Provider
      */
     protected function likePinMethodCall($pinId, $resourceUrl)
     {
-        return $this->callPostRequest(['pin_id' => $pinId], $resourceUrl);
+        return $this->execPostRequest(['pin_id' => $pinId], $resourceUrl);
     }
 
     /**
@@ -69,7 +71,7 @@ class Pins extends Provider
     {
         $requestOptions = ['pin_id' => $pinId, 'test' => $text];
 
-        return $this->callPostRequest($requestOptions, UrlHelper::RESOURCE_COMMENT_PIN, true);
+        return $this->execPostRequest($requestOptions, UrlHelper::RESOURCE_COMMENT_PIN, true);
     }
 
     /**
@@ -84,7 +86,7 @@ class Pins extends Provider
     {
         $requestOptions = ['pin_id' => $pinId, 'comment_id' => $commentId];
 
-        return $this->callPostRequest($requestOptions, UrlHelper::RESOURCE_COMMENT_DELETE_PIN);
+        return $this->execPostRequest($requestOptions, UrlHelper::RESOURCE_COMMENT_DELETE_PIN);
     }
 
     /**
@@ -107,7 +109,7 @@ class Pins extends Provider
             'board_id'    => $boardId,
         ];
 
-        return $this->callPostRequest($requestOptions, UrlHelper::RESOURCE_CREATE_PIN, true);
+        return $this->execPostRequest($requestOptions, UrlHelper::RESOURCE_CREATE_PIN, true);
     }
 
     /**
@@ -128,7 +130,7 @@ class Pins extends Provider
             'board_id'    => $boardId,
         ];
 
-        return $this->callPostRequest($requestOptions, UrlHelper::RESOURCE_UPDATE_PIN, true);
+        return $this->execPostRequest($requestOptions, UrlHelper::RESOURCE_UPDATE_PIN, true);
     }
 
     /**
@@ -162,7 +164,7 @@ class Pins extends Provider
             'pin_id'      => $repinId,
         ];
 
-        return $this->callPostRequest($requestOptions, UrlHelper::RESOURCE_REPIN, true);
+        return $this->execPostRequest($requestOptions, UrlHelper::RESOURCE_REPIN, true);
     }
 
     /**
@@ -174,7 +176,7 @@ class Pins extends Provider
      */
     public function delete($pinId)
     {
-        return $this->callPostRequest(['id' => $pinId], UrlHelper::RESOURCE_DELETE_PIN);
+        return $this->execPostRequest(['id' => $pinId], UrlHelper::RESOURCE_DELETE_PIN);
     }
 
     /**
@@ -200,6 +202,42 @@ class Pins extends Provider
         return $this->response->checkResponse($response);
     }
 
+    /**
+     * Get pins from a specific url. For example: https://pinterest.com/source/flickr.com/ will return
+     * recent Pins from flickr.com
+     *
+     * @param string $source
+     * @param int $batchesLimit
+     * @return Iterator
+     */
+    public function fromSource($source, $batchesLimit = 0)
+    {
+        return $this->getPaginatedData(
+            $source, UrlHelper::RESOURCE_DOMAIN_FEED, "/source/$source/", $batchesLimit
+        );
+    }
+
+    /**
+     * Wrapper over Pagination::getPaginatedData for
+     * high-level functions, such as 'following', 'pins' and others.
+     *
+     * @param string $domain
+     * @param string $url
+     * @param string $sourceUrl
+     * @param int $batchesLimit
+     * @return Iterator
+     */
+    protected function getPaginatedData($domain, $url, $sourceUrl, $batchesLimit)
+    {
+        $data = [
+            ['domain' => $domain],
+            $url,
+            $sourceUrl,
+        ];
+
+        return Pagination::getPaginatedData([$this, 'execPaginatedRequest'], $data, $batchesLimit);
+    }
+    
     /**
      * @return string
      */

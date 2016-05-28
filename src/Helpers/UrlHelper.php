@@ -37,6 +37,7 @@ class UrlHelper
     const RESOURCE_COMMENT_PIN = '/resource/PinCommentResource/create/';
     const RESOURCE_COMMENT_DELETE_PIN = '/resource/PinCommentResource/delete/';
     const RESOURCE_PIN_INFO = '/resource/PinResource/get/';
+    const RESOURCE_DOMAIN_FEED = '/resource/DomainFeedResource/get';
 
     /**
      * Pinners.
@@ -74,6 +75,12 @@ class UrlHelper
      * News.
      */
     const RESOURCE_GET_LATEST_NEWS = '/resource/NetworkStoriesResource/get/';
+
+    /**
+     * Uploads
+     */
+    const IMAGE_UPLOAD = '/upload-image/';
+
     const URL_BASE = 'https://nl.pinterest.com/';
 
     /**

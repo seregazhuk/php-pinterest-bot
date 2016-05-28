@@ -2,11 +2,12 @@
 
 namespace seregazhuk\PinterestBot\Api;
 
-use seregazhuk\PinterestBot\Contracts\HttpInterface;
-use seregazhuk\PinterestBot\Contracts\RequestInterface;
-use seregazhuk\PinterestBot\Exceptions\AuthException;
-use seregazhuk\PinterestBot\Helpers\CsrfHelper;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
+use seregazhuk\PinterestBot\Helpers\FileHelper;
+use seregazhuk\PinterestBot\Helpers\CsrfHelper;
+use seregazhuk\PinterestBot\Contracts\HttpInterface;
+use seregazhuk\PinterestBot\Exceptions\AuthException;
+use seregazhuk\PinterestBot\Contracts\RequestInterface;
 
 /**
  * Class Request.
@@ -33,6 +34,12 @@ class Request implements RequestInterface
     protected $cookieJar;
     protected $options;
 
+    /**
+     *
+     * @var string
+     */
+    protected $filePathToUpload;
+
     public $csrfToken = '';
 
     /**
@@ -45,12 +52,16 @@ class Request implements RequestInterface
         'Accept-Language: en-US,en;q=0.5',
         'DNT: 1',
         'Host: nl.pinterest.com',
-        'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
         'X-Pinterest-AppState: active',
         'X-NEW-APP: 1',
         'X-APP-VERSION: 04cf8cc',
         'X-Requested-With: XMLHttpRequest',
     ];
+
+    /**
+     * @var string
+     */
+    protected $postFileData;
 
     /**
      * @param HttpInterface $http
@@ -89,6 +100,13 @@ class Request implements RequestInterface
         return $this->exec($url, $postString);
     }
 
+    public function upload($pathToFile, $url)
+    {
+        $this->filePathToUpload = $pathToFile;
+
+        return $this->exec($url);
+    }
+
     /**
      * Executes request to Pinterest API.
      *
@@ -103,6 +121,7 @@ class Request implements RequestInterface
         $this->makeHttpOptions($postString);
         $res = $this->http->execute($url, $this->options);
 
+        $this->filePathToUpload = null;
         return json_decode($res, true);
     }
 
@@ -121,9 +140,9 @@ class Request implements RequestInterface
             $this->options = $this->addDefaultCsrfInfo($this->options);
         }
 
-        if (!empty($postString)) {
+        if (!empty($postString) || $this->filePathToUpload) {
             $this->options[CURLOPT_POST] = true;
-            $this->options[CURLOPT_POSTFIELDS] = $postString;
+            $this->options[CURLOPT_POSTFIELDS] = $this->filePathToUpload ? $this->postFileData : $postString;
         }
 
         return $this;
@@ -264,6 +283,42 @@ class Request implements RequestInterface
      */
     protected function getDefaultHttpHeaders()
     {
-        return array_merge($this->requestHeaders, ['X-CSRFToken: '.$this->csrfToken]);
+        return array_merge(
+            $this->requestHeaders, $this->getContentTypeHeader(), ['X-CSRFToken: ' . $this->csrfToken]
+        );
+    }
+
+    /**
+     * If we are uploading file, we should build boundary form data. Otherwise
+     * it is simple urlencoded form.
+     *
+     * @return array
+     */
+    protected function getContentTypeHeader()
+    {
+        if ($this->filePathToUpload) {
+            $delimiter = '-------------' . uniqid();
+            $this->buildFilePostData($delimiter);
+
+            return [
+                'Content-Type: multipart/form-data; boundary=' . $delimiter,
+                'Content-Length: ' . strlen($this->postFileData)
+            ];
+        }
+
+        return ['Content-Type: application/x-www-form-urlencoded; charset=UTF-8;'];
+    }
+
+    protected function buildFilePostData($delimiter)
+    {
+        $data = "--$delimiter\r\n";
+        $data .= 'Content-Disposition: form-data; name="img"; filename="' . basename($this->filePathToUpload) . '"' . "\r\n";
+        $data .= 'Content-Type: ' . FileHelper::getMimeType($this->filePathToUpload) . "\r\n\r\n";
+        $data .= file_get_contents($this->filePathToUpload) . "\r\n";
+        $data .= "--$delimiter--\r\n";
+
+        $this->postFileData = $data;
+
+        return $this;
     }
 }

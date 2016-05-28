@@ -55,7 +55,7 @@ abstract class Provider
      *
      * @return mixed
      */
-    public function callPostRequest($requestOptions, $resourceUrl, $returnData = false)
+    public function execPostRequest($requestOptions, $resourceUrl, $returnData = false)
     {
         $data = ['options' => $requestOptions];
         $postString = Request::createQuery($data);
@@ -66,6 +66,14 @@ abstract class Provider
         }
 
         return $this->response->checkResponse($response);
+    }
+
+    public function execPaginatedRequest($data, $url, $sourceUrl, $bookmarks = [])
+    {
+        $data['options'] = $data;
+        $response = $this->getRequest()->exec($url . '?' . Request::createQuery($data, $sourceUrl, $bookmarks));
+
+        return $this->getResponse()->getPaginationData($response);
     }
 
     /**

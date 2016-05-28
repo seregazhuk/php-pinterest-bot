@@ -125,7 +125,7 @@ foreach($bot->boards->followers($boardId) as $followersBatch)
 
 ## Pins
 
-Notice! Try not to be very aggressive when pinning or commetning pins, or pinterest will gonna ban you.
+Notice! Try not to be very aggressive when pinning or commenting pins, or pinterest will gonna ban you.
 
 Get pin info by its id.
 ```php
@@ -181,6 +181,14 @@ $result = $bot->pins->comment($pinId, 'your comment');
 Delete a comment.
 ```php
 $bot->pins->deleteComment($pinId, $commentId);
+```
+
+Get pins from a specific url. For example: https://pinterest.com/source/flickr.com/ will return 
+recent Pins from flickr.com:
+```php
+foreach ($bot->pins->fromSource('flickr.com') as $pins) {
+    // ...
+}
 ```
 
 ## Pinners
@@ -267,9 +275,18 @@ foreach($bot->boards->search('query') as $boardsBatch);
 ```
 
 ## User Settings
-Change profile. Available settings are: *last_name*, *first_name*, *username*, *about*, *location* and *website_url*:
+Change profile. Available settings are: *last_name*, *first_name*, *username*, *about*, *location*, *website_url* and
+*profile_image*:
 ```php
 $bot->user->profile(['first_name'=>'My_name']);
+```
+
+You can change your profile avatar by setting *profile_image* key with a path to image:  
+```php
+$bot->user->profile([
+	'first_name'=>'My_name',
+	'profile_image'=>$path_to_file
+]);
 ```
 
 ## News

@@ -3,15 +3,19 @@
 namespace seregazhuk\PinterestBot\Api\Providers;
 
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
+use seregazhuk\PinterestBot\Helpers\Providers\Traits\UploadsImages;
 
 class User extends Provider
 {
+    use UploadsImages;
+    
     protected $loginRequired = ['profile'];
 
     /**
      * Update user profile info. Gets associative array as
      * a params. Available keys of array are:
      * 'last_name', 'first_name', 'username', 'about', 'location' and 'website_url'.
+     * You can also change user avatar by passing 'profile_image'.
      *
      * @param array $userInfo
      *
@@ -19,6 +23,10 @@ class User extends Provider
      */
     public function profile($userInfo)
     {
-        return $this->callPostRequest($userInfo, UrlHelper::RESOURCE_UPDATE_USER_SETTINGS);
+        if (isset($userInfo['profile_image'])) {
+            $userInfo['profile_image_url'] = $this->upload($userInfo['profile_image']);
+        }
+
+        return $this->execPostRequest($userInfo, UrlHelper::RESOURCE_UPDATE_USER_SETTINGS);
     }
 }
