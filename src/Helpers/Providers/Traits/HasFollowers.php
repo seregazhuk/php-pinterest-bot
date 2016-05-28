@@ -3,28 +3,11 @@
 namespace seregazhuk\PinterestBot\Helpers\Providers\Traits;
 
 use Iterator;
-use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Helpers\Pagination;
 
 trait HasFollowers
 {
     use ProviderTrait;
-
-    /**
-     * @param array  $data
-     * @param string $url
-     * @param string $sourceUrl
-     * @param array  $bookmarks
-     *
-     * @return array
-     */
-    public function getData($data, $url, $sourceUrl, $bookmarks = [])
-    {
-        $data['options'] = $data;
-        $response = $this->getRequest()->exec($url.'?'.Request::createQuery($data, $sourceUrl, $bookmarks));
-
-        return $this->getResponse()->getPaginationData($response);
-    }
 
     /**
      * @param array  $data
@@ -38,6 +21,6 @@ trait HasFollowers
     {
         $requestData = array_merge([$data, $resourceUrl, $sourceUrl]);
 
-        return Pagination::getPaginatedData([$this, 'execPaginatedRequest'], $requestData, $batchesLimit);
+        return (new Pagination($this))->run('getPaginatedData', $requestData, $batchesLimit);
     }
 }

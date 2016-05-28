@@ -29,9 +29,8 @@ trait Searchable
     public function searchCall($query, $scope, $bookmarks = [])
     {
         $url = UrlHelper::getSearchUrl(!empty($bookmarks));
-        $get = $this->createSearchRequest($query, $scope, $bookmarks);
-        $url = $url.'?'.UrlHelper::buildRequestString($get);
-        $response = $this->getRequest()->exec($url);
+        $get = $this->createSearchQuery($query, $scope, $bookmarks);
+        $response = $this->getRequest()->exec($url . '?' . $get);
 
         return $this->getResponse()->parseSearchResponse($response, !empty($bookmarks));
     }
@@ -46,12 +45,12 @@ trait Searchable
      */
     public function searchWithPagination($query, $batchesLimit)
     {
-        return Pagination::getPaginatedData(
-            [$this, 'searchCall'], [
-            'query' => $query,
-            'scope' => $this->getScope(),
-        ], $batchesLimit
-        );
+        return (new Pagination($this))->run(
+                'searchCall', [
+                'query' => $query,
+                'scope' => $this->getScope(),
+            ], $batchesLimit
+            );
     }
 
     /**
@@ -63,12 +62,12 @@ trait Searchable
      *
      * @return array
      */
-    public function createSearchRequest($query, $scope, $bookmarks = [])
+    public function createSearchQuery($query, $scope, $bookmarks = [])
     {
         $options = ['scope' => $scope, 'query' => $query];
         $dataJson = $this->appendBookMarks($bookmarks, $options);
 
-        return Request::createRequestData(
+        return Request::createQuery(
             $dataJson, "/search/$scope/?q=".$query
         );
     }

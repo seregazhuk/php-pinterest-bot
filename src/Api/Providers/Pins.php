@@ -212,30 +212,13 @@ class Pins extends Provider
      */
     public function fromSource($source, $batchesLimit = 0)
     {
-        return $this->getPaginatedData(
-            $source, UrlHelper::RESOURCE_DOMAIN_FEED, "/source/$source/", $batchesLimit
-        );
-    }
-
-    /**
-     * Wrapper over Pagination::getPaginatedData for
-     * high-level functions, such as 'following', 'pins' and others.
-     *
-     * @param string $domain
-     * @param string $url
-     * @param string $sourceUrl
-     * @param int $batchesLimit
-     * @return Iterator
-     */
-    protected function getPaginatedData($domain, $url, $sourceUrl, $batchesLimit)
-    {
-        $data = [
-            ['domain' => $domain],
-            $url,
-            $sourceUrl,
+        $params = [
+            'data'      => ['domain' => $source],
+            'url'       => UrlHelper::RESOURCE_DOMAIN_FEED,
+            'sourceUrl' => "/source/$source/",
         ];
 
-        return Pagination::getPaginatedData([$this, 'execPaginatedRequest'], $data, $batchesLimit);
+        return (new Pagination($this))->run('getPaginatedData', $params, $batchesLimit);
     }
     
     /**

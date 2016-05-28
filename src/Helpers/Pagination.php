@@ -2,54 +2,71 @@
 
 namespace seregazhuk\PinterestBot\Helpers;
 
+use seregazhuk\PinterestBot\Api\Providers\Provider;
+
 class Pagination
 {
+    /**
+     * @var Provider
+     */
+    private $provider;
+
+    /**
+     * @var array
+     */
+    protected $bookmarks = [];
+
+    public function __construct(Provider $provider)
+    {
+        $this->provider = $provider;
+    }
+
     /**
      * Iterate through results of Api function call. By
      * default generator will return all pagination results.
      * To limit result batches, set $batchesLimit. Call function
      * of object to get data.
      *
-     * @param callable $callback
-     * @param array    $params
-     * @param int      $batchesLimit
-     *
+     * @param string $method
+     * @param array $params
+     * @param int $batchesLimit
      * @return \Iterator
      */
-    public static function getPaginatedData($callback, $params, $batchesLimit = 0)
+    public function run($method, $params, $batchesLimit = 0)
     {
         $batchesNum = 0;
         do {
-            $response = self::getPaginatedResponse($callback, $params);
-            $items = self::getDataFromPaginatedResponse($response);
-            if (empty($items)) {
+            $results = $this->callProviderRequest($method, $params);
+            if (empty($results)) {
                 return;
             }
 
             $batchesNum++;
-            yield $items;
+            yield $results;
 
-            $params['bookmarks'] = self::getBookMarks($response);
-            if (self::checkEndBookMarks($params['bookmarks'])) {
+            if ($this->checkEndBookMarks())
                 return;
-            }
-        } while (!self::reachBatchesLimit($batchesLimit, $batchesNum));
+        } while (!$this->reachBatchesLimit($batchesLimit, $batchesNum));
     }
 
-    protected static function getPaginatedResponse(callable $callback, array $params)
+    protected function callProviderRequest($method, array $params)
     {
-        $response = call_user_func_array($callback, $params);
-        if (self::responseHasData($response)) {
-            return self::clearResponseFromMetaData($response);
+        $params['bookmarks'] = $this->bookmarks;
+        $response = call_user_func_array([$this->provider, $method], $params);
+
+        if ($this->responseHasData($response)) {
+            $this->getBookMarks($response);
+
+            return $this->getDataFromPaginatedResponse($response);
         }
 
         return [];
     }
 
-    protected static function getDataFromPaginatedResponse($response)
+    protected function getDataFromPaginatedResponse($response)
     {
-        if (self::responseHasData($response)) {
-            $res = self::clearResponseFromMetaData($response);
+        if ($this->responseHasData($response)) {
+            $res = $this->clearResponseFromMetaData($response);
 
             return $res['data'];
         }
@@ -58,13 +75,13 @@ class Pagination
     }
 
     /**
-     * @param array $res
+     * @param array $response
      *
      * @return bool
      */
-    protected static function responseHasData($res)
+    protected function responseHasData($response)
     {
-        return isset($res['data']) && !empty($res['data']);
+        return isset($response['data']) && !empty($response['data']);
     }
 
     /**
@@ -75,7 +92,7 @@ class Pagination
      *
      * @return bool
      */
-    protected static function reachBatchesLimit($batchesLimit, $batchesNum)
+    protected function reachBatchesLimit($batchesLimit, $batchesNum)
     {
         return $batchesLimit && $batchesNum >= $batchesLimit;
     }
@@ -83,17 +100,17 @@ class Pagination
     /**
      * Remove 'module' data from response.
      *
-     * @param array $res
+     * @param array $response
      *
      * @return array mixed
      */
-    protected static function clearResponseFromMetaData($res)
+    protected function clearResponseFromMetaData($response)
     {
-        if (isset($res['data'][0]['type']) && $res['data'][0]['type'] == 'module') {
-            array_shift($res['data']);
+        if (isset($response['data'][0]['type']) && $response['data'][0]['type'] == 'module') {
+            array_shift($response['data']);
         }
 
-        return $res;
+        return $response;
     }
 
     /**
@@ -101,13 +118,15 @@ class Pagination
      *
      * @return array
      */
-    protected static function getBookMarks($response)
+    protected function getBookMarks($response)
     {
-        return isset($response['bookmarks']) ? $response['bookmarks'] : [];
+        $this->bookmarks = isset($response['bookmarks']) ? $response['bookmarks'] : [];
+
+        return $this;
     }
 
-    protected static function checkEndBookMarks($bookmarks)
+    protected function checkEndBookMarks()
     {
-        return !empty($bookmarks) && $bookmarks[0] == '-end-';
+        return !empty($this->bookmarks) && $this->bookmarks[0] == '-end-';
     }
 }

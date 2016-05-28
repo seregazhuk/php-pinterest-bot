@@ -1,6 +1,12 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [2.6.0] - 2016-05-28
+### Updated:
+ - Pagination refactoring
+ - Requests refactoring
+ - version up due to the previous features
+
 ## [2.5.3] - 2016-05-28
 ### Added: 
 - Edit profile image

@@ -14,7 +14,7 @@ class PinnerHelper
      *
      * @return array
      */
-    public static function createLoginRequest($username, $password)
+    public static function createLoginQuery($username, $password)
     {
         $dataJson = [
             'options' => [
@@ -23,6 +23,6 @@ class PinnerHelper
             ],
         ];
 
-        return Request::createRequestData($dataJson, '/login/');
+        return Request::createQuery($dataJson, '/login/');
     }
 }
