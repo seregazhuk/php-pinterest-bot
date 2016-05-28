@@ -47,12 +47,12 @@ class Pagination
             if ($this->checkEndBookMarks()) {
                 return;
             }
-            $params['bookmarks'] = $this->bookmarks;
         } while (!$this->reachBatchesLimit($batchesLimit, $batchesNum));
     }
 
     protected function callProviderRequest($method, array $params)
     {
+        $params['bookmarks'] = $this->bookmarks;
         $response = call_user_func_array([$this->provider, $method], $params);
 
         if ($this->responseHasData($response)) {
