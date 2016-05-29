@@ -126,7 +126,7 @@ class Boards extends Provider
     public function followers($boardId, $batchesLimit = 0)
     {
         return $this->getFollowData(
-            ['board_id' => $boardId], UrlHelper::RESOURCE_BOARD_FOLLOWERS, '', $batchesLimit
+            ['board_id' => $boardId], UrlHelper::RESOURCE_BOARD_FOLLOWERS, $batchesLimit
         );
     }
 
