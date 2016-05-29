@@ -3,7 +3,6 @@
 namespace seregazhuk\PinterestBot\Api\Providers;
 
 use Iterator;
-use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
 use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Helpers\Providers\Traits\Searchable;

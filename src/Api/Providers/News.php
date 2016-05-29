@@ -2,7 +2,6 @@
 
 namespace seregazhuk\PinterestBot\Api\Providers;
 
-use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
 
 class News extends Provider
