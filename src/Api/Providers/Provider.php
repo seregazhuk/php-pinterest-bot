@@ -68,6 +68,20 @@ abstract class Provider
         return $this->response->checkResponse($response);
     }
 
+    public function execGetRequest($requestOptions, $resourceUrl, $needsPagination = false, $bookmarks = [])
+    {
+        $query = Request::createQuery(
+            ['options' => $requestOptions], '', $bookmarks
+        );
+
+        $response = $this->request->exec($resourceUrl . "?{$query}");
+        if ($needsPagination) {
+            return $this->response->getPaginationData($response);
+        }
+
+        return $this->response->getData($response);
+    }
+    
     /**
      * @return Request
      */
