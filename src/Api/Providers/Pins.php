@@ -195,11 +195,7 @@ class Pins extends Provider
             'allow_stale'   => true,
         ];
 
-        $data = ['options' => $requestOptions];
-        $url = UrlHelper::RESOURCE_PIN_INFO.'?'.Request::createQuery($data);
-        $response = $this->request->exec($url);
-
-        return $this->response->checkResponse($response);
+        return $this->execGetRequest($requestOptions, UrlHelper::RESOURCE_PIN_INFO);
     }
 
     /**
