@@ -32,7 +32,7 @@ class Pinners extends Provider
      */
     public function info($username)
     {
-        $res = $this->paginate($username, UrlHelper::RESOURCE_USER_INFO, "/$username/", 1);
+        $res = $this->paginate($username, UrlHelper::RESOURCE_USER_INFO, 1);
         $res = iterator_to_array($res);
 
         return !empty($res) ? $res[0] : null;
@@ -49,7 +49,7 @@ class Pinners extends Provider
     public function followers($username, $batchesLimit = 0)
     {
         return $this->paginate(
-            $username, UrlHelper::RESOURCE_USER_FOLLOWERS, "/$username/followers/", $batchesLimit
+            $username, UrlHelper::RESOURCE_USER_FOLLOWERS, $batchesLimit
         );
     }
 
@@ -64,7 +64,7 @@ class Pinners extends Provider
     public function following($username, $batchesLimit = 0)
     {
         return $this->paginate(
-            $username, UrlHelper::RESOURCE_USER_FOLLOWING, "/$username/following/", $batchesLimit
+            $username, UrlHelper::RESOURCE_USER_FOLLOWING, $batchesLimit
         );
     }
 
@@ -79,7 +79,7 @@ class Pinners extends Provider
     public function pins($username, $batchesLimit = 0)
     {
         return $this->paginate(
-            $username, UrlHelper::RESOURCE_USER_PINS, "/$username/$username/", $batchesLimit
+            $username, UrlHelper::RESOURCE_USER_PINS, $batchesLimit
         );
     }
 
@@ -165,17 +165,15 @@ class Pinners extends Provider
     /**
      * @param string $username
      * @param string $url
-     * @param string $sourceUrl
      * @param int    $batchesLimit
      *
      * @return Iterator
      */
-    public function paginate($username, $url, $sourceUrl, $batchesLimit)
+    public function paginate($username, $url, $batchesLimit)
     {
         $params = [
             'data'      => ['username' => $username],
             'url'       => $url,
-            'sourceUrl' => $sourceUrl,
         ];
 
         return (new Pagination($this))->run('getPaginatedData', $params, $batchesLimit);

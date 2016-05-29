@@ -67,7 +67,29 @@ abstract class Provider
         return $this->response->checkResponse($response);
     }
 
-    public function execGetRequest($requestOptions, $resourceUrl, $needsPagination = false, $bookmarks = [])
+    /**
+     * Executes pagination GET request.
+     *
+     * @param array $data
+     * @param string $url
+     * @param array $bookmarks
+     * @return array|bool
+     */
+    public function getPaginatedData(array $data, $url, $bookmarks = [])
+    {
+        return $this->execGetRequest($data, $url, true, $bookmarks);
+    }
+
+    /**
+     * Executes a GET request to Pinterest API with pagination if required.
+     *
+     * @param array $requestOptions
+     * @param string $resourceUrl
+     * @param bool $needsPagination
+     * @param array $bookmarks
+     * @return array|bool
+     */
+    public function execGetRequest(array $requestOptions, $resourceUrl, $needsPagination = false, $bookmarks = [])
     {
         $query = Request::createQuery(['options' => $requestOptions], '', $bookmarks);
         $response = $this->request->exec($resourceUrl . "?{$query}");
@@ -103,13 +125,5 @@ abstract class Provider
     public function checkMethodRequiresLogin($method)
     {
         return in_array($method, $this->loginRequired);
-    }
-
-    public function getPaginatedData($data, $url, $sourceUrl, $bookmarks = [])
-    {
-        $data['options'] = $data;
-        $response = $this->getRequest()->exec($url . '?' . Request::createQuery($data, $sourceUrl, $bookmarks));
-
-        return $this->getResponse()->getPaginationData($response);
     }
 }

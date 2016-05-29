@@ -188,10 +188,10 @@ class Pins extends Provider
     public function info($pinId)
     {
         $requestOptions = [
-            'field_set_key' => 'detailed',
             'id'            => $pinId,
             'pin_id'        => $pinId,
             'allow_stale'   => true,
+            'field_set_key' => 'detailed',
         ];
 
         return $this->execGetRequest($requestOptions, UrlHelper::RESOURCE_PIN_INFO);
@@ -208,9 +208,8 @@ class Pins extends Provider
     public function fromSource($source, $batchesLimit = 0)
     {
         $params = [
-            'data'      => ['domain' => $source],
-            'url'       => UrlHelper::RESOURCE_DOMAIN_FEED,
-            'sourceUrl' => "/source/$source/",
+            'data' => ['domain' => $source],
+            'url'  => UrlHelper::RESOURCE_DOMAIN_FEED,
         ];
 
         return (new Pagination($this))->run('getPaginatedData', $params, $batchesLimit);

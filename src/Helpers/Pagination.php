@@ -46,6 +46,7 @@ class Pagination
 
             if ($this->checkEndBookMarks())
                 return;
+            
         } while (!$this->reachBatchesLimit($batchesLimit, $batchesNum));
     }
 
