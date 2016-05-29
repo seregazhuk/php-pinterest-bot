@@ -82,7 +82,7 @@ class Request implements RequestInterface
     {
         $dataJson = [
             'options' => [
-                $entityName => $entityId,
+                $entityName => (string)$entityId,
             ],
             'context' => [],
         ];
