@@ -57,8 +57,7 @@ abstract class Provider
      */
     public function execPostRequest($requestOptions, $resourceUrl, $returnData = false)
     {
-        $data = ['options' => $requestOptions];
-        $postString = Request::createQuery($data);
+        $postString = Request::createQuery(['options' => $requestOptions]);
         $response = $this->request->exec($resourceUrl, $postString);
 
         if ($returnData) {
@@ -70,11 +69,9 @@ abstract class Provider
 
     public function execGetRequest($requestOptions, $resourceUrl, $needsPagination = false, $bookmarks = [])
     {
-        $query = Request::createQuery(
-            ['options' => $requestOptions], '', $bookmarks
-        );
-
+        $query = Request::createQuery(['options' => $requestOptions], '', $bookmarks);
         $response = $this->request->exec($resourceUrl . "?{$query}");
+        
         if ($needsPagination) {
             return $this->response->getPaginationData($response);
         }
