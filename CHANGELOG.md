@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 ### Changed:
  - News *latest* method renamed to *last*
  - Request and providers refactoring
+ 
+### Fixes:
+ - Boards follow/unfollow request
 
 ## [2.6.0] - 2016-05-28
 ### Updated:
