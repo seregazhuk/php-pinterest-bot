@@ -6,6 +6,7 @@ use Mockery;
 use PHPUnit_Framework_TestCase;
 use ReflectionClass;
 use seregazhuk\PinterestBot\Api\CurlAdapter;
+use seregazhuk\PinterestBot\Api\Providers\Boards;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Contracts\HttpInterface;
 use seregazhuk\PinterestBot\Helpers\CsrfHelper;
@@ -85,8 +86,8 @@ class RequestTest extends PHPUnit_Framework_TestCase
         $http->shouldReceive('execute')->once()->andReturnNull();
         $request = $this->createRequestObject($http);
 
-        $this->assertEquals($response, $request->followMethodCall(1, Request::BOARD_ENTITY_ID, 'ur'));
-        $this->assertNull($request->followMethodCall(1, Request::INTEREST_ENTITY_ID, 'ur'));
+        $this->assertEquals($response, $request->followMethodCall(1, 'entity_id', 'ur'));
+        $this->assertNull($request->followMethodCall(1, 'entity_id', 'ur'));
     }
 
     /**

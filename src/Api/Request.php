@@ -20,10 +20,7 @@ use seregazhuk\PinterestBot\Contracts\RequestInterface;
  */
 class Request implements RequestInterface
 {
-    const INTEREST_ENTITY_ID = 'interest_id';
-    const BOARD_ENTITY_ID = 'board_id';
     const COOKIE_NAME = 'pinterest_cookie';
-    const PINNER_ENTITY_ID = 'user_id';
 
     protected $userAgent = 'Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0';
     /**
@@ -90,7 +87,7 @@ class Request implements RequestInterface
             'context' => [],
         ];
 
-        if ($entityName == self::INTEREST_ENTITY_ID) {
+        if ($entityName == 'interest_id') {
             $dataJson['options']['interest_list'] = 'favorited';
         }
 

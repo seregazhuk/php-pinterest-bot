@@ -4,7 +4,6 @@ namespace seregazhuk\PinterestBot\Api\Providers;
 
 use Iterator;
 use LogicException;
-use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
 use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Exceptions\AuthException;
@@ -140,7 +139,7 @@ class Pinners extends Provider
 
     protected function getEntityIdName()
     {
-        return Request::PINNER_ENTITY_ID;
+        return 'user_id';
     }
 
     /**
