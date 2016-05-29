@@ -2,9 +2,8 @@
 
 namespace seregazhuk\PinterestBot\Api\Providers;
 
-use seregazhuk\PinterestBot\Api\Request;
-use seregazhuk\PinterestBot\Helpers\Providers\Traits\Followable;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
+use seregazhuk\PinterestBot\Helpers\Providers\Traits\Followable;
 
 class Interests extends Provider
 {
@@ -17,7 +16,7 @@ class Interests extends Provider
 
     protected function getEntityIdName()
     {
-        return Request::INTEREST_ENTITY_ID;
+        return 'interest_id';
     }
 
     protected function getFollowUrl()

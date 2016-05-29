@@ -3,7 +3,6 @@
 namespace seregazhuk\PinterestBot\Api\Providers;
 
 use Iterator;
-use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
 use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Helpers\Providers\Traits\Searchable;
@@ -195,11 +194,7 @@ class Pins extends Provider
             'allow_stale'   => true,
         ];
 
-        $data = ['options' => $requestOptions];
-        $url = UrlHelper::RESOURCE_PIN_INFO.'?'.Request::createQuery($data);
-        $response = $this->request->exec($url);
-
-        return $this->response->checkResponse($response);
+        return $this->execGetRequest($requestOptions, UrlHelper::RESOURCE_PIN_INFO);
     }
 
     /**

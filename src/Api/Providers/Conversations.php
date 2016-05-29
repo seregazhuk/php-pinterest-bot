@@ -2,7 +2,6 @@
 
 namespace seregazhuk\PinterestBot\Api\Providers;
 
-use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
 use seregazhuk\PinterestBot\Exceptions\InvalidRequestException;
 
@@ -53,11 +52,7 @@ class Conversations extends Provider
      */
     public function last()
     {
-        $response = $this->request->exec(
-            UrlHelper::RESOURCE_GET_LAST_CONVERSATIONS.'?'.Request::createQuery()
-        );
-
-        return $this->response->getData($response);
+        return $this->execGetRequest([], UrlHelper::RESOURCE_GET_LAST_CONVERSATIONS);
     }
 
     /**

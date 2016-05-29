@@ -26,9 +26,9 @@ class NewsTest extends ProviderTest
         $error = $this->createErrorApiResponse();
 
         $this->setResponse($response);
-        $this->assertEquals('news', $this->provider->latest());
+        $this->assertEquals('news', $this->provider->last());
 
         $this->setResponse($error);
-        $this->assertFalse($this->provider->latest());
+        $this->assertFalse($this->provider->last());
     }
 }

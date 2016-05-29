@@ -3,7 +3,6 @@
 namespace seregazhuk\PinterestBot\Api\Providers;
 
 use Iterator;
-use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
 use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Helpers\Providers\Traits\Searchable;
@@ -30,9 +29,7 @@ class Boards extends Provider
      */
     public function forUser($username)
     {
-        $get = Request::createQuery(['options' => ['username' => $username]]);
-
-        return $this->boardsGetCall($get, UrlHelper::RESOURCE_GET_BOARDS);
+        return $this->execGetRequest(['username' => $username], UrlHelper::RESOURCE_GET_BOARDS);
     }
 
     /**
@@ -45,17 +42,15 @@ class Boards extends Provider
      */
     public function info($username, $board)
     {
-        $get = Request::createQuery(
-            [
-                'options' => [
-                    'username'      => $username,
-                    'slug'          => $board,
-                    'field_set_key' => 'detailed',
-                ],
-            ]
-        );
+        $requestOptions = [
+            'username'      => $username,
+            'slug'          => $board,
+            'field_set_key' => 'detailed',
+        ];
 
-        return $this->boardsGetCall($get, UrlHelper::RESOURCE_GET_BOARDS);
+        return $this->execGetRequest(
+            $requestOptions, UrlHelper::RESOURCE_GET_BOARDS
+        );
     }
 
     /**
@@ -83,30 +78,9 @@ class Boards extends Provider
      */
     public function getPinsFromBoard($boardId, $bookmarks = [])
     {
-        $get = Request::createQuery(
-            ['options' => ['board_id' => $boardId]], '', $bookmarks
+        return $this->execGetRequest(
+            ['board_id' => $boardId], UrlHelper::RESOURCE_GET_BOARD_FEED, true, $bookmarks
         );
-
-        return $this->boardsGetCall($get, UrlHelper::RESOURCE_GET_BOARD_FEED, true);
-    }
-
-    /**
-     * Run GET api request to boards resource.
-     *
-     * @param string $query
-     * @param string $url
-     * @param bool   $pagination
-     *
-     * @return array|bool
-     */
-    protected function boardsGetCall($query, $url, $pagination = false)
-    {
-        $response = $this->request->exec($url . "?{$query}");
-        if ($pagination) {
-            return $this->response->getPaginationData($response);
-        }
-
-        return $this->response->getData($response);
     }
 
     /**
@@ -168,7 +142,7 @@ class Boards extends Provider
 
     protected function getEntityIdName()
     {
-        return Request::BOARD_ENTITY_ID;
+        return 'board_id';
     }
 
     /**

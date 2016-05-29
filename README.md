@@ -184,7 +184,7 @@ $bot->pins->deleteComment($pinId, $commentId);
 ```
 
 Get pins from a specific url. For example: https://pinterest.com/source/flickr.com/ will return 
-recent Pins from flickr.com:
+recent pins from flickr.com:
 ```php
 foreach ($bot->pins->fromSource('flickr.com') as $pins) {
     // ...
@@ -290,9 +290,9 @@ $bot->user->profile([
 ```
 
 ## News
-Get latest user's news:
+Get last user's news:
 ```php
-$news = $bot->news->latest();
+$news = $bot->news->last();
 ```
 
 
