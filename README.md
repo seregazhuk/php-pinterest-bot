@@ -290,9 +290,9 @@ $bot->user->profile([
 ```
 
 ## News
-Get latest user's news:
+Get last user's news:
 ```php
-$news = $bot->news->latest();
+$news = $bot->news->last();
 ```
 
 

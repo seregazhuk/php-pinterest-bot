@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [2.7.0] - 2016-05-29
+### Changed:
+ - News *latest* method renamed to *last*
+ - Request and providers refactoring
+
 ## [2.6.0] - 2016-05-28
 ### Updated:
  - Pagination refactoring
