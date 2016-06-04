@@ -55,7 +55,7 @@ abstract class Provider
      *
      * @return mixed
      */
-    public function execPostRequest($requestOptions, $resourceUrl, $returnData = false)
+    protected function execPostRequest($requestOptions, $resourceUrl, $returnData = false)
     {
         $postString = Request::createQuery(['options' => $requestOptions]);
         $response = $this->request->exec($resourceUrl, $postString);
@@ -89,7 +89,7 @@ abstract class Provider
      * @param array $bookmarks
      * @return array|bool
      */
-    public function execGetRequest(array $requestOptions, $resourceUrl, $needsPagination = false, $bookmarks = [])
+    protected function execGetRequest(array $requestOptions, $resourceUrl, $needsPagination = false, $bookmarks = [])
     {
         $query = Request::createQuery(['options' => $requestOptions], '', $bookmarks);
         $response = $this->request->exec($resourceUrl . "?{$query}");

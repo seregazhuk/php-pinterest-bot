@@ -31,6 +31,7 @@ if your don't use such operations as creating pins, writing comments or sending 
 - [Search](#search)
 - [User Settings](#user-settings)
 - [News](#news)
+- [Keywords](#keywords)
 - [Errors handling](#errors-handling)
 - [Custom settings](#custom-settings)
 
@@ -308,6 +309,12 @@ $bot->user->profile([
 Get last user's news.
 ```php
 $news = $bot->news->last();
+```
+
+## Keywords
+Get recommended keywords for the query.
+```php
+$news = $bot->keywords->recommendedFor('query');
 ```
 
 
