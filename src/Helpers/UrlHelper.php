@@ -22,6 +22,7 @@ class UrlHelper
     const RESOURCE_UNFOLLOW_BOARD = '/resource/BoardFollowResource/delete/';
     const RESOURCE_DELETE_BOARD = '/resource/BoardResource/delete/';
     const RESOURCE_CREATE_BOARD = '/resource/BoardResource/create/';
+    const RESOURCE_UPDATE_BOARD = '/resource/BoardResource/update/';
     const RESOURCE_BOARD_FOLLOWERS = '/resource/BoardFollowersResource/get/';
 
     /**

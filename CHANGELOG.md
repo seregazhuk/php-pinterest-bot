@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [3.1.0] - 2016-06-04
+### Added:
+ - Change board (title, description, category and privacy)
+
 ## [3.0.0] - 2016-05-29
 ### Changed:
  - News *latest* method renamed to *last*
