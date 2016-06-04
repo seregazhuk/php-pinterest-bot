@@ -43,14 +43,14 @@ trait Searchable
      *
      * @return \Iterator
      */
-    public function searchWithPagination($query, $batchesLimit)
+    protected function searchWithPagination($query, $batchesLimit)
     {
         return (new Pagination($this))->run(
-                'searchCall', [
-                'query' => $query,
-                'scope' => $this->getScope(),
-            ], $batchesLimit
-            );
+            'searchCall', [
+            'query' => $query,
+            'scope' => $this->getScope(),
+        ], $batchesLimit
+        );
     }
 
     /**
@@ -62,7 +62,7 @@ trait Searchable
      *
      * @return array
      */
-    public function createSearchQuery($query, $scope, $bookmarks = [])
+    protected function createSearchQuery($query, $scope, $bookmarks = [])
     {
         $options = ['scope' => $scope, 'query' => $query];
         $dataJson = $this->appendBookMarks($bookmarks, $options);

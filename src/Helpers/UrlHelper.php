@@ -127,7 +127,7 @@ class UrlHelper
      *
      * @return string
      */
-    public static function getSearchUrl($bookmarksUsed)
+    public static function getSearchUrl($bookmarksUsed = false)
     {
         if (!$bookmarksUsed) {
             return self::RESOURCE_SEARCH;

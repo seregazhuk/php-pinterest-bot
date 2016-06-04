@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [3.2.0] - 2016-06-04
+### Added:
+ - Keywords provider
+ 	- recommendedFor($query) method.
+
 ## [3.1.0] - 2016-06-04
 ### Added:
  - Change board (title, description, category and privacy)
