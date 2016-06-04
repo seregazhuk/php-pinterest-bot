@@ -76,7 +76,7 @@ will return only 2 batches of search results.
 
 ## Boards
 
-Get all user's boards 
+Get all user's boards.
 ```php
 $boards = $bot->boards->forUser($username);
 ```
@@ -96,8 +96,7 @@ $bot->boards->create('name', 'description');
 $bot->boards->create('name', 'description', 'secret');
 ```
 
-Update a board by id
-
+Update a board by id.
 ```php
 $bot->boards->update($boardId, ['title' => 'New title', 'description' => 'New description']);
 ```
@@ -112,18 +111,18 @@ $bot->boards->update($boardId, [
 ]);
 ```
 
-Delete a board by id
+Delete a board by id.
 ```php
 $bot->boards->delete($boardId);
 ```
 
-Follow/unfollow board by ID
+Follow/unfollow board by id.
 ```php
 $bot->boards->follow($boardId);
 $bot->boards->unfollow($boardId);
 ```
 
-Get all pins for board by ID
+Get all pins for board by id.
 ```php
 foreach($bot->boards->pins($boardId) as $pinsBatch)
 {
@@ -209,12 +208,12 @@ foreach ($bot->pins->fromSource('flickr.com') as $pins) {
 
 ## Pinners
 
-Follow/unfollow user by ID
+Follow/unfollow user by id.
 ```php
 $bot->pinners->follow($userId);
 $bot->pinners->unfollow($userId);
 ```	
-Get user info by username
+Get user info by username.
 ```php
 $userData = $bot->pinners->info($username);
 ```	
@@ -234,12 +233,12 @@ foreach($bot->pinners->followers('username') as $followersBatch)
 ```
 
 ## Interests
-Follow/unfollow interest by ID
+Follow/unfollow interest by id.
 ```php
 $bot->interests->follow($interestId);
 $bot->interests->unfollow($interestId);
 ```
-##Conversations
+## Conversations
 
 ### Write a message
 Write a message to user by id. You may specify one user by id, or pass an array of user ids. 
@@ -248,7 +247,7 @@ Write a message to user by id. You may specify one user by id, or pass an array 
 $bot->conversations->sendMessage($userId, 'message text');
 ```
 
-Add pin by id to message
+Add pin by id to message.
 ```php
 $pinId = 123456789;
 $bot->conversations->sendMessage($userId, 'message text', $pinId);
@@ -260,12 +259,12 @@ Email param may be string or array of emails.
 $bot->conversations->sendEmail('mail@domain.com', 'message text');
 ```
 
-Attach pin to email
+Attach pin to email.
 ```php
 $bot->conversations->sendEmail('mail@domain.com', 'message text', $pindId);
 ```
 
-Get array of last conversations
+Get array of last conversations.
 ```php
 $conversations = $bot->conversations->last();
 ```
@@ -306,14 +305,14 @@ $bot->user->profile([
 ```
 
 ## News
-Get last user's news:
+Get last user's news.
 ```php
 $news = $bot->news->last();
 ```
 
 
 ## Errors handling
-You can check for occurred errors after requests with method *getLastError()*:
+You can check for occurred errors after requests with method *getLastError()*.
 ```php
 $error = $bot->getLastError();
 print_r($error);
