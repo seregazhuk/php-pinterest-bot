@@ -96,6 +96,29 @@ class Boards extends Provider
     }
 
     /**
+     * Update board info. Gets boardId and an associative array as params. Available keys of the array are:
+     * 'category', 'description', 'privacy'.
+     *
+     * - 'privacy' can be 'public' or 'secret'. 'public' by default.
+     * - 'category' is 'other' by default.
+     *
+     * @param $boardId
+     * @param $attributes
+     * @return mixed
+     */
+    public function update($boardId, $attributes)
+    {
+        $requestOptions = array_merge(
+            [
+                'board_id' => $boardId,
+                'category' => 'other',
+            ], $attributes
+        );
+
+        return $this->execPostRequest($requestOptions, UrlHelper::RESOURCE_UPDATE_BOARD);
+    }
+
+    /**
      * Create a new board.
      *
      * @param string $name

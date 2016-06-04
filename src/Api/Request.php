@@ -114,7 +114,7 @@ class Request implements RequestInterface
      */
     public function exec($resourceUrl, $postString = '')
     {
-        $url = UrlHelper::buildApiUrl($resourceUrl);
+        $url = UrlHelper::buildApiUrl($resourceUrl);        
         $this->makeHttpOptions($postString);
         $res = $this->http->execute($url, $this->options);
 
@@ -252,7 +252,7 @@ class Request implements RequestInterface
     public static function createRequestData(array $data = [], $sourceUrl = '/', $bookmarks = [])
     {
         if (empty($data)) {
-            $data = self::createEmptyRequestData();
+            $data = ['options' => []];
         }
 
         if (!empty($bookmarks)) {
@@ -265,14 +265,6 @@ class Request implements RequestInterface
             'source_url' => $sourceUrl,
             'data'       => json_encode($data),
         ];
-    }
-
-    /**
-     * @return array
-     */
-    protected static function createEmptyRequestData()
-    {
-        return ['options' => []];
     }
 
     /**
