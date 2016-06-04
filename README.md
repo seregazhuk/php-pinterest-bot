@@ -314,7 +314,7 @@ $news = $bot->news->last();
 ## Keywords
 Get recommended keywords for the query.
 ```php
-$news = $bot->keywords->recommendedFor('query');
+$keywords = $bot->keywords->recommendedFor('query');
 ```
 
 
