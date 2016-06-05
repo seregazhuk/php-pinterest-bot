@@ -15,14 +15,15 @@ class Keywords extends Provider
         );
         $response = $this->getRequest()->exec(UrlHelper::getSearchUrl() . '?' . $get);
 
-        return $this->parseKeywordsFromRequest($response);
+        return $this->parseKeywordsFromRequest($response, $query);
     }
 
     /**
-     * @param $response
+     * @param string $query
+     * @param array $response
      * @return array|null
      */
-    protected function parseKeywordsFromRequest($response)
+    protected function parseKeywordsFromRequest($response, $query)
     {
         if (!isset($response['resource_data_cache'][0]['data']['guides'])) {
             return null;
@@ -31,8 +32,8 @@ class Keywords extends Provider
         $keywords = $response['resource_data_cache'][0]['data']['guides'];
 
         return array_map(
-            function ($keywordData) {
-                return $keywordData['term'];
+            function ($keywordData) use ($query) {
+                return $query . ' ' . $keywordData['term'];
             }, $keywords
         );
     }
