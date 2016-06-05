@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [3.2.1] - 2016-06-05
+### Updated:
+ - Keywords provider
+ 	- recommendedFor($query) method returns items concatenated with the query request.
+
 ## [3.2.0] - 2016-06-04
 ### Added:
  - Keywords provider

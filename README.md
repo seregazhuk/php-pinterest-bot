@@ -314,7 +314,22 @@ $news = $bot->news->last();
 ## Keywords
 Get recommended keywords for the query.
 ```php
-$news = $bot->keywords->recommendedFor('query');
+$keywords = $bot->keywords->recommendedFor('dress');
+print_r($keywords);
+
+/*
+Array
+(
+    [0] => dress for teens
+    [1] => dress wedding
+    [2] => dress summer
+    [3] => dress floral
+    [4] => dress prom
+    [5] => dress modest
+    [6] => dress cute
+	// ...
+)
+*/
 ```
 
 
