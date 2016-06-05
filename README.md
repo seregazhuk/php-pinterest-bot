@@ -320,17 +320,31 @@ print_r($keywords);
 /*
 Array
 (
-    [0] => dress for teens
-    [1] => dress wedding
-    [2] => dress summer
-    [3] => dress floral
-    [4] => dress prom
-    [5] => dress modest
-    [6] => dress cute
+    [0] => Array
+        (
+            [term] => for teens
+            [position] => 1
+            [display] => For Teens
+        )
+
+    [1] => Array
+        (
+            [term] => wedding
+            [position] => 0
+            [display] => Wedding
+        )
 	// ...
 )
 */
 ```
+
+"position" determine the order to create the complete word. For example:
+ - "for teens", position = 1 -> the complete keyword is : "dress for teens"
+ - "wedding", position = 0 -> the complete keywords is: "wedding dress"
+ 
+So, position = 0 mean the additional keyword should be putted before the search keyword 
+when make concatenation, and position = 1 is for the reverse case.
+
 
 
 ## Errors handling
