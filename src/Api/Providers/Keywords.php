@@ -10,9 +10,7 @@ class Keywords extends Provider
     public function recommendedFor($query)
     {
         $data = ['options' => ['scope' => 'pins', 'query' => $query]];
-        $get = Request::createQuery(
-            $data, "/search/pins/?q=" . $query
-        );
+        $get = Request::createQuery($data);
         $response = $this->getRequest()->exec(UrlHelper::getSearchUrl() . '?' . $get);
 
         return $this->parseKeywordsFromRequest($response);
