@@ -68,19 +68,6 @@ abstract class Provider
     }
 
     /**
-     * Executes pagination GET request.
-     *
-     * @param array $data
-     * @param string $url
-     * @param array $bookmarks
-     * @return array|bool
-     */
-    public function getPaginatedData(array $data, $url, $bookmarks = [])
-    {
-        return $this->execGetRequest($data, $url, true, $bookmarks);
-    }
-
-    /**
      * Executes a GET request to Pinterest API with pagination if required.
      *
      * @param array $requestOptions
@@ -91,7 +78,7 @@ abstract class Provider
      */
     protected function execGetRequest(array $requestOptions, $resourceUrl, $needsPagination = false, $bookmarks = [])
     {
-        $query = Request::createQuery(['options' => $requestOptions], '', $bookmarks);
+        $query = Request::createQuery(['options' => $requestOptions], $bookmarks);
         $response = $this->request->exec($resourceUrl . "?{$query}");
         
         if ($needsPagination) {
@@ -99,6 +86,19 @@ abstract class Provider
         }
 
         return $this->response->getData($response);
+    }
+
+    /**
+     * Executes pagination GET request.
+     *
+     * @param array $data
+     * @param string $url
+     * @param array $bookmarks
+     * @return array|bool
+     */
+    public function getPaginatedData(array $data, $url, $bookmarks = [])
+    {
+        return $this->execGetRequest($data, $url, true, $bookmarks);
     }
     
     /**

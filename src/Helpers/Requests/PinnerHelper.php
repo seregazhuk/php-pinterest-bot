@@ -23,6 +23,6 @@ class PinnerHelper
             ],
         ];
 
-        return Request::createQuery($dataJson, '/login/');
+        return Request::createQuery($dataJson);
     }
 }
