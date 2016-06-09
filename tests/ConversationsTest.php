@@ -30,7 +30,7 @@ class ConversationsTest extends ProviderTest
         $this->setResponse($response);        
         $this->assertTrue($this->provider->sendMessage($userId, $message));
 
-        $this->setResponse(null);
+        $this->setResponse($this->createErrorApiResponse());
         $this->assertFalse($this->provider->sendMessage($userId, $message));
     }
 
@@ -44,7 +44,7 @@ class ConversationsTest extends ProviderTest
         $this->setResponse($response);        
         $this->assertTrue($this->provider->sendEmail($email, $message));
 
-        $this->setResponse(null);
+        $this->setResponse($this->createErrorApiResponse());
         $this->assertFalse($this->provider->sendEmail($email, $message));
     }
 

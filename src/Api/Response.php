@@ -70,16 +70,6 @@ class Response implements ResponseInterface
     }
 
     /**
-     * @param array $response
-     *
-     * @return bool
-     */
-    public function checkResponse($response)
-    {
-        return $this->notEmpty($response) && $this->checkErrorInResponse($response);
-    }
-
-    /**
      * Check for error info in api response and save
      * it.
      *
@@ -145,7 +135,7 @@ class Response implements ResponseInterface
      */
     public function getPaginationData($response)
     {
-        if (!$this->checkResponse($response)) {
+        if (!$this->notEmpty($response) && !$this->checkErrorInResponse($response)) {
             return [];
         }
 
