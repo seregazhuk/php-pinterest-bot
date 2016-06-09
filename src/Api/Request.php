@@ -230,26 +230,24 @@ class Request implements RequestInterface
      * Create request string.
      *
      * @param array  $data
-     * @param string $sourceUrl
      * @param array  $bookmarks
      *
      * @return string
      */
-    public static function createQuery(array $data = [], $sourceUrl = '/', $bookmarks = [])
+    public static function createQuery(array $data = [], $bookmarks = [])
     {
-        $request = self::createRequestData($data, $sourceUrl, $bookmarks);
+        $request = self::createRequestData($data, $bookmarks);
 
         return UrlHelper::buildRequestString($request);
     }
 
     /**
      * @param array|object $data
-     * @param string|null  $sourceUrl
      * @param array        $bookmarks
      *
      * @return array
      */
-    public static function createRequestData(array $data = [], $sourceUrl = '/', $bookmarks = [])
+    public static function createRequestData(array $data = [], $bookmarks = [])
     {
         if (empty($data)) {
             $data = ['options' => []];
@@ -262,7 +260,7 @@ class Request implements RequestInterface
         $data['context'] = new \stdClass();
 
         return [
-            'source_url' => $sourceUrl,
+            'source_url' => '',
             'data'       => json_encode($data),
         ];
     }

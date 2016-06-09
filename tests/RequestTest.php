@@ -124,7 +124,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
     public function createEmptyRequest()
     {
         $emptyRequest = [
-            'source_url' => '/',
+            'source_url' => '',
             'data'       => json_encode(
                 [
                     'options' => [],
@@ -136,20 +136,18 @@ class RequestTest extends PHPUnit_Framework_TestCase
         $object = $this->createRequestObject();
         $request = $object->createRequestData();
         $this->assertEquals($emptyRequest, $request);
-        $this->assertEquals('/', $request['source_url']);
+        $this->assertEquals('', $request['source_url']);
     }
 
     /** @test */
     public function createRequestWithData()
     {
-        $sourceUrl = 'http://example.com';
         $data = ['key' => 'val'];
 
         $object = $this->createRequestObject();
-        $request = $object->createRequestData($data, $sourceUrl);
+        $request = $object->createRequestData($data);
 
         $dataFromRequest = json_decode($request['data'], true);
-        $this->assertEquals($sourceUrl, $request['source_url']);
         $this->assertEquals($data['key'], $dataFromRequest['key']);
     }
 
@@ -159,7 +157,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
         $bookmarks = 'bookmarks';
 
         $object = $this->createRequestObject();
-        $request = $object->createRequestData([], '/', $bookmarks);
+        $request = $object->createRequestData([], $bookmarks);
         $dataFromRequest = json_decode($request['data'], true);
 
         $this->assertEquals($bookmarks, $dataFromRequest['options']['bookmarks']);
