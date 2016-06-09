@@ -53,15 +53,6 @@ interface ResponseInterface
     public function getPaginationData($res);
 
     /**
-     * Checks if response is empty or has errors.
-     *
-     * @param $response
-     *
-     * @return mixed
-     */
-    public function checkResponse($response);
-
-    /**
      * Parses Pinterest search API response for data and bookmarks
      * for next pagination page.
      *
