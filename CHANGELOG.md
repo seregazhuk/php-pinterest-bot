@@ -1,6 +1,16 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [3.2.3] - 2016-06-09
+### Fixes:
+ - Pins like/dislike
+ - Response error check
+
+## [3.2.2] - 2016-06-05
+### Updated:
+ - Keywords provider
+ 	- recommendedFor($query) method returns terms and their positions.
+
 ## [3.2.1] - 2016-06-05
 ### Updated:
  - Keywords provider

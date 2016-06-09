@@ -33,8 +33,8 @@ class UrlHelper
     const RESOURCE_REPIN = '/resource/RepinResource/create/';
     const RESOURCE_USER_FOLLOWERS = '/resource/UserFollowersResource/get/';
     const RESOURCE_DELETE_PIN = '/resource/PinResource/delete/';
-    const RESOURCE_LIKE_PIN = '/resource/PinLikeResource2/create/';
-    const RESOURCE_UNLIKE_PIN = '/resource/PinLikeResource2/delete/';
+    const RESOURCE_LIKE_PIN = '/resource/PinLikeResource/create/';
+    const RESOURCE_UNLIKE_PIN = '/resource/PinLikeResource/delete/';
     const RESOURCE_COMMENT_PIN = '/resource/PinCommentResource/create/';
     const RESOURCE_COMMENT_DELETE_PIN = '/resource/PinCommentResource/delete/';
     const RESOURCE_PIN_INFO = '/resource/PinResource/get/';

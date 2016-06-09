@@ -93,7 +93,7 @@ class PinsTest extends ProviderTest
         $this->setResponse($response);
         $this->assertNotFalse($this->provider->edit(1, 'new', 'changed'));
 
-        $this->setResponse(null);
+        $this->setResponse($this->createErrorApiResponse());
         $this->assertFalse($this->provider->edit(1, 'new', 'changed'));
     }
 
@@ -104,7 +104,7 @@ class PinsTest extends ProviderTest
         $this->setResponse($response);
         $this->assertNotFalse($this->provider->delete(1));
 
-        $this->setResponse(null);
+        $this->setResponse($this->createErrorApiResponse());
         $this->assertFalse($this->provider->delete(1));
     }
 
@@ -115,7 +115,7 @@ class PinsTest extends ProviderTest
         $this->setResponse($response);
         $this->assertNotNull($this->provider->info(1));
 
-        $this->setResponse(null);
+        $this->setResponse($this->createErrorApiResponse());
         $this->assertFalse($this->provider->info(1));
     }
 
