@@ -3,7 +3,7 @@ All notable changes to this project will be documented in this file.
 
 ## [4.0.0] - 2016-06-12
 ### Changed:
- - generator objects now return an entity for each iterator, not an array of entities. For example, to 
+ - generator objects now return an entity for each iteration, not an array of entities. For example, to 
  get search results there is no more need to make two nested loops:
  
  ```php
