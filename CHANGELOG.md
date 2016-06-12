@@ -1,7 +1,7 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [4.0.1] - 2016-06-13
+## [4.1.0] - 2016-06-13
 ### Added:
  - bot logout method
 
