@@ -17,7 +17,7 @@ class CsrfHelper
     public static function getTokenFromFile($file)
     {
         if (!file_exists($file)) {
-            return;
+            return null;
         }
 
         foreach (file($file) as $line) {
@@ -25,6 +25,8 @@ class CsrfHelper
                 return $token;
             }
         }
+
+        return null;
     }
 
     /**

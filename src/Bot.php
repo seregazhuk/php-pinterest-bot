@@ -75,4 +75,9 @@ class Bot
     {
         return $this->providersContainer->getResponse()->getLastError();
     }
+
+    public function isLoggedIn()
+    {
+        return $this->providersContainer->getRequest()->isLoggedIn();
+    }
 }

@@ -66,6 +66,14 @@ $bot->pins->create('http://exmaple.com/image.jpg', $boards[0]['id'], 'pin descri
 
 Or you may skip login, if you want. It is only required for such operations as likes, follows and making pins.
 
+You can get your current logged in status via *isLoggedIn* method:
+
+```php
+if($bot->isLoggedIn()) {
+	// ...
+}
+```
+
 *Note*: Some functions use pinterest navigation through results, for example,
 get user followers or search queries. These functions return a generator object with api results as batches in 
 every iteration. By default functions return all pinterest result batches, but you can 

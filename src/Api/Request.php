@@ -66,6 +66,7 @@ class Request implements RequestInterface
     public function __construct(HttpInterface $http)
     {
         $this->http = $http;
+        $this->loggedIn = false;
         $this->cookieJar = tempnam(sys_get_temp_dir(), self::COOKIE_NAME);
     }
 
@@ -296,6 +297,10 @@ class Request implements RequestInterface
         return ['Content-Type: application/x-www-form-urlencoded; charset=UTF-8;'];
     }
 
+    /**
+     * @param string $delimiter
+     * @return $this
+     */
     protected function buildFilePostData($delimiter)
     {
         $data = "--$delimiter\r\n";

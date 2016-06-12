@@ -26,7 +26,7 @@ class Response implements ResponseInterface
      */
     public function getData($response, $key = null)
     {
-        if (!$this->checkErrorInResponse($response)) {
+        if (!$this->hasErrors($response)) {
             return false;
         }
 
@@ -64,7 +64,7 @@ class Response implements ResponseInterface
      *
      * @return bool
      */
-    public function notEmpty($response)
+    public function isEmpty($response)
     {
         return !empty($this->getData($response));
     }
@@ -77,7 +77,7 @@ class Response implements ResponseInterface
      *
      * @return bool
      */
-    public function checkErrorInResponse($response)
+    public function hasErrors($response)
     {
         $this->lastError = null;
 
@@ -97,9 +97,9 @@ class Response implements ResponseInterface
      *
      * @return array|null
      */
-    public function getBookmarksFromResponse($response)
+    public function getBookmarks($response)
     {
-        if ($this->checkErrorInResponse($response) && isset($response['resource']['options']['bookmarks'][0])) {
+        if ($this->hasErrors($response) && isset($response['resource']['options']['bookmarks'][0])) {
             return [$response['resource']['options']['bookmarks'][0]];
         }
 
@@ -116,10 +116,10 @@ class Response implements ResponseInterface
      *
      * @return array|null
      */
-    public function parseSearchResponse($response, $bookmarksUsed = true)
+    public function parseSearchWithBookmarks($response, $bookmarksUsed = true)
     {
         if ($response === null || !$bookmarksUsed) {
-            return $this->parseSimpledSearchResponse($response);
+            return $this->parseSearch($response);
         }
 
         return $this->getPaginationData($response);
@@ -135,11 +135,11 @@ class Response implements ResponseInterface
      */
     public function getPaginationData($response)
     {
-        if (!$this->notEmpty($response) && !$this->checkErrorInResponse($response)) {
+        if (!$this->isEmpty($response) && !$this->hasErrors($response)) {
             return [];
         }
 
-        $bookmarks = $this->getBookmarksFromResponse($response);
+        $bookmarks = $this->getBookmarks($response);
         if ($data = $this->getData($response)) {
             return ['data' => $data, 'bookmarks' => $bookmarks];
         }
@@ -155,7 +155,7 @@ class Response implements ResponseInterface
      *
      * @return array
      */
-    public function parseSimpledSearchResponse($response)
+    public function parseSearch($response)
     {
         $bookmarks = [];
         if (isset($response['module']['tree']['resource']['options']['bookmarks'][0])) {
