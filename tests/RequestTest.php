@@ -90,16 +90,6 @@ class RequestTest extends PHPUnit_Framework_TestCase
         $this->assertNull($request->followMethodCall(1, 'entity_id', 'ur'));
     }
 
-    /**
-     * @return Mockery\Mock|HttpInterface
-     */
-    protected function getHttpMock()
-    {
-        $mock = Mockery::mock(HttpInterface::class);
-
-        return $mock;
-    }
-
     /** @test */
     public function setUserAgent()
     {
@@ -164,7 +154,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function setLoggedIn()
+    public function login()
     {
         $cookieFile = __DIR__.'/../'.Request::COOKIE_NAME;
         $token = 'WfdvEjNSLYiykJHDIx4sGSpCS8OhUld0';
@@ -173,8 +163,18 @@ class RequestTest extends PHPUnit_Framework_TestCase
         );
         $request = $this->createRequestObject();
         $this->setProperty('cookieJar', $cookieFile);
-        $request->setLoggedIn();
+        $request->login();
 
         $this->assertEquals($token, $request->csrfToken);
+    }
+
+    /**
+     * @return Mockery\Mock|HttpInterface
+     */
+    protected function getHttpMock()
+    {
+        $mock = Mockery::mock(HttpInterface::class);
+
+        return $mock;
     }
 }

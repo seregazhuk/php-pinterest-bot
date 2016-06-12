@@ -16,9 +16,19 @@ interface RequestInterface
     public function followMethodCall($entityId, $entityName, $url);
 
     /**
-     * Mark API as logged in.
+     * Set status to logged in.
+     *
+     * @return $this
      */
-    public function setLoggedIn();
+    public function login();
+
+    /**
+     * Set status to logged out.
+     *
+     * @return $this
+     */
+    public function logout();
+
 
     /**
      * Executes request to Pinterest API.

@@ -45,7 +45,7 @@ trait Searchable
      */
     protected function searchWithPagination($query, $batchesLimit)
     {
-        return (new Pagination($this))->run(
+        return (new Pagination($this))->paginate(
             'searchCall', [
             'query' => $query,
             'scope' => $this->getScope(),

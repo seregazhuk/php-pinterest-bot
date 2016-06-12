@@ -55,6 +55,15 @@ class Bot
     }
 
     /**
+     * Proxy method to pinners logout.
+     */
+    public function logout()
+    {
+        return $this->pinners->logout();
+    }
+
+
+    /**
      * Magic method to access different providers.
      *
      * @param string $provider

@@ -32,12 +32,12 @@ class Pagination
      * @param int $batchesLimit
      * @return \Iterator
      */
-    public function run($method, $params, $batchesLimit = 0)
+    public function paginate($method, $params, $batchesLimit = 0)
     {
         $batchesNum = 0;
         do {
             $results = $this->callProviderRequest($method, $params);
-            if (empty($results)) {
+            if (empty($results) || $this->checkEndBookMarks()) {
                 return;
             }
 
@@ -46,9 +46,6 @@ class Pagination
                 yield $result;
             }
 
-            if ($this->checkEndBookMarks())
-                return;
-            
         } while (!$this->reachBatchesLimit($batchesLimit, $batchesNum));
     }
 
