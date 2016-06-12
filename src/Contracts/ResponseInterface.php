@@ -22,7 +22,7 @@ interface ResponseInterface
      *
      * @return bool
      */
-    public function checkErrorInResponse($response);
+    public function hasErrors($response);
 
     /**
      * Checks if response is not empty.
@@ -31,7 +31,7 @@ interface ResponseInterface
      *
      * @return bool
      */
-    public function notEmpty($res);
+    public function isEmpty($res);
 
     /**
      * Parse bookmarks from response.
@@ -40,7 +40,7 @@ interface ResponseInterface
      *
      * @return array|null
      */
-    public function getBookmarksFromResponse($response);
+    public function getBookmarks($response);
 
     /**
      * Checks Pinterest API paginated response, and parses data
@@ -61,7 +61,7 @@ interface ResponseInterface
      *
      * @return array|null
      */
-    public function parseSearchResponse($response, $bookmarksUsed = true);
+    public function parseSearchWithBookmarks($response, $bookmarksUsed = true);
 
     /**
      * Returns last error in response.

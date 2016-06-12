@@ -64,7 +64,7 @@ abstract class Provider
             return $this->response->getData($response);
         }
 
-        return $this->response->checkErrorInResponse($response);
+        return $this->response->hasErrors($response);
     }
 
     /**

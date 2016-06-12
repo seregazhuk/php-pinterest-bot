@@ -42,7 +42,7 @@ trait Followable
     {
         $response = $this->getRequest()->followMethodCall($entityId, $this->getEntityIdName(), $resourceUrl);
 
-        return $this->getResponse()->checkErrorInResponse($response);
+        return $this->getResponse()->hasErrors($response);
     }
 
     abstract protected function getEntityIdName();

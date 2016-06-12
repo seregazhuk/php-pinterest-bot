@@ -105,7 +105,7 @@ class Pinners extends Provider
         $this->request->clearToken();
 
         $response = $this->request->exec(UrlHelper::RESOURCE_LOGIN, $postString);
-        $result = $this->response->checkErrorInResponse($response);
+        $result = $this->response->hasErrors($response);
         if (!$result) {
             throw new AuthException($this->response->getLastError()['message']);
         }

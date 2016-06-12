@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [3.3.1] - 2016-06-12
+### Added:
+ - isLoggedIn method
+ - Response and Request refactoring
+
 ## [3.2.3] - 2016-06-09
 ### Fixes:
  - Pins like/dislike

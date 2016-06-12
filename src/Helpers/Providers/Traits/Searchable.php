@@ -32,7 +32,7 @@ trait Searchable
         $get = $this->createSearchQuery($query, $scope, $bookmarks);
         $response = $this->getRequest()->exec($url . '?' . $get);
 
-        return $this->getResponse()->parseSearchResponse($response, !empty($bookmarks));
+        return $this->getResponse()->parseSearchWithBookmarks($response, !empty($bookmarks));
     }
 
     /**
