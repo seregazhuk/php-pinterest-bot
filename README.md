@@ -79,7 +79,9 @@ get user followers or search queries. These functions return a generator object 
 every iteration. By default functions return all pinterest result batches, but you can 
 pass batches num as a second argument. For example, 
 ```php 
-$bot->pins->search('query', 2)
+foreach($bot->pins->search('query', 2) as $pin) {
+	// ...
+}
 ```
 will return only 2 batches of search results.
 
@@ -92,11 +94,13 @@ $boards = $bot->boards->forUser($username);
 
 Get full board info by boardName and userName. Here you can get board id, for further functions
 (for examaple, pin creating or following boards).
+
 ```php
 $info = $bot->boards->info($username, $board);
 ```
 
 Create a new board. As third parameter you can pass privacy. It is *public* by default, or *secret* if private.
+
 ```php
 // create a public board
 $bot->boards->create('name', 'description');
@@ -131,17 +135,17 @@ $bot->boards->follow($boardId);
 $bot->boards->unfollow($boardId);
 ```
 
-Get all pins for board by id.
+Get all pins for board by id (returns generator).
 ```php
-foreach($bot->boards->pins($boardId) as $pinsBatch)
+foreach($bot->boards->pins($boardId) as $pin)
 {
     // ...
 }
 ```
 
-Get board followers. Uses pinterest api pagination.
+Get board followers. Uses pinterest api pagination (return generator).
 ```php
-foreach($bot->boards->followers($boardId) as $followersBatch)
+foreach($bot->boards->followers($boardId) as $follower)
 {
 	// ...
 }
@@ -228,14 +232,14 @@ $userData = $bot->pinners->info($username);
 ```	
 Get user following. Uses pinterest api pagination.
 ```php
-foreach($bot->pinners->following('username') as $followingBatch)
+foreach($bot->pinners->following('username') as $following)
 {
 	// ...
 }
 ```
 Get user followers. Uses pinterest api pagination.
 ```php
-foreach($bot->pinners->followers('username') as $followersBatch)
+foreach($bot->pinners->followers('username') as $follower)
 {
 	// ...
 }
@@ -281,18 +285,19 @@ $conversations = $bot->conversations->last();
 ## Search
 
 Search functions use pinterest pagination in fetching results and return generator.
+
 ```php
-foreach($bot->pins->search('query') as $pinsBatch)
+foreach($bot->pins->search('query') as $pin)
 {
 	// ...
 }
 
-foreach($bot->pinners->search('query') as $pinnersBatch)
+foreach($bot->pinners->search('query') as $pinner)
 {
 	// ...
 }
 
-foreach($bot->boards->search('query') as $boardsBatch);
+foreach($bot->boards->search('query') as $board);
 {
 	// ...
 }
@@ -321,6 +326,7 @@ $news = $bot->news->last();
 
 ## Keywords
 Get recommended keywords for the query.
+
 ```php
 $keywords = $bot->keywords->recommendedFor('dress');
 print_r($keywords);

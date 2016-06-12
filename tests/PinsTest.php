@@ -131,7 +131,7 @@ class PinsTest extends ProviderTest
         $this->setResponse($response, 2);
 
         $res = iterator_to_array($this->provider->search('dogs'), 1);
-        $this->assertCount($expectedResultsNum, $res[0]);
+        $this->assertCount($expectedResultsNum, $res);
     }
 
     /**

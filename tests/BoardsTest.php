@@ -29,7 +29,7 @@ class BoardsTest extends ProviderTest
         $this->setResponse($response, 2);
 
         $res = iterator_to_array($this->provider->search('dogs'), 1);
-        $this->assertCount($expectedResultsNum, $res[0]);
+        $this->assertCount($expectedResultsNum, $res);
     }
 
     /** @test */
@@ -68,7 +68,7 @@ class BoardsTest extends ProviderTest
         );
 
         $followers = $this->provider->followers(111);
-        $this->assertCount(2, iterator_to_array($followers)[0]);
+        $this->assertCount(2, iterator_to_array($followers));
 
         $followers = $this->provider->followers(111);
         $this->assertEmpty(iterator_to_array($followers));
@@ -115,7 +115,7 @@ class BoardsTest extends ProviderTest
             ]);
 
         $pins = $this->provider->pins(1);
-        $this->assertCount(2, iterator_to_array($pins)[0]);
+        $this->assertCount(2, iterator_to_array($pins));
 
         $pins = $this->provider->pins(0);
         $this->assertEmpty(iterator_to_array($pins));
