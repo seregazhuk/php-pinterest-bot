@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 ### Added:
  - isLoggedIn method
  - Response and Request refactoring
+ - Better exception messages in ProviderLoginCheckWrapper
 
 ## [3.2.3] - 2016-06-09
 ### Fixes:
