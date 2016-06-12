@@ -146,7 +146,7 @@ class PinnersTest extends ProviderTest
         $this->mock->shouldReceive('isLoggedIn')->andReturn(false);
         $this->mock->shouldReceive('exec')->andReturn($response);
         $this->mock->shouldReceive('clearToken')->once();
-        $this->mock->shouldReceive('setLoggedIn')->once();
+        $this->mock->shouldReceive('login')->once();
 
         $this->assertTrue($this->provider->login('test', 'test'));
     }

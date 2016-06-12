@@ -106,9 +106,14 @@ class Pinners extends Provider
         if (!$result) {
             throw new AuthException($this->response->getLastError()['message']);
         }
-        $this->request->setLoggedIn();
+        $this->request->login();
 
         return $result;
+    }
+
+    public function logout()
+    {
+        $this->request->logout();
     }
 
     /**
@@ -169,8 +174,8 @@ class Pinners extends Provider
     public function paginate($username, $url, $batchesLimit)
     {
         $params = [
-            'data'      => ['username' => $username],
-            'url'       => $url,
+            'data' => ['username' => $username],
+            'url'  => $url,
         ];
 
         return (new Pagination($this))->paginate('getPaginatedData', $params, $batchesLimit);

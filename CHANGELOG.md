@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [4.0.1] - 2016-06-13
+### Added:
+ - bot logout method
+
 ## [4.0.0] - 2016-06-12
 ### Changed:
  - generator objects now return an entity for each iteration, not an array of entities. For example, to 

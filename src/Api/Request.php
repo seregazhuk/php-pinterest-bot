@@ -194,14 +194,19 @@ class Request implements RequestInterface
      * @return $this
      * @throws AuthException
      */
-    public function setLoggedIn()
+    public function login()
     {
         $this->csrfToken = CsrfHelper::getTokenFromFile($this->cookieJar);
         if (empty($this->csrfToken)) {
             throw new AuthException('Cannot parse token from cookies.');
         }
         $this->loggedIn = true;
-        return $this;
+    }
+
+    public function logout()
+    {
+        $this->clearToken();
+        $this->loggedIn = false;
     }
 
     /**
