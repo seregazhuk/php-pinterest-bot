@@ -32,10 +32,7 @@ class Pinners extends Provider
      */
     public function info($username)
     {
-        $res = $this->paginate($username, UrlHelper::RESOURCE_USER_INFO, 1);
-        $res = iterator_to_array($res);
-
-        return !empty($res) ? $res[0] : null;
+        return $this->execGetRequest(['username' => $username], UrlHelper::RESOURCE_USER_INFO);
     }
 
     /**

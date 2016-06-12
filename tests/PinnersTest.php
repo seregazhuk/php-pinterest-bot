@@ -69,7 +69,7 @@ class PinnersTest extends ProviderTest
         );
 
         $followers = $this->provider->followers('username');
-        $this->assertCount(2, iterator_to_array($followers)[0]);
+        $this->assertCount(2, iterator_to_array($followers));
 
         $followers = $this->provider->followers('username');
         $this->assertEmpty(iterator_to_array($followers));
@@ -83,7 +83,7 @@ class PinnersTest extends ProviderTest
         $this->setResponse(['resource_response' => ['data' => []]]);
 
         $following = $this->provider->following('username');
-        $this->assertCount(2, iterator_to_array($following)[0]);
+        $this->assertCount(2, iterator_to_array($following));
     }
 
     /** @test */
@@ -106,7 +106,7 @@ class PinnersTest extends ProviderTest
 
         $pins = $this->provider->pins('username', 1);
         $expectedResultsNum = count($res['resource_response']['data']);
-        $this->assertCount($expectedResultsNum, iterator_to_array($pins)[0]);
+        $this->assertCount($expectedResultsNum, iterator_to_array($pins));
     }
 
     /** @test */
@@ -121,7 +121,7 @@ class PinnersTest extends ProviderTest
         $this->setResponse($response, 2);
 
         $res = iterator_to_array($this->provider->search('dogs'), 1);
-        $this->assertCount($expectedResultsNum, $res[0]);
+        $this->assertCount($expectedResultsNum, $res);
     }
 
     /** @test */

@@ -1,6 +1,19 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [4.0.0] - 2016-06-12
+### Changed:
+ - generator objects now return an entity for each iterator, not an array of entities. For example, to 
+ get search results there is no more need to make two nested loops:
+ 
+ ```php
+ foreach($bot->pins->search('cats') as $pin) {
+ 	echo $pin['id'], "\n";
+ 	// ...
+ }
+ 
+ The same is true about getting followers/following/pins for the user or board. 
+
 ## [3.3.1] - 2016-06-12
 ### Added:
  - isLoggedIn method

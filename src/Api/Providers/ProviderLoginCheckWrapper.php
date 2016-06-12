@@ -35,7 +35,9 @@ class ProviderLoginCheckWrapper
 
             return call_user_func_array([$this->provider, $method], $arguments);
         }
-        throw new InvalidRequestException("Method $method does'n exist.");
+
+        $errorMessage = $this->getErrorMethodCallMessage($method, "Method $method does'n exist.");
+        throw new InvalidRequestException($errorMessage);
     }
 
     /**
@@ -52,8 +54,20 @@ class ProviderLoginCheckWrapper
         $methodRequiresLogin = $this->provider->checkMethodRequiresLogin($method);
 
         if ($methodRequiresLogin && !$isLoggedIn) {
-            $providerClass = get_class($this->provider);
-            throw new AuthException("Error calling $providerClass::$method method. You must log in before.");
+            $errorMessage = $this->getErrorMethodCallMessage($method, "You must log in before.");
+            throw new AuthException($errorMessage);
         }
+    }
+
+    /**
+     * @param string $method
+     * @param string $message
+     * @return string
+     */
+    protected function getErrorMethodCallMessage($method, $message)
+    {
+        $providerClass = get_class($this->provider);
+
+        return "Error calling $providerClass::$method method. $message";
     }
 }

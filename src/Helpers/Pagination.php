@@ -42,7 +42,9 @@ class Pagination
             }
 
             $batchesNum++;
-            yield $results;
+            foreach ($results as $result) {
+                yield $result;
+            }
 
             if ($this->checkEndBookMarks())
                 return;
