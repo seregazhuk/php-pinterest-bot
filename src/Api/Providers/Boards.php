@@ -63,7 +63,7 @@ class Boards extends Provider
      */
     public function pins($boardId, $batchesLimit = 0)
     {
-        return (new Pagination($this))->run(
+        return (new Pagination($this))->paginate(
             'getPinsFromBoard',
             ['boardId' => $boardId],
             $batchesLimit

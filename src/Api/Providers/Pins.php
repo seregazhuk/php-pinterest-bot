@@ -212,7 +212,7 @@ class Pins extends Provider
             'url'  => UrlHelper::RESOURCE_DOMAIN_FEED,
         ];
 
-        return (new Pagination($this))->run('getPaginatedData', $params, $batchesLimit);
+        return (new Pagination($this))->paginate('getPaginatedData', $params, $batchesLimit);
     }
     
     /**
