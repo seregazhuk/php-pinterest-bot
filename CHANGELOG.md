@@ -13,7 +13,7 @@ All notable changes to this project will be documented in this file.
   - *activity* method in pins provider. Requires login.
 	 
 
-## [4.0.1] - 2016-06-12
+## [4.1.0] - 2016-06-12
 ### Added:
  - bot logout method
 
