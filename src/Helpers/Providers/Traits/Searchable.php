@@ -3,8 +3,8 @@
 namespace seregazhuk\PinterestBot\Helpers\Providers\Traits;
 
 use seregazhuk\PinterestBot\Api\Request;
-use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
+use seregazhuk\PinterestBot\Helpers\Pagination;
 
 trait Searchable
 {
@@ -28,27 +28,20 @@ trait Searchable
     {
         $url = UrlHelper::getSearchUrl(!empty($bookmarks));
         $get = $this->createSearchQuery($query, $scope, $bookmarks);
-        $response = $this->getRequest()->exec($url . '?' . $get);
+        $result = $this->getRequest()->exec($url . '?' . $get);
 
-        return $this->getResponse()->parseSearchWithBookmarks($response, !empty($bookmarks));
-    }
+        /*
+         * It was a first time search, we grab data and bookmarks for pagination.
+         */
+        if (empty($bookmarks)) {
+            return $this->parseSearchResult($result);
+        }
 
-    /**
-     * Executes search to API with pagination.
-     *
-     * @param string $query
-     * @param int    $batchesLimit
-     *
-     * @return \Iterator
-     */
-    protected function searchWithPagination($query, $batchesLimit)
-    {
-        return (new Pagination($this))->paginate(
-            'searchCall', [
-            'query' => $query,
-            'scope' => $this->getScope(),
-        ], $batchesLimit
-        );
+        /*
+         * Process a response with bookmarks
+         */
+
+        return $this->getResponse()->getPaginationData($result);
     }
 
     /**
@@ -72,13 +65,18 @@ trait Searchable
      * Search entities by search query.
      *
      * @param string $query
-     * @param int    $batchesLimit
+     * @param int $limit
      *
      * @return \Iterator
      */
-    public function search($query, $batchesLimit = 0)
+    public function search($query, $limit = 0)
     {
-        return $this->searchWithPagination($query, $batchesLimit);
+        return (new Pagination($this))->paginate(
+            'searchCall', [
+            'query' => $query,
+            'scope' => $this->getScope(),
+        ], $limit
+        );
     }
 
     /**
@@ -94,17 +92,40 @@ trait Searchable
             $dataJson['options']['bookmarks'] = $bookmarks;
 
             return $dataJson;
-        } else {
-            $dataJson = array_merge(
-                $dataJson, [
-                    'module' => [
-                        'name'    => $this->moduleSearchPage,
-                        'options' => $options,
-                    ],
-                ]
-            );
-
-            return $dataJson;
         }
+
+        $dataJson = array_merge(
+            $dataJson, [
+                'module' => [
+                    'name'    => $this->moduleSearchPage,
+                    'options' => $options,
+                ],
+            ]
+        );
+
+        return $dataJson;
+    }
+
+    /**
+     * Parses simple Pinterest search API response
+     * on request with bookmarks.
+     *
+     * @param array $response
+     *
+     * @return array
+     */
+    protected function parseSearchResult($response)
+    {
+        $bookmarks = [];
+
+        if (isset($response['module']['tree']['resource']['options']['bookmarks'][0])) {
+            $bookmarks = $response['module']['tree']['resource']['options']['bookmarks'][0];
+        }
+
+        if (!empty($response['module']['tree']['data']['results'])) {
+            return ['data' => $response['module']['tree']['data']['results'], 'bookmarks' => [$bookmarks]];
+        }
+
+        return [];
     }
 }

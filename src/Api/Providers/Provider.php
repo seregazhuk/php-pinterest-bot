@@ -3,7 +3,6 @@
 namespace seregazhuk\PinterestBot\Api\Providers;
 
 use seregazhuk\PinterestBot\Api\Request;
-use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Contracts\RequestInterface;
 use seregazhuk\PinterestBot\Contracts\ResponseInterface;
 
@@ -109,7 +108,7 @@ abstract class Provider
     }
 
     /**
-     * @return Request
+     * @return RequestInterface
      */
     public function getRequest()
     {
@@ -117,7 +116,7 @@ abstract class Provider
     }
 
     /**
-     * @return Response
+     * @return ResponseInterface
      */
     public function getResponse()
     {

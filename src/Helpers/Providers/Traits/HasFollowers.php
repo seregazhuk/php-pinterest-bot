@@ -10,14 +10,14 @@ trait HasFollowers
     /**
      * @param array  $data
      * @param string $resourceUrl
-     * @param int    $batchesLimit
+     * @param int $limit
      *
      * @return Iterator
      */
-    public function getFollowData($data, $resourceUrl, $batchesLimit = 0)
+    public function getFollowData($data, $resourceUrl, $limit = 0)
     {
         $requestData = array_merge([$data, $resourceUrl]);
 
-        return (new Pagination($this))->paginate('getPaginatedData', $requestData, $batchesLimit);
+        return (new Pagination($this))->paginate('getPaginatedData', $requestData, $limit);
     }
 }
