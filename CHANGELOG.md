@@ -10,7 +10,7 @@ All notable changes to this project will be documented in this file.
  will return only two pins for the search results. 
  The same is true about getting followers/following/pins for the user or board and getting pins from source.
   
-  - *activity* method in pins provider. Requires login.
+ - *activity* method in pins provider. Requires login.
 	 
 
 ## [4.1.0] - 2016-06-12
