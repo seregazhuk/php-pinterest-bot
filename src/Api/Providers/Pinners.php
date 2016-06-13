@@ -16,7 +16,7 @@ class Pinners extends Provider
 {
     use Searchable, Followable, HasFollowers;
 
-    protected $loginRequired = [
+    protected $loginRequiredFor = [
         'follow',
         'unFollow',
     ];

@@ -46,7 +46,7 @@ class ProviderLoginCheckWrapperTest extends \PHPUnit_Framework_TestCase
 
 class TestProvider extends Provider
 {
-    protected $loginRequired = ['testFail'];
+    protected $loginRequiredFor = ['testFail'];
 
     public function testFail()
     {

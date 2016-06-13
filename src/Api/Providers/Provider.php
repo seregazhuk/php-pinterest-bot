@@ -6,21 +6,18 @@ use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Contracts\RequestInterface;
 use seregazhuk\PinterestBot\Contracts\ResponseInterface;
-use seregazhuk\PinterestBot\Helpers\Providers\Traits\ProviderTrait;
 
 /**
  * Class Provider.
  */
 abstract class Provider
 {
-    use ProviderTrait;
-
     /**
      * List of methods that require logged status.
      *
      * @var array
      */
-    protected $loginRequired = [];
+    protected $loginRequiredFor = [];
 
     /**
      * Instance of the API RequestInterface.
@@ -100,7 +97,17 @@ abstract class Provider
     {
         return $this->execGetRequest($data, $url, true, $bookmarks);
     }
-    
+
+    /**
+     * @param string $method
+     *
+     * @return bool
+     */
+    public function checkMethodRequiresLogin($method)
+    {
+        return in_array($method, $this->loginRequiredFor);
+    }
+
     /**
      * @return Request
      */
@@ -115,15 +122,5 @@ abstract class Provider
     public function getResponse()
     {
         return $this->response;
-    }
-
-    /**
-     * @param string $method
-     *
-     * @return bool
-     */
-    public function checkMethodRequiresLogin($method)
-    {
-        return in_array($method, $this->loginRequired);
     }
 }

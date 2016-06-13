@@ -8,8 +8,6 @@ use seregazhuk\PinterestBot\Helpers\UrlHelper;
 
 trait Searchable
 {
-    use ProviderTrait;
-
     private $moduleSearchPage = 'SearchPage';
 
     /**

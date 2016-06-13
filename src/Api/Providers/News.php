@@ -6,7 +6,7 @@ use seregazhuk\PinterestBot\Helpers\UrlHelper;
 
 class News extends Provider
 {
-    protected $loginRequired = ['latest'];
+    protected $loginRequiredFor = ['latest'];
 
     /**
      * Get user's latest news array.

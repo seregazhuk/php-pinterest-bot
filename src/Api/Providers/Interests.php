@@ -9,10 +9,7 @@ class Interests extends Provider
 {
     use Followable;
 
-    protected $loginRequired = [
-        'follow',
-        'unFollow',
-    ];
+    protected $loginRequiredFor = ['follow', 'unFollow'];
 
     protected function getEntityIdName()
     {

@@ -13,7 +13,7 @@ class Boards extends Provider
 {
     use Searchable, Followable, HasFollowers;
 
-    protected $loginRequired = [
+    protected $loginRequiredFor = [
         'delete',
         'create',
         'follow',

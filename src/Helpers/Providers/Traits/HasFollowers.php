@@ -7,8 +7,6 @@ use seregazhuk\PinterestBot\Helpers\Pagination;
 
 trait HasFollowers
 {
-    use ProviderTrait;
-
     /**
      * @param array  $data
      * @param string $resourceUrl

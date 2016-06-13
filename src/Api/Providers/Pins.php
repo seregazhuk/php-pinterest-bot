@@ -11,7 +11,7 @@ class Pins extends Provider
 {
     use Searchable;
 
-    protected $loginRequired = [
+    protected $loginRequiredFor = [
         'like',
         'unLike',
         'comment',
