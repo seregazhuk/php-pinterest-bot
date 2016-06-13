@@ -229,6 +229,7 @@ Get activity of a pin:
 foreach ($bot->pins->activity($pinId) as $data) {
     //...
 }
+```
 
 If you don't want to get all activity record, you can pass a limit as a second parameter.
 Get  5 last activity records:
