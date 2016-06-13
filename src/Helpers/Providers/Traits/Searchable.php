@@ -26,7 +26,7 @@ trait Searchable
      */
     public function searchCall($query, $scope, $bookmarks = [])
     {
-        $url = UrlHelper::getSearchUrl(!empty($bookmarks));
+        $url = UrlHelper::getSearchUrl($bookmarks);
         $get = $this->createSearchQuery($query, $scope, $bookmarks);
         $result = $this->getRequest()->exec($url . '?' . $get);
 
