@@ -175,6 +175,6 @@ class Pinners extends Provider
             'url'  => $url,
         ];
 
-        return (new Pagination($this))->paginate('getPaginatedData', $params, $limit);
+        return (new Pagination($this))->paginateOver('getPaginatedData', $params, $limit);
     }
 }

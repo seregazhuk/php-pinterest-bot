@@ -71,7 +71,7 @@ trait Searchable
      */
     public function search($query, $limit = 0)
     {
-        return (new Pagination($this))->paginate(
+        return (new Pagination($this))->paginateOver(
             'searchCall', [
             'query' => $query,
             'scope' => $this->getScope(),

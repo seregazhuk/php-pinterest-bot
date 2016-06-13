@@ -18,6 +18,6 @@ trait HasFollowers
     {
         $requestData = array_merge([$data, $resourceUrl]);
 
-        return (new Pagination($this))->paginate('getPaginatedData', $requestData, $limit);
+        return (new Pagination($this))->paginateOver('getPaginatedData', $requestData, $limit);
     }
 }

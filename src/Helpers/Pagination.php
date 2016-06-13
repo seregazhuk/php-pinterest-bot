@@ -32,7 +32,7 @@ class Pagination
      * @param int $limit
      * @return \Iterator
      */
-    public function paginate($method, $params, $limit = 0)
+    public function paginateOver($method, $params, $limit = 0)
     {
         $resultsNum = 0;
         while (true) {
