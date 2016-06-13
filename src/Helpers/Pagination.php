@@ -24,29 +24,33 @@ class Pagination
     /**
      * Iterate through results of Api function call. By
      * default generator will return all pagination results.
-     * To limit result batches, set $batchesLimit. Call function
+     * To limit result batches, set $limit. Call function
      * of object to get data.
      *
      * @param string $method
      * @param array $params
-     * @param int $batchesLimit
+     * @param int $limit
      * @return \Iterator
      */
-    public function paginate($method, $params, $batchesLimit = 0)
+    public function paginate($method, $params, $limit = 0)
     {
-        $batchesNum = 0;
-        do {
+        $resultsNum = 0;
+        while (true) {
+            
             $results = $this->callProviderRequest($method, $params);
             if (empty($results) || $this->checkEndBookMarks()) {
                 return;
             }
 
-            $batchesNum++;
             foreach ($results as $result) {
+                $resultsNum++;
                 yield $result;
-            }
 
-        } while (!$this->reachBatchesLimit($batchesLimit, $batchesNum));
+                if ($this->reachesLimit($limit, $resultsNum)) {
+                    return;
+                }
+            }
+        }
     }
 
     protected function callProviderRequest($method, array $params)
@@ -87,14 +91,14 @@ class Pagination
     /**
      * Check if we get batches limit in pagination.
      *
-     * @param int $batchesLimit
-     * @param int $batchesNum
+     * @param int $limit
+     * @param int $resultsNum
      *
      * @return bool
      */
-    protected function reachBatchesLimit($batchesLimit, $batchesNum)
+    protected function reachesLimit($limit, $resultsNum)
     {
-        return $batchesLimit && $batchesNum >= $batchesLimit;
+        return $limit && $resultsNum >= $limit;
     }
 
     /**

@@ -19,6 +19,7 @@ class Pins extends Provider
         'create',
         'repin',
         'delete',
+        'activity'
     ];
 
     /**
@@ -189,8 +190,6 @@ class Pins extends Provider
     {
         $requestOptions = [
             'id'            => $pinId,
-            'pin_id'        => $pinId,
-            'allow_stale'   => true,
             'field_set_key' => 'detailed',
         ];
 
@@ -202,19 +201,40 @@ class Pins extends Provider
      * recent Pins from flickr.com
      *
      * @param string $source
-     * @param int $batchesLimit
+     * @param int $limit
      * @return Iterator
      */
-    public function fromSource($source, $batchesLimit = 0)
+    public function fromSource($source, $limit = 0)
     {
         $params = [
             'data' => ['domain' => $source],
             'url'  => UrlHelper::RESOURCE_DOMAIN_FEED,
         ];
 
-        return (new Pagination($this))->paginate('getPaginatedData', $params, $batchesLimit);
+        return (new Pagination($this))->paginate('getPaginatedData', $params, $limit);
     }
-    
+
+    /**
+     * @param $pinId
+     * @param int $limit
+     * @return Iterator
+     */
+    public function activity($pinId, $limit = 0)
+    {
+        $pinInfo = $this->info($pinId);
+        if (!isset($pinInfo['aggregated_pin_data']['id'])) {
+            return null;
+        }
+
+        $aggregatedPinId = $pinInfo['aggregated_pin_data']['id'];
+        $params = [
+            'data' => ['aggregated_pin_data_id' => $aggregatedPinId],
+            'url'  => UrlHelper::RESOURCE_ACTIVITY
+        ];
+
+        return (new Pagination($this))->paginate('getPaginatedData', $params, $limit);
+    }
+
     /**
      * @return string
      */

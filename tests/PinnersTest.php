@@ -104,7 +104,7 @@ class PinnersTest extends ProviderTest
         ];
         $this->setResponse($res);
 
-        $pins = $this->provider->pins('username', 1);
+        $pins = $this->provider->pins('username', 2);
         $expectedResultsNum = count($res['resource_response']['data']);
         $this->assertCount($expectedResultsNum, iterator_to_array($pins));
     }
