@@ -81,7 +81,7 @@ $bot->logout();
 
 *Note*: Some functions use pinterest navigation through results, for example,
 get user followers or search queries. These functions return a generator object with api results. By default functions 
-return all pinterest results, but you can pass a limit num as a second argument. For example, 
+return all pinterest results, but you can pass a limit num as the second argument. For example, 
 ```php 
 foreach($bot->pins->search('query', 2) as $pin) {
 	// ...
@@ -231,7 +231,7 @@ foreach ($bot->pins->activity($pinId) as $data) {
 }
 ```
 
-If you don't want to get all activity record, you can pass a limit as a second parameter.
+If you don't want to get all activity record, you can pass a limit as the second parameter.
 Get  5 last activity records:
 
 ```php
