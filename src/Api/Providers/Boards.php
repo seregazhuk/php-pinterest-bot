@@ -64,8 +64,7 @@ class Boards extends Provider
     public function pins($boardId, $limit = 0)
     {
         return (new Pagination($this))->paginateOver(
-            'getPinsFromBoard',
-            ['boardId' => $boardId], $limit
+            'getPinsFromBoard', ['boardId' => $boardId], $limit
         );
     }
 
@@ -77,8 +76,8 @@ class Boards extends Provider
      */
     public function getPinsFromBoard($boardId, $bookmarks = [])
     {
-        return $this->execGetRequest(
-            ['board_id' => $boardId], UrlHelper::RESOURCE_GET_BOARD_FEED, true, $bookmarks
+        return $this->execGetRequestWithPagination(
+            ['board_id' => $boardId], UrlHelper::RESOURCE_GET_BOARD_FEED, $bookmarks
         );
     }
 

@@ -3,7 +3,8 @@ All notable changes to this project will be documented in this file.
 
 Current master
 ### Fixed:
- - 	news *last* method login requirement check
+ - news *last* method login requirement check
+ - pagination empty result check
 
 ## [4.2.0] - 2016-06-13
 ### Changed: 

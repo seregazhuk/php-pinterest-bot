@@ -58,7 +58,7 @@ class Response implements ResponseInterface
     }
 
     /**
-     * Checks if response is not empty.
+     * Checks if response is empty.
      *
      * @param array $response
      *
@@ -66,7 +66,7 @@ class Response implements ResponseInterface
      */
     public function isEmpty($response)
     {
-        return !empty($this->getData($response));
+        return empty($this->getData($response));
     }
 
     /**
@@ -116,7 +116,7 @@ class Response implements ResponseInterface
      */
     public function getPaginationData($response)
     {
-        if (!$this->isEmpty($response) && !$this->hasErrors($response)) {
+        if ($this->isEmpty($response) && $this->hasErrors($response)) {
             return [];
         }
 
