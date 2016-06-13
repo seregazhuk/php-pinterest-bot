@@ -1,6 +1,18 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [4.2.0] - 2016-06-13
+### Changed: 
+ - functions with pagination accept a limit as a second argument, for example:
+ ```php
+ $bot->pins->search('cats', 2)
+ ```
+ will return only two pins for the search results. 
+ The same is true about getting followers/following/pins for the user or board and getting pins from source.
+  
+  - *activity* method in pins provider. Requires login.
+	 
+
 ## [4.0.1] - 2016-06-13
 ### Added:
  - bot logout method
@@ -16,7 +28,7 @@ All notable changes to this project will be documented in this file.
  	// ...
  }
  
- The same is true about getting followers/following/pins for the user or board. 
+ The same is true about getting followers/following/pins for the user or board and getting pins from source. 
 
 ## [3.3.1] - 2016-06-12
 ### Added:

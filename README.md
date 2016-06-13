@@ -79,15 +79,14 @@ $bot->logout();
 ```
 
 *Note*: Some functions use pinterest navigation through results, for example,
-get user followers or search queries. These functions return a generator object with api results as batches in 
-every iteration. By default functions return all pinterest result batches, but you can 
-pass batches num as a second argument. For example, 
+get user followers or search queries. These functions return a generator object with api results. By default functions 
+return all pinterest results, but you can pass a limit num as a second argument. For example, 
 ```php 
 foreach($bot->pins->search('query', 2) as $pin) {
 	// ...
 }
 ```
-will return only 2 batches of search results.
+will return only 2 pins of the search results.
 
 ## Boards
 
@@ -218,10 +217,27 @@ $bot->pins->deleteComment($pinId, $commentId);
 Get pins from a specific url. For example: https://pinterest.com/source/flickr.com/ will return 
 recent pins from flickr.com:
 ```php
-foreach ($bot->pins->fromSource('flickr.com') as $pins) {
+foreach ($bot->pins->fromSource('flickr.com') as $pin) {
     // ...
 }
 ```
+
+Get activity of a pin:
+
+```php
+foreach ($bot->pins->activity($pinId) as $data) {
+    //...
+}
+
+If you don't want to get all activity record, you can pass a limit as a second parameter.
+Get  5 last activity records:
+
+```php
+foreach($bot->pins->activity($pinId, 5) as $activity) {
+	//...
+}
+```
+
 
 ## Pinners
 
