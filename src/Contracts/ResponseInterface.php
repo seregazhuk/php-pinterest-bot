@@ -53,17 +53,6 @@ interface ResponseInterface
     public function getPaginationData($res);
 
     /**
-     * Parses Pinterest search API response for data and bookmarks
-     * for next pagination page.
-     *
-     * @param array $response
-     * @param bool  $bookmarksUsed
-     *
-     * @return array|null
-     */
-    public function parseSearchWithBookmarks($response, $bookmarksUsed = true);
-
-    /**
      * Returns last error in response.
      *
      * @return array

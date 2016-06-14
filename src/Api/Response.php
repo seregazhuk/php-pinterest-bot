@@ -58,7 +58,7 @@ class Response implements ResponseInterface
     }
 
     /**
-     * Checks if response is not empty.
+     * Checks if response is empty.
      *
      * @param array $response
      *
@@ -66,7 +66,7 @@ class Response implements ResponseInterface
      */
     public function isEmpty($response)
     {
-        return !empty($this->getData($response));
+        return empty($this->getData($response));
     }
 
     /**
@@ -106,25 +106,6 @@ class Response implements ResponseInterface
         return null;
     }
 
-
-    /**
-     * Parses Pinterest search API response for data and bookmarks
-     * for next pagination page.
-     *
-     * @param array $response
-     * @param bool  $bookmarksUsed
-     *
-     * @return array|null
-     */
-    public function parseSearchWithBookmarks($response, $bookmarksUsed = true)
-    {
-        if ($response === null || !$bookmarksUsed) {
-            return $this->parseSearch($response);
-        }
-
-        return $this->getPaginationData($response);
-    }
-
     /**
      * Checks Pinterest API paginated response, and parses data
      * with bookmarks info from it.
@@ -135,35 +116,13 @@ class Response implements ResponseInterface
      */
     public function getPaginationData($response)
     {
-        if (!$this->isEmpty($response) && !$this->hasErrors($response)) {
+        if ($this->isEmpty($response) && $this->hasErrors($response)) {
             return [];
         }
 
         $bookmarks = $this->getBookmarks($response);
         if ($data = $this->getData($response)) {
             return ['data' => $data, 'bookmarks' => $bookmarks];
-        }
-
-        return [];
-    }
-
-    /**
-     * Parses simple Pinterest search API response
-     * on request with bookmarks.
-     *
-     * @param array $response
-     *
-     * @return array
-     */
-    public function parseSearch($response)
-    {
-        $bookmarks = [];
-        if (isset($response['module']['tree']['resource']['options']['bookmarks'][0])) {
-            $bookmarks = $response['module']['tree']['resource']['options']['bookmarks'][0];
-        }
-
-        if (!empty($response['module']['tree']['data']['results'])) {
-            return ['data' => $response['module']['tree']['data']['results'], 'bookmarks' => [$bookmarks]];
         }
 
         return [];

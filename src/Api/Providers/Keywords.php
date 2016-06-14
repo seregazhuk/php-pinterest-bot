@@ -9,11 +9,11 @@ class Keywords extends Provider
 {
     public function recommendedFor($query)
     {
-        $data = ['options' => ['scope' => 'pins', 'query' => $query]];
-        $get = Request::createQuery($data);
-        $response = $this->getRequest()->exec(UrlHelper::getSearchUrl() . '?' . $get);
+        $result = $this->execGetRequest(
+            ['scope' => 'pins', 'query' => $query], UrlHelper::getSearchUrl()
+        );
 
-        return $this->parseKeywordsFromRequest($response);
+        return $this->parseKeywordsFromRequest($result);
     }
 
     /**
@@ -22,11 +22,11 @@ class Keywords extends Provider
      */
     protected function parseKeywordsFromRequest($response)
     {
-        if (!isset($response['resource_data_cache'][0]['data']['guides'])) {
+        if (!isset($response['guides'])) {
             return null;
         }
 
-        $keywords = $response['resource_data_cache'][0]['data']['guides'];
+        $keywords = $response['guides'];
 
         return array_map(
             function ($keywordData) {

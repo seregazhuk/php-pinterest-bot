@@ -11,7 +11,7 @@ class Pins extends Provider
 {
     use Searchable;
 
-    protected $loginRequired = [
+    protected $loginRequiredFor = [
         'like',
         'unLike',
         'comment',
@@ -211,7 +211,7 @@ class Pins extends Provider
             'url'  => UrlHelper::RESOURCE_DOMAIN_FEED,
         ];
 
-        return (new Pagination($this))->paginate('getPaginatedData', $params, $limit);
+        return (new Pagination($this))->paginateOver('getPaginatedData', $params, $limit);
     }
 
     /**
@@ -232,7 +232,7 @@ class Pins extends Provider
             'url'  => UrlHelper::RESOURCE_ACTIVITY
         ];
 
-        return (new Pagination($this))->paginate('getPaginatedData', $params, $limit);
+        return (new Pagination($this))->paginateOver('getPaginatedData', $params, $limit);
     }
 
     /**

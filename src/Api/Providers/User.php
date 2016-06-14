@@ -8,8 +8,8 @@ use seregazhuk\PinterestBot\Helpers\Providers\Traits\UploadsImages;
 class User extends Provider
 {
     use UploadsImages;
-    
-    protected $loginRequired = ['profile'];
+
+    protected $loginRequiredFor = ['profile'];
 
     /**
      * Update user profile info. Gets associative array as a param. Available keys of array are:

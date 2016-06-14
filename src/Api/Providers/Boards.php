@@ -13,7 +13,7 @@ class Boards extends Provider
 {
     use Searchable, Followable, HasFollowers;
 
-    protected $loginRequired = [
+    protected $loginRequiredFor = [
         'delete',
         'create',
         'follow',
@@ -57,16 +57,14 @@ class Boards extends Provider
      * Get pins from board by boardId.
      *
      * @param int $boardId
-     * @param int $batchesLimit
+     * @param int $limit
      *
      * @return Iterator
      */
-    public function pins($boardId, $batchesLimit = 0)
+    public function pins($boardId, $limit = 0)
     {
-        return (new Pagination($this))->paginate(
-            'getPinsFromBoard',
-            ['boardId' => $boardId],
-            $batchesLimit
+        return (new Pagination($this))->paginateOver(
+            'getPinsFromBoard', ['boardId' => $boardId], $limit
         );
     }
 
@@ -78,8 +76,8 @@ class Boards extends Provider
      */
     public function getPinsFromBoard($boardId, $bookmarks = [])
     {
-        return $this->execGetRequest(
-            ['board_id' => $boardId], UrlHelper::RESOURCE_GET_BOARD_FEED, true, $bookmarks
+        return $this->execGetRequestWithPagination(
+            ['board_id' => $boardId], UrlHelper::RESOURCE_GET_BOARD_FEED, $bookmarks
         );
     }
 
@@ -142,14 +140,14 @@ class Boards extends Provider
      * Get board followers.
      *
      * @param $boardId
-     * @param int $batchesLimit
+     * @param int $limit
      *
      * @return Iterator
      */
-    public function followers($boardId, $batchesLimit = 0)
+    public function followers($boardId, $limit = 0)
     {
         return $this->getFollowData(
-            ['board_id' => $boardId], UrlHelper::RESOURCE_BOARD_FOLLOWERS, $batchesLimit
+            ['board_id' => $boardId], UrlHelper::RESOURCE_BOARD_FOLLOWERS, $limit
         );
     }
 

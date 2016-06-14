@@ -4,8 +4,6 @@ namespace seregazhuk\PinterestBot\Helpers\Providers\Traits;
 
 trait Followable
 {
-    use ProviderTrait;
-
     /**
      * Follow user by user_id.
      *

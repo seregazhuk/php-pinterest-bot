@@ -7,7 +7,7 @@ use seregazhuk\PinterestBot\Exceptions\InvalidRequestException;
 
 class Conversations extends Provider
 {
-    protected $loginRequired = ['last', 'sendMessage', 'sendEmail'];
+    protected $loginRequiredFor = ['last', 'sendMessage', 'sendEmail'];
 
     /**
      * Send message to a user.

@@ -16,10 +16,7 @@ class Pinners extends Provider
 {
     use Searchable, Followable, HasFollowers;
 
-    protected $loginRequired = [
-        'follow',
-        'unFollow',
-    ];
+    protected $loginRequiredFor = ['follow', 'unFollow'];
 
     /**
      * Get user info.
@@ -39,14 +36,14 @@ class Pinners extends Provider
      * Get pinner followers.
      *
      * @param string $username
-     * @param int    $batchesLimit
+     * @param int $limit
      *
      * @return Iterator
      */
-    public function followers($username, $batchesLimit = 0)
+    public function followers($username, $limit = 0)
     {
         return $this->paginate(
-            $username, UrlHelper::RESOURCE_USER_FOLLOWERS, $batchesLimit
+            $username, UrlHelper::RESOURCE_USER_FOLLOWERS, $limit
         );
     }
 
@@ -54,14 +51,14 @@ class Pinners extends Provider
      * Get pinner following other pinners.
      *
      * @param string $username
-     * @param int    $batchesLimit
+     * @param int $limit
      *
      * @return Iterator
      */
-    public function following($username, $batchesLimit = 0)
+    public function following($username, $limit = 0)
     {
         return $this->paginate(
-            $username, UrlHelper::RESOURCE_USER_FOLLOWING, $batchesLimit
+            $username, UrlHelper::RESOURCE_USER_FOLLOWING, $limit
         );
     }
 
@@ -69,14 +66,14 @@ class Pinners extends Provider
      * Get pinner pins.
      *
      * @param string $username
-     * @param int    $batchesLimit
+     * @param int $limit
      *
      * @return Iterator
      */
-    public function pins($username, $batchesLimit = 0)
+    public function pins($username, $limit = 0)
     {
         return $this->paginate(
-            $username, UrlHelper::RESOURCE_USER_PINS, $batchesLimit
+            $username, UrlHelper::RESOURCE_USER_PINS, $limit
         );
     }
 
@@ -167,17 +164,17 @@ class Pinners extends Provider
     /**
      * @param string $username
      * @param string $url
-     * @param int    $batchesLimit
+     * @param int $limit
      *
      * @return Iterator
      */
-    public function paginate($username, $url, $batchesLimit)
+    public function paginate($username, $url, $limit)
     {
         $params = [
             'data' => ['username' => $username],
             'url'  => $url,
         ];
 
-        return (new Pagination($this))->paginate('getPaginatedData', $params, $batchesLimit);
+        return (new Pagination($this))->paginateOver('getPaginatedData', $params, $limit);
     }
 }

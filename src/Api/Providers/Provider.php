@@ -3,24 +3,20 @@
 namespace seregazhuk\PinterestBot\Api\Providers;
 
 use seregazhuk\PinterestBot\Api\Request;
-use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Contracts\RequestInterface;
 use seregazhuk\PinterestBot\Contracts\ResponseInterface;
-use seregazhuk\PinterestBot\Helpers\Providers\Traits\ProviderTrait;
 
 /**
  * Class Provider.
  */
 abstract class Provider
 {
-    use ProviderTrait;
-
     /**
      * List of methods that require logged status.
      *
      * @var array
      */
-    protected $loginRequired = [];
+    protected $loginRequiredFor = [];
 
     /**
      * Instance of the API RequestInterface.
@@ -68,24 +64,34 @@ abstract class Provider
     }
 
     /**
-     * Executes a GET request to Pinterest API with pagination if required.
+     * Executes a GET request to Pinterest API.
      *
      * @param array $requestOptions
      * @param string $resourceUrl
-     * @param bool $needsPagination
+     * @return array|bool
+     */
+    protected function execGetRequest(array $requestOptions, $resourceUrl)
+    {
+        $query = Request::createQuery(['options' => $requestOptions]);
+        $response = $this->request->exec($resourceUrl . "?{$query}");
+        
+        return $this->response->getData($response);
+    }
+
+    /**
+     * Executes a GET request to Pinterest API with pagination.
+     *
+     * @param array $requestOptions
+     * @param string $resourceUrl
      * @param array $bookmarks
      * @return array|bool
      */
-    protected function execGetRequest(array $requestOptions, $resourceUrl, $needsPagination = false, $bookmarks = [])
+    protected function execGetRequestWithPagination(array $requestOptions, $resourceUrl, $bookmarks = [])
     {
         $query = Request::createQuery(['options' => $requestOptions], $bookmarks);
         $response = $this->request->exec($resourceUrl . "?{$query}");
-        
-        if ($needsPagination) {
-            return $this->response->getPaginationData($response);
-        }
 
-        return $this->response->getData($response);
+        return $this->response->getPaginationData($response);
     }
 
     /**
@@ -98,23 +104,7 @@ abstract class Provider
      */
     public function getPaginatedData(array $data, $url, $bookmarks = [])
     {
-        return $this->execGetRequest($data, $url, true, $bookmarks);
-    }
-    
-    /**
-     * @return Request
-     */
-    public function getRequest()
-    {
-        return $this->request;
-    }
-
-    /**
-     * @return Response
-     */
-    public function getResponse()
-    {
-        return $this->response;
+        return $this->execGetRequestWithPagination($data, $url, $bookmarks);
     }
 
     /**
@@ -124,6 +114,22 @@ abstract class Provider
      */
     public function checkMethodRequiresLogin($method)
     {
-        return in_array($method, $this->loginRequired);
+        return in_array($method, $this->loginRequiredFor);
+    }
+
+    /**
+     * @return RequestInterface
+     */
+    public function getRequest()
+    {
+        return $this->request;
+    }
+
+    /**
+     * @return ResponseInterface
+     */
+    public function getResponse()
+    {
+        return $this->response;
     }
 }

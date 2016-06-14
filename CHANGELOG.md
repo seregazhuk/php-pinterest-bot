@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [4.2.1] - 2016-06-14
+### Fixed:
+ - news *last* method login requirement check
+ - pagination empty result check
+
 ## [4.2.0] - 2016-06-13
 ### Changed: 
  - functions with pagination accept a limit as a second argument, for example:

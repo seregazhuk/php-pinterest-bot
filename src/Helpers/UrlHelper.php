@@ -124,16 +124,13 @@ class UrlHelper
     /**
      * Return Pinterest API url for search requests.
      *
-     * @param bool $bookmarksUsed
-     *
+     * @param array $bookmarks
+     * 
      * @return string
      */
-    public static function getSearchUrl($bookmarksUsed = false)
+    public static function getSearchUrl($bookmarks = [])
     {
-        if (!$bookmarksUsed) {
-            return self::RESOURCE_SEARCH;
-        }
-
-        return self::RESOURCE_SEARCH_WITH_PAGINATION;
+        return empty($bookmarks) ? self::RESOURCE_SEARCH : self::RESOURCE_SEARCH_WITH_PAGINATION;
+            
     }
 }
