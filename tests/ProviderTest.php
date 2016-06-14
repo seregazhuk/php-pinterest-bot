@@ -63,7 +63,7 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return self
+     * @return $this
      */
     protected function createProviderInstance()
     {
@@ -87,7 +87,7 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
         return $this;
     }
 
-   protected function setResponse($response, $times = 1, $method = 'exec')
+    protected function setResponse($response, $times = 1, $method = 'exec')
     {        
         $this->mock->shouldReceive($method)->times($times)->andReturn($response);
     }

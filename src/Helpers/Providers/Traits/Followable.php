@@ -4,7 +4,7 @@ namespace seregazhuk\PinterestBot\Helpers\Providers\Traits;
 
 trait Followable
 {
-    use HandlesRequestAndResponse;
+    use HandlesRequestAndResponse, HasEntityIdName;
     /**
      * Follow user by user_id.
      *
@@ -26,11 +26,11 @@ trait Followable
      */
     public function unFollow($entityId)
     {
-        return $this->followCall($entityId, $this->getUnfFollowUrl());
+        return $this->followCall($entityId, $this->getUnFollowUrl());
     }
 
     /**
-     * Make api call for follow/unfollow a entity (user/board).
+     * Make api call for follow/unFollow a entity (user/board).
      *
      * @param int    $entityId
      * @param string $resourceUrl
@@ -47,15 +47,16 @@ trait Followable
     /**
      * @return string
      */
-    abstract protected function getEntityIdName();
+    protected function getFollowUrl()
+    {
+        return property_exists($this, 'followUrl') ? $this->followUrl : '';
+    }
 
     /**
      * @return string
      */
-    abstract protected function getFollowUrl();
-
-    /**
-     * @return string
-     */
-    abstract protected function getUnfFollowUrl();
+    protected function getUnFollowUrl()
+    {
+        return property_exists($this, 'followUrl') ? $this->unFollowUrl : '';
+    }
 }

@@ -138,6 +138,6 @@ class BoardsTest extends ProviderTest
         $this->assertTrue($this->provider->create('test', 'test'));
 
         $this->setErrorResponse();
-        $this->assertFalse($this->provider->delete('test', 'test'));
+        $this->assertFalse($this->provider->create('test', 'test'));
     }
 }

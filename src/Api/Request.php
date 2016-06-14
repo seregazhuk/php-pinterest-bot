@@ -98,6 +98,12 @@ class Request implements RequestInterface
         return $this->exec($url, $postString);
     }
 
+    /**
+     * @param string $pathToFile
+     * @param string $url
+     *
+     * @return array
+     */
     public function upload($pathToFile, $url)
     {
         $this->filePathToUpload = $pathToFile;

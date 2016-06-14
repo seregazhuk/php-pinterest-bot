@@ -94,6 +94,11 @@ abstract class Provider
         return $this->response->getPaginationData($response);
     }
 
+    protected function getEntityIdName()
+    {
+        return property_exists($this, 'entityIdName') ? $this->entityIdName : '';
+    }
+    
     /**
      * Executes pagination GET request.
      *

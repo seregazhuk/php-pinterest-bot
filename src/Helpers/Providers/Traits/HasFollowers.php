@@ -8,6 +8,21 @@ use seregazhuk\PinterestBot\Helpers\Pagination;
 trait HasFollowers
 {
     /**
+     * Get followers.
+     *
+     * @param string $for
+     * @param int $limit
+     *
+     * @return Iterator
+     */
+    public function followers($for, $limit = 0)
+    {
+        return $this->getFollowData(
+            [$this->getFollowersFor() => $for], $this->getFollowersUrl(), $limit
+        );
+    }
+    
+    /**
      * @param array  $data
      * @param string $resourceUrl
      * @param int $limit
@@ -19,5 +34,15 @@ trait HasFollowers
         $requestData = array_merge([$data, $resourceUrl]);
 
         return (new Pagination($this))->paginateOver('getPaginatedData', $requestData, $limit);
+    }
+
+    protected function getFollowersUrl()
+    {
+        return property_exists($this, 'followersUrl') ? $this->followersUrl : '';
+    }
+
+    protected function getFollowersFor()
+    {
+        return property_exists($this, 'followersFor') ? $this->followersFor : '';
     }
 }

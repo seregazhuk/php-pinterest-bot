@@ -5,13 +5,12 @@ namespace szhuk\tests;
 use Mockery;
 use PHPUnit_Framework_TestCase;
 use ReflectionClass;
-use seregazhuk\PinterestBot\Api\CurlAdapter;
-use seregazhuk\PinterestBot\Api\Providers\Boards;
 use seregazhuk\PinterestBot\Api\Request;
-use seregazhuk\PinterestBot\Contracts\HttpInterface;
-use seregazhuk\PinterestBot\Helpers\CsrfHelper;
-use seregazhuk\tests\helpers\ReflectionHelper;
+use seregazhuk\PinterestBot\Api\CurlAdapter;
 use seregazhuk\tests\helpers\ResponseHelper;
+use seregazhuk\tests\helpers\ReflectionHelper;
+use seregazhuk\PinterestBot\Helpers\CsrfHelper;
+use seregazhuk\PinterestBot\Contracts\HttpInterface;
 
 /**
  * Class RequestTest.

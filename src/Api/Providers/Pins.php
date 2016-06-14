@@ -6,10 +6,11 @@ use Iterator;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
 use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Helpers\Providers\Traits\Searchable;
+use seregazhuk\PinterestBot\Helpers\Providers\Traits\CanBeDeleted;
 
 class Pins extends Provider
 {
-    use Searchable;
+    use Searchable, CanBeDeleted;
 
     protected $loginRequiredFor = [
         'like',
@@ -22,6 +23,11 @@ class Pins extends Provider
         'activity'
     ];
 
+    protected $searchScope  = 'pins';
+    protected $entityIdName = 'id';
+
+    protected $deleteUrl = UrlHelper::RESOURCE_DELETE_PIN;
+    
     /**
      * Likes pin with current ID.
      *
@@ -44,19 +50,6 @@ class Pins extends Provider
     public function unLike($pinId)
     {
         return $this->likePinMethodCall($pinId, UrlHelper::RESOURCE_UNLIKE_PIN);
-    }
-
-    /**
-     * Calls Pinterest API to like or unlike Pin by ID.
-     *
-     * @param int    $pinId
-     * @param string $resourceUrl
-     *
-     * @return bool
-     */
-    protected function likePinMethodCall($pinId, $resourceUrl)
-    {
-        return $this->execPostRequest(['pin_id' => $pinId], $resourceUrl);
     }
 
     /**
@@ -168,18 +161,6 @@ class Pins extends Provider
     }
 
     /**
-     * Delete a pin.
-     *
-     * @param int $pinId
-     *
-     * @return bool
-     */
-    public function delete($pinId)
-    {
-        return $this->execPostRequest(['id' => $pinId], UrlHelper::RESOURCE_DELETE_PIN);
-    }
-
-    /**
      * Get information of a pin by PinID.
      *
      * @param int $pinId
@@ -236,10 +217,15 @@ class Pins extends Provider
     }
 
     /**
-     * @return string
+     * Calls Pinterest API to like or unlike Pin by ID.
+     *
+     * @param int $pinId
+     * @param string $resourceUrl
+     *
+     * @return bool
      */
-    protected function getScope()
+    protected function likePinMethodCall($pinId, $resourceUrl)
     {
-        return 'pins';
+        return $this->execPostRequest(['pin_id' => $pinId], $resourceUrl);
     }
 }

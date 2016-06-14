@@ -51,4 +51,12 @@ interface RequestInterface
      * @return bool
      */
     public function isLoggedIn();
+
+    /**
+     * @param string $pathToFile
+     * @param string $url
+     *
+     * @return array
+     */
+    public function upload($pathToFile, $url);
 }

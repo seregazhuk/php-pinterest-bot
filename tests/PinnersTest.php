@@ -37,10 +37,10 @@ class PinnersTest extends ProviderTest
     public function unFollowUser()
     {
         $this->setFollowSuccessResponse();
-        $this->assertTrue($this->provider->unfollow(1));
+        $this->assertTrue($this->provider->unFollow(1));
 
         $this->setFollowErrorResponse();
-        $this->assertFalse($this->provider->unfollow(1));
+        $this->assertFalse($this->provider->unFollow(1));
     }
 
     /** @test */
