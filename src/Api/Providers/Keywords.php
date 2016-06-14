@@ -21,7 +21,7 @@ class Keywords extends Provider
      */
     protected function parseKeywordsFromRequest($response)
     {
-        if (!$response || !isset($response['guides'])) {
+        if (empty($response) || !isset($response['guides'])) {
             return null;
         }
 
