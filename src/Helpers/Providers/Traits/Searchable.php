@@ -15,7 +15,10 @@ trait Searchable
     /**
      * @return string
      */
-    abstract protected function getScope();
+    protected function getSearchScope()
+    {
+        return property_exists($this, 'searchScope') ? $this->searchScope : '';
+    }
 
     /**
      * Executes search to API. Query - search string.
@@ -76,7 +79,7 @@ trait Searchable
         return (new Pagination($this))->paginateOver(
             'searchCall', [
             'query' => $query,
-            'scope' => $this->getScope(),
+            'scope' => $this->getSearchScope(),
         ], $limit
         );
     }

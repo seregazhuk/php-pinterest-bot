@@ -18,6 +18,14 @@ class Pinners extends Provider
 
     protected $loginRequiredFor = ['follow', 'unFollow'];
 
+    protected $searchScope  = 'people';
+    protected $entityIdName = 'user_id';
+    protected $followersFor = 'username';
+
+    protected $followUrl    = UrlHelper::RESOURCE_FOLLOW_USER;
+    protected $unFollowUrl  = UrlHelper::RESOURCE_UNFOLLOW_USER;
+    protected $followersUrl = UrlHelper::RESOURCE_USER_FOLLOWERS;
+    
     /**
      * Get user info.
      * If username param is not specified, will
@@ -30,21 +38,6 @@ class Pinners extends Provider
     public function info($username)
     {
         return $this->execGetRequest(['username' => $username], UrlHelper::RESOURCE_USER_INFO);
-    }
-
-    /**
-     * Get pinner followers.
-     *
-     * @param string $username
-     * @param int $limit
-     *
-     * @return Iterator
-     */
-    public function followers($username, $limit = 0)
-    {
-        return $this->paginate(
-            $username, UrlHelper::RESOURCE_USER_FOLLOWERS, $limit
-        );
     }
 
     /**
@@ -127,48 +120,13 @@ class Pinners extends Provider
     }
 
     /**
-     * Search scope.
-     *
-     * @return string
-     */
-    protected function getScope()
-    {
-        return 'people';
-    }
-
-    protected function getEntityIdName()
-    {
-        return 'user_id';
-    }
-
-    /**
-     * Follow resource.
-     *
-     * @return string
-     */
-    protected function getFollowUrl()
-    {
-        return UrlHelper::RESOURCE_FOLLOW_USER;
-    }
-
-    /**
-     * UnFollow resource.
-     *
-     * @return string
-     */
-    protected function getUnfFollowUrl()
-    {
-        return UrlHelper::RESOURCE_UNFOLLOW_USER;
-    }
-
-    /**
      * @param string $username
      * @param string $url
      * @param int $limit
      *
      * @return Iterator
      */
-    public function paginate($username, $url, $limit)
+    protected function paginate($username, $url, $limit)
     {
         $params = [
             'data' => ['username' => $username],

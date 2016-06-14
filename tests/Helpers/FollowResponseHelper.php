@@ -4,14 +4,14 @@ namespace seregazhuk\tests\Helpers;
 
 trait FollowResponseHelper 
 {
-
+    use SetsResponse;
+    
     protected function setFollowErrorResponse()
     {
         return $this->setResponse(
             $this->createErrorApiResponse(), 1, 'followMethodCall'
         );
     }
-
 
     protected function setFollowSuccessResponse()
     {

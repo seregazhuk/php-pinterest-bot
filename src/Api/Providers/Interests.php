@@ -11,18 +11,8 @@ class Interests extends Provider
 
     protected $loginRequiredFor = ['follow', 'unFollow'];
 
-    protected function getEntityIdName()
-    {
-        return 'interest_id';
-    }
+    protected $followUrl   = UrlHelper::RESOURCE_FOLLOW_INTEREST;
+    protected $unFollowUrl = UrlHelper::RESOURCE_UNFOLLOW_INTEREST;
 
-    protected function getFollowUrl()
-    {
-        return UrlHelper::RESOURCE_FOLLOW_INTEREST;
-    }
-
-    protected function getUnfFollowUrl()
-    {
-        return UrlHelper::RESOURCE_UNFOLLOW_INTEREST;
-    }
+    protected $entityIdName = 'interest_id';
 }

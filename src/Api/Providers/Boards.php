@@ -3,6 +3,7 @@
 namespace seregazhuk\PinterestBot\Api\Providers;
 
 use Iterator;
+use seregazhuk\PinterestBot\Helpers\Providers\Traits\CanBeDeleted;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
 use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Helpers\Providers\Traits\Searchable;
@@ -11,7 +12,7 @@ use seregazhuk\PinterestBot\Helpers\Providers\Traits\HasFollowers;
 
 class Boards extends Provider
 {
-    use Searchable, Followable, HasFollowers;
+    use CanBeDeleted, Searchable, Followable, HasFollowers;
 
     protected $loginRequiredFor = [
         'delete',
@@ -20,6 +21,15 @@ class Boards extends Provider
         'unFollow',
     ];
 
+    protected $searchScope  = 'boards';
+    protected $entityIdName = 'board_id';
+    protected $followersFor = 'board_id';
+
+    protected $followUrl    = UrlHelper::RESOURCE_FOLLOW_BOARD;
+    protected $unFollowUrl  = UrlHelper::RESOURCE_UNFOLLOW_BOARD;
+    protected $deleteUrl    = UrlHelper::RESOURCE_DELETE_BOARD;
+    protected $followersUrl = UrlHelper::RESOURCE_BOARD_FOLLOWERS;
+    
     /**
      * Get boards for user by username.
      *
@@ -82,18 +92,6 @@ class Boards extends Provider
     }
 
     /**
-     * Delete your board by ID.
-     *
-     * @param int $boardId
-     *
-     * @return bool
-     */
-    public function delete($boardId)
-    {
-        return $this->execPostRequest(['board_id' => $boardId], UrlHelper::RESOURCE_DELETE_BOARD);
-    }
-
-    /**
      * Update board info. Gets boardId and an associative array as params. Available keys of the array are:
      * 'category', 'description', 'privacy'.
      *
@@ -134,55 +132,5 @@ class Boards extends Provider
         ];
 
         return $this->execPostRequest($requestOptions, UrlHelper::RESOURCE_CREATE_BOARD);
-    }
-
-    /**
-     * Get board followers.
-     *
-     * @param $boardId
-     * @param int $limit
-     *
-     * @return Iterator
-     */
-    public function followers($boardId, $limit = 0)
-    {
-        return $this->getFollowData(
-            ['board_id' => $boardId], UrlHelper::RESOURCE_BOARD_FOLLOWERS, $limit
-        );
-    }
-
-    /**
-     * Search scope.
-     *
-     * @return string
-     */
-    protected function getScope()
-    {
-        return 'boards';
-    }
-
-    protected function getEntityIdName()
-    {
-        return 'board_id';
-    }
-
-    /**
-     * Follow resource.
-     *
-     * @return string
-     */
-    protected function getFollowUrl()
-    {
-        return UrlHelper::RESOURCE_FOLLOW_BOARD;
-    }
-
-    /**
-     * UnFollow resource.
-     *
-     * @return string
-     */
-    protected function getUnfFollowUrl()
-    {
-        return UrlHelper::RESOURCE_UNFOLLOW_BOARD;
     }
 }
