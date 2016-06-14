@@ -6,6 +6,8 @@ use seregazhuk\PinterestBot\Helpers\UrlHelper;
 
 trait UploadsImages
 {
+    use HandlesRequestAndResponse;
+    
     public function upload($image)
     {
         $res = $this->getRequest()->upload($image, UrlHelper::IMAGE_UPLOAD);
