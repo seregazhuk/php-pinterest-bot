@@ -4,6 +4,7 @@ namespace seregazhuk\PinterestBot\Helpers\Providers\Traits;
 
 trait Followable
 {
+    use HandlesRequestAndResponse;
     /**
      * Follow user by user_id.
      *
@@ -43,9 +44,18 @@ trait Followable
         return $this->getResponse()->hasErrors($response);
     }
 
+    /**
+     * @return string
+     */
     abstract protected function getEntityIdName();
 
+    /**
+     * @return string
+     */
     abstract protected function getFollowUrl();
 
+    /**
+     * @return string
+     */
     abstract protected function getUnfFollowUrl();
 }

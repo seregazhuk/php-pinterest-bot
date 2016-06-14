@@ -8,6 +8,8 @@ use seregazhuk\PinterestBot\Helpers\Pagination;
 
 trait Searchable
 {
+    use HandlesRequestAndResponse;
+    
     private $moduleSearchPage = 'SearchPage';
 
     /**
@@ -47,8 +49,8 @@ trait Searchable
     /**
      * Creates Pinterest API search request.
      *
-     * @param       $query
-     * @param       $scope
+     * @param string $query
+     * @param string $scope
      * @param array $bookmarks
      *
      * @return array
@@ -80,8 +82,8 @@ trait Searchable
     }
 
     /**
-     * @param $bookmarks
-     * @param $options
+     * @param array $bookmarks
+     * @param array $options
      *
      * @return array
      */

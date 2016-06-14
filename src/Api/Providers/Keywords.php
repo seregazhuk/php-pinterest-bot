@@ -2,7 +2,6 @@
 
 namespace seregazhuk\PinterestBot\Api\Providers;
 
-use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
 
 class Keywords extends Provider
@@ -22,7 +21,7 @@ class Keywords extends Provider
      */
     protected function parseKeywordsFromRequest($response)
     {
-        if (!isset($response['guides'])) {
+        if (!$response || !isset($response['guides'])) {
             return null;
         }
 
