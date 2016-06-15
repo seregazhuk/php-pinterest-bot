@@ -2,6 +2,13 @@
 
 namespace seregazhuk\PinterestBot\Helpers\Providers\Traits;
 
+/**
+ * Class Followable
+ * @package seregazhuk\PinterestBot\Helpers\Providers\Traits
+ *
+ * @property string $followUrl
+ * @property string $unFollowUrl
+ */
 trait Followable
 {
     use HandlesRequestAndResponse, HasEntityIdName;
