@@ -1,6 +1,6 @@
 <?php
 
-namespace seregazhuk\PinterestBot\Helpers\Providers\Traits;
+namespace seregazhuk\PinterestBot\Api\Traits;
 
 use seregazhuk\PinterestBot\Contracts\RequestInterface;
 use seregazhuk\PinterestBot\Contracts\ResponseInterface;

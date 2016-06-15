@@ -1,10 +1,10 @@
 <?php
 
-namespace seregazhuk\PinterestBot\Helpers\Providers\Traits;
+namespace seregazhuk\PinterestBot\Api\Traits;
 
 /**
  * Class CanBeDeleted
- * @package seregazhuk\PinterestBot\Helpers\Providers\Traits
+ * @package seregazhuk\PinterestBot\Api\Traits
  *
  * @property string $deleteUrl
  */

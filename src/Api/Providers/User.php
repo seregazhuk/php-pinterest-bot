@@ -3,7 +3,7 @@
 namespace seregazhuk\PinterestBot\Api\Providers;
 
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
-use seregazhuk\PinterestBot\Helpers\Providers\Traits\UploadsImages;
+use seregazhuk\PinterestBot\Api\Traits\UploadsImages;
 
 class User extends Provider
 {
