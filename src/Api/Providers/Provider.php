@@ -8,6 +8,7 @@ use seregazhuk\PinterestBot\Contracts\ResponseInterface;
 
 /**
  * Class Provider.
+ * @property string entityIdName
  */
 abstract class Provider
 {

@@ -5,6 +5,13 @@ namespace seregazhuk\PinterestBot\Helpers\Providers\Traits;
 use Iterator;
 use seregazhuk\PinterestBot\Helpers\Pagination;
 
+/**
+ * Class HasFollowers
+ * @package seregazhuk\PinterestBot\Helpers\Providers\Traits
+ *
+ * @property string $followersUrl
+ * @property string $followersFor
+ */
 trait HasFollowers
 {
     /**

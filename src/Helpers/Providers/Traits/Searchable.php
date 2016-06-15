@@ -6,6 +6,12 @@ use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
 use seregazhuk\PinterestBot\Helpers\Pagination;
 
+/**
+ * Class Searchable
+ * @package seregazhuk\PinterestBot\Helpers\Providers\Traits
+ *
+ * @property string $searchScope
+ */
 trait Searchable
 {
     use HandlesRequestAndResponse;

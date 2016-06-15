@@ -2,6 +2,12 @@
 
 namespace seregazhuk\PinterestBot\Helpers\Providers\Traits;
 
+/**
+ * Class CanBeDeleted
+ * @package seregazhuk\PinterestBot\Helpers\Providers\Traits
+ *
+ * @property string $deleteUrl
+ */
 trait CanBeDeleted
 {
     use HandlesRequestAndResponse, HasEntityIdName;
