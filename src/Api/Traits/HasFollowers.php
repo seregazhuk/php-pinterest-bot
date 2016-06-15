@@ -1,13 +1,13 @@
 <?php
 
-namespace seregazhuk\PinterestBot\Helpers\Providers\Traits;
+namespace seregazhuk\PinterestBot\Api\Traits;
 
 use Iterator;
 use seregazhuk\PinterestBot\Helpers\Pagination;
 
 /**
  * Class HasFollowers
- * @package seregazhuk\PinterestBot\Helpers\Providers\Traits
+ * @package seregazhuk\PinterestBot\Api\Traits
  *
  * @property string $followersUrl
  * @property string $followersFor

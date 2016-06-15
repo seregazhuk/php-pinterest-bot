@@ -8,9 +8,9 @@ use seregazhuk\PinterestBot\Helpers\UrlHelper;
 use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Exceptions\AuthException;
 use seregazhuk\PinterestBot\Helpers\Requests\PinnerHelper;
-use seregazhuk\PinterestBot\Helpers\Providers\Traits\Followable;
-use seregazhuk\PinterestBot\Helpers\Providers\Traits\Searchable;
-use seregazhuk\PinterestBot\Helpers\Providers\Traits\HasFollowers;
+use seregazhuk\PinterestBot\Api\Traits\Followable;
+use seregazhuk\PinterestBot\Api\Traits\Searchable;
+use seregazhuk\PinterestBot\Api\Traits\HasFollowers;
 
 class Pinners extends Provider
 {

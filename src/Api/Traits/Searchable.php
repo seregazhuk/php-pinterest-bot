@@ -1,6 +1,6 @@
 <?php
 
-namespace seregazhuk\PinterestBot\Helpers\Providers\Traits;
+namespace seregazhuk\PinterestBot\Api\Traits;
 
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
@@ -8,7 +8,7 @@ use seregazhuk\PinterestBot\Helpers\Pagination;
 
 /**
  * Class Searchable
- * @package seregazhuk\PinterestBot\Helpers\Providers\Traits
+ * @package seregazhuk\PinterestBot\Api\Traits
  *
  * @property string $searchScope
  */

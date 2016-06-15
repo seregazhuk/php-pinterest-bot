@@ -3,12 +3,12 @@
 namespace seregazhuk\PinterestBot\Api\Providers;
 
 use Iterator;
-use seregazhuk\PinterestBot\Helpers\Providers\Traits\CanBeDeleted;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
 use seregazhuk\PinterestBot\Helpers\Pagination;
-use seregazhuk\PinterestBot\Helpers\Providers\Traits\Searchable;
-use seregazhuk\PinterestBot\Helpers\Providers\Traits\Followable;
-use seregazhuk\PinterestBot\Helpers\Providers\Traits\HasFollowers;
+use seregazhuk\PinterestBot\Api\Traits\Searchable;
+use seregazhuk\PinterestBot\Api\Traits\Followable;
+use seregazhuk\PinterestBot\Api\Traits\CanBeDeleted;
+use seregazhuk\PinterestBot\Api\Traits\HasFollowers;
 
 class Boards extends Provider
 {
