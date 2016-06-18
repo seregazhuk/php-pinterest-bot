@@ -1,6 +1,6 @@
 <?php
 
-namespace seregazhuk\tests;
+namespace seregazhuk\tests\Api;
 
 use seregazhuk\PinterestBot\Api\Providers\User;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;

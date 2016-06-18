@@ -1,6 +1,6 @@
 <?php
 
-namespace seregazhuk\tests;
+namespace seregazhuk\tests\Api;
 
 use Mockery;
 use ReflectionClass;
@@ -42,7 +42,9 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
     protected function createRequestMock()
     {
         $requestMock = Mockery::mock(Request::class)->shouldReceive($this->httpMockMethods)->getMock();
+
         $requestMock->shouldReceive('checkLoggedIn')->andReturn(true);
+        
         $this->requestMock = $requestMock;
 
         return $this;
@@ -68,9 +70,7 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
     protected function createProviderInstance()
     {
         $providerReflection = new ReflectionClass($this->providerClass);
-        $this->provider = $providerReflection->newInstanceArgs(
-            [$this->requestMock, new Response()]
-        );
+        $this->provider = $providerReflection->newInstanceArgs([$this->requestMock, new Response()]);
 
         return $this;
     }

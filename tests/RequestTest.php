@@ -3,8 +3,8 @@
 namespace szhuk\tests;
 
 use Mockery;
-use PHPUnit_Framework_TestCase;
 use ReflectionClass;
+use PHPUnit_Framework_TestCase;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\CurlAdapter;
 use seregazhuk\tests\helpers\ResponseHelper;

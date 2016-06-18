@@ -1,9 +1,8 @@
 <?php
 
-namespace seregazhuk\tests;
+namespace seregazhuk\tests\Api;
 
 use seregazhuk\PinterestBot\Api\Providers\Pins;
-use seregazhuk\PinterestBot\Helpers\UrlHelper;
 
 /**
  * Class PinsTest.
