@@ -1,6 +1,6 @@
 <?php
 
-namespace seregazhuk\tests;
+namespace seregazhuk\tests\Api;
 
 use LogicException;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
