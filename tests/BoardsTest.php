@@ -2,6 +2,7 @@
 
 namespace seregazhuk\tests;
 
+use seregazhuk\PinterestBot\Helpers\UrlHelper;
 use seregazhuk\PinterestBot\Api\Providers\Boards;
 use seregazhuk\tests\Helpers\FollowResponseHelper;
 
@@ -11,6 +12,7 @@ use seregazhuk\tests\Helpers\FollowResponseHelper;
 class BoardsTest extends ProviderTest
 {
     use FollowResponseHelper;
+
     /**
      * @var Boards
      */
@@ -35,20 +37,22 @@ class BoardsTest extends ProviderTest
     /** @test */
     public function followBoard()
     {
-        $this->setFollowSuccessResponse();
-        $this->assertTrue($this->provider->follow(1));
+        $boardId = 1;
+        $this->setFollowSuccessResponse($boardId, UrlHelper::RESOURCE_FOLLOW_BOARD);
+        $this->assertTrue($this->provider->follow($boardId));
 
-        $this->setFollowErrorResponse();
+        $this->setFollowErrorResponse($boardId, UrlHelper::RESOURCE_FOLLOW_BOARD);
         $this->assertFalse($this->provider->follow(1));
     }
 
     /** @test */
     public function unFollowBoard()
     {
-        $this->setFollowSuccessResponse();
+        $boardId = 1;
+        $this->setFollowSuccessResponse($boardId, UrlHelper::RESOURCE_UNFOLLOW_BOARD);
         $this->assertTrue($this->provider->unFollow(1));
 
-        $this->setFollowErrorResponse();
+        $this->setFollowErrorResponse($boardId, UrlHelper::RESOURCE_UNFOLLOW_BOARD);
         $this->assertFalse($this->provider->unFollow(1));
     }
 
@@ -139,5 +143,20 @@ class BoardsTest extends ProviderTest
 
         $this->setErrorResponse();
         $this->assertFalse($this->provider->create('test', 'test'));
+    }
+
+    /** @test */
+    public function updateBoard()
+    {
+        $attributes = [
+            'category'    => 'test',
+            'description' => 'test'
+        ];
+
+        $this->setSuccessResponse();
+        $this->assertTrue($this->provider->update(1, $attributes));
+
+        $this->setErrorResponse();
+        $this->assertFalse($this->provider->update(1, $attributes));
     }
 }
