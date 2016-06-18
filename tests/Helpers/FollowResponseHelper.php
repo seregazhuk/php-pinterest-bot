@@ -5,19 +5,51 @@ namespace seregazhuk\tests\Helpers;
 trait FollowResponseHelper 
 {
     use SetsResponse;
-    
-    protected function setFollowErrorResponse()
+
+    /**
+     * @param int $entityId
+     * @param string $sourceUrl
+     * @return $this
+     */
+    protected function setFollowErrorResponse($entityId, $sourceUrl)
     {
-        return $this->setResponse(
-            $this->createErrorApiResponse(), 1, 'followMethodCall'
+        $this->setFollowRequest(
+            $entityId, $sourceUrl, $this->createErrorApiResponse()
         );
+
+        return $this;
     }
 
-    protected function setFollowSuccessResponse()
+    /**
+     * @param int $entityId
+     * @param string $sourceUrl
+     * @return $this
+     */
+    protected function setFollowSuccessResponse($entityId, $sourceUrl)
     {
-        return $this->setResponse(
-            $this->createSuccessApiResponse(), 1, 'followMethodCall'
+        $this->setFollowRequest(
+            $entityId, $sourceUrl, $this->createSuccessApiResponse()
         );
+
+        return $this;
     }
 
+    /**
+     * @param int $entityId
+     * @param string $sourceUrl
+     * @param array $response
+     * @return mixed
+     */
+    protected function setFollowRequest($entityId, $sourceUrl, $response)
+    {
+        $this->requestMock->shouldReceive('followMethodCall')->once()->withArgs(
+                [
+                    $entityId,
+                    $this->provider->getEntityIdName(),
+                    $sourceUrl
+                ]
+            )->andReturn($response);
+
+        return $this;
+    }
 }

@@ -3,6 +3,7 @@
 namespace seregazhuk\tests;
 
 use seregazhuk\PinterestBot\Api\Providers\Pins;
+use seregazhuk\PinterestBot\Helpers\UrlHelper;
 
 /**
  * Class PinsTest.

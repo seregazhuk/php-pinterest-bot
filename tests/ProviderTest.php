@@ -16,7 +16,7 @@ use seregazhuk\PinterestBot\Api\Providers\Provider;
  * Class ProviderTest.
  *
  * @property string $providerClass
- * @property MockInterface $mock
+ * @property MockInterface $requestMock
  * @property ReflectionClass $reflection
  */
 abstract class ProviderTest extends PHPUnit_Framework_TestCase
@@ -43,7 +43,7 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
     {
         $requestMock = Mockery::mock(Request::class)->shouldReceive($this->httpMockMethods)->getMock();
         $requestMock->shouldReceive('checkLoggedIn')->andReturn(true);
-        $this->mock = $requestMock;
+        $this->requestMock = $requestMock;
 
         return $this;
     }
@@ -69,7 +69,7 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
     {
         $providerReflection = new ReflectionClass($this->providerClass);
         $this->provider = $providerReflection->newInstanceArgs(
-            [$this->mock, new Response()]
+            [$this->requestMock, new Response()]
         );
 
         return $this;
@@ -82,14 +82,14 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
     {
         $this->reflection = new ReflectionClass($this->provider);
         $this->setReflectedObject($this->provider);
-        $this->setProperty('request', $this->mock);
+        $this->setProperty('request', $this->requestMock);
 
         return $this;
     }
 
     protected function setResponse($response, $times = 1, $method = 'exec')
-    {        
-        $this->mock->shouldReceive($method)->times($times)->andReturn($response);
+    {
+        $this->requestMock->shouldReceive($method)->times($times)->andReturn($response);
     }
 
     protected function setSuccessResponse()

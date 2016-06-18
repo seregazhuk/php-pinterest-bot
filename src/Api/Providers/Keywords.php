@@ -17,12 +17,12 @@ class Keywords extends Provider
 
     /**
      * @param array $response
-     * @return array|null
+     * @return array
      */
     protected function parseKeywordsFromRequest($response)
     {
         if (empty($response) || !isset($response['guides'])) {
-            return null;
+            return [];
         }
 
         $keywords = $response['guides'];

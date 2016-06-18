@@ -2,6 +2,7 @@
 
 namespace seregazhuk\tests;
 
+use seregazhuk\PinterestBot\Helpers\UrlHelper;
 use seregazhuk\tests\Helpers\FollowResponseHelper;
 use seregazhuk\PinterestBot\Api\Providers\Interests;
 
@@ -24,20 +25,22 @@ class InterestsTest extends ProviderTest
     /** @test */
     public function followInterest()
     {
-        $this->setFollowSuccessResponse();
+        $interestId = 1111;
+        $this->setFollowSuccessResponse($interestId, UrlHelper::RESOURCE_FOLLOW_INTEREST);
         $this->assertTrue($this->provider->follow(1111));
 
-        $this->setFollowErrorResponse();
+        $this->setFollowErrorResponse($interestId, UrlHelper::RESOURCE_FOLLOW_INTEREST);
         $this->assertFalse($this->provider->follow(1111));
     }
 
     /** @test */
     public function unFollowInterest()
     {
-        $this->setFollowSuccessResponse();
+        $interestId = 1111;
+        $this->setFollowSuccessResponse($interestId, UrlHelper::RESOURCE_UNFOLLOW_INTEREST);
         $this->assertTrue($this->provider->unFollow(1111));
 
-        $this->setFollowErrorResponse();
+        $this->setFollowErrorResponse($interestId, UrlHelper::RESOURCE_UNFOLLOW_INTEREST);
         $this->assertFalse($this->provider->unFollow(1111));
     }
 }

@@ -4,5 +4,5 @@ namespace seregazhuk\PinterestBot\Api\Traits;
 
 trait HasEntityIdName
 {
-    abstract protected function getEntityIdName();
+    abstract public function getEntityIdName();
 }
