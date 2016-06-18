@@ -56,6 +56,18 @@ class BotTest extends PHPUnit_Framework_TestCase
         $bot->logout();
     }
 
+    /** @test */
+    public function isLoggedIn()
+    {
+        $request = Mockery::mock(Request::class)->shouldReceive('isLoggedIn')->andReturn(true)->getMock();
+
+        $providersContainer = new ProvidersContainer($request, new Response());
+
+        $bot = new Bot($providersContainer);
+
+        $this->assertTrue($bot->isLoggedIn());
+    }
+
     /**
      * @param string $providerName
      * @param MockInterface $providerMock
