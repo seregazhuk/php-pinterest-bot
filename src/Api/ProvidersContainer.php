@@ -93,9 +93,6 @@ class ProvidersContainer implements ProvidersContainerInterface
     private function buildProvider($className)
     {
         $ref = new ReflectionClass($className);
-        if (!$ref->isInstantiable()) {
-            throw new WrongProviderException("Provider $className is not instantiable.");
-        }
 
         $provider = $ref->newInstanceArgs([$this->request, $this->response]);
 

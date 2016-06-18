@@ -45,6 +45,12 @@ class ProvidersContainerTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
+    public function getResponse()
+    {
+        $this->assertInstanceOf(Response::class, $this->container->getResponse());
+    }
+
+    /** @test */
     public function getWrongProvider()
     {
         $this->expectException(WrongProviderException::class);
