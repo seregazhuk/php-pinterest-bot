@@ -95,7 +95,7 @@ class Response implements ResponseInterface
      *
      * @param array $response
      *
-     * @return array|null
+     * @return array
      */
     public function getBookmarks($response)
     {
@@ -103,7 +103,7 @@ class Response implements ResponseInterface
             return [$response['resource']['options']['bookmarks'][0]];
         }
 
-        return null;
+        return [];
     }
 
     /**

@@ -85,11 +85,55 @@ class ResponseTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function getBookmarksReturnBookmarksString()
+    public function getBookmarksReturnsBookmarksString()
     {
         $response = new Response();
 
         $dataWithBookmarks = ['resource' => ['options' => ['bookmarks' => ['my_bookmarks_string']]]];
         $this->assertEquals(['my_bookmarks_string'], $response->getBookmarks($dataWithBookmarks));
+    }
+
+    /** @test */
+    public function getBookmarksReturnsEmptyArrayForNoBookmarks()
+    {
+        $response = new Response();
+        $this->assertEmpty($response->getBookmarks([]));
+    }
+
+    /** @test */
+    public function getPaginationDataReturnsEmptyArrayForNoPagination()
+    {
+        $response = new Response();
+        $this->assertEmpty($response->getPaginationData([]));
+    }
+
+    /** @test */
+    public function getPaginationDataReturnsEmptyArrayForErrors()
+    {
+        $response = new Response();
+        $data = ['resource_response' => ['error' => 'some error']];
+
+        $this->assertEmpty($response->getPaginationData($data));
+    }
+
+    /** @test */
+    public function getPaginationDataReturnDataAndBookmarks()
+    {
+        $response = new Response();
+        $dataWithBookmarks = [
+            'resource'          => [
+                'options' => ['bookmarks' => ['my_bookmarks_string']]
+            ],
+            'resource_response' => [
+                'data' => 'some data'
+            ]
+        ];
+
+        $expected = [
+            'data'      => 'some data',
+            'bookmarks' => ['my_bookmarks_string']
+        ];
+
+        $this->assertEquals($expected, $response->getPaginationData($dataWithBookmarks));
     }
 }
