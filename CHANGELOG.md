@@ -1,9 +1,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [4.2.2] - ?
+## [4.2.2] - 2016-06-19
 ### Fixed:
- - keywords *recommendedFor* method returns an empty array if no results 
+ - keywords *recommendedFor* method returns an empty array if no results
+ - Response *hasErrors* method returns true on errors
+ - php version downgraded for 5.5.9
+ - test changed for phpunit 4.0
+ - Response *getBookmarks* method return empty array for no bookmarks
 
 ## [4.2.1] - 2016-06-14
 ### Fixed:

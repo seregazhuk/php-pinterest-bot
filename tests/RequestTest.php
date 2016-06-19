@@ -167,6 +167,17 @@ class RequestTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($token, $request->csrfToken);
     }
 
+    /** @test */
+    public function logoutClearsTokenAndLoggedInStatus()
+    {
+        $request = $this->createRequestObject();
+        $this->setProperty('loggedIn', true);
+
+        $request->logout();
+        $this->assertFalse($request->isLoggedIn());
+        $this->assertEquals(CsrfHelper::DEFAULT_TOKEN, $request->csrfToken);
+    }
+
     /**
      * @return Mockery\Mock|HttpInterface
      */

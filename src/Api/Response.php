@@ -26,7 +26,7 @@ class Response implements ResponseInterface
      */
     public function getData($response, $key = null)
     {
-        if (!$this->hasErrors($response)) {
+        if ($this->hasErrors($response)) {
             return false;
         }
 
@@ -84,10 +84,10 @@ class Response implements ResponseInterface
         if (isset($response['resource_response']['error']) && !empty($response['resource_response']['error'])) {
             $this->lastError = $response['resource_response']['error'];
 
-            return false;
+            return true;
         }
 
-        return true;
+        return false;
     }
 
     /**
@@ -95,15 +95,15 @@ class Response implements ResponseInterface
      *
      * @param array $response
      *
-     * @return array|null
+     * @return array
      */
     public function getBookmarks($response)
     {
-        if ($this->hasErrors($response) && isset($response['resource']['options']['bookmarks'][0])) {
+        if (!$this->hasErrors($response) && isset($response['resource']['options']['bookmarks'][0])) {
             return [$response['resource']['options']['bookmarks'][0]];
         }
 
-        return null;
+        return [];
     }
 
     /**

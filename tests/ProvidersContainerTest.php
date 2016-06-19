@@ -4,10 +4,9 @@ namespace seregazhuk\tests;
 
 use Mockery;
 use PHPUnit_Framework_TestCase;
-use seregazhuk\PinterestBot\Api\ProvidersContainer;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
-use seregazhuk\PinterestBot\Exceptions\WrongProviderException;
+use seregazhuk\PinterestBot\Api\ProvidersContainer;
 
 /**
  * Class ProvidersContainerTest.
@@ -50,10 +49,12 @@ class ProvidersContainerTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(Response::class, $this->container->getResponse());
     }
 
-    /** @test */
+    /**
+     * @test
+     * @expectedException seregazhuk\PinterestBot\Exceptions\WrongProviderException
+     */
     public function getWrongProvider()
     {
-        $this->expectException(WrongProviderException::class);
         $this->container->getProvider('unknown');
     }
 }
