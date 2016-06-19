@@ -2,11 +2,9 @@
 
 namespace seregazhuk\tests\Api;
 
-use LogicException;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
 use seregazhuk\tests\Helpers\FollowResponseHelper;
 use seregazhuk\PinterestBot\Api\Providers\Pinners;
-use seregazhuk\PinterestBot\Exceptions\AuthException;
 
 /**
  * Class PinnersTest.
@@ -127,10 +125,12 @@ class PinnersTest extends ProviderTest
         $this->assertCount($expectedResultsNum, $res);
     }
 
-    /** @test */
+    /**
+     * @test
+     * @expectedException \LogicException
+     */
     public function loginWithEmptyCredentials()
     {
-        $this->expectException(LogicException::class);
         $this->requestMock->shouldReceive('isLoggedIn')->once()->andReturn(false);
         $this->provider->login('', '');
     }
@@ -154,11 +154,12 @@ class PinnersTest extends ProviderTest
         $this->assertTrue($this->provider->login('test', 'test'));
     }
 
-    /** @test */
+    /**
+     * @test
+     * @expectedException seregazhuk\PinterestBot\Exceptions\AuthException
+     */
     public function loginFails()
     {
-        $this->expectException(AuthException::class);
-
         $response = $this->createErrorApiResponse();
         $this->requestMock->shouldReceive('isLoggedIn')->andReturn(false);
         $this->requestMock->shouldReceive('exec')->andReturn($response);

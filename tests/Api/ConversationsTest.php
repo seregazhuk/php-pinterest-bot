@@ -3,7 +3,6 @@
 namespace seregazhuk\tests\Api;
 
 use seregazhuk\PinterestBot\Api\Providers\Conversations;
-use seregazhuk\PinterestBot\Exceptions\InvalidRequestException;
 
 /**
  * Class ConversationsTest.
@@ -48,17 +47,21 @@ class ConversationsTest extends ProviderTest
         $this->assertFalse($this->provider->sendEmail($email, $message));
     }
 
-    /** @test */
+    /**
+     * @test
+     * @expectedException seregazhuk\PinterestBot\Exceptions\InvalidRequestException
+     */
     public function failWhenEmptyUsersProvided()
     {
-        $this->expectException(InvalidRequestException::class);
         $this->provider->sendMessage([], '');
     }
 
-    /** @test */
+    /**
+     * @test
+     * @expectedException seregazhuk\PinterestBot\Exceptions\InvalidRequestException
+     */
     public function failWhenEmptyEmailsProvided()
     {
-        $this->expectException(InvalidRequestException::class);
         $this->provider->sendEmail([], '');
     }
 
