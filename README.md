@@ -37,7 +37,7 @@ if your don't use such operations as creating pins, writing comments or sending 
 - [Custom settings](#custom-settings)
 
 ## Dependencies
-Library requires CURL extension and PHP 5.6 or above.
+Library requires CURL extension and PHP 5.5.9 or above.
 
 ## Installation
 Via composer:
