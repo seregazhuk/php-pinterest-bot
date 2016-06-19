@@ -3,7 +3,8 @@ All notable changes to this project will be documented in this file.
 
 ## [4.2.2] - ?
 ### Fixed:
- - keywords *recommendedFor* method returns an empty array if no results 
+ - keywords *recommendedFor* method returns an empty array if no results
+ - Response *hasErrors* method returns true on errors
 
 ## [4.2.1] - 2016-06-14
 ### Fixed:
