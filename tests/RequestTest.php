@@ -82,7 +82,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
         $this->assertEmpty($this->getProperty('csrfToken'));
 
         $request->clearToken();
-        $this->assertEquals(CsrfHelper::DEFAULT_TOKEN, $request->csrfToken);
+        $this->assertEquals(CsrfHelper::DEFAULT_TOKEN, $this->getProperty('csrfToken'));
     }
 
     /** @test */
@@ -140,7 +140,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
         $this->setProperty('cookieJar', $cookieFile);
         $request->login();
 
-        $this->assertEquals($token, $request->csrfToken);
+        $this->assertEquals($token, $this->getProperty('csrfToken'));
     }
 
     /** @test */
@@ -151,7 +151,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
 
         $request->logout();
         $this->assertFalse($request->isLoggedIn());
-        $this->assertEquals(CsrfHelper::DEFAULT_TOKEN, $request->csrfToken);
+        $this->assertEquals(CsrfHelper::DEFAULT_TOKEN, $this->getProperty('csrfToken'));
     }
 
     protected function tearDown()

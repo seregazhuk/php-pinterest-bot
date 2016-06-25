@@ -37,7 +37,10 @@ class Request implements RequestInterface
      */
     protected $filePathToUpload;
 
-    public $csrfToken = '';
+    /**
+     * @var string
+     */
+    protected $csrfToken = '';
 
     /**
      * Common headers needed for every query.
