@@ -19,30 +19,6 @@ class RequestTest extends PHPUnit_Framework_TestCase
 {
     use ReflectionHelper, ResponseHelper;
 
-    /**
-     * @param HttpInterface $http
-     * @param string        $userAgentString
-     *
-     * @return Request
-     */
-    protected function createRequestObject(HttpInterface $http = null, $userAgentString = '')
-    {
-        if (!$http) {
-            $http = new CurlAdapter();
-        }
-        $request = new Request($http, $userAgentString);
-
-        $this->reflection = new ReflectionClass($request);
-        $this->setReflectedObject($request);
-
-        return $request;
-    }
-
-    protected function tearDown()
-    {
-        Mockery::close();
-    }
-
     /** @test */
     public function checkLoggedInFailure()
     {
@@ -178,6 +154,11 @@ class RequestTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(CsrfHelper::DEFAULT_TOKEN, $request->csrfToken);
     }
 
+    protected function tearDown()
+    {
+        Mockery::close();
+    }
+    
     /**
      * @return Mockery\Mock|HttpInterface
      */
@@ -186,5 +167,24 @@ class RequestTest extends PHPUnit_Framework_TestCase
         $mock = Mockery::mock(HttpInterface::class);
 
         return $mock;
+    }
+
+    /**
+     * @param HttpInterface $http
+     * @param string $userAgentString
+     *
+     * @return Request
+     */
+    protected function createRequestObject(HttpInterface $http = null, $userAgentString = '')
+    {
+        if (!$http) {
+            $http = new CurlAdapter();
+        }
+        $request = new Request($http, $userAgentString);
+
+        $this->reflection = new ReflectionClass($request);
+        $this->setReflectedObject($request);
+
+        return $request;
     }
 }

@@ -66,7 +66,7 @@ class UrlHelper
      * Conversations.
      */
     const RESOURCE_SEND_MESSAGE = '/resource/ConversationsResource/create/';
-    const RESOURCE_GET_LAST_CONVERSATIONS = 'resource/ConversationsResource/get/';
+    const RESOURCE_GET_LAST_CONVERSATIONS = '/resource/ConversationsResource/get/';
 
     /**
      * UserSettings.
@@ -77,6 +77,15 @@ class UrlHelper
      * News.
      */
     const RESOURCE_GET_LATEST_NEWS = '/resource/NetworkStoriesResource/get/';
+
+    /**
+     * Registration
+     */
+    const RESOURCE_CREATE_REGISTER = '/resource/UserRegisterResource/create/';
+    const RESOURCE_CHECK_EMAIL = '/resource/EmailExistsResource/get';
+    const RESOURCE_SET_ORIENTATION = '/resource/OrientationContextResource/create/';
+    const RESOURCE_UPDATE_REGISTRATION_TRACK = '/resource/UserRegisterTrackActionResource/update/';
+    const RESOURCE_REGISTRATION_COMPLETE = '/resource/UserExperienceCompletedResource/update/';
 
     /**
      * Uploads

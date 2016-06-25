@@ -59,4 +59,9 @@ interface RequestInterface
      * @return array
      */
     public function upload($pathToFile, $url);
+
+    /**
+     * @return self
+     */
+    public function setTokenFromCookies();
 }

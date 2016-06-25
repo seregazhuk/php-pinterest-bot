@@ -202,10 +202,7 @@ class Request implements RequestInterface
      */
     public function login()
     {
-        $this->csrfToken = CsrfHelper::getTokenFromFile($this->cookieJar);
-        if (empty($this->csrfToken)) {
-            throw new AuthException('Cannot parse token from cookies.');
-        }
+        $this->setTokenFromCookies();
         $this->loggedIn = true;
     }
 
@@ -275,6 +272,16 @@ class Request implements RequestInterface
             'source_url' => '',
             'data'       => json_encode($data),
         ];
+    }
+
+    public function setTokenFromCookies()
+    {
+        $this->csrfToken = CsrfHelper::getTokenFromFile($this->cookieJar);
+        if (empty($this->csrfToken)) {
+            throw new AuthException('Cannot parse token from cookies.');
+        }
+
+        return $this;
     }
 
     /**

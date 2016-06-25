@@ -79,9 +79,21 @@ To logout use *logout* method:
 $bot->logout();
 ```
 
-*Note*: Some functions use pinterest navigation through results, for example,
-get user followers or search queries. These functions return a generator object with api results. By default functions 
-return all pinterest results, but you can pass a limit num as a second argument. For example, 
+To register a new user:
+
+```php
+$bot->user->register('youremail@gmail.com', 'password', 'Name');
+```
+
+You can specify additional parameters with registration: age and country. By default they are: 18, "UK":
+
+```php
+$bot->user->register('youremail@gmail.com', 'password', 'Name', 40, "DE");
+```
+
+*Note*: Some functions use pinterest navigation through results, for example, get user followers or search queries. 
+These functions return a generator object with api results. By default functions  return all pinterest results, 
+but you can pass a limit num as a second argument. For example, 
 ```php 
 foreach($bot->pins->search('query', 2) as $pin) {
 	// ...
