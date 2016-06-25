@@ -2,8 +2,8 @@
 
 namespace seregazhuk\tests\Api;
 
-use seregazhuk\PinterestBot\Api\Providers\User;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
+use seregazhuk\PinterestBot\Api\Providers\User;
 
 /**
  * Class UserTest.
@@ -42,5 +42,31 @@ class UserTest extends ProviderTest
             );
         $this->setSuccessResponse();
         $this->assertTrue($this->provider->profile($attributes));
+    }
+
+    /**
+     * @test
+     */
+    public function registerReturnsTrueOnSuccess()
+    {
+        $this->requestMock->shouldReceive('setTokenFromCookies')->twice()->andReturnSelf();
+
+        $this->setProperty('request', $this->requestMock);
+
+        $this->setSuccessResponse(3);
+        $this->assertTrue($this->provider->register('email@email.com', 'test', 'name'));
+    }
+
+    /**
+     * @test
+     */
+    public function registerReturnsFalseOnFail()
+    {
+        $this->requestMock->shouldReceive('setTokenFromCookies')->once()->andReturnSelf();
+
+        $this->setProperty('request', $this->requestMock);
+
+        $this->setErrorResponse(2);
+        $this->assertFalse($this->provider->register('email@email.com', 'test', 'name'));
     }
 }
