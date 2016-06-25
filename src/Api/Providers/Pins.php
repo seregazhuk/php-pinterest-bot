@@ -123,7 +123,7 @@ class Pins extends Provider
             'board_id'    => $boardId,
         ];
 
-        return $this->execPostRequest($requestOptions, UrlHelper::RESOURCE_UPDATE_PIN, true);
+        return $this->execPostRequest($requestOptions, UrlHelper::RESOURCE_UPDATE_PIN);
     }
 
     /**
