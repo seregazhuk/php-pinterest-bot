@@ -112,7 +112,7 @@ class Pins extends Provider
      * @param string $description
      * @param string $link
      * @param int|null $boardId
-     * @return mixed
+     * @return bool
      */
     public function edit($pindId, $description = '', $link = '', $boardId = null)
     {
@@ -131,7 +131,7 @@ class Pins extends Provider
      *
      * @param int $pindId
      * @param int $boardId
-     * @return mixed
+     * @return bool
      */
     public function moveToBoard($pindId, $boardId)
     {
