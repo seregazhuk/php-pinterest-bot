@@ -2,6 +2,8 @@
 
 namespace seregazhuk\PinterestBot\Api\Providers;
 
+use seregazhuk\PinterestBot\Exceptions\AuthException;
+use seregazhuk\PinterestBot\Helpers\Requests\PinnerHelper;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
 use seregazhuk\PinterestBot\Api\Traits\UploadsImages;
 
@@ -60,6 +62,59 @@ class User extends Provider
         }
 
         return $this->completeRegistration();
+    }
+
+    /**
+     * Login as pinner.
+     *
+     * @param string $username
+     * @param string $password
+     *
+     * @throws AuthException
+     *
+     * @return bool
+     */
+    public function login($username, $password)
+    {
+        if ($this->request->isLoggedIn()) {
+            return true;
+        }
+
+        $this->checkCredentials($username, $password);
+
+        $postString = PinnerHelper::createLoginQuery($username, $password);
+        $this->request->clearToken();
+
+        $response = $this->request->exec(UrlHelper::RESOURCE_LOGIN, $postString);
+        if ($this->response->hasErrors($response)) {
+            throw new AuthException($this->response->getLastError()['message']);
+        }
+        $this->request->login();
+
+        return true;
+    }
+
+    public function logout()
+    {
+        $this->request->logout();
+    }
+
+    public function isLoggedIn()
+    {
+        return $this->request->isLoggedIn();
+    }
+
+    /**
+     * Validates password and login.
+     *
+     * @param string $username
+     * @param string $password
+     */
+    protected function checkCredentials($username, $password)
+    {
+        if (!$username || !$password) {
+            throw new \LogicException('You must set username and password to login.');
+        }
     }
 
     protected function completeRegistration()

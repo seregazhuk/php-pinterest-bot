@@ -69,4 +69,54 @@ class UserTest extends ProviderTest
         $this->setErrorResponse(2);
         $this->assertFalse($this->provider->register('email@email.com', 'test', 'name'));
     }
+
+    /**
+     * @test
+     * @expectedException \LogicException
+     */
+    public function loginWithEmptyCredentials()
+    {
+        $this->requestMock->shouldReceive('isLoggedIn')->once()->andReturn(false);
+        $this->provider->login('', '');
+    }
+
+    /** @test */
+    public function loginWhenAlreadyLogged()
+    {
+        $this->requestMock->shouldReceive('isLoggedIn')->once()->andReturn(true);
+        $this->assertTrue($this->provider->login('test', 'test'));
+    }
+
+    /** @test */
+    public function successLogin()
+    {
+        $response = $this->createSuccessApiResponse();
+        $this->requestMock->shouldReceive('isLoggedIn')->andReturn(false);
+        $this->requestMock->shouldReceive('exec')->andReturn($response);
+        $this->requestMock->shouldReceive('clearToken')->once();
+        $this->requestMock->shouldReceive('login')->once();
+
+        $this->assertTrue($this->provider->login('test', 'test'));
+    }
+
+    /**
+     * @test
+     * @expectedException seregazhuk\PinterestBot\Exceptions\AuthException
+     */
+    public function loginFails()
+    {
+        $response = $this->createErrorApiResponse();
+        $this->requestMock->shouldReceive('isLoggedIn')->andReturn(false);
+        $this->requestMock->shouldReceive('exec')->andReturn($response);
+        $this->requestMock->shouldReceive('clearToken');
+
+        $this->provider->login('test', 'test');
+    }
+
+    /** @test */
+    public function logout()
+    {
+        $this->requestMock->shouldReceive('logout');
+        $this->provider->logout();
+    }
 }

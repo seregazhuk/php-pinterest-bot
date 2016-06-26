@@ -56,7 +56,7 @@ use seregazhuk\PinterestBot\Factories\PinterestBot;
 $bot = PinterestBot::create();
 
 // login
-$bot->login('mypinterestlogin', 'mypinterestpassword');
+$bot->user->login('mypinterestlogin', 'mypinterestpassword');
 
 // get lists of your boards 
 $boards = $bot->boards->forUser('yourUserName');
@@ -69,14 +69,14 @@ Or you may skip login, if you want. It is only required for such operations as l
 You can get your current logged in status via *isLoggedIn* method:
 
 ```php
-if($bot->isLoggedIn()) {
+if($bot->user->isLoggedIn()) {
 	// ...
 }
 ```
 To logout use *logout* method:
 
 ```php
-$bot->logout();
+$bot->user->logout();
 ```
 
 To register a new user:

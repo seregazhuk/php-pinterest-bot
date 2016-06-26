@@ -44,6 +44,8 @@ class Bot
     /**
      * Proxy method to pinners login.
      *
+     * @deprecated since version 4.3.0
+     *
      * @param string $username
      * @param string $password
      *
@@ -51,15 +53,17 @@ class Bot
      */
     public function login($username, $password)
     {
-        return $this->pinners->login($username, $password);
+        return $this->user->login($username, $password);
     }
 
     /**
-     * Proxy method to pinners logout.
+     * Proxy method to user logout.
+     *
+     * @deprecated since version 4.3.0
      */
     public function logout()
     {
-        return $this->pinners->logout();
+        return $this->user->logout();
     }
 
 
@@ -85,6 +89,11 @@ class Bot
         return $this->providersContainer->getResponse()->getLastError();
     }
 
+    /**
+     * @return bool
+     *
+     * @deprecated since version 4.3.0
+     */
     public function isLoggedIn()
     {
         return $this->providersContainer->getRequest()->isLoggedIn();

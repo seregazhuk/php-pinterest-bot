@@ -35,9 +35,9 @@ class BotTest extends PHPUnit_Framework_TestCase
     public function login()
     {
         $credentials = ['test', 'test'];
-        $pinnersMock = Mockery::mock(Pinners::class)->shouldReceive('login')->withArgs($credentials)->andReturn(true)->getMock();
+        $userProviderMock = Mockery::mock(Pinners::class)->shouldReceive('login')->withArgs($credentials)->andReturn(true)->getMock();
 
-        $containerMock = $this->createContainerMockWithProvider('pinners', $pinnersMock);
+        $containerMock = $this->createContainerMockWithProvider('user', $userProviderMock);
 
         $bot = new Bot($containerMock);
 
@@ -47,9 +47,9 @@ class BotTest extends PHPUnit_Framework_TestCase
     /** @test */
     public function logout()
     {
-        $pinnersMock = Mockery::mock(Pinners::class)->shouldReceive('logout')->getMock();
+        $userProviderMock = Mockery::mock(Pinners::class)->shouldReceive('logout')->getMock();
 
-        $containerMock = $this->createContainerMockWithProvider('pinners', $pinnersMock);
+        $containerMock = $this->createContainerMockWithProvider('user', $userProviderMock);
 
         $bot = new Bot($containerMock);
 

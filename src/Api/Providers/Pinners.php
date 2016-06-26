@@ -71,54 +71,6 @@ class Pinners extends Provider
     }
 
     /**
-     * Login as pinner.
-     *
-     * @param string $username
-     * @param string $password
-     *
-     * @throws AuthException
-     *
-     * @return bool
-     */
-    public function login($username, $password)
-    {
-        if ($this->request->isLoggedIn()) {
-            return true;
-        }
-
-        $this->checkCredentials($username, $password);
-
-        $postString = PinnerHelper::createLoginQuery($username, $password);
-        $this->request->clearToken();
-
-        $response = $this->request->exec(UrlHelper::RESOURCE_LOGIN, $postString);
-        if ($this->response->hasErrors($response)) {
-            throw new AuthException($this->response->getLastError()['message']);
-        }
-        $this->request->login();
-
-        return true;
-    }
-
-    public function logout()
-    {
-        $this->request->logout();
-    }
-
-    /**
-     * Validates password and login.
-     *
-     * @param string $username
-     * @param string $password
-     */
-    protected function checkCredentials($username, $password)
-    {
-        if (!$username || !$password) {
-            throw new LogicException('You must set username and password to login.');
-        }
-    }
-
-    /**
      * @param string $username
      * @param string $url
      * @param int $limit
