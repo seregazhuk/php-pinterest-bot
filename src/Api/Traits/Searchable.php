@@ -66,10 +66,13 @@ trait Searchable
      */
     protected function createSearchQuery($query, $scope, $bookmarks = [])
     {
-        $options = ['scope' => $scope, 'query' => $query];
-        $dataJson = $this->appendBookMarks($bookmarks, $options);
+        $dataJson = $this->appendBookMarks(
+            $bookmarks, ['scope' => $scope, 'query' => $query]
+        );
 
-        return Request::createQuery($dataJson);
+        $request = Request::createRequestData($dataJson, $bookmarks);
+
+        return UrlHelper::buildRequestString($request);
     }
 
     /**
@@ -98,22 +101,23 @@ trait Searchable
      */
     protected function appendBookMarks($bookmarks, $options)
     {
+        $dataJson = ['options' => $options];
         if (!empty($bookmarks)) {
-            $options['bookmarks'] = $bookmarks;
+            $dataJson['options']['bookmarks'] = $bookmarks;
 
-            return $options;
+            return $dataJson;
+        } else {
+            $dataJson = array_merge(
+                $dataJson, [
+                    'module' => [
+                        "name"    => $this->moduleSearchPage,
+                        "options" => $options,
+                    ],
+                ]
+            );
+
+            return $dataJson;
         }
-
-        $dataJson = array_merge(
-            $options, [
-                'module' => [
-                    'name'    => $this->moduleSearchPage,
-                    'options' => $options,
-                ],
-            ]
-        );
-
-        return $dataJson;
     }
 
     /**
