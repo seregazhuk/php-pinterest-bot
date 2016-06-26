@@ -37,7 +37,7 @@ if your don't use such operations as creating pins, writing comments or sending 
 - [Custom settings](#custom-settings)
 
 ## Dependencies
-Library requires CURL extension and PHP 5.6 or above.
+Library requires CURL extension and PHP 5.5.9 or above.
 
 ## Installation
 Via composer:
@@ -241,8 +241,9 @@ Get activity of a pin:
 foreach ($bot->pins->activity($pinId) as $data) {
     //...
 }
+```
 
-If you don't want to get all activity record, you can pass a limit as a second parameter.
+If you don't want to get all activity record, you can pass a limit as the second parameter.
 Get  5 last activity records:
 
 ```php
