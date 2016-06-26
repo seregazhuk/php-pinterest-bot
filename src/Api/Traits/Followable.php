@@ -12,6 +12,7 @@ namespace seregazhuk\PinterestBot\Api\Traits;
 trait Followable
 {
     use HandlesRequestAndResponse, HasEntityIdName;
+
     /**
      * Follow user by user_id.
      *

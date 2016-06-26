@@ -9,6 +9,9 @@ class Interests extends Provider
 {
     use Followable;
 
+    /**
+     * @var array
+     */
     protected $loginRequiredFor = ['follow', 'unFollow'];
 
     protected $followUrl   = UrlHelper::RESOURCE_FOLLOW_INTEREST;

@@ -2,10 +2,10 @@
 
 namespace seregazhuk\PinterestBot\Api\Providers;
 
-use seregazhuk\PinterestBot\Exceptions\AuthException;
-use seregazhuk\PinterestBot\Helpers\Requests\PinnerHelper;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
+use seregazhuk\PinterestBot\Exceptions\AuthException;
 use seregazhuk\PinterestBot\Api\Traits\UploadsImages;
+use seregazhuk\PinterestBot\Helpers\Requests\PinnerHelper;
 
 class User extends Provider
 {
@@ -89,6 +89,7 @@ class User extends Provider
         if ($this->response->hasErrors($response)) {
             throw new AuthException($this->response->getLastError()['message']);
         }
+
         $this->request->login();
 
         return true;

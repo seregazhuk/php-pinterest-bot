@@ -19,6 +19,7 @@ class ProvidersContainer implements ProvidersContainerInterface
      * @var RequestInterface
      */
     protected $request;
+    
     /**
      * @var ResponseInterface
      */
@@ -92,9 +93,7 @@ class ProvidersContainer implements ProvidersContainerInterface
      */
     private function buildProvider($className)
     {
-        $ref = new ReflectionClass($className);
-
-        $provider = $ref->newInstanceArgs([$this->request, $this->response]);
+        $provider = (new ReflectionClass($className))->newInstanceArgs([$this->request, $this->response]);
 
         return new ProviderLoginCheckWrapper($provider);
     }
