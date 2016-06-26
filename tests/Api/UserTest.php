@@ -119,4 +119,12 @@ class UserTest extends ProviderTest
         $this->requestMock->shouldReceive('logout');
         $this->provider->logout();
     }
+
+    /** @test */
+    public function isLoggedIn()
+    {
+        $this->requestMock->shouldReceive('isLoggedIn')->andReturn(true)->getMock();
+
+        $this->assertTrue($this->provider->isLoggedIn());
+    }
 }
