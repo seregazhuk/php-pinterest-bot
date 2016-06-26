@@ -148,6 +148,21 @@ class PinsTest extends ProviderTest
         $this->assertFalse($this->provider->moveToBoard(1111, 1));
     }
 
+    /** @test */
+    public function getFromSource()
+    {
+        $response['module']['tree']['data']['results'] = [
+            ['id' => 1],
+            ['id' => 2],
+        ];
+
+        $expectedResultsNum = count($response['module']['tree']['data']['results']);
+        $this->setResponse($response, 2);
+
+        $res = iterator_to_array($this->provider->fromSource('http://flickr.ru'), 1);
+        $this->assertCount($expectedResultsNum, $res);
+    }
+
     /**
      * Creates a pin creation response from Pinterest.
      *
