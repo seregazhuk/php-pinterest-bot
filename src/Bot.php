@@ -2,15 +2,15 @@
 
 namespace seregazhuk\PinterestBot;
 
-use seregazhuk\PinterestBot\Api\Providers\Boards;
-use seregazhuk\PinterestBot\Api\Providers\Conversations;
-use seregazhuk\PinterestBot\Api\Providers\Interests;
-use seregazhuk\PinterestBot\Api\Providers\Keywords;
 use seregazhuk\PinterestBot\Api\Providers\News;
-use seregazhuk\PinterestBot\Api\Providers\Pinners;
 use seregazhuk\PinterestBot\Api\Providers\Pins;
-use seregazhuk\PinterestBot\Api\Providers\Provider;
 use seregazhuk\PinterestBot\Api\Providers\User;
+use seregazhuk\PinterestBot\Api\Providers\Boards;
+use seregazhuk\PinterestBot\Api\Providers\Pinners;
+use seregazhuk\PinterestBot\Api\Providers\Provider;
+use seregazhuk\PinterestBot\Api\Providers\Keywords;
+use seregazhuk\PinterestBot\Api\Providers\Interests;
+use seregazhuk\PinterestBot\Api\Providers\Conversations;
 use seregazhuk\PinterestBot\Contracts\ProvidersContainerInterface;
 
 /**
