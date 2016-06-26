@@ -151,16 +151,12 @@ class PinsTest extends ProviderTest
     /** @test */
     public function getFromSource()
     {
-        $response['module']['tree']['data']['results'] = [
-            ['id' => 1],
-            ['id' => 2],
-        ];
+        $response = $this->createPaginatedResponse();
+        $this->setResponse($response);
+        $this->setResponse(['resource_response' => ['data' => []]]);
 
-        $expectedResultsNum = count($response['module']['tree']['data']['results']);
-        $this->setResponse($response, 2);
-
-        $res = iterator_to_array($this->provider->fromSource('http://flickr.ru'), 1);
-        $this->assertCount($expectedResultsNum, $res);
+        $pins = $this->provider->fromSource('http://flickr.ru');
+        $this->assertCount(2, iterator_to_array($pins));
     }
 
     /**

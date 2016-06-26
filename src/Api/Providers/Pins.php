@@ -196,9 +196,9 @@ class Pins extends Provider
     }
 
     /**
-     * @param $pinId
+     * @param int $pinId
      * @param int $limit
-     * @return Iterator
+     * @return Iterator|null
      */
     public function activity($pinId, $limit = 0)
     {
