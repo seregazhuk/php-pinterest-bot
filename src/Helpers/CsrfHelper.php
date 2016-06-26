@@ -40,7 +40,7 @@ class CsrfHelper
             return false;
         }
 
-        preg_match('/'.self::TOKEN_NAME.'\s(\w*)/', $line, $matches);
+        preg_match('/' . self::TOKEN_NAME . '\s(\w*)/', $line, $matches);
         if (!empty($matches)) {
             return $matches[1];
         }
@@ -53,6 +53,6 @@ class CsrfHelper
      */
     public static function getDefaultCookie()
     {
-        return 'Cookie: csrftoken='.self::DEFAULT_TOKEN.';';
+        return 'Cookie: csrftoken=' . self::DEFAULT_TOKEN . ';';
     }
 }
