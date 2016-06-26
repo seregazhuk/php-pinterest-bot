@@ -155,7 +155,7 @@ class PinsTest extends ProviderTest
         $this->setResponse($response);
         $this->setResponse(['resource_response' => ['data' => []]]);
 
-        $pins = $this->provider->fromSource('http://flickr.ru');
+        $pins = $this->provider->fromSource('flickr.ru');
         $this->assertCount(2, iterator_to_array($pins));
     }
 

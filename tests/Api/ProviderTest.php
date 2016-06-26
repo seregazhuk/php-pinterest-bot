@@ -24,7 +24,14 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
 {
     use ReflectionHelper, ResponseHelper;
 
+    /**
+     * @var array
+     */
     protected $httpMockMethods = ['exec', 'checkLoggedIn', 'isLoggedIn', 'followMethodCall'];
+
+    /**
+     * @var string
+     */
     protected $providerClass = Provider::class;
 
     /**

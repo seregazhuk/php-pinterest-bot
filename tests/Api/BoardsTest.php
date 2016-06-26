@@ -17,6 +17,10 @@ class BoardsTest extends ProviderTest
      * @var Boards
      */
     protected $provider;
+
+    /**
+     * @var string
+     */
     protected $providerClass = Boards::class;
 
     /** @test */

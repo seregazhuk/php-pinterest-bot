@@ -14,6 +14,10 @@ class UserTest extends ProviderTest
      * @var User
      */
     protected $provider;
+
+    /**
+     * @var string
+     */
     protected $providerClass = User::class;
 
     /** @test */

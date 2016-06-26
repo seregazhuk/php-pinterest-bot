@@ -15,12 +15,15 @@ class KeywordsTest extends ProviderTest
      * @var Keywords
      */
     protected $provider;
+
+    /**
+     * @var string
+     */
     protected $providerClass = Keywords::class;
 
     /** @test */
     public function recommendedFor()
     {
-        $query = 'test';
         $recommendation = [
             'someData' => 'data',
             'term'     => 'term1',
@@ -35,7 +38,7 @@ class KeywordsTest extends ProviderTest
             ]
         );
 
-        $result = $this->provider->recommendedFor($query);
+        $result = $this->provider->recommendedFor('test');
 
         $expected = [
             'term'     => 'term1',
@@ -48,9 +51,8 @@ class KeywordsTest extends ProviderTest
     /** @test */
     public function emptyResultsForRecommendedFor()
     {
-        $query = 'test';
         $this->setResponse(['resource_response' => ['data' => '']]);
 
-        $this->assertEmpty($this->provider->recommendedFor($query));
+        $this->assertEmpty($this->provider->recommendedFor('test'));
     }
 }

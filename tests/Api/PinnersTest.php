@@ -18,7 +18,7 @@ class PinnersTest extends ProviderTest
     protected $provider;
 
     /**
-     * @var
+     * @var string
      */
     protected $providerClass = Pinners::class;
 
