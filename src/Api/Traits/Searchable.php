@@ -69,6 +69,8 @@ trait Searchable
         $options = ['scope' => $scope, 'query' => $query];
         $dataJson = $this->appendBookMarks($bookmarks, $options);
 
+        print_r($dataJson);
+        die();
         return Request::createQuery($dataJson);
     }
 
@@ -98,15 +100,14 @@ trait Searchable
      */
     protected function appendBookMarks($bookmarks, $options)
     {
-        $dataJson = ['options' => $options];
         if (!empty($bookmarks)) {
-            $dataJson['options']['bookmarks'] = $bookmarks;
+            $options['bookmarks'] = $bookmarks;
 
-            return $dataJson;
+            return $options;
         }
 
         $dataJson = array_merge(
-            $dataJson, [
+            $options, [
                 'module' => [
                     'name'    => $this->moduleSearchPage,
                     'options' => $options,

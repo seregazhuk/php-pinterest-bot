@@ -247,7 +247,7 @@ class Request
      */
     public static function createQuery(array $data = [], $bookmarks = [])
     {
-        $request = self::createRequestData($data, $bookmarks);
+        $request = self::createRequestData(['options' => $data], $bookmarks);
 
         return UrlHelper::buildRequestString($request);
     }

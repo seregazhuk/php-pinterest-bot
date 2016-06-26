@@ -53,7 +53,7 @@ abstract class Provider
      */
     protected function execPostRequest($requestOptions, $resourceUrl, $returnData = false)
     {
-        $postString = Request::createQuery(['options' => $requestOptions]);
+        $postString = Request::createQuery($requestOptions);
         $response = $this->request->exec($resourceUrl, $postString);
 
         if ($returnData) {
@@ -72,7 +72,7 @@ abstract class Provider
      */
     protected function execGetRequest(array $requestOptions, $resourceUrl)
     {
-        $query = Request::createQuery(['options' => $requestOptions]);
+        $query = Request::createQuery($requestOptions);
         $response = $this->request->exec($resourceUrl . "?{$query}");
         
         return $this->response->getData($response);
@@ -88,7 +88,7 @@ abstract class Provider
      */
     protected function execGetRequestWithPagination(array $requestOptions, $resourceUrl, $bookmarks = [])
     {
-        $query = Request::createQuery(['options' => $requestOptions], $bookmarks);
+        $query = Request::createQuery($requestOptions, $bookmarks);
         $response = $this->request->exec($resourceUrl . "?{$query}");
 
         return $this->response->getPaginationData($response);
