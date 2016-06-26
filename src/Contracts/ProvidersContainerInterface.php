@@ -2,6 +2,8 @@
 
 namespace seregazhuk\PinterestBot\Contracts;
 
+use Guzzle\Http\Message\Response;
+use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Providers\Provider;
 
 interface ProvidersContainerInterface
@@ -14,12 +16,12 @@ interface ProvidersContainerInterface
     public function getProvider($provider);
 
     /**
-     * @return RequestInterface
+     * @return Request
      */
     public function getRequest();
 
     /**
-     * @return ResponseInterface
+     * @return Response
      */
     public function getResponse();
 }

@@ -4,11 +4,9 @@ namespace seregazhuk\PinterestBot\Api;
 
 use ReflectionClass;
 use seregazhuk\PinterestBot\Api\Providers\Provider;
-use seregazhuk\PinterestBot\Api\Providers\ProviderLoginCheckWrapper;
-use seregazhuk\PinterestBot\Contracts\ProvidersContainerInterface;
-use seregazhuk\PinterestBot\Contracts\RequestInterface;
-use seregazhuk\PinterestBot\Contracts\ResponseInterface;
 use seregazhuk\PinterestBot\Exceptions\WrongProviderException;
+use seregazhuk\PinterestBot\Contracts\ProvidersContainerInterface;
+use seregazhuk\PinterestBot\Api\Providers\ProviderLoginCheckWrapper;
 
 class ProvidersContainer implements ProvidersContainerInterface
 {
@@ -16,12 +14,12 @@ class ProvidersContainer implements ProvidersContainerInterface
      * References to the request and response classes that travels
      * through the application.
      *
-     * @var RequestInterface
+     * @var Request
      */
     protected $request;
     
     /**
-     * @var ResponseInterface
+     * @var Response
      */
     protected $response;
 
@@ -34,7 +32,7 @@ class ProvidersContainer implements ProvidersContainerInterface
      */
     private $providers = [];
 
-    public function __construct(RequestInterface $request, ResponseInterface $response)
+    public function __construct(Request $request, Response $response)
     {
         $this->request = $request;
         $this->response = $response;
@@ -99,7 +97,7 @@ class ProvidersContainer implements ProvidersContainerInterface
     }
 
     /**
-     * @return RequestInterface
+     * @return Request
      */
     public function getRequest()
     {
@@ -107,7 +105,7 @@ class ProvidersContainer implements ProvidersContainerInterface
     }
 
     /**
-     * @return ResponseInterface
+     * @return Response
      */
     public function getResponse()
     {

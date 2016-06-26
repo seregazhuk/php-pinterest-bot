@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
 ### Changed:
  - *login*, *isLoggedIn* and *logout* methods move to User provider
  - Bot *login*, *isLoggedIn* and *logout* methods are deprecated
+ - removed *RequestInterface* and *ResponseInterface*
  
 
 ## [4.2.2] - 2016-06-19

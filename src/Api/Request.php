@@ -7,7 +7,6 @@ use seregazhuk\PinterestBot\Helpers\FileHelper;
 use seregazhuk\PinterestBot\Helpers\CsrfHelper;
 use seregazhuk\PinterestBot\Contracts\HttpInterface;
 use seregazhuk\PinterestBot\Exceptions\AuthException;
-use seregazhuk\PinterestBot\Contracts\RequestInterface;
 
 /**
  * Class Request.
@@ -18,7 +17,7 @@ use seregazhuk\PinterestBot\Contracts\RequestInterface;
  * @property string   $csrfToken
  * @property string   $cookieJar
  */
-class Request implements RequestInterface
+class Request
 {
     const COOKIE_NAME = 'pinterest_cookie';
 
