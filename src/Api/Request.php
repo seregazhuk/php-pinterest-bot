@@ -249,8 +249,6 @@ class Request
     {
         $request = self::createRequestData(['options' => $data], $bookmarks);
 
-        print_r($request);
-        die();
         return UrlHelper::buildRequestString($request);
     }
 
