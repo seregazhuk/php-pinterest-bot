@@ -69,8 +69,6 @@ trait Searchable
         $options = ['scope' => $scope, 'query' => $query];
         $dataJson = $this->appendBookMarks($bookmarks, $options);
 
-        print_r($dataJson);
-        die();
         return Request::createQuery($dataJson);
     }
 
