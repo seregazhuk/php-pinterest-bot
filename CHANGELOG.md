@@ -1,7 +1,7 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [4.3.0] - ???
+## [4.3.0] - 2016-06-27
 
 ### Added:
  - User *register* method
