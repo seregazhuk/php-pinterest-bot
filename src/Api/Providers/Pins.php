@@ -112,7 +112,7 @@ class Pins extends Provider
      * @param string $description
      * @param string $link
      * @param int|null $boardId
-     * @return mixed
+     * @return bool
      */
     public function edit($pindId, $description = '', $link = '', $boardId = null)
     {
@@ -123,7 +123,7 @@ class Pins extends Provider
             'board_id'    => $boardId,
         ];
 
-        return $this->execPostRequest($requestOptions, UrlHelper::RESOURCE_UPDATE_PIN, true);
+        return $this->execPostRequest($requestOptions, UrlHelper::RESOURCE_UPDATE_PIN);
     }
 
     /**
@@ -131,7 +131,7 @@ class Pins extends Provider
      *
      * @param int $pindId
      * @param int $boardId
-     * @return mixed
+     * @return bool
      */
     public function moveToBoard($pindId, $boardId)
     {
@@ -196,9 +196,9 @@ class Pins extends Provider
     }
 
     /**
-     * @param $pinId
+     * @param int $pinId
      * @param int $limit
-     * @return Iterator
+     * @return Iterator|null
      */
     public function activity($pinId, $limit = 0)
     {

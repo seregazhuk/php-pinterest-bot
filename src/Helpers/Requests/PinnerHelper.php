@@ -17,10 +17,8 @@ class PinnerHelper
     public static function createLoginQuery($username, $password)
     {
         $dataJson = [
-            'options' => [
-                'username_or_email' => $username,
-                'password'          => $password,
-            ],
+            'username_or_email' => $username,
+            'password'          => $password,
         ];
 
         return Request::createQuery($dataJson);

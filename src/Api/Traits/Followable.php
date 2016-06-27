@@ -12,6 +12,7 @@ namespace seregazhuk\PinterestBot\Api\Traits;
 trait Followable
 {
     use HandlesRequestAndResponse, HasEntityIdName;
+
     /**
      * Follow user by user_id.
      *
@@ -46,7 +47,9 @@ trait Followable
      */
     protected function followCall($entityId, $resourceUrl)
     {
-        $response = $this->getRequest()->followMethodCall($entityId, $this->getEntityIdName(), $resourceUrl);
+        $response = $this->getRequest()->followMethodCall(
+                $entityId, $this->getEntityIdName(), $resourceUrl
+            );
 
         return !$this->getResponse()->hasErrors($response);
     }

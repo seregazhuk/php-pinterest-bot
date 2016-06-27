@@ -3,6 +3,7 @@
 namespace seregazhuk\tests\Api;
 
 use Mockery;
+use Mockery\Mock;
 use ReflectionClass;
 use Mockery\MockInterface;
 use PHPUnit_Framework_TestCase;
@@ -16,14 +17,21 @@ use seregazhuk\PinterestBot\Api\Providers\Provider;
  * Class ProviderTest.
  *
  * @property string $providerClass
- * @property MockInterface $requestMock
+ * @property Mock $requestMock
  * @property ReflectionClass $reflection
  */
 abstract class ProviderTest extends PHPUnit_Framework_TestCase
 {
     use ReflectionHelper, ResponseHelper;
 
+    /**
+     * @var array
+     */
     protected $httpMockMethods = ['exec', 'checkLoggedIn', 'isLoggedIn', 'followMethodCall'];
+
+    /**
+     * @var string
+     */
     protected $providerClass = Provider::class;
 
     /**
@@ -37,7 +45,7 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
     protected $mock;
 
     /**
-     * @return $this|Request
+     * @return $this
      */
     protected function createRequestMock()
     {
@@ -92,14 +100,14 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
         $this->requestMock->shouldReceive($method)->times($times)->andReturn($response);
     }
 
-    protected function setSuccessResponse()
+    protected function setSuccessResponse($times = 1)
     {
-        $this->setResponse($this->createSuccessApiResponse());
+        $this->setResponse($this->createSuccessApiResponse(), $times);
     }
 
-    protected function setErrorResponse()
+    protected function setErrorResponse($times = 1)
     {
-        $this->setResponse($this->createErrorApiResponse());
+        $this->setResponse($this->createErrorApiResponse(), $times);
     }
 
 }

@@ -13,8 +13,9 @@ class ConversationsTest extends ProviderTest
      * @var Conversations
      */
     protected $provider;
+
     /**
-     * @var
+     * @var string
      */
     protected $providerClass = Conversations::class;
 

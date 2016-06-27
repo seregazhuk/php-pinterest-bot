@@ -53,6 +53,11 @@ class Pagination
         }
     }
 
+    /**
+     * @param string $method
+     * @param array $params
+     * @return array
+     */
     protected function callProviderRequest($method, array $params)
     {
         $params['bookmarks'] = $this->bookmarks;
@@ -67,6 +72,10 @@ class Pagination
         return [];
     }
 
+    /**
+     * @param array $response
+     * @return array
+     */
     protected function getDataFromPaginatedResponse($response)
     {
         if ($this->responseHasData($response)) {
@@ -129,6 +138,9 @@ class Pagination
         return $this;
     }
 
+    /**
+     * @return bool
+     */
     protected function checkEndBookMarks()
     {
         return !empty($this->bookmarks) && $this->bookmarks[0] == '-end-';

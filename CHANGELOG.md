@@ -1,6 +1,18 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [4.3.0] - 2016-06-27
+
+### Added:
+ - User *register* method
+### Fixed: 
+ - Pins *edit* method returns bool value 
+### Changed:
+ - *login*, *isLoggedIn* and *logout* methods move to User provider
+ - Bot *login*, *isLoggedIn* and *logout* methods are deprecated
+ - removed *RequestInterface* and *ResponseInterface*
+ 
+
 ## [4.2.2] - 2016-06-19
 ### Fixed:
  - keywords *recommendedFor* method returns an empty array if no results
@@ -50,7 +62,7 @@ All notable changes to this project will be documented in this file.
  - Better exception messages in ProviderLoginCheckWrapper
 
 ## [3.2.3] - 2016-06-09
-### Fixes:
+### Fixed:
  - Pins like/dislike
  - Response error check
 
@@ -78,7 +90,7 @@ All notable changes to this project will be documented in this file.
  - News *latest* method renamed to *last*
  - Request and providers refactoring
  
-### Fixes:
+### Fixed:
  - Boards follow/unfollow request
 
 ## [2.6.0] - 2016-05-28

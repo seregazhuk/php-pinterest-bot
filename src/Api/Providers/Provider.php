@@ -3,8 +3,7 @@
 namespace seregazhuk\PinterestBot\Api\Providers;
 
 use seregazhuk\PinterestBot\Api\Request;
-use seregazhuk\PinterestBot\Contracts\RequestInterface;
-use seregazhuk\PinterestBot\Contracts\ResponseInterface;
+use seregazhuk\PinterestBot\Api\Response;
 
 /**
  * Class Provider.
@@ -20,24 +19,24 @@ abstract class Provider
     protected $loginRequiredFor = [];
 
     /**
-     * Instance of the API RequestInterface.
+     * Instance of the API Request.
      *
-     * @var RequestInterface
+     * @var Request
      */
     protected $request;
 
     /**
-     * Instance of the API ResponseInterface.
+     * Instance of the API Response.
      *
-     * @var ResponseInterface
+     * @var Response
      */
     protected $response;
 
     /**
-     * @param RequestInterface  $request
-     * @param ResponseInterface $response
+     * @param Request $request
+     * @param Response $response
      */
-    public function __construct(RequestInterface $request, ResponseInterface $response)
+    public function __construct(Request $request, Response $response)
     {
         $this->request = $request;
         $this->response = $response;
@@ -54,7 +53,7 @@ abstract class Provider
      */
     protected function execPostRequest($requestOptions, $resourceUrl, $returnData = false)
     {
-        $postString = Request::createQuery(['options' => $requestOptions]);
+        $postString = Request::createQuery($requestOptions);
         $response = $this->request->exec($resourceUrl, $postString);
 
         if ($returnData) {
@@ -73,7 +72,7 @@ abstract class Provider
      */
     protected function execGetRequest(array $requestOptions, $resourceUrl)
     {
-        $query = Request::createQuery(['options' => $requestOptions]);
+        $query = Request::createQuery($requestOptions);
         $response = $this->request->exec($resourceUrl . "?{$query}");
         
         return $this->response->getData($response);
@@ -89,7 +88,7 @@ abstract class Provider
      */
     protected function execGetRequestWithPagination(array $requestOptions, $resourceUrl, $bookmarks = [])
     {
-        $query = Request::createQuery(['options' => $requestOptions], $bookmarks);
+        $query = Request::createQuery($requestOptions, $bookmarks);
         $response = $this->request->exec($resourceUrl . "?{$query}");
 
         return $this->response->getPaginationData($response);
@@ -124,7 +123,7 @@ abstract class Provider
     }
 
     /**
-     * @return RequestInterface
+     * @return Request
      */
     public function getRequest()
     {
@@ -132,7 +131,7 @@ abstract class Provider
     }
 
     /**
-     * @return ResponseInterface
+     * @return Response
      */
     public function getResponse()
     {

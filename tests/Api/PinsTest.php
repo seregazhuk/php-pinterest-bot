@@ -13,6 +13,10 @@ class PinsTest extends ProviderTest
      * @var Pins
      */
     protected $provider;
+
+    /**
+     * @var string
+     */
     protected $providerClass = Pins::class;
 
     /** @test */
@@ -132,6 +136,27 @@ class PinsTest extends ProviderTest
 
         $res = iterator_to_array($this->provider->search('dogs'), 1);
         $this->assertCount($expectedResultsNum, $res);
+    }
+
+    /** @test */
+    public function moveToBoard()
+    {
+        $this->setSuccessResponse();
+        $this->assertTrue($this->provider->moveToBoard(1111, 1));
+
+        $this->setErrorResponse();
+        $this->assertFalse($this->provider->moveToBoard(1111, 1));
+    }
+
+    /** @test */
+    public function getFromSource()
+    {
+        $response = $this->createPaginatedResponse();
+        $this->setResponse($response);
+        $this->setResponse(['resource_response' => ['data' => []]]);
+
+        $pins = $this->provider->fromSource('flickr.ru');
+        $this->assertCount(2, iterator_to_array($pins));
     }
 
     /**

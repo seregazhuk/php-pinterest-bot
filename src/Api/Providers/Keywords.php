@@ -17,7 +17,7 @@ class Keywords extends Provider
 
     /**
      * @param array $response
-     * @return array
+     * @return bool|array
      */
     protected function parseKeywordsFromRequest($response)
     {

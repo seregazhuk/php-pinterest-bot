@@ -19,30 +19,6 @@ class RequestTest extends PHPUnit_Framework_TestCase
 {
     use ReflectionHelper, ResponseHelper;
 
-    /**
-     * @param HttpInterface $http
-     * @param string        $userAgentString
-     *
-     * @return Request
-     */
-    protected function createRequestObject(HttpInterface $http = null, $userAgentString = '')
-    {
-        if (!$http) {
-            $http = new CurlAdapter();
-        }
-        $request = new Request($http, $userAgentString);
-
-        $this->reflection = new ReflectionClass($request);
-        $this->setReflectedObject($request);
-
-        return $request;
-    }
-
-    protected function tearDown()
-    {
-        Mockery::close();
-    }
-
     /** @test */
     public function checkLoggedInFailure()
     {
@@ -106,7 +82,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
         $this->assertEmpty($this->getProperty('csrfToken'));
 
         $request->clearToken();
-        $this->assertEquals(CsrfHelper::DEFAULT_TOKEN, $request->csrfToken);
+        $this->assertEquals(CsrfHelper::DEFAULT_TOKEN, $this->getProperty('csrfToken'));
     }
 
     /** @test */
@@ -164,7 +140,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
         $this->setProperty('cookieJar', $cookieFile);
         $request->login();
 
-        $this->assertEquals($token, $request->csrfToken);
+        $this->assertEquals($token, $this->getProperty('csrfToken'));
     }
 
     /** @test */
@@ -175,9 +151,14 @@ class RequestTest extends PHPUnit_Framework_TestCase
 
         $request->logout();
         $this->assertFalse($request->isLoggedIn());
-        $this->assertEquals(CsrfHelper::DEFAULT_TOKEN, $request->csrfToken);
+        $this->assertEquals(CsrfHelper::DEFAULT_TOKEN, $this->getProperty('csrfToken'));
     }
 
+    protected function tearDown()
+    {
+        Mockery::close();
+    }
+    
     /**
      * @return Mockery\Mock|HttpInterface
      */
@@ -186,5 +167,24 @@ class RequestTest extends PHPUnit_Framework_TestCase
         $mock = Mockery::mock(HttpInterface::class);
 
         return $mock;
+    }
+
+    /**
+     * @param HttpInterface $http
+     * @param string $userAgentString
+     *
+     * @return Request
+     */
+    protected function createRequestObject(HttpInterface $http = null, $userAgentString = '')
+    {
+        if (!$http) {
+            $http = new CurlAdapter();
+        }
+        $request = new Request($http, $userAgentString);
+
+        $this->reflection = new ReflectionClass($request);
+        $this->setReflectedObject($request);
+
+        return $request;
     }
 }

@@ -13,8 +13,9 @@ class NewsTest extends ProviderTest
      * @var News
      */
     protected $provider;
+
     /**
-     * @var
+     * @var string
      */
     protected $providerClass = News::class;
 

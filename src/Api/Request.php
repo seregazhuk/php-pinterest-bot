@@ -7,7 +7,6 @@ use seregazhuk\PinterestBot\Helpers\FileHelper;
 use seregazhuk\PinterestBot\Helpers\CsrfHelper;
 use seregazhuk\PinterestBot\Contracts\HttpInterface;
 use seregazhuk\PinterestBot\Exceptions\AuthException;
-use seregazhuk\PinterestBot\Contracts\RequestInterface;
 
 /**
  * Class Request.
@@ -18,7 +17,7 @@ use seregazhuk\PinterestBot\Contracts\RequestInterface;
  * @property string   $csrfToken
  * @property string   $cookieJar
  */
-class Request implements RequestInterface
+class Request
 {
     const COOKIE_NAME = 'pinterest_cookie';
 
@@ -37,7 +36,10 @@ class Request implements RequestInterface
      */
     protected $filePathToUpload;
 
-    public $csrfToken = '';
+    /**
+     * @var string
+     */
+    protected $csrfToken = '';
 
     /**
      * Common headers needed for every query.
@@ -202,10 +204,7 @@ class Request implements RequestInterface
      */
     public function login()
     {
-        $this->csrfToken = CsrfHelper::getTokenFromFile($this->cookieJar);
-        if (empty($this->csrfToken)) {
-            throw new AuthException('Cannot parse token from cookies.');
-        }
+        $this->setTokenFromCookies();
         $this->loggedIn = true;
     }
 
@@ -248,6 +247,7 @@ class Request implements RequestInterface
      */
     public static function createQuery(array $data = [], $bookmarks = [])
     {
+        $data = ['options' => $data];
         $request = self::createRequestData($data, $bookmarks);
 
         return UrlHelper::buildRequestString($request);
@@ -275,6 +275,16 @@ class Request implements RequestInterface
             'source_url' => '',
             'data'       => json_encode($data),
         ];
+    }
+
+    public function setTokenFromCookies()
+    {
+        $this->csrfToken = CsrfHelper::getTokenFromFile($this->cookieJar);
+        if (empty($this->csrfToken)) {
+            throw new AuthException('Cannot parse token from cookies.');
+        }
+
+        return $this;
     }
 
     /**

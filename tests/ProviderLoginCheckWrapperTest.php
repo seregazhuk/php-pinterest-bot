@@ -6,7 +6,6 @@ use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Api\CurlAdapter;
 use seregazhuk\PinterestBot\Api\Providers\Provider;
-use seregazhuk\PinterestBot\Exceptions\InvalidRequestException;
 use seregazhuk\PinterestBot\Api\Providers\ProviderLoginCheckWrapper;
 
 class ProviderLoginCheckWrapperTest extends \PHPUnit_Framework_TestCase

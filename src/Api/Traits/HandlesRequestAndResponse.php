@@ -2,18 +2,18 @@
 
 namespace seregazhuk\PinterestBot\Api\Traits;
 
-use seregazhuk\PinterestBot\Contracts\RequestInterface;
-use seregazhuk\PinterestBot\Contracts\ResponseInterface;
+use seregazhuk\PinterestBot\Api\Request;
+use seregazhuk\PinterestBot\Api\Response;
 
 trait HandlesRequestAndResponse
 {
     /**
-     * @return RequestInterface
+     * @return Request
      */
     abstract public function getRequest();
 
     /**
-     * @return ResponseInterface
+     * @return Response
      */
     abstract public function getResponse();
 

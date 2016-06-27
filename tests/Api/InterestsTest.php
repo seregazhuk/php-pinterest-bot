@@ -17,8 +17,9 @@ class InterestsTest extends ProviderTest
      * @var Interests
      */
     protected $provider;
+
     /**
-     * @var
+     * @var string
      */
     protected $providerClass = Interests::class;
 

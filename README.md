@@ -56,7 +56,7 @@ use seregazhuk\PinterestBot\Factories\PinterestBot;
 $bot = PinterestBot::create();
 
 // login
-$bot->login('mypinterestlogin', 'mypinterestpassword');
+$bot->user->login('mypinterestlogin', 'mypinterestpassword');
 
 // get lists of your boards 
 $boards = $bot->boards->forUser('yourUserName');
@@ -69,19 +69,31 @@ Or you may skip login, if you want. It is only required for such operations as l
 You can get your current logged in status via *isLoggedIn* method:
 
 ```php
-if($bot->isLoggedIn()) {
+if($bot->user->isLoggedIn()) {
 	// ...
 }
 ```
 To logout use *logout* method:
 
 ```php
-$bot->logout();
+$bot->user->logout();
 ```
 
-*Note*: Some functions use pinterest navigation through results, for example,
-get user followers or search queries. These functions return a generator object with api results. By default functions 
-return all pinterest results, but you can pass a limit num as the second argument. For example, 
+To register a new user:
+
+```php
+$bot->user->register('youremail@gmail.com', 'password', 'Name');
+```
+
+You can specify additional parameters with registration: age and country. By default they are: 18, "UK":
+
+```php
+$bot->user->register('youremail@gmail.com', 'password', 'Name', 40, "DE");
+```
+
+*Note*: Some functions use pinterest navigation through results, for example, get user followers or search queries. 
+These functions return a generator object with api results. By default functions  return all pinterest results, 
+but you can pass a limit num as a second argument. For example, 
 ```php 
 foreach($bot->pins->search('query', 2) as $pin) {
 	// ...
