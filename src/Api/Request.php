@@ -305,7 +305,9 @@ class Request
      */
     protected function getContentTypeHeader()
     {
-        return $this->filePathToUpload ? $this->makeHeadersForUpload() : ['Content-Type: application/x-www-form-urlencoded; charset=UTF-8;'];
+        return $this->filePathToUpload ?
+            $this->makeHeadersForUpload() :
+            ['Content-Type: application/x-www-form-urlencoded; charset=UTF-8;'];
     }
 
     /**
