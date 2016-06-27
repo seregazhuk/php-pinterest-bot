@@ -27,14 +27,12 @@ class Keywords extends Provider
 
         $keywords = $response['guides'];
 
-        return array_map(
-            function ($keywordData) {
-                return [
-                    'term'     => $keywordData['term'],
-                    'position' => $keywordData['position'],
-                    'display'  => $keywordData['display']
-                ];
-            }, $keywords
-        );
+        return array_map(function ($keywordData) {
+            return [
+                'term'     => $keywordData['term'],
+                'position' => $keywordData['position'],
+                'display'  => $keywordData['display']
+            ];
+        }, $keywords);
     }
 }

@@ -47,7 +47,8 @@ trait Followable
      */
     protected function followCall($entityId, $resourceUrl)
     {
-        $response = $this->getRequest()->followMethodCall(
+        $response = $this->getRequest()
+            ->followMethodCall(
                 $entityId, $this->getEntityIdName(), $resourceUrl
             );
 
