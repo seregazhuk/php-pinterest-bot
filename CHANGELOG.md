@@ -5,8 +5,10 @@ All notable changes to this project will be documented in this file.
 
 ### Added:
  - User *register* method
+ 
 ### Fixed: 
- - Pins *edit* method returns bool value 
+ - Pins *edit* method returns bool value
+  
 ### Changed:
  - *login*, *isLoggedIn* and *logout* methods move to User provider
  - Bot *login*, *isLoggedIn* and *logout* methods are deprecated
