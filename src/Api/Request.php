@@ -305,17 +305,7 @@ class Request
      */
     protected function getContentTypeHeader()
     {
-        if ($this->filePathToUpload) {
-            $delimiter = '-------------' . uniqid();
-            $this->buildFilePostData($delimiter);
-
-            return [
-                'Content-Type: multipart/form-data; boundary=' . $delimiter,
-                'Content-Length: ' . strlen($this->postFileData)
-            ];
-        }
-
-        return ['Content-Type: application/x-www-form-urlencoded; charset=UTF-8;'];
+        return $this->filePathToUpload ? $this->makeHeadersForUpload() : ['Content-Type: application/x-www-form-urlencoded; charset=UTF-8;'];
     }
 
     /**
@@ -333,5 +323,16 @@ class Request
         $this->postFileData = $data;
 
         return $this;
+    }
+
+    protected function makeHeadersForUpload()
+    {
+        $delimiter = '-------------' . uniqid();
+        $this->buildFilePostData($delimiter);
+
+        return [
+            'Content-Type: multipart/form-data; boundary=' . $delimiter,
+            'Content-Length: ' . strlen($this->postFileData)
+        ];
     }
 }
