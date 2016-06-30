@@ -9,9 +9,9 @@ use seregazhuk\PinterestBot\Api\Providers\Boards;
 use seregazhuk\PinterestBot\Api\Providers\Pinners;
 use seregazhuk\PinterestBot\Api\Providers\Provider;
 use seregazhuk\PinterestBot\Api\Providers\Keywords;
+use seregazhuk\PinterestBot\Api\ProvidersContainer;
 use seregazhuk\PinterestBot\Api\Providers\Interests;
 use seregazhuk\PinterestBot\Api\Providers\Conversations;
-use seregazhuk\PinterestBot\Contracts\ProvidersContainerInterface;
 
 /**
  * Class Bot.
@@ -29,14 +29,14 @@ use seregazhuk\PinterestBot\Contracts\ProvidersContainerInterface;
 class Bot
 {
     /**
-     * @var ProvidersContainerInterface
+     * @var ProvidersContainer
      */
     private $providersContainer;
 
     /**
-     * @param ProvidersContainerInterface $providersContainer
+     * @param ProvidersContainer $providersContainer
      */
-    public function __construct(ProvidersContainerInterface $providersContainer)
+    public function __construct(ProvidersContainer $providersContainer)
     {
         $this->providersContainer = $providersContainer;
     }

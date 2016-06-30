@@ -3,7 +3,7 @@
 namespace seregazhuk\PinterestBot\Api\Traits;
 
 /**
- * Class CanBeDeleted
+ * Trait CanBeDeleted
  * @package seregazhuk\PinterestBot\Api\Traits
  *
  * @property string $deleteUrl
@@ -26,6 +26,9 @@ trait CanBeDeleted
         );
     }
 
+    /**
+     * @return string
+     */
     protected function getDeleteUrl()
     {
         return property_exists($this, 'deleteUrl') ? $this->deleteUrl : '';

@@ -7,7 +7,7 @@ use seregazhuk\PinterestBot\Helpers\UrlHelper;
 use seregazhuk\PinterestBot\Helpers\Pagination;
 
 /**
- * Class Searchable
+ * Trait Searchable
  * @package seregazhuk\PinterestBot\Api\Traits
  *
  * @property string $searchScope

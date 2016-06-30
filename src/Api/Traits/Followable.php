@@ -3,7 +3,7 @@
 namespace seregazhuk\PinterestBot\Api\Traits;
 
 /**
- * Class Followable
+ * Trait Followable
  * @package seregazhuk\PinterestBot\Api\Traits
  *
  * @property string $followUrl

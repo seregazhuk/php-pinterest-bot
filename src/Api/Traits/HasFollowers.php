@@ -6,7 +6,7 @@ use Iterator;
 use seregazhuk\PinterestBot\Helpers\Pagination;
 
 /**
- * Class HasFollowers
+ * Trait HasFollowers
  * @package seregazhuk\PinterestBot\Api\Traits
  *
  * @property string $followersUrl
@@ -43,11 +43,17 @@ trait HasFollowers
         return (new Pagination($this))->paginateOver('getPaginatedData', $requestData, $limit);
     }
 
+    /**
+     * @return string
+     */
     protected function getFollowersUrl()
     {
         return property_exists($this, 'followersUrl') ? $this->followersUrl : '';
     }
 
+    /**
+     * @return string
+     */
     protected function getFollowersFor()
     {
         return property_exists($this, 'followersFor') ? $this->followersFor : '';
