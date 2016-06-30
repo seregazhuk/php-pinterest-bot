@@ -1,41 +1,39 @@
 {
     "name": "seregazhuk/pinterest-bot",
     "description": "PHP library for Pintrest",
-	"keywords": [
-		"php",
-		"lib",
-		"pinterest"
-	],
-	"type": "package",
-	"minimum-stability": "dev",
-	"license": "Mit",
-	"autoload": {
-		"psr-4": {
+    "keywords": [
+        "php",
+        "lib",
+        "pinterest"
+    ],
+    "type": "package",
+    "minimum-stability": "dev",
+    "license": "Mit",
+    "autoload": {
+        "psr-4": {
             "seregazhuk\\PinterestBot\\": "src"
-		}
-	},
+        }
+    },
     "autoload-dev": {
         "psr-4": {
             "seregazhuk\\PinterestBot\\": "src",
             "seregazhuk\\tests\\": "tests"
         }
     },
-	"require": {
+    "require": {
         "php": ">=5.5.9",
-		"ext-curl": "*"
-	},
-	"require-dev": {
+        "ext-curl": "*"
+    },
+    "require-dev": {
         "codeclimate/php-test-reporter": "dev-master",
         "mockery/mockery": "~0.9",
-        "phpunit/phpunit": "~4.0",
-        "phpmd/phpmd": "^2.4",
-        "sebastian/phpcpd": "^2.0"
-	},
-	"authors": [
-		{
-			"name": "Serega Zhuk",
-			"email": "seregazhuk88@gmail.com",
-			"role": "Developer"
-		}
-	]
+        "phpunit/phpunit": "~4.0"
+    },
+    "authors": [
+        {
+            "name": "Serega Zhuk",
+            "email": "seregazhuk88@gmail.com",
+            "role": "Developer"
+        }
+    ]
 }
