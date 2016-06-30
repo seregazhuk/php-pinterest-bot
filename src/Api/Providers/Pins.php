@@ -196,6 +196,8 @@ class Pins extends Provider
     }
 
     /**
+     * Get the latest pin activity with pagination.
+     *
      * @param int $pinId
      * @param int $limit
      * @return Iterator|null

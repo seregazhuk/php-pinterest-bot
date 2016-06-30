@@ -6,6 +6,12 @@ use seregazhuk\PinterestBot\Helpers\UrlHelper;
 
 class Keywords extends Provider
 {
+    /**
+     * Get recommendations for query word. 
+     * 
+     * @param $query
+     * @return array|bool
+     */
     public function recommendedFor($query)
     {
         $result = $this->execGetRequest(

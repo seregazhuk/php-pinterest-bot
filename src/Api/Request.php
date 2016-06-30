@@ -36,6 +36,9 @@ class Request
      */
     protected $loggedIn;
 
+    /**
+     * @var string
+     */
     protected $cookieJar;
 
     /**
