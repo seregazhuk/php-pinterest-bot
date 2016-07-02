@@ -40,9 +40,15 @@ class RequestTest extends PHPUnit_Framework_TestCase
     {
         $response = $this->createSuccessApiResponse();
         $http = $this->getHttpMock();
-        $http->shouldReceive('execute')->once()->andReturn(json_encode($response));
 
-        $http->shouldReceive('execute')->once()->andReturnNull();
+        $http->shouldReceive('execute')
+            ->once()
+            ->andReturn(json_encode($response));
+
+        $http->shouldReceive('execute')
+            ->once()
+            ->andReturnNull();
+
         $request = $this->createRequestObject($http);
 
         $res = $request->exec('endpoint', 'a=b');
@@ -57,8 +63,15 @@ class RequestTest extends PHPUnit_Framework_TestCase
     {
         $response = $this->createSuccessApiResponse();
         $http = $this->getHttpMock();
-        $http->shouldReceive('execute')->once()->andReturn(json_encode($response));
-        $http->shouldReceive('execute')->once()->andReturnNull();
+
+        $http->shouldReceive('execute')
+            ->once()
+            ->andReturn(json_encode($response));
+
+        $http->shouldReceive('execute')
+            ->once()
+            ->andReturnNull();
+
         $request = $this->createRequestObject($http);
 
         $this->assertEquals($response, $request->followMethodCall(1, 'entity_id', 'ur'));
@@ -140,6 +153,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
         $this->setProperty('cookieJar', $cookieFile);
         $request->login();
 
+        unlink($cookieFile);
         $this->assertEquals($token, $this->getProperty('csrfToken'));
     }
 
@@ -163,6 +177,35 @@ class RequestTest extends PHPUnit_Framework_TestCase
         $request = $this->createRequestObject();
         $this->setProperty('cookieJar', null);
         $request->setTokenFromCookies();
+    }
+
+    /**
+     * @test
+     * @expectedException seregazhuk\PinterestBot\Exceptions\InvalidRequestException
+     */
+    public function uploadThrowsExceptionIfFileNotExist()
+    {
+        $this->createRequestObject()->upload('image.jpg', 'http://uploadurl.com');
+    }
+
+    /**
+     * @test
+     */
+    public function uploadSets()
+    {
+        $http = $this->getHttpMock();
+        $image = 'image.jpg';
+        file_put_contents($image, '');
+
+        $http->shouldReceive('execute')
+            ->once()
+            ->andReturn('');
+
+        $request = $this->createRequestObject($http);
+
+        $request->upload($image, 'http://uploadurl.com');
+        $this->assertNotEmpty($this->getProperty('postFileData'));
+        unlink($image);
     }
 
     protected function tearDown()
