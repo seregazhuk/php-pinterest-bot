@@ -154,6 +154,17 @@ class RequestTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(CsrfHelper::DEFAULT_TOKEN, $this->getProperty('csrfToken'));
     }
 
+    /**
+     * @test
+     * @expectedException seregazhuk\PinterestBot\Exceptions\AuthException
+     */
+    public function setTokenFromCookiesThrowsExceptionForEmptyToke()
+    {
+        $request = $this->createRequestObject();
+        $this->setProperty('cookieJar', null);
+        $request->setTokenFromCookies();
+    }
+
     protected function tearDown()
     {
         Mockery::close();
