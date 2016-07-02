@@ -34,14 +34,15 @@ trait ResponseHelper
     /**
      * Create an error dummy response.
      *
+     * @param string $error
      * @return array
      */
-    protected function createErrorApiResponse()
+    protected function createErrorApiResponse($error = 'error')
     {
         return $this->createApiResponse(
             [
                 'error' => [
-                    'message' => 'error',
+                    'message' => $error,
                 ],
             ]
         );

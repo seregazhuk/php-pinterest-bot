@@ -5,18 +5,22 @@ namespace szhuk\tests;
 use Mockery;
 use PHPUnit_Framework_TestCase;
 use seregazhuk\PinterestBot\Api\Response;
+use seregazhuk\tests\Helpers\ResponseHelper;
 
 /**
  * Class ResponseTest.
  */
 class ResponseTest extends PHPUnit_Framework_TestCase
 {
+    use ResponseHelper;
+
     /** @test */
     public function getDataReturnsAllData()
     {
         $response = new Response();
 
-        $data = ['resource_response' => ['data' => 'some data']];
+        $data = $this->createApiResponse(['data' => 'some data']);
+
         $this->assertEquals('some data', $response->getData($data));
     }
 
@@ -25,11 +29,8 @@ class ResponseTest extends PHPUnit_Framework_TestCase
     {
         $response = new Response();
 
-        $data = [
-            'resource_response' => [
-                'data' => ['key' => 'value']
-            ]
-        ];
+        $data = $this->createApiResponse(['data' => ['key' => 'value']]);
+
         $this->assertEquals('value', $response->getData($data, 'key'));
     }
 
@@ -38,9 +39,11 @@ class ResponseTest extends PHPUnit_Framework_TestCase
     {
         $response = new Response();
 
-        $data = ['resource_response' => ['error' => 'some error']];
+        $data = $this->createErrorApiResponse('some error');
         $this->assertFalse($response->getData($data));
-        $this->assertEquals('some error', $response->getLastError());
+
+        $lastError = $response->getLastError();
+        $this->assertEquals('some error', $lastError['message']);
     }
 
     /** @test */
@@ -50,7 +53,8 @@ class ResponseTest extends PHPUnit_Framework_TestCase
 
         $this->assertTrue($response->isEmpty([]));
 
-        $dataWithErrors = ['resource_response' => ['error' => 'some error']];
+        $dataWithErrors = $this->createErrorApiResponse('some error');
+
         $this->assertTrue($response->isEmpty($dataWithErrors));
     }
 
@@ -59,7 +63,7 @@ class ResponseTest extends PHPUnit_Framework_TestCase
     {
         $response = new Response();
 
-        $data = ['resource_response' => ['data' => 'some data']];
+        $data = $this->createSuccessApiResponse();
 
         $this->assertFalse($response->isEmpty($data));
     }
@@ -69,9 +73,9 @@ class ResponseTest extends PHPUnit_Framework_TestCase
     {
         $response = new Response();
 
-        $dataWithErrors = ['resource_response' => ['error' => 'some error']];
+        $dataWithErrors = $this->createErrorApiResponse('some error');
+
         $this->assertTrue($response->hasErrors($dataWithErrors));
-        $this->assertEquals('some error', $response->getLastError());
     }
 
     /** @test */
@@ -79,7 +83,7 @@ class ResponseTest extends PHPUnit_Framework_TestCase
     {
         $response = new Response();
 
-        $data = ['resource_response' => ['data' => 'some data']];
+        $data = $this->createSuccessApiResponse();
 
         $this->assertFalse($response->hasErrors($data));
     }
@@ -111,7 +115,8 @@ class ResponseTest extends PHPUnit_Framework_TestCase
     public function getPaginationDataReturnsEmptyArrayForErrors()
     {
         $response = new Response();
-        $data = ['resource_response' => ['error' => 'some error']];
+
+        $data = $this->createApiResponse();
 
         $this->assertEmpty($response->getPaginationData($data));
     }
