@@ -11,9 +11,10 @@ class User extends Provider
 {
     use UploadsImages;
 
-    protected $loginRequiredFor = ['profile'];
+    protected $loginRequiredFor = ['profile', 'convertToBusiness'];
 
     const REGISTRATION_COMPLETE_EXPERIENCE_ID = '11:10105';
+    const ACCOUNT_TYPE_OTHER = 'other';
 
     /**
      * Update user profile info. Gets associative array as a param. Available keys of array are:
@@ -39,29 +40,62 @@ class User extends Provider
      * @param string $email
      * @param string $password
      * @param string $name
-     * @param string $county
+     * @param string $country
      * @param int $age
      * @return bool
      */
-    public function register($email, $password, $name, $county = "UK", $age = 18)
+    public function register($email, $password, $name, $country = "UK", $age = 18)
     {
-        $this->execGetRequest([], '');
-        $this->request->setTokenFromCookies();
-
         $data = [
             "age"        => $age,
             "email"      => $email,
             "password"   => $password,
-            "country"    => $county,
+            "country"    => $country,
             "first_name" => $name,
             "container"  => "home_page"
         ];
 
-        if (!$this->execPostRequest($data, UrlHelper::RESOURCE_CREATE_REGISTER)) {
-            return false;
-        }
+        return $this->makeRegisterCall($data);
+    }
 
-        return $this->completeRegistration();
+    /**
+     * Register a new business account.
+     *
+     * @param string $email
+     * @param string $password
+     * @param string $businessName
+     * @param string $website
+     * @return bool|mixed
+     */
+    public function registerBusiness($email, $password, $businessName, $website = '')
+    {
+        $data = [
+            "email"         => $email,
+            "password"      => $password,
+            "business_name" => $businessName,
+            "website_url"   => $website,
+            "account_type"  => self::ACCOUNT_TYPE_OTHER,
+        ];
+
+        return $this->makeRegisterCall($data);
+    }
+
+    /**
+     * Convert your account to a business one.
+     *
+     * @param string $businessName
+     * @param string $websiteUrl
+     * @return mixed
+     */
+    public function convertToBusiness($businessName, $websiteUrl = '')
+    {
+        $data = [
+            'business_name' => $businessName,
+            'website_url'   => $websiteUrl,
+            'account_type'  => self::ACCOUNT_TYPE_OTHER,
+        ];
+
+        return $this->execPostRequest($data, UrlHelper::RESOURCE_CONVERT_TO_BUSINESS);
     }
 
     /**
@@ -100,6 +134,9 @@ class User extends Provider
         $this->request->logout();
     }
 
+    /**
+     * @return bool
+     */
     public function isLoggedIn()
     {
         return $this->request->isLoggedIn();
@@ -125,5 +162,22 @@ class User extends Provider
         return $this->execPostRequest(
             ['placed_experience_id' => self::REGISTRATION_COMPLETE_EXPERIENCE_ID], UrlHelper::RESOURCE_REGISTRATION_COMPLETE
         );
+    }
+
+    /**
+     * @param array $data
+     * @return bool|mixed
+     * @throws AuthException
+     */
+    protected function makeRegisterCall($data)
+    {
+        $this->execGetRequest([], '');
+        $this->request->setTokenFromCookies();
+
+        if (!$this->execPostRequest($data, UrlHelper::RESOURCE_CREATE_REGISTER)) {
+            return false;
+        }
+
+        return $this->completeRegistration();
     }
 }

@@ -3,7 +3,7 @@
 namespace seregazhuk\PinterestBot\Api\Traits;
 
 /**
- * Class Followable
+ * Trait Followable
  * @package seregazhuk\PinterestBot\Api\Traits
  *
  * @property string $followUrl
@@ -47,7 +47,8 @@ trait Followable
      */
     protected function followCall($entityId, $resourceUrl)
     {
-        $response = $this->getRequest()->followMethodCall(
+        $response = $this->getRequest()
+            ->followMethodCall(
                 $entityId, $this->getEntityIdName(), $resourceUrl
             );
 

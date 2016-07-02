@@ -5,10 +5,9 @@ namespace seregazhuk\PinterestBot\Api;
 use ReflectionClass;
 use seregazhuk\PinterestBot\Api\Providers\Provider;
 use seregazhuk\PinterestBot\Exceptions\WrongProviderException;
-use seregazhuk\PinterestBot\Contracts\ProvidersContainerInterface;
 use seregazhuk\PinterestBot\Api\Providers\ProviderLoginCheckWrapper;
 
-class ProvidersContainer implements ProvidersContainerInterface
+class ProvidersContainer
 {
     /**
      * References to the request and response classes that travels

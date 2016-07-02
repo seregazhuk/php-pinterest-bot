@@ -86,6 +86,7 @@ class UrlHelper
     const RESOURCE_SET_ORIENTATION = 'resource/OrientationContextResource/create/';
     const RESOURCE_UPDATE_REGISTRATION_TRACK = 'resource/UserRegisterTrackActionResource/update/';
     const RESOURCE_REGISTRATION_COMPLETE = 'resource/UserExperienceCompletedResource/update/';
+    const RESOURCE_CONVERT_TO_BUSINESS = 'resource/PartnerResource/update/';
 
     /**
      * Uploads

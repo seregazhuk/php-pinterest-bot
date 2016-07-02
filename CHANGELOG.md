@@ -1,6 +1,12 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [4.4.0] - 2016-07-02
+
+### Added:
+ - User *registerBusiness* for registration business accounts.
+ - User *convertToBusiness* to convert simple account to a business one.
+
 ## [4.3.0] - 2016-06-27
 
 ### Added:

@@ -53,7 +53,10 @@ class UserTest extends ProviderTest
      */
     public function registerReturnsTrueOnSuccess()
     {
-        $this->requestMock->shouldReceive('setTokenFromCookies')->twice()->andReturnSelf();
+        $this->requestMock
+            ->shouldReceive('setTokenFromCookies')
+            ->twice()
+            ->andReturnSelf();
 
         $this->setProperty('request', $this->requestMock);
 
@@ -66,7 +69,10 @@ class UserTest extends ProviderTest
      */
     public function registerReturnsFalseOnFail()
     {
-        $this->requestMock->shouldReceive('setTokenFromCookies')->once()->andReturnSelf();
+        $this->requestMock
+            ->shouldReceive('setTokenFromCookies')
+            ->once()
+            ->andReturnSelf();
 
         $this->setProperty('request', $this->requestMock);
 
@@ -76,18 +82,58 @@ class UserTest extends ProviderTest
 
     /**
      * @test
+     */
+    public function registerBusinessReturnsTrueOnSuccess()
+    {
+        $this->requestMock
+            ->shouldReceive('setTokenFromCookies')
+            ->twice()
+            ->andReturnSelf();
+
+        $this->setProperty('request', $this->requestMock);
+
+        $this->setSuccessResponse(3);
+        $this->assertTrue($this->provider->registerBusiness('email@email.com', 'test', 'name'));
+    }
+
+    /**
+     * @test
+     */
+    public function registerBusinessReturnsFalseOnFail()
+    {
+        $this->requestMock
+            ->shouldReceive('setTokenFromCookies')
+            ->once()
+            ->andReturnSelf();
+
+        $this->setProperty('request', $this->requestMock);
+
+        $this->setErrorResponse(2);
+        $this->assertFalse($this->provider->registerBusiness('email@email.com', 'test', 'name'));
+    }
+
+    /**
+     * @test
      * @expectedException \LogicException
      */
     public function loginWithEmptyCredentials()
     {
-        $this->requestMock->shouldReceive('isLoggedIn')->once()->andReturn(false);
+        $this->requestMock
+            ->shouldReceive('isLoggedIn')
+            ->once()
+            ->andReturn(false);
+
         $this->provider->login('', '');
     }
 
     /** @test */
     public function loginWhenAlreadyLogged()
     {
-        $this->requestMock->shouldReceive('isLoggedIn')->once()->andReturn(true);
+        $this->requestMock
+            ->shouldReceive('isLoggedIn')
+            ->once()
+            ->andReturn(true);
+
         $this->assertTrue($this->provider->login('test', 'test'));
     }
 
@@ -127,8 +173,23 @@ class UserTest extends ProviderTest
     /** @test */
     public function isLoggedIn()
     {
-        $this->requestMock->shouldReceive('isLoggedIn')->andReturn(true)->getMock();
+        $this->requestMock
+            ->shouldReceive('isLoggedIn')
+            ->andReturn(true)
+            ->getMock();
 
         $this->assertTrue($this->provider->isLoggedIn());
+    }
+
+    /** @test */
+    public function convertToBusiness()
+    {
+        $success = $this->createSuccessApiResponse();
+        $this->setResponse($success);
+        $this->assertTrue($this->provider->convertToBusiness('name'));
+
+        $error = $this->createErrorApiResponse();
+        $this->setResponse($error);
+        $this->assertFalse($this->provider->convertToBusiness('name'));
     }
 }

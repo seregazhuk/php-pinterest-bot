@@ -21,13 +21,29 @@ class Request
 {
     const COOKIE_NAME = 'pinterest_cookie';
 
+    /**
+     * @var string
+     */
     protected $userAgent = 'Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0';
+
     /**
      * @var HttpInterface
      */
     protected $http;
+
+    /**
+     * @var bool
+     */
     protected $loggedIn;
+
+    /**
+     * @var string
+     */
     protected $cookieJar;
+
+    /**
+     * @var array
+     */
     protected $options;
 
     /**
@@ -293,7 +309,9 @@ class Request
     protected function getDefaultHttpHeaders()
     {
         return array_merge(
-            $this->requestHeaders, $this->getContentTypeHeader(), ['X-CSRFToken: ' . $this->csrfToken]
+            $this->requestHeaders,
+            $this->getContentTypeHeader(),
+            ['X-CSRFToken: ' . $this->csrfToken]
         );
     }
 
@@ -305,17 +323,9 @@ class Request
      */
     protected function getContentTypeHeader()
     {
-        if ($this->filePathToUpload) {
-            $delimiter = '-------------' . uniqid();
-            $this->buildFilePostData($delimiter);
-
-            return [
-                'Content-Type: multipart/form-data; boundary=' . $delimiter,
-                'Content-Length: ' . strlen($this->postFileData)
-            ];
-        }
-
-        return ['Content-Type: application/x-www-form-urlencoded; charset=UTF-8;'];
+        return $this->filePathToUpload ?
+            $this->makeHeadersForUpload() :
+            ['Content-Type: application/x-www-form-urlencoded; charset=UTF-8;'];
     }
 
     /**
@@ -333,5 +343,16 @@ class Request
         $this->postFileData = $data;
 
         return $this;
+    }
+
+    protected function makeHeadersForUpload()
+    {
+        $delimiter = '-------------' . uniqid();
+        $this->buildFilePostData($delimiter);
+
+        return [
+            'Content-Type: multipart/form-data; boundary=' . $delimiter,
+            'Content-Length: ' . strlen($this->postFileData)
+        ];
     }
 }

@@ -6,6 +6,12 @@ use seregazhuk\PinterestBot\Helpers\UrlHelper;
 
 class Keywords extends Provider
 {
+    /**
+     * Get recommendations for query word. 
+     * 
+     * @param $query
+     * @return array|bool
+     */
     public function recommendedFor($query)
     {
         $result = $this->execGetRequest(
@@ -27,14 +33,12 @@ class Keywords extends Provider
 
         $keywords = $response['guides'];
 
-        return array_map(
-            function ($keywordData) {
-                return [
-                    'term'     => $keywordData['term'],
-                    'position' => $keywordData['position'],
-                    'display'  => $keywordData['display']
-                ];
-            }, $keywords
-        );
+        return array_map(function ($keywordData) {
+            return [
+                'term'     => $keywordData['term'],
+                'position' => $keywordData['position'],
+                'display'  => $keywordData['display']
+            ];
+        }, $keywords);
     }
 }
