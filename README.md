@@ -25,6 +25,7 @@ if your don't use such operations as creating pins, writing comments or sending 
 - [Dependencies](#dependencies)
 - [Installation](#installation)
 - [Quick Start](#quick-start)
+- [Account](#account)
 - [Boards](#boards)
 - [Pins](#pins)
 - [Pinners](#pinners)
@@ -65,6 +66,24 @@ $boards = $bot->boards->forUser('yourUserName');
 $bot->pins->create('http://exmaple.com/image.jpg', $boards[0]['id'], 'pin description');
 ```
 
+*Note*: Some functions use pinterest navigation through results, for example, get user followers or search queries. 
+These functions return a generator object with api results. By default functions  return all pinterest results, 
+but you can pass a limit num as a second argument. For example, 
+```php 
+foreach($bot->pins->search('query', 2) as $pin) {
+	// ...
+}
+```
+will return only 2 pins of the search results.
+
+## Account
+
+Login:
+
+```php
+$bot->user->login('mypinterestlogin', 'mypinterestpassword');
+```
+
 Or you may skip login, if you want. It is only required for such operations as likes, follows and making pins.
 You can get your current logged in status via *isLoggedIn* method:
 
@@ -91,15 +110,21 @@ You can specify additional parameters with registration: age and country. By def
 $bot->user->register('youremail@gmail.com', 'password', 'Name', 40, "DE");
 ```
 
-*Note*: Some functions use pinterest navigation through results, for example, get user followers or search queries. 
-These functions return a generator object with api results. By default functions  return all pinterest results, 
-but you can pass a limit num as a second argument. For example, 
-```php 
-foreach($bot->pins->search('query', 2) as $pin) {
-	// ...
-}
+Register a business account. The last parameter with website url is *optional*:
+
+```php
+$bot->user->registerBusiness('youremail@gmail.com', 'password', 'BusinessName');
+
+$bot->user->registerBusiness('youremail@gmail.com', 'password', 'BusinessName', 'http://yoursite'com);
 ```
-will return only 2 pins of the search results.
+
+Convert your account to a business one. Requires log in. The last parameter with website url is *optional*:
+
+```php
+$bot->user->convertToBusiness('businessName'));
+
+$bot->user->convertToBusiness('businessName', 'http://yoursite.com));
+```
 
 ## Boards
 
