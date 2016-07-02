@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 ## [4.4.1] - 2016-07-02
 
 ### Fixed:
- - Pins *create* uploads images.
+ - Pins *create* method uploads images.
 
 ## [4.4.0] - 2016-07-02
 
