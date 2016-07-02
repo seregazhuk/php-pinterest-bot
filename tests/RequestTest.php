@@ -3,6 +3,7 @@
 namespace szhuk\tests;
 
 use Mockery;
+use Mockery\Mock;
 use ReflectionClass;
 use PHPUnit_Framework_TestCase;
 use seregazhuk\PinterestBot\Api\Request;
@@ -41,13 +42,8 @@ class RequestTest extends PHPUnit_Framework_TestCase
         $response = $this->createSuccessApiResponse();
         $http = $this->getHttpMock();
 
-        $http->shouldReceive('execute')
-            ->once()
-            ->andReturn(json_encode($response));
-
-        $http->shouldReceive('execute')
-            ->once()
-            ->andReturnNull();
+        $this->setHttpExecute($http, json_encode($response));
+        $this->setHttpExecute($http, null);
 
         $request = $this->createRequestObject($http);
 
@@ -64,13 +60,8 @@ class RequestTest extends PHPUnit_Framework_TestCase
         $response = $this->createSuccessApiResponse();
         $http = $this->getHttpMock();
 
-        $http->shouldReceive('execute')
-            ->once()
-            ->andReturn(json_encode($response));
-
-        $http->shouldReceive('execute')
-            ->once()
-            ->andReturnNull();
+        $this->setHttpExecute($http, json_encode($response));
+        $this->setHttpExecute($http, null);
 
         $request = $this->createRequestObject($http);
 
@@ -197,15 +188,24 @@ class RequestTest extends PHPUnit_Framework_TestCase
         $image = 'image.jpg';
         file_put_contents($image, '');
 
-        $http->shouldReceive('execute')
-            ->once()
-            ->andReturn('');
-
+        $this->setHttpExecute($http, null);
         $request = $this->createRequestObject($http);
 
         $request->upload($image, 'http://uploadurl.com');
         $this->assertNotEmpty($this->getProperty('postFileData'));
         unlink($image);
+    }
+
+    /**
+     * @param Mock $http
+     * @param mixed $returnsValue
+     * @param int $times
+     */
+    protected function setHttpExecute($http, $returnsValue, $times = 1)
+    {
+        $http->shouldReceive('execute')
+            ->times($times)
+            ->andReturn($returnsValue);
     }
 
     protected function tearDown()
@@ -214,7 +214,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
     }
     
     /**
-     * @return Mockery\Mock|HttpInterface
+     * @return Mock|HttpInterface
      */
     protected function getHttpMock()
     {
