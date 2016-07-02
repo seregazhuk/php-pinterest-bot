@@ -3,6 +3,7 @@
 namespace seregazhuk\tests\Api;
 
 use seregazhuk\PinterestBot\Api\Providers\Pins;
+use seregazhuk\PinterestBot\Helpers\UrlHelper;
 
 /**
  * Class PinsTest.
@@ -72,6 +73,19 @@ class PinsTest extends ProviderTest
 
         $this->setResponse(null);
         $this->assertFalse($this->provider->create($pinSource, $boardId, $pinDescription));
+    }
+
+    /** @test */
+    public function uploadImageWhenCreatingAPin()
+    {
+        $image = 'image.jpg';
+        $this->requestMock
+            ->shouldReceive('upload')
+            ->withArgs([$image, UrlHelper::IMAGE_UPLOAD]);
+
+        $response = $this->createPinCreationResponse();
+        $this->setResponse($response);
+        $this->provider->create($image, 1, 'test');
     }
 
     /** @test */
@@ -157,6 +171,27 @@ class PinsTest extends ProviderTest
 
         $pins = $this->provider->fromSource('flickr.ru');
         $this->assertCount(2, iterator_to_array($pins));
+    }
+
+    /** @test */
+    public function getActivityReturnsIteratorOnSuccess()
+    {
+        $response = $this->createApiResponse(
+            ['data' => ['aggregated_pin_data' => ['id' => 1]]]
+        );
+        $this->setResponse($response);
+
+        $this->setResponse($this->createPaginatedResponse());
+        $this->setResponse(['resource_response' => ['data' => []]]);
+
+        $this->assertCount(2, iterator_to_array($this->provider->activity(1)));
+    }
+
+    /** @test */
+    public function getActivityReturnsNullForNoResults()
+    {
+        $this->setResponse($this->createApiResponse());
+        $this->assertNull($this->provider->activity(1));
     }
 
     /**
