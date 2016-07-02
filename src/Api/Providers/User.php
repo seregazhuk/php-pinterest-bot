@@ -134,6 +134,9 @@ class User extends Provider
         $this->request->logout();
     }
 
+    /**
+     * @return bool
+     */
     public function isLoggedIn()
     {
         return $this->request->isLoggedIn();
