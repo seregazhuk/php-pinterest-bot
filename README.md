@@ -204,20 +204,28 @@ $info = $bot->pins->info(1234567890);
 Create new pin. Accepts image url, board id, where to post image, description and preview url.
 
 ```php
-$pinId = $bot->pins->create('http://exmaple.com/image.jpg', $boards[0]['id'], 'pin description');
+$pinId = $bot->pins->create('http://exmaple.com/image.jpg', $boardId, 'pin description');
+```
+
+You can pass a path to your local image. It will be uploaded to pinterest:
+
+```php
+$pinId = $bot->pins->create('image.jpg', $boardId, 'pin description');
 ```
     
 You can specify a link for pin (source) as fourth argument. If not set, link is equal to image url.    
 ```php
-$pinId = $bot->pins->create('http://exmaple.com/image.jpg', $boards[0]['id'], 'pin description', 'http://site.com');
+$pinId = $bot->pins->create('http://exmaple.com/image.jpg', $boardId, 'pin description', 'http://site.com');
 ```
     
 Repin other pin by its id.
+
 ```php
-$bot->pins->repin($pinId, $boards[0]['id'], 'my repin');
+$bot->pins->repin($pinId, $boardId, 'my repin');
 ``` 
 
 Edit pin by id. You can change pin's description, link or board.
+
 ```php
 // change description and link
 $bot->pins->edit($pinId, 'new description', 'new link');

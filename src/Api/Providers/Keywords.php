@@ -36,8 +36,8 @@ class Keywords extends Provider
         return array_map(function ($keywordData) {
             return [
                 'term'     => $keywordData['term'],
+                'display'  => $keywordData['display'],
                 'position' => $keywordData['position'],
-                'display'  => $keywordData['display']
             ];
         }, $keywords);
     }

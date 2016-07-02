@@ -3,6 +3,7 @@
 namespace seregazhuk\PinterestBot\Api\Providers;
 
 use Iterator;
+use seregazhuk\PinterestBot\Api\Traits\UploadsImages;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
 use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Api\Traits\Searchable;
@@ -10,7 +11,7 @@ use seregazhuk\PinterestBot\Api\Traits\CanBeDeleted;
 
 class Pins extends Provider
 {
-    use Searchable, CanBeDeleted;
+    use Searchable, CanBeDeleted, UploadsImages;
 
     protected $loginRequiredFor = [
         'like',
@@ -94,6 +95,11 @@ class Pins extends Provider
      */
     public function create($imageUrl, $boardId, $description = '', $link = '')
     {
+        // Upload image if first argument is not url
+        if (!filter_var($imageUrl, FILTER_VALIDATE_URL)) {
+            $imageUrl = $this->upload($imageUrl);
+        }
+
         $requestOptions = [
             'method'      => 'scraped',
             'description' => $description,

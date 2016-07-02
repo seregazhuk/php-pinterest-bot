@@ -160,7 +160,8 @@ class User extends Provider
         $this->request->setTokenFromCookies();
 
         return $this->execPostRequest(
-            ['placed_experience_id' => self::REGISTRATION_COMPLETE_EXPERIENCE_ID], UrlHelper::RESOURCE_REGISTRATION_COMPLETE
+            ['placed_experience_id' => self::REGISTRATION_COMPLETE_EXPERIENCE_ID],
+            UrlHelper::RESOURCE_REGISTRATION_COMPLETE
         );
     }
 
