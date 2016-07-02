@@ -173,6 +173,27 @@ class PinsTest extends ProviderTest
         $this->assertCount(2, iterator_to_array($pins));
     }
 
+    /** @test */
+    public function getActivityReturnsIteratorOnSuccess()
+    {
+        $response = $this->createApiResponse(
+            ['data' => ['aggregated_pin_data' => ['id' => 1]]]
+        );
+        $this->setResponse($response);
+
+        $this->setResponse($this->createPaginatedResponse());
+        $this->setResponse(['resource_response' => ['data' => []]]);
+
+        $this->assertCount(2, iterator_to_array($this->provider->activity(1)));
+    }
+
+    /** @test */
+    public function getActivityReturnsNullForNoResults()
+    {
+        $this->setResponse($this->createApiResponse());
+        $this->assertNull($this->provider->activity(1));
+    }
+
     /**
      * Creates a pin creation response from Pinterest.
      *

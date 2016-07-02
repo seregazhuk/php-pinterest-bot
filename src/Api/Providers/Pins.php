@@ -210,12 +210,10 @@ class Pins extends Provider
      */
     public function activity($pinId, $limit = 0)
     {
-        $pinInfo = $this->info($pinId);
-        if (!isset($pinInfo['aggregated_pin_data']['id'])) {
+        if (!$aggregatedPinId = $this->getAggregatedPinId($pinId)) {
             return null;
         }
 
-        $aggregatedPinId = $pinInfo['aggregated_pin_data']['id'];
         $params = [
             'data' => ['aggregated_pin_data_id' => $aggregatedPinId],
             'url'  => UrlHelper::RESOURCE_ACTIVITY
@@ -235,5 +233,18 @@ class Pins extends Provider
     protected function likePinMethodCall($pinId, $resourceUrl)
     {
         return $this->execPostRequest(['pin_id' => $pinId], $resourceUrl);
+    }
+
+    /**
+     * @param int $pinId
+     * @return int|null
+     */
+    protected function getAggregatedPinId($pinId)
+    {
+        $pinInfo = $this->info($pinId);
+
+        return isset($pinInfo['aggregated_pin_data']['id']) ?
+            $pinInfo['aggregated_pin_data']['id'] :
+            null;
     }
 }
