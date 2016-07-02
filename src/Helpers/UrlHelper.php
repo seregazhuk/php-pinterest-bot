@@ -8,12 +8,12 @@ namespace seregazhuk\PinterestBot\Helpers;
 class UrlHelper
 {
     /**
-     * Login.
+     * Login
      */
     const RESOURCE_LOGIN = 'resource/UserSessionResource/create/';
 
     /**
-     * Boards.
+     * Boards
      */
     const RESOURCE_GET_BOARDS = 'resource/BoardsResource/get/';
     const RESOURCE_GET_BOARD_FEED = 'resource/BoardFeedResource/get/';
@@ -26,7 +26,7 @@ class UrlHelper
     const RESOURCE_BOARD_FOLLOWERS = 'resource/BoardFollowersResource/get/';
 
     /**
-     * Pins.
+     * Pins
      */
     const RESOURCE_CREATE_PIN = 'resource/PinResource/create/';
     const RESOURCE_UPDATE_PIN = 'resource/PinResource/update/';
@@ -42,7 +42,7 @@ class UrlHelper
     const RESOURCE_ACTIVITY = 'resource/AggregatedActivityFeedResource/get';
 
     /**
-     * Pinners.
+     * Pinners
      */
     const RESOURCE_FOLLOW_USER = 'resource/UserFollowResource/create/';
     const RESOURCE_UNFOLLOW_USER = 'resource/UserFollowResource/delete/';
@@ -51,7 +51,7 @@ class UrlHelper
     const RESOURCE_USER_PINS = 'resource/UserPinsResource/get/';
 
     /**
-     * Search.
+     * Search
      */
     const RESOURCE_SEARCH = 'resource/BaseSearchResource/get/';
     const RESOURCE_SEARCH_WITH_PAGINATION = 'resource/SearchResource/get/';
@@ -69,12 +69,12 @@ class UrlHelper
     const RESOURCE_GET_LAST_CONVERSATIONS = 'resource/ConversationsResource/get/';
 
     /**
-     * UserSettings.
+     * UserSettings
      */
     const RESOURCE_UPDATE_USER_SETTINGS = 'resource/UserSettingsResource/update/';
 
     /**
-     * News.
+     * News
      */
     const RESOURCE_GET_LATEST_NEWS = 'resource/NetworkStoriesResource/get/';
 
@@ -93,7 +93,13 @@ class UrlHelper
      */
     const IMAGE_UPLOAD = '/upload-image/';
 
-    const URL_BASE = 'https://nl.pinterest.com/';
+    /**
+     * Categories
+     */
+    const RESOURCE_GET_CATEGORIES = 'resource/CategoriesResource/get';
+
+    const URL_BASE = 'https://uk.pinterest.com/';
+    const HOST = 'uk.pinterest.com';
 
     /**
      * @param array $request
