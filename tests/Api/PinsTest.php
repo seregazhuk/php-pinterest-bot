@@ -3,6 +3,7 @@
 namespace seregazhuk\tests\Api;
 
 use seregazhuk\PinterestBot\Api\Providers\Pins;
+use seregazhuk\PinterestBot\Helpers\UrlHelper;
 
 /**
  * Class PinsTest.
@@ -72,6 +73,19 @@ class PinsTest extends ProviderTest
 
         $this->setResponse(null);
         $this->assertFalse($this->provider->create($pinSource, $boardId, $pinDescription));
+    }
+
+    /** @test */
+    public function uploadImageWhenCreatingAPin()
+    {
+        $image = 'image.jpg';
+        $this->requestMock
+            ->shouldReceive('upload')
+            ->withArgs([$image, UrlHelper::IMAGE_UPLOAD]);
+
+        $response = $this->createPinCreationResponse();
+        $this->setResponse($response);
+        $this->provider->create($image, 1, 'test');
     }
 
     /** @test */

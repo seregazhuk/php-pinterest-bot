@@ -38,12 +38,10 @@ class UserTest extends ProviderTest
             'name'          => 'John Doe',
             'profile_image' => 'my_profile_image.jpg'
         ];
-        $this->requestMock->shouldReceive('upload')->withArgs(
-                [
-                    $attributes['profile_image'],
-                    UrlHelper::IMAGE_UPLOAD
-                ]
-            );
+        $this->requestMock
+            ->shouldReceive('upload')
+            ->withArgs([$attributes['profile_image'], UrlHelper::IMAGE_UPLOAD]);
+        
         $this->setSuccessResponse();
         $this->assertTrue($this->provider->profile($attributes));
     }
