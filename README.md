@@ -313,6 +313,19 @@ foreach($bot->pinners->followers('username') as $follower)
 ```
 
 ## Interests
+
+Get list of main categories.
+
+```php
+$categories = $bot->interests->getMain()
+```
+
+Get category info by name (can be taken from *getMain()*).
+
+```php
+$info = $bot->interests->getInfo("gifts")
+```
+
 Follow/unfollow interest by id.
 ```php
 $bot->interests->follow($interestId);

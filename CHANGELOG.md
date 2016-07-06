@@ -1,6 +1,12 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [4.5.0] - ???
+
+### Added:
+ - Interests: get main categories 
+ - Interests: get category info
+
 ## [4.4.1] - 2016-07-02
 
 ### Fixed:

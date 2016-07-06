@@ -96,7 +96,8 @@ class UrlHelper
     /**
      * Categories
      */
-    const RESOURCE_GET_CATEGORIES = 'resource/CategoriesResource/get';
+    const RESOURCE_GET_CATEGORIES = 'resource/CategoriesResource/get/';
+    const RESOURCE_GET_CATEGORY = 'resource/CategoryResource/get/';
 
     const URL_BASE = 'https://uk.pinterest.com/';
     const HOST = 'uk.pinterest.com';
