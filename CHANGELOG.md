@@ -1,6 +1,12 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [4.4.2] - 2016-07-06
+
+### Fixed: 
+ - Pins *comment* method
+
+
 ## [4.4.1] - 2016-07-02
 
 ### Fixed:
