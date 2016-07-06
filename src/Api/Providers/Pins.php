@@ -63,7 +63,7 @@ class Pins extends Provider
      */
     public function comment($pinId, $text)
     {
-        $requestOptions = ['pin_id' => $pinId, 'test' => $text];
+        $requestOptions = ['pin_id' => $pinId, 'text' => $text];
 
         return $this->execPostRequest($requestOptions, UrlHelper::RESOURCE_COMMENT_PIN, true);
     }
