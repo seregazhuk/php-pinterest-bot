@@ -115,15 +115,15 @@ Register a business account. The last parameter with website url is *optional*:
 ```php
 $bot->user->registerBusiness('youremail@gmail.com', 'password', 'BusinessName');
 
-$bot->user->registerBusiness('youremail@gmail.com', 'password', 'BusinessName', 'http://yoursite'com);
+$bot->user->registerBusiness('youremail@gmail.com', 'password', 'BusinessName', 'http://yoursite.com');
 ```
 
 Convert your account to a business one. Requires log in. The last parameter with website url is *optional*:
 
 ```php
-$bot->user->convertToBusiness('businessName'));
+$bot->user->convertToBusiness('businessName');
 
-$bot->user->convertToBusiness('businessName', 'http://yoursite.com));
+$bot->user->convertToBusiness('businessName', 'http://yoursite.com');
 ```
 
 ## Boards

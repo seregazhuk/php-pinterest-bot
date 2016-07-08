@@ -7,6 +7,11 @@ All notable changes to this project will be documented in this file.
  - Interests: get main categories 
  - Interests: get category info
 
+## [4.4.2] - 2016-07-06
+
+### Fixed: 
+ - Pins *comment* method
+
 ## [4.4.1] - 2016-07-02
 
 ### Fixed:
@@ -22,8 +27,10 @@ All notable changes to this project will be documented in this file.
 
 ### Added:
  - User *register* method
+ 
 ### Fixed: 
- - Pins *edit* method returns bool value 
+ - Pins *edit* method returns bool value
+  
 ### Changed:
  - *login*, *isLoggedIn* and *logout* methods move to User provider
  - Bot *login*, *isLoggedIn* and *logout* methods are deprecated
