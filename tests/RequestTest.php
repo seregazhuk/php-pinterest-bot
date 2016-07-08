@@ -21,23 +21,18 @@ class RequestTest extends PHPUnit_Framework_TestCase
     use ReflectionHelper, ResponseHelper;
 
     /** @test */
-    public function checkLoggedInFailure()
+    public function it_returns_logged_in_status()
     {
         $request = $this->createRequestObject();
         $this->setProperty('loggedIn', false);
-        $this->assertFalse($request->isLoggedIn(), 'Failed asserting logged in property');
-    }
+        $this->assertFalse($request->isLoggedIn());
 
-    /** @test */
-    public function checkLoggedInSuccess()
-    {
-        $request = $this->createRequestObject();
         $this->setProperty('loggedIn', true);
-        $this->assertTrue($request->isLoggedIn(), 'Failed asserting logged in property');
+        $this->assertTrue($request->isLoggedIn());
     }
 
     /** @test */
-    public function executeRequestToPinterestApi()
+    public function it_executes_request_to_api_endpoint()
     {
         $response = $this->createSuccessApiResponse();
         $http = $this->getHttpMock();
@@ -55,7 +50,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function executeFollowRequestToPinterestApi()
+    public function it_executes_follow_request_to_api()
     {
         $response = $this->createSuccessApiResponse();
         $http = $this->getHttpMock();
@@ -70,7 +65,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function setUserAgent()
+    public function it_stores_user_agent()
     {
         $userAgentString = 'UserAgentString';
 
@@ -80,7 +75,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function clearToken()
+    public function it_sets_csrf_token_to_default_value_after_clear()
     {
         $request = $this->createRequestObject();
         $this->assertEmpty($this->getProperty('csrfToken'));
@@ -90,7 +85,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function createEmptyRequest()
+    public function it_creates_simple_pinterest_request_object()
     {
         $emptyRequest = [
             'source_url' => '',
@@ -109,7 +104,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function createRequestWithData()
+    public function it_creates_pinterest_request_object_with_data()
     {
         $data = ['key' => 'val'];
 
@@ -121,7 +116,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function createRequestWithBookmarks()
+    public function it_creates_pinterest_request_object_with_bookmarks()
     {
         $bookmarks = 'bookmarks';
 
@@ -133,7 +128,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function login()
+    public function it_saves_token_from_cookies()
     {
         $cookieFile = __DIR__.'/../'.Request::COOKIE_NAME;
         $token = 'WfdvEjNSLYiykJHDIx4sGSpCS8OhUld0';
@@ -149,7 +144,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function logoutClearsTokenAndLoggedInStatus()
+    public function it_clears_token_and_login_status_after_logout()
     {
         $request = $this->createRequestObject();
         $this->setProperty('loggedIn', true);
@@ -163,7 +158,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
      * @test
      * @expectedException seregazhuk\PinterestBot\Exceptions\AuthException
      */
-    public function setTokenFromCookiesThrowsExceptionForEmptyToke()
+    public function it_throws_exception_when_setting_token_from_empty_cookies()
     {
         $request = $this->createRequestObject();
         $this->setProperty('cookieJar', null);
@@ -174,7 +169,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
      * @test
      * @expectedException seregazhuk\PinterestBot\Exceptions\InvalidRequestException
      */
-    public function uploadThrowsExceptionIfFileNotExist()
+    public function it_throws_exception_uploading_file_that_does_not_exist()
     {
         $this->createRequestObject()->upload('image.jpg', 'http://uploadurl.com');
     }
@@ -182,7 +177,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function uploadSets()
+    public function it_creates_post_data_for_upload()
     {
         $http = $this->getHttpMock();
         $image = 'image.jpg';
