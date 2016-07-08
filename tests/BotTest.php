@@ -52,7 +52,7 @@ class BotTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function logout()
+    public function it_proxies_logout_to_request()
     {
         $userProviderMock = Mockery::mock(Pinners::class)
             ->shouldReceive('logout')
@@ -66,7 +66,7 @@ class BotTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function isLoggedIn()
+    public function it_proxies_is_logged_in_to_request()
     {
         $request = Mockery::mock(Request::class)
             ->shouldReceive('isLoggedIn')
