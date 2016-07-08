@@ -18,7 +18,7 @@ use seregazhuk\PinterestBot\Api\ProvidersContainer;
 class BotTest extends PHPUnit_Framework_TestCase
 {
     /** @test */
-    public function getLastResponseError()
+    public function it_returns_last_error_from_response()
     {
         $error = 'expected_error';
         $mock = Mockery::mock(Response::class)
@@ -35,7 +35,7 @@ class BotTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function login()
+    public function it_returns_true_on_success_login()
     {
         $credentials = ['test', 'test'];
         $userProviderMock = Mockery::mock(Pinners::class)
