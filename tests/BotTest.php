@@ -21,7 +21,10 @@ class BotTest extends PHPUnit_Framework_TestCase
     public function getLastResponseError()
     {
         $error = 'expected_error';
-        $mock = Mockery::mock(Response::class)->shouldReceive('getLastError')->andReturn($error)->getMock();
+        $mock = Mockery::mock(Response::class)
+            ->shouldReceive('getLastError')
+            ->andReturn($error)
+            ->getMock();
 
         $request = new Request(new CurlAdapter());
         $providersContainer = new ProvidersContainer($request, $mock);
@@ -35,7 +38,11 @@ class BotTest extends PHPUnit_Framework_TestCase
     public function login()
     {
         $credentials = ['test', 'test'];
-        $userProviderMock = Mockery::mock(Pinners::class)->shouldReceive('login')->withArgs($credentials)->andReturn(true)->getMock();
+        $userProviderMock = Mockery::mock(Pinners::class)
+            ->shouldReceive('login')
+            ->withArgs($credentials)
+            ->andReturn(true)
+            ->getMock();
 
         $containerMock = $this->createContainerMockWithProvider('user', $userProviderMock);
 
@@ -47,7 +54,9 @@ class BotTest extends PHPUnit_Framework_TestCase
     /** @test */
     public function logout()
     {
-        $userProviderMock = Mockery::mock(Pinners::class)->shouldReceive('logout')->getMock();
+        $userProviderMock = Mockery::mock(Pinners::class)
+            ->shouldReceive('logout')
+            ->getMock();
 
         $containerMock = $this->createContainerMockWithProvider('user', $userProviderMock);
 
@@ -59,7 +68,10 @@ class BotTest extends PHPUnit_Framework_TestCase
     /** @test */
     public function isLoggedIn()
     {
-        $request = Mockery::mock(Request::class)->shouldReceive('isLoggedIn')->andReturn(true)->getMock();
+        $request = Mockery::mock(Request::class)
+            ->shouldReceive('isLoggedIn')
+            ->andReturn(true)
+            ->getMock();
 
         $providersContainer = new ProvidersContainer($request, new Response());
 
@@ -75,6 +87,10 @@ class BotTest extends PHPUnit_Framework_TestCase
      */
     protected function createContainerMockWithProvider($providerName, MockInterface $providerMock)
     {
-        return Mockery::mock(ProvidersContainer::class)->shouldReceive('getProvider')->with($providerName)->andReturn($providerMock)->getMock();
+        return Mockery::mock(ProvidersContainer::class)
+            ->shouldReceive('getProvider')
+            ->with($providerName)
+            ->andReturn($providerMock)
+            ->getMock();
     }
 }
