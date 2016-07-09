@@ -21,7 +21,7 @@ class UserTest extends ProviderTest
     protected $providerClass = User::class;
 
     /** @test */
-    public function editProfile()
+    public function it_should_edit_user_profile()
     {
         $this->setSuccessResponse();
         $attributes = ['name' => 'name'];
@@ -32,7 +32,7 @@ class UserTest extends ProviderTest
     }
 
     /** @test */
-    public function editProfileWithImage()
+    public function it_should_upload_image_when_editing_profile_with_local_image()
     {
         $attributes = [
             'name'          => 'John Doe',
@@ -49,7 +49,7 @@ class UserTest extends ProviderTest
     /**
      * @test
      */
-    public function registerReturnsTrueOnSuccess()
+    public function it_should_register_new_user()
     {
         $this->requestMock
             ->shouldReceive('setTokenFromCookies')
@@ -65,7 +65,7 @@ class UserTest extends ProviderTest
     /**
      * @test
      */
-    public function registerReturnsFalseOnFail()
+    public function it_returns_false_when_error_in_registration()
     {
         $this->requestMock
             ->shouldReceive('setTokenFromCookies')
@@ -81,7 +81,7 @@ class UserTest extends ProviderTest
     /**
      * @test
      */
-    public function registerBusinessReturnsTrueOnSuccess()
+    public function it_should_register_business_account()
     {
         $this->requestMock
             ->shouldReceive('setTokenFromCookies')
@@ -97,7 +97,7 @@ class UserTest extends ProviderTest
     /**
      * @test
      */
-    public function registerBusinessReturnsFalseOnFail()
+    public function it_should_return_false_when_error_in_business_registration()
     {
         $this->requestMock
             ->shouldReceive('setTokenFromCookies')
@@ -114,7 +114,7 @@ class UserTest extends ProviderTest
      * @test
      * @expectedException \LogicException
      */
-    public function loginWithEmptyCredentials()
+    public function it_should_throw_exception_when_login_with_credentials()
     {
         $this->requestMock
             ->shouldReceive('isLoggedIn')
@@ -125,18 +125,20 @@ class UserTest extends ProviderTest
     }
 
     /** @test */
-    public function loginWhenAlreadyLogged()
+    public function it_should_not_call_requests_to_api_when_login_already_logged()
     {
         $this->requestMock
             ->shouldReceive('isLoggedIn')
             ->once()
             ->andReturn(true);
 
+        $this->requestMock->shouldNotReceive('exec');
+
         $this->assertTrue($this->provider->login('test', 'test'));
     }
 
     /** @test */
-    public function successLogin()
+    public function it_should_make_api_request_and_clear_token_when_login()
     {
         $response = $this->createSuccessApiResponse();
         $this->requestMock->shouldReceive('isLoggedIn')->andReturn(false);
@@ -151,7 +153,7 @@ class UserTest extends ProviderTest
      * @test
      * @expectedException seregazhuk\PinterestBot\Exceptions\AuthException
      */
-    public function loginFails()
+    public function it_should_throw_exception_when_login_fails()
     {
         $response = $this->createErrorApiResponse();
         $this->requestMock->shouldReceive('isLoggedIn')->andReturn(false);
@@ -162,14 +164,14 @@ class UserTest extends ProviderTest
     }
 
     /** @test */
-    public function logout()
+    public function it_should_proxy_logout_to_request()
     {
         $this->requestMock->shouldReceive('logout');
         $this->provider->logout();
     }
 
     /** @test */
-    public function isLoggedIn()
+    public function is_should_proxy_logged_in_to_request()
     {
         $this->requestMock
             ->shouldReceive('isLoggedIn')
@@ -180,7 +182,7 @@ class UserTest extends ProviderTest
     }
 
     /** @test */
-    public function convertToBusiness()
+    public function it_should_convert_simple_account_to_business()
     {
         $success = $this->createSuccessApiResponse();
         $this->setResponse($success);
