@@ -21,7 +21,7 @@ class PinsTest extends ProviderTest
     protected $providerClass = Pins::class;
 
     /** @test */
-    public function likeAPin()
+    public function it_should_like_pins()
     {
         $this->setSuccessResponse();
         $this->assertTrue($this->provider->like(1111));
@@ -31,7 +31,7 @@ class PinsTest extends ProviderTest
     }
 
     /** @test */
-    public function unlikeAPin()
+    public function it_should_unlike_pins()
     {
         $this->setSuccessResponse();
         $this->assertTrue($this->provider->unLike(1111));
@@ -41,7 +41,7 @@ class PinsTest extends ProviderTest
     }
 
     /** @test */
-    public function createCommentForPin()
+    public function it_should_create_comments_for_pin()
     {
         $this->setSuccessResponse();
         $this->assertNotEmpty($this->provider->comment(1111, 'comment text'));
@@ -51,7 +51,7 @@ class PinsTest extends ProviderTest
     }
 
     /** @test */
-    public function deleteCommentFromPin()
+    public function it_should_delete_comments_for_pin()
     {
         $this->setSuccessResponse();
         $this->assertTrue($this->provider->deleteComment(1111, 1111));
@@ -61,7 +61,7 @@ class PinsTest extends ProviderTest
     }
 
     /** @test */
-    public function createANewPin()
+    public function it_should_create_new_pin()
     {
         $response = $this->createPinCreationResponse();
         $this->setResponse($response);
@@ -76,7 +76,7 @@ class PinsTest extends ProviderTest
     }
 
     /** @test */
-    public function uploadImageWhenCreatingAPin()
+    public function it_should_upload_images_when_creating_pin_with_local_image()
     {
         $image = 'image.jpg';
         $this->requestMock
@@ -89,7 +89,7 @@ class PinsTest extends ProviderTest
     }
 
     /** @test */
-    public function createARepin()
+    public function it_should_create_repin()
     {
         $response = $this->createPinCreationResponse();
         $this->setResponse($response);
@@ -105,7 +105,7 @@ class PinsTest extends ProviderTest
     }
 
     /** @test */
-    public function editPin()
+    public function it_should_edit_pins()
     {
         $response = $this->createApiResponse();
         $this->setResponse($response);
@@ -116,7 +116,7 @@ class PinsTest extends ProviderTest
     }
 
     /** @test */
-    public function deletePin()
+    public function it_should_delete_pin()
     {
         $response = $this->createApiResponse();
         $this->setResponse($response);
@@ -127,7 +127,7 @@ class PinsTest extends ProviderTest
     }
 
     /** @test */
-    public function getPinInfo()
+    public function it_should_return_pin_info()
     {
         $response = $this->createApiResponse();
         $this->setResponse($response);
@@ -138,7 +138,7 @@ class PinsTest extends ProviderTest
     }
 
     /** @test */
-    public function searchForPins()
+    public function it_should_return_iterator_when_searching()
     {
         $response['module']['tree']['data']['results'] = [
             ['id' => 1],
@@ -153,7 +153,7 @@ class PinsTest extends ProviderTest
     }
 
     /** @test */
-    public function moveToBoard()
+    public function it_should_move_pins_between_boards()
     {
         $this->setSuccessResponse();
         $this->assertTrue($this->provider->moveToBoard(1111, 1));
@@ -163,7 +163,7 @@ class PinsTest extends ProviderTest
     }
 
     /** @test */
-    public function getFromSource()
+    public function it_should_return_iterator_with_pins_for_specific_site()
     {
         $response = $this->createPaginatedResponse();
         $this->setResponse($response);
@@ -174,7 +174,7 @@ class PinsTest extends ProviderTest
     }
 
     /** @test */
-    public function getActivityReturnsIteratorOnSuccess()
+    public function it_should_return_iterator_with_pin_activity()
     {
         $response = $this->createApiResponse(
             ['data' => ['aggregated_pin_data' => ['id' => 1]]]
@@ -188,7 +188,7 @@ class PinsTest extends ProviderTest
     }
 
     /** @test */
-    public function getActivityReturnsNullForNoResults()
+    public function it_should_return_null_for_empty_activity()
     {
         $this->setResponse($this->createApiResponse());
         $this->assertNull($this->provider->activity(1));
