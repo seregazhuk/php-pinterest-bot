@@ -66,7 +66,6 @@ class Request
         'Accept: application/json, text/javascript, */*; q=0.01',
         'Accept-Language: en-US,en;q=0.5',
         'DNT: 1',
-        'Host: nl.pinterest.com',
         'X-Pinterest-AppState: active',
         'X-NEW-APP: 1',
         'X-APP-VERSION: 04cf8cc',
@@ -308,9 +307,10 @@ class Request
     protected function getDefaultHttpHeaders()
     {
         return array_merge(
-            $this->requestHeaders,
-            $this->getContentTypeHeader(),
-            ['X-CSRFToken: ' . $this->csrfToken]
+            $this->requestHeaders, $this->getContentTypeHeader(), [
+                'Host: ' . UrlHelper::HOST,
+                'X-CSRFToken: ' . $this->csrfToken
+            ]
         );
     }
 

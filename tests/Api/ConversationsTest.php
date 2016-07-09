@@ -20,7 +20,7 @@ class ConversationsTest extends ProviderTest
     protected $providerClass = Conversations::class;
 
     /** @test */
-    public function sendMessage()
+    public function it_should_send_messages()
     {
         $response = $this->createMessageSendResponse();
 
@@ -35,7 +35,7 @@ class ConversationsTest extends ProviderTest
     }
 
     /** @test */
-    public function sendEmail()
+    public function it_should_send_emails()
     {
         $response = $this->createMessageSendResponse();
         $email = 'test@email.com';
@@ -52,7 +52,7 @@ class ConversationsTest extends ProviderTest
      * @test
      * @expectedException seregazhuk\PinterestBot\Exceptions\InvalidRequestException
      */
-    public function failWhenEmptyUsersProvided()
+    public function it_should_throw_exception_when_sending_message_to_no_users()
     {
         $this->provider->sendMessage([], '');
     }
@@ -61,13 +61,13 @@ class ConversationsTest extends ProviderTest
      * @test
      * @expectedException seregazhuk\PinterestBot\Exceptions\InvalidRequestException
      */
-    public function failWhenEmptyEmailsProvided()
+    public function it_should_throw_exception_when_sending_email_to_no_emails()
     {
         $this->provider->sendEmail([], '');
     }
 
     /** @test */
-    public function getLastConversation()
+    public function it_should_return_last_conversation()
     {
         $lastConversations = [
             '1' => ['result'],

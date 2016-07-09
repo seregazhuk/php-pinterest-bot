@@ -18,4 +18,25 @@ class Interests extends Provider
     protected $unFollowUrl = UrlHelper::RESOURCE_UNFOLLOW_INTEREST;
 
     protected $entityIdName = 'interest_id';
+
+    /**
+     * Get list of main categories
+     * 
+     * @return array|bool
+     */
+    public function getMain()
+    {
+        return $this->execGetRequest(["category_types" => "main"], UrlHelper::RESOURCE_GET_CATEGORIES);
+    }
+
+    /**
+     * Get category info
+     *
+     * @param string $category
+     * @return array|bool
+     */
+    public function getInfo($category)
+    {
+        return $this->execGetRequest(["category" => $category], UrlHelper::RESOURCE_GET_CATEGORY);
+    }
 }

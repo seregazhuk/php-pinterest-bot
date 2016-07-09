@@ -23,7 +23,7 @@ class PinnersTest extends ProviderTest
     protected $providerClass = Pinners::class;
 
     /** @test */
-    public function followUser()
+    public function it_should_follow_user()
     {
         $pinnerId = 1;
         $this->setFollowSuccessResponse($pinnerId, UrlHelper::RESOURCE_FOLLOW_USER);
@@ -34,7 +34,7 @@ class PinnersTest extends ProviderTest
     }
 
     /** @test */
-    public function unFollowUser()
+    public function it_should_unfollow_user()
     {
         $pinnerId = 1;
         $this->setFollowSuccessResponse($pinnerId, UrlHelper::RESOURCE_UNFOLLOW_USER);
@@ -45,7 +45,7 @@ class PinnersTest extends ProviderTest
     }
 
     /** @test */
-    public function getUserInfo()
+    public function it_should_return_user_info()
     {
         $response = $this->createApiResponse(['data' => ['name' => 'test']]);
         $this->setResponse($response);
@@ -55,7 +55,7 @@ class PinnersTest extends ProviderTest
     }
 
     /** @test */
-    public function getUserFollowers()
+    public function it_should_return_iterator_with_user_followers()
     {
         $response = $this->createPaginatedResponse();
         $this->setResponse($response);
@@ -77,7 +77,7 @@ class PinnersTest extends ProviderTest
     }
 
     /** @test */
-    public function getFollowingUsers()
+    public function it_should_return_iterator_with_following_users()
     {
         $response = $this->createPaginatedResponse();
         $this->setResponse($response);
@@ -88,7 +88,7 @@ class PinnersTest extends ProviderTest
     }
 
     /** @test */
-    public function getUserPins()
+    public function it_should_return_iterator_with_user_pins()
     {
         $res = [
             'resource'          => [
@@ -111,7 +111,7 @@ class PinnersTest extends ProviderTest
     }
 
     /** @test */
-    public function searchForUsers()
+    public function it_should_return_iterator_when_searching()
     {
         $response['module']['tree']['data']['results'] = [
             ['id' => 1],

@@ -20,7 +20,7 @@ class NewsTest extends ProviderTest
     protected $providerClass = News::class;
 
     /** @test */
-    public function getLatest()
+    public function it_should_return_the_latest_user_news()
     {
         $news = ['data' => 'news'];
         $response = $this->createApiResponse($news);

@@ -5,11 +5,11 @@ namespace seregazhuk\tests;
 use Mockery;
 use Mockery\MockInterface;
 use PHPUnit_Framework_TestCase;
-use seregazhuk\PinterestBot\Api\Providers\Pinners;
 use seregazhuk\PinterestBot\Bot;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Api\CurlAdapter;
+use seregazhuk\PinterestBot\Api\Providers\Pinners;
 use seregazhuk\PinterestBot\Api\ProvidersContainer;
 
 /**
@@ -18,10 +18,13 @@ use seregazhuk\PinterestBot\Api\ProvidersContainer;
 class BotTest extends PHPUnit_Framework_TestCase
 {
     /** @test */
-    public function getLastResponseError()
+    public function it_should_return_last_error_from_response()
     {
         $error = 'expected_error';
-        $mock = Mockery::mock(Response::class)->shouldReceive('getLastError')->andReturn($error)->getMock();
+        $mock = Mockery::mock(Response::class)
+            ->shouldReceive('getLastError')
+            ->andReturn($error)
+            ->getMock();
 
         $request = new Request(new CurlAdapter());
         $providersContainer = new ProvidersContainer($request, $mock);
@@ -32,12 +35,16 @@ class BotTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function login()
+    public function it_should_return_true_on_success_login()
     {
         $credentials = ['test', 'test'];
-        $userProviderMock = Mockery::mock(Pinners::class)->shouldReceive('login')->withArgs($credentials)->andReturn(true)->getMock();
+        $userProviderMock = Mockery::mock(Pinners::class)
+            ->shouldReceive('login')
+            ->withArgs($credentials)
+            ->andReturn(true)
+            ->getMock();
 
-        $containerMock = $this->createContainerMockWithProvider('user', $userProviderMock);
+        $containerMock = $this->get_container_with_expected_provider('user', $userProviderMock);
 
         $bot = new Bot($containerMock);
 
@@ -45,11 +52,13 @@ class BotTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function logout()
+    public function it_should_proxy_logout_to_request()
     {
-        $userProviderMock = Mockery::mock(Pinners::class)->shouldReceive('logout')->getMock();
+        $userProviderMock = Mockery::mock(Pinners::class)
+            ->shouldReceive('logout')
+            ->getMock();
 
-        $containerMock = $this->createContainerMockWithProvider('user', $userProviderMock);
+        $containerMock = $this->get_container_with_expected_provider('user', $userProviderMock);
 
         $bot = new Bot($containerMock);
 
@@ -57,9 +66,12 @@ class BotTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function isLoggedIn()
+    public function it_should_proxy_is_logged_in_to_request()
     {
-        $request = Mockery::mock(Request::class)->shouldReceive('isLoggedIn')->andReturn(true)->getMock();
+        $request = Mockery::mock(Request::class)
+            ->shouldReceive('isLoggedIn')
+            ->andReturn(true)
+            ->getMock();
 
         $providersContainer = new ProvidersContainer($request, new Response());
 
@@ -73,8 +85,12 @@ class BotTest extends PHPUnit_Framework_TestCase
      * @param MockInterface $providerMock
      * @return ProvidersContainer
      */
-    protected function createContainerMockWithProvider($providerName, MockInterface $providerMock)
+    protected function get_container_with_expected_provider($providerName, MockInterface $providerMock)
     {
-        return Mockery::mock(ProvidersContainer::class)->shouldReceive('getProvider')->with($providerName)->andReturn($providerMock)->getMock();
+        return Mockery::mock(ProvidersContainer::class)
+            ->shouldReceive('getProvider')
+            ->with($providerName)
+            ->andReturn($providerMock)
+            ->getMock();
     }
 }

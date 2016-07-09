@@ -2,13 +2,14 @@
 
 namespace seregazhuk\tests;
 
+use PHPUnit_Framework_TestCase;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Api\CurlAdapter;
 use seregazhuk\PinterestBot\Api\Providers\Provider;
 use seregazhuk\PinterestBot\Api\Providers\ProviderLoginCheckWrapper;
 
-class ProviderLoginCheckWrapperTest extends \PHPUnit_Framework_TestCase
+class ProviderLoginCheckWrapperTest extends PHPUnit_Framework_TestCase
 {
     /**
      * For not logged in request.
@@ -16,7 +17,7 @@ class ProviderLoginCheckWrapperTest extends \PHPUnit_Framework_TestCase
      * @test
      * @expectedException seregazhuk\PinterestBot\Exceptions\AuthException
      */
-    public function failWhenLoginIsRequired()
+    public function it_should_fail_when_login_is_required()
     {
         $provider = new TestProvider(new Request(new CurlAdapter()), new Response());
         $wrapper = new ProviderLoginCheckWrapper($provider);
@@ -24,7 +25,7 @@ class ProviderLoginCheckWrapperTest extends \PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function simpleMethodCall()
+    public function it_should_call_provider_method()
     {
         $provider = new TestProvider(new Request(new CurlAdapter()), new Response());
         $wrapper = new ProviderLoginCheckWrapper($provider);
@@ -35,7 +36,7 @@ class ProviderLoginCheckWrapperTest extends \PHPUnit_Framework_TestCase
      * @test
      * @expectedException seregazhuk\PinterestBot\Exceptions\InvalidRequestException
      */
-    public function callNonexistentMethod()
+    public function it_should_throw_exception_when_calling_non_existed_method()
     {
         $provider = new TestProvider(new Request(new CurlAdapter()), new Response());
         $wrapper = new ProviderLoginCheckWrapper($provider);

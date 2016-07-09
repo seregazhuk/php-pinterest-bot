@@ -31,20 +31,20 @@ class ProvidersContainerTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function getValidProvider()
+    public function it_should_return_provider_instance()
     {
         $provider = $this->container->getProvider('pinners');
         $this->assertNotEmpty($provider);
     }
 
     /** @test */
-    public function getRequest()
+    public function it_should_return_request_instance()
     {
         $this->assertInstanceOf(Request::class, $this->container->getRequest());
     }
 
     /** @test */
-    public function getResponse()
+    public function it_should_return_response_instance()
     {
         $this->assertInstanceOf(Response::class, $this->container->getResponse());
     }
@@ -53,7 +53,7 @@ class ProvidersContainerTest extends PHPUnit_Framework_TestCase
      * @test
      * @expectedException seregazhuk\PinterestBot\Exceptions\WrongProviderException
      */
-    public function getWrongProvider()
+    public function it_should_throw_exception_on_getting_wrong_provider()
     {
         $this->container->getProvider('unknown');
     }
