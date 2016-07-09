@@ -44,7 +44,7 @@ class BotTest extends PHPUnit_Framework_TestCase
             ->andReturn(true)
             ->getMock();
 
-        $containerMock = $this->createContainerMockWithProvider('user', $userProviderMock);
+        $containerMock = $this->get_container_with_expected_provider('user', $userProviderMock);
 
         $bot = new Bot($containerMock);
 
@@ -58,7 +58,7 @@ class BotTest extends PHPUnit_Framework_TestCase
             ->shouldReceive('logout')
             ->getMock();
 
-        $containerMock = $this->createContainerMockWithProvider('user', $userProviderMock);
+        $containerMock = $this->get_container_with_expected_provider('user', $userProviderMock);
 
         $bot = new Bot($containerMock);
 
@@ -85,7 +85,7 @@ class BotTest extends PHPUnit_Framework_TestCase
      * @param MockInterface $providerMock
      * @return ProvidersContainer
      */
-    protected function createContainerMockWithProvider($providerName, MockInterface $providerMock)
+    protected function get_container_with_expected_provider($providerName, MockInterface $providerMock)
     {
         return Mockery::mock(ProvidersContainer::class)
             ->shouldReceive('getProvider')

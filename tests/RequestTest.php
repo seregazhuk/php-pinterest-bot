@@ -35,10 +35,10 @@ class RequestTest extends PHPUnit_Framework_TestCase
     public function it_executes_request_to_api_endpoint()
     {
         $response = $this->createSuccessApiResponse();
-        $http = $this->getHttpMock();
+        $http = $this->getHttpObject();
 
-        $this->setHttpExecute($http, json_encode($response));
-        $this->setHttpExecute($http, null);
+        $this->http_should_execute_and_return($http, json_encode($response));
+        $this->http_should_execute_and_return($http, null);
 
         $request = $this->createRequestObject($http);
 
@@ -53,10 +53,10 @@ class RequestTest extends PHPUnit_Framework_TestCase
     public function it_executes_follow_request_to_api()
     {
         $response = $this->createSuccessApiResponse();
-        $http = $this->getHttpMock();
+        $http = $this->getHttpObject();
 
-        $this->setHttpExecute($http, json_encode($response));
-        $this->setHttpExecute($http, null);
+        $this->http_should_execute_and_return($http, json_encode($response));
+        $this->http_should_execute_and_return($http, null);
 
         $request = $this->createRequestObject($http);
 
@@ -179,11 +179,11 @@ class RequestTest extends PHPUnit_Framework_TestCase
      */
     public function it_creates_post_data_for_upload()
     {
-        $http = $this->getHttpMock();
+        $http = $this->getHttpObject();
         $image = 'image.jpg';
         file_put_contents($image, '');
 
-        $this->setHttpExecute($http, null);
+        $this->http_should_execute_and_return($http, null);
         $request = $this->createRequestObject($http);
 
         $request->upload($image, 'http://uploadurl.com');
@@ -196,7 +196,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
      * @param mixed $returnsValue
      * @param int $times
      */
-    protected function setHttpExecute($http, $returnsValue, $times = 1)
+    protected function http_should_execute_and_return($http, $returnsValue, $times = 1)
     {
         $http->shouldReceive('execute')
             ->times($times)
@@ -211,7 +211,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
     /**
      * @return Mock|HttpInterface
      */
-    protected function getHttpMock()
+    protected function getHttpObject()
     {
         $mock = Mockery::mock(HttpInterface::class);
 
