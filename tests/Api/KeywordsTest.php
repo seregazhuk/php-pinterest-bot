@@ -22,7 +22,7 @@ class KeywordsTest extends ProviderTest
     protected $providerClass = Keywords::class;
 
     /** @test */
-    public function recommendedFor()
+    public function it_should_return_recommended_keywords()
     {
         $recommendation = [
             'someData' => 'data',
@@ -49,7 +49,7 @@ class KeywordsTest extends ProviderTest
     }
 
     /** @test */
-    public function emptyResultsForRecommendedFor()
+    public function it_should_return_empty_array_for_no_recommendations()
     {
         $this->setResponse(['resource_response' => ['data' => '']]);
 

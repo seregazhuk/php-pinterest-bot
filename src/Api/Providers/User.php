@@ -2,6 +2,7 @@
 
 namespace seregazhuk\PinterestBot\Api\Providers;
 
+use LogicException;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
 use seregazhuk\PinterestBot\Exceptions\AuthException;
 use seregazhuk\PinterestBot\Api\Traits\UploadsImages;
@@ -72,8 +73,8 @@ class User extends Provider
         $data = [
             "email"         => $email,
             "password"      => $password,
-            "business_name" => $businessName,
             "website_url"   => $website,
+            "business_name" => $businessName,
             "account_type"  => self::ACCOUNT_TYPE_OTHER,
         ];
 
@@ -151,7 +152,7 @@ class User extends Provider
     protected function checkCredentials($username, $password)
     {
         if (!$username || !$password) {
-            throw new \LogicException('You must set username and password to login.');
+            throw new LogicException('You must set username and password to login.');
         }
     }
 

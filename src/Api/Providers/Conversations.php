@@ -13,8 +13,8 @@ class Conversations extends Provider
      * Send message to a user.
      *
      * @param array|int $userId
-     * @param string    $text
-     * @param int|null  $pinId
+     * @param string $text
+     * @param int|null $pinId
      *
      * @throws InvalidRequestException
      *
@@ -31,8 +31,8 @@ class Conversations extends Provider
      * Send email.
      *
      * @param array|int $emails
-     * @param string    $text
-     * @param int|null  $pinId
+     * @param string $text
+     * @param int|null $pinId
      *
      * @throws InvalidRequestException
      *
@@ -56,20 +56,18 @@ class Conversations extends Provider
     }
 
     /**
-     * @param array  $userId
+     * @param array|int $userId
      * @param string $text
-     * @param int    $pinId
-     * @param array  $emails
+     * @param int $pinId
+     * @param array $emails
      *
      * @throws InvalidRequestException
      *
      * @return bool
      */
-    protected function callSendMessage($userId, $text, $pinId, $emails = [])
+    protected function callSendMessage($userId, $text, $pinId, array $emails = [])
     {
-        if (empty($userId) && empty($emails)) {
-            throw new InvalidRequestException('You must specify user_ids or emails to send message.');
-        }
+        $this->guardAgainstEmptyData($userId, $emails);
 
         $requestOptions = [
             'pin'      => $pinId,
@@ -79,5 +77,17 @@ class Conversations extends Provider
         ];
 
         return $this->execPostRequest($requestOptions, UrlHelper::RESOURCE_SEND_MESSAGE);
+    }
+
+    /**
+     * @param $userId
+     * @param array $emails
+     * @throws InvalidRequestException
+     */
+    protected function guardAgainstEmptyData($userId, array $emails)
+    {
+        if (empty($userId) && empty($emails)) {
+            throw new InvalidRequestException('You must specify user_ids or emails to send message.');
+        }
     }
 }
