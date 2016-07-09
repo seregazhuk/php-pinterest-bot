@@ -5,11 +5,11 @@ namespace seregazhuk\tests;
 use Mockery;
 use Mockery\MockInterface;
 use PHPUnit_Framework_TestCase;
-use seregazhuk\PinterestBot\Api\Providers\Pinners;
 use seregazhuk\PinterestBot\Bot;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Api\CurlAdapter;
+use seregazhuk\PinterestBot\Api\Providers\Pinners;
 use seregazhuk\PinterestBot\Api\ProvidersContainer;
 
 /**
@@ -18,7 +18,7 @@ use seregazhuk\PinterestBot\Api\ProvidersContainer;
 class BotTest extends PHPUnit_Framework_TestCase
 {
     /** @test */
-    public function it_returns_last_error_from_response()
+    public function it_should_return_last_error_from_response()
     {
         $error = 'expected_error';
         $mock = Mockery::mock(Response::class)
@@ -35,7 +35,7 @@ class BotTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function it_returns_true_on_success_login()
+    public function it_should_return_true_on_success_login()
     {
         $credentials = ['test', 'test'];
         $userProviderMock = Mockery::mock(Pinners::class)
@@ -52,7 +52,7 @@ class BotTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function it_proxies_logout_to_request()
+    public function it_should_proxy_logout_to_request()
     {
         $userProviderMock = Mockery::mock(Pinners::class)
             ->shouldReceive('logout')
@@ -66,7 +66,7 @@ class BotTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function it_proxies_is_logged_in_to_request()
+    public function it_should_proxy_is_logged_in_to_request()
     {
         $request = Mockery::mock(Request::class)
             ->shouldReceive('isLoggedIn')

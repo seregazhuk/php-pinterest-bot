@@ -15,7 +15,7 @@ class ResponseTest extends PHPUnit_Framework_TestCase
     use ResponseHelper;
 
     /** @test */
-    public function it_returns_data_from_response()
+    public function it_should_return_data_from_response()
     {
         $response = new Response();
 
@@ -25,7 +25,7 @@ class ResponseTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function it_returns_value_by_key_from_response()
+    public function it_should_return_value_by_key_from_response()
     {
         $response = new Response();
 
@@ -35,7 +35,7 @@ class ResponseTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function it_returns_false_on_error_response()
+    public function it_should_return_false_on_error_response()
     {
         $response = new Response();
 
@@ -47,7 +47,7 @@ class ResponseTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function it_checks_empty_responses()
+    public function it_should_check_empty_responses()
     {
         $response = new Response();
 
@@ -59,7 +59,7 @@ class ResponseTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function it_checks_responses_with_data()
+    public function it_should_check_responses_with_data()
     {
         $response = new Response();
 
@@ -69,7 +69,7 @@ class ResponseTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function it_checks_responses_with_errors()
+    public function it_should_check_responses_with_errors()
     {
         $response = new Response();
 
@@ -82,7 +82,7 @@ class ResponseTest extends PHPUnit_Framework_TestCase
 
 
     /** @test */
-    public function it_returns_bookmarks_string_from_response()
+    public function it_should_return_bookmarks_string_from_response()
     {
         $response = new Response();
 
@@ -93,7 +93,7 @@ class ResponseTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function it_returns_empty_array_for_response_without_pagination()
+    public function it_should_return_empty_array_for_response_without_pagination()
     {
         $response = new Response();
         $this->assertEmpty($response->getPaginationData([]));
@@ -104,7 +104,7 @@ class ResponseTest extends PHPUnit_Framework_TestCase
 
 
     /** @test */
-    public function it_returns_data_and_bookmarks_from_response_with_pagination()
+    public function it_should_return_data_and_bookmarks_from_response_with_pagination()
     {
         $response = new Response();
         $dataWithBookmarks = [

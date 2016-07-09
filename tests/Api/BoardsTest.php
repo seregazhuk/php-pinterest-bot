@@ -24,7 +24,7 @@ class BoardsTest extends ProviderTest
     protected $providerClass = Boards::class;
 
     /** @test */
-    public function it_returns_iterator_when_searching()
+    public function it_should_should_return_iterator_when_searching()
     {
         $response['module']['tree']['data']['results'] = [
             ['id' => 1],
@@ -39,7 +39,7 @@ class BoardsTest extends ProviderTest
     }
 
     /** @test */
-    public function it_follows_boards()
+    public function it_should_follow_boards()
     {
         $boardId = 1;
         $this->setFollowSuccessResponse($boardId, UrlHelper::RESOURCE_FOLLOW_BOARD);
@@ -50,7 +50,7 @@ class BoardsTest extends ProviderTest
     }
 
     /** @test */
-    public function it_unfollows_boards()
+    public function it_should_unfollow_boards()
     {
         $boardId = 1;
         $this->setFollowSuccessResponse($boardId, UrlHelper::RESOURCE_UNFOLLOW_BOARD);
@@ -61,7 +61,7 @@ class BoardsTest extends ProviderTest
     }
 
     /** @test */
-    public function it_returns_iterator_for_boards_followers()
+    public function it_should_return_iterator_for_boards_followers()
     {
         $response = $this->createPaginatedResponse();
         $this->setResponse($response);
@@ -83,7 +83,7 @@ class BoardsTest extends ProviderTest
     }
 
     /** @test */
-    public function it_returns_boards_for_specific_user()
+    public function it_should_return_boards_for_specific_user()
     {
         $boards = ['data' => 'boards'];
         $response = $this->createApiResponse($boards);
@@ -96,7 +96,7 @@ class BoardsTest extends ProviderTest
     }
 
     /** @test */
-    public function it_returns_board_info()
+    public function it_should_return_board_info()
     {
         $response = $this->createApiResponse(['data' => 'info']);
 
@@ -108,7 +108,7 @@ class BoardsTest extends ProviderTest
     }
 
     /** @test */
-    public function it_returns_iterator_with_pins_for_specific_board()
+    public function it_should_return_iterator_with_pins_for_specific_board()
     {
         $response = $this->createPaginatedResponse();
 
@@ -130,7 +130,7 @@ class BoardsTest extends ProviderTest
     }
 
     /** @test */
-    public function it_deletes_board()
+    public function it_should_delete_board()
     {
         $this->setSuccessResponse(); 
         $this->assertTrue($this->provider->delete(1111));
@@ -140,7 +140,7 @@ class BoardsTest extends ProviderTest
     }
 
     /** @test */
-    public function it_creates_board()
+    public function it_should_create_board()
     {
         $this->setSuccessResponse();
         $this->assertTrue($this->provider->create('test', 'test'));
@@ -150,7 +150,7 @@ class BoardsTest extends ProviderTest
     }
 
     /** @test */
-    public function it_updates_board()
+    public function it_should_update_board()
     {
         $attributes = [
             'category'    => 'test',
