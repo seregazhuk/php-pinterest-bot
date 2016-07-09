@@ -24,7 +24,7 @@ class InterestsTest extends ProviderTest
     protected $providerClass = Interests::class;
 
     /** @test */
-    public function followInterest()
+    public function it_should_follow_interest()
     {
         $interestId = 1111;
         $this->setFollowSuccessResponse($interestId, UrlHelper::RESOURCE_FOLLOW_INTEREST);
@@ -35,7 +35,7 @@ class InterestsTest extends ProviderTest
     }
 
     /** @test */
-    public function unFollowInterest()
+    public function it_should_unfollow_interest()
     {
         $interestId = 1111;
         $this->setFollowSuccessResponse($interestId, UrlHelper::RESOURCE_UNFOLLOW_INTEREST);
