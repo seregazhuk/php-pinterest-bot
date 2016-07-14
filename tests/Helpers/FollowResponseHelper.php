@@ -42,13 +42,17 @@ trait FollowResponseHelper
      */
     protected function setFollowRequest($entityId, $sourceUrl, $response)
     {
-        $this->requestMock->shouldReceive('followMethodCall')->once()->withArgs(
-                [
-                    $entityId,
-                    $this->provider->getEntityIdName(),
-                    $sourceUrl
-                ]
-            )->andReturn($response);
+        $arguments = [
+            $entityId,
+            $this->provider->getEntityIdName(),
+            $sourceUrl
+        ];
+
+        $this->requestMock
+            ->shouldReceive('followMethodCall')
+            ->once()
+            ->withArgs($arguments)
+            ->andReturn($response);
 
         return $this;
     }
