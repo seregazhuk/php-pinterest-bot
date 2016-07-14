@@ -120,4 +120,8 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
         $this->setResponse($this->createErrorApiResponse(), $times);
     }
 
+    protected function setResourceResponse($data)
+    {
+        $this->setResponse(['resource_response' => ['data' => $data]]);
+    }
 }

@@ -38,10 +38,10 @@ class PinnersTest extends ProviderTest
     {
         $pinnerId = 1;
         $this->setFollowSuccessResponse($pinnerId, UrlHelper::RESOURCE_UNFOLLOW_USER);
-        $this->assertTrue($this->provider->unFollow(1));
+        $this->assertTrue($this->provider->unFollow($pinnerId));
 
         $this->setFollowErrorResponse($pinnerId, UrlHelper::RESOURCE_UNFOLLOW_USER);
-        $this->assertFalse($this->provider->unFollow(1));
+        $this->assertFalse($this->provider->unFollow($pinnerId));
     }
 
     /** @test */

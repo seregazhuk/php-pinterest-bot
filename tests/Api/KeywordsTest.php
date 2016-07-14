@@ -49,9 +49,4 @@ class KeywordsTest extends ProviderTest
 
         $this->assertEmpty($this->provider->recommendedFor('test'));
     }
-
-    protected function setResourceResponse($data)
-    {
-        $this->setResponse(['resource_response' => ['data' => $data]]);
-    }
 }
