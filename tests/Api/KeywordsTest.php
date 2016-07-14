@@ -30,13 +30,7 @@ class KeywordsTest extends ProviderTest
             'display'  => 'Term 1',
             'position' => 0,
         ];
-        $this->setResponse(
-            [
-                'resource_response' => [
-                    'data' => ['guides' => [$recommendation]]
-                ]
-            ]
-        );
+        $this->setResourceResponseData(['guides' => [$recommendation]]);
 
         $result = $this->provider->recommendedFor('test');
 
@@ -51,7 +45,7 @@ class KeywordsTest extends ProviderTest
     /** @test */
     public function it_should_return_empty_array_for_no_recommendations()
     {
-        $this->setResponse(['resource_response' => ['data' => '']]);
+        $this->setResourceResponseData('');
 
         $this->assertEmpty($this->provider->recommendedFor('test'));
     }

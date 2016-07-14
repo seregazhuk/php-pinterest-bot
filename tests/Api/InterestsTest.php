@@ -28,10 +28,10 @@ class InterestsTest extends ProviderTest
     {
         $interestId = 1111;
         $this->setFollowSuccessResponse($interestId, UrlHelper::RESOURCE_FOLLOW_INTEREST);
-        $this->assertTrue($this->provider->follow(1111));
+        $this->assertTrue($this->provider->follow($interestId));
 
         $this->setFollowErrorResponse($interestId, UrlHelper::RESOURCE_FOLLOW_INTEREST);
-        $this->assertFalse($this->provider->follow(1111));
+        $this->assertFalse($this->provider->follow($interestId));
     }
 
     /** @test */
@@ -39,9 +39,33 @@ class InterestsTest extends ProviderTest
     {
         $interestId = 1111;
         $this->setFollowSuccessResponse($interestId, UrlHelper::RESOURCE_UNFOLLOW_INTEREST);
-        $this->assertTrue($this->provider->unFollow(1111));
+        $this->assertTrue($this->provider->unFollow($interestId));
 
         $this->setFollowErrorResponse($interestId, UrlHelper::RESOURCE_UNFOLLOW_INTEREST);
-        $this->assertFalse($this->provider->unFollow(1111));
+        $this->assertFalse($this->provider->unFollow($interestId));
+    }
+
+    /** @test */
+    public function it_should_return_main_categories()
+    {
+        $categories = ['category1', 'category2'];
+
+        $response = $this->createApiResponse(['data' => $categories]);
+
+        $this->setResponse($response);
+
+        $this->assertEquals($categories, $this->provider->getMain());
+    }
+
+    /** @test */
+    public function it_should_return_category_info()
+    {
+        $info = ['name' => 'category1'];
+
+        $response = $this->createApiResponse(['data' => $info]);
+
+        $this->setResponse($response);
+
+        $this->assertEquals($info, $this->provider->getInfo(1));
     }
 }

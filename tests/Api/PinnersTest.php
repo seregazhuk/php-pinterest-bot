@@ -38,10 +38,10 @@ class PinnersTest extends ProviderTest
     {
         $pinnerId = 1;
         $this->setFollowSuccessResponse($pinnerId, UrlHelper::RESOURCE_UNFOLLOW_USER);
-        $this->assertTrue($this->provider->unFollow(1));
+        $this->assertTrue($this->provider->unFollow($pinnerId));
 
         $this->setFollowErrorResponse($pinnerId, UrlHelper::RESOURCE_UNFOLLOW_USER);
-        $this->assertFalse($this->provider->unFollow(1));
+        $this->assertFalse($this->provider->unFollow($pinnerId));
     }
 
     /** @test */
@@ -59,15 +59,8 @@ class PinnersTest extends ProviderTest
     {
         $response = $this->createPaginatedResponse();
         $this->setResponse($response);
-        $this->setResponse(['resource_response' => ['data' => []]]);
-        $this->setResponse([
-                'resource_response' => [
-                    'data' => [
-                        ['type' => 'module'],
-                    ],
-                ],
-            ]
-        );
+        $this->setResourceResponseData([]);
+        $this->setResourceResponseData([['type' => 'module']]);
 
         $followers = $this->provider->followers('username');
         $this->assertCount(2, iterator_to_array($followers));
@@ -81,7 +74,7 @@ class PinnersTest extends ProviderTest
     {
         $response = $this->createPaginatedResponse();
         $this->setResponse($response);
-        $this->setResponse(['resource_response' => ['data' => []]]);
+        $this->setResourceResponseData([]);
 
         $following = $this->provider->following('username');
         $this->assertCount(2, iterator_to_array($following));

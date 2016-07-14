@@ -46,7 +46,7 @@ class BoardsTest extends ProviderTest
         $this->assertTrue($this->provider->follow($boardId));
 
         $this->setFollowErrorResponse($boardId, UrlHelper::RESOURCE_FOLLOW_BOARD);
-        $this->assertFalse($this->provider->follow(1));
+        $this->assertFalse($this->provider->follow($boardId));
     }
 
     /** @test */
@@ -54,10 +54,10 @@ class BoardsTest extends ProviderTest
     {
         $boardId = 1;
         $this->setFollowSuccessResponse($boardId, UrlHelper::RESOURCE_UNFOLLOW_BOARD);
-        $this->assertTrue($this->provider->unFollow(1));
+        $this->assertTrue($this->provider->unFollow($boardId));
 
         $this->setFollowErrorResponse($boardId, UrlHelper::RESOURCE_UNFOLLOW_BOARD);
-        $this->assertFalse($this->provider->unFollow(1));
+        $this->assertFalse($this->provider->unFollow($boardId));
     }
 
     /** @test */
@@ -65,20 +65,14 @@ class BoardsTest extends ProviderTest
     {
         $response = $this->createPaginatedResponse();
         $this->setResponse($response);
-        $this->setResponse((['resource_response' => ['data' => []]]));
-        $this->setResponse([
-                'resource_response' => [
-                    'data' => [
-                        ['type' => 'module'],
-                    ],
-                ],
-            ]
-        );
+        $this->setResourceResponseData([]);
+        $this->setResourceResponseData([['type' => 'module']]);
 
-        $followers = $this->provider->followers(111);
+        $boardId = 1;
+        $followers = $this->provider->followers($boardId);
         $this->assertCount(2, iterator_to_array($followers));
 
-        $followers = $this->provider->followers(111);
+        $followers = $this->provider->followers($boardId);
         $this->assertEmpty(iterator_to_array($followers));
     }
 
@@ -86,13 +80,14 @@ class BoardsTest extends ProviderTest
     public function it_should_return_boards_for_specific_user()
     {
         $boards = ['data' => 'boards'];
+        $userName = 'user';
         $response = $this->createApiResponse($boards);
 
         $this->setResponse($response);
-        $this->assertEquals($boards['data'], $this->provider->forUser(1));
+        $this->assertEquals($boards['data'], $this->provider->forUser($userName));
 
         $this->setResponse(null);
-        $this->assertFalse($this->provider->forUser(1));
+        $this->assertFalse($this->provider->forUser($userName));
     }
 
     /** @test */
@@ -113,19 +108,14 @@ class BoardsTest extends ProviderTest
         $response = $this->createPaginatedResponse();
 
         $this->setResponse($response);
-        $this->setResponse((['resource_response' => ['data' => []]]));
-        $this->setResponse([
-                'resource_response' => [
-                    'data' => [
-                        ['type' => 'module'],
-                    ],
-                ],
-            ]);
+        $this->setResourceResponseData([]);
+        $this->setResourceResponseData([['type' => 'module']]);
 
-        $pins = $this->provider->pins(1);
+        $boardId = 1;
+        $pins = $this->provider->pins($boardId);
         $this->assertCount(2, iterator_to_array($pins));
 
-        $pins = $this->provider->pins(0);
+        $pins = $this->provider->pins($boardId);
         $this->assertEmpty(iterator_to_array($pins));
     }
 
@@ -157,10 +147,11 @@ class BoardsTest extends ProviderTest
             'description' => 'test'
         ];
 
+        $boardId = 1;
         $this->setSuccessResponse();
-        $this->assertTrue($this->provider->update(1, $attributes));
+        $this->assertTrue($this->provider->update($boardId, $attributes));
 
         $this->setErrorResponse();
-        $this->assertFalse($this->provider->update(1, $attributes));
+        $this->assertFalse($this->provider->update($boardId, $attributes));
     }
 }

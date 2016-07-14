@@ -27,7 +27,12 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
     /**
      * @var array
      */
-    protected $httpMockMethods = ['exec', 'checkLoggedIn', 'isLoggedIn', 'followMethodCall'];
+    protected $httpMockMethods = [
+        'exec',
+        'isLoggedIn',
+        'checkLoggedIn',
+        'followMethodCall',
+    ];
 
     /**
      * @var string
@@ -49,7 +54,9 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
      */
     protected function createRequestMock()
     {
-        $requestMock = Mockery::mock(Request::class)->shouldReceive($this->httpMockMethods)->getMock();
+        $requestMock = Mockery::mock(Request::class)
+            ->shouldReceive($this->httpMockMethods)
+            ->getMock();
 
         $requestMock->shouldReceive('checkLoggedIn')->andReturn(true);
         
@@ -97,7 +104,10 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
 
     protected function setResponse($response, $times = 1, $method = 'exec')
     {
-        $this->requestMock->shouldReceive($method)->times($times)->andReturn($response);
+        $this->requestMock
+            ->shouldReceive($method)
+            ->times($times)
+            ->andReturn($response);
     }
 
     protected function setSuccessResponse($times = 1)
@@ -110,4 +120,8 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
         $this->setResponse($this->createErrorApiResponse(), $times);
     }
 
+    protected function setResourceResponseData($data)
+    {
+        $this->setResponse(['resource_response' => ['data' => $data]]);
+    }
 }
