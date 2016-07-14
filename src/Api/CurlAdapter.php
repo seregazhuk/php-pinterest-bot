@@ -65,16 +65,6 @@ class CurlAdapter implements HttpInterface
     }
 
     /**
-     * Check if the curl request ended up with errors.
-     *
-     * @return bool
-     */
-    public function hasErrors()
-    {
-        return curl_errno($this->curl) ? true : false;
-    }
-
-    /**
      * Get curl errors.
      *
      * @return string
