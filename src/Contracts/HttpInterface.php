@@ -5,13 +5,6 @@ namespace seregazhuk\PinterestBot\Contracts;
 interface HttpInterface
 {
     /**
-     * Check if the curl request ended up with errors.
-     *
-     * @return bool
-     */
-    public function hasErrors();
-
-    /**
      * Get curl errors.
      *
      * @return string
