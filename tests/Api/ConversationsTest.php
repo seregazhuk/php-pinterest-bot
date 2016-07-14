@@ -24,7 +24,7 @@ class ConversationsTest extends ProviderTest
     {
         $response = $this->createMessageSendResponse();
 
-        $userId = '0000000000000';
+        $userId = '1';
         $message = 'test';
 
         $this->setResponse($response);        
@@ -93,7 +93,7 @@ class ConversationsTest extends ProviderTest
     protected function createMessageSendResponse()
     {
         $data = [
-            'data'  => ['id' => '0000000000000'],
+            'data'  => ['id' => '1'],
             'error' => null,
         ];
 
