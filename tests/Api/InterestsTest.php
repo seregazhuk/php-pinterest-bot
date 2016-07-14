@@ -28,10 +28,10 @@ class InterestsTest extends ProviderTest
     {
         $interestId = 1111;
         $this->setFollowSuccessResponse($interestId, UrlHelper::RESOURCE_FOLLOW_INTEREST);
-        $this->assertTrue($this->provider->follow(1111));
+        $this->assertTrue($this->provider->follow($interestId));
 
         $this->setFollowErrorResponse($interestId, UrlHelper::RESOURCE_FOLLOW_INTEREST);
-        $this->assertFalse($this->provider->follow(1111));
+        $this->assertFalse($this->provider->follow($interestId));
     }
 
     /** @test */
@@ -39,9 +39,9 @@ class InterestsTest extends ProviderTest
     {
         $interestId = 1111;
         $this->setFollowSuccessResponse($interestId, UrlHelper::RESOURCE_UNFOLLOW_INTEREST);
-        $this->assertTrue($this->provider->unFollow(1111));
+        $this->assertTrue($this->provider->unFollow($interestId));
 
         $this->setFollowErrorResponse($interestId, UrlHelper::RESOURCE_UNFOLLOW_INTEREST);
-        $this->assertFalse($this->provider->unFollow(1111));
+        $this->assertFalse($this->provider->unFollow($interestId));
     }
 }
