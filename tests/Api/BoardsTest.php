@@ -65,15 +65,8 @@ class BoardsTest extends ProviderTest
     {
         $response = $this->createPaginatedResponse();
         $this->setResponse($response);
-        $this->setResponse((['resource_response' => ['data' => []]]));
-        $this->setResponse([
-                'resource_response' => [
-                    'data' => [
-                        ['type' => 'module'],
-                    ],
-                ],
-            ]
-        );
+        $this->setResourceResponseData([]);
+        $this->setResourceResponseData([['type' => 'module']]);
 
         $boardId = 1;
         $followers = $this->provider->followers($boardId);
@@ -115,14 +108,8 @@ class BoardsTest extends ProviderTest
         $response = $this->createPaginatedResponse();
 
         $this->setResponse($response);
-        $this->setResponse((['resource_response' => ['data' => []]]));
-        $this->setResponse([
-                'resource_response' => [
-                    'data' => [
-                        ['type' => 'module'],
-                    ],
-                ],
-            ]);
+        $this->setResourceResponseData([]);
+        $this->setResourceResponseData([['type' => 'module']]);
 
         $boardId = 1;
         $pins = $this->provider->pins($boardId);

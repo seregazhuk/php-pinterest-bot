@@ -167,7 +167,7 @@ class PinsTest extends ProviderTest
     {
         $response = $this->createPaginatedResponse();
         $this->setResponse($response);
-        $this->setResponse(['resource_response' => ['data' => []]]);
+        $this->setResourceResponseData([]);
 
         $pins = $this->provider->fromSource('flickr.ru');
         $this->assertCount(2, iterator_to_array($pins));
@@ -182,7 +182,7 @@ class PinsTest extends ProviderTest
         $this->setResponse($response);
 
         $this->setResponse($this->createPaginatedResponse());
-        $this->setResponse(['resource_response' => ['data' => []]]);
+        $this->setResourceResponseData([]);
 
         $this->assertCount(2, iterator_to_array($this->provider->activity(1)));
     }
