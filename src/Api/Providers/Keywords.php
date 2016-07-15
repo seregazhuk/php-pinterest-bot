@@ -14,9 +14,9 @@ class Keywords extends Provider
      */
     public function recommendedFor($query)
     {
-        $result = $this->execGetRequest(
-            ['scope' => 'pins', 'query' => $query], UrlHelper::getSearchUrl()
-        );
+        $requestOptions = ['scope' => 'pins', 'query' => $query];
+
+        $result = $this->execGetRequest($requestOptions, UrlHelper::getSearchUrl());
 
         return $this->parseKeywordsFromRequest($result);
     }

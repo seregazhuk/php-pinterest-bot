@@ -3,10 +3,10 @@
 namespace seregazhuk\PinterestBot\Api\Providers;
 
 use LogicException;
+use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
 use seregazhuk\PinterestBot\Exceptions\AuthException;
 use seregazhuk\PinterestBot\Api\Traits\UploadsImages;
-use seregazhuk\PinterestBot\Helpers\Requests\PinnerHelper;
 
 class User extends Provider
 {
@@ -117,7 +117,7 @@ class User extends Provider
 
         $this->checkCredentials($username, $password);
 
-        $postString = PinnerHelper::createLoginQuery($username, $password);
+        $postString = $this->createLoginQuery($username, $password);
         $this->request->clearToken();
 
         $response = $this->request->exec(UrlHelper::RESOURCE_LOGIN, $postString);
@@ -181,5 +181,23 @@ class User extends Provider
         }
 
         return $this->completeRegistration();
+    }
+
+    /**
+     * Creates Pinterest API request to login.
+     *
+     * @param string $username
+     * @param string $password
+     *
+     * @return array
+     */
+    protected static function createLoginQuery($username, $password)
+    {
+        $dataJson = [
+            'username_or_email' => $username,
+            'password'          => $password,
+        ];
+
+        return Request::createQuery($dataJson);
     }
 }
