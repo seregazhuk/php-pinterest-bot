@@ -51,11 +51,7 @@ class UserTest extends ProviderTest
      */
     public function it_should_register_new_user()
     {
-        $this->requestMock
-            ->shouldReceive('setTokenFromCookies')
-            ->twice()
-            ->andReturnSelf();
-
+        $this->setTokenFromCookiesExpectation(2);
         $this->setProperty('request', $this->requestMock);
 
         $this->setSuccessResponse(3);
@@ -67,11 +63,7 @@ class UserTest extends ProviderTest
      */
     public function it_returns_false_when_error_in_registration()
     {
-        $this->requestMock
-            ->shouldReceive('setTokenFromCookies')
-            ->once()
-            ->andReturnSelf();
-
+        $this->setTokenFromCookiesExpectation();
         $this->setProperty('request', $this->requestMock);
 
         $this->setErrorResponse(2);
@@ -83,11 +75,7 @@ class UserTest extends ProviderTest
      */
     public function it_should_register_business_account()
     {
-        $this->requestMock
-            ->shouldReceive('setTokenFromCookies')
-            ->twice()
-            ->andReturnSelf();
-
+        $this->setTokenFromCookiesExpectation(2);
         $this->setProperty('request', $this->requestMock);
 
         $this->setSuccessResponse(3);
@@ -99,11 +87,7 @@ class UserTest extends ProviderTest
      */
     public function it_should_return_false_when_error_in_business_registration()
     {
-        $this->requestMock
-            ->shouldReceive('setTokenFromCookies')
-            ->once()
-            ->andReturnSelf();
-
+        $this->setTokenFromCookiesExpectation();
         $this->setProperty('request', $this->requestMock);
 
         $this->setErrorResponse(2);
@@ -191,5 +175,13 @@ class UserTest extends ProviderTest
         $error = $this->createErrorApiResponse();
         $this->setResponse($error);
         $this->assertFalse($this->provider->convertToBusiness('name'));
+    }
+
+    protected function setTokenFromCookiesExpectation($times = 1)
+    {
+        $this->requestMock
+            ->shouldReceive('setTokenFromCookies')
+            ->times($times)
+            ->andReturnSelf();
     }
 }
