@@ -61,7 +61,6 @@ trait Followable
      * Executes api call for follow/unfollow user.
      *
      * @param int    $entityId
-     * @param string $entityName
      * @param string $url
      *
      * @return array
