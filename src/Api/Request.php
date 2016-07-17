@@ -88,34 +88,6 @@ class Request
     }
 
     /**
-     * Executes api call for follow or unfollow user.
-     *
-     * @param int    $entityId
-     * @param string $entityName
-     * @param string $url
-     *
-     * @return array
-     */
-    public function followMethodCall($entityId, $entityName, $url)
-    {
-        $dataJson = [
-            'options' => [
-                $entityName => (string)$entityId,
-            ],
-            'context' => [],
-        ];
-
-        if ($entityName == 'interest_id') {
-            $dataJson['options']['interest_list'] = 'favorited';
-        }
-
-        $post = ['data' => json_encode($dataJson, JSON_FORCE_OBJECT)];
-        $postString = UrlHelper::buildRequestString($post);
-
-        return $this->exec($url, $postString);
-    }
-
-    /**
      * @param string $pathToFile
      * @param string $url
      *
@@ -137,7 +109,7 @@ class Request
      */
     public function exec($resourceUrl, $postString = '')
     {
-        $url = UrlHelper::buildApiUrl($resourceUrl);        
+        $url = UrlHelper::buildApiUrl($resourceUrl);
         $this->makeHttpOptions($postString);
         $res = $this->http->execute($url, $this->options);
 

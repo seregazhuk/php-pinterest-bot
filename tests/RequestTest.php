@@ -31,38 +31,6 @@ class RequestTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($request->isLoggedIn());
     }
 
-    /** @test */
-    public function it_should_execute_request_to_api_endpoint()
-    {
-        $response = $this->createSuccessApiResponse();
-        $http = $this->getHttpObject();
-
-        $this->http_should_execute_and_return($http, json_encode($response));
-        $this->http_should_execute_and_return($http, null);
-
-        $request = $this->createRequestObject($http);
-
-        $res = $request->exec('endpoint', 'a=b');
-        $this->assertEquals($response, $res);
-
-        $res = $request->exec('endpoint', 'a=b');
-        $this->assertNull($res);
-    }
-
-    /** @test */
-    public function it_should_execute_follow_request_to_api()
-    {
-        $response = $this->createSuccessApiResponse();
-        $http = $this->getHttpObject();
-
-        $this->http_should_execute_and_return($http, json_encode($response));
-        $this->http_should_execute_and_return($http, null);
-
-        $request = $this->createRequestObject($http);
-
-        $this->assertEquals($response, $request->followMethodCall(1, 'entity_id', 'ur'));
-        $this->assertNull($request->followMethodCall(1, 'entity_id', 'ur'));
-    }
 
     /** @test */
     public function it_should_store_user_agent()
@@ -226,9 +194,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
      */
     protected function createRequestObject(HttpInterface $http = null, $userAgentString = '')
     {
-        if (!$http) {
-            $http = new CurlAdapter();
-        }
+        $http = $http ? : new CurlAdapter();
         $request = new Request($http, $userAgentString);
 
         $this->reflection = new ReflectionClass($request);

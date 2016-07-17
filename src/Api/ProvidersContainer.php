@@ -90,7 +90,8 @@ class ProvidersContainer
      */
     private function buildProvider($className)
     {
-        $provider = (new ReflectionClass($className))->newInstanceArgs([$this->request, $this->response]);
+        $provider = (new ReflectionClass($className))
+            ->newInstanceArgs([$this->request, $this->response]);
 
         return new ProviderLoginCheckWrapper($provider);
     }
