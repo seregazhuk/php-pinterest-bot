@@ -70,7 +70,7 @@ abstract class Provider
      * @param string $resourceUrl
      * @return array|bool
      */
-    protected function execGetRequest(array $requestOptions, $resourceUrl)
+    protected function execGetRequest(array $requestOptions = [], $resourceUrl = '')
     {
         $query = Request::createQuery($requestOptions);
         $response = $this->request->exec($resourceUrl . "?{$query}");

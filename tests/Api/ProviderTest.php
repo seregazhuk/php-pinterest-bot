@@ -25,16 +25,6 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
     use ReflectionHelper, ResponseHelper;
 
     /**
-     * @var array
-     */
-    protected $httpMockMethods = [
-        'exec',
-        'isLoggedIn',
-        'checkLoggedIn',
-        'followMethodCall',
-    ];
-
-    /**
      * @var string
      */
     protected $providerClass = Provider::class;
@@ -54,12 +44,9 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
      */
     protected function createRequestMock()
     {
-        $requestMock = Mockery::mock(Request::class)
-            ->shouldReceive($this->httpMockMethods)
-            ->getMock();
-
+        $requestMock = Mockery::mock(Request::class);
         $requestMock->shouldReceive('checkLoggedIn')->andReturn(true);
-        
+
         $this->requestMock = $requestMock;
 
         return $this;
@@ -67,7 +54,9 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->createRequestMock()->createProviderInstance()->setUpReflection();
+        $this->createRequestMock()
+            ->createProviderInstance()
+            ->setUpReflection();
 
         parent::setUp();
     }
@@ -102,6 +91,11 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
         return $this;
     }
 
+    /**
+     * @param mixed $response
+     * @param int $times
+     * @param string $method
+     */
     protected function setResponse($response, $times = 1, $method = 'exec')
     {
         $this->requestMock
@@ -110,16 +104,25 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
             ->andReturn($response);
     }
 
+    /**
+     * @param int $times
+     */
     protected function setSuccessResponse($times = 1)
     {
         $this->setResponse($this->createSuccessApiResponse(), $times);
     }
 
+    /**
+     * @param int $times
+     */
     protected function setErrorResponse($times = 1)
     {
         $this->setResponse($this->createErrorApiResponse(), $times);
     }
 
+    /**
+     * @param mixed $data
+     */
     protected function setResourceResponseData($data)
     {
         $this->setResponse(['resource_response' => ['data' => $data]]);

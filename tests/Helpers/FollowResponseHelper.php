@@ -2,7 +2,7 @@
 
 namespace seregazhuk\tests\Helpers;
 
-trait FollowResponseHelper 
+trait FollowResponseHelper
 {
     use SetsResponse;
 
@@ -42,17 +42,15 @@ trait FollowResponseHelper
      */
     protected function setFollowRequest($entityId, $sourceUrl, $response)
     {
-        $arguments = [
-            $entityId,
-            $this->provider->getEntityIdName(),
-            $sourceUrl
-        ];
-
         $this->requestMock
-            ->shouldReceive('followMethodCall')
+            ->shouldReceive('exec')
             ->once()
-            ->withArgs($arguments)
+            ->withArgs([
+                $sourceUrl,
+                $this->provider->createFollowRequestQuery($entityId)
+            ])
             ->andReturn($response);
+
 
         return $this;
     }

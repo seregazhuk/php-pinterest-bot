@@ -2,6 +2,8 @@
 
 namespace seregazhuk\PinterestBot\Api\Traits;
 
+use seregazhuk\PinterestBot\Helpers\UrlHelper;
+
 /**
  * Trait Followable
  * @package seregazhuk\PinterestBot\Api\Traits
@@ -47,12 +49,45 @@ trait Followable
      */
     protected function followCall($entityId, $resourceUrl)
     {
-        $response = $this->getRequest()
+        $response = $this
             ->followMethodCall(
-                $entityId, $this->getEntityIdName(), $resourceUrl
+                $entityId, $resourceUrl
             );
 
         return !$this->getResponse()->hasErrors($response);
+    }
+
+    /**
+     * Executes api call for follow/unfollow user.
+     *
+     * @param int    $entityId
+     * @param string $entityName
+     * @param string $url
+     *
+     * @return array
+     */
+    public function followMethodCall($entityId, $url)
+    {
+        return $this->getRequest()->exec($url, $this->createFollowRequestQuery($entityId));
+    }
+
+    public function createFollowRequestQuery($entityId)
+    {
+        $entityName = $this->getEntityIdName();
+
+        $dataJson = [
+            'options' => [
+                $entityName => (string)$entityId,
+            ],
+            'context' => [],
+        ];
+
+        if ($entityName == 'interest_id') {
+            $dataJson['options']['interest_list'] = 'favorited';
+        }
+
+        $post = ['data' => json_encode($dataJson, JSON_FORCE_OBJECT)];
+        return UrlHelper::buildRequestString($post);
     }
 
     /**
