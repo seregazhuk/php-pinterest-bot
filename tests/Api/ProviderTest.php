@@ -91,6 +91,11 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
         return $this;
     }
 
+    /**
+     * @param mixed $response
+     * @param int $times
+     * @param string $method
+     */
     protected function setResponse($response, $times = 1, $method = 'exec')
     {
         $this->requestMock
@@ -99,16 +104,25 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
             ->andReturn($response);
     }
 
+    /**
+     * @param int $times
+     */
     protected function setSuccessResponse($times = 1)
     {
         $this->setResponse($this->createSuccessApiResponse(), $times);
     }
 
+    /**
+     * @param int $times
+     */
     protected function setErrorResponse($times = 1)
     {
         $this->setResponse($this->createErrorApiResponse(), $times);
     }
 
+    /**
+     * @param mixed $data
+     */
     protected function setResourceResponseData($data)
     {
         $this->setResponse(['resource_response' => ['data' => $data]]);

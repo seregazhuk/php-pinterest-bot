@@ -173,6 +173,9 @@ class UserTest extends ProviderTest
         $this->assertFalse($this->provider->convertToBusiness('name'));
     }
 
+    /**
+     * @param int $times
+     */
     protected function setTokenFromCookiesExpectation($times = 1)
     {
         $this->requestMock
@@ -181,6 +184,9 @@ class UserTest extends ProviderTest
             ->andReturnSelf();
     }
 
+    /**
+     * @param bool $status
+     */
     protected function setIsLoggedInExpectation($status)
     {
         $this->requestMock
