@@ -119,9 +119,7 @@ class UserTest extends ProviderTest
         $response = $this->createSuccessApiResponse();
         $this->setIsLoggedInExpectation(false);
 
-        $this->requestMock
-            ->shouldReceive('exec')
-            ->andReturn($response);
+        $this->setResponse($response);
 
         $this->requestMock
             ->shouldReceive('clearToken')
@@ -143,10 +141,7 @@ class UserTest extends ProviderTest
         $response = $this->createErrorApiResponse();
         $this->setIsLoggedInExpectation(false);
 
-        $this->requestMock
-            ->shouldReceive('exec')
-            ->andReturn($response);
-
+        $this->setResponse($response);
         $this->requestMock->shouldReceive('clearToken');
 
         $this->provider->login('test', 'test');
