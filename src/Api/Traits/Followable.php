@@ -61,7 +61,6 @@ trait Followable
      * Executes api call for follow/unfollow user.
      *
      * @param int    $entityId
-     * @param string $entityName
      * @param string $url
      *
      * @return array
@@ -71,6 +70,9 @@ trait Followable
         return $this->getRequest()->exec($url, $this->createFollowRequestQuery($entityId));
     }
 
+    /**
+     * @param integer $entityId
+     */
     public function createFollowRequestQuery($entityId)
     {
         $entityName = $this->getEntityIdName();
