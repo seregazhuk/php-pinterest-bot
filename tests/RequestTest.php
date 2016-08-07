@@ -124,7 +124,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException seregazhuk\PinterestBot\Exceptions\AuthException
+     * @expectedException \seregazhuk\PinterestBot\Exceptions\AuthException
      */
     public function it_should_throw_exception_when_setting_token_from_empty_cookies()
     {
@@ -135,7 +135,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException seregazhuk\PinterestBot\Exceptions\InvalidRequestException
+     * @expectedException \seregazhuk\PinterestBot\Exceptions\InvalidRequestException
      */
     public function it_should_throw_exception_uploading_file_that_does_not_exist()
     {

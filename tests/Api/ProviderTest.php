@@ -92,11 +92,11 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param mixed $response
+     * @param array|null $response
      * @param int $times
      * @param string $method
      */
-    protected function setResponse($response, $times = 1, $method = 'exec')
+    protected function setResponseExpectation($response = null, $times = 1, $method = 'exec')
     {
         $this->requestMock
             ->shouldReceive($method)
@@ -109,7 +109,7 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
      */
     protected function setSuccessResponse($times = 1)
     {
-        $this->setResponse($this->createSuccessApiResponse(), $times);
+        $this->setResponseExpectation($this->createSuccessApiResponse(), $times);
     }
 
     /**
@@ -117,7 +117,7 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
      */
     protected function setErrorResponse($times = 1)
     {
-        $this->setResponse($this->createErrorApiResponse(), $times);
+        $this->setResponseExpectation($this->createErrorApiResponse(), $times);
     }
 
     /**
@@ -125,6 +125,6 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
      */
     protected function setResourceResponseData($data)
     {
-        $this->setResponse(['resource_response' => ['data' => $data]]);
+        $this->setResponseExpectation(['resource_response' => ['data' => $data]]);
     }
 }

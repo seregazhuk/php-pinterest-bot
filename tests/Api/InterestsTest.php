@@ -52,7 +52,7 @@ class InterestsTest extends ProviderTest
 
         $response = $this->createApiResponse(['data' => $categories]);
 
-        $this->setResponse($response);
+        $this->setResponseExpectation($response);
 
         $this->assertEquals($categories, $this->provider->getMain());
     }
@@ -64,7 +64,7 @@ class InterestsTest extends ProviderTest
 
         $response = $this->createApiResponse(['data' => $info]);
 
-        $this->setResponse($response);
+        $this->setResponseExpectation($response);
 
         $this->assertEquals($info, $this->provider->getInfo(1));
     }

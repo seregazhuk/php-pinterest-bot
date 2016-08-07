@@ -32,7 +32,7 @@ class BoardsTest extends ProviderTest
         ];
 
         $expectedResultsNum = count($response['module']['tree']['data']['results']);
-        $this->setResponse($response, 2);
+        $this->setResponseExpectation($response, 2);
 
         $res = iterator_to_array($this->provider->search('dogs'), 1);
         $this->assertCount($expectedResultsNum, $res);
@@ -64,7 +64,7 @@ class BoardsTest extends ProviderTest
     public function it_should_return_iterator_for_boards_followers()
     {
         $response = $this->createPaginatedResponse();
-        $this->setResponse($response);
+        $this->setResponseExpectation($response);
         $this->setResourceResponseData([]);
         $this->setResourceResponseData([['type' => 'module']]);
 
@@ -83,10 +83,10 @@ class BoardsTest extends ProviderTest
         $userName = 'user';
         $response = $this->createApiResponse($boards);
 
-        $this->setResponse($response);
+        $this->setResponseExpectation($response);
         $this->assertEquals($boards['data'], $this->provider->forUser($userName));
 
-        $this->setResponse(null);
+        $this->setResponseExpectation();
         $this->assertFalse($this->provider->forUser($userName));
     }
 
@@ -95,10 +95,10 @@ class BoardsTest extends ProviderTest
     {
         $response = $this->createApiResponse(['data' => 'info']);
 
-        $this->setResponse($response);
+        $this->setResponseExpectation($response);
         $this->assertEquals('info', $this->provider->info('username', 'board'));
         
-        $this->setResponse(null);
+        $this->setResponseExpectation();
         $this->assertFalse($this->provider->info('username', 'board'));
     }
 
@@ -107,7 +107,7 @@ class BoardsTest extends ProviderTest
     {
         $response = $this->createPaginatedResponse();
 
-        $this->setResponse($response);
+        $this->setResponseExpectation($response);
         $this->setResourceResponseData([]);
         $this->setResourceResponseData([['type' => 'module']]);
 

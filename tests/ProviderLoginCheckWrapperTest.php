@@ -15,7 +15,7 @@ class ProviderLoginCheckWrapperTest extends PHPUnit_Framework_TestCase
      * For not logged in request.
      *
      * @test
-     * @expectedException seregazhuk\PinterestBot\Exceptions\AuthException
+     * @expectedException \seregazhuk\PinterestBot\Exceptions\AuthException
      */
     public function it_should_fail_when_login_is_required()
     {
@@ -34,7 +34,7 @@ class ProviderLoginCheckWrapperTest extends PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException seregazhuk\PinterestBot\Exceptions\InvalidRequestException
+     * @expectedException \seregazhuk\PinterestBot\Exceptions\InvalidRequestException
      */
     public function it_should_throw_exception_when_calling_non_existed_method()
     {

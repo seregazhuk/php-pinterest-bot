@@ -51,7 +51,7 @@ class ProvidersContainerTest extends PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException seregazhuk\PinterestBot\Exceptions\WrongProviderException
+     * @expectedException \seregazhuk\PinterestBot\Exceptions\WrongProviderException
      */
     public function it_should_throw_exception_on_getting_wrong_provider()
     {
