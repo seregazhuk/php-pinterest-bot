@@ -27,10 +27,10 @@ class ConversationsTest extends ProviderTest
         $userId = '1';
         $message = 'test';
 
-        $this->setResponse($response);        
+        $this->setResponseExpectation($response);
         $this->assertTrue($this->provider->sendMessage($userId, $message));
 
-        $this->setResponse($this->createErrorApiResponse());
+        $this->setResponseExpectation($this->createErrorApiResponse());
         $this->assertFalse($this->provider->sendMessage($userId, $message));
     }
 
@@ -41,16 +41,16 @@ class ConversationsTest extends ProviderTest
         $email = 'test@email.com';
         $message = 'test';
 
-        $this->setResponse($response);        
+        $this->setResponseExpectation($response);
         $this->assertTrue($this->provider->sendEmail($email, $message));
 
-        $this->setResponse($this->createErrorApiResponse());
+        $this->setResponseExpectation($this->createErrorApiResponse());
         $this->assertFalse($this->provider->sendEmail($email, $message));
     }
 
     /**
      * @test
-     * @expectedException seregazhuk\PinterestBot\Exceptions\InvalidRequestException
+     * @expectedException \seregazhuk\PinterestBot\Exceptions\InvalidRequestException
      */
     public function it_should_throw_exception_when_sending_message_to_no_users()
     {
@@ -59,7 +59,7 @@ class ConversationsTest extends ProviderTest
 
     /**
      * @test
-     * @expectedException seregazhuk\PinterestBot\Exceptions\InvalidRequestException
+     * @expectedException \seregazhuk\PinterestBot\Exceptions\InvalidRequestException
      */
     public function it_should_throw_exception_when_sending_email_to_no_emails()
     {
@@ -80,10 +80,10 @@ class ConversationsTest extends ProviderTest
             ]
         );
 
-        $this->setResponse($res);
+        $this->setResponseExpectation($res);
         $this->assertEquals($lastConversations, $this->provider->last());
         
-        $this->setResponse(null);
+        $this->setResponseExpectation();
         $this->assertFalse($this->provider->last());
     }
 

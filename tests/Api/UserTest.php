@@ -119,7 +119,7 @@ class UserTest extends ProviderTest
         $response = $this->createSuccessApiResponse();
         $this->setIsLoggedInExpectation(false);
 
-        $this->setResponse($response);
+        $this->setResponseExpectation($response);
 
         $this->requestMock
             ->shouldReceive('clearToken')
@@ -134,14 +134,14 @@ class UserTest extends ProviderTest
 
     /**
      * @test
-     * @expectedException seregazhuk\PinterestBot\Exceptions\AuthException
+     * @expectedException \seregazhuk\PinterestBot\Exceptions\AuthException
      */
     public function it_should_throw_exception_when_login_fails()
     {
         $response = $this->createErrorApiResponse();
         $this->setIsLoggedInExpectation(false);
 
-        $this->setResponse($response);
+        $this->setResponseExpectation($response);
         $this->requestMock->shouldReceive('clearToken');
 
         $this->provider->login('test', 'test');
@@ -165,11 +165,11 @@ class UserTest extends ProviderTest
     public function it_should_convert_simple_account_to_business()
     {
         $success = $this->createSuccessApiResponse();
-        $this->setResponse($success);
+        $this->setResponseExpectation($success);
         $this->assertTrue($this->provider->convertToBusiness('name'));
 
         $error = $this->createErrorApiResponse();
-        $this->setResponse($error);
+        $this->setResponseExpectation($error);
         $this->assertFalse($this->provider->convertToBusiness('name'));
     }
 

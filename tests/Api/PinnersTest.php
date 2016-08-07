@@ -48,7 +48,7 @@ class PinnersTest extends ProviderTest
     public function it_should_return_user_info()
     {
         $response = $this->createApiResponse(['data' => ['name' => 'test']]);
-        $this->setResponse($response);
+        $this->setResponseExpectation($response);
 
         $data = $this->provider->info('username');
         $this->assertEquals($response['resource_response']['data'], $data);
@@ -58,7 +58,7 @@ class PinnersTest extends ProviderTest
     public function it_should_return_iterator_with_user_followers()
     {
         $response = $this->createPaginatedResponse();
-        $this->setResponse($response);
+        $this->setResponseExpectation($response);
         $this->setResourceResponseData([]);
         $this->setResourceResponseData([['type' => 'module']]);
 
@@ -73,7 +73,7 @@ class PinnersTest extends ProviderTest
     public function it_should_return_iterator_with_following_users()
     {
         $response = $this->createPaginatedResponse();
-        $this->setResponse($response);
+        $this->setResponseExpectation($response);
         $this->setResourceResponseData([]);
 
         $following = $this->provider->following('username');
@@ -96,7 +96,7 @@ class PinnersTest extends ProviderTest
                 ],
             ],
         ];
-        $this->setResponse($res);
+        $this->setResponseExpectation($res);
 
         $pins = $this->provider->pins('username', 2);
         $expectedResultsNum = count($res['resource_response']['data']);
@@ -112,7 +112,7 @@ class PinnersTest extends ProviderTest
         ];
 
         $expectedResultsNum = count($response['module']['tree']['data']['results']);
-        $this->setResponse($response, 2);
+        $this->setResponseExpectation($response, 2);
 
         $res = iterator_to_array($this->provider->search('dogs'), 1);
         $this->assertCount($expectedResultsNum, $res);

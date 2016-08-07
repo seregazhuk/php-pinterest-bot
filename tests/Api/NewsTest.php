@@ -26,10 +26,10 @@ class NewsTest extends ProviderTest
         $response = $this->createApiResponse($news);
         $error = $this->createErrorApiResponse();
 
-        $this->setResponse($response);
+        $this->setResponseExpectation($response);
         $this->assertEquals('news', $this->provider->last());
 
-        $this->setResponse($error);
+        $this->setResponseExpectation($error);
         $this->assertFalse($this->provider->last());
     }
 }
