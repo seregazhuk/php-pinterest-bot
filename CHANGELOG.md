@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [4.5.1] - 2016-08-09
+
+### Fixed:
+ - Pins method *userFeed* required login
+
 ## [4.5.0] - 2016-08-09
 
 ### Added:
