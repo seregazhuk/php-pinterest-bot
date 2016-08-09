@@ -148,7 +148,7 @@ class PinsTest extends ProviderTest
         $expectedResultsNum = count($response['module']['tree']['data']['results']);
         $this->setResponseExpectation($response, 2);
 
-        $res = iterator_to_array($this->provider->search('dogs'), 1);
+        $res = iterator_to_array($this->provider->search('dogs'));
         $this->assertCount($expectedResultsNum, $res);
     }
 
@@ -193,6 +193,18 @@ class PinsTest extends ProviderTest
         $this->setResponseExpectation($this->createApiResponse());
         $this->assertNull($this->provider->activity(1));
     }
+
+    /** @test */
+    public function it_should_return_iterator_for_users_feed()
+    {
+        $response = $this->createPaginatedResponse();
+        $this->setResponseExpectation($response);
+        $this->setResourceResponseData([]);
+
+        $res = iterator_to_array($this->provider->userFeed());
+        $this->assertCount(2, $res);
+    }
+
 
     /**
      * Creates a pin creation response from Pinterest.

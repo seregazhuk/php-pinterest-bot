@@ -223,6 +223,21 @@ class Pins extends Provider
     }
 
     /**
+     * Get pins from user's feed
+     *
+     * @param int $limit
+     * @return Iterator
+     */
+    public function userFeed($limit = 0)
+    {
+        $params = [
+            'data' => [],
+            'url'  => UrlHelper::RESOURCE_USER_FEED
+        ];
+        return (new Pagination($this))->paginateOver('getPaginatedData', $params, $limit);
+    }
+
+    /**
      * Calls Pinterest API to like or unlike Pin by ID.
      *
      * @param int $pinId

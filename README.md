@@ -268,6 +268,18 @@ foreach ($bot->pins->fromSource('flickr.com') as $pin) {
 }
 ```
 
+Get user pins feed. Method *userFeed()* returns Iterator object.
+```php
+foreach ($bot->pins->userFeed() as $pin) {
+    //...
+}
+
+// only first 20 pins from feed
+foreach ($bot->pins->userFeed(20) as $pin) {
+    //...
+}
+```
+
 Get activity of a pin:
 
 ```php

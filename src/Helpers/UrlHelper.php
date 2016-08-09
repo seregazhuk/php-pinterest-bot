@@ -40,6 +40,7 @@ class UrlHelper
     const RESOURCE_PIN_INFO = 'resource/PinResource/get/';
     const RESOURCE_DOMAIN_FEED = 'resource/DomainFeedResource/get';
     const RESOURCE_ACTIVITY = 'resource/AggregatedActivityFeedResource/get';
+    const RESOURCE_USER_FEED = 'resource/UserHomefeedResource/get/';
 
     /**
      * Pinners
