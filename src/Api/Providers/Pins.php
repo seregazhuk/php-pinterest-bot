@@ -21,7 +21,8 @@ class Pins extends Provider
         'create',
         'repin',
         'delete',
-        'activity'
+        'activity',
+        'userFeed'
     ];
 
     protected $searchScope  = 'pins';
