@@ -10,17 +10,12 @@ use seregazhuk\PinterestBot\Api\Providers\ProviderLoginCheckWrapper;
 class ProvidersContainer
 {
     /**
-     * References to the request and response classes that travels
+     * References to the request that travels
      * through the application.
      *
      * @var Request
      */
     protected $request;
-    
-    /**
-     * @var Response
-     */
-    protected $response;
 
     const PROVIDERS_NAMESPACE = 'seregazhuk\\PinterestBot\\Api\\Providers\\';
 
@@ -31,10 +26,9 @@ class ProvidersContainer
      */
     private $providers = [];
 
-    public function __construct(Request $request, Response $response)
+    public function __construct(Request $request)
     {
         $this->request = $request;
-        $this->response = $response;
     }
 
     /**
@@ -91,7 +85,7 @@ class ProvidersContainer
     private function buildProvider($className)
     {
         $provider = (new ReflectionClass($className))
-            ->newInstanceArgs([$this->request, $this->response]);
+            ->newInstanceArgs([$this->request]);
 
         return new ProviderLoginCheckWrapper($provider);
     }
@@ -102,13 +96,5 @@ class ProvidersContainer
     public function getRequest()
     {
         return $this->request;
-    }
-
-    /**
-     * @return Response
-     */
-    public function getResponse()
-    {
-        return $this->response;
     }
 }

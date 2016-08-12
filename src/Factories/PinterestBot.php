@@ -25,8 +25,7 @@ class PinterestBot
             $request->setUserAgent($userAgent);
         }
         
-        $response = new Response();
-        $providersContainer = new ProvidersContainer($request, $response);
+        $providersContainer = new ProvidersContainer($request);
 
         return new Bot($providersContainer);
     }

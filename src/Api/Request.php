@@ -105,7 +105,7 @@ class Request
      * @param string $resourceUrl
      * @param string $postString
      *
-     * @return array
+     * @return Response
      */
     public function exec($resourceUrl, $postString = '')
     {
@@ -114,7 +114,7 @@ class Request
         $res = $this->http->execute($url, $this->options);
 
         $this->filePathToUpload = null;
-        return json_decode($res, true);
+        return new Response(json_decode($res, true));
     }
 
     /**

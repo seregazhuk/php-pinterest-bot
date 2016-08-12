@@ -5,40 +5,48 @@ namespace seregazhuk\PinterestBot\Api;
 class Response
 {
     /**
+     * @var mixed
+     */
+    protected $data;
+
+    /**
      * @var array|null
      */
     protected $lastError;
 
+    public function __construct($data)
+    {
+        $this->data = $data;
+    }
+
     /**
      * Check if specified data exists in response.
      *
-     * @param array $response
      * @param null  $key
      *
      * @return array|bool
      */
-    public function getData($response, $key = null)
+    public function getData($key = null)
     {
-        if ($this->hasErrors($response)) {
+        if ($this->hasErrors()) {
             return false;
         }
 
-        return $this->parseData($response, $key);
+        return $this->parseData($key);
     }
 
     /**
      * Parse data from Pinterest Api response.
      * Data is stored in ['resource_response']['data'] array.
      *
-     * @param array  $response
      * @param string $key
      *
      * @return bool|array
      */
-    protected function parseData($response, $key)
+    protected function parseData($key)
     {
-        if (isset($response['resource_response']['data'])) {
-            $data = $response['resource_response']['data'];
+        if (isset($this->data['resource_response']['data'])) {
+            $data = $this->data['resource_response']['data'];
 
             if ($key) {
                 return array_key_exists($key, $data) ? $data[$key] : false;
@@ -53,29 +61,25 @@ class Response
     /**
      * Checks if response is empty.
      *
-     * @param array $response
-     *
      * @return bool
      */
-    public function isEmpty($response)
+    public function isEmpty()
     {
-        return empty($this->getData($response));
+        return empty($this->getData());
     }
 
     /**
      * Check for error info in api response and save
      * it.
      *
-     * @param array $response
-     *
      * @return bool
      */
-    public function hasErrors($response)
+    public function hasErrors()
     {
         $this->lastError = null;
 
-        if (isset($response['resource_response']['error']) && !empty($response['resource_response']['error'])) {
-            $this->lastError = $response['resource_response']['error'];
+        if (isset($this->data['resource_response']['error']) && !empty($this->data['resource_response']['error'])) {
+            $this->lastError = $this->data['resource_response']['error'];
 
             return true;
         }
@@ -86,14 +90,12 @@ class Response
     /**
      * Parse bookmarks from response.
      *
-     * @param array $response
-     *
      * @return array
      */
-    public function getBookmarks($response)
+    public function getBookmarks()
     {
-        if (!$this->hasErrors($response) && isset($response['resource']['options']['bookmarks'][0])) {
-            return [$response['resource']['options']['bookmarks'][0]];
+        if (!$this->hasErrors() && isset($this->data['resource']['options']['bookmarks'][0])) {
+            return [$this->data['resource']['options']['bookmarks'][0]];
         }
 
         return [];
@@ -103,18 +105,16 @@ class Response
      * Checks Pinterest API paginated response, and parses data
      * with bookmarks info from it.
      *
-     * @param array $response
-     *
      * @return array
      */
-    public function getPaginationData($response)
+    public function getPaginationData()
     {
-        if ($this->isEmpty($response) && $this->hasErrors($response)) {
+        if ($this->isEmpty() && $this->hasErrors()) {
             return [];
         }
 
-        $bookmarks = $this->getBookmarks($response);
-        if ($data = $this->getData($response)) {
+        $bookmarks = $this->getBookmarks();
+        if ($data = $this->getData()) {
             return ['data' => $data, 'bookmarks' => $bookmarks];
         }
 

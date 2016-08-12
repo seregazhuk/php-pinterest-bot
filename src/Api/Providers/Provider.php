@@ -26,20 +26,11 @@ abstract class Provider
     protected $request;
 
     /**
-     * Instance of the API Response.
-     *
-     * @var Response
-     */
-    protected $response;
-
-    /**
      * @param Request $request
-     * @param Response $response
      */
-    public function __construct(Request $request, Response $response)
+    public function __construct(Request $request)
     {
         $this->request = $request;
-        $this->response = $response;
     }
 
     /**
@@ -57,10 +48,10 @@ abstract class Provider
         $response = $this->request->exec($resourceUrl, $postString);
 
         if ($returnData) {
-            return $this->response->getData($response);
+            return $response->getData();
         }
 
-        return !$this->response->hasErrors($response);
+        return !$response->hasErrors();
     }
 
     /**

@@ -121,8 +121,8 @@ class User extends Provider
         $this->request->clearToken();
 
         $response = $this->request->exec(UrlHelper::RESOURCE_LOGIN, $postString);
-        if ($this->response->hasErrors($response)) {
-            throw new AuthException($this->response->getLastError()['message']);
+        if ($response->hasErrors()) {
+            throw new AuthException($response->getLastError()['message']);
         }
 
         $this->request->login();
