@@ -10,7 +10,7 @@ namespace seregazhuk\PinterestBot\Api\Traits;
  */
 trait CanBeDeleted
 {
-    use HandlesRequestAndResponse, HasEntityIdName;
+    use HandlesRequest, HasEntityIdName;
 
     /**
      * Delete entity by ID.

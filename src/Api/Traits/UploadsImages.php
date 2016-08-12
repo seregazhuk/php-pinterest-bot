@@ -10,7 +10,7 @@ use seregazhuk\PinterestBot\Helpers\UrlHelper;
  */
 trait UploadsImages
 {
-    use HandlesRequestAndResponse;
+    use HandlesRequest;
     
     public function upload($image)
     {

@@ -9,17 +9,12 @@ use seregazhuk\PinterestBot\Api\Response;
  * Trait HandlesRequestAndResponse
  * @package seregazhuk\PinterestBot\Api\Traits
  */
-trait HandlesRequestAndResponse
+trait HandlesRequest
 {
     /**
      * @return Request
      */
     abstract public function getRequest();
-
-    /**
-     * @return Response
-     */
-    abstract public function getResponse();
 
     /**
      * Executes a POST request to Pinterest API.

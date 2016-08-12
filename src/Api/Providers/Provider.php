@@ -115,12 +115,4 @@ abstract class Provider
     {
         return $this->request;
     }
-
-    /**
-     * @return Response
-     */
-    public function getResponse()
-    {
-        return $this->response;
-    }
 }

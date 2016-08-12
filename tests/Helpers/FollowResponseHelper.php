@@ -2,6 +2,8 @@
 
 namespace seregazhuk\tests\Helpers;
 
+use seregazhuk\PinterestBot\Api\Response;
+
 trait FollowResponseHelper
 {
     use SetsResponse;
@@ -49,7 +51,7 @@ trait FollowResponseHelper
                 $sourceUrl,
                 $this->provider->createFollowRequestQuery($entityId)
             ])
-            ->andReturn($response);
+            ->andReturn(new Response($response));
 
 
         return $this;

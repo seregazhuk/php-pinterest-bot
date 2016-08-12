@@ -14,7 +14,7 @@ use seregazhuk\PinterestBot\Helpers\Pagination;
  */
 trait Searchable
 {
-    use HandlesRequestAndResponse;
+    use HandlesRequest;
     
     private $moduleSearchPage = 'SearchPage';
 
