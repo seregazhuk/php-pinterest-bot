@@ -5,11 +5,6 @@ namespace seregazhuk\PinterestBot\Api;
 class Response
 {
     /**
-     * @var array
-     */
-    protected $response;
-
-    /**
      * @var array|null
      */
     protected $lastError;
@@ -33,7 +28,7 @@ class Response
 
     /**
      * Parse data from Pinterest Api response.
-     * Data stores in ['resource_response']['data'] array.
+     * Data is stored in ['resource_response']['data'] array.
      *
      * @param array  $response
      * @param string $key

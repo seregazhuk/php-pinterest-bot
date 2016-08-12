@@ -18,7 +18,8 @@ class ProviderLoginCheckWrapper
     }
 
     /**
-     * Run login check before every method if needed.
+     * Proxies a call to a provider with a login check
+     * before every method if needed.
      *
      * @param $method
      * @param $arguments
