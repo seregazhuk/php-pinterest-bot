@@ -36,22 +36,18 @@ abstract class Provider
     /**
      * Executes a POST request to Pinterest API.
      *
-     * @param array  $requestOptions
+     * @param array $requestOptions
      * @param string $resourceUrl
-     * @param bool   $returnData
+     * @param bool $returnResponse
      *
-     * @return mixed
+     * @return Response|bool
      */
-    protected function execPostRequest($requestOptions, $resourceUrl, $returnData = false)
+    protected function execPostRequest($requestOptions, $resourceUrl, $returnResponse = false)
     {
         $postString = Request::createQuery($requestOptions);
         $response = $this->request->exec($resourceUrl, $postString);
 
-        if ($returnData) {
-            return $response->getData();
-        }
-
-        return !$response->hasErrors();
+        return $returnResponse ? $response : $response->isOk();
     }
 
     /**
@@ -59,14 +55,13 @@ abstract class Provider
      *
      * @param array $requestOptions
      * @param string $resourceUrl
-     * @return array|bool
+     *
+     * @return Response
      */
     protected function execGetRequest(array $requestOptions = [], $resourceUrl = '')
     {
         $query = Request::createQuery($requestOptions);
-        $response = $this->request->exec($resourceUrl . "?{$query}");
-        
-        return $this->response->getData($response);
+        return $this->request->exec($resourceUrl . "?{$query}");
     }
 
     /**

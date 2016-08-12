@@ -74,7 +74,7 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
     protected function createProviderInstance()
     {
         $providerReflection = new ReflectionClass($this->providerClass);
-        $this->provider = $providerReflection->newInstanceArgs([$this->requestMock, new Response()]);
+        $this->provider = $providerReflection->newInstanceArgs([$this->requestMock]);
 
         return $this;
     }
@@ -101,7 +101,7 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
         $this->requestMock
             ->shouldReceive($method)
             ->times($times)
-            ->andReturn($response);
+            ->andReturn(new Response($response));
     }
 
     /**

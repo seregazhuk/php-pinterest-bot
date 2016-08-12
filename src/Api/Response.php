@@ -68,6 +68,11 @@ class Response
         return empty($this->getData());
     }
 
+    public function isOk()
+    {
+        return !$this->hasErrors();
+    }
+
     /**
      * Check for error info in api response and save
      * it.
@@ -128,4 +133,13 @@ class Response
     {
         return $this->lastError;
     }
+
+    /**
+     * @return mixed
+     */
+    public function __toString()
+    {
+        return $this->data;
+    }
+
 }

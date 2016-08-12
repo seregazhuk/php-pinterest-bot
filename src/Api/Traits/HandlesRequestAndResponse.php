@@ -26,9 +26,9 @@ trait HandlesRequestAndResponse
      *
      * @param array $requestOptions
      * @param string $resourceUrl
-     * @param bool $returnData
+     * @param bool $returnResponse
      *
-     * @return mixed
+     * @return Response
      */
-    abstract protected function execPostRequest($requestOptions, $resourceUrl, $returnData = false);
+    abstract protected function execPostRequest($requestOptions, $resourceUrl, $returnResponse = false);
 }
