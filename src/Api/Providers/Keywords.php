@@ -16,7 +16,9 @@ class Keywords extends Provider
     {
         $requestOptions = ['scope' => 'pins', 'query' => $query];
 
-        $result = $this->execGetRequest($requestOptions, UrlHelper::getSearchUrl());
+        $result = $this
+            ->execGetRequest($requestOptions, UrlHelper::getSearchUrl())
+            ->getData();
 
         return $this->parseKeywordsFromRequest($result);
     }
