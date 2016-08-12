@@ -40,8 +40,9 @@ class Boards extends Provider
     public function forUser($username)
     {
         return $this->execGetRequest(
-            ['username' => $username], UrlHelper::RESOURCE_GET_BOARDS
-        );
+                ['username' => $username], UrlHelper::RESOURCE_GET_BOARDS
+            )
+            ->getData();
     }
 
     /**

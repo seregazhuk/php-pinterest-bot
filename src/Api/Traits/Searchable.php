@@ -39,13 +39,13 @@ trait Searchable
     {
         $url = UrlHelper::getSearchUrl($bookmarks);
         $get = $this->createSearchQuery($query, $scope, $bookmarks);
-        $result = $this->getRequest()->exec($url . '?' . $get);
+        $response = $this->getRequest()->exec($url . '?' . $get);
 
         /*
          * It was a first time search, we grab data and bookmarks for pagination.
          */
         if (empty($bookmarks)) {
-            return $this->parseSearchResult($result);
+            return $this->parseSearchResult($response->getData());
         }
 
         /*
