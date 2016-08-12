@@ -45,14 +45,14 @@ trait Searchable
          * It was a first time search, we grab data and bookmarks for pagination.
          */
         if (empty($bookmarks)) {
-            return $this->parseSearchResult($response->getData());
+            return $this->parseSearchResult($response->getRaw());
         }
 
         /*
          * Process a response with bookmarks
          */
 
-        return $this->getResponse()->getPaginationData($result);
+        return $response->getPaginationData();
     }
 
     /**

@@ -36,6 +36,14 @@ class Response
     }
 
     /**
+     * @return mixed
+     */
+    public function getRaw()
+    {
+        return $this->data;
+    }
+
+    /**
      * Parse data from Pinterest Api response.
      * Data is stored in ['resource_response']['data'] array.
      *
@@ -71,6 +79,28 @@ class Response
     public function isOk()
     {
         return !$this->hasErrors();
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasData()
+    {
+        return isset($this->data['data']) && !empty($this->data['data']);
+    }
+
+    /**
+     * Remove 'module' data from response.
+     *
+     * @return array mixed
+     */
+    public function clearResponseFromMetaData()
+    {
+        if (isset($this->data['data'][0]['type']) && $this->data['data'][0]['type'] == 'module') {
+            array_shift($this->data['data']);
+        }
+
+        return $this->data;
     }
 
     /**

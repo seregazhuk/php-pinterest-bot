@@ -61,7 +61,9 @@ class Boards extends Provider
             'field_set_key' => 'detailed',
         ];
 
-        return $this->execGetRequest($requestOptions, UrlHelper::RESOURCE_GET_BOARDS);
+        return $this
+            ->execGetRequest($requestOptions, UrlHelper::RESOURCE_GET_BOARDS)
+            ->getData();
     }
 
     /**
@@ -88,7 +90,9 @@ class Boards extends Provider
     public function getPinsFromBoard($boardId, $bookmarks = [])
     {
         return $this->execGetRequestWithPagination(
-            ['board_id' => $boardId], UrlHelper::RESOURCE_GET_BOARD_FEED, $bookmarks
+            ['board_id' => $boardId],
+            UrlHelper::RESOURCE_GET_BOARD_FEED,
+            $bookmarks
         );
     }
 
