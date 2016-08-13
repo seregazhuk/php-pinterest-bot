@@ -4,6 +4,7 @@ namespace seregazhuk\PinterestBot\Api\Providers;
 
 use Iterator;
 use LogicException;
+use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
 use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Exceptions\AuthException;
@@ -33,7 +34,7 @@ class Pinners extends Provider
      *
      * @param string $username
      *
-     * @return null|array
+     * @return Response
      */
     public function info($username)
     {

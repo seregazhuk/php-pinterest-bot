@@ -50,7 +50,7 @@ class PinnersTest extends ProviderTest
         $response = $this->createApiResponse(['data' => ['name' => 'test']]);
         $this->setResponseExpectation($response);
 
-        $data = $this->provider->info('username');
+        $data = $this->provider->info('username')->getData();
         $this->assertEquals($response['resource_response']['data'], $data);
     }
 
