@@ -3,6 +3,7 @@
 namespace seregazhuk\PinterestBot\Api\Providers;
 
 use Iterator;
+use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Api\Traits\UploadsImages;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
 use seregazhuk\PinterestBot\Helpers\Pagination;
@@ -66,7 +67,9 @@ class Pins extends Provider
     {
         $requestOptions = ['pin_id' => $pinId, 'text' => $text];
 
-        return $this->execPostRequest($requestOptions, UrlHelper::RESOURCE_COMMENT_PIN, true);
+        return $this
+            ->execPostRequest($requestOptions, UrlHelper::RESOURCE_COMMENT_PIN, true)
+            ->isOk();
     }
 
     /**
@@ -92,7 +95,7 @@ class Pins extends Provider
      * @param string $description
      * @param string $link
      *
-     * @return bool|int
+     * @return Response
      */
     public function create($imageUrl, $boardId, $description = '', $link = '')
     {
@@ -152,7 +155,7 @@ class Pins extends Provider
      * @param int    $boardId
      * @param string $description
      *
-     * @return bool|int
+     * @return Response
      */
     public function repin($repinId, $boardId, $description = '')
     {
@@ -172,7 +175,7 @@ class Pins extends Provider
      *
      * @param int $pinId
      *
-     * @return array|bool
+     * @return Response
      */
     public function info($pinId)
     {
@@ -181,7 +184,7 @@ class Pins extends Provider
             'field_set_key' => 'detailed',
         ];
 
-        return $this->execGetRequest($requestOptions, UrlHelper::RESOURCE_PIN_INFO);
+        return $this->execGetRequest($requestOptions, UrlHelper::RESOURCE_PIN_INFO, true);
     }
 
     /**
@@ -257,7 +260,7 @@ class Pins extends Provider
      */
     protected function getAggregatedPinId($pinId)
     {
-        $pinInfo = $this->info($pinId);
+        $pinInfo = $this->info($pinId)->getData();
 
         return isset($pinInfo['aggregated_pin_data']['id']) ?
             $pinInfo['aggregated_pin_data']['id'] :
