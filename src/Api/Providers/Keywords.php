@@ -18,7 +18,7 @@ class Keywords extends Provider
 
         $result = $this
             ->execGetRequest($requestOptions, UrlHelper::getSearchUrl())
-            ->getData();
+            ->getResponseData();
 
         return $this->parseKeywordsFromRequest($result);
     }

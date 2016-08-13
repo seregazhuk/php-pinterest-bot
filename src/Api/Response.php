@@ -26,21 +26,23 @@ class Response
      *
      * @return array|bool
      */
-    public function getData($key = null)
+    public function getResponseData($key = null)
     {
         if ($this->hasErrors()) {
             return false;
         }
 
-        return $this->parseData($key);
+        return $this->parseResponseData($key);
     }
 
     /**
+     * @param string $key
+     * @param null $default
      * @return mixed
      */
-    public function getRaw()
+    public function getData($key = '', $default = null)
     {
-        return $this->data;
+        return $this->getValueByKey($key, $this->data, $default);
     }
 
     /**
@@ -51,7 +53,7 @@ class Response
      *
      * @return bool|array
      */
-    protected function parseData($key)
+    protected function parseResponseData($key)
     {
         if (isset($this->data['resource_response']['data'])) {
             $data = $this->data['resource_response']['data'];
@@ -69,15 +71,18 @@ class Response
     /**
      * @param string $key
      * @param array $data
+     * @param bool $default
      * @return array|bool|mixed
      */
-    protected function getValueByKey($key, array $data)
+    protected function getValueByKey($key = '', array $data, $default = null)
     {
+        if(empty($key)) return $data;
+
         $indexes = explode('.', $key);
         $value = $data;
 
         foreach ($indexes as $index) {
-            if(!isset($value[$index])) return false;
+            if(!isset($value[$index])) return $default;
 
             $value = $value[$index];
         }
@@ -92,7 +97,7 @@ class Response
      */
     public function isEmpty()
     {
-        return empty($this->getData());
+        return empty($this->getResponseData());
     }
 
     public function isOk()
@@ -168,7 +173,7 @@ class Response
         }
 
         $bookmarks = $this->getBookmarks();
-        if ($data = $this->getData()) {
+        if ($data = $this->getResponseData()) {
             return ['data' => $data, 'bookmarks' => $bookmarks];
         }
 

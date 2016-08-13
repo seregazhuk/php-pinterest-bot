@@ -42,7 +42,7 @@ class Boards extends Provider
         return $this->execGetRequest(
                 ['username' => $username], UrlHelper::RESOURCE_GET_BOARDS
             )
-            ->getData();
+            ->getResponseData();
     }
 
     /**
@@ -63,7 +63,7 @@ class Boards extends Provider
 
         return $this
             ->execGetRequest($requestOptions, UrlHelper::RESOURCE_GET_BOARDS)
-            ->getData();
+            ->getResponseData();
     }
 
     /**

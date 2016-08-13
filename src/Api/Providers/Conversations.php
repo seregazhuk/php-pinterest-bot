@@ -54,7 +54,7 @@ class Conversations extends Provider
     {
         return $this
             ->execGetRequest([], UrlHelper::RESOURCE_GET_LAST_CONVERSATIONS)
-            ->getData();
+            ->getResponseData();
     }
 
     /**

@@ -260,7 +260,7 @@ class Pins extends Provider
      */
     protected function getAggregatedPinId($pinId)
     {
-        $pinInfo = $this->info($pinId)->getData();
+        $pinInfo = $this->info($pinId)->getResponseData();
 
         return isset($pinInfo['aggregated_pin_data']['id']) ?
             $pinInfo['aggregated_pin_data']['id'] :

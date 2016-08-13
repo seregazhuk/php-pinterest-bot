@@ -19,7 +19,7 @@ class ResponseTest extends PHPUnit_Framework_TestCase
     {
         $response = new Response($this->createApiResponse(['data' => 'some data']));
 
-        $this->assertEquals('some data', $response->getData());
+        $this->assertEquals('some data', $response->getResponseData());
     }
 
     /** @test */
@@ -27,7 +27,7 @@ class ResponseTest extends PHPUnit_Framework_TestCase
     {
         $response = new Response($this->createApiResponse(['data' => ['key' => 'value']]));
 
-        $this->assertEquals('value', $response->getData('key'));
+        $this->assertEquals('value', $response->getResponseData('key'));
     }
 
     /** @test */
@@ -35,7 +35,7 @@ class ResponseTest extends PHPUnit_Framework_TestCase
     {
         $response = new Response($this->createErrorApiResponse('some error'));
 
-        $this->assertFalse($response->getData());
+        $this->assertFalse($response->getResponseData());
 
         $lastError = $response->getLastError();
         $this->assertEquals('some error', $lastError['message']);

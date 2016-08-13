@@ -28,7 +28,7 @@ class Interests extends Provider
     {
         return $this
             ->execGetRequest(["category_types" => "main"], UrlHelper::RESOURCE_GET_CATEGORIES)
-            ->getData();
+            ->getResponseData();
     }
 
     /**
@@ -41,6 +41,6 @@ class Interests extends Provider
     {
         return $this
             ->execGetRequest(["category" => $category], UrlHelper::RESOURCE_GET_CATEGORY)
-            ->getData();
+            ->getResponseData();
     }
 }
