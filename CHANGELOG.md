@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 4.5.2 - ???
+ - Renamed ProviderLoginCheckWrapper to ProviderWrapper
+ - Refactored Response class
+
 ## [4.5.1] - 2016-08-09
 
 ### Fixed:
@@ -89,7 +93,7 @@ All notable changes to this project will be documented in this file.
 ### Added:
  - isLoggedIn method
  - Response and Request refactoring
- - Better exception messages in ProviderWrapper
+ - Better exception messages in ProviderLoginCheckWrapper
 
 ## [3.2.3] - 2016-06-09
 ### Fixed:
