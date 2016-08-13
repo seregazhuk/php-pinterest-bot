@@ -19,7 +19,7 @@ class ProviderLoginCheckWrapperTest extends PHPUnit_Framework_TestCase
      */
     public function it_should_fail_when_login_is_required()
     {
-        $provider = new TestProvider(new Request(new CurlAdapter()), new Response());
+        $provider = new TestProvider(new Request(new CurlAdapter()));
         $wrapper = new ProviderLoginCheckWrapper($provider);
         $wrapper->testFail();
     }
@@ -27,7 +27,7 @@ class ProviderLoginCheckWrapperTest extends PHPUnit_Framework_TestCase
     /** @test */
     public function it_should_call_provider_method()
     {
-        $provider = new TestProvider(new Request(new CurlAdapter()), new Response());
+        $provider = new TestProvider(new Request(new CurlAdapter()));
         $wrapper = new ProviderLoginCheckWrapper($provider);
         $this->assertEquals('success', $wrapper->testSuccess());
     }
@@ -38,7 +38,7 @@ class ProviderLoginCheckWrapperTest extends PHPUnit_Framework_TestCase
      */
     public function it_should_throw_exception_when_calling_non_existed_method()
     {
-        $provider = new TestProvider(new Request(new CurlAdapter()), new Response());
+        $provider = new TestProvider(new Request(new CurlAdapter()));
         $wrapper = new ProviderLoginCheckWrapper($provider);
         $wrapper->badMethod();
     }

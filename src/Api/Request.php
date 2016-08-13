@@ -58,6 +58,17 @@ class Request
     protected $csrfToken = '';
 
     /**
+     * @var string
+     */
+    protected $postFileData;
+
+    /**
+     * @var array|null
+     */
+    protected $lastError;
+
+
+    /**
      * Common headers needed for every query.
      *
      * @var array
@@ -71,11 +82,6 @@ class Request
         'X-APP-VERSION: 04cf8cc',
         'X-Requested-With: XMLHttpRequest',
     ];
-
-    /**
-     * @var string
-     */
-    protected $postFileData;
 
     /**
      * @param HttpInterface $http
@@ -111,10 +117,9 @@ class Request
     {
         $url = UrlHelper::buildApiUrl($resourceUrl);
         $this->makeHttpOptions($postString);
-        $res = $this->http->execute($url, $this->options);
 
-        $this->filePathToUpload = null;
-        return new Response(json_decode($res, true));
+        $result = $this->http->execute($url, $this->options);
+        return $this->processResponse($result);
     }
 
     /**
@@ -325,5 +330,28 @@ class Request
             'Content-Type: multipart/form-data; boundary=' . $delimiter,
             'Content-Length: ' . strlen($this->postFileData)
         ];
+    }
+
+    /**
+     * @param array|null $res
+     * @return Response
+     */
+    protected function processResponse($res)
+    {
+        $this->filePathToUpload = null;
+        $this->lastError = null;
+
+        $response = new Response(json_decode($res, true));
+        $this->lastError = $response->getLastError();
+
+        return $response;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getLastError()
+    {
+        return $this->lastError;
     }
 }

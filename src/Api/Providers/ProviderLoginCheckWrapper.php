@@ -12,6 +12,9 @@ class ProviderLoginCheckWrapper
      */
     private $provider;
 
+    /**
+     * @param Provider|object $provider
+     */
     public function __construct(Provider $provider)
     {
         $this->provider = $provider;

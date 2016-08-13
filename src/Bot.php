@@ -86,7 +86,7 @@ class Bot
      */
     public function getLastError()
     {
-        return $this->providersContainer->getResponse()->getLastError();
+        return $this->providersContainer->getRequest()->getLastError();
     }
 
     /**
