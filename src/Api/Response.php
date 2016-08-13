@@ -55,17 +55,12 @@ class Response
      */
     protected function parseResponseData($key)
     {
-        if (isset($this->data['resource_response']['data'])) {
-            $data = $this->data['resource_response']['data'];
+        $responseData = $this->getValueByKey('resource_response.data', $this->data);
+        if(!$responseData) return false;
 
-            if ($key) {
-                return $this->getValueByKey($key, $data);
-            }
-
-            return $data;
-        }
-
-        return false;
+        return $key ?
+            $this->getValueByKey($key, $responseData) :
+            $responseData;
     }
 
     /**
@@ -110,7 +105,7 @@ class Response
      */
     public function hasData()
     {
-        return isset($this->data['data']) && !empty($this->data['data']);
+        return (bool)$this->getValueByKey('data', $this->data);
     }
 
     /**
