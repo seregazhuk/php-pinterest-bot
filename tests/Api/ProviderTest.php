@@ -96,7 +96,7 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
      * @param int $times
      * @param string $method
      */
-    protected function setResponseExpectation($response = null, $times = 1, $method = 'exec')
+    protected function setResponseExpectation($response = [], $times = 1, $method = 'exec')
     {
         $this->requestMock
             ->shouldReceive($method)

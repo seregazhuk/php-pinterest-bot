@@ -68,7 +68,11 @@ trait Searchable
     protected function createSearchQuery($query, $scope, $bookmarks = [])
     {
         $dataJson = $this->appendBookMarks(
-            $bookmarks, ['scope' => $scope, 'query' => $query]
+            $bookmarks,
+            [
+                'scope' => $scope,
+                'query' => $query
+            ]
         );
 
         $request = Request::createRequestData($dataJson, $bookmarks);
@@ -87,10 +91,12 @@ trait Searchable
     public function search($query, $limit = 0)
     {
         return (new Pagination($this))->paginateOver(
-            'searchCall', [
-            'query' => $query,
-            'scope' => $this->getSearchScope(),
-        ], $limit
+            'searchCall',
+            [
+                'query' => $query,
+                'scope' => $this->getSearchScope(),
+            ],
+            $limit
         );
     }
 
@@ -131,7 +137,9 @@ trait Searchable
      */
     protected function parseResponseSearchResult(Response $response)
     {
-        $bookmarks = $response->getData('module.tree.resource.options.bookmarks', []);
+        $responseBookmarks = $response->getData('module.tree.resource.options.bookmarks', []);
+        $bookmarks  = empty($responseBookmarks) ? [] : $responseBookmarks[0];
+
         $results = $response->getData('module.tree.data.results');
 
         if (!empty($results)) {

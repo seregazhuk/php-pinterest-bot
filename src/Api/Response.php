@@ -137,13 +137,11 @@ class Response
     {
         $this->lastError = null;
 
-        if (isset($this->data['resource_response']['error']) && !empty($this->data['resource_response']['error'])) {
-            $this->lastError = $this->data['resource_response']['error'];
+        $error = $this->getValueByKey('resource_response.error', $this->data);
+        if(!$error) return false;
 
-            return true;
-        }
-
-        return false;
+        $this->lastError = $error;
+        return true;
     }
 
     /**
@@ -153,11 +151,8 @@ class Response
      */
     public function getBookmarks()
     {
-        if (!$this->hasErrors() && isset($this->data['resource']['options']['bookmarks'][0])) {
-            return [$this->data['resource']['options']['bookmarks'][0]];
-        }
-
-        return [];
+        $bookmarks = $this->getValueByKey('resource.options.bookmarks', $this->data,  []);
+        return empty($bookmarks) ? [] : [$bookmarks[0]];
     }
 
     /**
