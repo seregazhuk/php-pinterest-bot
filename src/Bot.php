@@ -96,6 +96,9 @@ class Bot
      */
     public function isLoggedIn()
     {
-        return $this->providersContainer->getRequest()->isLoggedIn();
+        return $this
+            ->providersContainer
+            ->getRequest()
+            ->isLoggedIn();
     }
 }
