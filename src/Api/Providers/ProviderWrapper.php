@@ -5,7 +5,7 @@ namespace seregazhuk\PinterestBot\Api\Providers;
 use seregazhuk\PinterestBot\Exceptions\AuthException;
 use seregazhuk\PinterestBot\Exceptions\InvalidRequestException;
 
-class ProviderLoginCheckWrapper
+class ProviderWrapper
 {
     /**
      * @var Provider

@@ -5,7 +5,7 @@ namespace seregazhuk\PinterestBot\Api;
 use ReflectionClass;
 use seregazhuk\PinterestBot\Api\Providers\Provider;
 use seregazhuk\PinterestBot\Exceptions\WrongProviderException;
-use seregazhuk\PinterestBot\Api\Providers\ProviderLoginCheckWrapper;
+use seregazhuk\PinterestBot\Api\Providers\ProviderWrapper;
 
 class ProvidersContainer
 {
@@ -92,7 +92,7 @@ class ProvidersContainer
         $provider = (new ReflectionClass($className))
             ->newInstanceArgs([$this->request]);
 
-        return new ProviderLoginCheckWrapper($provider);
+        return new ProviderWrapper($provider);
     }
 
     /**
