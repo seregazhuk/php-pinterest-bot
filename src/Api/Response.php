@@ -57,13 +57,32 @@ class Response
             $data = $this->data['resource_response']['data'];
 
             if ($key) {
-                return array_key_exists($key, $data) ? $data[$key] : false;
+                return $this->getValueByKey($key, $data);
             }
 
             return $data;
         }
 
         return false;
+    }
+
+    /**
+     * @param string $key
+     * @param array $data
+     * @return array|bool|mixed
+     */
+    protected function getValueByKey($key, array $data)
+    {
+        $indexes = explode('.', $key);
+        $value = $data;
+
+        foreach ($indexes as $index) {
+            if(!isset($value[$index])) return false;
+
+            $value = $value[$index];
+        }
+
+        return $value;
     }
 
     /**
