@@ -9,13 +9,16 @@ class Pagination
     /**
      * @var Provider
      */
-    private $provider;
+    protected $provider;
 
     /**
      * @var array
      */
     protected $bookmarks = [];
 
+    /**
+     * @param Provider $provider
+     */
     public function __construct(Provider $provider)
     {
         $this->provider = $provider;
@@ -30,7 +33,7 @@ class Pagination
      * @param string $method
      * @param array $params
      * @param int $limit
-     * @return \Iterator
+     * @return \Iterator|void
      */
     public function paginateOver($method, $params, $limit = 0)
     {
