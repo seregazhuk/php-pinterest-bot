@@ -63,39 +63,13 @@ class Pagination
         $params['bookmarks'] = $this->bookmarks;
 
         $response = call_user_func_array([$this->provider, $method], $params);
+        if ($response->hasResponseData()) {
+            $this->bookmarks = $response->getBookmarks();
 
-        if ($this->responseHasData($response)) {
-            $this->getBookMarks($response);
-
-            return $this->getDataFromPaginatedResponse($response);
+            return $response->getResponseData();
         }
 
         return [];
-    }
-
-    /**
-     * @param array $response
-     * @return array
-     */
-    protected function getDataFromPaginatedResponse($response)
-    {
-        if ($this->responseHasData($response)) {
-            $res = $this->clearResponseFromMetaData($response);
-
-            return $res['data'];
-        }
-
-        return [];
-    }
-
-    /**
-     * @param array $response
-     *
-     * @return bool
-     */
-    protected function responseHasData($response)
-    {
-        return isset($response['data']) && !empty($response['data']);
     }
 
     /**
@@ -125,18 +99,6 @@ class Pagination
         }
 
         return $response;
-    }
-
-    /**
-     * @param $response
-     *
-     * @return array
-     */
-    protected function getBookMarks($response)
-    {
-        $this->bookmarks = isset($response['bookmarks']) ? $response['bookmarks'] : [];
-
-        return $this;
     }
 
     /**

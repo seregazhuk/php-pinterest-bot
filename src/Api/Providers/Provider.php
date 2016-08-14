@@ -70,12 +70,12 @@ abstract class Provider
      * @param array $requestOptions
      * @param string $resourceUrl
      * @param array $bookmarks
-     * @return array|bool
+     * @return Response
      */
     protected function execGetRequestWithPagination(array $requestOptions, $resourceUrl, $bookmarks = [])
     {
         $query = Request::createQuery($requestOptions, $bookmarks);
-        return $this->request->exec($resourceUrl . "?{$query}")->getPaginationData();
+        return $this->request->exec($resourceUrl . "?{$query}");
     }
 
     public function getEntityIdName()

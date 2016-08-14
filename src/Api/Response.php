@@ -103,9 +103,9 @@ class Response
     /**
      * @return bool
      */
-    public function hasData()
+    public function hasResponseData()
     {
-        return (bool)$this->getValueByKey('data', $this->data);
+        return (bool)$this->getValueByKey('resource_response.data', $this->data);
     }
 
     /**

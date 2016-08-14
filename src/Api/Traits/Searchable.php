@@ -52,7 +52,6 @@ trait Searchable
         /*
          * Process a response with bookmarks
          */
-
         return $response->getPaginationData();
     }
 
