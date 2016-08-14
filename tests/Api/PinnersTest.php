@@ -55,14 +55,15 @@ class PinnersTest extends ProviderTest
     }
 
     /** @test */
-    public function it_should_return_iterator_with_user_followers()
+    public function it_should_return_generator_with_user_followers()
     {
         $response = $this->createPaginatedResponse();
         $this->setResponseExpectation($response);
         $this->setResourceResponseData([]);
-        $this->setResourceResponseData([['type' => 'module']]);
+        $this->setResourceResponseData([]);
 
         $followers = $this->provider->followers('username');
+        $this->assertInstanceOf(\Generator::class, $followers);
         $this->assertCount(2, iterator_to_array($followers));
 
         $followers = $this->provider->followers('username');
@@ -70,7 +71,7 @@ class PinnersTest extends ProviderTest
     }
 
     /** @test */
-    public function it_should_return_iterator_with_following_users()
+    public function it_should_return_generator_with_following_users()
     {
         $response = $this->createPaginatedResponse();
         $this->setResponseExpectation($response);
@@ -81,7 +82,7 @@ class PinnersTest extends ProviderTest
     }
 
     /** @test */
-    public function it_should_return_iterator_with_user_pins()
+    public function it_should_return_generator_with_user_pins()
     {
         $res = [
             'resource'          => [
@@ -104,7 +105,7 @@ class PinnersTest extends ProviderTest
     }
 
     /** @test */
-    public function it_should_return_iterator_when_searching()
+    public function it_should_return_generator_when_searching()
     {
         $response['module']['tree']['data']['results'] = [
             ['id' => 1],
@@ -112,9 +113,9 @@ class PinnersTest extends ProviderTest
         ];
 
         $expectedResultsNum = count($response['module']['tree']['data']['results']);
-        $this->setResponseExpectation($response, 2);
+        $this->setResponseExpectation($response);
 
-        $res = iterator_to_array($this->provider->search('dogs'), 1);
+        $res = iterator_to_array($this->provider->search('dogs', 2));
         $this->assertCount($expectedResultsNum, $res);
     }
 }

@@ -3,8 +3,8 @@
 namespace seregazhuk\PinterestBot\Api\Traits;
 
 use seregazhuk\PinterestBot\Api\Request;
-use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
+use seregazhuk\PinterestBot\Api\SearchResponse;
 use seregazhuk\PinterestBot\Helpers\Pagination;
 
 /**
@@ -34,7 +34,7 @@ trait Searchable
      * @param string $scope
      * @param array  $bookmarks
      *
-     * @return array
+     * @return SearchResponse
      */
     public function searchCall($query, $scope, $bookmarks = [])
     {
@@ -42,17 +42,7 @@ trait Searchable
         $get = $this->createSearchQuery($query, $scope, $bookmarks);
         $response = $this->getRequest()->exec($url . '?' . $get);
 
-        /*
-         * It was a first time search, we grab data and bookmarks for pagination.
-         */
-        if (empty($bookmarks)) {
-            return $this->parseResponseSearchResult($response);
-        }
-
-        /*
-         * Process a response with bookmarks
-         */
-        return $response->getPaginationData();
+        return new SearchResponse($response);
     }
 
     /**
@@ -124,27 +114,5 @@ trait Searchable
 
             return $dataJson;
         }
-    }
-
-    /**
-     * Parses simple Pinterest search API response
-     * on request with bookmarks.
-     *
-     * @param Response $response
-     *
-     * @return array
-     */
-    protected function parseResponseSearchResult(Response $response)
-    {
-        $responseBookmarks = $response->getData('module.tree.resource.options.bookmarks', []);
-        $bookmarks  = empty($responseBookmarks) ? [] : $responseBookmarks[0];
-
-        $results = $response->getData('module.tree.data.results');
-
-        if (!empty($results)) {
-            return ['data' => $results, 'bookmarks' => [$bookmarks]];
-        }
-
-        return [];
     }
 }

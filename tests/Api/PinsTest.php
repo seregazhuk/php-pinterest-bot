@@ -146,9 +146,9 @@ class PinsTest extends ProviderTest
         ];
 
         $expectedResultsNum = count($response['module']['tree']['data']['results']);
-        $this->setResponseExpectation($response, 2);
+        $this->setResponseExpectation($response);
 
-        $res = iterator_to_array($this->provider->search('dogs'));
+        $res = iterator_to_array($this->provider->search('dogs', 2));
         $this->assertCount($expectedResultsNum, $res);
     }
 

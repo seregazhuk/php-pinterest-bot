@@ -23,7 +23,7 @@ trait HandlesRequest
      * @param string $resourceUrl
      * @param bool $returnResponse
      *
-     * @return Response
+     * @return Response|bool
      */
     abstract protected function execPostRequest($requestOptions, $resourceUrl, $returnResponse = false);
 }

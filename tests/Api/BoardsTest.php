@@ -32,9 +32,9 @@ class BoardsTest extends ProviderTest
         ];
 
         $expectedResultsNum = count($response['module']['tree']['data']['results']);
-        $this->setResponseExpectation($response, 2);
+        $this->setResponseExpectation($response);
 
-        $res = iterator_to_array($this->provider->search('dogs'), 1);
+        $res = iterator_to_array($this->provider->search('dogs', 2));
         $this->assertCount($expectedResultsNum, $res);
     }
 
@@ -61,15 +61,16 @@ class BoardsTest extends ProviderTest
     }
 
     /** @test */
-    public function it_should_return_iterator_for_boards_followers()
+    public function it_should_return_generator_for_boards_followers()
     {
         $response = $this->createPaginatedResponse();
         $this->setResponseExpectation($response);
         $this->setResourceResponseData([]);
-        $this->setResourceResponseData([['type' => 'module']]);
+        $this->setResourceResponseData([]);
 
         $boardId = 1;
         $followers = $this->provider->followers($boardId);
+        $this->assertInstanceOf(\Generator::class, $followers);
         $this->assertCount(2, iterator_to_array($followers));
 
         $followers = $this->provider->followers($boardId);
@@ -103,16 +104,17 @@ class BoardsTest extends ProviderTest
     }
 
     /** @test */
-    public function it_should_return_iterator_with_pins_for_specific_board()
+    public function it_should_return_generator_with_pins_for_specific_board()
     {
         $response = $this->createPaginatedResponse();
 
         $this->setResponseExpectation($response);
         $this->setResourceResponseData([]);
-        $this->setResourceResponseData([['type' => 'module']]);
+        $this->setResourceResponseData([]);
 
         $boardId = 1;
         $pins = $this->provider->pins($boardId);
+        $this->assertInstanceOf(\Generator::class, $pins);
         $this->assertCount(2, iterator_to_array($pins));
 
         $pins = $this->provider->pins($boardId);
