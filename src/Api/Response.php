@@ -97,6 +97,9 @@ class Response implements PaginatedResponse
         return empty($this->getResponseData());
     }
 
+    /**
+     * @return bool
+     */
     public function isOk()
     {
         return !$this->hasErrors();
