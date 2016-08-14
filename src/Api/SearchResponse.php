@@ -21,7 +21,9 @@ class SearchResponse implements PaginatedResponse
      */
     public function hasResponseData()
     {
-        $searchResults = $this->response->getData('module.tree.data.results', []);
+        $searchResults = $this
+            ->response
+            ->getData('module.tree.data.results', []);
 
         return $searchResults ? : $this->response->hasResponseData();
     }
@@ -33,7 +35,9 @@ class SearchResponse implements PaginatedResponse
      */
     public function getBookmarks()
     {
-        $searchBookmarks = $this->response->getData('module.tree.resource.options.bookmarks', []);
+        $searchBookmarks = $this
+            ->response
+            ->getData('module.tree.resource.options.bookmarks', []);
 
         return $searchBookmarks ? [$searchBookmarks[0]] : $this->response->getBookmarks();
     }
@@ -43,7 +47,9 @@ class SearchResponse implements PaginatedResponse
      */
     public function getResponseData()
     {
-        $results = $this->response->getData('module.tree.data.results', []);
+        $results = $this
+            ->response
+            ->getData('module.tree.data.results', []);
 
         return $results ? : $this->response->getResponseData();
     }
