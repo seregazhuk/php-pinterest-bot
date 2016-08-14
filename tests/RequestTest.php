@@ -11,7 +11,7 @@ use seregazhuk\PinterestBot\Api\CurlAdapter;
 use seregazhuk\tests\helpers\ResponseHelper;
 use seregazhuk\tests\helpers\ReflectionHelper;
 use seregazhuk\PinterestBot\Helpers\CsrfHelper;
-use seregazhuk\PinterestBot\Contracts\HttpInterface;
+use seregazhuk\PinterestBot\Contracts\Http;
 
 /**
  * Class RequestTest.
@@ -177,22 +177,22 @@ class RequestTest extends PHPUnit_Framework_TestCase
     }
     
     /**
-     * @return Mock|HttpInterface
+     * @return Mock|Http
      */
     protected function getHttpObject()
     {
-        $mock = Mockery::mock(HttpInterface::class);
+        $mock = Mockery::mock(Http::class);
 
         return $mock;
     }
 
     /**
-     * @param HttpInterface $http
+     * @param Http $http
      * @param string $userAgentString
      *
      * @return Request
      */
-    protected function createRequestObject(HttpInterface $http = null, $userAgentString = '')
+    protected function createRequestObject(Http $http = null, $userAgentString = '')
     {
         $http = $http ? : new CurlAdapter();
         $request = new Request($http, $userAgentString);

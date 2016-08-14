@@ -2,7 +2,9 @@
 
 namespace seregazhuk\PinterestBot\Api;
 
-class SearchResponse
+use seregazhuk\PinterestBot\Contracts\PaginatedResponse;
+
+class SearchResponse implements PaginatedResponse
 {
     /**
      * @var Response
@@ -14,6 +16,9 @@ class SearchResponse
         $this->response = $response;
     }
 
+    /**
+     * @return bool
+     */
     public function hasResponseData()
     {
         $searchResults = $this->response->getData('module.tree.data.results', []);

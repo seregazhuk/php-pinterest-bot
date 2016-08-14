@@ -2,7 +2,9 @@
 
 namespace seregazhuk\PinterestBot\Api;
 
-class Response
+use seregazhuk\PinterestBot\Contracts\PaginatedResponse;
+
+class Response implements PaginatedResponse
 {
     /**
      * @var mixed

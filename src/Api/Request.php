@@ -5,7 +5,7 @@ namespace seregazhuk\PinterestBot\Api;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
 use seregazhuk\PinterestBot\Helpers\FileHelper;
 use seregazhuk\PinterestBot\Helpers\CsrfHelper;
-use seregazhuk\PinterestBot\Contracts\HttpInterface;
+use seregazhuk\PinterestBot\Contracts\Http;
 use seregazhuk\PinterestBot\Exceptions\AuthException;
 
 /**
@@ -27,7 +27,7 @@ class Request
     protected $userAgent = 'Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0';
 
     /**
-     * @var HttpInterface
+     * @var Http
      */
     protected $http;
 
@@ -84,9 +84,9 @@ class Request
     ];
 
     /**
-     * @param HttpInterface $http
+     * @param Http $http
      */
-    public function __construct(HttpInterface $http)
+    public function __construct(Http $http)
     {
         $this->http = $http;
         $this->loggedIn = false;

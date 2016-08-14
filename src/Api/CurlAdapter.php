@@ -2,7 +2,7 @@
 
 namespace seregazhuk\PinterestBot\Api;
 
-use seregazhuk\PinterestBot\Contracts\HttpInterface;
+use seregazhuk\PinterestBot\Contracts\Http;
 
 /**
  * Class CurlAdapter.
@@ -10,7 +10,7 @@ use seregazhuk\PinterestBot\Contracts\HttpInterface;
  * @property string $cookieJar
  * @property string $cookePath
  */
-class CurlAdapter implements HttpInterface
+class CurlAdapter implements Http
 {
     /**
      * Contains the curl instance.
