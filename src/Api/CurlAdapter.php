@@ -2,7 +2,7 @@
 
 namespace seregazhuk\PinterestBot\Api;
 
-use seregazhuk\PinterestBot\Contracts\Http;
+use seregazhuk\PinterestBot\Api\Contracts\Http;
 
 /**
  * Class CurlAdapter.

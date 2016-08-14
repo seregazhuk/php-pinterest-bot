@@ -1,6 +1,6 @@
 <?php
 
-namespace seregazhuk\PinterestBot\Contracts;
+namespace seregazhuk\PinterestBot\Api\Contracts;
 
 interface Http
 {

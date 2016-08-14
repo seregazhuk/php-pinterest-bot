@@ -2,6 +2,7 @@
 All notable changes to this project will be documented in this file.
 
 ## 4.5.2 - ???
+ - Request *upload* method throws exception, if file does not exist
  - Renamed ProviderLoginCheckWrapper to ProviderWrapper
  - Refactored Response class
  - HttpInterface renamed to Http

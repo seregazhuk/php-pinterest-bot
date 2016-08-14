@@ -2,10 +2,11 @@
 
 namespace seregazhuk\PinterestBot\Api;
 
+use seregazhuk\PinterestBot\Exceptions\InvalidRequestException;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
+use seregazhuk\PinterestBot\Api\Contracts\Http;
 use seregazhuk\PinterestBot\Helpers\FileHelper;
 use seregazhuk\PinterestBot\Helpers\CsrfHelper;
-use seregazhuk\PinterestBot\Contracts\Http;
 use seregazhuk\PinterestBot\Exceptions\AuthException;
 
 /**
@@ -96,11 +97,13 @@ class Request
     /**
      * @param string $pathToFile
      * @param string $url
-     *
      * @return array
+     * @throws InvalidRequestException
      */
     public function upload($pathToFile, $url)
     {
+        if(!file_exists($pathToFile)) throw new InvalidRequestException("File $pathToFile does not exist!");
+
         $this->filePathToUpload = $pathToFile;
         return $this->exec($url);
     }
