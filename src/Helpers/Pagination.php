@@ -2,6 +2,7 @@
 
 namespace seregazhuk\PinterestBot\Helpers;
 
+use seregazhuk\PinterestBot\Api\Contracts\PaginatedResponse;
 use seregazhuk\PinterestBot\Api\Providers\Provider;
 
 class Pagination
@@ -40,10 +41,10 @@ class Pagination
         $resultsNum = 0;
         while (true) {
 
-            $results = $this->callProviderRequest($method, $params);
-            if (empty($results) || $this->checkEndBookMarks()) {
-                return;
-            }
+            $response = $this->callProviderRequest($method, $params);
+            $results = $this->processProviderResponse($response);
+
+            if (empty($results)) return;
 
             foreach ($results as $result) {
                 $resultsNum++;
@@ -59,17 +60,24 @@ class Pagination
     /**
      * @param string $method
      * @param array $params
-     * @return array
+     * @return PaginatedResponse
      */
     protected function callProviderRequest($method, array $params)
     {
         $params['bookmarks'] = $this->bookmarks;
-        $response = call_user_func_array([$this->provider, $method], $params);
+        return call_user_func_array([$this->provider, $method], $params);
+    }
 
+    /**
+     * @param PaginatedResponse $response
+     * @return array
+     */
+    protected function processProviderResponse(PaginatedResponse $response)
+    {
         if ($response->hasResponseData()) {
             $this->bookmarks = $response->getBookmarks();
 
-            return $response->getResponseData();
+            return $this->checkEndBookMarks() ? [] : $response->getResponseData();
         }
 
         return [];
@@ -105,6 +113,8 @@ class Pagination
     }
 
     /**
+     * Checks for -end- substring in bookmarks
+     *
      * @return bool
      */
     protected function checkEndBookMarks()
