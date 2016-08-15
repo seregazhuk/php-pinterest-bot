@@ -2,8 +2,8 @@
 
 namespace seregazhuk\PinterestBot\Helpers;
 
-use seregazhuk\PinterestBot\Api\Contracts\PaginatedResponse;
 use seregazhuk\PinterestBot\Api\Providers\Provider;
+use seregazhuk\PinterestBot\Api\Contracts\PaginatedResponse;
 
 class Pagination
 {
