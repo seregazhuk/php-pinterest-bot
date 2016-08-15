@@ -78,6 +78,9 @@ abstract class Provider
         return $this->request->exec($resourceUrl . "?{$query}");
     }
 
+    /**
+     * @return string
+     */
     public function getEntityIdName()
     {
         return property_exists($this, 'entityIdName') ? $this->entityIdName : '';

@@ -102,8 +102,6 @@ class Request
      */
     public function upload($pathToFile, $url)
     {
-        if(!file_exists($pathToFile)) throw new InvalidRequestException("File $pathToFile does not exist!");
-
         $this->filePathToUpload = $pathToFile;
         return $this->exec($url);
     }

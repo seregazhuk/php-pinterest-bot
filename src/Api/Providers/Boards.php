@@ -2,13 +2,13 @@
 
 namespace seregazhuk\PinterestBot\Api\Providers;
 
-use Iterator;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
 use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Api\Traits\Searchable;
 use seregazhuk\PinterestBot\Api\Traits\Followable;
 use seregazhuk\PinterestBot\Api\Traits\CanBeDeleted;
 use seregazhuk\PinterestBot\Api\Traits\HasFollowers;
+use seregazhuk\PinterestBot\Api\Contracts\PaginatedResponse;
 
 class Boards extends Provider
 {
@@ -39,9 +39,8 @@ class Boards extends Provider
      */
     public function forUser($username)
     {
-        return $this->execGetRequest(
-                ['username' => $username], UrlHelper::RESOURCE_GET_BOARDS
-            )
+        return $this
+            ->execGetRequest(['username' => $username], UrlHelper::RESOURCE_GET_BOARDS)
             ->getResponseData();
     }
 
@@ -72,7 +71,7 @@ class Boards extends Provider
      * @param int $boardId
      * @param int $limit
      *
-     * @return Iterator
+     * @return Generator
      */
     public function pins($boardId, $limit = 0)
     {
@@ -85,7 +84,7 @@ class Boards extends Provider
      * @param int   $boardId
      * @param array $bookmarks
      *
-     * @return array|bool
+     * @return PaginatedResponse
      */
     public function getPinsFromBoard($boardId, $bookmarks = [])
     {

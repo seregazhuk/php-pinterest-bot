@@ -4,8 +4,8 @@ namespace seregazhuk\PinterestBot\Api;
 
 use ReflectionClass;
 use seregazhuk\PinterestBot\Api\Providers\Provider;
-use seregazhuk\PinterestBot\Exceptions\WrongProviderException;
 use seregazhuk\PinterestBot\Api\Providers\ProviderWrapper;
+use seregazhuk\PinterestBot\Exceptions\WrongProviderException;
 
 class ProvidersContainer
 {
