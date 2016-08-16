@@ -299,7 +299,7 @@ class Request
      * If we are uploading file, we should build boundary form data. Otherwise
      * it is simple urlencoded form.
      *
-     * @return string[]
+     * @return array
      */
     protected function getContentTypeHeader()
     {
