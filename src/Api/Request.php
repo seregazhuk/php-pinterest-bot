@@ -220,7 +220,7 @@ class Request
     }
 
     /**
-     * @param $userAgent
+     * @param string $userAgent
      * @return $this
      */
     public function setUserAgent($userAgent)
@@ -299,7 +299,7 @@ class Request
      * If we are uploading file, we should build boundary form data. Otherwise
      * it is simple urlencoded form.
      *
-     * @return array
+     * @return string[]
      */
     protected function getContentTypeHeader()
     {
@@ -337,7 +337,7 @@ class Request
     }
 
     /**
-     * @param array|null $res
+     * @param string $res
      * @return Response
      */
     protected function processResponse($res)
