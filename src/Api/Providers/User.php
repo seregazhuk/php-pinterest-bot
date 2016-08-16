@@ -91,7 +91,7 @@ class User extends Provider
      * @param string $businessName
      * @param string $websiteUrl
      *
-     * @return Response
+     * @return bool
      */
     public function convertToBusiness($businessName, $websiteUrl = '')
     {

@@ -70,7 +70,7 @@ class Response implements PaginatedResponse
     /**
      * @param string $key
      * @param array $data
-     * @param bool $default
+     * @param mixed $default
      * @return array|bool|mixed
      */
     protected function getValueByKey($key = '', array $data, $default = null)

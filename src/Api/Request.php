@@ -337,7 +337,7 @@ class Request
     }
 
     /**
-     * @param array|null $res
+     * @param string|null $res
      * @return Response
      */
     protected function processResponse($res)
