@@ -151,7 +151,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
         $image = 'image.jpg';
         file_put_contents($image, '');
 
-        $this->http_should_execute_and_return($http, null);
+        $this->http_should_execute_and_return($http, json_encode([]));
         $request = $this->createRequestObject($http);
 
         $request->upload($image, 'http://uploadurl.com');

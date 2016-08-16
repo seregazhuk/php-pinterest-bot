@@ -19,6 +19,8 @@ class Response implements PaginatedResponse
     public function __construct($data)
     {
         $this->data = $data;
+
+        $this->lastError = $this->getValueByKey('resource_response.error', $this->data);
     }
 
     /**
@@ -135,13 +137,7 @@ class Response implements PaginatedResponse
      */
     public function hasErrors()
     {
-        $this->lastError = null;
-
-        $error = $this->getValueByKey('resource_response.error', $this->data);
-        if(!$error) return false;
-
-        $this->lastError = $error;
-        return true;
+        return !is_null($this->lastError);
     }
 
     /**

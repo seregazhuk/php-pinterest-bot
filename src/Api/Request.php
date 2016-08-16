@@ -119,7 +119,10 @@ class Request
         $url = UrlHelper::buildApiUrl($resourceUrl);
         $this->makeHttpOptions($postString);
 
-        $result = $this->http->execute($url, $this->options);
+        $result = $this
+            ->http
+            ->execute($url, $this->options);
+
         return $this->processResponse($result);
     }
 

@@ -69,10 +69,10 @@ class PinsTest extends ProviderTest
         $pinSource = 'http://example.com/image.jpg';
         $pinDescription = 'Pin Description';
         $boardId = 1;
-        $this->assertNotFalse($this->provider->create($pinSource, $boardId, $pinDescription)->isOk());
+        $this->assertNotEmpty($this->provider->create($pinSource, $boardId, $pinDescription));
 
         $this->setErrorResponse();
-        $this->assertFalse($this->provider->create($pinSource, $boardId, $pinDescription)->isOk());
+        $this->assertEmpty($this->provider->create($pinSource, $boardId, $pinDescription));
     }
 
     /** @test */
@@ -98,10 +98,10 @@ class PinsTest extends ProviderTest
         $repinId = 11;
         $pinDescription = 'Pin Description';
 
-        $this->assertTrue($this->provider->repin($repinId, $boardId, $pinDescription)->isOk());
+        $this->assertNotEmpty($this->provider->repin($repinId, $boardId, $pinDescription));
         
         $this->setErrorResponse();
-        $this->assertFalse($this->provider->repin($repinId, $boardId, $pinDescription)->isOk());
+        $this->assertEmpty($this->provider->repin($repinId, $boardId, $pinDescription));
     }
 
     /** @test */

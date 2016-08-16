@@ -88,14 +88,14 @@ class Pins extends Provider
     }
 
     /**
-     * Create a pin. Returns created pin ID.
+     * Create a pin. Returns created pin info.
      *
      * @param string $imageUrl
      * @param int    $boardId
      * @param string $description
      * @param string $link
      *
-     * @return Response
+     * @return array
      */
     public function create($imageUrl, $boardId, $description = '', $link = '')
     {
@@ -112,7 +112,9 @@ class Pins extends Provider
             'board_id'    => $boardId,
         ];
 
-        return $this->execPostRequest($requestOptions, UrlHelper::RESOURCE_CREATE_PIN, true);
+        return $this
+            ->execPostRequest($requestOptions, UrlHelper::RESOURCE_CREATE_PIN, true)
+            ->getResponseData();
     }
 
     /**
@@ -155,7 +157,7 @@ class Pins extends Provider
      * @param int    $boardId
      * @param string $description
      *
-     * @return Response
+     * @return array
      */
     public function repin($repinId, $boardId, $description = '')
     {
@@ -167,7 +169,9 @@ class Pins extends Provider
             'pin_id'      => $repinId,
         ];
 
-        return $this->execPostRequest($requestOptions, UrlHelper::RESOURCE_REPIN, true);
+        return $this
+            ->execPostRequest($requestOptions, UrlHelper::RESOURCE_REPIN, true)
+            ->getResponseData();
     }
 
     /**
