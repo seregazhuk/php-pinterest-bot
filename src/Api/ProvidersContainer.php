@@ -29,8 +29,11 @@ class ProvidersContainer
      *
      * @var array
      */
-    private $providers = [];
+    protected $providers = [];
 
+    /**
+     * @param Request $request
+     */
     public function __construct(Request $request)
     {
         $this->request = $request;
