@@ -6,6 +6,9 @@ use seregazhuk\PinterestBot\Helpers\UrlHelper;
 
 class News extends Provider
 {
+    /**
+     * @var array
+     */
     protected $loginRequiredFor = ['last'];
 
     /**

@@ -2,6 +2,7 @@
 
 namespace seregazhuk\PinterestBot\Api\Providers;
 
+use Generator;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
 use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Api\Traits\Searchable;
@@ -14,6 +15,9 @@ class Boards extends Provider
 {
     use CanBeDeleted, Searchable, Followable, HasFollowers;
 
+    /**
+     * @var array
+     */
     protected $loginRequiredFor = [
         'delete',
         'create',

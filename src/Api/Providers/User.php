@@ -12,6 +12,9 @@ class User extends Provider
 {
     use UploadsImages;
 
+    /**
+     * @var array
+     */
     protected $loginRequiredFor = ['profile', 'convertToBusiness'];
 
     const REGISTRATION_COMPLETE_EXPERIENCE_ID = '11:10105';
