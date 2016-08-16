@@ -1,6 +1,12 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## 4.5.2 - 2016-08-16
+ - Renamed ProviderLoginCheckWrapper to ProviderWrapper
+ - Refactored Response class
+ - HttpInterface contract renamed to Http
+ - PaginatedResponse contract added
+
 ## [4.5.1] - 2016-08-09
 
 ### Fixed:

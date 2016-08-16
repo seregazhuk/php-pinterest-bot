@@ -43,12 +43,6 @@ class ProvidersContainerTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf(Request::class, $this->container->getRequest());
     }
 
-    /** @test */
-    public function it_should_return_response_instance()
-    {
-        $this->assertInstanceOf(Response::class, $this->container->getResponse());
-    }
-
     /**
      * @test
      * @expectedException \seregazhuk\PinterestBot\Exceptions\WrongProviderException

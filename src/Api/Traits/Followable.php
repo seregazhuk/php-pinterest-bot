@@ -2,6 +2,7 @@
 
 namespace seregazhuk\PinterestBot\Api\Traits;
 
+use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
 
 /**
@@ -13,7 +14,7 @@ use seregazhuk\PinterestBot\Helpers\UrlHelper;
  */
 trait Followable
 {
-    use HandlesRequestAndResponse, HasEntityIdName;
+    use HandlesRequest, HasEntityIdName;
 
     /**
      * Follow user by user_id.
@@ -49,12 +50,9 @@ trait Followable
      */
     protected function followCall($entityId, $resourceUrl)
     {
-        $response = $this
-            ->followMethodCall(
-                $entityId, $resourceUrl
-            );
-
-        return !$this->getResponse()->hasErrors($response);
+        return $this
+            ->followMethodCall($entityId, $resourceUrl)
+            ->isOk();
     }
 
     /**
@@ -63,15 +61,18 @@ trait Followable
      * @param int    $entityId
      * @param string $url
      *
-     * @return array
+     * @return Response
      */
     public function followMethodCall($entityId, $url)
     {
-        return $this->getRequest()->exec($url, $this->createFollowRequestQuery($entityId));
+        return $this
+            ->getRequest()
+            ->exec($url, $this->createFollowRequestQuery($entityId));
     }
 
     /**
      * @param integer $entityId
+     * @return mixed
      */
     public function createFollowRequestQuery($entityId)
     {

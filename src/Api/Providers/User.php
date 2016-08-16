@@ -3,7 +3,7 @@
 namespace seregazhuk\PinterestBot\Api\Providers;
 
 use LogicException;
-use seregazhuk\PinterestBot\Api\Request;
+use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
 use seregazhuk\PinterestBot\Exceptions\AuthException;
 use seregazhuk\PinterestBot\Api\Traits\UploadsImages;
@@ -12,6 +12,9 @@ class User extends Provider
 {
     use UploadsImages;
 
+    /**
+     * @var array
+     */
     protected $loginRequiredFor = ['profile', 'convertToBusiness'];
 
     const REGISTRATION_COMPLETE_EXPERIENCE_ID = '11:10105';
@@ -24,7 +27,7 @@ class User extends Provider
      *
      * @param array $userInfo
      *
-     * @return mixed
+     * @return bool
      */
     public function profile($userInfo)
     {
@@ -43,6 +46,7 @@ class User extends Provider
      * @param string $name
      * @param string $country
      * @param int $age
+     *
      * @return bool
      */
     public function register($email, $password, $name, $country = "UK", $age = 18)
@@ -86,7 +90,8 @@ class User extends Provider
      *
      * @param string $businessName
      * @param string $websiteUrl
-     * @return mixed
+     *
+     * @return Response
      */
     public function convertToBusiness($businessName, $websiteUrl = '')
     {
@@ -111,18 +116,20 @@ class User extends Provider
      */
     public function login($username, $password)
     {
-        if ($this->request->isLoggedIn()) {
-            return true;
-        }
+        if ($this->request->isLoggedIn()) return true;
 
         $this->checkCredentials($username, $password);
 
-        $postString = $this->createLoginQuery($username, $password);
+        $credentials = [
+            'username_or_email' => $username,
+            'password'          => $password,
+        ];
+
         $this->request->clearToken();
 
-        $response = $this->request->exec(UrlHelper::RESOURCE_LOGIN, $postString);
-        if ($this->response->hasErrors($response)) {
-            throw new AuthException($this->response->getLastError()['message']);
+        $response = $this->execPostRequest($credentials, UrlHelper::RESOURCE_LOGIN, true);
+        if ($response->hasErrors()) {
+            throw new AuthException($response->getLastError()['message']);
         }
 
         $this->request->login();
@@ -156,14 +163,17 @@ class User extends Provider
         }
     }
 
+    /**
+     * @return bool
+     */
     protected function completeRegistration()
     {
         $this->request->setTokenFromCookies();
 
         return $this->execPostRequest(
-            ['placed_experience_id' => self::REGISTRATION_COMPLETE_EXPERIENCE_ID],
-            UrlHelper::RESOURCE_REGISTRATION_COMPLETE
-        );
+                ['placed_experience_id' => self::REGISTRATION_COMPLETE_EXPERIENCE_ID],
+                UrlHelper::RESOURCE_REGISTRATION_COMPLETE
+            );
     }
 
     /**
@@ -181,23 +191,5 @@ class User extends Provider
         }
 
         return $this->completeRegistration();
-    }
-
-    /**
-     * Creates Pinterest API request to login.
-     *
-     * @param string $username
-     * @param string $password
-     *
-     * @return array
-     */
-    protected static function createLoginQuery($username, $password)
-    {
-        $dataJson = [
-            'username_or_email' => $username,
-            'password'          => $password,
-        ];
-
-        return Request::createQuery($dataJson);
     }
 }

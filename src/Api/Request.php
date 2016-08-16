@@ -2,10 +2,11 @@
 
 namespace seregazhuk\PinterestBot\Api;
 
+use seregazhuk\PinterestBot\Exceptions\InvalidRequestException;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
+use seregazhuk\PinterestBot\Api\Contracts\Http;
 use seregazhuk\PinterestBot\Helpers\FileHelper;
 use seregazhuk\PinterestBot\Helpers\CsrfHelper;
-use seregazhuk\PinterestBot\Contracts\HttpInterface;
 use seregazhuk\PinterestBot\Exceptions\AuthException;
 
 /**
@@ -27,7 +28,7 @@ class Request
     protected $userAgent = 'Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0';
 
     /**
-     * @var HttpInterface
+     * @var Http
      */
     protected $http;
 
@@ -58,6 +59,17 @@ class Request
     protected $csrfToken = '';
 
     /**
+     * @var string
+     */
+    protected $postFileData;
+
+    /**
+     * @var array|null
+     */
+    protected $lastError;
+
+
+    /**
      * Common headers needed for every query.
      *
      * @var array
@@ -73,14 +85,9 @@ class Request
     ];
 
     /**
-     * @var string
+     * @param Http $http
      */
-    protected $postFileData;
-
-    /**
-     * @param HttpInterface $http
-     */
-    public function __construct(HttpInterface $http)
+    public function __construct(Http $http)
     {
         $this->http = $http;
         $this->loggedIn = false;
@@ -90,8 +97,8 @@ class Request
     /**
      * @param string $pathToFile
      * @param string $url
-     *
      * @return array
+     * @throws InvalidRequestException
      */
     public function upload($pathToFile, $url)
     {
@@ -105,16 +112,18 @@ class Request
      * @param string $resourceUrl
      * @param string $postString
      *
-     * @return array
+     * @return Response
      */
     public function exec($resourceUrl, $postString = '')
     {
         $url = UrlHelper::buildApiUrl($resourceUrl);
         $this->makeHttpOptions($postString);
-        $res = $this->http->execute($url, $this->options);
 
-        $this->filePathToUpload = null;
-        return json_decode($res, true);
+        $result = $this
+            ->http
+            ->execute($url, $this->options);
+
+        return $this->processResponse($result);
     }
 
     /**
@@ -325,5 +334,28 @@ class Request
             'Content-Type: multipart/form-data; boundary=' . $delimiter,
             'Content-Length: ' . strlen($this->postFileData)
         ];
+    }
+
+    /**
+     * @param array|null $res
+     * @return Response
+     */
+    protected function processResponse($res)
+    {
+        $this->filePathToUpload = null;
+        $this->lastError = null;
+
+        $response = new Response(json_decode($res, true));
+        $this->lastError = $response->getLastError();
+
+        return $response;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getLastError()
+    {
+        return $this->lastError;
     }
 }

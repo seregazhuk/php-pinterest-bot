@@ -1,8 +1,8 @@
 <?php
 
-namespace seregazhuk\PinterestBot\Contracts;
+namespace seregazhuk\PinterestBot\Api\Contracts;
 
-interface HttpInterface
+interface Http
 {
     /**
      * Get curl errors.

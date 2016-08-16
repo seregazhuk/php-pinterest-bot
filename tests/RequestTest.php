@@ -10,8 +10,8 @@ use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\CurlAdapter;
 use seregazhuk\tests\helpers\ResponseHelper;
 use seregazhuk\tests\helpers\ReflectionHelper;
+use seregazhuk\PinterestBot\Api\Contracts\Http;
 use seregazhuk\PinterestBot\Helpers\CsrfHelper;
-use seregazhuk\PinterestBot\Contracts\HttpInterface;
 
 /**
  * Class RequestTest.
@@ -151,7 +151,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
         $image = 'image.jpg';
         file_put_contents($image, '');
 
-        $this->http_should_execute_and_return($http, null);
+        $this->http_should_execute_and_return($http, json_encode([]));
         $request = $this->createRequestObject($http);
 
         $request->upload($image, 'http://uploadurl.com');
@@ -177,22 +177,22 @@ class RequestTest extends PHPUnit_Framework_TestCase
     }
     
     /**
-     * @return Mock|HttpInterface
+     * @return Mock|Http
      */
     protected function getHttpObject()
     {
-        $mock = Mockery::mock(HttpInterface::class);
+        $mock = Mockery::mock(Http::class);
 
         return $mock;
     }
 
     /**
-     * @param HttpInterface $http
+     * @param Http $http
      * @param string $userAgentString
      *
      * @return Request
      */
-    protected function createRequestObject(HttpInterface $http = null, $userAgentString = '')
+    protected function createRequestObject(Http $http = null, $userAgentString = '')
     {
         $http = $http ? : new CurlAdapter();
         $request = new Request($http, $userAgentString);

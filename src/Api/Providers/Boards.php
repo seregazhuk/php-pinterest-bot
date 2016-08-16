@@ -2,18 +2,22 @@
 
 namespace seregazhuk\PinterestBot\Api\Providers;
 
-use Iterator;
+use Generator;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
 use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Api\Traits\Searchable;
 use seregazhuk\PinterestBot\Api\Traits\Followable;
 use seregazhuk\PinterestBot\Api\Traits\CanBeDeleted;
 use seregazhuk\PinterestBot\Api\Traits\HasFollowers;
+use seregazhuk\PinterestBot\Api\Contracts\PaginatedResponse;
 
 class Boards extends Provider
 {
     use CanBeDeleted, Searchable, Followable, HasFollowers;
 
+    /**
+     * @var array
+     */
     protected $loginRequiredFor = [
         'delete',
         'create',
@@ -39,9 +43,9 @@ class Boards extends Provider
      */
     public function forUser($username)
     {
-        return $this->execGetRequest(
-            ['username' => $username], UrlHelper::RESOURCE_GET_BOARDS
-        );
+        return $this
+            ->execGetRequest(['username' => $username], UrlHelper::RESOURCE_GET_BOARDS)
+            ->getResponseData();
     }
 
     /**
@@ -60,7 +64,9 @@ class Boards extends Provider
             'field_set_key' => 'detailed',
         ];
 
-        return $this->execGetRequest($requestOptions, UrlHelper::RESOURCE_GET_BOARDS);
+        return $this
+            ->execGetRequest($requestOptions, UrlHelper::RESOURCE_GET_BOARDS)
+            ->getResponseData();
     }
 
     /**
@@ -69,7 +75,7 @@ class Boards extends Provider
      * @param int $boardId
      * @param int $limit
      *
-     * @return Iterator
+     * @return Generator
      */
     public function pins($boardId, $limit = 0)
     {
@@ -82,12 +88,14 @@ class Boards extends Provider
      * @param int   $boardId
      * @param array $bookmarks
      *
-     * @return array|bool
+     * @return PaginatedResponse
      */
     public function getPinsFromBoard($boardId, $bookmarks = [])
     {
         return $this->execGetRequestWithPagination(
-            ['board_id' => $boardId], UrlHelper::RESOURCE_GET_BOARD_FEED, $bookmarks
+            ['board_id' => $boardId],
+            UrlHelper::RESOURCE_GET_BOARD_FEED,
+            $bookmarks
         );
     }
 

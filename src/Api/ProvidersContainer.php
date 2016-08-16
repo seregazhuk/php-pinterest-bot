@@ -4,19 +4,19 @@ namespace seregazhuk\PinterestBot\Api;
 
 use ReflectionClass;
 use seregazhuk\PinterestBot\Api\Providers\Provider;
+use seregazhuk\PinterestBot\Api\Providers\ProviderWrapper;
 use seregazhuk\PinterestBot\Exceptions\WrongProviderException;
-use seregazhuk\PinterestBot\Api\Providers\ProviderLoginCheckWrapper;
 
 class ProvidersContainer
 {
     /**
-     * References to the request and response classes that travels
+     * References to the request that travels
      * through the application.
      *
      * @var Request
      */
     protected $request;
-    
+
     /**
      * @var Response
      */
@@ -29,12 +29,14 @@ class ProvidersContainer
      *
      * @var array
      */
-    private $providers = [];
+    protected $providers = [];
 
-    public function __construct(Request $request, Response $response)
+    /**
+     * @param Request $request
+     */
+    public function __construct(Request $request)
     {
         $this->request = $request;
-        $this->response = $response;
     }
 
     /**
@@ -91,9 +93,9 @@ class ProvidersContainer
     private function buildProvider($className)
     {
         $provider = (new ReflectionClass($className))
-            ->newInstanceArgs([$this->request, $this->response]);
+            ->newInstanceArgs([$this->request]);
 
-        return new ProviderLoginCheckWrapper($provider);
+        return new ProviderWrapper($provider);
     }
 
     /**
@@ -102,13 +104,5 @@ class ProvidersContainer
     public function getRequest()
     {
         return $this->request;
-    }
-
-    /**
-     * @return Response
-     */
-    public function getResponse()
-    {
-        return $this->response;
     }
 }

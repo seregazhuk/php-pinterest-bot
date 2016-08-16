@@ -2,11 +2,10 @@
 
 namespace seregazhuk\PinterestBot\Factories;
 
+use seregazhuk\PinterestBot\Bot;
+use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\CurlAdapter;
 use seregazhuk\PinterestBot\Api\ProvidersContainer;
-use seregazhuk\PinterestBot\Api\Request;
-use seregazhuk\PinterestBot\Api\Response;
-use seregazhuk\PinterestBot\Bot;
 
 class PinterestBot
 {
@@ -25,8 +24,7 @@ class PinterestBot
             $request->setUserAgent($userAgent);
         }
         
-        $response = new Response();
-        $providersContainer = new ProvidersContainer($request, $response);
+        $providersContainer = new ProvidersContainer($request);
 
         return new Bot($providersContainer);
     }

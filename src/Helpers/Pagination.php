@@ -3,19 +3,23 @@
 namespace seregazhuk\PinterestBot\Helpers;
 
 use seregazhuk\PinterestBot\Api\Providers\Provider;
+use seregazhuk\PinterestBot\Api\Contracts\PaginatedResponse;
 
 class Pagination
 {
     /**
      * @var Provider
      */
-    private $provider;
+    protected $provider;
 
     /**
      * @var array
      */
     protected $bookmarks = [];
 
+    /**
+     * @param Provider $provider
+     */
     public function __construct(Provider $provider)
     {
         $this->provider = $provider;
@@ -30,23 +34,23 @@ class Pagination
      * @param string $method
      * @param array $params
      * @param int $limit
-     * @return \Iterator
+     * @return \Iterator|void
      */
     public function paginateOver($method, $params, $limit = 0)
     {
         $resultsNum = 0;
         while (true) {
-            
-            $results = $this->callProviderRequest($method, $params);
-            if (empty($results) || $this->checkEndBookMarks()) {
-                return;
-            }
+
+            $response = $this->callProviderRequest($method, $params);
+            $results = $this->processProviderResponse($response);
+
+            if (empty($results)) return;
 
             foreach ($results as $result) {
                 $resultsNum++;
                 yield $result;
 
-                if ($this->reachesLimit($limit, $resultsNum)) {
+                if ($this->reachesLimit($limit, $resultsNum) || $this->checkEndBookMarks()) {
                     return;
                 }
             }
@@ -56,45 +60,27 @@ class Pagination
     /**
      * @param string $method
      * @param array $params
-     * @return array
+     * @return PaginatedResponse
      */
     protected function callProviderRequest($method, array $params)
     {
         $params['bookmarks'] = $this->bookmarks;
-        $response = call_user_func_array([$this->provider, $method], $params);
-
-        if ($this->responseHasData($response)) {
-            $this->getBookMarks($response);
-
-            return $this->getDataFromPaginatedResponse($response);
-        }
-
-        return [];
+        return call_user_func_array([$this->provider, $method], $params);
     }
 
     /**
-     * @param array $response
+     * @param PaginatedResponse $response
      * @return array
      */
-    protected function getDataFromPaginatedResponse($response)
+    protected function processProviderResponse(PaginatedResponse $response)
     {
-        if ($this->responseHasData($response)) {
-            $res = $this->clearResponseFromMetaData($response);
+        if ($response->hasResponseData()) {
+            $this->bookmarks = $response->getBookmarks();
 
-            return $res['data'];
+            return $response->getResponseData();
         }
 
         return [];
-    }
-
-    /**
-     * @param array $response
-     *
-     * @return bool
-     */
-    protected function responseHasData($response)
-    {
-        return isset($response['data']) && !empty($response['data']);
     }
 
     /**
@@ -127,18 +113,8 @@ class Pagination
     }
 
     /**
-     * @param $response
+     * Checks for -end- substring in bookmarks
      *
-     * @return array
-     */
-    protected function getBookMarks($response)
-    {
-        $this->bookmarks = isset($response['bookmarks']) ? $response['bookmarks'] : [];
-
-        return $this;
-    }
-
-    /**
      * @return bool
      */
     protected function checkEndBookMarks()

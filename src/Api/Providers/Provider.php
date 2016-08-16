@@ -26,41 +26,28 @@ abstract class Provider
     protected $request;
 
     /**
-     * Instance of the API Response.
-     *
-     * @var Response
-     */
-    protected $response;
-
-    /**
      * @param Request $request
-     * @param Response $response
      */
-    public function __construct(Request $request, Response $response)
+    public function __construct(Request $request)
     {
         $this->request = $request;
-        $this->response = $response;
     }
 
     /**
      * Executes a POST request to Pinterest API.
      *
-     * @param array  $requestOptions
+     * @param array $requestOptions
      * @param string $resourceUrl
-     * @param bool   $returnData
+     * @param bool $returnResponse
      *
-     * @return mixed
+     * @return Response|bool
      */
-    protected function execPostRequest($requestOptions, $resourceUrl, $returnData = false)
+    protected function execPostRequest($requestOptions, $resourceUrl, $returnResponse = false)
     {
         $postString = Request::createQuery($requestOptions);
         $response = $this->request->exec($resourceUrl, $postString);
 
-        if ($returnData) {
-            return $this->response->getData($response);
-        }
-
-        return !$this->response->hasErrors($response);
+        return $returnResponse ? $response : $response->isOk();
     }
 
     /**
@@ -68,14 +55,13 @@ abstract class Provider
      *
      * @param array $requestOptions
      * @param string $resourceUrl
-     * @return array|bool
+     *
+     * @return Response
      */
     protected function execGetRequest(array $requestOptions = [], $resourceUrl = '')
     {
         $query = Request::createQuery($requestOptions);
-        $response = $this->request->exec($resourceUrl . "?{$query}");
-        
-        return $this->response->getData($response);
+        return $this->request->exec($resourceUrl . "?{$query}");
     }
 
     /**
@@ -84,16 +70,17 @@ abstract class Provider
      * @param array $requestOptions
      * @param string $resourceUrl
      * @param array $bookmarks
-     * @return array|bool
+     * @return Response
      */
     protected function execGetRequestWithPagination(array $requestOptions, $resourceUrl, $bookmarks = [])
     {
         $query = Request::createQuery($requestOptions, $bookmarks);
-        $response = $this->request->exec($resourceUrl . "?{$query}");
-
-        return $this->response->getPaginationData($response);
+        return $this->request->exec($resourceUrl . "?{$query}");
     }
 
+    /**
+     * @return string
+     */
     public function getEntityIdName()
     {
         return property_exists($this, 'entityIdName') ? $this->entityIdName : '';
@@ -128,13 +115,5 @@ abstract class Provider
     public function getRequest()
     {
         return $this->request;
-    }
-
-    /**
-     * @return Response
-     */
-    public function getResponse()
-    {
-        return $this->response;
     }
 }

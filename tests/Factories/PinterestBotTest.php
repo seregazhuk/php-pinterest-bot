@@ -13,4 +13,20 @@ class PinterestBotTest extends PHPUnit_Framework_TestCase
     {
         $this->assertInstanceOf(Bot::class, PinterestBot::create());
     }
+
+    /** @test */
+    public function it_has_private_constructor()
+    {
+        $reflection = new \ReflectionClass(PinterestBot::class);
+        $constructor = $reflection->getConstructor();
+        $this->assertFalse($constructor->isPublic());
+    }
+
+    /** @test */
+    public function it_has_private_clone_method()
+    {
+        $reflection = new \ReflectionClass(PinterestBot::class);
+        $constructor = $reflection->getMethod('__clone');
+        $this->assertFalse($constructor->isPublic());
+    }
 }

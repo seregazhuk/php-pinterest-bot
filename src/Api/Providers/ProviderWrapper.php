@@ -5,20 +5,24 @@ namespace seregazhuk\PinterestBot\Api\Providers;
 use seregazhuk\PinterestBot\Exceptions\AuthException;
 use seregazhuk\PinterestBot\Exceptions\InvalidRequestException;
 
-class ProviderLoginCheckWrapper
+class ProviderWrapper
 {
     /**
      * @var Provider
      */
     private $provider;
 
+    /**
+     * @param Provider|object $provider
+     */
     public function __construct(Provider $provider)
     {
         $this->provider = $provider;
     }
 
     /**
-     * Run login check before every method if needed.
+     * Proxies a call to a provider with a login check
+     * before every method if needed.
      *
      * @param $method
      * @param $arguments

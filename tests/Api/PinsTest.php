@@ -69,10 +69,10 @@ class PinsTest extends ProviderTest
         $pinSource = 'http://example.com/image.jpg';
         $pinDescription = 'Pin Description';
         $boardId = 1;
-        $this->assertNotFalse($this->provider->create($pinSource, $boardId, $pinDescription));
+        $this->assertNotEmpty($this->provider->create($pinSource, $boardId, $pinDescription));
 
-        $this->setResponseExpectation();
-        $this->assertFalse($this->provider->create($pinSource, $boardId, $pinDescription));
+        $this->setErrorResponse();
+        $this->assertEmpty($this->provider->create($pinSource, $boardId, $pinDescription));
     }
 
     /** @test */
@@ -98,10 +98,10 @@ class PinsTest extends ProviderTest
         $repinId = 11;
         $pinDescription = 'Pin Description';
 
-        $this->assertNotFalse($this->provider->repin($repinId, $boardId, $pinDescription));
+        $this->assertNotEmpty($this->provider->repin($repinId, $boardId, $pinDescription));
         
         $this->setErrorResponse();
-        $this->assertFalse($this->provider->repin($repinId, $boardId, $pinDescription));
+        $this->assertEmpty($this->provider->repin($repinId, $boardId, $pinDescription));
     }
 
     /** @test */
@@ -109,7 +109,7 @@ class PinsTest extends ProviderTest
     {
         $response = $this->createApiResponse();
         $this->setResponseExpectation($response);
-        $this->assertNotFalse($this->provider->edit(1, 'new', 'changed'));
+        $this->assertTrue($this->provider->edit(1, 'new', 'changed'));
 
         $this->setResponseExpectation($this->createErrorApiResponse());
         $this->assertFalse($this->provider->edit(1, 'new', 'changed'));
@@ -120,7 +120,7 @@ class PinsTest extends ProviderTest
     {
         $response = $this->createApiResponse();
         $this->setResponseExpectation($response);
-        $this->assertNotFalse($this->provider->delete(1));
+        $this->assertTrue($this->provider->delete(1));
 
         $this->setResponseExpectation($this->createErrorApiResponse());
         $this->assertFalse($this->provider->delete(1));
@@ -131,10 +131,10 @@ class PinsTest extends ProviderTest
     {
         $response = $this->createApiResponse();
         $this->setResponseExpectation($response);
-        $this->assertNotNull($this->provider->info(1));
+        $this->assertNotEmpty($this->provider->info(1));
 
         $this->setResponseExpectation($this->createErrorApiResponse());
-        $this->assertFalse($this->provider->info(1));
+        $this->assertEmpty($this->provider->info(1));
     }
 
     /** @test */
@@ -146,9 +146,9 @@ class PinsTest extends ProviderTest
         ];
 
         $expectedResultsNum = count($response['module']['tree']['data']['results']);
-        $this->setResponseExpectation($response, 2);
+        $this->setResponseExpectation($response);
 
-        $res = iterator_to_array($this->provider->search('dogs'));
+        $res = iterator_to_array($this->provider->search('dogs', 2));
         $this->assertCount($expectedResultsNum, $res);
     }
 

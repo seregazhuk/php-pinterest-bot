@@ -17,30 +17,25 @@ class ResponseTest extends PHPUnit_Framework_TestCase
     /** @test */
     public function it_should_return_data_from_response()
     {
-        $response = new Response();
+        $response = new Response($this->createApiResponse(['data' => 'some data']));
 
-        $data = $this->createApiResponse(['data' => 'some data']);
-
-        $this->assertEquals('some data', $response->getData($data));
+        $this->assertEquals('some data', $response->getResponseData());
     }
 
     /** @test */
     public function it_should_return_value_by_key_from_response()
     {
-        $response = new Response();
+        $response = new Response($this->createApiResponse(['data' => ['key' => 'value']]));
 
-        $data = $this->createApiResponse(['data' => ['key' => 'value']]);
-
-        $this->assertEquals('value', $response->getData($data, 'key'));
+        $this->assertEquals('value', $response->getResponseData('key'));
     }
 
     /** @test */
     public function it_should_return_false_on_error_response()
     {
-        $response = new Response();
+        $response = new Response($this->createErrorApiResponse('some error'));
 
-        $data = $this->createErrorApiResponse('some error');
-        $this->assertFalse($response->getData($data));
+        $this->assertFalse($response->getResponseData());
 
         $lastError = $response->getLastError();
         $this->assertEquals('some error', $lastError['message']);
@@ -49,64 +44,60 @@ class ResponseTest extends PHPUnit_Framework_TestCase
     /** @test */
     public function it_should_check_empty_responses()
     {
-        $response = new Response();
+        $response = new Response([]);
 
-        $this->assertTrue($response->isEmpty([]));
+        $this->assertTrue($response->isEmpty());
 
-        $dataWithErrors = $this->createErrorApiResponse('some error');
+        $responseWithError = new Response($this->createErrorApiResponse('some error'));
 
-        $this->assertTrue($response->isEmpty($dataWithErrors));
+        $this->assertTrue($responseWithError->isEmpty());
     }
 
     /** @test */
     public function it_should_check_responses_with_data()
     {
-        $response = new Response();
+        $response = new Response($this->createSuccessApiResponse());
 
-        $data = $this->createSuccessApiResponse();
-
-        $this->assertFalse($response->isEmpty($data));
+        $this->assertFalse($response->isEmpty());
     }
 
     /** @test */
     public function it_should_check_responses_with_errors()
     {
-        $response = new Response();
+        $response = new Response($this->createErrorApiResponse('some error'));
+        $this->assertTrue($response->hasErrors());
 
-        $dataWithErrors = $this->createErrorApiResponse('some error');
-        $this->assertTrue($response->hasErrors($dataWithErrors));
-
-        $data = $this->createSuccessApiResponse();
-        $this->assertFalse($response->hasErrors($data));
+        $response = new Response($this->createSuccessApiResponse());
+        $this->assertFalse($response->hasErrors());
     }
 
 
     /** @test */
     public function it_should_return_bookmarks_string_from_response()
     {
-        $response = new Response();
+        $response = new Response(
+            ['resource' => ['options' => ['bookmarks' => ['my_bookmarks_string']]]]
+        );
+        $this->assertEquals(['my_bookmarks_string'], $response->getBookmarks());
 
-        $dataWithBookmarks = ['resource' => ['options' => ['bookmarks' => ['my_bookmarks_string']]]];
-        $this->assertEquals(['my_bookmarks_string'], $response->getBookmarks($dataWithBookmarks));
-
-        $this->assertEmpty($response->getBookmarks([]));
+        $response = new Response([]);
+        $this->assertEmpty($response->getBookmarks());
     }
 
     /** @test */
     public function it_should_return_empty_array_for_response_without_pagination()
     {
-        $response = new Response();
-        $this->assertEmpty($response->getPaginationData([]));
+        $response = new Response([]);
+        $this->assertEmpty($response->getPaginationData());
 
-        $data = $this->createApiResponse();
-        $this->assertEmpty($response->getPaginationData($data));
+        $response = new Response($this->createApiResponse());
+        $this->assertEmpty($response->getPaginationData());
     }
 
 
     /** @test */
     public function it_should_return_data_and_bookmarks_from_response_with_pagination()
     {
-        $response = new Response();
         $dataWithBookmarks = [
             'resource'          => [
                 'options' => ['bookmarks' => ['my_bookmarks_string']]
@@ -115,12 +106,13 @@ class ResponseTest extends PHPUnit_Framework_TestCase
                 'data' => 'some data'
             ]
         ];
+        $response = new Response($dataWithBookmarks);
 
         $expected = [
             'data'      => 'some data',
             'bookmarks' => ['my_bookmarks_string']
         ];
 
-        $this->assertEquals($expected, $response->getPaginationData($dataWithBookmarks));
+        $this->assertEquals($expected, $response->getPaginationData());
     }
 }
