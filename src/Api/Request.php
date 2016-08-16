@@ -220,7 +220,7 @@ class Request
     }
 
     /**
-     * @param $userAgent
+     * @param string $userAgent
      * @return $this
      */
     public function setUserAgent($userAgent)
@@ -337,7 +337,7 @@ class Request
     }
 
     /**
-     * @param string|null $res
+     * @param string $res
      * @return Response
      */
     protected function processResponse($res)
