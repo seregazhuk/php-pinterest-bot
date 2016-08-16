@@ -50,7 +50,7 @@ class Pagination
                 $resultsNum++;
                 yield $result;
 
-                if ($this->reachesLimit($limit, $resultsNum)) {
+                if ($this->reachesLimit($limit, $resultsNum) || $this->checkEndBookMarks()) {
                     return;
                 }
             }
@@ -77,7 +77,7 @@ class Pagination
         if ($response->hasResponseData()) {
             $this->bookmarks = $response->getBookmarks();
 
-            return $this->checkEndBookMarks() ? [] : $response->getResponseData();
+            return $response->getResponseData();
         }
 
         return [];
