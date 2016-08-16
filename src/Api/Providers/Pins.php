@@ -188,7 +188,9 @@ class Pins extends Provider
             'field_set_key' => 'detailed',
         ];
 
-        return $this->execGetRequest($requestOptions, UrlHelper::RESOURCE_PIN_INFO, true);
+        return $this
+            ->execGetRequest($requestOptions, UrlHelper::RESOURCE_PIN_INFO)
+            ->getResponseData();
     }
 
     /**
@@ -264,7 +266,7 @@ class Pins extends Provider
      */
     protected function getAggregatedPinId($pinId)
     {
-        $pinInfo = $this->info($pinId)->getResponseData();
+        $pinInfo = $this->info($pinId);
 
         return isset($pinInfo['aggregated_pin_data']['id']) ?
             $pinInfo['aggregated_pin_data']['id'] :

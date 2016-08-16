@@ -131,10 +131,10 @@ class PinsTest extends ProviderTest
     {
         $response = $this->createApiResponse();
         $this->setResponseExpectation($response);
-        $this->assertTrue($this->provider->info(1)->isOk());
+        $this->assertNotEmpty($this->provider->info(1));
 
         $this->setResponseExpectation($this->createErrorApiResponse());
-        $this->assertFalse($this->provider->info(1)->isOk());
+        $this->assertEmpty($this->provider->info(1));
     }
 
     /** @test */

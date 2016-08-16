@@ -3,12 +3,8 @@
 namespace seregazhuk\PinterestBot\Api\Providers;
 
 use Iterator;
-use LogicException;
-use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
 use seregazhuk\PinterestBot\Helpers\Pagination;
-use seregazhuk\PinterestBot\Exceptions\AuthException;
-use seregazhuk\PinterestBot\Helpers\Requests\PinnerHelper;
 use seregazhuk\PinterestBot\Api\Traits\Followable;
 use seregazhuk\PinterestBot\Api\Traits\Searchable;
 use seregazhuk\PinterestBot\Api\Traits\HasFollowers;
@@ -34,13 +30,13 @@ class Pinners extends Provider
      *
      * @param string $username
      *
-     * @return Response
+     * @return array
      */
     public function info($username)
     {
-        return $this->execGetRequest(
-            ['username' => $username], UrlHelper::RESOURCE_USER_INFO
-        );
+        return $this
+            ->execGetRequest(['username' => $username], UrlHelper::RESOURCE_USER_INFO)
+            ->getResponseData();
     }
 
     /**
