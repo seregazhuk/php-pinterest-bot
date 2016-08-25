@@ -7,10 +7,10 @@ use Mockery\Mock;
 use ReflectionClass;
 use PHPUnit_Framework_TestCase;
 use seregazhuk\PinterestBot\Api\Request;
-use seregazhuk\PinterestBot\Api\CurlAdapter;
+use seregazhuk\PinterestBot\Api\CurlHttpClient;
 use seregazhuk\tests\helpers\ResponseHelper;
 use seregazhuk\tests\helpers\ReflectionHelper;
-use seregazhuk\PinterestBot\Api\Contracts\Http;
+use seregazhuk\PinterestBot\Api\Contracts\HttpClient;
 use seregazhuk\PinterestBot\Helpers\CsrfHelper;
 
 /**
@@ -37,7 +37,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
     {
         $userAgentString = 'UserAgentString';
 
-        $request = $this->createRequestObject(new CurlAdapter());
+        $request = $this->createRequestObject(new CurlHttpClient());
         $request->setUserAgent($userAgentString);
         $this->assertEquals($userAgentString, $this->getProperty('userAgent'));
     }
@@ -177,24 +177,24 @@ class RequestTest extends PHPUnit_Framework_TestCase
     }
     
     /**
-     * @return Mock|Http
+     * @return Mock|HttpClient
      */
     protected function getHttpObject()
     {
-        $mock = Mockery::mock(Http::class);
+        $mock = Mockery::mock(HttpClient::class);
 
         return $mock;
     }
 
     /**
-     * @param Http $http
+     * @param HttpClient $http
      * @param string $userAgentString
      *
      * @return Request
      */
-    protected function createRequestObject(Http $http = null, $userAgentString = '')
+    protected function createRequestObject(HttpClient $http = null, $userAgentString = '')
     {
-        $http = $http ? : new CurlAdapter();
+        $http = $http ? : new CurlHttpClient();
         $request = new Request($http, $userAgentString);
 
         $this->reflection = new ReflectionClass($request);

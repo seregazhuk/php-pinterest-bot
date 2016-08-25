@@ -2,7 +2,7 @@
 
 namespace seregazhuk\PinterestBot\Api\Contracts;
 
-interface Http
+interface HttpClient
 {
     /**
      * Get curl errors.

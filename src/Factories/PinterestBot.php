@@ -4,7 +4,7 @@ namespace seregazhuk\PinterestBot\Factories;
 
 use seregazhuk\PinterestBot\Bot;
 use seregazhuk\PinterestBot\Api\Request;
-use seregazhuk\PinterestBot\Api\CurlAdapter;
+use seregazhuk\PinterestBot\Api\CurlHttpClient;
 use seregazhuk\PinterestBot\Api\ProvidersContainer;
 
 class PinterestBot
@@ -19,7 +19,7 @@ class PinterestBot
      */
     public static function create($userAgent = "")
     {
-        $request = new Request(new CurlAdapter());
+        $request = new Request(new CurlHttpClient());
         if (!empty($userAgent)) {
             $request->setUserAgent($userAgent);
         }
