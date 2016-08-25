@@ -11,7 +11,7 @@
          syntaxCheck="false"
 >
     <testsuites>
-        <testsuite name="Pinterest PHP API Test Suite">
+        <testsuite name="Pinterest PHP Bot Test Suite">
             <directory suffix=".php">./tests/</directory>
         </testsuite>
     </testsuites>
@@ -20,7 +20,7 @@
             <directory suffix=".php">./src/</directory>
             <exclude>
                 <directory suffix=".php">./src/Helpers</directory>
-                <file>./src/Api/CurlAdapter.php</file>
+                <file>./src/Api/CurlHttpClient.php</file>
             </exclude>
         </whitelist>
     </filter>
