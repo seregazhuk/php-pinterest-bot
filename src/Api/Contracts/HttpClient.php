@@ -25,4 +25,10 @@ interface HttpClient
      * @return string|null
      */
     public function getToken();
+
+    /**
+     * @param string $userAgent
+     * @return $this
+     */
+    public function setUserAgent($userAgent);
 }

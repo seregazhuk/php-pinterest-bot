@@ -14,17 +14,10 @@ use seregazhuk\PinterestBot\Exceptions\AuthException;
  *
  * @property resource $ch
  * @property bool     $loggedIn
- * @property string   $userAgent
  * @property string   $csrfToken
- * @property string   $cookieJar
  */
 class Request
 {
-    /**
-     * @var string
-     */
-    protected $userAgent = 'Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0';
-
     /**
      * @var HttpClient
      */
@@ -34,16 +27,6 @@ class Request
      * @var bool
      */
     protected $loggedIn;
-
-    /**
-     * @var string
-     */
-    protected $cookieJar;
-
-    /**
-     * @var array
-     */
-    protected $options;
 
     /**
      *
@@ -178,19 +161,6 @@ class Request
     }
 
     /**
-     * @param string $userAgent
-     * @return $this
-     */
-    public function setUserAgent($userAgent)
-    {
-        if ($userAgent !== null) {
-            $this->userAgent = $userAgent;
-        }
-
-        return $this;
-    }
-
-    /**
      * Create request string.
      *
      * @param array  $data
@@ -317,5 +287,13 @@ class Request
     public function getLastError()
     {
         return $this->lastError;
+    }
+
+    /**
+     * @return HttpClient
+     */
+    public function getHttpClient()
+    {
+        return $this->httpClient;
     }
 }

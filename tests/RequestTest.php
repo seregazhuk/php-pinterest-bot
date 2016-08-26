@@ -7,11 +7,11 @@ use Mockery\Mock;
 use ReflectionClass;
 use PHPUnit_Framework_TestCase;
 use seregazhuk\PinterestBot\Api\Request;
-use seregazhuk\PinterestBot\Api\CurlHttpClient;
 use seregazhuk\tests\helpers\ResponseHelper;
 use seregazhuk\tests\helpers\ReflectionHelper;
-use seregazhuk\PinterestBot\Api\Contracts\HttpClient;
+use seregazhuk\PinterestBot\Api\CurlHttpClient;
 use seregazhuk\PinterestBot\Helpers\CsrfHelper;
+use seregazhuk\PinterestBot\Api\Contracts\HttpClient;
 
 /**
  * Class RequestTest.
@@ -29,17 +29,6 @@ class RequestTest extends PHPUnit_Framework_TestCase
 
         $this->setProperty('loggedIn', true);
         $this->assertTrue($request->isLoggedIn());
-    }
-
-
-    /** @test */
-    public function it_should_store_user_agent()
-    {
-        $userAgentString = 'UserAgentString';
-
-        $request = $this->createRequestObject(new CurlHttpClient());
-        $request->setUserAgent($userAgentString);
-        $this->assertEquals($userAgentString, $this->getProperty('userAgent'));
     }
 
     /** @test */
@@ -119,17 +108,6 @@ class RequestTest extends PHPUnit_Framework_TestCase
         $request->logout();
         $this->assertFalse($request->isLoggedIn());
         $this->assertEquals(CsrfHelper::DEFAULT_TOKEN, $this->getProperty('csrfToken'));
-    }
-
-    /**
-     * @test
-     * @expectedException \seregazhuk\PinterestBot\Exceptions\AuthException
-     */
-    public function it_should_throw_exception_when_setting_token_from_empty_cookies()
-    {
-        $request = $this->createRequestObject();
-        $this->setProperty('cookieJar', null);
-        $request->setTokenFromCookies();
     }
 
     /**

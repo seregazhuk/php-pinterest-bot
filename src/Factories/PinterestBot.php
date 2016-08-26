@@ -19,14 +19,20 @@ class PinterestBot
      */
     public static function create($userAgent = "")
     {
-        $request = new Request(new CurlHttpClient());
-        if (!empty($userAgent)) {
-            $request->setUserAgent($userAgent);
-        }
-        
+        $request = new Request(self::getHttpClient($userAgent));
+
         $providersContainer = new ProvidersContainer($request);
 
         return new Bot($providersContainer);
+    }
+
+    protected static function getHttpClient($userAgent = "")
+    {
+        $httpClient = new CurlHttpClient();
+
+        if(!empty($userAgent)) $httpClient->setUserAgent($userAgent);
+
+        return $httpClient;
     }
 
     private function __construct()
