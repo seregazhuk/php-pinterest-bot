@@ -6,6 +6,7 @@ use seregazhuk\PinterestBot\Bot;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\CurlHttpClient;
 use seregazhuk\PinterestBot\Api\ProvidersContainer;
+use seregazhuk\PinterestBot\Api\Contracts\HttpClient;
 
 class PinterestBot
 {
@@ -26,6 +27,10 @@ class PinterestBot
         return new Bot($providersContainer);
     }
 
+    /**
+     * @param string $userAgent
+     * @return HttpClient
+     */
     protected static function getHttpClient($userAgent = "")
     {
         $httpClient = new CurlHttpClient();
