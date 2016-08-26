@@ -124,7 +124,9 @@ class Request
         return $this->processResponse($result);
     }
 
-
+    /**
+     * @return array
+     */
     protected function getHttpHeaders()
     {
         $headers = $this->getDefaultHttpHeaders();
@@ -244,7 +246,9 @@ class Request
     protected function getDefaultHttpHeaders()
     {
         return array_merge(
-            $this->requestHeaders, $this->getContentTypeHeader(), [
+            $this->requestHeaders,
+            $this->getContentTypeHeader(),
+            [
                 'Host: ' . UrlHelper::HOST,
                 'X-CSRFToken: ' . $this->csrfToken
             ]

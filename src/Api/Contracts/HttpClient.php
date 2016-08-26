@@ -20,4 +20,9 @@ interface HttpClient
      * @return string
      */
     public function execute($url, $postString, array $headers = []);
+
+    /**
+     * @return string|null
+     */
+    public function getToken();
 }

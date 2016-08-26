@@ -14,10 +14,6 @@ class CurlHttpClient implements HttpClient
     const COOKIE_NAME = 'pinterest_cookie';
 
     /**
-     * @var string
-     */
-    protected $csrfToken;
-    /**
      * @var array
      */
     protected $options;
@@ -43,6 +39,82 @@ class CurlHttpClient implements HttpClient
     public function __construct()
     {
         $this->cookieJar = tempnam(sys_get_temp_dir(), self::COOKIE_NAME);
+    }
+
+    /**
+     * Executes curl request.
+     *
+     * @param string $url
+     * @param string $postString
+     * @param array $headers
+     * @return string
+     */
+    public function execute($url, $postString, array $headers = [])
+    {
+        $this->headers = $headers;
+        $this->init($url)->setOptions($postString);
+
+        $res = curl_exec($this->curl);
+        $this->close();
+
+        return $res;
+    }
+
+    /**
+     * Get curl errors.
+     *
+     * @return string
+     */
+    public function getErrors()
+    {
+        return curl_error($this->curl);
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getToken()
+    {
+        return CsrfHelper::getTokenFromFile($this->cookieJar);
+    }
+
+    /**
+     * Close the curl resource.
+     *
+     * @return void
+     */
+    protected function close()
+    {
+        curl_close($this->curl);
+    }
+
+    /**
+     * Initializes curl resource.
+     *
+     * @param string $url
+     *
+     * @return $this
+     */
+    protected function init($url)
+    {
+        $this->curl = curl_init($url);
+
+        return $this;
+    }
+
+    /**
+     * Sets multiple options at the same time.
+     *
+     * @param string $postString
+     * @return static
+     */
+    protected function setOptions($postString)
+    {
+        $this->makeHttpOptions($postString);
+
+        curl_setopt_array($this->curl, $this->options);
+
+        return $this;
     }
 
     /**
@@ -74,103 +146,11 @@ class CurlHttpClient implements HttpClient
     {
         $this->setDefaultHttpOptions();
 
-        if ($this->csrfToken == CsrfHelper::DEFAULT_TOKEN) {
-            $this->options = $this->addDefaultCsrfInfo($this->options);
-        }
-
         if (!empty($postString)) {
             $this->options[CURLOPT_POST] = true;
             $this->options[CURLOPT_POSTFIELDS] = $postString;
         }
 
         return $this;
-    }
-
-    /**
-     * @param array $options
-     *
-     * @return mixed
-     */
-    protected function addDefaultCsrfInfo($options)
-    {
-        $options[CURLOPT_REFERER] = UrlHelper::URL_BASE;
-
-        return $options;
-    }
-
-    /**
-     * Executes curl request.
-     *
-     * @param string $url
-     * @param string $postString
-     * @param array $headers
-     * @return string
-     */
-    public function execute($url, $postString, array $headers = [])
-    {
-        $this->headers = $headers;
-        $this->init($url)->setOptions($postString);
-
-        $res = curl_exec($this->curl);
-        $this->close();
-
-        return $res;
-    }
-    
-    /**
-     * Initializes curl resource.
-     *
-     * @param string $url
-     *
-     * @return $this
-     */
-    protected function init($url)
-    {
-        $this->curl = curl_init($url);
-
-        return $this;
-    }
-
-    /**
-     * Sets multiple options at the same time.
-     *
-     * @param string $postString
-     * @return static
-     */
-    protected function setOptions($postString)
-    {
-        $this->makeHttpOptions($postString);
-
-        curl_setopt_array($this->curl, $this->options);
-
-        return $this;
-    }
-
-    /**
-     * Get curl errors.
-     *
-     * @return string
-     */
-    public function getErrors()
-    {
-        return curl_error($this->curl);
-    }
-
-    /**
-     * Close the curl resource.
-     *
-     * @return void
-     */
-    protected function close()
-    {
-        curl_close($this->curl);
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getToken()
-    {
-        return CsrfHelper::getTokenFromFile($this->cookieJar);
     }
 }
