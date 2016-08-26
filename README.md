@@ -35,7 +35,7 @@ if your don't use such operations as creating pins, writing comments or sending 
 - [News](#news)
 - [Keywords](#keywords)
 - [Errors handling](#errors-handling)
-- [Custom settings](#custom-settings)
+- [Custom request settings](#custom-request-settings)
 
 ## Dependencies
 Library requires CURL extension and PHP 5.5.9 or above.
@@ -461,11 +461,16 @@ $error = $bot->getLastError();
 print_r($error);
 ```
 
-## Custom settings
-You can set UserAgent string for bot like this:
+## Custom request settings
+
+It is possible to override default Curl options for bot requests. For example you can 
+set proxy and user-agent like this:
+
 ```php
-$userAgent = 'Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0';
-$bot = PinterestBot::create($userAgent);
+$bot->getHttpClient->setOptions([
+    CURLOPT_PROXY => 'xx.xx.xxx.xx:80',
+    CURLOPT_USERAGENT => 'Your_User_Agent',
+]);
 ```
 
 ## How can I thank you?

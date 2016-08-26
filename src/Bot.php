@@ -11,6 +11,7 @@ use seregazhuk\PinterestBot\Api\Providers\Provider;
 use seregazhuk\PinterestBot\Api\Providers\Keywords;
 use seregazhuk\PinterestBot\Api\ProvidersContainer;
 use seregazhuk\PinterestBot\Api\Providers\Interests;
+use seregazhuk\PinterestBot\Api\Contracts\HttpClient;
 use seregazhuk\PinterestBot\Api\Providers\Conversations;
 
 /**
@@ -25,6 +26,9 @@ use seregazhuk\PinterestBot\Api\Providers\Conversations;
  * @property Keywords $keywords
  * @property Interests $interests
  * @property Conversations $conversations
+ *
+ * @method HttpClient getHttpClient
+ * @method array getLastError
  */
 class Bot
 {
@@ -42,32 +46,6 @@ class Bot
     }
 
     /**
-     * Proxy method to pinners login.
-     *
-     * @deprecated since version 4.3.0
-     *
-     * @param string $username
-     * @param string $password
-     *
-     * @return bool
-     */
-    public function login($username, $password)
-    {
-        return $this->user->login($username, $password);
-    }
-
-    /**
-     * Proxy method to user logout.
-     *
-     * @deprecated since version 4.3.0
-     */
-    public function logout()
-    {
-        return $this->user->logout();
-    }
-
-
-    /**
      * Magic method to access different providers.
      *
      * @param string $provider
@@ -80,25 +58,14 @@ class Bot
     }
 
     /**
-     * Proxy method to Request object.
+     *  Magic method to proxy calls to providers container.
      *
-     * @return array
+     * @param string $method
+     * @param array $parameters
+     * @return mixed
      */
-    public function getLastError()
+    public function __call($method, $parameters)
     {
-        return $this->providersContainer->getRequest()->getLastError();
-    }
-
-    /**
-     * @return bool
-     *
-     * @deprecated since version 4.3.0
-     */
-    public function isLoggedIn()
-    {
-        return $this
-            ->providersContainer
-            ->getRequest()
-            ->isLoggedIn();
+        return call_user_func([$this->providersContainer, $method], $parameters);
     }
 }

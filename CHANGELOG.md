@@ -1,6 +1,12 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [4.6.0] - 2016-08-26
+ - HttpClient cookie file name moved to property instead of constant
+ - Custom curl options in HttpClient object
+ - Removed deprecated methods (isLoggedIn, logout, login) from Bot class. Instead use User provider
+ - Removed getRequest method from ProvidersContainer
+ 
 ## [4.5.4] - 2016-08-26
  - Http contract renamed to HttpClient
  - Fixed upload problems

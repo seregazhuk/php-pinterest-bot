@@ -19,16 +19,20 @@ interface HttpClient
      * @param array $headers
      * @return string
      */
-    public function execute($url, $postString, array $headers = []);
+    public function execute($url, $postString = '', array $headers = []);
 
     /**
+     * Returns csrf token from cookies.
+     *
      * @return string|null
      */
     public function getToken();
 
     /**
-     * @param string $userAgent
+     * Set custom Curl options to override default
+     *
+     * @param array $options
      * @return $this
      */
-    public function setUserAgent($userAgent);
+    public function setOptions(array $options);
 }

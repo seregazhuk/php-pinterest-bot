@@ -3,6 +3,7 @@
 namespace seregazhuk\PinterestBot\Api;
 
 use ReflectionClass;
+use seregazhuk\PinterestBot\Api\Contracts\HttpClient;
 use seregazhuk\PinterestBot\Api\Providers\Provider;
 use seregazhuk\PinterestBot\Api\Providers\ProviderWrapper;
 use seregazhuk\PinterestBot\Exceptions\WrongProviderException;
@@ -70,7 +71,7 @@ class ProvidersContainer
      *
      * @throws WrongProviderException
      */
-    private function addProvider($provider)
+    protected function addProvider($provider)
     {
         $className = self::PROVIDERS_NAMESPACE.ucfirst($provider);
 
@@ -90,7 +91,7 @@ class ProvidersContainer
      *
      * @return object
      */
-    private function buildProvider($className)
+    protected function buildProvider($className)
     {
         $provider = (new ReflectionClass($className))
             ->newInstanceArgs([$this->request]);
@@ -99,10 +100,25 @@ class ProvidersContainer
     }
 
     /**
-     * @return Request
+     * Proxy method to Request object.
+     *
+     * @return array
      */
-    public function getRequest()
+    public function getLastError()
     {
-        return $this->request;
+        return $this
+            ->request
+            ->getLastError();
+    }
+
+    /**
+     * Returns HttpClient object for setting user-agent string or
+     * other CURL available options.
+     *
+     * @return HttpClient
+     */
+    public function getHttpClient()
+    {
+        return $this->request->getHttpClient();
     }
 }
