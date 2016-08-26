@@ -406,8 +406,8 @@ $bot->user->profile(['first_name'=>'My_name']);
 You can change your profile avatar by setting *profile_image* key with a path to image:  
 ```php
 $bot->user->profile([
-	'first_name'=>'My_name',
-	'profile_image'=>$path_to_file
+	'first_name' => 'My_name',
+	'profile_image' => $path_to_file
 ]);
 ```
 

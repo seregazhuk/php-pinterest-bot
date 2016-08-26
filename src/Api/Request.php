@@ -83,7 +83,8 @@ class Request
     public function upload($pathToFile, $url)
     {
         $this->filePathToUpload = $pathToFile;
-        return $this->exec($url)->getResponseData();
+
+        return $this->exec($url)->getData();
     }
 
     /**
