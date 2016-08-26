@@ -2,34 +2,115 @@
 
 namespace seregazhuk\PinterestBot\Api;
 
+use seregazhuk\PinterestBot\Helpers\UrlHelper;
+use seregazhuk\PinterestBot\Helpers\CsrfHelper;
 use seregazhuk\PinterestBot\Api\Contracts\HttpClient;
 
 /**
  * Class CurlAdapter.
- *
- * @property string $cookieJar
- * @property string $cookePath
  */
 class CurlHttpClient implements HttpClient
 {
+    const COOKIE_NAME = 'pinterest_cookie';
+
+    /**
+     * @var string
+     */
+    protected $csrfToken;
+    /**
+     * @var array
+     */
+    protected $options;
+
+    /**
+     * @var string
+     */
+    protected $userAgent;
+
+    /**
+     * @var array
+     */
+    protected $headers;
+
     /**
      * Contains the curl instance.
      *
      * @var resource
      */
-    private $curl;
+    protected $curl;
+    protected $cookieJar;
+
+    public function __construct()
+    {
+        $this->cookieJar = tempnam(sys_get_temp_dir(), self::COOKIE_NAME);
+    }
+
+    /**
+     * @return array
+     */
+    protected function setDefaultHttpOptions()
+    {
+        $this->options = [
+            CURLOPT_USERAGENT      => $this->userAgent,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_ENCODING       => 'gzip,deflate',
+            CURLOPT_HTTPHEADER     => $this->headers,
+            CURLOPT_REFERER        => UrlHelper::URL_BASE,
+            CURLOPT_COOKIEFILE     => $this->cookieJar,
+            CURLOPT_COOKIEJAR      => $this->cookieJar,
+        ];
+    }
+
+    /**
+     * Adds necessary curl options for query.
+     *
+     * @param string $postString POST query string
+     *
+     * @return $this
+     */
+    protected function makeHttpOptions($postString = '')
+    {
+        $this->setDefaultHttpOptions();
+
+        if ($this->csrfToken == CsrfHelper::DEFAULT_TOKEN) {
+            $this->options = $this->addDefaultCsrfInfo($this->options);
+        }
+
+        if (!empty($postString)) {
+            $this->options[CURLOPT_POST] = true;
+            $this->options[CURLOPT_POSTFIELDS] = $postString;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return mixed
+     */
+    protected function addDefaultCsrfInfo($options)
+    {
+        $options[CURLOPT_REFERER] = UrlHelper::URL_BASE;
+
+        return $options;
+    }
 
     /**
      * Executes curl request.
      *
      * @param string $url
-     * @param array $options
-     *
+     * @param string $postString
+     * @param array $headers
      * @return string
      */
-    public function execute($url, array $options = [])
+    public function execute($url, $postString, array $headers = [])
     {
-        $this->init($url)->setOptions($options);
+        $this->headers = $headers;
+        $this->init($url)->setOptions($postString);
+
         $res = curl_exec($this->curl);
         $this->close();
 
@@ -53,13 +134,14 @@ class CurlHttpClient implements HttpClient
     /**
      * Sets multiple options at the same time.
      *
-     * @param array $options
-     *
+     * @param string $postString
      * @return static
      */
-    protected function setOptions(array $options = [])
+    protected function setOptions($postString)
     {
-        curl_setopt_array($this->curl, $options);
+        $this->makeHttpOptions($postString);
+
+        curl_setopt_array($this->curl, $this->options);
 
         return $this;
     }
@@ -82,5 +164,13 @@ class CurlHttpClient implements HttpClient
     protected function close()
     {
         curl_close($this->curl);
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getToken()
+    {
+        return CsrfHelper::getTokenFromFile($this->cookieJar);
     }
 }
