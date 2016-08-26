@@ -11,6 +11,7 @@ use seregazhuk\PinterestBot\Api\Providers\Provider;
 use seregazhuk\PinterestBot\Api\Providers\Keywords;
 use seregazhuk\PinterestBot\Api\ProvidersContainer;
 use seregazhuk\PinterestBot\Api\Providers\Interests;
+use seregazhuk\PinterestBot\Api\Contracts\HttpClient;
 use seregazhuk\PinterestBot\Api\Providers\Conversations;
 
 /**
@@ -25,6 +26,9 @@ use seregazhuk\PinterestBot\Api\Providers\Conversations;
  * @property Keywords $keywords
  * @property Interests $interests
  * @property Conversations $conversations
+ *
+ * @method HttpClient getHttpClient
+ * @method array getLastError
  */
 class Bot
 {
