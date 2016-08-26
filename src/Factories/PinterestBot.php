@@ -14,16 +14,17 @@ class PinterestBot
      * its dependencies.
      *
      * @param string $userAgent
+     * @param array $curlOpts
      *
      * @return Bot
      */
-    public static function create($userAgent = "")
+    public static function create($userAgent = "", $curlOpts = [])
     {
-        $request = new Request(new CurlHttpClient());
+        $request = new Request(new CurlHttpClient(), $curlOpts);
         if (!empty($userAgent)) {
             $request->setUserAgent($userAgent);
         }
-        
+
         $providersContainer = new ProvidersContainer($request);
 
         return new Bot($providersContainer);
