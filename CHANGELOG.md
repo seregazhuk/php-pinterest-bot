@@ -1,7 +1,7 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [?] - ?
+## [4.5.4] - 2016-08-26
  - Http contract renamed to HttpClient
  - Fixed upload problems
  - Curl specific methods moved to CurlHttpClient
