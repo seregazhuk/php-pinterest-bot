@@ -114,12 +114,16 @@ class UserTest extends ProviderTest
     }
 
     /** @test */
-    public function it_should_make_api_request_when_login()
+    public function it_should_make_api_request_and_clear_token_when_login()
     {
         $response = $this->createSuccessApiResponse();
         $this->setIsLoggedInExpectation(false);
 
         $this->setResponseExpectation($response);
+
+        $this->requestMock
+            ->shouldReceive('clearToken')
+            ->once();
 
         $this->requestMock
             ->shouldReceive('login')
