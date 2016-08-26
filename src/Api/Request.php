@@ -87,9 +87,10 @@ class Request
     /**
      * @param HttpClient $http
      */
-    public function __construct(HttpClient $http)
+    public function __construct(HttpClient $http, $curlOpts)
     {
         $this->http = $http;
+        $this->curlOpts = $curlOpts;
         $this->loggedIn = false;
         $this->cookieJar = tempnam(sys_get_temp_dir(), self::COOKIE_NAME);
     }
@@ -146,6 +147,12 @@ class Request
             $this->options[CURLOPT_POSTFIELDS] = $this->filePathToUpload ? $this->postFileData : $postString;
         }
 
+        if (!empty($this->curlOpts)) {
+            foreach($this->curlOpts as $name => $value) {
+                $this->options[$name] = $value;
+            }
+        }
+
         return $this;
     }
 
@@ -179,7 +186,7 @@ class Request
 
         return $options;
     }
-    
+
     /**
      * Clear token information.
      *
