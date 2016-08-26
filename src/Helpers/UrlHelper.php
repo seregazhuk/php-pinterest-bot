@@ -92,7 +92,7 @@ class UrlHelper
     /**
      * Uploads
      */
-    const IMAGE_UPLOAD = '/upload-image/';
+    const IMAGE_UPLOAD = 'upload-image/';
 
     /**
      * Categories

@@ -15,9 +15,20 @@ interface HttpClient
      * Executes curl request.
      *
      * @param string $url
-     * @param array  $options
-     *
+     * @param string $postString
+     * @param array $headers
      * @return string
      */
-    public function execute($url, array $options = []);
+    public function execute($url, $postString, array $headers = []);
+
+    /**
+     * @return string|null
+     */
+    public function getToken();
+
+    /**
+     * @param string $userAgent
+     * @return $this
+     */
+    public function setUserAgent($userAgent);
 }

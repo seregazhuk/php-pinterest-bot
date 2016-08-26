@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 ## [?] - ?
  - Http contract renamed to HttpClient
+ - Fixed upload problems
+ - Curl specific methods moved to CurlHttpClient
+ - Removed token logic from HttpClient, only parsing
+ - Removed user agent logic from Request to HttpClient
 
 ## [4.5.3] - 2016-08-16
  - Fixed upload

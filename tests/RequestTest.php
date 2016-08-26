@@ -7,11 +7,11 @@ use Mockery\Mock;
 use ReflectionClass;
 use PHPUnit_Framework_TestCase;
 use seregazhuk\PinterestBot\Api\Request;
-use seregazhuk\PinterestBot\Api\CurlHttpClient;
 use seregazhuk\tests\helpers\ResponseHelper;
 use seregazhuk\tests\helpers\ReflectionHelper;
-use seregazhuk\PinterestBot\Api\Contracts\HttpClient;
+use seregazhuk\PinterestBot\Api\CurlHttpClient;
 use seregazhuk\PinterestBot\Helpers\CsrfHelper;
+use seregazhuk\PinterestBot\Api\Contracts\HttpClient;
 
 /**
  * Class RequestTest.
@@ -29,17 +29,6 @@ class RequestTest extends PHPUnit_Framework_TestCase
 
         $this->setProperty('loggedIn', true);
         $this->assertTrue($request->isLoggedIn());
-    }
-
-
-    /** @test */
-    public function it_should_store_user_agent()
-    {
-        $userAgentString = 'UserAgentString';
-
-        $request = $this->createRequestObject(new CurlHttpClient());
-        $request->setUserAgent($userAgentString);
-        $this->assertEquals($userAgentString, $this->getProperty('userAgent'));
     }
 
     /** @test */
@@ -95,10 +84,9 @@ class RequestTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($bookmarks, $dataFromRequest['options']['bookmarks']);
     }
 
-    /** @test */
     public function it_should_save_token_from_cookies()
     {
-        $cookieFile = __DIR__.'/../'.Request::COOKIE_NAME;
+        $cookieFile = __DIR__.'/../'.CurlHttpClient::COOKIE_NAME;
         $token = 'WfdvEjNSLYiykJHDIx4sGSpCS8OhUld0';
         file_put_contents(
             $cookieFile, ".pinterest.com	TRUE	/	TRUE	1488295594	csrftoken	$token"
@@ -124,22 +112,11 @@ class RequestTest extends PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException \seregazhuk\PinterestBot\Exceptions\AuthException
-     */
-    public function it_should_throw_exception_when_setting_token_from_empty_cookies()
-    {
-        $request = $this->createRequestObject();
-        $this->setProperty('cookieJar', null);
-        $request->setTokenFromCookies();
-    }
-
-    /**
-     * @test
      * @expectedException \seregazhuk\PinterestBot\Exceptions\InvalidRequestException
      */
     public function it_should_throw_exception_uploading_file_that_does_not_exist()
     {
-        $this->createRequestObject()->upload('image.jpg', 'http://uploadurl.com');
+        $this->createRequestObject()->upload('image.jpg', 'httpClient://uploadurl.com');
     }
 
     /**
@@ -154,7 +131,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
         $this->http_should_execute_and_return($http, json_encode([]));
         $request = $this->createRequestObject($http);
 
-        $request->upload($image, 'http://uploadurl.com');
+        $request->upload($image, 'httpClient://uploadurl.com');
         $this->assertNotEmpty($this->getProperty('postFileData'));
         unlink($image);
     }

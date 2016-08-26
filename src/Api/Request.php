@@ -14,38 +14,19 @@ use seregazhuk\PinterestBot\Exceptions\AuthException;
  *
  * @property resource $ch
  * @property bool     $loggedIn
- * @property string   $userAgent
  * @property string   $csrfToken
- * @property string   $cookieJar
  */
 class Request
 {
-    const COOKIE_NAME = 'pinterest_cookie';
-
-    /**
-     * @var string
-     */
-    protected $userAgent = 'Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0';
-
     /**
      * @var HttpClient
      */
-    protected $http;
+    protected $httpClient;
 
     /**
      * @var bool
      */
     protected $loggedIn;
-
-    /**
-     * @var string
-     */
-    protected $cookieJar;
-
-    /**
-     * @var array
-     */
-    protected $options;
 
     /**
      *
@@ -89,9 +70,8 @@ class Request
      */
     public function __construct(HttpClient $http)
     {
-        $this->http = $http;
+        $this->httpClient = $http;
         $this->loggedIn = false;
-        $this->cookieJar = tempnam(sys_get_temp_dir(), self::COOKIE_NAME);
     }
 
     /**
@@ -103,7 +83,8 @@ class Request
     public function upload($pathToFile, $url)
     {
         $this->filePathToUpload = $pathToFile;
-        return $this->exec($url)->getResponseData();
+
+        return $this->exec($url)->getData();
     }
 
     /**
@@ -117,68 +98,29 @@ class Request
     public function exec($resourceUrl, $postString = '')
     {
         $url = UrlHelper::buildApiUrl($resourceUrl);
-        $this->makeHttpOptions($postString);
+        $headers = $this->getHttpHeaders();
+        $postString = $this->filePathToUpload ? $this->postFileData : $postString;
 
         $result = $this
-            ->http
-            ->execute($url, $this->options);
+            ->httpClient
+            ->execute($url, $postString, $headers);
 
         return $this->processResponse($result);
     }
 
     /**
-     * Adds necessary curl options for query.
-     *
-     * @param string $postString POST query string
-     *
-     * @return $this
-     */
-    protected function makeHttpOptions($postString = '')
-    {
-        $this->setDefaultHttpOptions();
-
-        if ($this->csrfToken == CsrfHelper::DEFAULT_TOKEN) {
-            $this->options = $this->addDefaultCsrfInfo($this->options);
-        }
-
-        if (!empty($postString) || $this->filePathToUpload) {
-            $this->options[CURLOPT_POST] = true;
-            $this->options[CURLOPT_POSTFIELDS] = $this->filePathToUpload ? $this->postFileData : $postString;
-        }
-
-        return $this;
-    }
-
-    /**
      * @return array
      */
-    protected function setDefaultHttpOptions()
+    protected function getHttpHeaders()
     {
-        $this->options = [
-            CURLOPT_USERAGENT      => $this->userAgent,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_SSL_VERIFYPEER => false,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_ENCODING       => 'gzip,deflate',
-            CURLOPT_HTTPHEADER     => $this->getDefaultHttpHeaders(),
-            CURLOPT_REFERER        => UrlHelper::URL_BASE,
-            CURLOPT_COOKIEFILE     => $this->cookieJar,
-            CURLOPT_COOKIEJAR      => $this->cookieJar,
-        ];
+        $headers = $this->getDefaultHttpHeaders();
+        if ($this->csrfToken == CsrfHelper::DEFAULT_TOKEN) {
+            $headers[] = CsrfHelper::getDefaultCookie();
+        }
+
+        return $headers;
     }
 
-    /**
-     * @param array $options
-     *
-     * @return mixed
-     */
-    protected function addDefaultCsrfInfo($options)
-    {
-        $options[CURLOPT_REFERER] = UrlHelper::URL_BASE;
-        $options[CURLOPT_HTTPHEADER][] = CsrfHelper::getDefaultCookie();
-
-        return $options;
-    }
     
     /**
      * Clear token information.
@@ -217,19 +159,6 @@ class Request
     public function isLoggedIn()
     {
         return $this->loggedIn;
-    }
-
-    /**
-     * @param string $userAgent
-     * @return $this
-     */
-    public function setUserAgent($userAgent)
-    {
-        if ($userAgent !== null) {
-            $this->userAgent = $userAgent;
-        }
-
-        return $this;
     }
 
     /**
@@ -274,7 +203,7 @@ class Request
 
     public function setTokenFromCookies()
     {
-        $this->csrfToken = CsrfHelper::getTokenFromFile($this->cookieJar);
+        $this->csrfToken = $this->httpClient->getToken();
         if (empty($this->csrfToken)) {
             throw new AuthException('Cannot parse token from cookies.');
         }
@@ -288,7 +217,9 @@ class Request
     protected function getDefaultHttpHeaders()
     {
         return array_merge(
-            $this->requestHeaders, $this->getContentTypeHeader(), [
+            $this->requestHeaders,
+            $this->getContentTypeHeader(),
+            [
                 'Host: ' . UrlHelper::HOST,
                 'X-CSRFToken: ' . $this->csrfToken
             ]
@@ -357,5 +288,13 @@ class Request
     public function getLastError()
     {
         return $this->lastError;
+    }
+
+    /**
+     * @return HttpClient
+     */
+    public function getHttpClient()
+    {
+        return $this->httpClient;
     }
 }

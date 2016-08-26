@@ -66,7 +66,7 @@ class PinsTest extends ProviderTest
         $response = $this->createPinCreationResponse();
         $this->setResponseExpectation($response);
 
-        $pinSource = 'http://example.com/image.jpg';
+        $pinSource = 'httpClient://example.com/image.jpg';
         $pinDescription = 'Pin Description';
         $boardId = 1;
         $this->assertNotEmpty($this->provider->create($pinSource, $boardId, $pinDescription));

@@ -3,7 +3,6 @@
 namespace seregazhuk\PinterestBot\Api\Providers;
 
 use LogicException;
-use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
 use seregazhuk\PinterestBot\Exceptions\AuthException;
 use seregazhuk\PinterestBot\Api\Traits\UploadsImages;
@@ -119,13 +118,12 @@ class User extends Provider
         if ($this->request->isLoggedIn()) return true;
 
         $this->checkCredentials($username, $password);
+        $this->request->clearToken();
 
         $credentials = [
             'username_or_email' => $username,
             'password'          => $password,
         ];
-
-        $this->request->clearToken();
 
         $response = $this->execPostRequest($credentials, UrlHelper::RESOURCE_LOGIN, true);
         if ($response->hasErrors()) {
