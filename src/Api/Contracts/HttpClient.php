@@ -29,10 +29,10 @@ interface HttpClient
     public function getToken();
 
     /**
-     * Sets User-Agent string for requests.
+     * Set custom Curl options to override default
      *
-     * @param string $userAgent
+     * @param array $options
      * @return $this
      */
-    public function setUserAgent($userAgent);
+    public function setOptions(array $options);
 }

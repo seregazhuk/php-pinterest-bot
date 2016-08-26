@@ -2,9 +2,9 @@
 
 namespace seregazhuk\PinterestBot\Api;
 
-use seregazhuk\PinterestBot\Helpers\UrlHelper;
-use seregazhuk\PinterestBot\Helpers\CsrfHelper;
 use seregazhuk\PinterestBot\Api\Contracts\HttpClient;
+use seregazhuk\PinterestBot\Helpers\CsrfHelper;
+use seregazhuk\PinterestBot\Helpers\UrlHelper;
 
 /**
  * Class CurlAdapter.
@@ -14,9 +14,11 @@ class CurlHttpClient implements HttpClient
     public $cookieName = 'pinterest_cookie';
 
     /**
+     * Custom CURL options for requests.
+     *
      * @var array
      */
-    protected $options;
+    protected $options = [];
 
     /**
      * @var string
@@ -26,7 +28,7 @@ class CurlHttpClient implements HttpClient
     /**
      * @var array
      */
-    protected $headers;
+    protected $headers = [];
 
     /**
      * Contains the curl instance.
@@ -56,7 +58,8 @@ class CurlHttpClient implements HttpClient
     public function execute($url, $postString = '', array $headers = [])
     {
         $this->headers = $headers;
-        $this->init($url)->setOptions($postString);
+
+        $this->init($url, $postString);
 
         $res = curl_exec($this->curl);
         $this->close();
@@ -106,30 +109,20 @@ class CurlHttpClient implements HttpClient
     }
 
     /**
-     * Initializes curl resource.
+     * Initializes curl resource with options.
      *
      * @param string $url
-     *
+     * @param $postString
      * @return $this
      */
-    protected function init($url)
+    protected function init($url, $postString)
     {
         $this->curl = curl_init($url);
 
-        return $this;
-    }
-
-    /**
-     * Sets multiple options at the same time.
-     *
-     * @param string $postString
-     * @return static
-     */
-    protected function setOptions($postString)
-    {
-        $this->makeHttpOptions($postString);
-
-        curl_setopt_array($this->curl, $this->options);
+        curl_setopt_array(
+            $this->curl,
+            $this->makeHttpOptions($postString)
+        );
 
         return $this;
     }
@@ -137,9 +130,9 @@ class CurlHttpClient implements HttpClient
     /**
      * @return array
      */
-    protected function setDefaultHttpOptions()
+    protected function getDefaultHttpOptions()
     {
-        $this->options = [
+        return [
             CURLOPT_USERAGENT      => $this->userAgent,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_SSL_VERIFYPEER => false,
@@ -157,16 +150,36 @@ class CurlHttpClient implements HttpClient
      *
      * @param string $postString POST query string
      *
-     * @return $this
+     * @return array
      */
     protected function makeHttpOptions($postString = '')
     {
-        $this->setDefaultHttpOptions();
+        $options = $this->getDefaultHttpOptions();
 
         if (!empty($postString)) {
-            $this->options[CURLOPT_POST] = true;
-            $this->options[CURLOPT_POSTFIELDS] = $postString;
+            $options[CURLOPT_POST] = true;
+            $options[CURLOPT_POSTFIELDS] = $postString;
         }
+
+        // Override default options with custom
+        if (!empty($this->options)) {
+            foreach ($this->options as $option => $value) {
+                $options[$option] = $value;
+            }
+        }
+
+        return $options;
+    }
+
+    /**
+     * Set custom Curl options to override default
+     *
+     * @param array $options
+     * @return CurlHttpClient
+     */
+    public function setOptions(array $options)
+    {
+        $this->options = $options;
 
         return $this;
     }

@@ -33,51 +33,6 @@ class BotTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($error, $bot->getLastError());
     }
 
-    /** @test */
-    public function it_should_return_true_on_success_login()
-    {
-        $credentials = ['test', 'test'];
-        $userProviderMock = Mockery::mock(Pinners::class)
-            ->shouldReceive('login')
-            ->withArgs($credentials)
-            ->andReturn(true)
-            ->getMock();
-
-        $containerMock = $this->get_container_with_expected_provider('user', $userProviderMock);
-
-        $bot = new Bot($containerMock);
-
-        $this->assertTrue($bot->login('test', 'test'));
-    }
-
-    /** @test */
-    public function it_should_proxy_logout_to_request()
-    {
-        $userProviderMock = Mockery::mock(Pinners::class)
-            ->shouldReceive('logout')
-            ->getMock();
-
-        $containerMock = $this->get_container_with_expected_provider('user', $userProviderMock);
-
-        $bot = new Bot($containerMock);
-
-        $bot->logout();
-    }
-
-    /** @test */
-    public function it_should_proxy_is_logged_in_to_request()
-    {
-        $request = Mockery::mock(Request::class)
-            ->shouldReceive('isLoggedIn')
-            ->andReturn(true)
-            ->getMock();
-
-        $providersContainer = new ProvidersContainer($request);
-
-        $bot = new Bot($providersContainer);
-
-        $this->assertTrue($bot->isLoggedIn());
-    }
 
     /**
      * @param string $providerName
