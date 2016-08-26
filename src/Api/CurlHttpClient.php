@@ -11,7 +11,7 @@ use seregazhuk\PinterestBot\Api\Contracts\HttpClient;
  */
 class CurlHttpClient implements HttpClient
 {
-    const COOKIE_NAME = 'pinterest_cookie';
+    public $cookieName = 'pinterest_cookie';
 
     /**
      * @var array
@@ -34,11 +34,15 @@ class CurlHttpClient implements HttpClient
      * @var resource
      */
     protected $curl;
+
+    /**
+     * @var string
+     */
     protected $cookieJar;
 
     public function __construct()
     {
-        $this->cookieJar = tempnam(sys_get_temp_dir(), self::COOKIE_NAME);
+        $this->cookieJar = tempnam(sys_get_temp_dir(), $this->cookieName);
     }
 
     /**
@@ -49,7 +53,7 @@ class CurlHttpClient implements HttpClient
      * @param array $headers
      * @return string
      */
-    public function execute($url, $postString, array $headers = [])
+    public function execute($url, $postString = '', array $headers = [])
     {
         $this->headers = $headers;
         $this->init($url)->setOptions($postString);
