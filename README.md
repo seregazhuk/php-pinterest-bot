@@ -467,7 +467,7 @@ It is possible to override default Curl options for bot requests. For example yo
 set proxy and user-agent like this:
 
 ```php
-$bot->getHttpClient->setOptions([
+$bot->getHttpClient()->setOptions([
     CURLOPT_PROXY => 'xx.xx.xxx.xx:80',
     CURLOPT_USERAGENT => 'Your_User_Agent',
 ]);
