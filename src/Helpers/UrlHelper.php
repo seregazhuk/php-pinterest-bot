@@ -148,7 +148,8 @@ class UrlHelper
      */
     public static function getSearchUrl($bookmarks = [])
     {
-        return empty($bookmarks) ? self::RESOURCE_SEARCH : self::RESOURCE_SEARCH_WITH_PAGINATION;
-            
+        return empty($bookmarks) ?
+            self::RESOURCE_SEARCH :
+            self::RESOURCE_SEARCH_WITH_PAGINATION;
     }
 }
