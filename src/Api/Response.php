@@ -180,7 +180,7 @@ class Response implements PaginatedResponse
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function __toString()
     {

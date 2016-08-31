@@ -3,7 +3,6 @@
 namespace seregazhuk\PinterestBot\Api\Providers;
 
 use Iterator;
-use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
 use seregazhuk\PinterestBot\Api\Traits\Searchable;
 use seregazhuk\PinterestBot\Api\Traits\CanBeDeleted;
@@ -178,7 +177,7 @@ class Pins extends Provider
      *
      * @param int $pinId
      *
-     * @return Response
+     * @return array|bool
      */
     public function info($pinId)
     {
