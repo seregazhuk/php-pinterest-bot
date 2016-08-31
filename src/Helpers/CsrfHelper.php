@@ -47,12 +47,4 @@ class CsrfHelper
 
         return false;
     }
-
-    /**
-     * @return string
-     */
-    public static function getDefaultCookie()
-    {
-        return 'Cookie: csrftoken=' . self::DEFAULT_TOKEN . ';';
-    }
 }

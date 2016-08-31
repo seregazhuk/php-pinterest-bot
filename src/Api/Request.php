@@ -115,7 +115,7 @@ class Request
     {
         $headers = $this->getDefaultHttpHeaders();
         if ($this->csrfToken == CsrfHelper::DEFAULT_TOKEN) {
-            $headers[] = CsrfHelper::getDefaultCookie();
+            $headers[] = 'Cookie: csrftoken=' . CsrfHelper::DEFAULT_TOKEN . ';';
         }
 
         return $headers;
