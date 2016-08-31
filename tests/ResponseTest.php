@@ -2,7 +2,6 @@
 
 namespace szhuk\tests;
 
-use Mockery;
 use PHPUnit_Framework_TestCase;
 use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\tests\Helpers\ResponseHelper;

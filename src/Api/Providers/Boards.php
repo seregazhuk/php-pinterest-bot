@@ -4,7 +4,6 @@ namespace seregazhuk\PinterestBot\Api\Providers;
 
 use Generator;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
-use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Api\Traits\Searchable;
 use seregazhuk\PinterestBot\Api\Traits\Followable;
 use seregazhuk\PinterestBot\Api\Traits\CanBeDeleted;
@@ -79,9 +78,7 @@ class Boards extends Provider
      */
     public function pins($boardId, $limit = 0)
     {
-        return (new Pagination($this))->paginateOver(
-            'getPinsFromBoard', ['boardId' => $boardId], $limit
-        );
+        return $this->getPaginatedResponse(['boardId' => $boardId], $limit, 'getPinsFromBoard');
     }
 
     /**
