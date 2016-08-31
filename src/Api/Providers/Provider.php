@@ -4,6 +4,7 @@ namespace seregazhuk\PinterestBot\Api\Providers;
 
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
+use seregazhuk\PinterestBot\Helpers\Pagination;
 
 /**
  * Class Provider.
@@ -61,6 +62,7 @@ abstract class Provider
     protected function execGetRequest(array $requestOptions = [], $resourceUrl = '')
     {
         $query = Request::createQuery($requestOptions);
+
         return $this->request->exec($resourceUrl . "?{$query}");
     }
 
@@ -75,6 +77,7 @@ abstract class Provider
     protected function execGetRequestWithPagination(array $requestOptions, $resourceUrl, $bookmarks = [])
     {
         $query = Request::createQuery($requestOptions, $bookmarks);
+
         return $this->request->exec($resourceUrl . "?{$query}");
     }
 
@@ -85,14 +88,14 @@ abstract class Provider
     {
         return property_exists($this, 'entityIdName') ? $this->entityIdName : '';
     }
-    
+
     /**
      * Executes pagination GET request.
      *
      * @param array $data
      * @param string $url
      * @param array $bookmarks
-     * @return array|bool
+     * @return Response
      */
     public function getPaginatedData(array $data, $url, $bookmarks = [])
     {
@@ -115,5 +118,16 @@ abstract class Provider
     public function getRequest()
     {
         return $this->request;
+    }
+
+    /**
+     * @param array $params
+     * @param int $limit
+     * @param string $method
+     * @return mixed
+     */
+    protected function getPaginatedResponse(array $params, $limit, $method = 'getPaginatedData')
+    {
+        return (new Pagination($this))->paginateOver($method, $params, $limit);
     }
 }

@@ -3,7 +3,6 @@
 namespace seregazhuk\PinterestBot\Api\Traits;
 
 use Iterator;
-use seregazhuk\PinterestBot\Helpers\Pagination;
 
 /**
  * Trait HasFollowers
@@ -40,7 +39,7 @@ trait HasFollowers
     {
         $requestData = array_merge([$data, $resourceUrl]);
 
-        return (new Pagination($this))->paginateOver('getPaginatedData', $requestData, $limit);
+        return $this->getPaginatedResponse($requestData, $limit);
     }
 
     /**
@@ -58,4 +57,12 @@ trait HasFollowers
     {
         return property_exists($this, 'followersFor') ? $this->followersFor : '';
     }
+
+    /**
+     * @param array $params
+     * @param int $limit
+     * @param string $method
+     * @return mixed
+     */
+    abstract protected function getPaginatedResponse(array $params, $limit, $method = 'getPaginatedData');
 }

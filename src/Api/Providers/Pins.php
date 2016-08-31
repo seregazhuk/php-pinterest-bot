@@ -4,11 +4,10 @@ namespace seregazhuk\PinterestBot\Api\Providers;
 
 use Iterator;
 use seregazhuk\PinterestBot\Api\Response;
-use seregazhuk\PinterestBot\Api\Traits\UploadsImages;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
-use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Api\Traits\Searchable;
 use seregazhuk\PinterestBot\Api\Traits\CanBeDeleted;
+use seregazhuk\PinterestBot\Api\Traits\UploadsImages;
 
 class Pins extends Provider
 {
@@ -208,7 +207,7 @@ class Pins extends Provider
             'url'  => UrlHelper::RESOURCE_DOMAIN_FEED,
         ];
 
-        return (new Pagination($this))->paginateOver('getPaginatedData', $params, $limit);
+        return $this->getPaginatedResponse($params, $limit);
     }
 
     /**
@@ -229,7 +228,7 @@ class Pins extends Provider
             'url'  => UrlHelper::RESOURCE_ACTIVITY
         ];
 
-        return (new Pagination($this))->paginateOver('getPaginatedData', $params, $limit);
+        return $this->getPaginatedResponse($params, $limit);
     }
 
     /**
@@ -244,7 +243,8 @@ class Pins extends Provider
             'data' => [],
             'url'  => UrlHelper::RESOURCE_USER_FEED
         ];
-        return (new Pagination($this))->paginateOver('getPaginatedData', $params, $limit);
+
+        return $this->getPaginatedResponse($params, $limit);
     }
 
     /**
