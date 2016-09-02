@@ -3,7 +3,7 @@
 namespace seregazhuk\PinterestBot\Api\Providers;
 
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
-use seregazhuk\PinterestBot\Exceptions\InvalidRequestException;
+use seregazhuk\PinterestBot\Exceptions\InvalidRequest;
 
 class Conversations extends Provider
 {
@@ -23,7 +23,7 @@ class Conversations extends Provider
      * @param string $text
      * @param int|null $pinId
      *
-     * @throws InvalidRequestException
+     * @throws InvalidRequest
      *
      * @return bool
      */
@@ -41,7 +41,7 @@ class Conversations extends Provider
      * @param string $text
      * @param int|null $pinId
      *
-     * @throws InvalidRequestException
+     * @throws InvalidRequest
      *
      * @return bool
      */
@@ -68,7 +68,7 @@ class Conversations extends Provider
      * @param int $pinId
      * @param array $emails
      *
-     * @throws InvalidRequestException
+     * @throws InvalidRequest
      *
      * @return bool
      */
@@ -89,12 +89,12 @@ class Conversations extends Provider
     /**
      * @param $userId
      * @param array $emails
-     * @throws InvalidRequestException
+     * @throws InvalidRequest
      */
     protected function guardAgainstEmptyData($userId, array $emails)
     {
         if (empty($userId) && empty($emails)) {
-            throw new InvalidRequestException('You must specify user_ids or emails to send message.');
+            throw new InvalidRequest('You must specify user_ids or emails to send message.');
         }
     }
 }

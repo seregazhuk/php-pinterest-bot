@@ -50,7 +50,7 @@ class ConversationsTest extends ProviderTest
 
     /**
      * @test
-     * @expectedException \seregazhuk\PinterestBot\Exceptions\InvalidRequestException
+     * @expectedException \seregazhuk\PinterestBot\Exceptions\InvalidRequest
      */
     public function it_should_throw_exception_when_sending_message_to_no_users()
     {
@@ -59,7 +59,7 @@ class ConversationsTest extends ProviderTest
 
     /**
      * @test
-     * @expectedException \seregazhuk\PinterestBot\Exceptions\InvalidRequestException
+     * @expectedException \seregazhuk\PinterestBot\Exceptions\InvalidRequest
      */
     public function it_should_throw_exception_when_sending_email_to_no_emails()
     {

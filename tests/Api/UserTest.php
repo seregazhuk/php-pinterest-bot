@@ -134,7 +134,7 @@ class UserTest extends ProviderTest
 
     /**
      * @test
-     * @expectedException \seregazhuk\PinterestBot\Exceptions\AuthException
+     * @expectedException \seregazhuk\PinterestBot\Exceptions\AuthFailed
      */
     public function it_should_throw_exception_when_login_fails()
     {

@@ -4,7 +4,7 @@ namespace seregazhuk\PinterestBot\Api\Providers;
 
 use LogicException;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
-use seregazhuk\PinterestBot\Exceptions\AuthException;
+use seregazhuk\PinterestBot\Exceptions\AuthFailed;
 use seregazhuk\PinterestBot\Api\Traits\UploadsImages;
 
 class User extends Provider
@@ -109,7 +109,7 @@ class User extends Provider
      * @param string $username
      * @param string $password
      *
-     * @throws AuthException
+     * @throws AuthFailed
      *
      * @return bool
      */
@@ -127,7 +127,7 @@ class User extends Provider
 
         $response = $this->execPostRequest($credentials, UrlHelper::RESOURCE_LOGIN, true);
         if ($response->hasErrors()) {
-            throw new AuthException($response->getLastError()['message']);
+            throw new AuthFailed($response->getLastError()['message']);
         }
 
         $this->request->login();
@@ -177,7 +177,7 @@ class User extends Provider
     /**
      * @param array $data
      * @return bool|mixed
-     * @throws AuthException
+     * @throws AuthFailed
      */
     protected function makeRegisterCall($data)
     {

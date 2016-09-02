@@ -2,12 +2,12 @@
 
 namespace seregazhuk\PinterestBot\Api;
 
-use seregazhuk\PinterestBot\Exceptions\InvalidRequestException;
+use seregazhuk\PinterestBot\Exceptions\InvalidRequest;
 use seregazhuk\PinterestBot\Helpers\UrlHelper;
 use seregazhuk\PinterestBot\Api\Contracts\HttpClient;
 use seregazhuk\PinterestBot\Helpers\FileHelper;
 use seregazhuk\PinterestBot\Helpers\CsrfHelper;
-use seregazhuk\PinterestBot\Exceptions\AuthException;
+use seregazhuk\PinterestBot\Exceptions\AuthFailed;
 
 /**
  * Class Request.
@@ -78,7 +78,7 @@ class Request
      * @param string $pathToFile
      * @param string $url
      * @return array
-     * @throws InvalidRequestException
+     * @throws InvalidRequest
      */
     public function upload($pathToFile, $url)
     {
@@ -137,7 +137,7 @@ class Request
     /**
      * Mark api as logged.
      * @return $this
-     * @throws AuthException
+     * @throws AuthFailed
      */
     public function login()
     {
@@ -205,7 +205,7 @@ class Request
     {
         $this->csrfToken = $this->httpClient->getToken();
         if (empty($this->csrfToken)) {
-            throw new AuthException('Cannot parse token from cookies.');
+            throw new AuthFailed('Cannot parse token from cookies.');
         }
 
         return $this;
