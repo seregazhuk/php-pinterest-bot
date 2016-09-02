@@ -18,11 +18,6 @@ class ProvidersContainer
      */
     protected $request;
 
-    /**
-     * @var Response
-     */
-    protected $response;
-
     const PROVIDERS_NAMESPACE = 'seregazhuk\\PinterestBot\\Api\\Providers\\';
 
     /**
