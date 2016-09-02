@@ -2,7 +2,7 @@
 
 namespace seregazhuk\PinterestBot\Api\Providers;
 
-use seregazhuk\PinterestBot\Helpers\UrlHelper;
+use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\Traits\Followable;
 
 class Interests extends Provider
@@ -14,8 +14,8 @@ class Interests extends Provider
      */
     protected $loginRequiredFor = ['follow', 'unFollow'];
 
-    protected $followUrl   = UrlHelper::RESOURCE_FOLLOW_INTEREST;
-    protected $unFollowUrl = UrlHelper::RESOURCE_UNFOLLOW_INTEREST;
+    protected $followUrl   = UrlBuilder::RESOURCE_FOLLOW_INTEREST;
+    protected $unFollowUrl = UrlBuilder::RESOURCE_UNFOLLOW_INTEREST;
 
     protected $entityIdName = 'interest_id';
 
@@ -26,7 +26,7 @@ class Interests extends Provider
      */
     public function getMain()
     {
-        return $this->execGetRequest(["category_types" => "main"], UrlHelper::RESOURCE_GET_CATEGORIES);
+        return $this->execGetRequest(["category_types" => "main"], UrlBuilder::RESOURCE_GET_CATEGORIES);
     }
 
     /**
@@ -37,6 +37,6 @@ class Interests extends Provider
      */
     public function getInfo($category)
     {
-        return $this->execGetRequest(["category" => $category], UrlHelper::RESOURCE_GET_CATEGORY);
+        return $this->execGetRequest(["category" => $category], UrlBuilder::RESOURCE_GET_CATEGORY);
     }
 }

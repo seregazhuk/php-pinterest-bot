@@ -5,7 +5,7 @@ namespace seregazhuk\PinterestBot\Helpers;
 /**
  * Class UrlHelper.
  */
-class UrlHelper
+class UrlBuilder
 {
     /**
      * Login

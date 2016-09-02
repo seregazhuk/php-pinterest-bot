@@ -2,7 +2,7 @@
 
 namespace seregazhuk\PinterestBot\Api\Traits;
 
-use seregazhuk\PinterestBot\Helpers\UrlHelper;
+use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Exceptions\InvalidRequest;
 
 /**
@@ -22,7 +22,7 @@ trait UploadsImages
     {
         $res = $this
             ->getRequest()
-            ->upload($image, UrlHelper::IMAGE_UPLOAD);
+            ->upload($image, UrlBuilder::IMAGE_UPLOAD);
 
         return $res['success'] ? $res['image_url'] : null;
     }

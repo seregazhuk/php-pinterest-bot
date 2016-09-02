@@ -2,7 +2,7 @@
 
 namespace seregazhuk\tests\Api;
 
-use seregazhuk\PinterestBot\Helpers\UrlHelper;
+use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\Providers\Pins;
 
 /**
@@ -81,7 +81,7 @@ class PinsTest extends ProviderTest
         $image = 'image.jpg';
         $this->requestMock
             ->shouldReceive('upload')
-            ->withArgs([$image, UrlHelper::IMAGE_UPLOAD]);
+            ->withArgs([$image, UrlBuilder::IMAGE_UPLOAD]);
 
         $response = $this->createPinCreationResponse();
         $this->setResponseExpectation($response);

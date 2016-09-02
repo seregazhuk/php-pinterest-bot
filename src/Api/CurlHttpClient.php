@@ -3,8 +3,8 @@
 namespace seregazhuk\PinterestBot\Api;
 
 use seregazhuk\PinterestBot\Api\Contracts\HttpClient;
-use seregazhuk\PinterestBot\Helpers\CsrfHelper;
-use seregazhuk\PinterestBot\Helpers\UrlHelper;
+use seregazhuk\PinterestBot\Helpers\CsrfParser;
+use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 
 /**
  * Class CurlAdapter.
@@ -82,7 +82,7 @@ class CurlHttpClient implements HttpClient
      */
     public function getToken()
     {
-        return CsrfHelper::getTokenFromFile($this->cookieJar);
+        return CsrfParser::getTokenFromFile($this->cookieJar);
     }
 
     /**
@@ -139,7 +139,7 @@ class CurlHttpClient implements HttpClient
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_ENCODING       => 'gzip,deflate',
             CURLOPT_HTTPHEADER     => $this->headers,
-            CURLOPT_REFERER        => UrlHelper::URL_BASE,
+            CURLOPT_REFERER        => UrlBuilder::URL_BASE,
             CURLOPT_COOKIEFILE     => $this->cookieJar,
             CURLOPT_COOKIEJAR      => $this->cookieJar,
         ];

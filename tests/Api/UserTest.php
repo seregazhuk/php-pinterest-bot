@@ -2,7 +2,7 @@
 
 namespace seregazhuk\tests\Api;
 
-use seregazhuk\PinterestBot\Helpers\UrlHelper;
+use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\Providers\User;
 
 /**
@@ -40,7 +40,7 @@ class UserTest extends ProviderTest
         ];
         $this->requestMock
             ->shouldReceive('upload')
-            ->withArgs([$attributes['profile_image'], UrlHelper::IMAGE_UPLOAD]);
+            ->withArgs([$attributes['profile_image'], UrlBuilder::IMAGE_UPLOAD]);
         
         $this->setSuccessResponse();
         $this->assertTrue($this->provider->profile($attributes));

@@ -3,7 +3,7 @@
 namespace seregazhuk\PinterestBot\Api\Traits;
 
 use seregazhuk\PinterestBot\Api\Response;
-use seregazhuk\PinterestBot\Helpers\UrlHelper;
+use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 
 /**
  * Trait Followable
@@ -90,7 +90,7 @@ trait Followable
         }
 
         $post = ['data' => json_encode($dataJson, JSON_FORCE_OBJECT)];
-        return UrlHelper::buildRequestString($post);
+        return UrlBuilder::buildRequestString($post);
     }
 
     /**

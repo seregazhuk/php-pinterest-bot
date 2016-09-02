@@ -11,6 +11,9 @@ class SearchResponse implements PaginatedResponse
      */
     protected $response;
 
+    /**
+     * @param Response $response
+     */
     public function __construct(Response $response)
     {
         $this->response = $response;

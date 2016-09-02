@@ -2,7 +2,7 @@
 
 namespace seregazhuk\PinterestBot\Api\Providers;
 
-use seregazhuk\PinterestBot\Helpers\UrlHelper;
+use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 
 class Keywords extends Provider
 {
@@ -16,7 +16,7 @@ class Keywords extends Provider
     {
         $requestOptions = ['scope' => 'pins', 'query' => $query];
 
-        $result = $this->execGetRequest($requestOptions, UrlHelper::getSearchUrl());
+        $result = $this->execGetRequest($requestOptions, UrlBuilder::getSearchUrl());
 
         return $this->parseKeywordsFromRequest($result);
     }

@@ -3,10 +3,10 @@
 namespace seregazhuk\PinterestBot\Api;
 
 use ReflectionClass;
-use seregazhuk\PinterestBot\Api\Contracts\HttpClient;
 use seregazhuk\PinterestBot\Api\Providers\Provider;
-use seregazhuk\PinterestBot\Api\Providers\ProviderWrapper;
 use seregazhuk\PinterestBot\Exceptions\WrongProvider;
+use seregazhuk\PinterestBot\Api\Contracts\HttpClient;
+use seregazhuk\PinterestBot\Api\Providers\ProviderWrapper;
 
 class ProvidersContainer
 {
