@@ -3,7 +3,7 @@
 namespace seregazhuk\PinterestBot\Api\Traits;
 
 use seregazhuk\PinterestBot\Api\Request;
-use seregazhuk\PinterestBot\Helpers\UrlHelper;
+use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\SearchResponse;
 
 /**
@@ -37,7 +37,7 @@ trait Searchable
      */
     public function searchCall($query, $scope, $bookmarks = [])
     {
-        $url = UrlHelper::getSearchUrl($bookmarks);
+        $url = UrlBuilder::getSearchUrl($bookmarks);
         $get = $this->createSearchQuery($query, $scope, $bookmarks);
         $response = $this->getRequest()->exec($url . '?' . $get);
 
@@ -65,7 +65,7 @@ trait Searchable
 
         $request = Request::createRequestData($dataJson, $bookmarks);
 
-        return UrlHelper::buildRequestString($request);
+        return UrlBuilder::buildRequestString($request);
     }
 
     /**

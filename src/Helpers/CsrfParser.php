@@ -2,7 +2,7 @@
 
 namespace seregazhuk\PinterestBot\Helpers;
 
-class CsrfHelper
+class CsrfParser
 {
     const TOKEN_NAME = 'csrftoken';
     const DEFAULT_TOKEN = '1234';

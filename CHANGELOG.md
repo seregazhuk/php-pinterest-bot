@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## ? - ?
+ - Provider::execGetRequest method now returns bool or array
+ - Exceptions classes renamed
+ - Helper classes renamed
+
 ## [4.6.0] - 2016-08-26
  - HttpClient cookie file name moved to property instead of constant
  - Custom curl options in HttpClient object

@@ -3,7 +3,7 @@
 namespace seregazhuk\PinterestBot\Api\Providers;
 
 use Generator;
-use seregazhuk\PinterestBot\Helpers\UrlHelper;
+use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\Traits\Searchable;
 use seregazhuk\PinterestBot\Api\Traits\Followable;
 use seregazhuk\PinterestBot\Api\Traits\CanBeDeleted;
@@ -28,10 +28,10 @@ class Boards extends Provider
     protected $entityIdName = 'board_id';
     protected $followersFor = 'board_id';
 
-    protected $followUrl    = UrlHelper::RESOURCE_FOLLOW_BOARD;
-    protected $unFollowUrl  = UrlHelper::RESOURCE_UNFOLLOW_BOARD;
-    protected $deleteUrl    = UrlHelper::RESOURCE_DELETE_BOARD;
-    protected $followersUrl = UrlHelper::RESOURCE_BOARD_FOLLOWERS;
+    protected $followUrl    = UrlBuilder::RESOURCE_FOLLOW_BOARD;
+    protected $unFollowUrl  = UrlBuilder::RESOURCE_UNFOLLOW_BOARD;
+    protected $deleteUrl    = UrlBuilder::RESOURCE_DELETE_BOARD;
+    protected $followersUrl = UrlBuilder::RESOURCE_BOARD_FOLLOWERS;
     
     /**
      * Get boards for user by username.
@@ -42,9 +42,7 @@ class Boards extends Provider
      */
     public function forUser($username)
     {
-        return $this
-            ->execGetRequest(['username' => $username], UrlHelper::RESOURCE_GET_BOARDS)
-            ->getResponseData();
+        return $this->execGetRequest(['username' => $username], UrlBuilder::RESOURCE_GET_BOARDS);
     }
 
     /**
@@ -63,9 +61,7 @@ class Boards extends Provider
             'field_set_key' => 'detailed',
         ];
 
-        return $this
-            ->execGetRequest($requestOptions, UrlHelper::RESOURCE_GET_BOARDS)
-            ->getResponseData();
+        return $this->execGetRequest($requestOptions, UrlBuilder::RESOURCE_GET_BOARDS);
     }
 
     /**
@@ -91,7 +87,7 @@ class Boards extends Provider
     {
         return $this->execGetRequestWithPagination(
             ['board_id' => $boardId],
-            UrlHelper::RESOURCE_GET_BOARD_FEED,
+            UrlBuilder::RESOURCE_GET_BOARD_FEED,
             $bookmarks
         );
     }
@@ -116,7 +112,7 @@ class Boards extends Provider
             ], $attributes
         );
 
-        return $this->execPostRequest($requestOptions, UrlHelper::RESOURCE_UPDATE_BOARD);
+        return $this->execPostRequest($requestOptions, UrlBuilder::RESOURCE_UPDATE_BOARD);
     }
 
     /**
@@ -136,6 +132,6 @@ class Boards extends Provider
             'privacy'     => $privacy,
         ];
 
-        return $this->execPostRequest($requestOptions, UrlHelper::RESOURCE_CREATE_BOARD);
+        return $this->execPostRequest($requestOptions, UrlBuilder::RESOURCE_CREATE_BOARD);
     }
 }

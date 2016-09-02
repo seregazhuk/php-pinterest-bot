@@ -10,7 +10,7 @@ use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\tests\helpers\ResponseHelper;
 use seregazhuk\tests\helpers\ReflectionHelper;
 use seregazhuk\PinterestBot\Api\CurlHttpClient;
-use seregazhuk\PinterestBot\Helpers\CsrfHelper;
+use seregazhuk\PinterestBot\Helpers\CsrfParser;
 use seregazhuk\PinterestBot\Api\Contracts\HttpClient;
 
 /**
@@ -38,7 +38,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
         $this->assertEmpty($this->getProperty('csrfToken'));
 
         $request->clearToken();
-        $this->assertEquals(CsrfHelper::DEFAULT_TOKEN, $this->getProperty('csrfToken'));
+        $this->assertEquals(CsrfParser::DEFAULT_TOKEN, $this->getProperty('csrfToken'));
     }
 
     /** @test */
@@ -107,12 +107,12 @@ class RequestTest extends PHPUnit_Framework_TestCase
 
         $request->logout();
         $this->assertFalse($request->isLoggedIn());
-        $this->assertEquals(CsrfHelper::DEFAULT_TOKEN, $this->getProperty('csrfToken'));
+        $this->assertEquals(CsrfParser::DEFAULT_TOKEN, $this->getProperty('csrfToken'));
     }
 
     /**
      * @test
-     * @expectedException \seregazhuk\PinterestBot\Exceptions\InvalidRequestException
+     * @expectedException \seregazhuk\PinterestBot\Exceptions\InvalidRequest
      */
     public function it_should_throw_exception_uploading_file_that_does_not_exist()
     {

@@ -2,7 +2,7 @@
 
 namespace seregazhuk\tests\Api;
 
-use seregazhuk\PinterestBot\Helpers\UrlHelper;
+use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\tests\Helpers\FollowResponseHelper;
 use seregazhuk\PinterestBot\Api\Providers\Pinners;
 
@@ -26,10 +26,10 @@ class PinnersTest extends ProviderTest
     public function it_should_follow_user()
     {
         $pinnerId = 1;
-        $this->setFollowSuccessResponse($pinnerId, UrlHelper::RESOURCE_FOLLOW_USER);
+        $this->setFollowSuccessResponse($pinnerId, UrlBuilder::RESOURCE_FOLLOW_USER);
         $this->assertTrue($this->provider->follow($pinnerId));
 
-        $this->setFollowErrorResponse($pinnerId, UrlHelper::RESOURCE_FOLLOW_USER);
+        $this->setFollowErrorResponse($pinnerId, UrlBuilder::RESOURCE_FOLLOW_USER);
         $this->assertFalse($this->provider->follow($pinnerId));
     }
 
@@ -37,10 +37,10 @@ class PinnersTest extends ProviderTest
     public function it_should_unfollow_user()
     {
         $pinnerId = 1;
-        $this->setFollowSuccessResponse($pinnerId, UrlHelper::RESOURCE_UNFOLLOW_USER);
+        $this->setFollowSuccessResponse($pinnerId, UrlBuilder::RESOURCE_UNFOLLOW_USER);
         $this->assertTrue($this->provider->unFollow($pinnerId));
 
-        $this->setFollowErrorResponse($pinnerId, UrlHelper::RESOURCE_UNFOLLOW_USER);
+        $this->setFollowErrorResponse($pinnerId, UrlBuilder::RESOURCE_UNFOLLOW_USER);
         $this->assertFalse($this->provider->unFollow($pinnerId));
     }
 

@@ -2,8 +2,8 @@
 
 namespace seregazhuk\PinterestBot\Api\Providers;
 
-use seregazhuk\PinterestBot\Exceptions\AuthException;
-use seregazhuk\PinterestBot\Exceptions\InvalidRequestException;
+use seregazhuk\PinterestBot\Exceptions\AuthFailed;
+use seregazhuk\PinterestBot\Exceptions\InvalidRequest;
 
 class ProviderWrapper
 {
@@ -27,8 +27,8 @@ class ProviderWrapper
      * @param $method
      * @param $arguments
      *
-     * @throws AuthException
-     * @throws InvalidRequestException
+     * @throws AuthFailed
+     * @throws InvalidRequest
      *
      * @return mixed|null
      */
@@ -41,7 +41,7 @@ class ProviderWrapper
         }
 
         $errorMessage = $this->getErrorMethodCallMessage($method, "Method $method does'n exist.");
-        throw new InvalidRequestException($errorMessage);
+        throw new InvalidRequest($errorMessage);
     }
 
     /**
@@ -50,7 +50,7 @@ class ProviderWrapper
      *
      * @param $method
      *
-     * @throws AuthException if is not logged in
+     * @throws AuthFailed if is not logged in
      */
     protected function checkMethodForLoginRequired($method)
     {
@@ -59,7 +59,7 @@ class ProviderWrapper
 
         if ($methodRequiresLogin && !$isLoggedIn) {
             $errorMessage = $this->getErrorMethodCallMessage($method, "You must log in before.");
-            throw new AuthException($errorMessage);
+            throw new AuthFailed($errorMessage);
         }
     }
 

@@ -2,19 +2,15 @@
 
 namespace seregazhuk\PinterestBot\Api;
 
-use seregazhuk\PinterestBot\Exceptions\InvalidRequestException;
-use seregazhuk\PinterestBot\Helpers\UrlHelper;
-use seregazhuk\PinterestBot\Api\Contracts\HttpClient;
+use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Helpers\FileHelper;
-use seregazhuk\PinterestBot\Helpers\CsrfHelper;
-use seregazhuk\PinterestBot\Exceptions\AuthException;
+use seregazhuk\PinterestBot\Helpers\CsrfParser;
+use seregazhuk\PinterestBot\Exceptions\AuthFailed;
+use seregazhuk\PinterestBot\Api\Contracts\HttpClient;
+use seregazhuk\PinterestBot\Exceptions\InvalidRequest;
 
 /**
  * Class Request.
- *
- * @property resource $ch
- * @property bool     $loggedIn
- * @property string   $csrfToken
  */
 class Request
 {
@@ -78,7 +74,7 @@ class Request
      * @param string $pathToFile
      * @param string $url
      * @return array
-     * @throws InvalidRequestException
+     * @throws InvalidRequest
      */
     public function upload($pathToFile, $url)
     {
@@ -97,7 +93,7 @@ class Request
      */
     public function exec($resourceUrl, $postString = '')
     {
-        $url = UrlHelper::buildApiUrl($resourceUrl);
+        $url = UrlBuilder::buildApiUrl($resourceUrl);
         $headers = $this->getHttpHeaders();
         $postString = $this->filePathToUpload ? $this->postFileData : $postString;
 
@@ -114,8 +110,8 @@ class Request
     protected function getHttpHeaders()
     {
         $headers = $this->getDefaultHttpHeaders();
-        if ($this->csrfToken == CsrfHelper::DEFAULT_TOKEN) {
-            $headers[] = 'Cookie: csrftoken=' . CsrfHelper::DEFAULT_TOKEN . ';';
+        if ($this->csrfToken == CsrfParser::DEFAULT_TOKEN) {
+            $headers[] = 'Cookie: csrftoken=' . CsrfParser::DEFAULT_TOKEN . ';';
         }
 
         return $headers;
@@ -129,7 +125,7 @@ class Request
      */
     public function clearToken()
     {
-        $this->csrfToken = CsrfHelper::DEFAULT_TOKEN;
+        $this->csrfToken = CsrfParser::DEFAULT_TOKEN;
 
         return $this;
     }
@@ -137,7 +133,7 @@ class Request
     /**
      * Mark api as logged.
      * @return $this
-     * @throws AuthException
+     * @throws AuthFailed
      */
     public function login()
     {
@@ -174,7 +170,7 @@ class Request
         $data = ['options' => $data];
         $request = self::createRequestData($data, $bookmarks);
 
-        return UrlHelper::buildRequestString($request);
+        return UrlBuilder::buildRequestString($request);
     }
 
     /**
@@ -205,7 +201,7 @@ class Request
     {
         $this->csrfToken = $this->httpClient->getToken();
         if (empty($this->csrfToken)) {
-            throw new AuthException('Cannot parse token from cookies.');
+            throw new AuthFailed('Cannot parse token from cookies.');
         }
 
         return $this;
@@ -220,7 +216,7 @@ class Request
             $this->requestHeaders,
             $this->getContentTypeHeader(),
             [
-                'Host: ' . UrlHelper::HOST,
+                'Host: ' . UrlBuilder::HOST,
                 'X-CSRFToken: ' . $this->csrfToken
             ]
         );

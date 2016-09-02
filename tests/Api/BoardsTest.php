@@ -2,7 +2,7 @@
 
 namespace seregazhuk\tests\Api;
 
-use seregazhuk\PinterestBot\Helpers\UrlHelper;
+use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\Providers\Boards;
 use seregazhuk\tests\Helpers\FollowResponseHelper;
 
@@ -42,10 +42,10 @@ class BoardsTest extends ProviderTest
     public function it_should_follow_boards()
     {
         $boardId = 1;
-        $this->setFollowSuccessResponse($boardId, UrlHelper::RESOURCE_FOLLOW_BOARD);
+        $this->setFollowSuccessResponse($boardId, UrlBuilder::RESOURCE_FOLLOW_BOARD);
         $this->assertTrue($this->provider->follow($boardId));
 
-        $this->setFollowErrorResponse($boardId, UrlHelper::RESOURCE_FOLLOW_BOARD);
+        $this->setFollowErrorResponse($boardId, UrlBuilder::RESOURCE_FOLLOW_BOARD);
         $this->assertFalse($this->provider->follow($boardId));
     }
 
@@ -53,10 +53,10 @@ class BoardsTest extends ProviderTest
     public function it_should_unfollow_boards()
     {
         $boardId = 1;
-        $this->setFollowSuccessResponse($boardId, UrlHelper::RESOURCE_UNFOLLOW_BOARD);
+        $this->setFollowSuccessResponse($boardId, UrlBuilder::RESOURCE_UNFOLLOW_BOARD);
         $this->assertTrue($this->provider->unFollow($boardId));
 
-        $this->setFollowErrorResponse($boardId, UrlHelper::RESOURCE_UNFOLLOW_BOARD);
+        $this->setFollowErrorResponse($boardId, UrlBuilder::RESOURCE_UNFOLLOW_BOARD);
         $this->assertFalse($this->provider->unFollow($boardId));
     }
 
