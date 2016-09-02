@@ -56,14 +56,15 @@ abstract class Provider
      *
      * @param array $requestOptions
      * @param string $resourceUrl
-     *
-     * @return Response
+     * @return array|bool
      */
     protected function execGetRequest(array $requestOptions = [], $resourceUrl = '')
     {
         $query = Request::createQuery($requestOptions);
 
-        return $this->request->exec($resourceUrl . "?{$query}");
+        $response = $this->request->exec($resourceUrl . "?{$query}");
+
+        return $response->getResponseData();
     }
 
     /**

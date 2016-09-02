@@ -186,9 +186,7 @@ class Pins extends Provider
             'field_set_key' => 'detailed',
         ];
 
-        return $this
-            ->execGetRequest($requestOptions, UrlHelper::RESOURCE_PIN_INFO)
-            ->getResponseData();
+        return $this->execGetRequest($requestOptions, UrlHelper::RESOURCE_PIN_INFO);
     }
 
     /**

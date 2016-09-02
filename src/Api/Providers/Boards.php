@@ -42,9 +42,7 @@ class Boards extends Provider
      */
     public function forUser($username)
     {
-        return $this
-            ->execGetRequest(['username' => $username], UrlHelper::RESOURCE_GET_BOARDS)
-            ->getResponseData();
+        return $this->execGetRequest(['username' => $username], UrlHelper::RESOURCE_GET_BOARDS);
     }
 
     /**
@@ -63,9 +61,7 @@ class Boards extends Provider
             'field_set_key' => 'detailed',
         ];
 
-        return $this
-            ->execGetRequest($requestOptions, UrlHelper::RESOURCE_GET_BOARDS)
-            ->getResponseData();
+        return $this->execGetRequest($requestOptions, UrlHelper::RESOURCE_GET_BOARDS);
     }
 
     /**

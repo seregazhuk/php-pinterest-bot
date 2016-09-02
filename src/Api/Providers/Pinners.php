@@ -33,9 +33,7 @@ class Pinners extends Provider
      */
     public function info($username)
     {
-        return $this
-            ->execGetRequest(['username' => $username], UrlHelper::RESOURCE_USER_INFO)
-            ->getResponseData();
+        return $this->execGetRequest(['username' => $username], UrlHelper::RESOURCE_USER_INFO);
     }
 
     /**

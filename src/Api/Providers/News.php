@@ -18,9 +18,6 @@ class News extends Provider
      */
     public function last()
     {
-        return $this->execGetRequest(
-                ['allow_state' => true], UrlHelper::RESOURCE_GET_LATEST_NEWS
-            )
-            ->getResponseData();
+        return $this->execGetRequest(['allow_state' => true], UrlHelper::RESOURCE_GET_LATEST_NEWS);
     }
 }

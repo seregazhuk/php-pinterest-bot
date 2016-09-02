@@ -59,9 +59,7 @@ class Conversations extends Provider
      */
     public function last()
     {
-        return $this
-            ->execGetRequest([], UrlHelper::RESOURCE_GET_LAST_CONVERSATIONS)
-            ->getResponseData();
+        return $this->execGetRequest([], UrlHelper::RESOURCE_GET_LAST_CONVERSATIONS);
     }
 
     /**
