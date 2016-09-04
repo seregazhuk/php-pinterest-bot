@@ -17,6 +17,18 @@ trait ReflectionHelper
     protected $reflectedObject;
 
     /**
+     * @return $this
+     */
+    protected function setUpReflection()
+    {
+        $this->reflection = new ReflectionClass($this->provider);
+        $this->setReflectedObject($this->provider);
+        $this->setProperty('request', $this->requestMock);
+
+        return $this;
+    }
+
+    /**
      * @param $property
      *
      * @return mixed

@@ -80,18 +80,6 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return $this
-     */
-    protected function setUpReflection()
-    {
-        $this->reflection = new ReflectionClass($this->provider);
-        $this->setReflectedObject($this->provider);
-        $this->setProperty('request', $this->requestMock);
-
-        return $this;
-    }
-
-    /**
      * @param array|null $response
      * @param int $times
      * @param string $method
