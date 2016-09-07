@@ -35,7 +35,7 @@ class Bot
     /**
      * @var ProvidersContainer
      */
-    private $providersContainer;
+    protected $providersContainer;
 
     /**
      * @param ProvidersContainer $providersContainer

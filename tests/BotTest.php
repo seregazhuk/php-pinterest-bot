@@ -7,9 +7,7 @@ use Mockery\MockInterface;
 use PHPUnit_Framework_TestCase;
 use seregazhuk\PinterestBot\Bot;
 use seregazhuk\PinterestBot\Api\Request;
-use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Api\CurlHttpClient;
-use seregazhuk\PinterestBot\Api\Providers\Pinners;
 use seregazhuk\PinterestBot\Api\ProvidersContainer;
 
 /**

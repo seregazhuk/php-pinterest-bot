@@ -3,12 +3,10 @@
 namespace seregazhuk\PinterestBot\Api\Providers;
 
 use Iterator;
-use seregazhuk\PinterestBot\Api\Response;
-use seregazhuk\PinterestBot\Api\Traits\UploadsImages;
-use seregazhuk\PinterestBot\Helpers\UrlHelper;
-use seregazhuk\PinterestBot\Helpers\Pagination;
+use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\Traits\Searchable;
 use seregazhuk\PinterestBot\Api\Traits\CanBeDeleted;
+use seregazhuk\PinterestBot\Api\Traits\UploadsImages;
 
 class Pins extends Provider
 {
@@ -29,7 +27,7 @@ class Pins extends Provider
     protected $searchScope  = 'pins';
     protected $entityIdName = 'id';
 
-    protected $deleteUrl = UrlHelper::RESOURCE_DELETE_PIN;
+    protected $deleteUrl = UrlBuilder::RESOURCE_DELETE_PIN;
     
     /**
      * Likes pin with current ID.
@@ -40,7 +38,7 @@ class Pins extends Provider
      */
     public function like($pinId)
     {
-        return $this->likePinMethodCall($pinId, UrlHelper::RESOURCE_LIKE_PIN);
+        return $this->likePinMethodCall($pinId, UrlBuilder::RESOURCE_LIKE_PIN);
     }
 
     /**
@@ -52,7 +50,7 @@ class Pins extends Provider
      */
     public function unLike($pinId)
     {
-        return $this->likePinMethodCall($pinId, UrlHelper::RESOURCE_UNLIKE_PIN);
+        return $this->likePinMethodCall($pinId, UrlBuilder::RESOURCE_UNLIKE_PIN);
     }
 
     /**
@@ -68,7 +66,7 @@ class Pins extends Provider
         $requestOptions = ['pin_id' => $pinId, 'text' => $text];
 
         return $this
-            ->execPostRequest($requestOptions, UrlHelper::RESOURCE_COMMENT_PIN, true)
+            ->execPostRequest($requestOptions, UrlBuilder::RESOURCE_COMMENT_PIN, true)
             ->isOk();
     }
 
@@ -84,7 +82,7 @@ class Pins extends Provider
     {
         $requestOptions = ['pin_id' => $pinId, 'comment_id' => $commentId];
 
-        return $this->execPostRequest($requestOptions, UrlHelper::RESOURCE_COMMENT_DELETE_PIN);
+        return $this->execPostRequest($requestOptions, UrlBuilder::RESOURCE_COMMENT_DELETE_PIN);
     }
 
     /**
@@ -113,7 +111,7 @@ class Pins extends Provider
         ];
 
         return $this
-            ->execPostRequest($requestOptions, UrlHelper::RESOURCE_CREATE_PIN, true)
+            ->execPostRequest($requestOptions, UrlBuilder::RESOURCE_CREATE_PIN, true)
             ->getResponseData();
     }
 
@@ -135,7 +133,7 @@ class Pins extends Provider
             'board_id'    => $boardId,
         ];
 
-        return $this->execPostRequest($requestOptions, UrlHelper::RESOURCE_UPDATE_PIN);
+        return $this->execPostRequest($requestOptions, UrlBuilder::RESOURCE_UPDATE_PIN);
     }
 
     /**
@@ -170,7 +168,7 @@ class Pins extends Provider
         ];
 
         return $this
-            ->execPostRequest($requestOptions, UrlHelper::RESOURCE_REPIN, true)
+            ->execPostRequest($requestOptions, UrlBuilder::RESOURCE_REPIN, true)
             ->getResponseData();
     }
 
@@ -179,7 +177,7 @@ class Pins extends Provider
      *
      * @param int $pinId
      *
-     * @return Response
+     * @return array|bool
      */
     public function info($pinId)
     {
@@ -188,9 +186,7 @@ class Pins extends Provider
             'field_set_key' => 'detailed',
         ];
 
-        return $this
-            ->execGetRequest($requestOptions, UrlHelper::RESOURCE_PIN_INFO)
-            ->getResponseData();
+        return $this->execGetRequest($requestOptions, UrlBuilder::RESOURCE_PIN_INFO);
     }
 
     /**
@@ -205,10 +201,10 @@ class Pins extends Provider
     {
         $params = [
             'data' => ['domain' => $source],
-            'url'  => UrlHelper::RESOURCE_DOMAIN_FEED,
+            'url'  => UrlBuilder::RESOURCE_DOMAIN_FEED,
         ];
 
-        return (new Pagination($this))->paginateOver('getPaginatedData', $params, $limit);
+        return $this->getPaginatedResponse($params, $limit);
     }
 
     /**
@@ -226,10 +222,10 @@ class Pins extends Provider
 
         $params = [
             'data' => ['aggregated_pin_data_id' => $aggregatedPinId],
-            'url'  => UrlHelper::RESOURCE_ACTIVITY
+            'url'  => UrlBuilder::RESOURCE_ACTIVITY
         ];
 
-        return (new Pagination($this))->paginateOver('getPaginatedData', $params, $limit);
+        return $this->getPaginatedResponse($params, $limit);
     }
 
     /**
@@ -242,9 +238,10 @@ class Pins extends Provider
     {
         $params = [
             'data' => [],
-            'url'  => UrlHelper::RESOURCE_USER_FEED
+            'url'  => UrlBuilder::RESOURCE_USER_FEED
         ];
-        return (new Pagination($this))->paginateOver('getPaginatedData', $params, $limit);
+
+        return $this->getPaginatedResponse($params, $limit);
     }
 
     /**

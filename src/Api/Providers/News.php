@@ -2,7 +2,7 @@
 
 namespace seregazhuk\PinterestBot\Api\Providers;
 
-use seregazhuk\PinterestBot\Helpers\UrlHelper;
+use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 
 class News extends Provider
 {
@@ -18,9 +18,6 @@ class News extends Provider
      */
     public function last()
     {
-        return $this->execGetRequest(
-                ['allow_state' => true], UrlHelper::RESOURCE_GET_LATEST_NEWS
-            )
-            ->getResponseData();
+        return $this->execGetRequest(['allow_state' => true], UrlBuilder::RESOURCE_GET_LATEST_NEWS);
     }
 }

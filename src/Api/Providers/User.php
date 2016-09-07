@@ -3,8 +3,8 @@
 namespace seregazhuk\PinterestBot\Api\Providers;
 
 use LogicException;
-use seregazhuk\PinterestBot\Helpers\UrlHelper;
-use seregazhuk\PinterestBot\Exceptions\AuthException;
+use seregazhuk\PinterestBot\Helpers\UrlBuilder;
+use seregazhuk\PinterestBot\Exceptions\AuthFailed;
 use seregazhuk\PinterestBot\Api\Traits\UploadsImages;
 
 class User extends Provider
@@ -34,7 +34,7 @@ class User extends Provider
             $userInfo['profile_image_url'] = $this->upload($userInfo['profile_image']);
         }
 
-        return $this->execPostRequest($userInfo, UrlHelper::RESOURCE_UPDATE_USER_SETTINGS);
+        return $this->execPostRequest($userInfo, UrlBuilder::RESOURCE_UPDATE_USER_SETTINGS);
     }
 
     /**
@@ -100,7 +100,7 @@ class User extends Provider
             'account_type'  => self::ACCOUNT_TYPE_OTHER,
         ];
 
-        return $this->execPostRequest($data, UrlHelper::RESOURCE_CONVERT_TO_BUSINESS);
+        return $this->execPostRequest($data, UrlBuilder::RESOURCE_CONVERT_TO_BUSINESS);
     }
 
     /**
@@ -109,7 +109,7 @@ class User extends Provider
      * @param string $username
      * @param string $password
      *
-     * @throws AuthException
+     * @throws AuthFailed
      *
      * @return bool
      */
@@ -125,9 +125,9 @@ class User extends Provider
             'password'          => $password,
         ];
 
-        $response = $this->execPostRequest($credentials, UrlHelper::RESOURCE_LOGIN, true);
+        $response = $this->execPostRequest($credentials, UrlBuilder::RESOURCE_LOGIN, true);
         if ($response->hasErrors()) {
-            throw new AuthException($response->getLastError()['message']);
+            throw new AuthFailed($response->getLastError()['message']);
         }
 
         $this->request->login();
@@ -170,21 +170,21 @@ class User extends Provider
 
         return $this->execPostRequest(
                 ['placed_experience_id' => self::REGISTRATION_COMPLETE_EXPERIENCE_ID],
-                UrlHelper::RESOURCE_REGISTRATION_COMPLETE
+                UrlBuilder::RESOURCE_REGISTRATION_COMPLETE
             );
     }
 
     /**
      * @param array $data
      * @return bool|mixed
-     * @throws AuthException
+     * @throws AuthFailed
      */
     protected function makeRegisterCall($data)
     {
         $this->execGetRequest([], '');
         $this->request->setTokenFromCookies();
 
-        if (!$this->execPostRequest($data, UrlHelper::RESOURCE_CREATE_REGISTER)) {
+        if (!$this->execPostRequest($data, UrlBuilder::RESOURCE_CREATE_REGISTER)) {
             return false;
         }
 

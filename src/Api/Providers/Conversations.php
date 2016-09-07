@@ -2,8 +2,8 @@
 
 namespace seregazhuk\PinterestBot\Api\Providers;
 
-use seregazhuk\PinterestBot\Helpers\UrlHelper;
-use seregazhuk\PinterestBot\Exceptions\InvalidRequestException;
+use seregazhuk\PinterestBot\Helpers\UrlBuilder;
+use seregazhuk\PinterestBot\Exceptions\InvalidRequest;
 
 class Conversations extends Provider
 {
@@ -23,7 +23,7 @@ class Conversations extends Provider
      * @param string $text
      * @param int|null $pinId
      *
-     * @throws InvalidRequestException
+     * @throws InvalidRequest
      *
      * @return bool
      */
@@ -41,7 +41,7 @@ class Conversations extends Provider
      * @param string $text
      * @param int|null $pinId
      *
-     * @throws InvalidRequestException
+     * @throws InvalidRequest
      *
      * @return bool
      */
@@ -59,9 +59,7 @@ class Conversations extends Provider
      */
     public function last()
     {
-        return $this
-            ->execGetRequest([], UrlHelper::RESOURCE_GET_LAST_CONVERSATIONS)
-            ->getResponseData();
+        return $this->execGetRequest([], UrlBuilder::RESOURCE_GET_LAST_CONVERSATIONS);
     }
 
     /**
@@ -70,7 +68,7 @@ class Conversations extends Provider
      * @param int $pinId
      * @param array $emails
      *
-     * @throws InvalidRequestException
+     * @throws InvalidRequest
      *
      * @return bool
      */
@@ -85,18 +83,18 @@ class Conversations extends Provider
             'user_ids' => $userId,
         ];
 
-        return $this->execPostRequest($requestOptions, UrlHelper::RESOURCE_SEND_MESSAGE);
+        return $this->execPostRequest($requestOptions, UrlBuilder::RESOURCE_SEND_MESSAGE);
     }
 
     /**
      * @param $userId
      * @param array $emails
-     * @throws InvalidRequestException
+     * @throws InvalidRequest
      */
     protected function guardAgainstEmptyData($userId, array $emails)
     {
         if (empty($userId) && empty($emails)) {
-            throw new InvalidRequestException('You must specify user_ids or emails to send message.');
+            throw new InvalidRequest('You must specify user_ids or emails to send message.');
         }
     }
 }

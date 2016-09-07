@@ -3,10 +3,10 @@
 namespace seregazhuk\PinterestBot\Api;
 
 use ReflectionClass;
-use seregazhuk\PinterestBot\Api\Contracts\HttpClient;
 use seregazhuk\PinterestBot\Api\Providers\Provider;
+use seregazhuk\PinterestBot\Exceptions\WrongProvider;
+use seregazhuk\PinterestBot\Api\Contracts\HttpClient;
 use seregazhuk\PinterestBot\Api\Providers\ProviderWrapper;
-use seregazhuk\PinterestBot\Exceptions\WrongProviderException;
 
 class ProvidersContainer
 {
@@ -17,11 +17,6 @@ class ProvidersContainer
      * @var Request
      */
     protected $request;
-
-    /**
-     * @var Response
-     */
-    protected $response;
 
     const PROVIDERS_NAMESPACE = 'seregazhuk\\PinterestBot\\Api\\Providers\\';
 
@@ -47,7 +42,7 @@ class ProvidersContainer
      *
      * @param string $provider
      *
-     * @throws WrongProviderException
+     * @throws WrongProvider
      *
      * @return Provider
      */
@@ -69,14 +64,14 @@ class ProvidersContainer
      *
      * @param string $provider
      *
-     * @throws WrongProviderException
+     * @throws WrongProvider
      */
     protected function addProvider($provider)
     {
         $className = self::PROVIDERS_NAMESPACE.ucfirst($provider);
 
         if (!class_exists($className)) {
-            throw new WrongProviderException("Provider $className not found.");
+            throw new WrongProvider("Provider $className not found.");
         }
 
         $this->providers[$provider] = $this->buildProvider($className);
@@ -87,7 +82,7 @@ class ProvidersContainer
      *
      * @param string $className
      *
-     * @throws WrongProviderException
+     * @throws WrongProvider
      *
      * @return object
      */

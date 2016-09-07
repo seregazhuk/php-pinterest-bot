@@ -3,8 +3,7 @@
 namespace seregazhuk\PinterestBot\Api\Providers;
 
 use Iterator;
-use seregazhuk\PinterestBot\Helpers\UrlHelper;
-use seregazhuk\PinterestBot\Helpers\Pagination;
+use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\Traits\Followable;
 use seregazhuk\PinterestBot\Api\Traits\Searchable;
 use seregazhuk\PinterestBot\Api\Traits\HasFollowers;
@@ -19,9 +18,9 @@ class Pinners extends Provider
     protected $entityIdName = 'user_id';
     protected $followersFor = 'username';
 
-    protected $followUrl    = UrlHelper::RESOURCE_FOLLOW_USER;
-    protected $unFollowUrl  = UrlHelper::RESOURCE_UNFOLLOW_USER;
-    protected $followersUrl = UrlHelper::RESOURCE_USER_FOLLOWERS;
+    protected $followUrl    = UrlBuilder::RESOURCE_FOLLOW_USER;
+    protected $unFollowUrl  = UrlBuilder::RESOURCE_UNFOLLOW_USER;
+    protected $followersUrl = UrlBuilder::RESOURCE_USER_FOLLOWERS;
     
     /**
      * Get user info.
@@ -34,9 +33,7 @@ class Pinners extends Provider
      */
     public function info($username)
     {
-        return $this
-            ->execGetRequest(['username' => $username], UrlHelper::RESOURCE_USER_INFO)
-            ->getResponseData();
+        return $this->execGetRequest(['username' => $username], UrlBuilder::RESOURCE_USER_INFO);
     }
 
     /**
@@ -50,7 +47,7 @@ class Pinners extends Provider
     public function following($username, $limit = 0)
     {
         return $this->paginate(
-            $username, UrlHelper::RESOURCE_USER_FOLLOWING, $limit
+            $username, UrlBuilder::RESOURCE_USER_FOLLOWING, $limit
         );
     }
 
@@ -65,7 +62,7 @@ class Pinners extends Provider
     public function pins($username, $limit = 0)
     {
         return $this->paginate(
-            $username, UrlHelper::RESOURCE_USER_PINS, $limit
+            $username, UrlBuilder::RESOURCE_USER_PINS, $limit
         );
     }
 
@@ -83,6 +80,6 @@ class Pinners extends Provider
             'url'  => $url,
         ];
 
-        return (new Pagination($this))->paginateOver('getPaginatedData', $params, $limit);
+        return $this->getPaginatedResponse($params, $limit);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace seregazhuk\PinterestBot\Helpers;
 
-class CsrfHelper
+class CsrfParser
 {
     const TOKEN_NAME = 'csrftoken';
     const DEFAULT_TOKEN = '1234';
@@ -46,13 +46,5 @@ class CsrfHelper
         }
 
         return false;
-    }
-
-    /**
-     * @return string
-     */
-    public static function getDefaultCookie()
-    {
-        return 'Cookie: csrftoken=' . self::DEFAULT_TOKEN . ';';
     }
 }
