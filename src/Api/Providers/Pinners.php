@@ -6,11 +6,10 @@ use Iterator;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\Traits\Followable;
 use seregazhuk\PinterestBot\Api\Traits\Searchable;
-use seregazhuk\PinterestBot\Api\Traits\HasFollowers;
 
 class Pinners extends Provider
 {
-    use Searchable, Followable, HasFollowers;
+    use Searchable, Followable;
 
     protected $loginRequiredFor = ['follow', 'unFollow'];
 

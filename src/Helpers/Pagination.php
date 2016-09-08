@@ -40,7 +40,6 @@ class Pagination
     {
         $resultsNum = 0;
         while (true) {
-
             $response = $this->callProviderRequest($method, $params);
             $results = $this->processProviderResponse($response);
 

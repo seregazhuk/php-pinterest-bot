@@ -7,12 +7,11 @@ use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\Traits\Searchable;
 use seregazhuk\PinterestBot\Api\Traits\Followable;
 use seregazhuk\PinterestBot\Api\Traits\CanBeDeleted;
-use seregazhuk\PinterestBot\Api\Traits\HasFollowers;
 use seregazhuk\PinterestBot\Api\Contracts\PaginatedResponse;
 
 class Boards extends Provider
 {
-    use CanBeDeleted, Searchable, Followable, HasFollowers;
+    use CanBeDeleted, Searchable, Followable;
 
     /**
      * @var array
