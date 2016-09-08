@@ -1,11 +1,12 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## ? - ?
+## 4.6.1 - ??
  - Provider::execGetRequest method now returns bool or array
  - Exceptions classes renamed
  - Helpers classes renamed
  - Removed HasFollowers trait
+ - Fixed *getUnFollowUrl()* method in Followable trait
 
 ## [4.6.0] - 2016-08-26
  - HttpClient cookie file name moved to property instead of constant

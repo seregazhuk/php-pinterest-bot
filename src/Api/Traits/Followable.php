@@ -3,7 +3,6 @@
 namespace seregazhuk\PinterestBot\Api\Traits;
 
 use Iterator;
-use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 
 /**
@@ -12,6 +11,8 @@ use seregazhuk\PinterestBot\Helpers\UrlBuilder;
  *
  * @property string $followUrl
  * @property string $unFollowUrl
+ * @property string $followersUrl
+ * @property string $followersFor
  */
 trait Followable
 {
@@ -130,7 +131,7 @@ trait Followable
      */
     protected function getUnFollowUrl()
     {
-        return property_exists($this, 'followUrl') ? $this->unFollowUrl : '';
+        return property_exists($this, 'unFollowUrl') ? $this->unFollowUrl : '';
     }
 
     /**
