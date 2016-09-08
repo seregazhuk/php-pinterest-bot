@@ -43,8 +43,14 @@ class ProviderLoginCheckWrapperTest extends PHPUnit_Framework_TestCase
     }
 }
 
+/**
+ * Dummy Class TestProvider
+ */
 class TestProvider extends Provider
 {
+    /**
+     * @var array
+     */
     protected $loginRequiredFor = ['testFail'];
 
     public function testFail()

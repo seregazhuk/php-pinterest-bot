@@ -16,7 +16,7 @@ trait Searchable
 {
     use HandlesRequest;
     
-    private $moduleSearchPage = 'SearchPage';
+    protected $moduleSearchPage = 'SearchPage';
 
     /**
      * @return string
@@ -101,18 +101,18 @@ trait Searchable
             $dataJson['options']['bookmarks'] = $bookmarks;
 
             return $dataJson;
-        } else {
-            $dataJson = array_merge(
-                $dataJson, [
-                    'module' => [
-                        "name"    => $this->moduleSearchPage,
-                        "options" => $options,
-                    ],
-                ]
-            );
-
-            return $dataJson;
         }
+
+        $dataJson = array_merge(
+            $dataJson, [
+                'module' => [
+                    "name"    => $this->moduleSearchPage,
+                    "options" => $options,
+                ],
+            ]
+        );
+
+        return $dataJson;
     }
 
     /**

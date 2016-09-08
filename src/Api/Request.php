@@ -252,6 +252,9 @@ class Request
         return $this;
     }
 
+    /**
+     * @return array
+     */
     protected function makeHeadersForUpload()
     {
         $delimiter = '-------------' . uniqid();
