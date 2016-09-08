@@ -23,10 +23,16 @@ class PinterestBot
         return new Bot($providersContainer);
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     private function __construct()
     {
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     private function __clone()
     {
     }
