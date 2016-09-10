@@ -353,12 +353,6 @@ foreach($bot->interest->getPinsFor('videos') as $pin) {
 }
 ```
 
-Follow/unfollow interest by id.
-```php
-$bot->interests->follow($interestId);
-$bot->interests->unfollow($interestId);
-```
-
 ## Topics
 
 Each interest has a list of related topics.
