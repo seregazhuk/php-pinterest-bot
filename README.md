@@ -339,11 +339,51 @@ Get category info by name (can be taken from *getMain()*).
 $info = $bot->interests->getInfo("gifts")
 ```
 
+Get related topics for interest:
+
+```php
+$topics = $bot->interest->getRelatedTopics('videos');
+```
+
+Get pins for specific interest:
+
+```php
+foreach($bot->interest->getPinsFor('videos') as $pin) {
+    // ...
+}
+```
+
 Follow/unfollow interest by id.
 ```php
 $bot->interests->follow($interestId);
 $bot->interests->unfollow($interestId);
 ```
+
+## Topics
+
+Each interest has a list of related topics.
+
+Follow/unfollow a topic by name:
+
+```php
+$bot->topics->follow('content-marketing');
+$bot->topics->unFollow('content-marketing');
+```
+
+Get a topic info:
+
+```php
+$info = $bot->topics->getInfo('content-marketing');
+```
+
+Get pins for a specific topic:
+
+```php
+foreach($bot->topics->getPinsFor('content-marketing') as $pin) {
+    // ...
+}
+```
+
 ## Conversations
 
 ### Write a message

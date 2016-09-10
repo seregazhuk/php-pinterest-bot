@@ -5,6 +5,7 @@ namespace seregazhuk\PinterestBot;
 use seregazhuk\PinterestBot\Api\Providers\News;
 use seregazhuk\PinterestBot\Api\Providers\Pins;
 use seregazhuk\PinterestBot\Api\Providers\User;
+use seregazhuk\PinterestBot\Api\Providers\Topics;
 use seregazhuk\PinterestBot\Api\Providers\Boards;
 use seregazhuk\PinterestBot\Api\Providers\Pinners;
 use seregazhuk\PinterestBot\Api\Providers\Provider;
@@ -25,6 +26,7 @@ use seregazhuk\PinterestBot\Api\Providers\Conversations;
  * @property Pinners $pinners
  * @property Keywords $keywords
  * @property Interests $interests
+ * @property Topics $topics
  * @property Conversations $conversations
  *
  * @method HttpClient getHttpClient
