@@ -131,13 +131,4 @@ abstract class Provider
     {
         return (new Pagination($this))->paginateOver($method, $params, $limit);
     }
-
-    /**
-     * @param $pinId
-     * @return string
-     */
-    protected function convertId($pinId)
-    {
-        return (string)$pinId;
-    }
 }
