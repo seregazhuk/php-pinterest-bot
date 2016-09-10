@@ -54,6 +54,8 @@ class Pagination
                 }
             }
         }
+
+        return;
     }
 
     /**

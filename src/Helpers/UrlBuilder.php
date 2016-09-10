@@ -99,6 +99,14 @@ class UrlBuilder
      */
     const RESOURCE_GET_CATEGORIES = 'resource/CategoriesResource/get/';
     const RESOURCE_GET_CATEGORY = 'resource/CategoryResource/get/';
+    const RESOURCE_GET_CATEGORIES_RELATED = 'resource/RelatedInterestsResource/get/';
+    const RESOURCE_GET_CATEGORY_FEED = 'resource/CategoryFeedResource/get';
+
+    /**
+     * Topics
+     */
+    const RESOURCE_GET_TOPIC_FEED = 'resource/TopicFeedResource/get';
+    const RESOURCE_GET_TOPIC = 'resource/TopicResource/get';
 
     const URL_BASE = 'https://uk.pinterest.com/';
     const HOST = 'uk.pinterest.com';

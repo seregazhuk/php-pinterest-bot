@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [4.7.0] - 2016-09-10
+ - New Topics provider
+ - Follow/unfollow methods moved from Interest to Topics provider
+ - Added getRelatedTopics to Interests provider
+
 ## [4.6.1] - 2016-09-08
  - Provider::execGetRequest method now returns bool or array
  - Exceptions classes renamed

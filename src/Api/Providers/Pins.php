@@ -63,7 +63,7 @@ class Pins extends Provider
      */
     public function comment($pinId, $text)
     {
-        $requestOptions = ['pin_id' => $pinId, 'text' => $text];
+        $requestOptions = ['pin_id' => (string)$pinId, 'text' => $text];
 
         return $this
             ->execPostRequest($requestOptions, UrlBuilder::RESOURCE_COMMENT_PIN, true)
@@ -151,8 +151,8 @@ class Pins extends Provider
     /**
      * Make a repin.
      *
-     * @param int    $repinId
-     * @param int    $boardId
+     * @param int|string   $repinId
+     * @param int|string   $boardId
      * @param string $description
      *
      * @return array
@@ -175,7 +175,7 @@ class Pins extends Provider
     /**
      * Get information of a pin by PinID.
      *
-     * @param int $pinId
+     * @param int|string $pinId
      *
      * @return array|bool
      */
@@ -210,7 +210,7 @@ class Pins extends Provider
     /**
      * Get the latest pin activity with pagination.
      *
-     * @param int $pinId
+     * @param int|string $pinId
      * @param int $limit
      * @return Iterator|null
      */

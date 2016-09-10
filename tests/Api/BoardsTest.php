@@ -24,7 +24,7 @@ class BoardsTest extends ProviderTest
     protected $providerClass = Boards::class;
 
     /** @test */
-    public function it_should_should_return_iterator_when_searching()
+    public function it_should_should_return_generator_when_searching()
     {
         $response['module']['tree']['data']['results'] = [
             ['id' => 1],
