@@ -57,4 +57,15 @@ class TopicsTest extends ProviderTest
 
         $this->assertEquals($info, $this->provider->getInfo(1));
     }
+
+    /** @test */
+    public function it_should_return_generator_for_pins()
+    {
+        $response = $this->createPaginatedResponse();
+
+        $this->setResponseExpectation($response);
+        $this->setResourceResponseData([]);
+
+        $this->assertCount(2, iterator_to_array($this->provider->getPinsFor('test')));
+    }
 }

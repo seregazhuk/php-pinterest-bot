@@ -66,7 +66,7 @@ class PinsTest extends ProviderTest
         $response = $this->createPinCreationResponse();
         $this->setResponseExpectation($response);
 
-        $pinSource = 'httpClient://example.com/image.jpg';
+        $pinSource = 'http://example.com/image.jpg';
         $pinDescription = 'Pin Description';
         $boardId = 1;
         $this->assertNotEmpty($this->provider->create($pinSource, $boardId, $pinDescription));
@@ -138,7 +138,7 @@ class PinsTest extends ProviderTest
     }
 
     /** @test */
-    public function it_should_return_iterator_when_searching()
+    public function it_should_return_generator_when_searching()
     {
         $response['module']['tree']['data']['results'] = [
             ['id' => 1],
@@ -163,7 +163,7 @@ class PinsTest extends ProviderTest
     }
 
     /** @test */
-    public function it_should_return_iterator_with_pins_for_specific_site()
+    public function it_should_return_generator_with_pins_for_specific_site()
     {
         $response = $this->createPaginatedResponse();
         $this->setResponseExpectation($response);
@@ -174,7 +174,7 @@ class PinsTest extends ProviderTest
     }
 
     /** @test */
-    public function it_should_return_iterator_with_pin_activity()
+    public function it_should_return_generator_with_pin_activity()
     {
         $response = $this->createApiResponse(
             ['data' => ['aggregated_pin_data' => ['id' => 1]]]
@@ -195,7 +195,7 @@ class PinsTest extends ProviderTest
     }
 
     /** @test */
-    public function it_should_return_iterator_for_users_feed()
+    public function it_should_return_generator_for_users_feed()
     {
         $response = $this->createPaginatedResponse();
         $this->setResponseExpectation($response);
