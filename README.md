@@ -32,6 +32,8 @@ if your don't use such operations as creating pins, writing comments or sending 
 - [Interests](#interests)
 - [Interests](#interests)
 - [Topics](#topics)
+- [Conversations](#conversations)
+- [Search](#search)
 - [User Settings](#user-settings)
 - [News](#news)
 - [Keywords](#keywords)
