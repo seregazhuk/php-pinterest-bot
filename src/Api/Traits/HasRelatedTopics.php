@@ -20,4 +20,13 @@ trait HasRelatedTopics
             UrlBuilder::RESOURCE_GET_CATEGORIES_RELATED
         );
     }
+
+    /**
+     * Executes a GET request to Pinterest API.
+     *
+     * @param array $requestOptions
+     * @param string $resourceUrl
+     * @return array|bool
+     */
+    abstract protected function execGetRequest(array $requestOptions = [], $resourceUrl = '');
 }

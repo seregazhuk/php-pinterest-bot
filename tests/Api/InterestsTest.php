@@ -24,28 +24,6 @@ class InterestsTest extends ProviderTest
     protected $providerClass = Interests::class;
 
     /** @test */
-    public function it_should_follow_interest()
-    {
-        $interestId = 1111;
-        $this->setFollowSuccessResponse($interestId, UrlBuilder::RESOURCE_FOLLOW_INTEREST);
-        $this->assertTrue($this->provider->follow($interestId));
-
-        $this->setFollowErrorResponse($interestId, UrlBuilder::RESOURCE_FOLLOW_INTEREST);
-        $this->assertFalse($this->provider->follow($interestId));
-    }
-
-    /** @test */
-    public function it_should_unfollow_interest()
-    {
-        $interestId = 1111;
-        $this->setFollowSuccessResponse($interestId, UrlBuilder::RESOURCE_UNFOLLOW_INTEREST);
-        $this->assertTrue($this->provider->unFollow($interestId));
-
-        $this->setFollowErrorResponse($interestId, UrlBuilder::RESOURCE_UNFOLLOW_INTEREST);
-        $this->assertFalse($this->provider->unFollow($interestId));
-    }
-
-    /** @test */
     public function it_should_return_main_categories()
     {
         $categories = ['category1', 'category2'];
