@@ -152,13 +152,13 @@ $bot->boards->create('name', 'description', 'secret');
 
 Update a board by id.
 ```php
-$bot->boards->update($boardId, ['title' => 'New title', 'description' => 'New description']);
+$bot->boards->update($boardId, ['name' => 'New title', 'description' => 'New description']);
 ```
 
 You can pass more options in update: 'privacy' - is *public* by default and 'category' - is *other* by default.
 ```php
 $bot->boards->update($boardId, [
-    'title'       => 'New title',
+    'name'        => 'New title',
     'description' => 'New description',
     'privacy'     => 'secret',
     'category'    => 'sports'
