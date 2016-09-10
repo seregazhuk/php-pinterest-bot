@@ -7,7 +7,7 @@ use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 trait HasRelatedTopics
 {
     /**
-     * Returns a list of related interests
+     * Returns a list of related interests/topics
      * @param string $interest
      * @return array|bool
      */
