@@ -35,15 +35,15 @@ class Topics extends Provider
 
     /**
      * Returns a feed of pins
-     * @param string $interest
+     * @param string $topic
      * @param int $limit
      * @return array|bool
      */
-    public function getPinsFor($interest, $limit = 0)
+    public function getPinsFor($topic, $limit = 0)
     {
         $params = [
             'data' => [
-                'interest'  => $interest,
+                'interest'  => $topic,
                 'pins_only' => false,
             ],
             'url' => UrlBuilder::RESOURCE_GET_TOPIC_FEED

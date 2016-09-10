@@ -151,8 +151,8 @@ class Pins extends Provider
     /**
      * Make a repin.
      *
-     * @param int|string   $repinId
-     * @param int|string   $boardId
+     * @param int   $repinId
+     * @param int   $boardId
      * @param string $description
      *
      * @return array
@@ -175,7 +175,7 @@ class Pins extends Provider
     /**
      * Get information of a pin by PinID.
      *
-     * @param int|string $pinId
+     * @param int $pinId
      *
      * @return array|bool
      */
@@ -210,7 +210,7 @@ class Pins extends Provider
     /**
      * Get the latest pin activity with pagination.
      *
-     * @param int|string $pinId
+     * @param int $pinId
      * @param int $limit
      * @return Iterator|null
      */
