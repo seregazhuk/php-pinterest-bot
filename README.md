@@ -378,6 +378,13 @@ foreach($bot->topics->getPinsFor('content-marketing') as $pin) {
 }
 ```
 
+Get related topics for topic (similar as related topics for interest):
+
+```php
+$topics = $bot->topics->getRelatedTopics('content-marketing');
+```
+
+
 ## Conversations
 
 ### Write a message
