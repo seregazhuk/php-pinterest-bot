@@ -327,17 +327,17 @@ foreach($bot->pinners->following('username') as $following)
 
 You can specify type of entities to be returned: *people*, *interests* or *boards*. For example:
 ```php
-foreach($bot->pinners->following('username', 'people') as $following)
+foreach($bot->pinners->following('username', 'people') as $user)
 {
 	// loop through people
 }
 
-foreach($bot->pinners->following('username', 'boards') as $following)
+foreach($bot->pinners->following('username', 'boards') as $board)
 {
 	// loop through boards
 }
 
-foreach($bot->pinners->following('username', 'interests') as $following)
+foreach($bot->pinners->following('username', 'interests') as $interest)
 {
 	// loop through interests
 }
@@ -346,17 +346,17 @@ foreach($bot->pinners->following('username', 'interests') as $following)
 Also you can use special methods-helpers to achieve the same results:
 
 ```php
-foreach($bot->pinners->followingPeople('username') as $following)
+foreach($bot->pinners->followingPeople('username') as $user)
 {
 	// loop through people
 }
 
-foreach($bot->pinners->followingBoards('username') as $following)
+foreach($bot->pinners->followingBoards('username') as $board)
 {
 	// loop through boards
 }
 
-foreach($bot->pinners->followingInterests('username') as $following)
+foreach($bot->pinners->followingInterests('username') as $interest)
 {
 	// loop through interests
 }
