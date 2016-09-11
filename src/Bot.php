@@ -18,7 +18,6 @@ use seregazhuk\PinterestBot\Api\Providers\Conversations;
 /**
  * Class Bot.
  *
- *
  * @property Pins $pins 
  * @property News $news
  * @property User $user
