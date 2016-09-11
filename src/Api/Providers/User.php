@@ -28,8 +28,12 @@ class User extends Provider
      *
      * @return bool
      */
-    public function profile($userInfo)
+    public function profile($userInfo = [])
     {
+        if(empty($userInfo)) {
+            return $this->execGetRequest([], UrlBuilder::RESOURCE_GET_USER_SETTINGS);
+        }
+
         if (isset($userInfo['profile_image'])) {
             $userInfo['profile_image_url'] = $this->upload($userInfo['profile_image']);
         }
