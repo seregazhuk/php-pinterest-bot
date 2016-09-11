@@ -2,37 +2,48 @@
 All notable changes to this project will be documented in this file.
 
 ## [4.8.0] - 2016-09-11
+### Added:
  - Get following boards/people/interests for a pinner
 
 ## [4.7.0] - 2016-09-10
+### Added:
  - New Topics provider
+### Changed:
  - Follow/unfollow methods moved from Interest to Topics provider
  - Added getRelatedTopics to Interests provider
 
 ## [4.6.1] - 2016-09-08
+### Changed:
  - Provider::execGetRequest method now returns bool or array
  - Exceptions classes renamed
  - Helpers classes renamed
  - Removed HasFollowers trait
+### Fixed:
  - Fixed *getUnFollowUrl()* method in Followable trait
 
 ## [4.6.0] - 2016-08-26
+### Changed:
  - HttpClient cookie file name moved to property instead of constant
  - Custom curl options in HttpClient object
  - Removed deprecated methods (isLoggedIn, logout, login) from Bot class. Instead use User provider
  - Removed getRequest method from ProvidersContainer
  
 ## [4.5.4] - 2016-08-26
+### Changed:
  - Http contract renamed to HttpClient
- - Fixed upload problems
  - Curl specific methods moved to CurlHttpClient
  - Removed token logic from HttpClient, only parsing
  - Removed user agent logic from Request to HttpClient
+
+### Fixed:
+- Upload problems
 
 ## [4.5.3] - 2016-08-16
  - Fixed upload
 
 ## [4.5.2] - 2016-08-16
+
+### Changed:
  - Renamed ProviderLoginCheckWrapper to ProviderWrapper
  - Refactored Response class
  - HttpInterface contract renamed to Http
