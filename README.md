@@ -305,21 +305,63 @@ foreach($bot->pins->activity($pinId, 5) as $activity) {
 ## Pinners
 
 Follow/unfollow user by id.
+
 ```php
 $bot->pinners->follow($userId);
 $bot->pinners->unfollow($userId);
-```	
+```
+
 Get user info by username.
+
 ```php
 $userData = $bot->pinners->info($username);
-```	
-Get user following. Uses pinterest api pagination.
+```
+
+Get user following info. By default returns following users. Uses pinterest api pagination.
 ```php
 foreach($bot->pinners->following('username') as $following)
 {
 	// ...
 }
 ```
+
+You can specify type of entities to be returned: *people*, *interests* or *boards*. For example:
+```php
+foreach($bot->pinners->following('username', 'people') as $following)
+{
+	// loop through people
+}
+
+foreach($bot->pinners->following('username', 'boards') as $following)
+{
+	// loop through boards
+}
+
+foreach($bot->pinners->following('username', 'interests') as $following)
+{
+	// loop through interests
+}
+```
+
+Also you can use special methods-helpers to achieve the same results:
+
+```php
+foreach($bot->pinners->followingPeople('username') as $following)
+{
+	// loop through people
+}
+
+foreach($bot->pinners->followingBoards('username') as $following)
+{
+	// loop through boards
+}
+
+foreach($bot->pinners->followingInterests('username') as $following)
+{
+	// loop through interests
+}
+```
+
 Get user followers. Uses pinterest api pagination.
 ```php
 foreach($bot->pinners->followers('username') as $follower)

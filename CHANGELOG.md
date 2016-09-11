@@ -1,6 +1,9 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [4.8.0] - 2016-09-11
+ - Get following boards/people/interests for a pinner
+
 ## [4.7.0] - 2016-09-10
  - New Topics provider
  - Follow/unfollow methods moved from Interest to Topics provider
