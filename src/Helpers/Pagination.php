@@ -34,7 +34,7 @@ class Pagination
      * @param string $method
      * @param array $params
      * @param int $limit
-     * @return \Iterator|void
+     * @return \Generator
      */
     public function paginateOver($method, $params, $limit = 0)
     {
