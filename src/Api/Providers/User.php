@@ -20,16 +20,20 @@ class User extends Provider
     const ACCOUNT_TYPE_OTHER = 'other';
 
     /**
-     * Update user profile info. Gets associative array as a param. Available keys of array are:
+     * Updates or returns user profile info. Gets associative array as a param. Available keys of array are:
      * 'last_name', 'first_name', 'username', 'about', 'location' and 'website_url'.
      * You can also change user avatar by passing 'profile_image'.
      *
-     * @param array $userInfo
+     * @param array $userInfo If empty returns current user profile.
      *
-     * @return bool
+     * @return bool|array
      */
-    public function profile($userInfo)
+    public function profile($userInfo = [])
     {
+        if(empty($userInfo)) {
+            return $this->execGetRequest([], UrlBuilder::RESOURCE_GET_USER_SETTINGS);
+        }
+
         if (isset($userInfo['profile_image'])) {
             $userInfo['profile_image_url'] = $this->upload($userInfo['profile_image']);
         }

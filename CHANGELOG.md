@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [4.9.0] - 2016-09-11
+### Added:
+ - Get user profile info
+
 ## [4.8.0] - 2016-09-11
 ### Added:
  - Get following boards/people/interests for a pinner

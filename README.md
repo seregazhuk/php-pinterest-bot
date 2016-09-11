@@ -497,6 +497,12 @@ $bot->user->profile([
 ]);
 ```
 
+You can get your current profile settings calling *profile* method without any params:
+```php
+$profile = $bot->user->profile();
+```
+In result you can find your username, and all your account settings.
+
 ## News
 Get last user's news.
 ```php

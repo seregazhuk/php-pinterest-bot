@@ -75,6 +75,7 @@ class UrlBuilder
      * UserSettings
      */
     const RESOURCE_UPDATE_USER_SETTINGS = 'resource/UserSettingsResource/update/';
+    const RESOURCE_GET_USER_SETTINGS = 'resource/UserSettingsResource/get/';
 
     /**
      * News
