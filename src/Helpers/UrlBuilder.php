@@ -24,6 +24,7 @@ class UrlBuilder
     const RESOURCE_CREATE_BOARD = 'resource/BoardResource/create/';
     const RESOURCE_UPDATE_BOARD = 'resource/BoardResource/update/';
     const RESOURCE_BOARD_FOLLOWERS = 'resource/BoardFollowersResource/get/';
+    const RESOURCE_FOLLOWING_BOARDS = 'resource/BoardFollowingResource/get/';
 
     /**
      * Pins
@@ -62,6 +63,7 @@ class UrlBuilder
      */
     const RESOURCE_FOLLOW_INTEREST = 'resource/InterestFollowResource/create/';
     const RESOURCE_UNFOLLOW_INTEREST = 'resource/InterestFollowResource/delete/';
+    const RESOURCE_FOLLOWING_INTERESTS = 'resource/InterestFollowingResource/get/';
 
     /**
      * Conversations.
@@ -111,6 +113,10 @@ class UrlBuilder
     const URL_BASE = 'https://uk.pinterest.com/';
     const HOST = 'uk.pinterest.com';
 
+    const FOLLOWING_INTERESTS = 'interests';
+    const FOLLOWING_PEOPLE = 'people';
+    const FOLLOWING_BOARDS = 'boards';
+
     /**
      * @param array $request
      *
@@ -159,5 +165,24 @@ class UrlBuilder
         return empty($bookmarks) ?
             self::RESOURCE_SEARCH :
             self::RESOURCE_SEARCH_WITH_PAGINATION;
+    }
+
+    /**
+     * @param string $type
+     * @return string|null
+     */
+    public static function getFollowingUrlByType($type)
+    {
+        $urls = [
+            self::FOLLOWING_INTERESTS => self::RESOURCE_FOLLOWING_INTERESTS,
+            self::FOLLOWING_BOARDS    => self::RESOURCE_FOLLOWING_BOARDS,
+            self::FOLLOWING_PEOPLE    => self::RESOURCE_USER_FOLLOWING,
+        ];
+
+        if(array_key_exists($type, $urls)) {
+            return $urls[$type];
+        }
+
+        return null;
     }
 }
