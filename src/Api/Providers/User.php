@@ -153,6 +153,28 @@ class User extends Provider
     }
 
     /**
+     * Checks if current user is banned
+     *
+     * @return bool
+     */
+    public function isBanned()
+    {
+        $profile = $this->profile();
+
+        return (bool)$profile['is_write_banned'];
+    }
+
+    /**
+     * Returns current user username
+     *
+     * @return string
+     */
+    public function getUserName()
+    {
+        return $this->profile()['username'];
+    }
+
+    /**
      * Validates password and login.
      *
      * @param string $username
