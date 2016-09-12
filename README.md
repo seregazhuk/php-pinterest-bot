@@ -503,6 +503,17 @@ $profile = $bot->user->profile();
 ```
 In result you can find your username, and all your account settings.
 
+Get your current username:
+```php
+$username = $bot->user->getUserName();
+```
+
+Check if your account is banned:
+```php
+if ($bot->user->isBanned() {
+    // ... you have ban
+}
+
 ## News
 Get last user's news.
 ```php
