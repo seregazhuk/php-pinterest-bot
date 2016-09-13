@@ -26,7 +26,7 @@ class InterestsTest extends ProviderTest
     {
         $categories = ['category1', 'category2'];
 
-        $response = $this->createApiResponse(['data' => $categories]);
+        $response = $this->createApiResponseWithData($categories);
 
         $this->setResponseExpectation($response);
 
@@ -38,7 +38,7 @@ class InterestsTest extends ProviderTest
     {
         $info = ['name' => 'category1'];
 
-        $response = $this->createApiResponse(['data' => $info]);
+        $response = $this->createApiResponseWithData($info);
 
         $this->setResponseExpectation($response);
 

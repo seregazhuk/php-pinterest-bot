@@ -161,7 +161,9 @@ class User extends Provider
     {
         $profile = $this->profile();
 
-        return (bool)$profile['is_write_banned'];
+       return isset($profile['is_write_banned']) ?
+           (bool)$profile['is_write_banned'] :
+           false;
     }
 
     /**
@@ -171,7 +173,9 @@ class User extends Provider
      */
     public function getUserName()
     {
-        return $this->profile()['username'];
+        $profile = $this->profile();
+
+        return isset($profile['username']) ? $profile['username'] : '';
     }
 
     /**

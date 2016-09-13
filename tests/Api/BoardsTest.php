@@ -80,12 +80,12 @@ class BoardsTest extends ProviderTest
     /** @test */
     public function it_should_return_boards_for_specific_user()
     {
-        $boards = ['data' => 'boards'];
+        $boards = 'boards';
         $userName = 'user';
-        $response = $this->createApiResponse($boards);
+        $response = $this->createApiResponseWithData($boards);
 
         $this->setResponseExpectation($response);
-        $this->assertEquals($boards['data'], $this->provider->forUser($userName));
+        $this->assertEquals($boards, $this->provider->forUser($userName));
 
         $this->setResponseExpectation();
         $this->assertFalse($this->provider->forUser($userName));
@@ -94,10 +94,11 @@ class BoardsTest extends ProviderTest
     /** @test */
     public function it_should_return_board_info()
     {
-        $response = $this->createApiResponse(['data' => 'info']);
+        $boardInfo = 'info';
+        $response = $this->createApiResponseWithData($boardInfo);
 
         $this->setResponseExpectation($response);
-        $this->assertEquals('info', $this->provider->info('username', 'board'));
+        $this->assertEquals($boardInfo, $this->provider->info('username', 'board'));
         
         $this->setResponseExpectation();
         $this->assertFalse($this->provider->info('username', 'board'));

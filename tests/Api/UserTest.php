@@ -32,6 +32,16 @@ class UserTest extends ProviderTest
     }
 
     /** @test */
+    public function it_should_return_current_user_profile()
+    {
+        $profile = ['username' => 'test'];
+        $response = $this->createApiResponseWithData($profile);
+        $this->setResponseExpectation($response);
+
+        $this->assertEquals($profile, $this->provider->profile());
+    }
+
+    /** @test */
     public function it_should_upload_image_when_editing_profile_with_local_image()
     {
         $attributes = [
