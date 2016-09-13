@@ -387,13 +387,13 @@ $info = $bot->interests->getInfo("gifts")
 Get related topics for interest:
 
 ```php
-$topics = $bot->interest->getRelatedTopics('videos');
+$topics = $bot->interests->getRelatedTopics('videos');
 ```
 
 Get pins for specific interest:
 
 ```php
-foreach($bot->interest->getPinsFor('videos') as $pin) {
+foreach($bot->interests->getPinsFor('videos') as $pin) {
     // ...
 }
 ```
@@ -500,6 +500,7 @@ $bot->user->profile([
 You can get your current profile settings calling *profile* method without any params:
 ```php
 $profile = $bot->user->profile();
+echo $profile['username']; //prints your username
 ```
 In result you can find your username, and all your account settings.
 
