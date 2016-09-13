@@ -49,6 +49,15 @@ trait ResponseHelper
     }
 
     /**
+     * @param array $data
+     * @return array
+     */
+    protected function createApiResponseWithData($data)
+    {
+        return $this->createApiResponse(['data' => $data]);
+    }
+
+    /**
      * Create a not found dummy response.
      *
      * @return array

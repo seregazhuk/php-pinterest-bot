@@ -176,9 +176,8 @@ class PinsTest extends ProviderTest
     /** @test */
     public function it_should_return_generator_with_pin_activity()
     {
-        $response = $this->createApiResponse(
-            ['data' => ['aggregated_pin_data' => ['id' => 1]]]
-        );
+        $pinData = ['aggregated_pin_data' => ['id' => 1]];
+        $response = $this->createApiResponseWithData($pinData);
         $this->setResponseExpectation($response);
 
         $this->setResponseExpectation($this->createPaginatedResponse());
@@ -213,9 +212,9 @@ class PinsTest extends ProviderTest
      */
     protected function createPinCreationResponse()
     {
-        $data = ['data' => ['id' => 1]];
+        $data = ['id' => 1];
 
-        return $this->createApiResponse($data);
+        return $this->createApiResponseWithData($data);
     }
 
     /**

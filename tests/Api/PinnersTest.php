@@ -47,11 +47,12 @@ class PinnersTest extends ProviderTest
     /** @test */
     public function it_should_return_user_info()
     {
-        $response = $this->createApiResponse(['data' => ['name' => 'test']]);
+        $userInfo = ['name' => 'test'];
+        $response = $this->createApiResponseWithData($userInfo);
         $this->setResponseExpectation($response);
 
         $data = $this->provider->info('username');
-        $this->assertEquals($response['resource_response']['data'], $data);
+        $this->assertEquals($userInfo, $data);
     }
 
     /** @test */
@@ -117,5 +118,14 @@ class PinnersTest extends ProviderTest
 
         $res = iterator_to_array($this->provider->search('dogs', 2));
         $this->assertCount($expectedResultsNum, $res);
+    }
+
+    /**
+     * @test
+     * @expectedException \seregazhuk\PinterestBot\Exceptions\WrongFollowingType
+     */
+    public function it_throws_exception_for_wrong_following_request()
+    {
+        $this->provider->following('test', 'unknown');
     }
 }

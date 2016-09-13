@@ -51,7 +51,7 @@ class TopicsTest extends ProviderTest
     {
         $info = ['name' => 'category1'];
 
-        $response = $this->createApiResponse(['data' => $info]);
+        $response = $this->createApiResponseWithData($info);
 
         $this->setResponseExpectation($response);
 
