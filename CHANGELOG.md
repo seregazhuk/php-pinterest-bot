@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [4.10.1] - 2016-09-13
+## Fixed:
+ - Checks in *getUserName* and *isBanned* methods
+
 ## [4.10.0] - 2016-09-12
 ### Added
  - User *isBanned* and *getUserName* methods
