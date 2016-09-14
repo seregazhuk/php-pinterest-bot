@@ -110,7 +110,7 @@ $bot->user->register('youremail@gmail.com', 'password', 'Name');
 You can specify additional parameters with registration: age and country. By default they are: 18, "UK":
 
 ```php
-$bot->user->register('youremail@gmail.com', 'password', 'Name', 40, "DE");
+$bot->user->register('youremail@gmail.com', 'password', 'Name', "DE", 40);
 ```
 
 Register a business account. The last parameter with website url is *optional*:
