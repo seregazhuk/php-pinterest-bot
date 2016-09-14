@@ -3,9 +3,9 @@
 namespace seregazhuk\PinterestBot\Api\Providers;
 
 use LogicException;
-use seregazhuk\PinterestBot\Api\Traits\UploadsImages;
-use seregazhuk\PinterestBot\Exceptions\AuthFailed;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
+use seregazhuk\PinterestBot\Exceptions\AuthFailed;
+use seregazhuk\PinterestBot\Api\Traits\UploadsImages;
 
 class User extends Provider
 {
@@ -14,7 +14,14 @@ class User extends Provider
     /**
      * @var array
      */
-    protected $loginRequiredFor = ['profile', 'convertToBusiness'];
+    protected $loginRequiredFor = [
+        'profile',
+        'convertToBusiness',
+        'changePassword',
+        'isBanned',
+        'deactivate',
+        'getUserName'
+    ];
 
     const REGISTRATION_COMPLETE_EXPERIENCE_ID = '11:10105';
     const ACCOUNT_TYPE_OTHER = 'other';
