@@ -3,7 +3,7 @@ All notable changes to this project will be documented in this file.
 
 ## [4.11.0] - ?
 ### Added:
- - User *changePassword* 
+ - User *changePassword*, *deactivate* methods.
 
 ## [4.10.1] - 2016-09-13
 ### Fixed:

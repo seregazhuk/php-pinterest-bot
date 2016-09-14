@@ -77,6 +77,7 @@ class UrlBuilder
     const RESOURCE_UPDATE_USER_SETTINGS = 'resource/UserSettingsResource/update/';
     const RESOURCE_GET_USER_SETTINGS = 'resource/UserSettingsResource/get/';
     const RESOURCE_CHANGE_PASSWORD = 'resource/UserPasswordResource/update/';
+    const RESOURCE_DEACTIVATE_ACCOUNT = 'resource/DeactivateAccountResource/create/';
 
     /**
      * News

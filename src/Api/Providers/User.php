@@ -3,9 +3,9 @@
 namespace seregazhuk\PinterestBot\Api\Providers;
 
 use LogicException;
-use seregazhuk\PinterestBot\Helpers\UrlBuilder;
-use seregazhuk\PinterestBot\Exceptions\AuthFailed;
 use seregazhuk\PinterestBot\Api\Traits\UploadsImages;
+use seregazhuk\PinterestBot\Exceptions\AuthFailed;
+use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 
 class User extends Provider
 {
@@ -185,13 +185,35 @@ class User extends Provider
      */
     public function changePassword($oldPassword, $newPassword)
     {
-        $data = [
+        $request = [
             'old_password'         => $oldPassword,
             'new_password'         => $newPassword,
             'new_password_confirm' => $newPassword,
         ];
 
-        return $this->execPostRequest($data, UrlBuilder::RESOURCE_CHANGE_PASSWORD);
+        return $this->execPostRequest($request, UrlBuilder::RESOURCE_CHANGE_PASSWORD);
+    }
+
+    /**
+     * Deactivates your account.
+     *
+     * @param string $reason
+     * @param string $explanation
+     * @return bool
+     */
+    public function deactivate($reason = 'other', $explanation = '')
+    {
+        $profile = $this->profile();
+
+        if(!isset($profile['id'])) return false;
+
+        $request = [
+            'user_id'     => $profile['id'],
+            'reason'      => $reason,
+            'explanation' => $explanation,
+        ];
+
+        return $this->execPostRequest($request, UrlBuilder::RESOURCE_DEACTIVATE_ACCOUNT);
     }
 
     /**

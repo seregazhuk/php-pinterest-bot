@@ -520,6 +520,11 @@ Change you password:
 $bot->user->changePassword('oldPassword', 'newPassword');
 ```
 
+Deactivate current account:
+```php
+$bot->user->deactivate();
+```
+
 ## News
 Get last user's news.
 ```php
