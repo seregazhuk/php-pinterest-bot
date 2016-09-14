@@ -515,6 +515,11 @@ if ($bot->user->isBanned() {
     // ... you have ban
 }
 
+Change you password:
+```php
+$bot->user->changePassword('oldPassword', 'newPassword');
+```
+
 ## News
 Get last user's news.
 ```php

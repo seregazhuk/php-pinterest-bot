@@ -179,6 +179,22 @@ class User extends Provider
     }
 
     /**
+     * @param string $oldPassword
+     * @param string $newPassword
+     * @return bool
+     */
+    public function changePassword($oldPassword, $newPassword)
+    {
+        $data = [
+            'old_password'         => $oldPassword,
+            'new_password'         => $newPassword,
+            'new_password_confirm' => $newPassword,
+        ];
+
+        return $this->execPostRequest($data, UrlBuilder::RESOURCE_CHANGE_PASSWORD);
+    }
+
+    /**
      * Validates password and login.
      *
      * @param string $username
