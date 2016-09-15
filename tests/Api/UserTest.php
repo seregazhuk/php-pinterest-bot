@@ -142,11 +142,8 @@ class UserTest extends ProviderTest
         $this->assertTrue($this->provider->login('test', 'test'));
     }
 
-    /**
-     * @test
-     * @expectedException \seregazhuk\PinterestBot\Exceptions\AuthFailed
-     */
-    public function it_should_throw_exception_when_login_fails()
+    /** @test */
+    public function it_should_return_false_when_login_fails()
     {
         $response = $this->createErrorApiResponse();
         $this->setIsLoggedInExpectation(false);
@@ -154,7 +151,7 @@ class UserTest extends ProviderTest
         $this->setResponseExpectation($response);
         $this->requestMock->shouldReceive('clearToken');
 
-        $this->provider->login('test', 'test');
+        $this->assertFalse($this->provider->login('test', 'test'));
     }
 
     /** @test */

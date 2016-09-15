@@ -18,7 +18,7 @@ class BotTest extends PHPUnit_Framework_TestCase
     /** @test */
     public function it_should_return_last_error_from_response()
     {
-        $error = 'expected_error';
+        $error = ['message' => 'expected_error'];
         $request = Mockery::mock(Request::class, [new CurlHttpClient()])
             ->shouldReceive('getLastError')
             ->andReturn($error)
@@ -28,7 +28,7 @@ class BotTest extends PHPUnit_Framework_TestCase
 
         $bot = new Bot($providersContainer);
 
-        $this->assertEquals($error, $bot->getLastError());
+        $this->assertEquals($error['message'], $bot->getLastError());
     }
 
 
