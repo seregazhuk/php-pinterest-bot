@@ -120,8 +120,6 @@ class User extends Provider
      * @param string $username
      * @param string $password
      *
-     * @throws AuthFailed
-     *
      * @return bool
      */
     public function login($username, $password)
@@ -138,7 +136,7 @@ class User extends Provider
 
         $response = $this->execPostRequest($credentials, UrlBuilder::RESOURCE_LOGIN, true);
         if ($response->hasErrors()) {
-            throw new AuthFailed($response->getLastError()['message']);
+            return false;
         }
 
         $this->request->login();

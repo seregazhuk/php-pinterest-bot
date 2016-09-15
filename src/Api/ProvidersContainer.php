@@ -97,13 +97,15 @@ class ProvidersContainer
     /**
      * Proxy method to Request object.
      *
-     * @return array
+     * @return string|null
      */
     public function getLastError()
     {
-        return $this
+        $error = $this
             ->request
             ->getLastError();
+
+        return isset($error['message']) ? $error['message'] : null;
     }
 
     /**

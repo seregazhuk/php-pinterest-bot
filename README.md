@@ -84,7 +84,16 @@ will return only 2 pins of the search results.
 Login:
 
 ```php
-$bot->user->login('mypinterestlogin', 'mypinterestpassword');
+$resul = $bot->user->login('mypinterestlogin', 'mypinterestpassword');
+```
+Login method returns `true` on success and `failse` if fails:
+
+```php
+$resul = $bot->user->login('mypinterestlogin', 'mypinterestpassword');
+if(!$result) {
+	echo $bot->getLastError();
+	die();
+}
 ```
 
 Or you may skip login, if you want. It is only required for such operations as likes, follows and making pins.
@@ -95,6 +104,7 @@ if($bot->user->isLoggedIn()) {
 	// ...
 }
 ```
+
 To logout use *logout* method:
 
 ```php
@@ -569,10 +579,12 @@ when make concatenation, and position = 1 is for the reverse case.
 
 
 ## Errors handling
-You can check for occurred errors after requests with method *getLastError()*.
+You can check for occurred errors after requests with method *getLastError()*. It returns
+string that contains error from you last request to API:
+ 
 ```php
 $error = $bot->getLastError();
-print_r($error);
+echo $error;
 ```
 
 ## Custom request settings

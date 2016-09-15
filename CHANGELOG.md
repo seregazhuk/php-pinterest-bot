@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 ## [4.11.0] - ?
 ### Added:
  - User *changePassword*, *deactivate* methods.
+### Changed:
+ - User *login* method does not throw exception, now it returns *false* on fail.
+ - Bot *getLastError* method returns string, not array.
 
 ## [4.10.1] - 2016-09-13
 ### Fixed:
