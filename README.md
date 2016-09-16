@@ -398,6 +398,24 @@ foreach($bot->pinners->followers('username') as $follower)
 }
 ```
 
+Get the newest pins of a pinner. Returns Generator object.
+
+```php
+foreach($bot->pinners->pins('username') as $pin)
+{
+    // ...
+}
+```
+
+Get the last 20 pins of a pinner 
+
+```php
+foreach($bot->pinners->pins('username', 20) as $pin)
+{
+    // ...
+}
+```
+
 Get pins that user likes. Returns Generator object.
 
 ```php
