@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
  - AuthRequired exception.
  - Pins *getRelatedPins* method.
  - News *all* method.
+ - Boards *getTitleSuggestionsFor* method.
  
 ### Changed:
  - User *login* method does not throw exception, now it returns *false* on fail.

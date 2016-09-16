@@ -31,7 +31,8 @@ class Interests extends Provider
     }
 
     /**
-     * Returns a feed of pins
+     * Returns a feed of pins.
+     *
      * @param string $interest
      * @param int $limit
      * @return array|bool

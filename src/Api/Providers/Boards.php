@@ -133,4 +133,16 @@ class Boards extends Provider
 
         return $this->execPostRequest($requestOptions, UrlBuilder::RESOURCE_CREATE_BOARD);
     }
+
+    /**
+     * Returns title suggestions for pin.
+     *
+     * @param int $pinId
+     * @return array|bool
+     */
+    public function getTitleSuggestionsFor($pinId)
+    {
+        return $this->execGetRequest(['pin_id' => $pinId], UrlBuilder::RESOURCE_TITLE_SUGGESTIONS);
+    }
+
 }

@@ -205,6 +205,11 @@ foreach($bot->boards->followers($boardId) as $follower)
 }
 ```
 
+When you repin, Pinterest suggests you some board titles for it. You can get these
+suggestions for pin by its id:
+```
+$suggestions = $bot->boards->getTitleSuggestionsFor($pinId);
+```
 ## Pins
 
 Notice! Try not to be very aggressive when pinning or commenting pins, or pinterest will gonna ban you.

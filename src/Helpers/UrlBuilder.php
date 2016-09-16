@@ -25,6 +25,7 @@ class UrlBuilder
     const RESOURCE_UPDATE_BOARD = 'resource/BoardResource/update/';
     const RESOURCE_BOARD_FOLLOWERS = 'resource/BoardFollowersResource/get/';
     const RESOURCE_FOLLOWING_BOARDS = 'resource/BoardFollowingResource/get/';
+    const RESOURCE_TITLE_SUGGESTIONS = 'resource/BoardTitleSuggestionsResource/get';
 
     /**
      * Pins
