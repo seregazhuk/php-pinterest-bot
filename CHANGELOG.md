@@ -11,7 +11,7 @@ All notable changes to this project will be documented in this file.
  - Boards *getTitleSuggestionsFor* method.
  
 ### Changed:
- - User *login* method does not throw exception, now it returns *false* on fail.
+ - User *login* method does not throw an exception, now it returns *false* on fail.
  - Bot *getLastError* method returns string, not array.
  - News *last* method is deprecated.
 
