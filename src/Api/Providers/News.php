@@ -18,7 +18,7 @@ class News extends Provider
      * @param $limit
      * @return mixed
      */
-    public function last($limit)
+    public function last($limit = 0)
     {
         return $this->all($limit);
     }
