@@ -249,7 +249,6 @@ class User extends Provider
     /**
      * @param array $data
      * @return bool|mixed
-     * @throws AuthFailed
      */
     protected function makeRegisterCall($data)
     {

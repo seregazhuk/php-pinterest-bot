@@ -189,7 +189,7 @@ $bot->boards->follow($boardId);
 $bot->boards->unfollow($boardId);
 ```
 
-Get all pins for board by id (returns generator).
+Get all pins for board by id (returns Generator object).
 ```php
 foreach($bot->boards->pins($boardId) as $pin)
 {
@@ -197,7 +197,7 @@ foreach($bot->boards->pins($boardId) as $pin)
 }
 ```
 
-Get board followers. Uses pinterest api pagination (return generator).
+Get board followers. Uses pinterest api pagination (return Generator object).
 ```php
 foreach($bot->boards->followers($boardId) as $follower)
 {
@@ -549,9 +549,11 @@ $bot->user->deactivate();
 ```
 
 ## News
-Get last user's news.
+Get your current user's news. Returns Generator object.
 ```php
-$news = $bot->news->last();
+foreach($bot->news->all() as $new) {
+    // ...
+}
 ```
 
 ## Keywords

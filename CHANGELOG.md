@@ -6,10 +6,12 @@ All notable changes to this project will be documented in this file.
  - User *changePassword*, *deactivate* methods.
  - AuthRequired exception.
  - Pins *getRelatedPins* method.
+ - News *all* method.
  
 ### Changed:
  - User *login* method does not throw exception, now it returns *false* on fail.
  - Bot *getLastError* method returns string, not array.
+ - News *last* method is deprecated.
 
 ## [4.10.1] - 2016-09-13
 ### Fixed:
