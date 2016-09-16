@@ -53,6 +53,7 @@ class UrlBuilder
     const RESOURCE_USER_INFO = 'resource/UserResource/get/';
     const RESOURCE_USER_FOLLOWING = 'resource/UserFollowingResource/get/';
     const RESOURCE_USER_PINS = 'resource/UserPinsResource/get/';
+    const RESOURCE_USER_LIKES = 'resource/UserLikesResource/get/';
 
     /**
      * Search

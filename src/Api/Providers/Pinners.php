@@ -109,6 +109,20 @@ class Pinners extends Provider
     }
 
     /**
+     * Get pins that user likes.
+     *
+     * @param string $username
+     * @param int $limit
+     * @return Iterator
+     */
+    public function likes($username, $limit = 0)
+    {
+        return $this->paginate(
+            $username, UrlBuilder::RESOURCE_USER_LIKES, $limit
+        );
+    }
+
+    /**
      * @param string $username
      * @param string $url
      * @param int $limit

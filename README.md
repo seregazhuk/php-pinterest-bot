@@ -390,11 +390,20 @@ foreach($bot->pinners->followingInterests('username') as $interest)
 }
 ```
 
-Get user followers. Uses pinterest api pagination.
+Get user followers. Returns Generator object.
 ```php
 foreach($bot->pinners->followers('username') as $follower)
 {
 	// ...
+}
+```
+
+Get pins that user likes. Returns Generator object.
+
+```php
+foreach($bot->pinners->likes('username') as $like)
+{
+    // ...
 }
 ```
 

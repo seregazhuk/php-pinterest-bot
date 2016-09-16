@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
  - User *changePassword*, *deactivate* methods.
  - AuthRequired exception.
  - Pins *getRelatedPins* method.
+ - Pinners *likes* method.
  - News *all* method.
  - Boards *getTitleSuggestionsFor* method.
  
