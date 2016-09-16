@@ -245,6 +245,21 @@ class Pins extends Provider
     }
 
     /**
+     * @param int $pinId
+     * @param int $limit
+     * @return mixed
+     */
+    public function getRelatedPins($pinId, $limit = 0)
+    {
+        $params = [
+            'data' => ['pin' => $pinId],
+            'url'  => UrlBuilder::RESOURCE_RELATED_PINS
+        ];
+
+        return $this->getPaginatedResponse($params, $limit);
+    }
+
+    /**
      * Calls Pinterest API to like or unlike Pin by ID.
      *
      * @param int $pinId

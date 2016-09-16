@@ -25,6 +25,7 @@ class UrlBuilder
     const RESOURCE_UPDATE_BOARD = 'resource/BoardResource/update/';
     const RESOURCE_BOARD_FOLLOWERS = 'resource/BoardFollowersResource/get/';
     const RESOURCE_FOLLOWING_BOARDS = 'resource/BoardFollowingResource/get/';
+    const RESOURCE_TITLE_SUGGESTIONS = 'resource/BoardTitleSuggestionsResource/get';
 
     /**
      * Pins
@@ -42,6 +43,7 @@ class UrlBuilder
     const RESOURCE_DOMAIN_FEED = 'resource/DomainFeedResource/get';
     const RESOURCE_ACTIVITY = 'resource/AggregatedActivityFeedResource/get';
     const RESOURCE_USER_FEED = 'resource/UserHomefeedResource/get/';
+    const RESOURCE_RELATED_PINS = 'resource/RelatedPinFeedResource/get';
 
     /**
      * Pinners
@@ -51,6 +53,7 @@ class UrlBuilder
     const RESOURCE_USER_INFO = 'resource/UserResource/get/';
     const RESOURCE_USER_FOLLOWING = 'resource/UserFollowingResource/get/';
     const RESOURCE_USER_PINS = 'resource/UserPinsResource/get/';
+    const RESOURCE_USER_LIKES = 'resource/UserLikesResource/get/';
 
     /**
      * Search
@@ -76,6 +79,8 @@ class UrlBuilder
      */
     const RESOURCE_UPDATE_USER_SETTINGS = 'resource/UserSettingsResource/update/';
     const RESOURCE_GET_USER_SETTINGS = 'resource/UserSettingsResource/get/';
+    const RESOURCE_CHANGE_PASSWORD = 'resource/UserPasswordResource/update/';
+    const RESOURCE_DEACTIVATE_ACCOUNT = 'resource/DeactivateAccountResource/create/';
 
     /**
      * News

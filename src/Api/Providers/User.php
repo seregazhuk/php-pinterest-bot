@@ -4,7 +4,6 @@ namespace seregazhuk\PinterestBot\Api\Providers;
 
 use LogicException;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
-use seregazhuk\PinterestBot\Exceptions\AuthFailed;
 use seregazhuk\PinterestBot\Api\Traits\UploadsImages;
 
 class User extends Provider
@@ -14,7 +13,14 @@ class User extends Provider
     /**
      * @var array
      */
-    protected $loginRequiredFor = ['profile', 'convertToBusiness'];
+    protected $loginRequiredFor = [
+        'profile',
+        'convertToBusiness',
+        'changePassword',
+        'isBanned',
+        'deactivate',
+        'getUserName'
+    ];
 
     const REGISTRATION_COMPLETE_EXPERIENCE_ID = '11:10105';
     const ACCOUNT_TYPE_OTHER = 'other';
@@ -113,8 +119,6 @@ class User extends Provider
      * @param string $username
      * @param string $password
      *
-     * @throws AuthFailed
-     *
      * @return bool
      */
     public function login($username, $password)
@@ -131,7 +135,7 @@ class User extends Provider
 
         $response = $this->execPostRequest($credentials, UrlBuilder::RESOURCE_LOGIN, true);
         if ($response->hasErrors()) {
-            throw new AuthFailed($response->getLastError()['message']);
+            return false;
         }
 
         $this->request->login();
@@ -179,6 +183,44 @@ class User extends Provider
     }
 
     /**
+     * @param string $oldPassword
+     * @param string $newPassword
+     * @return bool
+     */
+    public function changePassword($oldPassword, $newPassword)
+    {
+        $request = [
+            'old_password'         => $oldPassword,
+            'new_password'         => $newPassword,
+            'new_password_confirm' => $newPassword,
+        ];
+
+        return $this->execPostRequest($request, UrlBuilder::RESOURCE_CHANGE_PASSWORD);
+    }
+
+    /**
+     * Deactivates your account.
+     *
+     * @param string $reason
+     * @param string $explanation
+     * @return bool
+     */
+    public function deactivate($reason = 'other', $explanation = '')
+    {
+        $profile = $this->profile();
+
+        if(!isset($profile['id'])) return false;
+
+        $request = [
+            'user_id'     => $profile['id'],
+            'reason'      => $reason,
+            'explanation' => $explanation,
+        ];
+
+        return $this->execPostRequest($request, UrlBuilder::RESOURCE_DEACTIVATE_ACCOUNT);
+    }
+
+    /**
      * Validates password and login.
      *
      * @param string $username
@@ -207,7 +249,6 @@ class User extends Provider
     /**
      * @param array $data
      * @return bool|mixed
-     * @throws AuthFailed
      */
     protected function makeRegisterCall($data)
     {

@@ -14,7 +14,7 @@ class ProviderLoginCheckWrapperTest extends PHPUnit_Framework_TestCase
      * For not logged in request.
      *
      * @test
-     * @expectedException \seregazhuk\PinterestBot\Exceptions\AuthFailed
+     * @expectedException \seregazhuk\PinterestBot\Exceptions\AuthRequired
      */
     public function it_should_fail_when_login_is_required()
     {

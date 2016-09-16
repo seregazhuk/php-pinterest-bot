@@ -84,7 +84,16 @@ will return only 2 pins of the search results.
 Login:
 
 ```php
-$bot->user->login('mypinterestlogin', 'mypinterestpassword');
+$resul = $bot->user->login('mypinterestlogin', 'mypinterestpassword');
+```
+Login method returns `true` on success and `failse` if fails:
+
+```php
+$resul = $bot->user->login('mypinterestlogin', 'mypinterestpassword');
+if(!$result) {
+	echo $bot->getLastError();
+	die();
+}
 ```
 
 Or you may skip login, if you want. It is only required for such operations as likes, follows and making pins.
@@ -95,6 +104,7 @@ if($bot->user->isLoggedIn()) {
 	// ...
 }
 ```
+
 To logout use *logout* method:
 
 ```php
@@ -179,7 +189,7 @@ $bot->boards->follow($boardId);
 $bot->boards->unfollow($boardId);
 ```
 
-Get all pins for board by id (returns generator).
+Get all pins for board by id (returns Generator object).
 ```php
 foreach($bot->boards->pins($boardId) as $pin)
 {
@@ -187,7 +197,7 @@ foreach($bot->boards->pins($boardId) as $pin)
 }
 ```
 
-Get board followers. Uses pinterest api pagination (return generator).
+Get board followers. Uses pinterest api pagination (return Generator object).
 ```php
 foreach($bot->boards->followers($boardId) as $follower)
 {
@@ -195,6 +205,11 @@ foreach($bot->boards->followers($boardId) as $follower)
 }
 ```
 
+When you repin, Pinterest suggests you some board titles for it. You can get these
+suggestions for pin by its id:
+```
+$suggestions = $bot->boards->getTitleSuggestionsFor($pinId);
+```
 ## Pins
 
 Notice! Try not to be very aggressive when pinning or commenting pins, or pinterest will gonna ban you.
@@ -272,7 +287,7 @@ foreach ($bot->pins->fromSource('flickr.com') as $pin) {
 }
 ```
 
-Get user pins feed. Method *userFeed()* returns Iterator object.
+Get user pins feed. Method *userFeed()* returns Generator object.
 ```php
 foreach ($bot->pins->userFeed() as $pin) {
     //...
@@ -292,7 +307,7 @@ foreach ($bot->pins->activity($pinId) as $data) {
 }
 ```
 
-If you don't want to get all activity record, you can pass a limit as the second parameter.
+If you don't want to get all activity records, you can pass a limit as the second parameter.
 Get  5 last activity records:
 
 ```php
@@ -301,6 +316,19 @@ foreach($bot->pins->activity($pinId, 5) as $activity) {
 }
 ```
 
+Get related pins for current pin:
+```php
+foreach($bot->pins->getRelatedPins($pinId) as $pin) {
+	//...
+}
+```
+
+Get last 10 related pins for current pin:
+```php
+foreach($bot->pins->getRelatedPins($pinId, 10) as $pin) {
+	//...
+}
+```
 
 ## Pinners
 
@@ -362,11 +390,20 @@ foreach($bot->pinners->followingInterests('username') as $interest)
 }
 ```
 
-Get user followers. Uses pinterest api pagination.
+Get user followers. Returns Generator object.
 ```php
 foreach($bot->pinners->followers('username') as $follower)
 {
 	// ...
+}
+```
+
+Get pins that user likes. Returns Generator object.
+
+```php
+foreach($bot->pinners->likes('username') as $like)
+{
+    // ...
 }
 ```
 
@@ -515,10 +552,22 @@ if ($bot->user->isBanned() {
     // ... you have ban
 }
 
-## News
-Get last user's news.
+Change you password:
 ```php
-$news = $bot->news->last();
+$bot->user->changePassword('oldPassword', 'newPassword');
+```
+
+Deactivate current account:
+```php
+$bot->user->deactivate();
+```
+
+## News
+Get your current user's news. Returns Generator object.
+```php
+foreach($bot->news->all() as $new) {
+    // ...
+}
 ```
 
 ## Keywords
@@ -559,10 +608,12 @@ when make concatenation, and position = 1 is for the reverse case.
 
 
 ## Errors handling
-You can check for occurred errors after requests with method *getLastError()*.
+You can check for occurred errors after requests with method *getLastError()*. It returns
+string that contains error from you last request to API:
+ 
 ```php
 $error = $bot->getLastError();
-print_r($error);
+echo $error;
 ```
 
 ## Custom request settings
