@@ -1,7 +1,7 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [4.11.0] - ?
+## [4.11.0] - 2016-09-16
 ### Added:
  - User *changePassword*, *deactivate* methods.
  - AuthRequired exception.
