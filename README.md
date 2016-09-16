@@ -282,7 +282,7 @@ foreach ($bot->pins->fromSource('flickr.com') as $pin) {
 }
 ```
 
-Get user pins feed. Method *userFeed()* returns Iterator object.
+Get user pins feed. Method *userFeed()* returns Generator object.
 ```php
 foreach ($bot->pins->userFeed() as $pin) {
     //...
@@ -302,7 +302,7 @@ foreach ($bot->pins->activity($pinId) as $data) {
 }
 ```
 
-If you don't want to get all activity record, you can pass a limit as the second parameter.
+If you don't want to get all activity records, you can pass a limit as the second parameter.
 Get  5 last activity records:
 
 ```php
@@ -311,6 +311,19 @@ foreach($bot->pins->activity($pinId, 5) as $activity) {
 }
 ```
 
+Get related pins for current pin:
+```php
+foreach($bot->pins->getRelatedPins($pinId) as $pin) {
+	//...
+}
+```
+
+Get last 10 related pins for current pin:
+```php
+foreach($bot->pins->getRelatedPins($pinId, 10) as $pin) {
+	//...
+}
+```
 
 ## Pinners
 

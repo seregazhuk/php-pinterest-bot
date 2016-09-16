@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 ### Added:
  - User *changePassword*, *deactivate* methods.
  - AuthRequired exception.
+ - Pins *getRelatedPins* method.
+ 
 ### Changed:
  - User *login* method does not throw exception, now it returns *false* on fail.
  - Bot *getLastError* method returns string, not array.

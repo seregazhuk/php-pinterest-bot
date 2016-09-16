@@ -42,6 +42,7 @@ class UrlBuilder
     const RESOURCE_DOMAIN_FEED = 'resource/DomainFeedResource/get';
     const RESOURCE_ACTIVITY = 'resource/AggregatedActivityFeedResource/get';
     const RESOURCE_USER_FEED = 'resource/UserHomefeedResource/get/';
+    const RESOURCE_RELATED_PINS = 'resource/RelatedPinFeedResource/get';
 
     /**
      * Pinners
