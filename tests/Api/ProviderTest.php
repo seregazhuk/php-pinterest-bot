@@ -3,7 +3,6 @@
 namespace seregazhuk\tests\Api;
 
 use Mockery;
-use Mockery\Mock;
 use ReflectionClass;
 use Mockery\MockInterface;
 use PHPUnit_Framework_TestCase;
@@ -17,7 +16,6 @@ use seregazhuk\PinterestBot\Api\Providers\Provider;
  * Class ProviderTest.
  *
  * @property string $providerClass
- * @property Mock $requestMock
  * @property ReflectionClass $reflection
  */
 abstract class ProviderTest extends PHPUnit_Framework_TestCase
@@ -40,14 +38,33 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
     protected $mock;
 
     /**
+     * @var Response
+     */
+    protected $response;
+
+    /**
+     * @var Request
+     */
+    protected $request;
+
+    /**
      * @return $this
      */
     protected function createRequestMock()
     {
-        $requestMock = Mockery::mock(Request::class);
-        $requestMock->shouldReceive('checkLoggedIn')->andReturn(true);
+        $this->request = Mockery::mock(Request::class);
+        $this->request->shouldReceive('checkLoggedIn')->andReturn(true);
 
-        $this->requestMock = $requestMock;
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function createResponseMock()
+    {
+        $this->response = Mockery::mock(Response::class);
+        $this->response->shouldDeferMissing();
 
         return $this;
     }
@@ -55,6 +72,7 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->createRequestMock()
+            ->createResponseMock()
             ->createProviderInstance()
             ->setUpReflection();
 
@@ -74,7 +92,7 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
     protected function createProviderInstance()
     {
         $providerReflection = new ReflectionClass($this->providerClass);
-        $this->provider = $providerReflection->newInstanceArgs([$this->requestMock]);
+        $this->provider = $providerReflection->newInstanceArgs([$this->request, $this->response]);
 
         return $this;
     }
@@ -86,10 +104,10 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
      */
     protected function setResponseExpectation($response = [], $times = 1, $method = 'exec')
     {
-        $this->requestMock
+        $this->request
             ->shouldReceive($method)
             ->times($times)
-            ->andReturn(new Response($response));
+            ->andReturn(json_encode($response));
     }
 
     /**

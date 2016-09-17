@@ -44,7 +44,7 @@ trait FollowResponseHelper
      */
     protected function setFollowRequest($entityId, $sourceUrl, $response)
     {
-        $this->requestMock
+        $this->request
             ->shouldReceive('exec')
             ->once()
             ->withArgs([

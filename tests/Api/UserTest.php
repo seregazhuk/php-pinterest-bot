@@ -48,7 +48,7 @@ class UserTest extends ProviderTest
             'name'          => 'John Doe',
             'profile_image' => 'my_profile_image.jpg'
         ];
-        $this->requestMock
+        $this->request
             ->shouldReceive('upload')
             ->withArgs([$attributes['profile_image'], UrlBuilder::IMAGE_UPLOAD]);
         
@@ -62,7 +62,7 @@ class UserTest extends ProviderTest
     public function it_should_register_new_user()
     {
         $this->setTokenFromCookiesExpectation(2);
-        $this->setProperty('request', $this->requestMock);
+        $this->setProperty('request', $this->request);
 
         $this->setSuccessResponse(3);
         $this->assertTrue($this->provider->register('email@email.com', 'test', 'name'));
@@ -74,7 +74,7 @@ class UserTest extends ProviderTest
     public function it_returns_false_when_error_in_registration()
     {
         $this->setTokenFromCookiesExpectation();
-        $this->setProperty('request', $this->requestMock);
+        $this->setProperty('request', $this->request);
 
         $this->setErrorResponse(2);
         $this->assertFalse($this->provider->register('email@email.com', 'test', 'name'));
@@ -86,7 +86,7 @@ class UserTest extends ProviderTest
     public function it_should_register_business_account()
     {
         $this->setTokenFromCookiesExpectation(2);
-        $this->setProperty('request', $this->requestMock);
+        $this->setProperty('request', $this->request);
 
         $this->setSuccessResponse(3);
         $this->assertTrue($this->provider->registerBusiness('email@email.com', 'test', 'name'));
@@ -98,7 +98,7 @@ class UserTest extends ProviderTest
     public function it_should_return_false_when_error_in_business_registration()
     {
         $this->setTokenFromCookiesExpectation();
-        $this->setProperty('request', $this->requestMock);
+        $this->setProperty('request', $this->request);
 
         $this->setErrorResponse(2);
         $this->assertFalse($this->provider->registerBusiness('email@email.com', 'test', 'name'));
@@ -118,7 +118,7 @@ class UserTest extends ProviderTest
     public function it_should_not_call_requests_to_api_when_login_already_logged()
     {
         $this->setIsLoggedInExpectation(true);
-        $this->requestMock->shouldNotReceive('exec');
+        $this->request->shouldNotReceive('exec');
 
         $this->assertTrue($this->provider->login('test', 'test'));
     }
@@ -131,11 +131,11 @@ class UserTest extends ProviderTest
 
         $this->setResponseExpectation($response);
 
-        $this->requestMock
+        $this->request
             ->shouldReceive('clearToken')
             ->once();
 
-        $this->requestMock
+        $this->request
             ->shouldReceive('login')
             ->once();
 
@@ -149,7 +149,7 @@ class UserTest extends ProviderTest
         $this->setIsLoggedInExpectation(false);
 
         $this->setResponseExpectation($response);
-        $this->requestMock->shouldReceive('clearToken');
+        $this->request->shouldReceive('clearToken');
 
         $this->assertFalse($this->provider->login('test', 'test'));
     }
@@ -157,7 +157,7 @@ class UserTest extends ProviderTest
     /** @test */
     public function it_should_proxy_logout_to_request()
     {
-        $this->requestMock->shouldReceive('logout');
+        $this->request->shouldReceive('logout');
         $this->provider->logout();
     }
 
@@ -185,7 +185,7 @@ class UserTest extends ProviderTest
      */
     protected function setTokenFromCookiesExpectation($times = 1)
     {
-        $this->requestMock
+        $this->request
             ->shouldReceive('setTokenFromCookies')
             ->times($times)
             ->andReturnSelf();
@@ -196,7 +196,7 @@ class UserTest extends ProviderTest
      */
     protected function setIsLoggedInExpectation($status)
     {
-        $this->requestMock
+        $this->request
             ->shouldReceive('isLoggedIn')
             ->once()
             ->andReturn($status);

@@ -23,7 +23,7 @@ trait ReflectionHelper
     {
         $this->reflection = new ReflectionClass($this->provider);
         $this->setReflectedObject($this->provider);
-        $this->setProperty('request', $this->requestMock);
+        $this->setProperty('request', $this->request);
 
         return $this;
     }

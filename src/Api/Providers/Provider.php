@@ -61,9 +61,10 @@ abstract class Provider
         $postString = Request::createQuery($requestOptions);
         $result = $this->request->exec($resourceUrl, $postString);
 
-        $this->returnData = $returnResponse;
+        $this->processResult($result);
 
-        return $this->processResult($result);
+        return $returnResponse ? $this->response : $this->response->isOk();
+
     }
 
     /**
@@ -77,11 +78,11 @@ abstract class Provider
     {
         $query = Request::createQuery($requestOptions);
 
-        $response = $this->request->exec($resourceUrl . "?{$query}");
+        $result = $this->request->exec($resourceUrl . "?{$query}");
 
-        $this->returnData = true;
+        $this->processResult($result);
 
-        return $response->getResponseData();
+        return $this->response->getResponseData();
     }
 
     /**
@@ -155,6 +156,6 @@ abstract class Provider
      */
     protected function processResult($res)
     {
-        return new Response(json_decode($res, true));
+        return $this->response->fill(json_decode($res, true));
     }
 }
