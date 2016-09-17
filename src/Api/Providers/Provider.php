@@ -97,7 +97,11 @@ abstract class Provider
     {
         $query = Request::createQuery($requestOptions, $bookmarks);
 
-        return $this->request->exec($resourceUrl . "?{$query}");
+        $result = $this->request->exec($resourceUrl . "?{$query}");
+
+        $this->processResult($result);
+
+        return $this->response;
     }
 
     /**
