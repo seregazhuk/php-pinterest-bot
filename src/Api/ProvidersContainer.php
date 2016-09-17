@@ -26,13 +26,19 @@ class ProvidersContainer
      * @var array
      */
     protected $providers = [];
+    /**
+     * @var Response
+     */
+    private $response;
 
     /**
      * @param Request $request
+     * @param Response $response
      */
-    public function __construct(Request $request)
+    public function __construct(Request $request, Response $response)
     {
         $this->request = $request;
+        $this->response = $response;
     }
 
     /**
@@ -89,7 +95,7 @@ class ProvidersContainer
     protected function buildProvider($className)
     {
         $provider = (new ReflectionClass($className))
-            ->newInstanceArgs([$this->request]);
+            ->newInstanceArgs([$this->request, $this->response]);
 
         return new ProviderWrapper($provider);
     }

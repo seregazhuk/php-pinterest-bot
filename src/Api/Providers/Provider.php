@@ -13,6 +13,12 @@ use seregazhuk\PinterestBot\Helpers\Pagination;
 abstract class Provider
 {
     /**
+     * @var bool
+     */
+    protected $returnData = true;
+
+
+    /**
      * List of methods that require logged status.
      *
      * @var array
@@ -27,11 +33,18 @@ abstract class Provider
     protected $request;
 
     /**
-     * @param Request $request
+     * @var Response
      */
-    public function __construct(Request $request)
+    protected $response;
+
+    /**
+     * @param Request $request
+     * @param Response $response
+     */
+    public function __construct(Request $request, Response $response)
     {
         $this->request = $request;
+        $this->response = $response;
     }
 
     /**
@@ -46,9 +59,11 @@ abstract class Provider
     protected function execPostRequest($requestOptions, $resourceUrl, $returnResponse = false)
     {
         $postString = Request::createQuery($requestOptions);
-        $response = $this->request->exec($resourceUrl, $postString);
+        $result = $this->request->exec($resourceUrl, $postString);
 
-        return $returnResponse ? $response : $response->isOk();
+        $this->returnData = $returnResponse;
+
+        return $this->processResult($result);
     }
 
     /**
@@ -63,6 +78,8 @@ abstract class Provider
         $query = Request::createQuery($requestOptions);
 
         $response = $this->request->exec($resourceUrl . "?{$query}");
+
+        $this->returnData = true;
 
         return $response->getResponseData();
     }
@@ -130,5 +147,14 @@ abstract class Provider
     protected function getPaginatedResponse(array $params, $limit, $method = 'getPaginatedData')
     {
         return (new Pagination($this))->paginateOver($method, $params, $limit);
+    }
+
+    /**
+     * @param string $res
+     * @return Response
+     */
+    protected function processResult($res)
+    {
+        return new Response(json_decode($res, true));
     }
 }

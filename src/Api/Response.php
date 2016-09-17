@@ -9,18 +9,25 @@ class Response implements PaginatedResponse
     /**
      * @var mixed
      */
-    protected $data;
+    protected $data = [];
 
     /**
      * @var array|null
      */
     protected $lastError;
 
-    public function __construct($data)
+    /**
+     * @var array|null
+     */
+    protected $clientInfo;
+
+    public function fill($data)
     {
         $this->data = $data;
 
         $this->lastError = $this->getValueByKey('resource_response.error', $this->data);
+
+        $this->clientInfo = $this->getValueByKey('client_context', $this->data);
     }
 
     /**

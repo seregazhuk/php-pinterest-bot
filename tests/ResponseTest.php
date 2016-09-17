@@ -16,7 +16,8 @@ class ResponseTest extends PHPUnit_Framework_TestCase
     /** @test */
     public function it_should_return_data_from_response()
     {
-        $response = new Response($this->createApiResponse(['data' => 'some data']));
+        $response = new Response();
+        $response->fill($this->createApiResponse(['data' => 'some data']));
 
         $this->assertEquals('some data', $response->getResponseData());
     }
@@ -24,7 +25,8 @@ class ResponseTest extends PHPUnit_Framework_TestCase
     /** @test */
     public function it_should_return_value_by_key_from_response()
     {
-        $response = new Response($this->createApiResponse(['data' => ['key' => 'value']]));
+        $response = new Response();
+        $response->fill($this->createApiResponse(['data' => ['key' => 'value']]));
 
         $this->assertEquals('value', $response->getResponseData('key'));
     }
@@ -32,7 +34,8 @@ class ResponseTest extends PHPUnit_Framework_TestCase
     /** @test */
     public function it_should_return_false_on_error_response()
     {
-        $response = new Response($this->createErrorApiResponse('some error'));
+        $response = new Response();
+        $response->fill($this->createErrorApiResponse('some error'));
 
         $this->assertFalse($response->getResponseData());
 
@@ -43,11 +46,12 @@ class ResponseTest extends PHPUnit_Framework_TestCase
     /** @test */
     public function it_should_check_empty_responses()
     {
-        $response = new Response([]);
+        $response = new Response();
 
         $this->assertTrue($response->isEmpty());
 
-        $responseWithError = new Response($this->createErrorApiResponse('some error'));
+        $responseWithError = new Response();
+        $response->fill($this->createErrorApiResponse('some error'));
 
         $this->assertTrue($responseWithError->isEmpty());
     }
@@ -55,7 +59,8 @@ class ResponseTest extends PHPUnit_Framework_TestCase
     /** @test */
     public function it_should_check_responses_with_data()
     {
-        $response = new Response($this->createSuccessApiResponse());
+        $response = new Response();
+        $response->fill($this->createSuccessApiResponse());
 
         $this->assertFalse($response->isEmpty());
     }
@@ -63,10 +68,12 @@ class ResponseTest extends PHPUnit_Framework_TestCase
     /** @test */
     public function it_should_check_responses_with_errors()
     {
-        $response = new Response($this->createErrorApiResponse('some error'));
+        $response = new Response();
+        $response->fill($this->createErrorApiResponse('some error'));
         $this->assertTrue($response->hasErrors());
 
-        $response = new Response($this->createSuccessApiResponse());
+        $response = new Response();
+        $response->fill($this->createSuccessApiResponse());
         $this->assertFalse($response->hasErrors());
     }
 
@@ -74,22 +81,22 @@ class ResponseTest extends PHPUnit_Framework_TestCase
     /** @test */
     public function it_should_return_bookmarks_string_from_response()
     {
-        $response = new Response(
-            ['resource' => ['options' => ['bookmarks' => ['my_bookmarks_string']]]]
-        );
+        $response = new Response();
+        $response->fill(['resource' => ['options' => ['bookmarks' => ['my_bookmarks_string']]]]);
         $this->assertEquals(['my_bookmarks_string'], $response->getBookmarks());
 
-        $response = new Response([]);
+        $response = new Response();
         $this->assertEmpty($response->getBookmarks());
     }
 
     /** @test */
     public function it_should_return_empty_array_for_response_without_pagination()
     {
-        $response = new Response([]);
+        $response = new Response();
         $this->assertEmpty($response->getPaginationData());
 
-        $response = new Response($this->createApiResponse());
+        $response = new Response();
+        $response->fill($this->createApiResponse());
         $this->assertEmpty($response->getPaginationData());
     }
 
@@ -105,7 +112,8 @@ class ResponseTest extends PHPUnit_Framework_TestCase
                 'data' => 'some data'
             ]
         ];
-        $response = new Response($dataWithBookmarks);
+        $response = new Response();
+        $response->fill($dataWithBookmarks);
 
         $expected = [
             'data'      => 'some data',

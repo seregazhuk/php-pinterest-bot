@@ -116,6 +116,15 @@ trait Searchable
     }
 
     /**
+     * @param string $res
+     * @return Response
+     */
+    protected function processResult($res)
+    {
+        return new SearchResponse(json_decode($res, true));
+    }
+
+    /**
      * @param array $params
      * @param int $limit
      * @param string $method

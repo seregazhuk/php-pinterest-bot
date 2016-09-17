@@ -37,7 +37,9 @@ class ProviderWrapper
         if (method_exists($this->provider, $method)) {
             $this->checkMethodForLoginRequired($method);
 
-            return call_user_func_array([$this->provider, $method], $arguments);
+            $result = call_user_func_array([$this->provider, $method], $arguments);
+            return $result['return_response'] ?
+                $result['response'] : $result['response']->isOk();
         }
 
         $errorMessage = $this->getErrorMethodCallMessage($method, "Method $method does'n exist.");

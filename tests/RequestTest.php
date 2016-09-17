@@ -87,6 +87,8 @@ class RequestTest extends PHPUnit_Framework_TestCase
     public function it_should_save_token_from_cookies()
     {
         $cookieFile = __DIR__.'/../'.CurlHttpClient::COOKIE_NAME;
+        var_dump($cookieFile);
+        die();
         $token = 'WfdvEjNSLYiykJHDIx4sGSpCS8OhUld0';
         file_put_contents(
             $cookieFile, ".pinterest.com	TRUE	/	TRUE	1488295594	csrftoken	$token"
