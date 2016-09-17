@@ -2,8 +2,6 @@
 
 namespace seregazhuk\tests\Helpers;
 
-use seregazhuk\PinterestBot\Api\Response;
-
 trait FollowResponseHelper
 {
     use SetsResponse;

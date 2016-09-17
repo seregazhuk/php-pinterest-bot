@@ -59,9 +59,8 @@ abstract class Provider
     protected function execPostRequest($requestOptions, $resourceUrl, $returnResponse = false)
     {
         $postString = Request::createQuery($requestOptions);
-        $result = $this->request->exec($resourceUrl, $postString);
 
-        $this->processResult($result);
+        $this->execute($resourceUrl, $postString);
 
         return $returnResponse ? $this->response : $this->response->isOk();
 
@@ -78,9 +77,7 @@ abstract class Provider
     {
         $query = Request::createQuery($requestOptions);
 
-        $result = $this->request->exec($resourceUrl . "?{$query}");
-
-        $this->processResult($result);
+        $this->execute($resourceUrl . "?{$query}");
 
         return $this->response->getResponseData();
     }
@@ -97,11 +94,23 @@ abstract class Provider
     {
         $query = Request::createQuery($requestOptions, $bookmarks);
 
-        $result = $this->request->exec($resourceUrl . "?{$query}");
+        $this->execute($resourceUrl . "?{$query}");
+
+        return $this->response;
+    }
+
+    /**
+     * @param $url
+     * @param string $postString
+     * @return $this
+     */
+    protected function execute($url, $postString = "")
+    {
+        $result = $this->request->exec($url, $postString);
 
         $this->processResult($result);
 
-        return $this->response;
+        return $this;
     }
 
     /**
@@ -136,11 +145,11 @@ abstract class Provider
     }
 
     /**
-     * @return Request
+     * @return bool
      */
-    public function getRequest()
+    public function isLoggedIn()
     {
-        return $this->request;
+        return $this->request->isLoggedIn();
     }
 
     /**

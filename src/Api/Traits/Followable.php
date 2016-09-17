@@ -3,6 +3,7 @@
 namespace seregazhuk\PinterestBot\Api\Traits;
 
 use Iterator;
+use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 
@@ -15,6 +16,7 @@ use seregazhuk\PinterestBot\Helpers\UrlBuilder;
  * @property string $followersUrl
  * @property string $followersFor
  * @property Response $response
+ * @property Request $request
  */
 trait Followable
 {
@@ -54,8 +56,7 @@ trait Followable
      */
     protected function followCall($entityId, $resourceUrl)
     {
-        $result = $this
-            ->getRequest()
+        $result = $this->request
             ->exec($resourceUrl, $this->createFollowRequestQuery($entityId));
 
         $this->processResult($result);

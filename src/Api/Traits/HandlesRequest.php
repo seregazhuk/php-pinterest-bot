@@ -12,11 +12,6 @@ use seregazhuk\PinterestBot\Api\Response;
 trait HandlesRequest
 {
     /**
-     * @return Request
-     */
-    abstract public function getRequest();
-
-    /**
      * Executes a POST request to Pinterest API.
      *
      * @param array $requestOptions

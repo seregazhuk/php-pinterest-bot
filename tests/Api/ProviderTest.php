@@ -52,8 +52,10 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
      */
     protected function createRequestMock()
     {
-        $this->request = Mockery::mock(Request::class);
-        $this->request->shouldReceive('checkLoggedIn')->andReturn(true);
+        $this->request = Mockery::mock(Request::class)
+            ->shouldReceive('checkLoggedIn')
+            ->andReturn(true)
+            ->getMock();
 
         return $this;
     }
@@ -63,8 +65,8 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
      */
     protected function createResponseMock()
     {
-        $this->response = Mockery::mock(Response::class);
-        $this->response->shouldDeferMissing();
+        $this->response = Mockery::mock(Response::class)
+            ->shouldDeferMissing();
 
         return $this;
     }

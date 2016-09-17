@@ -18,6 +18,11 @@ class ProvidersContainer
      */
     protected $request;
 
+    /**
+     * @var Response
+     */
+    protected $response;
+
     const PROVIDERS_NAMESPACE = 'seregazhuk\\PinterestBot\\Api\\Providers\\';
 
     /**
@@ -26,10 +31,6 @@ class ProvidersContainer
      * @var array
      */
     protected $providers = [];
-    /**
-     * @var Response
-     */
-    private $response;
 
     /**
      * @param Request $request
@@ -112,6 +113,14 @@ class ProvidersContainer
             ->getLastError();
 
         return isset($error['message']) ? $error['message'] : null;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getClientInfo()
+    {
+        return $this->response->getClientInfo();
     }
 
     /**

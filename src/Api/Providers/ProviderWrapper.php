@@ -54,7 +54,7 @@ class ProviderWrapper
      */
     protected function checkMethodForLoginRequired($method)
     {
-        $isLoggedIn = $this->provider->getRequest()->isLoggedIn();
+        $isLoggedIn = $this->provider->isLoggedIn();
         $methodRequiresLogin = $this->provider->checkMethodRequiresLogin($method);
 
         if ($methodRequiresLogin && !$isLoggedIn) {
