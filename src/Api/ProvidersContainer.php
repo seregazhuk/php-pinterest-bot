@@ -10,6 +10,8 @@ use seregazhuk\PinterestBot\Api\Providers\ProviderWrapper;
 
 class ProvidersContainer
 {
+    const PROVIDERS_NAMESPACE = 'seregazhuk\\PinterestBot\\Api\\Providers\\';
+
     /**
      * References to the request that travels
      * through the application.
@@ -22,8 +24,6 @@ class ProvidersContainer
      * @var Response
      */
     protected $response;
-
-    const PROVIDERS_NAMESPACE = 'seregazhuk\\PinterestBot\\Api\\Providers\\';
 
     /**
      * A array containing the cached providers.

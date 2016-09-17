@@ -134,7 +134,6 @@ class Request
 
     /**
      * Mark api as logged.
-     * @return $this
      * @throws AuthFailed
      */
     public function login()
@@ -266,19 +265,6 @@ class Request
             'Content-Type: multipart/form-data; boundary=' . $delimiter,
             'Content-Length: ' . strlen($this->postFileData)
         ];
-    }
-
-    /**
-     * @param string $res
-     * @return Response
-     */
-    protected function processResponse($res)
-    {
-        $this->filePathToUpload = null;
-        $this->lastError = null;
-
-
-        return $response;
     }
 
     /**
