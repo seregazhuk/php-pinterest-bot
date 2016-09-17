@@ -39,9 +39,11 @@ trait Searchable
     {
         $url = UrlBuilder::getSearchUrl($bookmarks);
         $get = $this->createSearchQuery($query, $scope, $bookmarks);
-        $response = $this->getRequest()->exec($url . '?' . $get);
+        $result = $this->getRequest()->exec($url . '?' . $get);
 
-        return new SearchResponse($response);
+        $this->processResult($result);
+
+        return new SearchResponse($this->response);
     }
 
     /**
@@ -113,15 +115,6 @@ trait Searchable
         );
 
         return $dataJson;
-    }
-
-    /**
-     * @param string $res
-     * @return Response
-     */
-    protected function processResult($res)
-    {
-        return new SearchResponse(json_decode($res, true));
     }
 
     /**

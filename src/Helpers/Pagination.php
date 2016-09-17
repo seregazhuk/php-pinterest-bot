@@ -66,6 +66,7 @@ class Pagination
     protected function callProviderRequest($method, array $params)
     {
         $params['bookmarks'] = $this->bookmarks;
+
         return call_user_func_array([$this->provider, $method], $params);
     }
 

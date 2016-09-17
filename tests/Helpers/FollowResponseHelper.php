@@ -51,7 +51,7 @@ trait FollowResponseHelper
                 $sourceUrl,
                 $this->provider->createFollowRequestQuery($entityId)
             ])
-            ->andReturn(new Response($response));
+            ->andReturn(json_encode($response));
 
 
         return $this;
