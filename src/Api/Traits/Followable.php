@@ -155,4 +155,10 @@ trait Followable
     {
         return property_exists($this, 'followersFor') ? $this->followersFor : '';
     }
+
+    /**
+     * @param string $res
+     * @return Response
+     */
+    abstract protected function processResult($res);
 }
