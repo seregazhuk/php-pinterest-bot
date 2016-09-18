@@ -12,6 +12,8 @@ use seregazhuk\PinterestBot\Api\SearchResponse;
  * @package seregazhuk\PinterestBot\Api\Traits
  *
  * @property string $searchScope
+ * @property Request request
+ * @property Response $response
  */
 trait Searchable
 {
@@ -54,7 +56,7 @@ trait Searchable
      * @param string $scope
      * @param array $bookmarks
      *
-     * @return array
+     * @return string
      */
     protected function createSearchQuery($query, $scope, $bookmarks = [])
     {

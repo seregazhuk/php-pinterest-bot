@@ -66,7 +66,7 @@ trait Followable
 
     /**
      * @param integer $entityId
-     * @return mixed
+     * @return string
      */
     public function createFollowRequestQuery($entityId)
     {
@@ -155,4 +155,10 @@ trait Followable
     {
         return property_exists($this, 'followersFor') ? $this->followersFor : '';
     }
+
+    /**
+     * @param string $res
+     * @return Response
+     */
+    abstract protected function processResult($res);
 }
