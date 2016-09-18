@@ -81,7 +81,11 @@ class PinsTest extends ProviderTest
         $image = 'image.jpg';
         $this->request
             ->shouldReceive('upload')
-            ->withArgs([$image, UrlBuilder::IMAGE_UPLOAD]);
+            ->withArgs([$image, UrlBuilder::IMAGE_UPLOAD])
+            ->andReturn(json_encode([
+                'success' => true,
+                'image_url' => 'http://example.com/example.jpg'
+            ]));
 
         $response = $this->createPinCreationResponse();
         $this->setResponseExpectation($response);
