@@ -646,6 +646,13 @@ $bot->getHttpClient()->setOptions([
 ]);
 ```
 
+With every request Pinterest returns an array with your current client info, with such info as 
+OS, browser, ip and others:
+
+```php
+$info = $bot->getClientInfo();
+```
+
 ## How can I thank you?
 Why not star the github repo? I'd love the attention!
 
