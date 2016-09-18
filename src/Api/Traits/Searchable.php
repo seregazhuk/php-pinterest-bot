@@ -13,6 +13,7 @@ use seregazhuk\PinterestBot\Api\SearchResponse;
  *
  * @property string $searchScope
  * @property Request request
+ * @property Response $response
  */
 trait Searchable
 {
