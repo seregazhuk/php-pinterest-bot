@@ -7,8 +7,9 @@ use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\CurlHttpClient;
 use seregazhuk\PinterestBot\Api\Providers\Provider;
 use seregazhuk\PinterestBot\Api\Providers\ProviderWrapper;
+use seregazhuk\PinterestBot\Api\Response;
 
-class ProviderLoginCheckWrapperTest extends PHPUnit_Framework_TestCase
+class ProviderWrapperTest extends PHPUnit_Framework_TestCase
 {
     /**
      * For not logged in request.
@@ -18,7 +19,7 @@ class ProviderLoginCheckWrapperTest extends PHPUnit_Framework_TestCase
      */
     public function it_should_fail_when_login_is_required()
     {
-        $provider = new TestProvider(new Request(new CurlHttpClient()));
+        $provider = new TestProvider(new Request(new CurlHttpClient()), new Response());
         $wrapper = new ProviderWrapper($provider);
         $wrapper->testFail();
     }
@@ -26,7 +27,7 @@ class ProviderLoginCheckWrapperTest extends PHPUnit_Framework_TestCase
     /** @test */
     public function it_should_call_provider_method()
     {
-        $provider = new TestProvider(new Request(new CurlHttpClient()));
+        $provider = new TestProvider(new Request(new CurlHttpClient()), new Response());
         $wrapper = new ProviderWrapper($provider);
         $this->assertEquals('success', $wrapper->testSuccess());
     }
@@ -37,7 +38,7 @@ class ProviderLoginCheckWrapperTest extends PHPUnit_Framework_TestCase
      */
     public function it_should_throw_exception_when_calling_non_existed_method()
     {
-        $provider = new TestProvider(new Request(new CurlHttpClient()));
+        $provider = new TestProvider(new Request(new CurlHttpClient()), new Response());
         $wrapper = new ProviderWrapper($provider);
         $wrapper->badMethod();
     }

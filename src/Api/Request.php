@@ -73,14 +73,14 @@ class Request
     /**
      * @param string $pathToFile
      * @param string $url
-     * @return array
+     * @return string
      * @throws InvalidRequest
      */
     public function upload($pathToFile, $url)
     {
         $this->filePathToUpload = $pathToFile;
 
-        return $this->exec($url)->getData();
+        return $this->exec($url);
     }
 
     /**
@@ -101,7 +101,9 @@ class Request
             ->httpClient
             ->execute($url, $postString, $headers);
 
-        return $this->processResponse($result);
+        $this->filePathToUpload = null;
+
+        return $result;
     }
 
     /**
@@ -132,7 +134,6 @@ class Request
 
     /**
      * Mark api as logged.
-     * @return $this
      * @throws AuthFailed
      */
     public function login()
@@ -264,21 +265,6 @@ class Request
             'Content-Type: multipart/form-data; boundary=' . $delimiter,
             'Content-Length: ' . strlen($this->postFileData)
         ];
-    }
-
-    /**
-     * @param string $res
-     * @return Response
-     */
-    protected function processResponse($res)
-    {
-        $this->filePathToUpload = null;
-        $this->lastError = null;
-
-        $response = new Response(json_decode($res, true));
-        $this->lastError = $response->getLastError();
-
-        return $response;
     }
 
     /**

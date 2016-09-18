@@ -87,6 +87,8 @@ class RequestTest extends PHPUnit_Framework_TestCase
     public function it_should_save_token_from_cookies()
     {
         $cookieFile = __DIR__.'/../'.CurlHttpClient::COOKIE_NAME;
+        var_dump($cookieFile);
+        die();
         $token = 'WfdvEjNSLYiykJHDIx4sGSpCS8OhUld0';
         file_put_contents(
             $cookieFile, ".pinterest.com	TRUE	/	TRUE	1488295594	csrftoken	$token"
@@ -116,7 +118,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
      */
     public function it_should_throw_exception_uploading_file_that_does_not_exist()
     {
-        $this->createRequestObject()->upload('image.jpg', 'httpClient://uploadurl.com');
+        $this->createRequestObject()->upload('image.jpg', 'http://uploadurl.com');
     }
 
     /**
@@ -131,7 +133,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
         $this->http_should_execute_and_return($http, json_encode([]));
         $request = $this->createRequestObject($http);
 
-        $request->upload($image, 'httpClient://uploadurl.com');
+        $request->upload($image, 'http://uploadurl.com');
         $this->assertNotEmpty($this->getProperty('postFileData'));
         unlink($image);
     }
@@ -152,7 +154,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
     {
         Mockery::close();
     }
-    
+
     /**
      * @return Mock|HttpClient
      */

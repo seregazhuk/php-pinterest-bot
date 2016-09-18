@@ -79,7 +79,7 @@ class PinsTest extends ProviderTest
     public function it_should_upload_images_when_creating_pin_with_local_image()
     {
         $image = 'image.jpg';
-        $this->requestMock
+        $this->request
             ->shouldReceive('upload')
             ->withArgs([$image, UrlBuilder::IMAGE_UPLOAD]);
 

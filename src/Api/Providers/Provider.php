@@ -13,6 +13,12 @@ use seregazhuk\PinterestBot\Helpers\Pagination;
 abstract class Provider
 {
     /**
+     * @var bool
+     */
+    protected $returnData = true;
+
+
+    /**
      * List of methods that require logged status.
      *
      * @var array
@@ -27,11 +33,18 @@ abstract class Provider
     protected $request;
 
     /**
-     * @param Request $request
+     * @var Response
      */
-    public function __construct(Request $request)
+    protected $response;
+
+    /**
+     * @param Request $request
+     * @param Response $response
+     */
+    public function __construct(Request $request, Response $response)
     {
         $this->request = $request;
+        $this->response = $response;
     }
 
     /**
@@ -46,9 +59,11 @@ abstract class Provider
     protected function execPostRequest($requestOptions, $resourceUrl, $returnResponse = false)
     {
         $postString = Request::createQuery($requestOptions);
-        $response = $this->request->exec($resourceUrl, $postString);
 
-        return $returnResponse ? $response : $response->isOk();
+        $this->execute($resourceUrl, $postString);
+
+        return $returnResponse ? $this->response : $this->response->isOk();
+
     }
 
     /**
@@ -62,9 +77,9 @@ abstract class Provider
     {
         $query = Request::createQuery($requestOptions);
 
-        $response = $this->request->exec($resourceUrl . "?{$query}");
+        $this->execute($resourceUrl . "?{$query}");
 
-        return $response->getResponseData();
+        return $this->response->getResponseData();
     }
 
     /**
@@ -79,7 +94,23 @@ abstract class Provider
     {
         $query = Request::createQuery($requestOptions, $bookmarks);
 
-        return $this->request->exec($resourceUrl . "?{$query}");
+        $this->execute($resourceUrl . "?{$query}");
+
+        return $this->response;
+    }
+
+    /**
+     * @param $url
+     * @param string $postString
+     * @return $this
+     */
+    protected function execute($url, $postString = "")
+    {
+        $result = $this->request->exec($url, $postString);
+
+        $this->processResult($result);
+
+        return $this;
     }
 
     /**
@@ -114,11 +145,11 @@ abstract class Provider
     }
 
     /**
-     * @return Request
+     * @return bool
      */
-    public function getRequest()
+    public function isLoggedIn()
     {
-        return $this->request;
+        return $this->request->isLoggedIn();
     }
 
     /**
@@ -130,5 +161,14 @@ abstract class Provider
     protected function getPaginatedResponse(array $params, $limit, $method = 'getPaginatedData')
     {
         return (new Pagination($this))->paginateOver($method, $params, $limit);
+    }
+
+    /**
+     * @param string $res
+     * @return Response
+     */
+    protected function processResult($res)
+    {
+        return $this->response->fill(json_decode($res, true));
     }
 }

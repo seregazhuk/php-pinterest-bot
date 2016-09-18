@@ -4,6 +4,7 @@ namespace seregazhuk\PinterestBot\Factories;
 
 use seregazhuk\PinterestBot\Bot;
 use seregazhuk\PinterestBot\Api\Request;
+use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Api\CurlHttpClient;
 use seregazhuk\PinterestBot\Api\ProvidersContainer;
 
@@ -18,7 +19,7 @@ class PinterestBot
     {
         $request = new Request(new CurlHttpClient());
 
-        $providersContainer = new ProvidersContainer($request);
+        $providersContainer = new ProvidersContainer($request, new Response());
 
         return new Bot($providersContainer);
     }

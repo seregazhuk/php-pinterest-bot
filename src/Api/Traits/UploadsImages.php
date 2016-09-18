@@ -20,8 +20,7 @@ trait UploadsImages
      */
     public function upload($image)
     {
-        $res = $this
-            ->getRequest()
+        $res = $this->request
             ->upload($image, UrlBuilder::IMAGE_UPLOAD);
 
         return $res['success'] ? $res['image_url'] : null;

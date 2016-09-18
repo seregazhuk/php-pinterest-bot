@@ -5,6 +5,7 @@ namespace seregazhuk\tests;
 use Mockery;
 use Mockery\MockInterface;
 use PHPUnit_Framework_TestCase;
+use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Bot;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\CurlHttpClient;
@@ -24,7 +25,7 @@ class BotTest extends PHPUnit_Framework_TestCase
             ->andReturn($error)
             ->getMock();
 
-        $providersContainer = new ProvidersContainer($request);
+        $providersContainer = new ProvidersContainer($request, new Response());
 
         $bot = new Bot($providersContainer);
 

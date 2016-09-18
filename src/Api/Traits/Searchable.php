@@ -39,9 +39,11 @@ trait Searchable
     {
         $url = UrlBuilder::getSearchUrl($bookmarks);
         $get = $this->createSearchQuery($query, $scope, $bookmarks);
-        $response = $this->getRequest()->exec($url . '?' . $get);
+        $result = $this->request->exec($url . '?' . $get);
 
-        return new SearchResponse($response);
+        $this->processResult($result);
+
+        return new SearchResponse($this->response);
     }
 
     /**

@@ -10,6 +10,8 @@ use seregazhuk\PinterestBot\Api\Providers\ProviderWrapper;
 
 class ProvidersContainer
 {
+    const PROVIDERS_NAMESPACE = 'seregazhuk\\PinterestBot\\Api\\Providers\\';
+
     /**
      * References to the request that travels
      * through the application.
@@ -18,7 +20,10 @@ class ProvidersContainer
      */
     protected $request;
 
-    const PROVIDERS_NAMESPACE = 'seregazhuk\\PinterestBot\\Api\\Providers\\';
+    /**
+     * @var Response
+     */
+    protected $response;
 
     /**
      * A array containing the cached providers.
@@ -29,10 +34,12 @@ class ProvidersContainer
 
     /**
      * @param Request $request
+     * @param Response $response
      */
-    public function __construct(Request $request)
+    public function __construct(Request $request, Response $response)
     {
         $this->request = $request;
+        $this->response = $response;
     }
 
     /**
@@ -89,7 +96,7 @@ class ProvidersContainer
     protected function buildProvider($className)
     {
         $provider = (new ReflectionClass($className))
-            ->newInstanceArgs([$this->request]);
+            ->newInstanceArgs([$this->request, $this->response]);
 
         return new ProviderWrapper($provider);
     }
@@ -106,6 +113,14 @@ class ProvidersContainer
             ->getLastError();
 
         return isset($error['message']) ? $error['message'] : null;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getClientInfo()
+    {
+        return $this->response->getClientInfo();
     }
 
     /**
