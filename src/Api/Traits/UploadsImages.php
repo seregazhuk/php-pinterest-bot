@@ -34,4 +34,10 @@ trait UploadsImages
             $this->response->getData('image_url') :
             null;
     }
+
+    /**
+     * @param string $res
+     * @return Response
+     */
+    abstract protected function processResult($res);
 }
