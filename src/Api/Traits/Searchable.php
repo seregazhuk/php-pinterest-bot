@@ -55,7 +55,7 @@ trait Searchable
      * @param string $scope
      * @param array $bookmarks
      *
-     * @return array
+     * @return string
      */
     protected function createSearchQuery($query, $scope, $bookmarks = [])
     {
