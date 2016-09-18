@@ -66,7 +66,7 @@ trait Followable
 
     /**
      * @param integer $entityId
-     * @return mixed
+     * @return string
      */
     public function createFollowRequestQuery($entityId)
     {
