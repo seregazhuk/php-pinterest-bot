@@ -50,7 +50,11 @@ class UserTest extends ProviderTest
         ];
         $this->request
             ->shouldReceive('upload')
-            ->withArgs([$attributes['profile_image'], UrlBuilder::IMAGE_UPLOAD]);
+            ->withArgs([$attributes['profile_image'], UrlBuilder::IMAGE_UPLOAD])
+            ->andReturn(json_encode([
+                'success' => true,
+                'image_url' => 'http://example.com/example.jpg'
+            ]));
         
         $this->setSuccessResponse();
         $this->assertTrue($this->provider->profile($attributes));
