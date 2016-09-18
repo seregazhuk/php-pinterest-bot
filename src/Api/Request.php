@@ -89,7 +89,7 @@ class Request
      * @param string $resourceUrl
      * @param string $postString
      *
-     * @return Response
+     * @return string
      */
     public function exec($resourceUrl, $postString = '')
     {

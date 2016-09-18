@@ -57,6 +57,15 @@ class Response implements PaginatedResponse
     }
 
     /**
+     * @param string $key
+     * @return bool
+     */
+    public function hasData($key = '')
+    {
+        return !is_null($this->getValueByKey($key, $this->data));
+    }
+
+    /**
      * Parse data from Pinterest Api response.
      * Data is stored in ['resource_response']['data'] array.
      *

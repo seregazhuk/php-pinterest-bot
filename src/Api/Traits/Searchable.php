@@ -3,6 +3,7 @@
 namespace seregazhuk\PinterestBot\Api\Traits;
 
 use seregazhuk\PinterestBot\Api\Request;
+use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\SearchResponse;
 
@@ -124,4 +125,10 @@ trait Searchable
      * @return mixed
      */
     abstract protected function getPaginatedResponse(array $params, $limit, $method = 'getPaginatedData');
+
+    /**
+     * @param string $res
+     * @return Response
+     */
+    abstract protected function processResult($res);
 }
