@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [4.11.2] - 2016-09-18
+### Fixed:
+ - Images upload
+
 ## [4.11.1] - 2016-09-18
 ### Added: 
  - Bot *getClientInfo* method.
