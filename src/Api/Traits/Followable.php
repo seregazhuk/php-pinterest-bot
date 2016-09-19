@@ -2,7 +2,7 @@
 
 namespace seregazhuk\PinterestBot\Api\Traits;
 
-use Iterator;
+use Generator;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
@@ -93,7 +93,7 @@ trait Followable
      * @param string $for
      * @param int $limit
      *
-     * @return Iterator
+     * @return Generator
      */
     public function followers($for, $limit = 0)
     {
@@ -107,7 +107,7 @@ trait Followable
      * @param string $resourceUrl
      * @param int $limit
      *
-     * @return Iterator
+     * @return Generator
      */
     public function getFollowData($data, $resourceUrl, $limit = 0)
     {
@@ -120,7 +120,7 @@ trait Followable
      * @param array $params
      * @param int $limit
      * @param string $method
-     * @return mixed
+     * @return Generator
      */
     abstract protected function getPaginatedResponse(array $params, $limit, $method = 'getPaginatedData');
 

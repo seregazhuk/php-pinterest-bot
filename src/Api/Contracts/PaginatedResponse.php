@@ -4,7 +4,6 @@ namespace seregazhuk\PinterestBot\Api\Contracts;
 
 interface PaginatedResponse
 {
-
     /**
      * @return bool
      */
