@@ -12,8 +12,6 @@ use seregazhuk\PinterestBot\Api\Request;
  */
 trait FollowResponseHelper
 {
-    use SetsResponse;
-
     /**
      * @param int $entityId
      * @param string $sourceUrl

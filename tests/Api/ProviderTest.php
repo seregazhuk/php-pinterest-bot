@@ -104,7 +104,7 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
      * @param int $times
      * @param string $method
      */
-    protected function setResponseExpectation($response = [], $times = 1, $method = 'exec')
+    protected function apiShouldReturn($response = [], $times = 1, $method = 'exec')
     {
         $this->request
             ->shouldReceive($method)
@@ -117,7 +117,7 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
      */
     protected function setSuccessResponse($times = 1)
     {
-        $this->setResponseExpectation($this->createSuccessApiResponse(), $times);
+        $this->apiShouldReturn($this->createSuccessApiResponse(), $times);
     }
 
     /**
@@ -125,14 +125,23 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
      */
     protected function setErrorResponse($times = 1)
     {
-        $this->setResponseExpectation($this->createErrorApiResponse(), $times);
+        $this->apiShouldReturn($this->createErrorApiResponse(), $times);
+    }
+
+    /**
+     * @param int $times
+     */
+    protected function apiShouldReturnEmpty($times = 1)
+    {
+        $this->apiShouldReturnData([], $times);
     }
 
     /**
      * @param mixed $data
+     * @param int $times
      */
-    protected function setResourceResponseData($data)
+    protected function apiShouldReturnData($data, $times = 1)
     {
-        $this->setResponseExpectation(['resource_response' => ['data' => $data]]);
+        $this->apiShouldReturn(['resource_response' => ['data' => $data]], $times);
     }
 }

@@ -36,7 +36,7 @@ class UserTest extends ProviderTest
     {
         $profile = ['username' => 'test'];
         $response = $this->createApiResponseWithData($profile);
-        $this->setResponseExpectation($response);
+        $this->apiShouldReturn($response);
 
         $this->assertEquals($profile, $this->provider->profile());
     }
@@ -133,7 +133,7 @@ class UserTest extends ProviderTest
         $response = $this->createSuccessApiResponse();
         $this->setIsLoggedInExpectation(false);
 
-        $this->setResponseExpectation($response);
+        $this->apiShouldReturn($response);
 
         $this->request
             ->shouldReceive('clearToken')
@@ -152,7 +152,7 @@ class UserTest extends ProviderTest
         $response = $this->createErrorApiResponse();
         $this->setIsLoggedInExpectation(false);
 
-        $this->setResponseExpectation($response);
+        $this->apiShouldReturn($response);
         $this->request->shouldReceive('clearToken');
 
         $this->assertFalse($this->provider->login('test', 'test'));
@@ -176,11 +176,11 @@ class UserTest extends ProviderTest
     public function it_should_convert_simple_account_to_business()
     {
         $success = $this->createSuccessApiResponse();
-        $this->setResponseExpectation($success);
+        $this->apiShouldReturn($success);
         $this->assertTrue($this->provider->convertToBusiness('name'));
 
         $error = $this->createErrorApiResponse();
-        $this->setResponseExpectation($error);
+        $this->apiShouldReturn($error);
         $this->assertFalse($this->provider->convertToBusiness('name'));
     }
 

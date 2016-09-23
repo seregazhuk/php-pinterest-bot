@@ -64,7 +64,7 @@ class PinsTest extends ProviderTest
     public function it_should_create_new_pin()
     {
         $response = $this->createPinCreationResponse();
-        $this->setResponseExpectation($response);
+        $this->apiShouldReturn($response);
 
         $pinSource = 'http://example.com/image.jpg';
         $pinDescription = 'Pin Description';
@@ -88,7 +88,7 @@ class PinsTest extends ProviderTest
             ]));
 
         $response = $this->createPinCreationResponse();
-        $this->setResponseExpectation($response);
+        $this->apiShouldReturn($response);
         $this->provider->create($image, 1, 'test');
     }
 
@@ -96,7 +96,7 @@ class PinsTest extends ProviderTest
     public function it_should_create_repin()
     {
         $response = $this->createPinCreationResponse();
-        $this->setResponseExpectation($response);
+        $this->apiShouldReturn($response);
 
         $boardId = 1;
         $repinId = 11;
@@ -112,10 +112,10 @@ class PinsTest extends ProviderTest
     public function it_should_edit_pins()
     {
         $response = $this->createApiResponse();
-        $this->setResponseExpectation($response);
+        $this->apiShouldReturn($response);
         $this->assertTrue($this->provider->edit(1, 'new', 'changed'));
 
-        $this->setResponseExpectation($this->createErrorApiResponse());
+        $this->apiShouldReturn($this->createErrorApiResponse());
         $this->assertFalse($this->provider->edit(1, 'new', 'changed'));
     }
 
@@ -123,10 +123,10 @@ class PinsTest extends ProviderTest
     public function it_should_delete_pin()
     {
         $response = $this->createApiResponse();
-        $this->setResponseExpectation($response);
+        $this->apiShouldReturn($response);
         $this->assertTrue($this->provider->delete(1));
 
-        $this->setResponseExpectation($this->createErrorApiResponse());
+        $this->apiShouldReturn($this->createErrorApiResponse());
         $this->assertFalse($this->provider->delete(1));
     }
 
@@ -134,10 +134,10 @@ class PinsTest extends ProviderTest
     public function it_should_return_pin_info()
     {
         $response = $this->createApiResponse();
-        $this->setResponseExpectation($response);
+        $this->apiShouldReturn($response);
         $this->assertNotEmpty($this->provider->info(1));
 
-        $this->setResponseExpectation($this->createErrorApiResponse());
+        $this->apiShouldReturn($this->createErrorApiResponse());
         $this->assertEmpty($this->provider->info(1));
     }
 
@@ -150,7 +150,7 @@ class PinsTest extends ProviderTest
         ];
 
         $expectedResultsNum = count($response['module']['tree']['data']['results']);
-        $this->setResponseExpectation($response);
+        $this->apiShouldReturn($response);
 
         $res = iterator_to_array($this->provider->search('dogs', 2));
         $this->assertCount($expectedResultsNum, $res);
@@ -170,8 +170,8 @@ class PinsTest extends ProviderTest
     public function it_should_return_generator_with_pins_for_specific_site()
     {
         $response = $this->createPaginatedResponse();
-        $this->setResponseExpectation($response);
-        $this->setResourceResponseData([]);
+        $this->apiShouldReturn($response);
+        $this->apiShouldReturnEmpty();
 
         $pins = $this->provider->fromSource('flickr.ru');
         $this->assertCount(2, iterator_to_array($pins));
@@ -182,10 +182,10 @@ class PinsTest extends ProviderTest
     {
         $pinData = ['aggregated_pin_data' => ['id' => 1]];
         $response = $this->createApiResponseWithData($pinData);
-        $this->setResponseExpectation($response);
+        $this->apiShouldReturn($response);
 
-        $this->setResponseExpectation($this->createPaginatedResponse());
-        $this->setResourceResponseData([]);
+        $this->apiShouldReturn($this->createPaginatedResponse());
+        $this->apiShouldReturnEmpty();
 
         $this->assertCount(2, iterator_to_array($this->provider->activity(1)));
     }
@@ -193,7 +193,7 @@ class PinsTest extends ProviderTest
     /** @test */
     public function it_should_return_null_for_empty_activity()
     {
-        $this->setResponseExpectation($this->createApiResponse());
+        $this->apiShouldReturn($this->createApiResponse());
         $this->assertNull($this->provider->activity(1));
     }
 
@@ -201,8 +201,8 @@ class PinsTest extends ProviderTest
     public function it_should_return_generator_for_users_feed()
     {
         $response = $this->createPaginatedResponse();
-        $this->setResponseExpectation($response);
-        $this->setResourceResponseData([]);
+        $this->apiShouldReturn($response);
+        $this->apiShouldReturnEmpty();
 
         $res = iterator_to_array($this->provider->userFeed());
         $this->assertCount(2, $res);

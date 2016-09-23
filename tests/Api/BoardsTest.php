@@ -32,7 +32,7 @@ class BoardsTest extends ProviderTest
         ];
 
         $expectedResultsNum = count($response['module']['tree']['data']['results']);
-        $this->setResponseExpectation($response);
+        $this->apiShouldReturn($response);
 
         $res = iterator_to_array($this->provider->search('dogs', 2));
         $this->assertCount($expectedResultsNum, $res);
@@ -64,9 +64,8 @@ class BoardsTest extends ProviderTest
     public function it_should_return_generator_for_boards_followers()
     {
         $response = $this->createPaginatedResponse();
-        $this->setResponseExpectation($response);
-        $this->setResourceResponseData([]);
-        $this->setResourceResponseData([]);
+        $this->apiShouldReturn($response);
+        $this->apiShouldReturnEmpty(2);
 
         $boardId = 1;
         $followers = $this->provider->followers($boardId);
@@ -84,10 +83,10 @@ class BoardsTest extends ProviderTest
         $userName = 'user';
         $response = $this->createApiResponseWithData($boards);
 
-        $this->setResponseExpectation($response);
+        $this->apiShouldReturn($response);
         $this->assertEquals($boards, $this->provider->forUser($userName));
 
-        $this->setResponseExpectation();
+        $this->apiShouldReturn();
         $this->assertFalse($this->provider->forUser($userName));
     }
 
@@ -97,10 +96,10 @@ class BoardsTest extends ProviderTest
         $boardInfo = 'info';
         $response = $this->createApiResponseWithData($boardInfo);
 
-        $this->setResponseExpectation($response);
+        $this->apiShouldReturn($response);
         $this->assertEquals($boardInfo, $this->provider->info('username', 'board'));
         
-        $this->setResponseExpectation();
+        $this->apiShouldReturn();
         $this->assertFalse($this->provider->info('username', 'board'));
     }
 
@@ -109,9 +108,8 @@ class BoardsTest extends ProviderTest
     {
         $response = $this->createPaginatedResponse();
 
-        $this->setResponseExpectation($response);
-        $this->setResourceResponseData([]);
-        $this->setResourceResponseData([]);
+        $this->apiShouldReturn($response);
+        $this->apiShouldReturnEmpty(2);
 
         $boardId = 1;
         $pins = $this->provider->pins($boardId);

@@ -27,10 +27,10 @@ class ConversationsTest extends ProviderTest
         $userId = '1';
         $message = 'test';
 
-        $this->setResponseExpectation($response);
+        $this->apiShouldReturn($response);
         $this->assertTrue($this->provider->sendMessage($userId, $message));
 
-        $this->setResponseExpectation($this->createErrorApiResponse());
+        $this->apiShouldReturn($this->createErrorApiResponse());
         $this->assertFalse($this->provider->sendMessage($userId, $message));
     }
 
@@ -41,10 +41,10 @@ class ConversationsTest extends ProviderTest
         $email = 'test@email.com';
         $message = 'test';
 
-        $this->setResponseExpectation($response);
+        $this->apiShouldReturn($response);
         $this->assertTrue($this->provider->sendEmail($email, $message));
 
-        $this->setResponseExpectation($this->createErrorApiResponse());
+        $this->apiShouldReturn($this->createErrorApiResponse());
         $this->assertFalse($this->provider->sendEmail($email, $message));
     }
 
@@ -80,10 +80,10 @@ class ConversationsTest extends ProviderTest
             ]
         );
 
-        $this->setResponseExpectation($res);
+        $this->apiShouldReturn($res);
         $this->assertEquals($lastConversations, $this->provider->last());
         
-        $this->setResponseExpectation();
+        $this->apiShouldReturn();
         $this->assertFalse($this->provider->last());
     }
 

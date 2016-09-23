@@ -53,7 +53,7 @@ class TopicsTest extends ProviderTest
 
         $response = $this->createApiResponseWithData($info);
 
-        $this->setResponseExpectation($response);
+        $this->apiShouldReturn($response);
 
         $this->assertEquals($info, $this->provider->getInfo(1));
     }
@@ -63,8 +63,8 @@ class TopicsTest extends ProviderTest
     {
         $response = $this->createPaginatedResponse();
 
-        $this->setResponseExpectation($response);
-        $this->setResourceResponseData([]);
+        $this->apiShouldReturn($response);
+        $this->apiShouldReturnEmpty();
 
         $this->assertCount(2, iterator_to_array($this->provider->getPinsFor('test')));
     }
