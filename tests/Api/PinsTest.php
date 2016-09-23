@@ -23,41 +23,41 @@ class PinsTest extends ProviderTest
     /** @test */
     public function it_should_like_pins()
     {
-        $this->setSuccessResponse();
-        $this->assertTrue($this->provider->like(1111));
+        $this->apiShouldReturnSuccess()
+            ->assertTrue($this->provider->like(1111));
 
-        $this->setErrorResponse();
-        $this->assertFalse($this->provider->like(1111));
+        $this->apiShouldReturnError()
+            ->assertFalse($this->provider->like(1111));
     }
 
     /** @test */
     public function it_should_unlike_pins()
     {
-        $this->setSuccessResponse();
-        $this->assertTrue($this->provider->unLike(1111));
+        $this->apiShouldReturnSuccess()
+            ->assertTrue($this->provider->unLike(1111));
 
-        $this->setErrorResponse();
-        $this->assertFalse($this->provider->unLike(1111));
+        $this->apiShouldReturnError()
+            ->assertFalse($this->provider->unLike(1111));
     }
 
     /** @test */
     public function it_should_create_comments_for_pin()
     {
-        $this->setSuccessResponse();
-        $this->assertNotEmpty($this->provider->comment(1111, 'comment text'));
+        $this->apiShouldReturnSuccess()
+            ->assertNotEmpty($this->provider->comment(1111, 'comment text'));
 
-        $this->setErrorResponse();
-        $this->assertFalse($this->provider->comment(1111, 'comment text'));
+        $this->apiShouldReturnError()
+            ->assertFalse($this->provider->comment(1111, 'comment text'));
     }
 
     /** @test */
     public function it_should_delete_comments_for_pin()
     {
-        $this->setSuccessResponse();
-        $this->assertTrue($this->provider->deleteComment(1111, 1111));
+        $this->apiShouldReturnSuccess()
+            ->assertTrue($this->provider->deleteComment(1111, 1111));
 
-        $this->setErrorResponse();
-        $this->assertFalse($this->provider->deleteComment(1111, 1111));
+        $this->apiShouldReturnError()
+            ->assertFalse($this->provider->deleteComment(1111, 1111));
     }
 
     /** @test */
@@ -70,8 +70,8 @@ class PinsTest extends ProviderTest
         $boardId = 1;
         $this->assertNotEmpty($this->provider->create($pinSource, $boardId, $pinDescription));
 
-        $this->setErrorResponse();
-        $this->assertEmpty($this->provider->create($pinSource, $boardId, $pinDescription));
+        $this->apiShouldReturnError()
+            ->assertEmpty($this->provider->create($pinSource, $boardId, $pinDescription));
     }
 
     /** @test */
@@ -101,8 +101,8 @@ class PinsTest extends ProviderTest
 
         $this->assertNotEmpty($this->provider->repin($repinId, $boardId, $pinDescription));
         
-        $this->setErrorResponse();
-        $this->assertEmpty($this->provider->repin($repinId, $boardId, $pinDescription));
+        $this->apiShouldReturnError()
+            ->assertEmpty($this->provider->repin($repinId, $boardId, $pinDescription));
     }
 
     /** @test */
@@ -143,21 +143,20 @@ class PinsTest extends ProviderTest
             ['id' => 2],
         ];
 
-        $expectedResultsNum = count($response['module']['tree']['data']['results']);
         $this->apiShouldReturn($response);
 
-        $res = iterator_to_array($this->provider->search('dogs', 2));
-        $this->assertCount($expectedResultsNum, $res);
+        $res = $this->provider->search('dogs', 2);
+        $this->assertIsPaginatedResponse($res);
     }
 
     /** @test */
     public function it_should_move_pins_between_boards()
     {
-        $this->setSuccessResponse();
-        $this->assertTrue($this->provider->moveToBoard(1111, 1));
+        $this->apiShouldReturnSuccess()
+            ->assertTrue($this->provider->moveToBoard(1111, 1));
 
-        $this->setErrorResponse();
-        $this->assertFalse($this->provider->moveToBoard(1111, 1));
+        $this->apiShouldReturnError()
+            ->assertFalse($this->provider->moveToBoard(1111, 1));
     }
 
     /** @test */
@@ -167,7 +166,8 @@ class PinsTest extends ProviderTest
             ->apiShouldReturnEmpty();
 
         $pins = $this->provider->fromSource('flickr.ru');
-        $this->assertCount(2, iterator_to_array($pins));
+
+        $this->assertIsPaginatedResponse($pins);
     }
 
     /** @test */
@@ -177,7 +177,7 @@ class PinsTest extends ProviderTest
         $this->apiShouldReturnData($pinData)
             ->apiShouldReturnPagination()
             ->apiShouldReturnEmpty()
-            ->assertCount(2, iterator_to_array($this->provider->activity(1)));
+            ->assertIsPaginatedResponse($this->provider->activity(1));
     }
 
     /** @test */
@@ -193,8 +193,21 @@ class PinsTest extends ProviderTest
         $this->apiShouldReturnPagination()
             ->apiShouldReturnEmpty();
 
-        $res = iterator_to_array($this->provider->userFeed());
-        $this->assertCount(2, $res);
+        $res = $this->provider->userFeed();
+
+        $this->assertIsPaginatedResponse($res);
+    }
+
+    /** @test */
+    public function it_should_return_generator_for_related_pins()
+    {
+        $this->apiShouldReturnPagination()
+            ->apiShouldReturnEmpty();
+
+        $pinId = 1;
+        $res = $this->provider->getRelatedPins($pinId);
+
+        $this->assertIsPaginatedResponse($res);
     }
 
 

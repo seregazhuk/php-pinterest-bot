@@ -16,7 +16,7 @@ trait ResponseHelper
      *
      * @return array
      */
-    protected function createApiResponse($data = [])
+    public function createApiResponse($data = [])
     {
         return ['resource_response' => $data];
     }
@@ -26,7 +26,7 @@ trait ResponseHelper
      *
      * @return array
      */
-    protected function createSuccessApiResponse()
+    public function createSuccessApiResponse()
     {
         return $this->createApiResponse(['data' => 'success']);
     }
@@ -37,7 +37,7 @@ trait ResponseHelper
      * @param string $error
      * @return array
      */
-    protected function createErrorApiResponse($error = 'error')
+    public function createErrorApiResponse($error = 'error')
     {
         return $this->createApiResponse(
             [
@@ -53,7 +53,7 @@ trait ResponseHelper
      *
      * @return array
      */
-    protected function createPaginatedResponse()
+    public function createPaginatedResponse()
     {
         return [
             'resource_response' => [
@@ -71,7 +71,7 @@ trait ResponseHelper
      * @param string $method
      * @return $this
      */
-    protected function apiShouldReturn($response = [], $times = 1, $method = 'exec')
+    public function apiShouldReturn($response = [], $times = 1, $method = 'exec')
     {
         $this->request
             ->shouldReceive($method)
@@ -83,25 +83,9 @@ trait ResponseHelper
 
     /**
      * @param int $times
-     */
-    protected function setSuccessResponse($times = 1)
-    {
-        $this->apiShouldReturn($this->createSuccessApiResponse(), $times);
-    }
-
-    /**
-     * @param int $times
-     */
-    protected function setErrorResponse($times = 1)
-    {
-        $this->apiShouldReturn($this->createErrorApiResponse(), $times);
-    }
-
-    /**
-     * @param int $times
      * @return $this
      */
-    protected function apiShouldReturnEmpty($times = 1)
+    public function apiShouldReturnEmpty($times = 1)
     {
         return $this->apiShouldReturnData([], $times);
     }
@@ -111,38 +95,52 @@ trait ResponseHelper
      * @param int $times
      * @return $this
      */
-    protected function apiShouldReturnData($data, $times = 1)
+    public function apiShouldReturnData($data, $times = 1)
     {
         return $this->apiShouldReturn(['resource_response' => ['data' => $data]], $times);
     }
 
     /**
+     * @param int $times
      * @return $this
      */
-    protected function apiShouldReturnSuccess()
+    public function apiShouldReturnSuccess($times = 1)
     {
         return $this->apiShouldReturn(
-            $this->createSuccessApiResponse()
+            $this->createSuccessApiResponse(),
+            $times
+        );
+    }
+
+    /**
+     * @param int $times
+     * @return $this
+     */
+    public function apiShouldReturnError($times = 1)
+    {
+        return $this->apiShouldReturn(
+            $this->createErrorApiResponse(),
+            $times
         );
     }
 
     /**
      * @return $this
      */
-    protected function apiShouldReturnError()
-    {
-        return $this->apiShouldReturn(
-            $this->createErrorApiResponse()
-        );
-    }
-
-    /**
-     * @return $this
-     */
-    protected function apiShouldReturnPagination()
+    public function apiShouldReturnPagination()
     {
         return $this->apiShouldReturn(
             $this->createPaginatedResponse()
         );
+    }
+
+    /**
+     * @param mixed $response
+     * @param int $count
+     */
+    public function assertIsPaginatedResponse($response, $count = 2)
+    {
+        $this->assertInstanceOf(\Generator::class, $response);
+        $this->assertCount($count, iterator_to_array($response));
     }
 }

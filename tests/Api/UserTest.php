@@ -23,12 +23,12 @@ class UserTest extends ProviderTest
     /** @test */
     public function it_should_edit_user_profile()
     {
-        $this->setSuccessResponse();
+        $this->apiShouldReturnSuccess();
         $attributes = ['name' => 'name'];
         $this->assertTrue($this->provider->profile($attributes));
 
-        $this->setErrorResponse();
-        $this->assertFalse($this->provider->profile($attributes));
+        $this->apiShouldReturnError()
+            ->assertFalse($this->provider->profile($attributes));
     }
 
     /** @test */
@@ -55,8 +55,8 @@ class UserTest extends ProviderTest
                 'image_url' => 'http://example.com/example.jpg'
             ]));
         
-        $this->setSuccessResponse();
-        $this->assertTrue($this->provider->profile($attributes));
+        $this->apiShouldReturnSuccess()
+            ->assertTrue($this->provider->profile($attributes));
     }
 
     /**
@@ -67,8 +67,8 @@ class UserTest extends ProviderTest
         $this->setTokenFromCookiesExpectation(2);
         $this->setProperty('request', $this->request);
 
-        $this->setSuccessResponse(3);
-        $this->assertTrue($this->provider->register('email@email.com', 'test', 'name'));
+        $this->apiShouldReturnSuccess(3)
+            ->assertTrue($this->provider->register('email@email.com', 'test', 'name'));
     }
 
     /**
@@ -79,8 +79,8 @@ class UserTest extends ProviderTest
         $this->setTokenFromCookiesExpectation();
         $this->setProperty('request', $this->request);
 
-        $this->setErrorResponse(2);
-        $this->assertFalse($this->provider->register('email@email.com', 'test', 'name'));
+        $this->apiShouldReturnError(2)
+            ->assertFalse($this->provider->register('email@email.com', 'test', 'name'));
     }
 
     /**
@@ -91,8 +91,8 @@ class UserTest extends ProviderTest
         $this->setTokenFromCookiesExpectation(2);
         $this->setProperty('request', $this->request);
 
-        $this->setSuccessResponse(3);
-        $this->assertTrue($this->provider->registerBusiness('email@email.com', 'test', 'name'));
+        $this->apiShouldReturnSuccess(3)
+            ->assertTrue($this->provider->registerBusiness('email@email.com', 'test', 'name'));
     }
 
     /**
@@ -103,8 +103,8 @@ class UserTest extends ProviderTest
         $this->setTokenFromCookiesExpectation();
         $this->setProperty('request', $this->request);
 
-        $this->setErrorResponse(2);
-        $this->assertFalse($this->provider->registerBusiness('email@email.com', 'test', 'name'));
+        $this->apiShouldReturnError(2)
+            ->assertFalse($this->provider->registerBusiness('email@email.com', 'test', 'name'));
     }
 
     /**
