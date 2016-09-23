@@ -115,4 +115,12 @@ trait ResponseHelper
     {
         return $this->apiShouldReturn(['resource_response' => ['data' => $data]], $times);
     }
+
+    /**
+     * @return $this
+     */
+    protected function apiShouldReturnSuccess()
+    {
+        return $this->apiShouldReturnData('success');
+    }
 }

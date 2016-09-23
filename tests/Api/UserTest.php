@@ -129,10 +129,8 @@ class UserTest extends ProviderTest
     /** @test */
     public function it_should_make_api_request_and_clear_token_when_login()
     {
-        $response = $this->createSuccessApiResponse();
-        $this->setIsLoggedInExpectation(false);
-
-        $this->apiShouldReturn($response);
+        $this->setIsLoggedInExpectation(false)
+            ->apiShouldReturnSuccess();
 
         $this->request
             ->shouldReceive('clearToken')
@@ -174,8 +172,7 @@ class UserTest extends ProviderTest
     /** @test */
     public function it_should_convert_simple_account_to_business()
     {
-        $success = $this->createSuccessApiResponse();
-        $this->apiShouldReturn($success)
+        $this->apiShouldReturnSuccess()
             ->assertTrue($this->provider->convertToBusiness('name'));
 
         $error = $this->createErrorApiResponse();
@@ -196,6 +193,7 @@ class UserTest extends ProviderTest
 
     /**
      * @param bool $status
+     * @return $this
      */
     protected function setIsLoggedInExpectation($status)
     {
@@ -203,5 +201,7 @@ class UserTest extends ProviderTest
             ->shouldReceive('isLoggedIn')
             ->once()
             ->andReturn($status);
+
+        return $this;
     }
 }
