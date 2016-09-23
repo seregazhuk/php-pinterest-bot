@@ -81,9 +81,8 @@ class BoardsTest extends ProviderTest
     {
         $boards = 'boards';
         $userName = 'user';
-        $response = $this->createApiResponseWithData($boards);
 
-        $this->apiShouldReturn($response)
+        $this->apiShouldReturnData($boards)
             ->assertEquals($boards, $this->provider->forUser($userName));
 
         $this->apiShouldReturnEmpty()
@@ -94,9 +93,7 @@ class BoardsTest extends ProviderTest
     public function it_should_return_board_info()
     {
         $boardInfo = 'info';
-        $response = $this->createApiResponseWithData($boardInfo);
-
-        $this->apiShouldReturn($response)
+        $this->apiShouldReturnData($boardInfo)
             ->assertEquals($boardInfo, $this->provider->info('username', 'board'));
 
         $this->apiShouldReturnEmpty()

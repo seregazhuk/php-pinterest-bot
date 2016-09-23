@@ -35,8 +35,8 @@ class UserTest extends ProviderTest
     public function it_should_return_current_user_profile()
     {
         $profile = ['username' => 'test'];
-        $response = $this->createApiResponseWithData($profile);
-        $this->apiShouldReturn($response)
+
+        $this->apiShouldReturnData($profile)
             ->assertEquals($profile, $this->provider->profile());
     }
 

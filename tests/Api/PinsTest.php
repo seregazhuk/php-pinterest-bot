@@ -63,8 +63,7 @@ class PinsTest extends ProviderTest
     /** @test */
     public function it_should_create_new_pin()
     {
-        $response = $this->createPinCreationResponse();
-        $this->apiShouldReturn($response);
+        $this->apiShouldCreatePin();
 
         $pinSource = 'http://example.com/image.jpg';
         $pinDescription = 'Pin Description';
@@ -87,16 +86,14 @@ class PinsTest extends ProviderTest
                 'image_url' => 'http://example.com/example.jpg'
             ]));
 
-        $response = $this->createPinCreationResponse();
-        $this->apiShouldReturn($response);
+        $this->apiShouldCreatePin();
         $this->provider->create($image, 1, 'test');
     }
 
     /** @test */
     public function it_should_create_repin()
     {
-        $response = $this->createPinCreationResponse();
-        $this->apiShouldReturn($response);
+        $this->apiShouldCreatePin();
 
         $boardId = 1;
         $repinId = 11;
@@ -181,8 +178,7 @@ class PinsTest extends ProviderTest
     public function it_should_return_generator_with_pin_activity()
     {
         $pinData = ['aggregated_pin_data' => ['id' => 1]];
-        $response = $this->createApiResponseWithData($pinData);
-        $this->apiShouldReturn($response)
+        $this->apiShouldReturnData($pinData)
             ->apiShouldReturn($this->createPaginatedResponse())
             ->apiShouldReturnEmpty()
             ->assertCount(2, iterator_to_array($this->provider->activity(1)));
@@ -210,13 +206,13 @@ class PinsTest extends ProviderTest
     /**
      * Creates a pin creation response from Pinterest.
      *
-     * @return array
+     * @return $this
      */
-    protected function createPinCreationResponse()
+    protected function apiShouldCreatePin()
     {
         $data = ['id' => 1];
 
-        return $this->createApiResponseWithData($data);
+        return $this->apiShouldReturnData($data);
     }
 
     /**

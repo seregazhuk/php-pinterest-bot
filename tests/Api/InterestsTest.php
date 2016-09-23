@@ -26,9 +26,7 @@ class InterestsTest extends ProviderTest
     {
         $categories = ['category1', 'category2'];
 
-        $response = $this->createApiResponseWithData($categories);
-
-        $this->apiShouldReturn($response)
+        $this->apiShouldReturnData($categories)
             ->assertEquals($categories, $this->provider->getMain());
     }
 
@@ -37,9 +35,7 @@ class InterestsTest extends ProviderTest
     {
         $info = ['name' => 'category1'];
 
-        $response = $this->createApiResponseWithData($info);
-
-        $this->apiShouldReturn($response);
+        $this->apiShouldReturnData($info);
 
         $this->assertEquals($info, $this->provider->getInfo(1));
     }

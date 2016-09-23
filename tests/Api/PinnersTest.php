@@ -48,8 +48,7 @@ class PinnersTest extends ProviderTest
     public function it_should_return_user_info()
     {
         $userInfo = ['name' => 'test'];
-        $response = $this->createApiResponseWithData($userInfo);
-        $this->apiShouldReturn($response);
+        $this->apiShouldReturnData($userInfo);
 
         $data = $this->provider->info('username');
         $this->assertEquals($userInfo, $data);

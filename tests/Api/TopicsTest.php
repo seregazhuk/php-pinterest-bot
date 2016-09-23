@@ -51,9 +51,7 @@ class TopicsTest extends ProviderTest
     {
         $info = ['name' => 'category1'];
 
-        $response = $this->createApiResponseWithData($info);
-
-        $this->apiShouldReturn($response)
+        $this->apiShouldReturnData($info)
             ->assertEquals($info, $this->provider->getInfo(1));
     }
 
