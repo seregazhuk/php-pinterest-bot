@@ -58,14 +58,11 @@ class PinnersTest extends ProviderTest
     public function it_should_return_generator_with_user_followers()
     {
         $this->apiShouldReturnPagination()
-            ->apiShouldReturnEmpty(2);
+            ->apiShouldReturnEmpty();
 
         $followers = $this->provider->followers('username');
         $this->assertInstanceOf(\Generator::class, $followers);
         $this->assertCount(2, iterator_to_array($followers));
-
-        $followers = $this->provider->followers('username');
-        $this->assertEmpty(iterator_to_array($followers));
     }
 
     /** @test */
@@ -114,6 +111,17 @@ class PinnersTest extends ProviderTest
 
         $res = iterator_to_array($this->provider->search('dogs', 2));
         $this->assertCount($expectedResultsNum, $res);
+    }
+
+    /** @test */
+    public function it_should_return_generator_with_user_likes()
+    {
+        $this->apiShouldReturnPagination()
+            ->apiShouldReturnEmpty();
+
+        $likes = $this->provider->likes('username');
+        $this->assertInstanceOf(\Generator::class, $likes);
+        $this->assertCount(2, iterator_to_array($likes));
     }
 
     /**

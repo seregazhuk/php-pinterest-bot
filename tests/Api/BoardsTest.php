@@ -64,15 +64,12 @@ class BoardsTest extends ProviderTest
     public function it_should_return_generator_for_boards_followers()
     {
         $this->apiShouldReturnPagination()
-            ->apiShouldReturnEmpty(2);
+            ->apiShouldReturnEmpty();
 
         $boardId = 1;
         $followers = $this->provider->followers($boardId);
         $this->assertInstanceOf(\Generator::class, $followers);
         $this->assertCount(2, iterator_to_array($followers));
-
-        $followers = $this->provider->followers($boardId);
-        $this->assertEmpty(iterator_to_array($followers));
     }
 
     /** @test */
@@ -103,15 +100,12 @@ class BoardsTest extends ProviderTest
     public function it_should_return_generator_with_pins_for_specific_board()
     {
         $this->apiShouldReturnPagination()
-            ->apiShouldReturnEmpty(2);
+            ->apiShouldReturnEmpty();
 
         $boardId = 1;
         $pins = $this->provider->pins($boardId);
         $this->assertInstanceOf(\Generator::class, $pins);
         $this->assertCount(2, iterator_to_array($pins));
-
-        $pins = $this->provider->pins($boardId);
-        $this->assertEmpty(iterator_to_array($pins));
     }
 
     /** @test */

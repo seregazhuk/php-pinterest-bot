@@ -100,6 +100,16 @@ class ResponseTest extends PHPUnit_Framework_TestCase
         $this->assertEmpty($response->getPaginationData());
     }
 
+    /** @test */
+    public function it_should_return_client_info()
+    {
+        $response = new Response();
+        $clientInfo = ['ip' => '127.0.0.1'];
+        $response->fill(['client_context' => $clientInfo]);
+
+        $this->assertEquals($clientInfo, $response->getClientInfo());
+    }
+
 
     /** @test */
     public function it_should_return_data_and_bookmarks_from_response_with_pagination()

@@ -197,6 +197,17 @@ class PinsTest extends ProviderTest
         $this->assertCount(2, $res);
     }
 
+    /** @test */
+    public function it_should_return_generator_for_related_pins()
+    {
+        $this->apiShouldReturnPagination()
+            ->apiShouldReturnEmpty();
+
+        $pinId = 1;
+        $res = iterator_to_array($this->provider->getRelatedPins($pinId));
+        $this->assertCount(2, $res);
+    }
+
 
     /**
      * Creates a pin creation response from Pinterest.
