@@ -27,11 +27,11 @@ class ConversationsTest extends ProviderTest
         $userId = '1';
         $message = 'test';
 
-        $this->apiShouldReturn($response);
-        $this->assertTrue($this->provider->sendMessage($userId, $message));
+        $this->apiShouldReturn($response)
+            ->assertTrue($this->provider->sendMessage($userId, $message));
 
-        $this->apiShouldReturn($this->createErrorApiResponse());
-        $this->assertFalse($this->provider->sendMessage($userId, $message));
+        $this->apiShouldReturn($this->createErrorApiResponse())
+            ->assertFalse($this->provider->sendMessage($userId, $message));
     }
 
     /** @test */
@@ -41,11 +41,11 @@ class ConversationsTest extends ProviderTest
         $email = 'test@email.com';
         $message = 'test';
 
-        $this->apiShouldReturn($response);
-        $this->assertTrue($this->provider->sendEmail($email, $message));
+        $this->apiShouldReturn($response)
+            ->assertTrue($this->provider->sendEmail($email, $message));
 
-        $this->apiShouldReturn($this->createErrorApiResponse());
-        $this->assertFalse($this->provider->sendEmail($email, $message));
+        $this->apiShouldReturn($this->createErrorApiResponse())
+            ->assertFalse($this->provider->sendEmail($email, $message));
     }
 
     /**
@@ -80,11 +80,11 @@ class ConversationsTest extends ProviderTest
             ]
         );
 
-        $this->apiShouldReturn($res);
-        $this->assertEquals($lastConversations, $this->provider->last());
+        $this->apiShouldReturn($res)
+            ->assertEquals($lastConversations, $this->provider->last());
         
-        $this->apiShouldReturn();
-        $this->assertFalse($this->provider->last());
+        $this->apiShouldReturnEmpty()
+            ->assertFalse($this->provider->last());
     }
 
     /**

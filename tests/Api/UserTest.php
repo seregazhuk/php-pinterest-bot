@@ -36,9 +36,8 @@ class UserTest extends ProviderTest
     {
         $profile = ['username' => 'test'];
         $response = $this->createApiResponseWithData($profile);
-        $this->apiShouldReturn($response);
-
-        $this->assertEquals($profile, $this->provider->profile());
+        $this->apiShouldReturn($response)
+            ->assertEquals($profile, $this->provider->profile());
     }
 
     /** @test */
@@ -176,12 +175,12 @@ class UserTest extends ProviderTest
     public function it_should_convert_simple_account_to_business()
     {
         $success = $this->createSuccessApiResponse();
-        $this->apiShouldReturn($success);
-        $this->assertTrue($this->provider->convertToBusiness('name'));
+        $this->apiShouldReturn($success)
+            ->assertTrue($this->provider->convertToBusiness('name'));
 
         $error = $this->createErrorApiResponse();
-        $this->apiShouldReturn($error);
-        $this->assertFalse($this->provider->convertToBusiness('name'));
+        $this->apiShouldReturn($error)
+            ->assertFalse($this->provider->convertToBusiness('name'));
     }
 
     /**

@@ -45,8 +45,7 @@ class KeywordsTest extends ProviderTest
     /** @test */
     public function it_should_return_empty_array_for_no_recommendations()
     {
-        $this->apiShouldReturnData('');
-
-        $this->assertEmpty($this->provider->recommendedFor('test'));
+        $this->apiShouldReturnData('')
+            ->assertEmpty($this->provider->recommendedFor('test'));
     }
 }

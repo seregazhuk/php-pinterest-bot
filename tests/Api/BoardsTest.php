@@ -64,8 +64,8 @@ class BoardsTest extends ProviderTest
     public function it_should_return_generator_for_boards_followers()
     {
         $response = $this->createPaginatedResponse();
-        $this->apiShouldReturn($response);
-        $this->apiShouldReturnEmpty(2);
+        $this->apiShouldReturn($response)
+            ->apiShouldReturnEmpty(2);
 
         $boardId = 1;
         $followers = $this->provider->followers($boardId);
@@ -83,11 +83,11 @@ class BoardsTest extends ProviderTest
         $userName = 'user';
         $response = $this->createApiResponseWithData($boards);
 
-        $this->apiShouldReturn($response);
-        $this->assertEquals($boards, $this->provider->forUser($userName));
+        $this->apiShouldReturn($response)
+            ->assertEquals($boards, $this->provider->forUser($userName));
 
-        $this->apiShouldReturn();
-        $this->assertFalse($this->provider->forUser($userName));
+        $this->apiShouldReturnEmpty()
+            ->assertFalse($this->provider->forUser($userName));
     }
 
     /** @test */
@@ -96,11 +96,11 @@ class BoardsTest extends ProviderTest
         $boardInfo = 'info';
         $response = $this->createApiResponseWithData($boardInfo);
 
-        $this->apiShouldReturn($response);
-        $this->assertEquals($boardInfo, $this->provider->info('username', 'board'));
-        
-        $this->apiShouldReturn();
-        $this->assertFalse($this->provider->info('username', 'board'));
+        $this->apiShouldReturn($response)
+            ->assertEquals($boardInfo, $this->provider->info('username', 'board'));
+
+        $this->apiShouldReturnEmpty()
+            ->assertFalse($this->provider->info('username', 'board'));
     }
 
     /** @test */
@@ -108,8 +108,8 @@ class BoardsTest extends ProviderTest
     {
         $response = $this->createPaginatedResponse();
 
-        $this->apiShouldReturn($response);
-        $this->apiShouldReturnEmpty(2);
+        $this->apiShouldReturn($response)
+            ->apiShouldReturnEmpty(2);
 
         $boardId = 1;
         $pins = $this->provider->pins($boardId);
@@ -123,7 +123,7 @@ class BoardsTest extends ProviderTest
     /** @test */
     public function it_should_delete_board()
     {
-        $this->setSuccessResponse(); 
+        $this->setSuccessResponse();
         $this->assertTrue($this->provider->delete(1111));
 
         $this->setErrorResponse();        

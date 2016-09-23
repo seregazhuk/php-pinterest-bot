@@ -59,8 +59,8 @@ class PinnersTest extends ProviderTest
     public function it_should_return_generator_with_user_followers()
     {
         $response = $this->createPaginatedResponse();
-        $this->apiShouldReturn($response);
-        $this->apiShouldReturnEmpty(2);
+        $this->apiShouldReturn($response)
+            ->apiShouldReturnEmpty(2);
 
         $followers = $this->provider->followers('username');
         $this->assertInstanceOf(\Generator::class, $followers);
@@ -74,8 +74,8 @@ class PinnersTest extends ProviderTest
     public function it_should_return_generator_with_following_users()
     {
         $response = $this->createPaginatedResponse();
-        $this->apiShouldReturn($response);
-        $this->apiShouldReturnEmpty();
+        $this->apiShouldReturn($response)
+            ->apiShouldReturnEmpty();
 
         $following = $this->provider->following('username');
         $this->assertCount(2, iterator_to_array($following));

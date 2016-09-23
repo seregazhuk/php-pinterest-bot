@@ -28,9 +28,8 @@ class InterestsTest extends ProviderTest
 
         $response = $this->createApiResponseWithData($categories);
 
-        $this->apiShouldReturn($response);
-
-        $this->assertEquals($categories, $this->provider->getMain());
+        $this->apiShouldReturn($response)
+            ->assertEquals($categories, $this->provider->getMain());
     }
 
     /** @test */
@@ -50,9 +49,8 @@ class InterestsTest extends ProviderTest
     {
         $response = $this->createPaginatedResponse();
 
-        $this->apiShouldReturn($response);
-        $this->apiShouldReturnEmpty();
-
-        $this->assertCount(2, iterator_to_array($this->provider->getPinsFor('test')));
+        $this->apiShouldReturn($response)
+            ->apiShouldReturnEmpty()
+            ->assertCount(2, iterator_to_array($this->provider->getPinsFor('test')));
     }
 }

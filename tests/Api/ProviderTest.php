@@ -103,6 +103,7 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
      * @param array|null $response
      * @param int $times
      * @param string $method
+     * @return $this
      */
     protected function apiShouldReturn($response = [], $times = 1, $method = 'exec')
     {
@@ -110,6 +111,8 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
             ->shouldReceive($method)
             ->times($times)
             ->andReturn(json_encode($response));
+
+        return $this;
     }
 
     /**
@@ -130,18 +133,20 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
 
     /**
      * @param int $times
+     * @return ProviderTest
      */
     protected function apiShouldReturnEmpty($times = 1)
     {
-        $this->apiShouldReturnData([], $times);
+        return $this->apiShouldReturnData([], $times);
     }
 
     /**
      * @param mixed $data
      * @param int $times
+     * @return ProviderTest
      */
     protected function apiShouldReturnData($data, $times = 1)
     {
-        $this->apiShouldReturn(['resource_response' => ['data' => $data]], $times);
+        return $this->apiShouldReturn(['resource_response' => ['data' => $data]], $times);
     }
 }
