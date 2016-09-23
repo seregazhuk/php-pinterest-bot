@@ -121,6 +121,8 @@ trait ResponseHelper
      */
     protected function apiShouldReturnSuccess()
     {
-        return $this->apiShouldReturnData('success');
+        return $this->apiShouldReturn(
+            $this->createSuccessApiResponse()
+        );
     }
 }
