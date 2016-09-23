@@ -2,6 +2,14 @@
 
 namespace seregazhuk\tests\Helpers;
 
+use seregazhuk\PinterestBot\Api\Request;
+
+/**
+ * Class FollowResponseHelper
+ * @package seregazhuk\tests\Helpers
+ *
+ * @property Request|MockeryInterface $request
+ */
 trait FollowResponseHelper
 {
     use SetsResponse;
