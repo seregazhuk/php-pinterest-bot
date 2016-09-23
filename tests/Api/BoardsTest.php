@@ -63,8 +63,7 @@ class BoardsTest extends ProviderTest
     /** @test */
     public function it_should_return_generator_for_boards_followers()
     {
-        $response = $this->createPaginatedResponse();
-        $this->apiShouldReturn($response)
+        $this->apiShouldReturnPagination()
             ->apiShouldReturnEmpty(2);
 
         $boardId = 1;
@@ -103,9 +102,7 @@ class BoardsTest extends ProviderTest
     /** @test */
     public function it_should_return_generator_with_pins_for_specific_board()
     {
-        $response = $this->createPaginatedResponse();
-
-        $this->apiShouldReturn($response)
+        $this->apiShouldReturnPagination()
             ->apiShouldReturnEmpty(2);
 
         $boardId = 1;

@@ -135,4 +135,14 @@ trait ResponseHelper
             $this->createErrorApiResponse()
         );
     }
+
+    /**
+     * @return $this
+     */
+    protected function apiShouldReturnPagination()
+    {
+        return $this->apiShouldReturn(
+            $this->createPaginatedResponse()
+        );
+    }
 }

@@ -163,8 +163,7 @@ class PinsTest extends ProviderTest
     /** @test */
     public function it_should_return_generator_with_pins_for_specific_site()
     {
-        $response = $this->createPaginatedResponse();
-        $this->apiShouldReturn($response)
+        $this->apiShouldReturnPagination()
             ->apiShouldReturnEmpty();
 
         $pins = $this->provider->fromSource('flickr.ru');
@@ -176,7 +175,7 @@ class PinsTest extends ProviderTest
     {
         $pinData = ['aggregated_pin_data' => ['id' => 1]];
         $this->apiShouldReturnData($pinData)
-            ->apiShouldReturn($this->createPaginatedResponse())
+            ->apiShouldReturnPagination()
             ->apiShouldReturnEmpty()
             ->assertCount(2, iterator_to_array($this->provider->activity(1)));
     }
@@ -191,8 +190,7 @@ class PinsTest extends ProviderTest
     /** @test */
     public function it_should_return_generator_for_users_feed()
     {
-        $response = $this->createPaginatedResponse();
-        $this->apiShouldReturn($response)
+        $this->apiShouldReturnPagination()
             ->apiShouldReturnEmpty();
 
         $res = iterator_to_array($this->provider->userFeed());

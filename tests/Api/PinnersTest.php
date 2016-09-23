@@ -57,8 +57,7 @@ class PinnersTest extends ProviderTest
     /** @test */
     public function it_should_return_generator_with_user_followers()
     {
-        $response = $this->createPaginatedResponse();
-        $this->apiShouldReturn($response)
+        $this->apiShouldReturnPagination()
             ->apiShouldReturnEmpty(2);
 
         $followers = $this->provider->followers('username');
@@ -72,8 +71,7 @@ class PinnersTest extends ProviderTest
     /** @test */
     public function it_should_return_generator_with_following_users()
     {
-        $response = $this->createPaginatedResponse();
-        $this->apiShouldReturn($response)
+        $this->apiShouldReturnPagination()
             ->apiShouldReturnEmpty();
 
         $following = $this->provider->following('username');

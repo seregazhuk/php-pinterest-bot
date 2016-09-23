@@ -58,9 +58,7 @@ class TopicsTest extends ProviderTest
     /** @test */
     public function it_should_return_generator_for_pins()
     {
-        $response = $this->createPaginatedResponse();
-
-        $this->apiShouldReturn($response)
+        $this->apiShouldReturnPagination()
             ->apiShouldReturnEmpty()
             ->assertCount(2, iterator_to_array($this->provider->getPinsFor('test')));
     }
