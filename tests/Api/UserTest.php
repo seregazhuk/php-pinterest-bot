@@ -35,10 +35,9 @@ class UserTest extends ProviderTest
     public function it_should_return_current_user_profile()
     {
         $profile = ['username' => 'test'];
-        $response = $this->createApiResponseWithData($profile);
-        $this->setResponseExpectation($response);
 
-        $this->assertEquals($profile, $this->provider->profile());
+        $this->apiShouldReturnData($profile)
+            ->assertEquals($profile, $this->provider->profile());
     }
 
     /** @test */
@@ -130,10 +129,8 @@ class UserTest extends ProviderTest
     /** @test */
     public function it_should_make_api_request_and_clear_token_when_login()
     {
-        $response = $this->createSuccessApiResponse();
-        $this->setIsLoggedInExpectation(false);
-
-        $this->setResponseExpectation($response);
+        $this->setIsLoggedInExpectation(false)
+            ->apiShouldReturnSuccess();
 
         $this->request
             ->shouldReceive('clearToken')
@@ -149,10 +146,9 @@ class UserTest extends ProviderTest
     /** @test */
     public function it_should_return_false_when_login_fails()
     {
-        $response = $this->createErrorApiResponse();
         $this->setIsLoggedInExpectation(false);
 
-        $this->setResponseExpectation($response);
+        $this->apiShouldReturnError();
         $this->request->shouldReceive('clearToken');
 
         $this->assertFalse($this->provider->login('test', 'test'));
@@ -175,13 +171,11 @@ class UserTest extends ProviderTest
     /** @test */
     public function it_should_convert_simple_account_to_business()
     {
-        $success = $this->createSuccessApiResponse();
-        $this->setResponseExpectation($success);
-        $this->assertTrue($this->provider->convertToBusiness('name'));
+        $this->apiShouldReturnSuccess()
+            ->assertTrue($this->provider->convertToBusiness('name'));
 
-        $error = $this->createErrorApiResponse();
-        $this->setResponseExpectation($error);
-        $this->assertFalse($this->provider->convertToBusiness('name'));
+        $this->apiShouldReturnError()
+            ->assertFalse($this->provider->convertToBusiness('name'));
     }
 
     /**
@@ -197,6 +191,7 @@ class UserTest extends ProviderTest
 
     /**
      * @param bool $status
+     * @return $this
      */
     protected function setIsLoggedInExpectation($status)
     {
@@ -204,5 +199,7 @@ class UserTest extends ProviderTest
             ->shouldReceive('isLoggedIn')
             ->once()
             ->andReturn($status);
+
+        return $this;
     }
 }

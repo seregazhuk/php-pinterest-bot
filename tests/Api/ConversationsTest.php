@@ -22,30 +22,27 @@ class ConversationsTest extends ProviderTest
     /** @test */
     public function it_should_send_messages()
     {
-        $response = $this->createMessageSendResponse();
-
         $userId = '1';
         $message = 'test';
 
-        $this->setResponseExpectation($response);
-        $this->assertTrue($this->provider->sendMessage($userId, $message));
+        $this->apiShouldSendMessage()
+            ->assertTrue($this->provider->sendMessage($userId, $message));
 
-        $this->setResponseExpectation($this->createErrorApiResponse());
-        $this->assertFalse($this->provider->sendMessage($userId, $message));
+        $this->apiShouldReturnError()
+            ->assertFalse($this->provider->sendMessage($userId, $message));
     }
 
     /** @test */
     public function it_should_send_emails()
     {
-        $response = $this->createMessageSendResponse();
         $email = 'test@email.com';
         $message = 'test';
 
-        $this->setResponseExpectation($response);
-        $this->assertTrue($this->provider->sendEmail($email, $message));
+        $this->apiShouldSendMessage()
+            ->assertTrue($this->provider->sendEmail($email, $message));
 
-        $this->setResponseExpectation($this->createErrorApiResponse());
-        $this->assertFalse($this->provider->sendEmail($email, $message));
+        $this->apiShouldReturnError()
+            ->assertFalse($this->provider->sendEmail($email, $message));
     }
 
     /**
@@ -73,30 +70,18 @@ class ConversationsTest extends ProviderTest
             '1' => ['result'],
         ];
 
-        $res = $this->createApiResponse(
-            [
-                'data'  => $lastConversations,
-                'error' => null,
-            ]
-        );
-
-        $this->setResponseExpectation($res);
-        $this->assertEquals($lastConversations, $this->provider->last());
+        $this->apiShouldReturnData($lastConversations)
+            ->assertEquals($lastConversations, $this->provider->last());
         
-        $this->setResponseExpectation();
-        $this->assertFalse($this->provider->last());
+        $this->apiShouldReturnEmpty()
+            ->assertFalse($this->provider->last());
     }
 
     /**
-     * @return array
+     * @return $this
      */
-    protected function createMessageSendResponse()
+    protected function apiShouldSendMessage()
     {
-        $data = [
-            'data'  => ['id' => '1'],
-            'error' => null,
-        ];
-
-        return $this->createApiResponse($data);
+        return $this->apiShouldReturnData(['id' => '1']);
     }
 }

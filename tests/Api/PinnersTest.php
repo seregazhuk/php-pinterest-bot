@@ -48,8 +48,7 @@ class PinnersTest extends ProviderTest
     public function it_should_return_user_info()
     {
         $userInfo = ['name' => 'test'];
-        $response = $this->createApiResponseWithData($userInfo);
-        $this->setResponseExpectation($response);
+        $this->apiShouldReturnData($userInfo);
 
         $data = $this->provider->info('username');
         $this->assertEquals($userInfo, $data);
@@ -58,10 +57,8 @@ class PinnersTest extends ProviderTest
     /** @test */
     public function it_should_return_generator_with_user_followers()
     {
-        $response = $this->createPaginatedResponse();
-        $this->setResponseExpectation($response);
-        $this->setResourceResponseData([]);
-        $this->setResourceResponseData([]);
+        $this->apiShouldReturnPagination()
+            ->apiShouldReturnEmpty(2);
 
         $followers = $this->provider->followers('username');
         $this->assertInstanceOf(\Generator::class, $followers);
@@ -74,9 +71,8 @@ class PinnersTest extends ProviderTest
     /** @test */
     public function it_should_return_generator_with_following_users()
     {
-        $response = $this->createPaginatedResponse();
-        $this->setResponseExpectation($response);
-        $this->setResourceResponseData([]);
+        $this->apiShouldReturnPagination()
+            ->apiShouldReturnEmpty();
 
         $following = $this->provider->following('username');
         $this->assertCount(2, iterator_to_array($following));
@@ -98,7 +94,7 @@ class PinnersTest extends ProviderTest
                 ],
             ],
         ];
-        $this->setResponseExpectation($res);
+        $this->apiShouldReturn($res);
 
         $pins = $this->provider->pins('username', 2);
         $expectedResultsNum = count($res['resource_response']['data']);
@@ -114,7 +110,7 @@ class PinnersTest extends ProviderTest
         ];
 
         $expectedResultsNum = count($response['module']['tree']['data']['results']);
-        $this->setResponseExpectation($response);
+        $this->apiShouldReturn($response);
 
         $res = iterator_to_array($this->provider->search('dogs', 2));
         $this->assertCount($expectedResultsNum, $res);

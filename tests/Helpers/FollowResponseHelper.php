@@ -2,10 +2,16 @@
 
 namespace seregazhuk\tests\Helpers;
 
+use seregazhuk\PinterestBot\Api\Request;
+
+/**
+ * Class FollowResponseHelper
+ * @package seregazhuk\tests\Helpers
+ *
+ * @property Request|MockeryInterface $request
+ */
 trait FollowResponseHelper
 {
-    use SetsResponse;
-
     /**
      * @param int $entityId
      * @param string $sourceUrl
@@ -50,7 +56,6 @@ trait FollowResponseHelper
                 $this->provider->createFollowRequestQuery($entityId)
             ])
             ->andReturn(json_encode($response));
-
 
         return $this;
     }

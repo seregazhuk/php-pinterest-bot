@@ -98,41 +98,4 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
 
         return $this;
     }
-
-    /**
-     * @param array|null $response
-     * @param int $times
-     * @param string $method
-     */
-    protected function setResponseExpectation($response = [], $times = 1, $method = 'exec')
-    {
-        $this->request
-            ->shouldReceive($method)
-            ->times($times)
-            ->andReturn(json_encode($response));
-    }
-
-    /**
-     * @param int $times
-     */
-    protected function setSuccessResponse($times = 1)
-    {
-        $this->setResponseExpectation($this->createSuccessApiResponse(), $times);
-    }
-
-    /**
-     * @param int $times
-     */
-    protected function setErrorResponse($times = 1)
-    {
-        $this->setResponseExpectation($this->createErrorApiResponse(), $times);
-    }
-
-    /**
-     * @param mixed $data
-     */
-    protected function setResourceResponseData($data)
-    {
-        $this->setResponseExpectation(['resource_response' => ['data' => $data]]);
-    }
 }

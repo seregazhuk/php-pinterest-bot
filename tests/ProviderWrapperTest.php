@@ -19,16 +19,14 @@ class ProviderWrapperTest extends PHPUnit_Framework_TestCase
      */
     public function it_should_fail_when_login_is_required()
     {
-        $provider = new TestProvider(new Request(new CurlHttpClient()), new Response());
-        $wrapper = new ProviderWrapper($provider);
+        $wrapper = $this->createWrapper();
         $wrapper->testFail();
     }
 
     /** @test */
     public function it_should_call_provider_method()
     {
-        $provider = new TestProvider(new Request(new CurlHttpClient()), new Response());
-        $wrapper = new ProviderWrapper($provider);
+        $wrapper = $this->createWrapper();
         $this->assertEquals('success', $wrapper->testSuccess());
     }
 
@@ -38,9 +36,16 @@ class ProviderWrapperTest extends PHPUnit_Framework_TestCase
      */
     public function it_should_throw_exception_when_calling_non_existed_method()
     {
+        $this->createWrapper()->badMethod();
+    }
+
+    /**
+     * @return ProviderWrapper
+     */
+    protected function createWrapper()
+    {
         $provider = new TestProvider(new Request(new CurlHttpClient()), new Response());
-        $wrapper = new ProviderWrapper($provider);
-        $wrapper->badMethod();
+        return new ProviderWrapper($provider);
     }
 }
 

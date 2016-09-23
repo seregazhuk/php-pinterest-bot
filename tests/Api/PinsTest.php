@@ -63,8 +63,7 @@ class PinsTest extends ProviderTest
     /** @test */
     public function it_should_create_new_pin()
     {
-        $response = $this->createPinCreationResponse();
-        $this->setResponseExpectation($response);
+        $this->apiShouldCreatePin();
 
         $pinSource = 'http://example.com/image.jpg';
         $pinDescription = 'Pin Description';
@@ -87,16 +86,14 @@ class PinsTest extends ProviderTest
                 'image_url' => 'http://example.com/example.jpg'
             ]));
 
-        $response = $this->createPinCreationResponse();
-        $this->setResponseExpectation($response);
+        $this->apiShouldCreatePin();
         $this->provider->create($image, 1, 'test');
     }
 
     /** @test */
     public function it_should_create_repin()
     {
-        $response = $this->createPinCreationResponse();
-        $this->setResponseExpectation($response);
+        $this->apiShouldCreatePin();
 
         $boardId = 1;
         $repinId = 11;
@@ -111,34 +108,31 @@ class PinsTest extends ProviderTest
     /** @test */
     public function it_should_edit_pins()
     {
-        $response = $this->createApiResponse();
-        $this->setResponseExpectation($response);
-        $this->assertTrue($this->provider->edit(1, 'new', 'changed'));
+        $this->apiShouldReturnSuccess()
+            ->assertTrue($this->provider->edit(1, 'new', 'changed'));
 
-        $this->setResponseExpectation($this->createErrorApiResponse());
-        $this->assertFalse($this->provider->edit(1, 'new', 'changed'));
+        $this->apiShouldReturnError()
+            ->assertFalse($this->provider->edit(1, 'new', 'changed'));
     }
 
     /** @test */
     public function it_should_delete_pin()
     {
-        $response = $this->createApiResponse();
-        $this->setResponseExpectation($response);
-        $this->assertTrue($this->provider->delete(1));
+        $this->apiShouldReturnSuccess()
+            ->assertTrue($this->provider->delete(1));
 
-        $this->setResponseExpectation($this->createErrorApiResponse());
-        $this->assertFalse($this->provider->delete(1));
+        $this->apiShouldReturnError()
+            ->assertFalse($this->provider->delete(1));
     }
 
     /** @test */
     public function it_should_return_pin_info()
     {
-        $response = $this->createApiResponse();
-        $this->setResponseExpectation($response);
-        $this->assertNotEmpty($this->provider->info(1));
+        $this->apiShouldReturnSuccess()
+            ->assertNotEmpty($this->provider->info(1));
 
-        $this->setResponseExpectation($this->createErrorApiResponse());
-        $this->assertEmpty($this->provider->info(1));
+        $this->apiShouldReturnError()
+            ->assertEmpty($this->provider->info(1));
     }
 
     /** @test */
@@ -150,7 +144,7 @@ class PinsTest extends ProviderTest
         ];
 
         $expectedResultsNum = count($response['module']['tree']['data']['results']);
-        $this->setResponseExpectation($response);
+        $this->apiShouldReturn($response);
 
         $res = iterator_to_array($this->provider->search('dogs', 2));
         $this->assertCount($expectedResultsNum, $res);
@@ -169,9 +163,8 @@ class PinsTest extends ProviderTest
     /** @test */
     public function it_should_return_generator_with_pins_for_specific_site()
     {
-        $response = $this->createPaginatedResponse();
-        $this->setResponseExpectation($response);
-        $this->setResourceResponseData([]);
+        $this->apiShouldReturnPagination()
+            ->apiShouldReturnEmpty();
 
         $pins = $this->provider->fromSource('flickr.ru');
         $this->assertCount(2, iterator_to_array($pins));
@@ -181,28 +174,24 @@ class PinsTest extends ProviderTest
     public function it_should_return_generator_with_pin_activity()
     {
         $pinData = ['aggregated_pin_data' => ['id' => 1]];
-        $response = $this->createApiResponseWithData($pinData);
-        $this->setResponseExpectation($response);
-
-        $this->setResponseExpectation($this->createPaginatedResponse());
-        $this->setResourceResponseData([]);
-
-        $this->assertCount(2, iterator_to_array($this->provider->activity(1)));
+        $this->apiShouldReturnData($pinData)
+            ->apiShouldReturnPagination()
+            ->apiShouldReturnEmpty()
+            ->assertCount(2, iterator_to_array($this->provider->activity(1)));
     }
 
     /** @test */
     public function it_should_return_null_for_empty_activity()
     {
-        $this->setResponseExpectation($this->createApiResponse());
-        $this->assertNull($this->provider->activity(1));
+        $this->apiShouldReturnSuccess()
+            ->assertNull($this->provider->activity(1));
     }
 
     /** @test */
     public function it_should_return_generator_for_users_feed()
     {
-        $response = $this->createPaginatedResponse();
-        $this->setResponseExpectation($response);
-        $this->setResourceResponseData([]);
+        $this->apiShouldReturnPagination()
+            ->apiShouldReturnEmpty();
 
         $res = iterator_to_array($this->provider->userFeed());
         $this->assertCount(2, $res);
@@ -212,24 +201,12 @@ class PinsTest extends ProviderTest
     /**
      * Creates a pin creation response from Pinterest.
      *
-     * @return array
+     * @return $this
      */
-    protected function createPinCreationResponse()
+    protected function apiShouldCreatePin()
     {
         $data = ['id' => 1];
 
-        return $this->createApiResponseWithData($data);
-    }
-
-    /**
-     * Creates a response from Pinterest.
-     *
-     * @param array $data
-     *
-     * @return array
-     */
-    protected function createApiResponse($data = ['data' => 'success'])
-    {
-        return parent::createApiResponse($data);
+        return $this->apiShouldReturnData($data);
     }
 }

@@ -32,7 +32,7 @@ class BoardsTest extends ProviderTest
         ];
 
         $expectedResultsNum = count($response['module']['tree']['data']['results']);
-        $this->setResponseExpectation($response);
+        $this->apiShouldReturn($response);
 
         $res = iterator_to_array($this->provider->search('dogs', 2));
         $this->assertCount($expectedResultsNum, $res);
@@ -63,10 +63,8 @@ class BoardsTest extends ProviderTest
     /** @test */
     public function it_should_return_generator_for_boards_followers()
     {
-        $response = $this->createPaginatedResponse();
-        $this->setResponseExpectation($response);
-        $this->setResourceResponseData([]);
-        $this->setResourceResponseData([]);
+        $this->apiShouldReturnPagination()
+            ->apiShouldReturnEmpty(2);
 
         $boardId = 1;
         $followers = $this->provider->followers($boardId);
@@ -82,36 +80,30 @@ class BoardsTest extends ProviderTest
     {
         $boards = 'boards';
         $userName = 'user';
-        $response = $this->createApiResponseWithData($boards);
 
-        $this->setResponseExpectation($response);
-        $this->assertEquals($boards, $this->provider->forUser($userName));
+        $this->apiShouldReturnData($boards)
+            ->assertEquals($boards, $this->provider->forUser($userName));
 
-        $this->setResponseExpectation();
-        $this->assertFalse($this->provider->forUser($userName));
+        $this->apiShouldReturnEmpty()
+            ->assertFalse($this->provider->forUser($userName));
     }
 
     /** @test */
     public function it_should_return_board_info()
     {
         $boardInfo = 'info';
-        $response = $this->createApiResponseWithData($boardInfo);
+        $this->apiShouldReturnData($boardInfo)
+            ->assertEquals($boardInfo, $this->provider->info('username', 'board'));
 
-        $this->setResponseExpectation($response);
-        $this->assertEquals($boardInfo, $this->provider->info('username', 'board'));
-        
-        $this->setResponseExpectation();
-        $this->assertFalse($this->provider->info('username', 'board'));
+        $this->apiShouldReturnEmpty()
+            ->assertFalse($this->provider->info('username', 'board'));
     }
 
     /** @test */
     public function it_should_return_generator_with_pins_for_specific_board()
     {
-        $response = $this->createPaginatedResponse();
-
-        $this->setResponseExpectation($response);
-        $this->setResourceResponseData([]);
-        $this->setResourceResponseData([]);
+        $this->apiShouldReturnPagination()
+            ->apiShouldReturnEmpty(2);
 
         $boardId = 1;
         $pins = $this->provider->pins($boardId);
@@ -125,7 +117,7 @@ class BoardsTest extends ProviderTest
     /** @test */
     public function it_should_delete_board()
     {
-        $this->setSuccessResponse(); 
+        $this->setSuccessResponse();
         $this->assertTrue($this->provider->delete(1111));
 
         $this->setErrorResponse();        
