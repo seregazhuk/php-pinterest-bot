@@ -57,7 +57,6 @@ trait FollowResponseHelper
             ])
             ->andReturn(json_encode($response));
 
-
         return $this;
     }
 }
