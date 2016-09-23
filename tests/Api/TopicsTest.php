@@ -60,6 +60,6 @@ class TopicsTest extends ProviderTest
     {
         $this->apiShouldReturnPagination()
             ->apiShouldReturnEmpty()
-            ->assertCount(2, iterator_to_array($this->provider->getPinsFor('test')));
+            ->assertIsPaginatedResponse($this->provider->getPinsFor('test'));
     }
 }

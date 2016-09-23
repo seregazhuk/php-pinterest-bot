@@ -31,11 +31,10 @@ class BoardsTest extends ProviderTest
             ['id' => 2],
         ];
 
-        $expectedResultsNum = count($response['module']['tree']['data']['results']);
-        $this->apiShouldReturn($response);
+        $this->apiShouldReturnPagination();
 
-        $res = iterator_to_array($this->provider->search('dogs', 2));
-        $this->assertCount($expectedResultsNum, $res);
+        $res = $this->provider->search('dogs', 2);
+        $this->assertIsPaginatedResponse($res);
     }
 
     /** @test */
@@ -68,8 +67,8 @@ class BoardsTest extends ProviderTest
 
         $boardId = 1;
         $followers = $this->provider->followers($boardId);
-        $this->assertInstanceOf(\Generator::class, $followers);
-        $this->assertCount(2, iterator_to_array($followers));
+
+        $this->assertIsPaginatedResponse($followers);
     }
 
     /** @test */
@@ -104,8 +103,8 @@ class BoardsTest extends ProviderTest
 
         $boardId = 1;
         $pins = $this->provider->pins($boardId);
-        $this->assertInstanceOf(\Generator::class, $pins);
-        $this->assertCount(2, iterator_to_array($pins));
+
+        $this->assertIsPaginatedResponse($pins);
     }
 
     /** @test */

@@ -61,8 +61,7 @@ class PinnersTest extends ProviderTest
             ->apiShouldReturnEmpty();
 
         $followers = $this->provider->followers('username');
-        $this->assertInstanceOf(\Generator::class, $followers);
-        $this->assertCount(2, iterator_to_array($followers));
+        $this->assertIsPaginatedResponse($followers);
     }
 
     /** @test */
@@ -72,7 +71,8 @@ class PinnersTest extends ProviderTest
             ->apiShouldReturnEmpty();
 
         $following = $this->provider->following('username');
-        $this->assertCount(2, iterator_to_array($following));
+
+        $this->assertIsPaginatedResponse($following);
     }
 
     /** @test */
@@ -94,8 +94,7 @@ class PinnersTest extends ProviderTest
         $this->apiShouldReturn($res);
 
         $pins = $this->provider->pins('username', 2);
-        $expectedResultsNum = count($res['resource_response']['data']);
-        $this->assertCount($expectedResultsNum, iterator_to_array($pins));
+        $this->assertIsPaginatedResponse($pins);
     }
 
     /** @test */
@@ -106,11 +105,10 @@ class PinnersTest extends ProviderTest
             ['id' => 2],
         ];
 
-        $expectedResultsNum = count($response['module']['tree']['data']['results']);
         $this->apiShouldReturn($response);
 
-        $res = iterator_to_array($this->provider->search('dogs', 2));
-        $this->assertCount($expectedResultsNum, $res);
+        $res = $this->provider->search('dogs', 2);
+        $this->assertIsPaginatedResponse($res);
     }
 
     /** @test */
@@ -120,8 +118,8 @@ class PinnersTest extends ProviderTest
             ->apiShouldReturnEmpty();
 
         $likes = $this->provider->likes('username');
-        $this->assertInstanceOf(\Generator::class, $likes);
-        $this->assertCount(2, iterator_to_array($likes));
+
+        $this->assertIsPaginatedResponse($likes);
     }
 
     /**

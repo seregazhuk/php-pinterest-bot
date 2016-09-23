@@ -143,11 +143,10 @@ class PinsTest extends ProviderTest
             ['id' => 2],
         ];
 
-        $expectedResultsNum = count($response['module']['tree']['data']['results']);
         $this->apiShouldReturn($response);
 
-        $res = iterator_to_array($this->provider->search('dogs', 2));
-        $this->assertCount($expectedResultsNum, $res);
+        $res = $this->provider->search('dogs', 2);
+        $this->assertIsPaginatedResponse($res);
     }
 
     /** @test */
@@ -167,7 +166,8 @@ class PinsTest extends ProviderTest
             ->apiShouldReturnEmpty();
 
         $pins = $this->provider->fromSource('flickr.ru');
-        $this->assertCount(2, iterator_to_array($pins));
+
+        $this->assertIsPaginatedResponse($pins);
     }
 
     /** @test */
@@ -177,7 +177,7 @@ class PinsTest extends ProviderTest
         $this->apiShouldReturnData($pinData)
             ->apiShouldReturnPagination()
             ->apiShouldReturnEmpty()
-            ->assertCount(2, iterator_to_array($this->provider->activity(1)));
+            ->assertIsPaginatedResponse($this->provider->activity(1));
     }
 
     /** @test */
@@ -193,8 +193,9 @@ class PinsTest extends ProviderTest
         $this->apiShouldReturnPagination()
             ->apiShouldReturnEmpty();
 
-        $res = iterator_to_array($this->provider->userFeed());
-        $this->assertCount(2, $res);
+        $res = $this->provider->userFeed();
+
+        $this->assertIsPaginatedResponse($res);
     }
 
     /** @test */
@@ -204,8 +205,9 @@ class PinsTest extends ProviderTest
             ->apiShouldReturnEmpty();
 
         $pinId = 1;
-        $res = iterator_to_array($this->provider->getRelatedPins($pinId));
-        $this->assertCount(2, $res);
+        $res = $this->provider->getRelatedPins($pinId);
+
+        $this->assertIsPaginatedResponse($res);
     }
 
 
