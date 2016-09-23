@@ -108,8 +108,7 @@ class PinsTest extends ProviderTest
     /** @test */
     public function it_should_edit_pins()
     {
-        $response = $this->createApiResponse();
-        $this->apiShouldReturn($response)
+        $this->apiShouldReturnSuccess()
             ->assertTrue($this->provider->edit(1, 'new', 'changed'));
 
         $this->apiShouldReturnError()
@@ -119,8 +118,7 @@ class PinsTest extends ProviderTest
     /** @test */
     public function it_should_delete_pin()
     {
-        $response = $this->createApiResponse();
-        $this->apiShouldReturn($response)
+        $this->apiShouldReturnSuccess()
             ->assertTrue($this->provider->delete(1));
 
         $this->apiShouldReturnError()
@@ -130,8 +128,7 @@ class PinsTest extends ProviderTest
     /** @test */
     public function it_should_return_pin_info()
     {
-        $response = $this->createApiResponse();
-        $this->apiShouldReturn($response)
+        $this->apiShouldReturnSuccess()
             ->assertNotEmpty($this->provider->info(1));
 
         $this->apiShouldReturnError()
@@ -187,7 +184,7 @@ class PinsTest extends ProviderTest
     /** @test */
     public function it_should_return_null_for_empty_activity()
     {
-        $this->apiShouldReturn($this->createApiResponse())
+        $this->apiShouldReturnSuccess()
             ->assertNull($this->provider->activity(1));
     }
 
@@ -213,17 +210,5 @@ class PinsTest extends ProviderTest
         $data = ['id' => 1];
 
         return $this->apiShouldReturnData($data);
-    }
-
-    /**
-     * Creates a response from Pinterest.
-     *
-     * @param array $data
-     *
-     * @return array
-     */
-    protected function createApiResponse($data = ['data' => 'success'])
-    {
-        return parent::createApiResponse($data);
     }
 }

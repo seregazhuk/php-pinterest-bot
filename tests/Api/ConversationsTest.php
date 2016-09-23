@@ -22,12 +22,10 @@ class ConversationsTest extends ProviderTest
     /** @test */
     public function it_should_send_messages()
     {
-        $response = $this->createMessageSendResponse();
-
         $userId = '1';
         $message = 'test';
 
-        $this->apiShouldReturn($response)
+        $this->apiShouldSendMessage()
             ->assertTrue($this->provider->sendMessage($userId, $message));
 
         $this->apiShouldReturnError()
@@ -37,11 +35,10 @@ class ConversationsTest extends ProviderTest
     /** @test */
     public function it_should_send_emails()
     {
-        $response = $this->createMessageSendResponse();
         $email = 'test@email.com';
         $message = 'test';
 
-        $this->apiShouldReturn($response)
+        $this->apiShouldSendMessage()
             ->assertTrue($this->provider->sendEmail($email, $message));
 
         $this->apiShouldReturnError()
@@ -73,14 +70,7 @@ class ConversationsTest extends ProviderTest
             '1' => ['result'],
         ];
 
-        $res = $this->createApiResponse(
-            [
-                'data'  => $lastConversations,
-                'error' => null,
-            ]
-        );
-
-        $this->apiShouldReturn($res)
+        $this->apiShouldReturnData($lastConversations)
             ->assertEquals($lastConversations, $this->provider->last());
         
         $this->apiShouldReturnEmpty()
@@ -88,15 +78,10 @@ class ConversationsTest extends ProviderTest
     }
 
     /**
-     * @return array
+     * @return $this
      */
-    protected function createMessageSendResponse()
+    protected function apiShouldSendMessage()
     {
-        $data = [
-            'data'  => ['id' => '1'],
-            'error' => null,
-        ];
-
-        return $this->createApiResponse($data);
+        return $this->apiShouldReturnData(['id' => '1']);
     }
 }
