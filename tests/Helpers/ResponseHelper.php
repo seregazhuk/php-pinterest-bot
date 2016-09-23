@@ -83,22 +83,6 @@ trait ResponseHelper
 
     /**
      * @param int $times
-     */
-    protected function setSuccessResponse($times = 1)
-    {
-        $this->apiShouldReturn($this->createSuccessApiResponse(), $times);
-    }
-
-    /**
-     * @param int $times
-     */
-    protected function setErrorResponse($times = 1)
-    {
-        $this->apiShouldReturn($this->createErrorApiResponse(), $times);
-    }
-
-    /**
-     * @param int $times
      * @return $this
      */
     protected function apiShouldReturnEmpty($times = 1)
@@ -117,22 +101,26 @@ trait ResponseHelper
     }
 
     /**
+     * @param int $times
      * @return $this
      */
-    protected function apiShouldReturnSuccess()
+    protected function apiShouldReturnSuccess($times = 1)
     {
         return $this->apiShouldReturn(
-            $this->createSuccessApiResponse()
+            $this->createSuccessApiResponse(),
+            $times
         );
     }
 
     /**
+     * @param int $times
      * @return $this
      */
-    protected function apiShouldReturnError()
+    protected function apiShouldReturnError($times = 1)
     {
         return $this->apiShouldReturn(
-            $this->createErrorApiResponse()
+            $this->createErrorApiResponse(),
+            $times
         );
     }
 

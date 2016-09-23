@@ -111,21 +111,21 @@ class BoardsTest extends ProviderTest
     /** @test */
     public function it_should_delete_board()
     {
-        $this->setSuccessResponse();
-        $this->assertTrue($this->provider->delete(1111));
+        $this->apiShouldReturnSuccess()
+            ->assertTrue($this->provider->delete(1111));
 
-        $this->setErrorResponse();        
-        $this->assertFalse($this->provider->delete(1111));
+        $this->apiShouldReturnError()
+            ->assertFalse($this->provider->delete(1111));
     }
 
     /** @test */
     public function it_should_create_board()
     {
-        $this->setSuccessResponse();
-        $this->assertTrue($this->provider->create('test', 'test'));
+        $this->apiShouldReturnSuccess()
+            ->assertTrue($this->provider->create('test', 'test'));
 
-        $this->setErrorResponse();
-        $this->assertFalse($this->provider->create('test', 'test'));
+        $this->apiShouldReturnError()
+            ->assertFalse($this->provider->create('test', 'test'));
     }
 
     /** @test */
@@ -137,10 +137,10 @@ class BoardsTest extends ProviderTest
         ];
 
         $boardId = 1;
-        $this->setSuccessResponse();
-        $this->assertTrue($this->provider->update($boardId, $attributes));
+        $this->apiShouldReturnSuccess()
+            ->assertTrue($this->provider->update($boardId, $attributes));
 
-        $this->setErrorResponse();
-        $this->assertFalse($this->provider->update($boardId, $attributes));
+        $this->apiShouldReturnError()
+            ->assertFalse($this->provider->update($boardId, $attributes));
     }
 }
