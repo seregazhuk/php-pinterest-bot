@@ -27,22 +27,22 @@ class TopicsTest extends ProviderTest
     public function it_should_follow_topic()
     {
         $interestId = 1111;
-        $this->setFollowSuccessResponse($interestId, UrlBuilder::RESOURCE_FOLLOW_INTEREST);
-        $this->assertTrue($this->provider->follow($interestId));
+        $this->apiShouldFollowTo($interestId, UrlBuilder::RESOURCE_FOLLOW_INTEREST)
+            ->assertTrue($this->provider->follow($interestId));
 
-        $this->setFollowErrorResponse($interestId, UrlBuilder::RESOURCE_FOLLOW_INTEREST);
-        $this->assertFalse($this->provider->follow($interestId));
+        $this->apiShouldNotFollow($interestId, UrlBuilder::RESOURCE_FOLLOW_INTEREST)
+            ->assertFalse($this->provider->follow($interestId));
     }
 
     /** @test */
     public function it_should_unfollow_topic()
     {
         $interestId = 1111;
-        $this->setFollowSuccessResponse($interestId, UrlBuilder::RESOURCE_UNFOLLOW_INTEREST);
-        $this->assertTrue($this->provider->unFollow($interestId));
+        $this->apiShouldFollowTo($interestId, UrlBuilder::RESOURCE_UNFOLLOW_INTEREST)
+            ->assertTrue($this->provider->unFollow($interestId));
 
-        $this->setFollowErrorResponse($interestId, UrlBuilder::RESOURCE_UNFOLLOW_INTEREST);
-        $this->assertFalse($this->provider->unFollow($interestId));
+        $this->apiShouldNotFollow($interestId, UrlBuilder::RESOURCE_UNFOLLOW_INTEREST)
+            ->assertFalse($this->provider->unFollow($interestId));
     }
 
 

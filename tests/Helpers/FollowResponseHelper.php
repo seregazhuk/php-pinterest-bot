@@ -17,7 +17,7 @@ trait FollowResponseHelper
      * @param string $sourceUrl
      * @return $this
      */
-    protected function setFollowErrorResponse($entityId, $sourceUrl)
+    protected function apiShouldNotFollow($entityId, $sourceUrl)
     {
         $this->setFollowRequest(
             $entityId, $sourceUrl, $this->createErrorApiResponse()
@@ -31,7 +31,7 @@ trait FollowResponseHelper
      * @param string $sourceUrl
      * @return $this
      */
-    protected function setFollowSuccessResponse($entityId, $sourceUrl)
+    protected function apiShouldFollowTo($entityId, $sourceUrl)
     {
         $this->setFollowRequest(
             $entityId, $sourceUrl, $this->createSuccessApiResponse()

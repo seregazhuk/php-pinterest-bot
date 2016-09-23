@@ -26,22 +26,22 @@ class PinnersTest extends ProviderTest
     public function it_should_follow_user()
     {
         $pinnerId = 1;
-        $this->setFollowSuccessResponse($pinnerId, UrlBuilder::RESOURCE_FOLLOW_USER);
-        $this->assertTrue($this->provider->follow($pinnerId));
+        $this->apiShouldFollowTo($pinnerId, UrlBuilder::RESOURCE_FOLLOW_USER)
+            ->assertTrue($this->provider->follow($pinnerId));
 
-        $this->setFollowErrorResponse($pinnerId, UrlBuilder::RESOURCE_FOLLOW_USER);
-        $this->assertFalse($this->provider->follow($pinnerId));
+        $this->apiShouldNotFollow($pinnerId, UrlBuilder::RESOURCE_FOLLOW_USER)
+            ->assertFalse($this->provider->follow($pinnerId));
     }
 
     /** @test */
     public function it_should_unfollow_user()
     {
         $pinnerId = 1;
-        $this->setFollowSuccessResponse($pinnerId, UrlBuilder::RESOURCE_UNFOLLOW_USER);
-        $this->assertTrue($this->provider->unFollow($pinnerId));
+        $this->apiShouldFollowTo($pinnerId, UrlBuilder::RESOURCE_UNFOLLOW_USER)
+            ->assertTrue($this->provider->unFollow($pinnerId));
 
-        $this->setFollowErrorResponse($pinnerId, UrlBuilder::RESOURCE_UNFOLLOW_USER);
-        $this->assertFalse($this->provider->unFollow($pinnerId));
+        $this->apiShouldNotFollow($pinnerId, UrlBuilder::RESOURCE_UNFOLLOW_USER)
+            ->assertFalse($this->provider->unFollow($pinnerId));
     }
 
     /** @test */

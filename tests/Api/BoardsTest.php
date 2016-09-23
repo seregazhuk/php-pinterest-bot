@@ -42,22 +42,22 @@ class BoardsTest extends ProviderTest
     public function it_should_follow_boards()
     {
         $boardId = 1;
-        $this->setFollowSuccessResponse($boardId, UrlBuilder::RESOURCE_FOLLOW_BOARD);
-        $this->assertTrue($this->provider->follow($boardId));
+        $this->apiShouldFollowTo($boardId, UrlBuilder::RESOURCE_FOLLOW_BOARD)
+            ->assertTrue($this->provider->follow($boardId));
 
-        $this->setFollowErrorResponse($boardId, UrlBuilder::RESOURCE_FOLLOW_BOARD);
-        $this->assertFalse($this->provider->follow($boardId));
+        $this->apiShouldNotFollow($boardId, UrlBuilder::RESOURCE_FOLLOW_BOARD)
+            ->assertFalse($this->provider->follow($boardId));
     }
 
     /** @test */
     public function it_should_unfollow_boards()
     {
         $boardId = 1;
-        $this->setFollowSuccessResponse($boardId, UrlBuilder::RESOURCE_UNFOLLOW_BOARD);
-        $this->assertTrue($this->provider->unFollow($boardId));
+        $this->apiShouldFollowTo($boardId, UrlBuilder::RESOURCE_UNFOLLOW_BOARD)
+            ->assertTrue($this->provider->unFollow($boardId));
 
-        $this->setFollowErrorResponse($boardId, UrlBuilder::RESOURCE_UNFOLLOW_BOARD);
-        $this->assertFalse($this->provider->unFollow($boardId));
+        $this->apiShouldNotFollow($boardId, UrlBuilder::RESOURCE_UNFOLLOW_BOARD)
+            ->assertFalse($this->provider->unFollow($boardId));
     }
 
     /** @test */
