@@ -146,10 +146,9 @@ class UserTest extends ProviderTest
     /** @test */
     public function it_should_return_false_when_login_fails()
     {
-        $response = $this->createErrorApiResponse();
         $this->setIsLoggedInExpectation(false);
 
-        $this->apiShouldReturn($response);
+        $this->apiShouldReturnError();
         $this->request->shouldReceive('clearToken');
 
         $this->assertFalse($this->provider->login('test', 'test'));
@@ -175,8 +174,7 @@ class UserTest extends ProviderTest
         $this->apiShouldReturnSuccess()
             ->assertTrue($this->provider->convertToBusiness('name'));
 
-        $error = $this->createErrorApiResponse();
-        $this->apiShouldReturn($error)
+        $this->apiShouldReturnError()
             ->assertFalse($this->provider->convertToBusiness('name'));
     }
 

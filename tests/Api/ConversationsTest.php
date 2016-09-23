@@ -30,7 +30,7 @@ class ConversationsTest extends ProviderTest
         $this->apiShouldReturn($response)
             ->assertTrue($this->provider->sendMessage($userId, $message));
 
-        $this->apiShouldReturn($this->createErrorApiResponse())
+        $this->apiShouldReturnError()
             ->assertFalse($this->provider->sendMessage($userId, $message));
     }
 
@@ -44,7 +44,7 @@ class ConversationsTest extends ProviderTest
         $this->apiShouldReturn($response)
             ->assertTrue($this->provider->sendEmail($email, $message));
 
-        $this->apiShouldReturn($this->createErrorApiResponse())
+        $this->apiShouldReturnError()
             ->assertFalse($this->provider->sendEmail($email, $message));
     }
 

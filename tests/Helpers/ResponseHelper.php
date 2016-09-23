@@ -125,4 +125,14 @@ trait ResponseHelper
             $this->createSuccessApiResponse()
         );
     }
+
+    /**
+     * @return $this
+     */
+    protected function apiShouldReturnError()
+    {
+        return $this->apiShouldReturn(
+            $this->createErrorApiResponse()
+        );
+    }
 }
