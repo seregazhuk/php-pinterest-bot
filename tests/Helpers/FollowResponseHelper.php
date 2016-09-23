@@ -14,13 +14,13 @@ trait FollowResponseHelper
 {
     /**
      * @param int $entityId
-     * @param string $sourceUrl
+     * @param string $followUrl
      * @return $this
      */
-    protected function apiShouldNotFollow($entityId, $sourceUrl)
+    protected function apiShouldNotFollow($entityId, $followUrl)
     {
         $this->setFollowRequest(
-            $entityId, $sourceUrl, $this->createErrorApiResponse()
+            $entityId, $followUrl, $this->createErrorApiResponse()
         );
 
         return $this;
@@ -28,13 +28,13 @@ trait FollowResponseHelper
 
     /**
      * @param int $entityId
-     * @param string $sourceUrl
+     * @param string $followUrl
      * @return $this
      */
-    protected function apiShouldFollowTo($entityId, $sourceUrl)
+    protected function apiShouldFollowTo($entityId, $followUrl)
     {
         $this->setFollowRequest(
-            $entityId, $sourceUrl, $this->createSuccessApiResponse()
+            $entityId, $followUrl, $this->createSuccessApiResponse()
         );
 
         return $this;
@@ -42,17 +42,17 @@ trait FollowResponseHelper
 
     /**
      * @param int $entityId
-     * @param string $sourceUrl
+     * @param string $followUrl
      * @param array $response
      * @return mixed
      */
-    protected function setFollowRequest($entityId, $sourceUrl, $response)
+    protected function setFollowRequest($entityId, $followUrl, $response)
     {
         $this->request
             ->shouldReceive('exec')
             ->once()
             ->withArgs([
-                $sourceUrl,
+                $followUrl,
                 $this->provider->createFollowRequestQuery($entityId)
             ])
             ->andReturn(json_encode($response));
