@@ -7,10 +7,10 @@ use Mockery\Mock;
 use ReflectionClass;
 use PHPUnit_Framework_TestCase;
 use seregazhuk\PinterestBot\Api\Request;
+use seregazhuk\PinterestBot\Helpers\Cookies;
 use seregazhuk\tests\helpers\ResponseHelper;
 use seregazhuk\tests\helpers\ReflectionHelper;
 use seregazhuk\PinterestBot\Api\CurlHttpClient;
-use seregazhuk\PinterestBot\Helpers\CsrfParser;
 use seregazhuk\PinterestBot\Api\Contracts\HttpClient;
 
 /**
@@ -38,7 +38,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
         $this->assertEmpty($this->getProperty('csrfToken'));
 
         $request->clearToken();
-        $this->assertEquals(CsrfParser::DEFAULT_TOKEN, $this->getProperty('csrfToken'));
+        $this->assertEquals(Cookies::DEFAULT_TOKEN, $this->getProperty('csrfToken'));
     }
 
     /** @test */
@@ -84,23 +84,6 @@ class RequestTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($bookmarks, $dataFromRequest['options']['bookmarks']);
     }
 
-    public function it_should_save_token_from_cookies()
-    {
-        $cookieFile = __DIR__.'/../'.CurlHttpClient::COOKIE_NAME;
-        var_dump($cookieFile);
-        die();
-        $token = 'WfdvEjNSLYiykJHDIx4sGSpCS8OhUld0';
-        file_put_contents(
-            $cookieFile, ".pinterest.com	TRUE	/	TRUE	1488295594	csrftoken	$token"
-        );
-        $request = $this->createRequestObject();
-        $this->setProperty('cookieJar', $cookieFile);
-        $request->login();
-
-        unlink($cookieFile);
-        $this->assertEquals($token, $this->getProperty('csrfToken'));
-    }
-
     /** @test */
     public function it_should_clear_token_and_login_status_after_logout()
     {
@@ -109,7 +92,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
 
         $request->logout();
         $this->assertFalse($request->isLoggedIn());
-        $this->assertEquals(CsrfParser::DEFAULT_TOKEN, $this->getProperty('csrfToken'));
+        $this->assertEquals(Cookies::DEFAULT_TOKEN, $this->getProperty('csrfToken'));
     }
 
     /**
@@ -173,7 +156,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
      */
     protected function createRequestObject(HttpClient $http = null, $userAgentString = '')
     {
-        $http = $http ? : new CurlHttpClient();
+        $http = $http ? : new CurlHttpClient(new Cookies());
         $request = new Request($http, $userAgentString);
 
         $this->reflection = new ReflectionClass($request);

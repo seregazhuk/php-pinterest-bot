@@ -119,13 +119,21 @@ class User extends Provider
      * @param string $username
      * @param string $password
      *
+     * @param bool $autoLogin
      * @return bool
      */
-    public function login($username, $password)
+    public function login($username, $password, $autoLogin = true)
     {
         if ($this->request->isLoggedIn()) return true;
 
         $this->checkCredentials($username, $password);
+
+        // Trying to load previously saved cookies from last login
+        // attempt for this username.
+        if($autoLogin && $this->request->autoLogin($username)) {
+            return true;
+        }
+
         $this->request->clearToken();
 
         $credentials = [

@@ -140,7 +140,7 @@ class UserTest extends ProviderTest
             ->shouldReceive('login')
             ->once();
 
-        $this->assertTrue($this->provider->login('test', 'test'));
+        $this->assertTrue($this->provider->login('test', 'test', false));
     }
 
     /** @test */
@@ -151,7 +151,7 @@ class UserTest extends ProviderTest
         $this->apiShouldReturnError();
         $this->request->shouldReceive('clearToken');
 
-        $this->assertFalse($this->provider->login('test', 'test'));
+        $this->assertFalse($this->provider->login('test', 'test', false));
     }
 
     /** @test */
