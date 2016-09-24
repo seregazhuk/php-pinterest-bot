@@ -18,10 +18,6 @@
     <filter>
         <whitelist>
             <directory suffix=".php">./src/</directory>
-            <exclude>
-                <directory suffix=".php">./src/Helpers</directory>
-                <file>./src/Api/CurlHttpClient.php</file>
-            </exclude>
         </whitelist>
     </filter>
     <logging>

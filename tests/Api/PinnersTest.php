@@ -12,6 +12,7 @@ use seregazhuk\PinterestBot\Api\Providers\Pinners;
 class PinnersTest extends ProviderTest
 {
     use FollowResponseHelper;
+
     /**
      * @var Pinners
      */
