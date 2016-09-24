@@ -1,6 +1,6 @@
 <?php
 
-namespace seregazhuk\tests\Api;
+namespace seregazhuk\tests\Bot\Api;
 
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\tests\Helpers\FollowResponseHelper;

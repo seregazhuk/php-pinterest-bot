@@ -1,6 +1,6 @@
 <?php
 
-namespace szhuk\tests;
+namespace seregazhuk\tests\Bot;
 
 use Mockery;
 use Mockery\Mock;

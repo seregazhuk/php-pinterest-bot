@@ -1,6 +1,6 @@
 <?php
 
-namespace szhuk\tests\Factories;
+namespace szhuk\tests\Bot\Factories;
 
 use PHPUnit_Framework_TestCase;
 use seregazhuk\PinterestBot\Bot;

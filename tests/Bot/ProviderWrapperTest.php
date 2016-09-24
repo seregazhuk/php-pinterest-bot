@@ -1,14 +1,14 @@
 <?php
 
-namespace seregazhuk\tests;
+namespace seregazhuk\tests\Bot;
 
 use PHPUnit_Framework_TestCase;
 use seregazhuk\PinterestBot\Api\Request;
+use seregazhuk\PinterestBot\Api\Response;
+use seregazhuk\PinterestBot\Helpers\Cookies;
 use seregazhuk\PinterestBot\Api\CurlHttpClient;
 use seregazhuk\PinterestBot\Api\Providers\Provider;
 use seregazhuk\PinterestBot\Api\Providers\ProviderWrapper;
-use seregazhuk\PinterestBot\Api\Response;
-use seregazhuk\PinterestBot\Helpers\Cookies;
 
 class ProviderWrapperTest extends PHPUnit_Framework_TestCase
 {

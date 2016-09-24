@@ -1,6 +1,6 @@
 <?php
 
-namespace seregazhuk\tests\Api;
+namespace seregazhuk\tests\Bot\Api;
 
 use Mockery;
 use ReflectionClass;
