@@ -246,7 +246,7 @@ class User extends Provider
      */
     protected function makeRegisterCall($data)
     {
-        $this->execGetRequest([], '');
+        $this->visitMainPage();
         $this->request->setTokenFromCookies();
 
         if (!$this->execPostRequest($data, UrlBuilder::RESOURCE_CREATE_REGISTER)) {
@@ -278,5 +278,11 @@ class User extends Provider
         $this->request->login();
 
         return true;
+    }
+
+
+    public function visitMainPage()
+    {
+        $this->execGetRequest([], '');
     }
 }

@@ -2,11 +2,13 @@
 
 namespace seregazhuk\PinterestBot\Api;
 
+use Guzzle\Http\Url;
 use ReflectionClass;
 use seregazhuk\PinterestBot\Api\Providers\Provider;
 use seregazhuk\PinterestBot\Exceptions\WrongProvider;
 use seregazhuk\PinterestBot\Api\Contracts\HttpClient;
 use seregazhuk\PinterestBot\Api\Providers\ProviderWrapper;
+use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 
 class ProvidersContainer
 {
@@ -120,6 +122,12 @@ class ProvidersContainer
      */
     public function getClientInfo()
     {
+        $clientInfo = $this->response->getClientInfo();
+
+        if(is_null($clientInfo)) {
+            $this->getProvider('user')->visitMainPage();
+        }
+
         return $this->response->getClientInfo();
     }
 
