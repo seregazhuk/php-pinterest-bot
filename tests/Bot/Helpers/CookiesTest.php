@@ -3,10 +3,13 @@
 namespace szhuk\tests\Bot\Helpers;
 
 use PHPUnit_Framework_TestCase;
+use seregazhuk\tests\Helpers\CookiesHelper;
 use seregazhuk\PinterestBot\Helpers\Cookies;
 
 class CookiesTest extends PHPUnit_Framework_TestCase
 {
+    use CookiesHelper;
+
     /**
      * @var string
      */
@@ -67,15 +70,5 @@ class CookiesTest extends PHPUnit_Framework_TestCase
     {
         unlink($this->cookieFileName);
         parent::tearDown();
-    }
-
-
-    protected function createCookieFile($fileName)
-    {
-        file_put_contents(
-            $fileName,
-            "#HttpOnly_.pinterest.com        TRUE    /       TRUE    1505844784      _auth   1
-            .pinterest.com	TRUE	/	TRUE	1488295594	csrftoken	123456"
-        );
     }
 }

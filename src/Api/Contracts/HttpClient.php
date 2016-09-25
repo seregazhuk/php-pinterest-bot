@@ -38,6 +38,11 @@ interface HttpClient
     public function cookie($name);
 
     /**
+     * @return array
+     */
+    public function cookies();
+
+    /**
      * Load cookies for specified username
      *
      * @param string $username
