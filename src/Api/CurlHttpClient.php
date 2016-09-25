@@ -209,12 +209,7 @@ class CurlHttpClient implements HttpClient
      */
     protected function initCookieJar($username = '')
     {
-        $cookieName = $this->getCookieFileName($username);
-        $cookieFilePath = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $cookieName;
-
-        if (!file_exists($cookieFilePath)) {
-            touch($cookieFilePath);
-        }
+        $cookieFilePath = $this->getCookieFilePath($username);
 
         $this->cookieJar = $cookieFilePath;
 
@@ -223,18 +218,19 @@ class CurlHttpClient implements HttpClient
 
     /**
      * Return cookie file name by username. If username is empty we use a
-     * random cookie name based on timestamp, to be sure we have
-     * different cookies in parallel sessions.
+     * random cookie name, to be sure we have different cookies
+     * in parallel sessions.
      *
      * @param string $username
      * @return string
      */
-    protected function getCookieFileName($username)
+    protected function getCookieFilePath($username)
     {
-        $username = empty($username) ? time() . rand(0, 100) : $username;
+        if(empty($username)) {
+            return tempnam(sys_get_temp_dir(), 'printerest_cookie_');
+        }
 
         $cookieName = 'printerest_cookie_' . $username;
-
-        return $cookieName;
+        return sys_get_temp_dir() . DIRECTORY_SEPARATOR . $cookieName;
     }
 }

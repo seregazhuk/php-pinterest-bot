@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 ## [4.12.5] - 2016-09-25
 ### Fixed:
  - Bot *getLastError* method.
- - Common cookie file *pinterest_cookie_common* for non-authorized sessions.
+ - Random cookie file name for non-authorized sessions.
 
 ## [4.12.4] - 2016-09-25
 ### Fixed:
