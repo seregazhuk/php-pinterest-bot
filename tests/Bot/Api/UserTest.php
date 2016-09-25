@@ -118,7 +118,7 @@ class UserTest extends ProviderTest
     }
 
     /** @test */
-    public function it_should_not_call_requests_to_api_when_login_already_logged()
+    public function it_should_not_make_requests_to_api_when_login_already_logged()
     {
         $this->setIsLoggedInExpectation(true);
         $this->request->shouldNotReceive('exec');

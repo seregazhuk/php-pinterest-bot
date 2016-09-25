@@ -129,7 +129,7 @@ class User extends Provider
         $this->checkCredentials($username, $password);
 
         // Trying to load previously saved cookies from last login
-        // attempt for this username.
+        // session for this username.
         if($autoLogin && $this->request->autoLogin($username)) {
             return true;
         }

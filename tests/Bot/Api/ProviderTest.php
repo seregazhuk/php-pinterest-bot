@@ -43,7 +43,7 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
     protected $response;
 
     /**
-     * @var Request
+     * @var Request|MockInterface
      */
     protected $request;
 
