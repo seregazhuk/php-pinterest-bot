@@ -2,9 +2,9 @@
 
 namespace seregazhuk\PinterestBot\Api;
 
-use seregazhuk\PinterestBot\Api\Contracts\HttpClient;
 use seregazhuk\PinterestBot\Helpers\Cookies;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
+use seregazhuk\PinterestBot\Api\Contracts\HttpClient;
 
 /**
  * Class CurlAdapter.
@@ -207,7 +207,7 @@ class CurlHttpClient implements HttpClient
      * @param $username
      * @return $this
      */
-    protected function initCookieJar($username = '')
+    protected function initCookieJar($username = 'common')
     {
         $cookieName = 'printerest_cookie_' . $username;
         $cookieFilePath = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $cookieName;

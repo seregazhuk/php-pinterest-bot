@@ -156,6 +156,7 @@ class Request
     public function login()
     {
         $this->setTokenFromCookies();
+
         if(!empty($this->csrfToken)) {
             $this->loggedIn = true;
         }
