@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 ## [4.12.3] - ?
 ## Added:
 - HttpClient *cookie* and *cookies* methods.
+- Auto-login from previous saved session.
 
 ## Fixed:
  - HttpClient *setOptions* does not override default Curl options, only adds additional ones.
