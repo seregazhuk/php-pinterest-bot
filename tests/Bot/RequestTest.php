@@ -108,12 +108,14 @@ class RequestTest extends PHPUnit_Framework_TestCase
     /** @test */
     public function it_should_load_cookies_from_previously_saved_session_on_auto_login()
     {
-        $cookieFilePath = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'printerest_cookie_test';
+        $cookieFilePath = $this->getCookiePath('test');
         $this->createCookieFile($cookieFilePath);
 
         $request = $this->createRequestObject();
         $request->autoLogin('test');
+
         $this->assertNotEmpty($request->getHttpClient()->cookies());
+        unlink($cookieFilePath);
     }
 
     /** @test */

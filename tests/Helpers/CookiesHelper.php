@@ -18,4 +18,13 @@ trait CookiesHelper
 
         file_put_contents($fileName, preg_replace('/ +/', "\t",$content));
     }
+
+    /**
+     * @param string $username
+     * @return string
+     */
+    protected function getCookiePath($username = '')
+    {
+        return sys_get_temp_dir() . DIRECTORY_SEPARATOR . "printerest_cookie_$username";
+    }
 }
