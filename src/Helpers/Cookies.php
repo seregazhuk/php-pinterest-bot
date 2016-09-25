@@ -88,20 +88,32 @@ class Cookies
 
         if (!$this->isValid($line)) return false;
 
+        $data = $this->getCookieData($line);
+
+        $data['httponly'] = $httpOnly;
+
+        return $data;
+    }
+
+    /**
+     * @param $line
+     * @return array
+     */
+    protected function getCookieData($line)
+    {
         // get tokens in an array
-        $tokens = explode("\t", $line);
+        $data = explode("\t", $line);
         // trim the tokens
-        $tokens = array_map('trim', $tokens);
+        $data =  array_map('trim', $data);
 
         return [
-            'httponly'   => $httpOnly,
-            'domain'     => $tokens[0],
-            'flag'       => $tokens[1],
-            'path'       => $tokens[2],
-            'secure'     => $tokens[3],
-            'name'       => urldecode($tokens[5]),
-            'value'      => urldecode($tokens[6]),
-            'expiration' => date('Y-m-d h:i:s', $tokens[4]),
+            'domain'     => $data[0],
+            'flag'       => $data[1],
+            'path'       => $data[2],
+            'secure'     => $data[3],
+            'name'       => urldecode($data[5]),
+            'value'      => urldecode($data[6]),
+            'expiration' => date('Y-m-d h:i:s', $data[4]),
         ];
     }
 }
