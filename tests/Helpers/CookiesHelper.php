@@ -16,7 +16,6 @@ trait CookiesHelper
             $content .= "\n#HttpOnly_.pinterest.com        TRUE    /       TRUE    1505894318      _auth   1";
         }
 
-        unlink($fileName);
         file_put_contents($fileName, preg_replace('/ +/', "\t",$content));
     }
 }
