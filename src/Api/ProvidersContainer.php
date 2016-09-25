@@ -8,7 +8,6 @@ use seregazhuk\PinterestBot\Api\Providers\Provider;
 use seregazhuk\PinterestBot\Exceptions\WrongProvider;
 use seregazhuk\PinterestBot\Api\Contracts\HttpClient;
 use seregazhuk\PinterestBot\Api\Providers\ProviderWrapper;
-use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 
 class ProvidersContainer
 {
@@ -111,7 +110,7 @@ class ProvidersContainer
     public function getLastError()
     {
         $error = $this
-            ->request
+            ->response
             ->getLastError();
 
         return isset($error['message']) ? $error['message'] : null;
