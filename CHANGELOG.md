@@ -1,19 +1,23 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [4.12.5] - 2016-09-25
+### Fixed:
+ - Bot *getLastError* method.
+
 ## [4.12.4] - 2016-09-25
-## Fixed:
+### Fixed:
  - Bot *getClientInfo* method with auto login.
 
 ## [4.12.3] - 2016-09-25
-## Added:
+### Added:
 - HttpClient *cookie* and *cookies* methods.
 - Auto-login from a previously saved session.
 
-## Fixed:
+### Fixed:
  - HttpClient *setOptions* does not override default Curl options, only adds additional ones.
 
-## Removed:
+### Removed:
  - HttpClient *setUserAgent* method, custom userAgent should be passed with 
  other Curl options via *setOptions* method.
 
