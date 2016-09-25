@@ -79,12 +79,10 @@ class Cookies
      */
     protected function parseCookie($line)
     {
-        $cookie = [];
+        // detect http only cookies and remove #HttpOnly prefix
+        $httpOnly = $this->isHttp($line);
 
-        // detect httponly cookies and remove #HttpOnly prefix
-        $cookie['httponly'] = $this->isHttp($line);
-
-        if ($cookie['httponly']) {
+        if ($httpOnly) {
             $line = substr($line, 10);
         }
 
@@ -95,18 +93,15 @@ class Cookies
         // trim the tokens
         $tokens = array_map('trim', $tokens);
 
-        // Extract the data
-        $cookie['domain'] = $tokens[0]; // The domain that created AND can read the variable.
-        $cookie['flag'] = $tokens[1];   // A TRUE/FALSE value indicating if all machines within a given domain can access the variable.
-        $cookie['path'] = $tokens[2];   // The path within the domain that the variable is valid for.
-        $cookie['secure'] = $tokens[3]; // A TRUE/FALSE value indicating if a secure connection with the domain is needed to access the variable.
-
-        $cookie['expiration-epoch'] = $tokens[4];  // The UNIX time that the variable will expire on.
-        $cookie['name'] = urldecode($tokens[5]);   // The name of the variable.
-        $cookie['value'] = urldecode($tokens[6]);  // The value of the variable.
-
-        // Convert date to a readable format
-        $cookie['expiration'] = date('Y-m-d h:i:s', $tokens[4]);
-        return $cookie;
+        return [
+            'httponly'   => $httpOnly,
+            'domain'     => $tokens[0],
+            'flag'       => $tokens[1],
+            'path'       => $tokens[2],
+            'secure'     => $tokens[3],
+            'name'       => urldecode($tokens[5]),
+            'value'      => urldecode($tokens[6]),
+            'expiration' => date('Y-m-d h:i:s', $tokens[4]),
+        ];
     }
 }
