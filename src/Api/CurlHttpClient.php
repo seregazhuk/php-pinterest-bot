@@ -218,8 +218,8 @@ class CurlHttpClient implements HttpClient
 
     /**
      * Return cookie file name by username. If username is empty we use a
-     * random cookie name based on timestamp, to be sure we have
-     * different cookies in parallel sessions.
+     * random cookie name, to be sure we have different cookies
+     * in parallel sessions.
      *
      * @param string $username
      * @return string
