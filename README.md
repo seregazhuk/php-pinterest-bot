@@ -97,7 +97,7 @@ if(!$resultt) {
 }
 ```
 
-By default bot uses auto-login. It uses cookies, saved from last session. To skip auto-login
+By default bot uses auto-login. It uses cookies, saved from the last session. To skip auto-login
 and force login requests, you can pass `false` as the third argument:
 
 ```php
