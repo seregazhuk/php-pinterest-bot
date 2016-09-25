@@ -1,6 +1,6 @@
 <?php
 
-namespace szhuk\tests;
+namespace seregazhuk\tests\Bot;
 
 use PHPUnit_Framework_TestCase;
 use seregazhuk\PinterestBot\Api\Response;

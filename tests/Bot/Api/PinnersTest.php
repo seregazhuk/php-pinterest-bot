@@ -1,6 +1,6 @@
 <?php
 
-namespace seregazhuk\tests\Api;
+namespace seregazhuk\tests\Bot\Api;
 
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\tests\Helpers\FollowResponseHelper;
@@ -12,6 +12,7 @@ use seregazhuk\PinterestBot\Api\Providers\Pinners;
 class PinnersTest extends ProviderTest
 {
     use FollowResponseHelper;
+
     /**
      * @var Pinners
      */

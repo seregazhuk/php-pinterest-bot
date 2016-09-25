@@ -39,6 +39,7 @@ if your don't use such operations as creating pins, writing comments or sending 
 - [Keywords](#keywords)
 - [Errors handling](#errors-handling)
 - [Custom request settings](#custom-request-settings)
+- [Cookies](#cookies)
 
 ## Dependencies
 Library requires CURL extension and PHP 5.5.9 or above.
@@ -84,16 +85,23 @@ will return only 2 pins of the search results.
 Login:
 
 ```php
-$resul = $bot->user->login('mypinterestlogin', 'mypinterestpassword');
+$result = $bot->user->login('mypinterestlogin', 'mypinterestpassword');
 ```
 Login method returns `true` on success and `failse` if fails:
 
 ```php
-$resul = $bot->user->login('mypinterestlogin', 'mypinterestpassword');
-if(!$result) {
+$result = $bot->user->login('mypinterestlogin', 'mypinterestpassword');
+if(!$resultt) {
 	echo $bot->getLastError();
 	die();
 }
+```
+
+By default bot uses auto-login. It uses cookies, saved from last session. To skip auto-login
+and force login requests, you can pass `false` as the third argument:
+
+```php
+$result = $bot->user->login('mypinterestlogin', 'mypinterestpassword', false);
 ```
 
 Or you may skip login, if you want. It is only required for such operations as likes, follows and making pins.
@@ -269,7 +277,7 @@ $bot->pins->unLike($pinId);
 ```
 Write a comment.
 ```php
-$result = $bot->pins->comment($pinId, 'your comment'); 
+$resultt = $bot->pins->comment($pinId, 'your comment'); 
 // Result contains info about written comment. For example,
 // comment_id if you want to delete it.
 ```
@@ -636,7 +644,7 @@ echo $error;
 
 ## Custom request settings
 
-It is possible to override default Curl options for bot requests. For example you can 
+It is possible to add some additional Curl options for bot requests. For example you can 
 set proxy and user-agent like this:
 
 ```php
@@ -651,6 +659,20 @@ OS, browser, ip and others:
 
 ```php
 $info = $bot->getClientInfo();
+```
+
+## Cookies
+
+Current bot cookies are available through getHttpClient and cookie/cookies methods.
+All cookies:
+
+```php
+$cookies = $bot->getHttpClient()->cookies();
+```
+
+Cookie value by name:
+```php
+$someCookieValue = $bot->getHttpClient()->cookie('cookieName');
 ```
 
 ## How can I thank you?

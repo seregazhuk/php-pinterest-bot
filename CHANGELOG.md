@@ -1,6 +1,18 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [4.12.3] - ?
+## Added:
+- HttpClient *cookie* and *cookies* methods.
+- Auto-login from previous saved session.
+
+## Fixed:
+ - HttpClient *setOptions* does not override default Curl options, only adds additional ones.
+
+## Removed:
+ - HttpClient *setUserAgent* method, custom userAgent should be passed with 
+ other Curl options via *setOptions* method.
+
 ## [4.11.2] - 2016-09-18
 ### Fixed:
  - Images upload

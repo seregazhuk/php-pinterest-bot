@@ -3,7 +3,7 @@
 namespace seregazhuk\PinterestBot\Api;
 
 use seregazhuk\PinterestBot\Api\Contracts\HttpClient;
-use seregazhuk\PinterestBot\Helpers\CsrfParser;
+use seregazhuk\PinterestBot\Helpers\Cookies;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 
 /**
@@ -11,19 +11,14 @@ use seregazhuk\PinterestBot\Helpers\UrlBuilder;
  */
 class CurlHttpClient implements HttpClient
 {
-    public $cookieName = 'pinterest_cookie';
-
     /**
      * Custom CURL options for requests.
      *
      * @var array
      */
-    protected $options = [];
-
-    /**
-     * @var string
-     */
-    protected $userAgent = 'Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0';
+    protected $options = [
+        CURLOPT_USERAGENT => 'Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0'
+    ];
 
     /**
      * @var array
@@ -42,9 +37,30 @@ class CurlHttpClient implements HttpClient
      */
     protected $cookieJar;
 
-    public function __construct()
+    /**
+     * Cookies container
+     *
+     * @var Cookies
+     */
+    protected $cookies;
+
+    public function __construct(Cookies $cookies)
     {
-        $this->cookieJar = tempnam(sys_get_temp_dir(), $this->cookieName);
+        $this->cookies = $cookies;
+    }
+
+    /**
+     * Load cookies for specified username
+     *
+     * @param string $username
+     * @return HttpClient
+     */
+    public function loadCookies($username = '')
+    {
+        $this->initCookieJar($username);
+        $this->cookies->fill($this->cookieJar);
+
+        return $this;
     }
 
     /**
@@ -64,6 +80,8 @@ class CurlHttpClient implements HttpClient
         $res = curl_exec($this->curl);
         $this->close();
 
+        $this->cookies->fill($this->cookieJar);
+
         return $res;
     }
 
@@ -75,27 +93,6 @@ class CurlHttpClient implements HttpClient
     public function getErrors()
     {
         return curl_error($this->curl);
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getToken()
-    {
-        return CsrfParser::getTokenFromFile($this->cookieJar);
-    }
-
-    /**
-     * @param string $userAgent
-     * @return $this
-     */
-    public function setUserAgent($userAgent)
-    {
-        if ($userAgent !== null) {
-            $this->userAgent = $userAgent;
-        }
-
-        return $this;
     }
 
     /**
@@ -119,10 +116,11 @@ class CurlHttpClient implements HttpClient
     {
         $this->curl = curl_init($url);
 
-        curl_setopt_array(
-            $this->curl,
-            $this->makeHttpOptions($postString)
-        );
+        if (empty($this->cookieJar)) {
+            $this->loadCookies();
+        }
+
+        curl_setopt_array($this->curl, $this->makeHttpOptions($postString));
 
         return $this;
     }
@@ -133,7 +131,6 @@ class CurlHttpClient implements HttpClient
     protected function getDefaultHttpOptions()
     {
         return [
-            CURLOPT_USERAGENT      => $this->userAgent,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_SSL_VERIFYPEER => false,
             CURLOPT_FOLLOWLOCATION => true,
@@ -154,18 +151,15 @@ class CurlHttpClient implements HttpClient
      */
     protected function makeHttpOptions($postString = '')
     {
-        $options = $this->getDefaultHttpOptions();
+        // Union custom Curl options and default.
+        $options = array_replace(
+            $this->options,
+            $this->getDefaultHttpOptions()
+        );
 
         if (!empty($postString)) {
             $options[CURLOPT_POST] = true;
             $options[CURLOPT_POSTFIELDS] = $postString;
-        }
-
-        // Override default options with custom
-        if (!empty($this->options)) {
-            foreach ($this->options as $option => $value) {
-                $options[$option] = $value;
-            }
         }
 
         return $options;
@@ -180,6 +174,49 @@ class CurlHttpClient implements HttpClient
     public function setOptions(array $options)
     {
         $this->options = $options;
+
+        return $this;
+    }
+
+    /**
+     * Get a cookie value by name
+     *
+     * @param $name
+     * @return mixed
+     */
+    public function cookie($name)
+    {
+        return $this->cookies->get($name);
+    }
+
+    /**
+     * Get all cookies
+     *
+     * @return array
+     */
+    public function cookies()
+    {
+        return $this->cookies->all();
+    }
+
+    /**
+     * Init cookie file for a specified username. If username is empty we use
+     * common cookie file for all sessions. If file does not exist it will
+     * be created in system temp directory.
+     *
+     * @param $username
+     * @return $this
+     */
+    protected function initCookieJar($username = '')
+    {
+        $cookieName = 'printerest_cookie_' . $username;
+        $cookieFilePath = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $cookieName;
+
+        if (!file_exists($cookieFilePath)) {
+            touch($cookieFilePath);
+        }
+
+        $this->cookieJar = $cookieFilePath;
 
         return $this;
     }

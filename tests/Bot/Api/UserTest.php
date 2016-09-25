@@ -1,6 +1,6 @@
 <?php
 
-namespace seregazhuk\tests\Api;
+namespace seregazhuk\tests\Bot\Api;
 
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\Providers\User;
@@ -118,7 +118,7 @@ class UserTest extends ProviderTest
     }
 
     /** @test */
-    public function it_should_not_call_requests_to_api_when_login_already_logged()
+    public function it_should_not_make_requests_to_api_when_login_already_logged()
     {
         $this->setIsLoggedInExpectation(true);
         $this->request->shouldNotReceive('exec');
@@ -140,7 +140,7 @@ class UserTest extends ProviderTest
             ->shouldReceive('login')
             ->once();
 
-        $this->assertTrue($this->provider->login('test', 'test'));
+        $this->assertTrue($this->provider->login('test', 'test', false));
     }
 
     /** @test */
@@ -151,7 +151,7 @@ class UserTest extends ProviderTest
         $this->apiShouldReturnError();
         $this->request->shouldReceive('clearToken');
 
-        $this->assertFalse($this->provider->login('test', 'test'));
+        $this->assertFalse($this->provider->login('test', 'test', false));
     }
 
     /** @test */

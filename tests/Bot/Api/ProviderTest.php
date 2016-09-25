@@ -1,6 +1,6 @@
 <?php
 
-namespace seregazhuk\tests\Api;
+namespace seregazhuk\tests\Bot\Api;
 
 use Mockery;
 use ReflectionClass;
@@ -43,7 +43,7 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
     protected $response;
 
     /**
-     * @var Request
+     * @var Request|MockInterface
      */
     protected $request;
 

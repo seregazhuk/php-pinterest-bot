@@ -1,16 +1,17 @@
 <?php
 
-namespace szhuk\tests;
+namespace seregazhuk\tests\Bot;
 
 use Mockery;
 use Mockery\Mock;
 use ReflectionClass;
 use PHPUnit_Framework_TestCase;
 use seregazhuk\PinterestBot\Api\Request;
+use seregazhuk\tests\Helpers\CookiesHelper;
+use seregazhuk\PinterestBot\Helpers\Cookies;
 use seregazhuk\tests\helpers\ResponseHelper;
 use seregazhuk\tests\helpers\ReflectionHelper;
 use seregazhuk\PinterestBot\Api\CurlHttpClient;
-use seregazhuk\PinterestBot\Helpers\CsrfParser;
 use seregazhuk\PinterestBot\Api\Contracts\HttpClient;
 
 /**
@@ -18,7 +19,7 @@ use seregazhuk\PinterestBot\Api\Contracts\HttpClient;
  */
 class RequestTest extends PHPUnit_Framework_TestCase
 {
-    use ReflectionHelper, ResponseHelper;
+    use ReflectionHelper, ResponseHelper, CookiesHelper;
 
     /** @test */
     public function it_should_return_logged_in_status()
@@ -38,7 +39,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
         $this->assertEmpty($this->getProperty('csrfToken'));
 
         $request->clearToken();
-        $this->assertEquals(CsrfParser::DEFAULT_TOKEN, $this->getProperty('csrfToken'));
+        $this->assertEquals(Cookies::DEFAULT_TOKEN, $this->getProperty('csrfToken'));
     }
 
     /** @test */
@@ -84,23 +85,6 @@ class RequestTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($bookmarks, $dataFromRequest['options']['bookmarks']);
     }
 
-    public function it_should_save_token_from_cookies()
-    {
-        $cookieFile = __DIR__.'/../'.CurlHttpClient::COOKIE_NAME;
-        var_dump($cookieFile);
-        die();
-        $token = 'WfdvEjNSLYiykJHDIx4sGSpCS8OhUld0';
-        file_put_contents(
-            $cookieFile, ".pinterest.com	TRUE	/	TRUE	1488295594	csrftoken	$token"
-        );
-        $request = $this->createRequestObject();
-        $this->setProperty('cookieJar', $cookieFile);
-        $request->login();
-
-        unlink($cookieFile);
-        $this->assertEquals($token, $this->getProperty('csrfToken'));
-    }
-
     /** @test */
     public function it_should_clear_token_and_login_status_after_logout()
     {
@@ -109,7 +93,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
 
         $request->logout();
         $this->assertFalse($request->isLoggedIn());
-        $this->assertEquals(CsrfParser::DEFAULT_TOKEN, $this->getProperty('csrfToken'));
+        $this->assertEquals(Cookies::DEFAULT_TOKEN, $this->getProperty('csrfToken'));
     }
 
     /**
@@ -121,9 +105,42 @@ class RequestTest extends PHPUnit_Framework_TestCase
         $this->createRequestObject()->upload('image.jpg', 'http://uploadurl.com');
     }
 
-    /**
-     * @test
-     */
+    /** @test */
+    public function it_should_load_cookies_from_previously_saved_session_on_auto_login()
+    {
+        $cookieFilePath = $this->getCookiePath('test');
+        $this->createCookieFile($cookieFilePath);
+
+        $request = $this->createRequestObject();
+        $request->autoLogin('test');
+
+        $this->assertNotEmpty($request->getHttpClient()->cookies());
+        unlink($cookieFilePath);
+    }
+
+    /** @test */
+    public function it_should_return_false_on_auto_login_when_auth_cookie_not_found()
+    {
+        $cookieFilePath = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'printerest_cookie_test';
+        $this->createCookieFile($cookieFilePath, false);
+
+        $request = $this->createRequestObject();
+        $this->assertFalse($request->autoLogin('test'));
+    }
+
+    /** @test */
+    public function it_should_return_true_on_auto_login_when_auth_cookie_exist()
+    {
+        $cookieFilePath = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'printerest_cookie_test';
+        $this->createCookieFile($cookieFilePath);
+
+        $request = $this->createRequestObject();
+
+        $this->assertTrue($request->autoLogin('test'));
+        $this->assertTrue($request->isLoggedIn());
+    }
+
+    /** @test */
     public function it_should_create_post_data_for_upload()
     {
         $http = $this->getHttpObject();
@@ -173,7 +190,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
      */
     protected function createRequestObject(HttpClient $http = null, $userAgentString = '')
     {
-        $http = $http ? : new CurlHttpClient();
+        $http = $http ? : new CurlHttpClient(new Cookies());
         $request = new Request($http, $userAgentString);
 
         $this->reflection = new ReflectionClass($request);

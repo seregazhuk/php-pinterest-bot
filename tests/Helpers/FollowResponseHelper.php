@@ -2,13 +2,16 @@
 
 namespace seregazhuk\tests\Helpers;
 
+use Mockery\MockInterface;
 use seregazhuk\PinterestBot\Api\Request;
+use seregazhuk\PinterestBot\Api\Providers\Provider;
 
 /**
  * Class FollowResponseHelper
  * @package seregazhuk\tests\Helpers
  *
- * @property Request|MockeryInterface $request
+ * @property Request|MockInterface $request
+ * @property Provider $provider
  */
 trait FollowResponseHelper
 {

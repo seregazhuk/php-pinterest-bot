@@ -2,6 +2,8 @@
 
 namespace seregazhuk\PinterestBot\Api\Contracts;
 
+use seregazhuk\PinterestBot\Helpers\Cookies;
+
 interface HttpClient
 {
     /**
@@ -22,17 +24,29 @@ interface HttpClient
     public function execute($url, $postString = '', array $headers = []);
 
     /**
-     * Returns csrf token from cookies.
-     *
-     * @return string|null
-     */
-    public function getToken();
-
-    /**
      * Set custom Curl options to override default
      *
      * @param array $options
      * @return $this
      */
     public function setOptions(array $options);
+
+    /**
+     * @param $name
+     * @return mixed
+     */
+    public function cookie($name);
+
+    /**
+     * @return array
+     */
+    public function cookies();
+
+    /**
+     * Load cookies for specified username
+     *
+     * @param string $username
+     * @return HttpClient
+     */
+    public function loadCookies($username = '');
 }

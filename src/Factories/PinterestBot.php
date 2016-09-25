@@ -6,6 +6,7 @@ use seregazhuk\PinterestBot\Bot;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Api\CurlHttpClient;
+use seregazhuk\PinterestBot\Helpers\Cookies;
 use seregazhuk\PinterestBot\Api\ProvidersContainer;
 
 class PinterestBot
@@ -17,11 +18,21 @@ class PinterestBot
      */
     public static function create()
     {
-        $request = new Request(new CurlHttpClient());
+        $request = self::makeRequest();
 
         $providersContainer = new ProvidersContainer($request, new Response());
 
         return new Bot($providersContainer);
+    }
+
+    /**
+     * @return Request
+     */
+    protected static function makeRequest()
+    {
+        $httpClient = new CurlHttpClient(new Cookies());
+
+        return new Request($httpClient);
     }
 
     /**

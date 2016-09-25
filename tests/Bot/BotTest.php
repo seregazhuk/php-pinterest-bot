@@ -10,6 +10,7 @@ use seregazhuk\PinterestBot\Bot;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\CurlHttpClient;
 use seregazhuk\PinterestBot\Api\ProvidersContainer;
+use seregazhuk\PinterestBot\Helpers\Cookies;
 
 /**
  * Class BotTest.
@@ -20,7 +21,7 @@ class BotTest extends PHPUnit_Framework_TestCase
     public function it_should_return_last_error_from_response()
     {
         $error = ['message' => 'expected_error'];
-        $request = Mockery::mock(Request::class, [new CurlHttpClient()])
+        $request = Mockery::mock(Request::class, [new CurlHttpClient(new Cookies())])
             ->shouldReceive('getLastError')
             ->andReturn($error)
             ->getMock();

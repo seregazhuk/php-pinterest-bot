@@ -2,10 +2,9 @@
 
 namespace seregazhuk\PinterestBot\Api;
 
+use seregazhuk\PinterestBot\Helpers\Cookies;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Helpers\FileHelper;
-use seregazhuk\PinterestBot\Helpers\CsrfParser;
-use seregazhuk\PinterestBot\Exceptions\AuthFailed;
 use seregazhuk\PinterestBot\Api\Contracts\HttpClient;
 use seregazhuk\PinterestBot\Exceptions\InvalidRequest;
 
@@ -14,6 +13,7 @@ use seregazhuk\PinterestBot\Exceptions\InvalidRequest;
  */
 class Request
 {
+
     /**
      * @var HttpClient
      */
@@ -112,8 +112,8 @@ class Request
     protected function getHttpHeaders()
     {
         $headers = $this->getDefaultHttpHeaders();
-        if ($this->csrfToken == CsrfParser::DEFAULT_TOKEN) {
-            $headers[] = 'Cookie: csrftoken=' . CsrfParser::DEFAULT_TOKEN . ';';
+        if ($this->csrfToken == Cookies::DEFAULT_TOKEN) {
+            $headers[] = 'Cookie: csrftoken=' . Cookies::DEFAULT_TOKEN . ';';
         }
 
         return $headers;
@@ -127,21 +127,43 @@ class Request
      */
     public function clearToken()
     {
-        $this->csrfToken = CsrfParser::DEFAULT_TOKEN;
+        $this->csrfToken = Cookies::DEFAULT_TOKEN;
 
         return $this;
     }
 
     /**
-     * Mark api as logged.
-     * @throws AuthFailed
+     * Load cookies for this username and check if it was logged in.
+     * @param string $username
+     * @return bool
+     */
+    public function autoLogin($username)
+    {
+        $this->httpClient->loadCookies($username);
+
+        if(!$this->httpClient->cookie('_auth')) {
+            return false;
+        }
+
+        $this->login();
+
+        return true;
+    }
+
+    /**
+     * Mark client as logged.
      */
     public function login()
     {
         $this->setTokenFromCookies();
-        $this->loggedIn = true;
+        if(!empty($this->csrfToken)) {
+            $this->loggedIn = true;
+        }
     }
 
+    /**
+     * Mark client as logged out.
+     */
     public function logout()
     {
         $this->clearToken();
@@ -149,7 +171,7 @@ class Request
     }
 
     /**
-     * Get log status.
+     * Get current auth status.
      *
      * @return bool
      */
@@ -168,8 +190,9 @@ class Request
      */
     public static function createQuery(array $data = [], $bookmarks = [])
     {
-        $data = ['options' => $data];
-        $request = self::createRequestData($data, $bookmarks);
+        $request = self::createRequestData(
+            ['options' => $data], $bookmarks
+        );
 
         return UrlBuilder::buildRequestString($request);
     }
@@ -198,12 +221,14 @@ class Request
         ];
     }
 
+    /**
+     * Trying to get csrf token from cookies.
+     *
+     * @return $this
+     */
     public function setTokenFromCookies()
     {
-        $this->csrfToken = $this->httpClient->getToken();
-        if (empty($this->csrfToken)) {
-            throw new AuthFailed('Cannot parse token from cookies.');
-        }
+        $this->csrfToken = $this->httpClient->cookie('csrftoken');
 
         return $this;
     }
