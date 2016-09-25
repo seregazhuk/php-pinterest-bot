@@ -134,21 +134,7 @@ class User extends Provider
             return true;
         }
 
-        $this->request->clearToken();
-
-        $credentials = [
-            'username_or_email' => $username,
-            'password'          => $password,
-        ];
-
-        $response = $this->execPostRequest($credentials, UrlBuilder::RESOURCE_LOGIN, true);
-        if ($response->hasErrors()) {
-            return false;
-        }
-
-        $this->request->login();
-
-        return true;
+        return $this->processLogin($username, $password);
     }
 
     public function logout()
@@ -268,5 +254,29 @@ class User extends Provider
         }
 
         return $this->completeRegistration();
+    }
+
+    /**
+     * @param string $username
+     * @param string $password
+     * @return bool
+     */
+    protected function processLogin($username, $password)
+    {
+        $this->request->clearToken();
+
+        $credentials = [
+            'username_or_email' => $username,
+            'password'          => $password,
+        ];
+
+        $response = $this->execPostRequest($credentials, UrlBuilder::RESOURCE_LOGIN, true);
+        if ($response->hasErrors()) {
+            return false;
+        }
+
+        $this->request->login();
+
+        return true;
     }
 }
