@@ -30,7 +30,6 @@ use seregazhuk\PinterestBot\Api\Providers\Conversations;
  *
  * @method HttpClient getHttpClient
  * @method array|null getLastError
- * @method array|null getClientInfo
  */
 class Bot
 {
@@ -69,5 +68,21 @@ class Bot
     public function __call($method, $parameters)
     {
         return call_user_func([$this->providersContainer, $method], $parameters);
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getClientInfo()
+    {
+        $clientInfo = $this->providersContainer->getClientInfo();
+
+        // If there was no request before, simply visit the main page, to
+        // load client context information.
+        if(is_null($clientInfo)) {
+            $this->user->visitMainPage();
+        }
+
+        return $this->providersContainer->getClientInfo();
     }
 }

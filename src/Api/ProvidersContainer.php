@@ -122,12 +122,6 @@ class ProvidersContainer
      */
     public function getClientInfo()
     {
-        $clientInfo = $this->response->getClientInfo();
-
-        if(is_null($clientInfo)) {
-            $this->getProvider('user')->visitMainPage();
-        }
-
         return $this->response->getClientInfo();
     }
 
