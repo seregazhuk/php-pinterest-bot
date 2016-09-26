@@ -71,15 +71,19 @@ class Bot
     }
 
     /**
+     * Returns client context from Pinterest response.
+     *
+     * @param bool $reload
      * @return array|null
      */
-    public function getClientInfo()
+    public function getClientInfo($reload = false)
     {
         $clientInfo = $this->providersContainer->getClientInfo();
 
-        // If there was no request before, simply visit the main page, to
-        // load client context information.
-        if(is_null($clientInfo)) {
+        // If there was no request before or reload param is provided we
+        // simply visit the main page, to load client context
+        // information.
+        if(is_null($clientInfo) || $reload) {
             $this->user->visitMainPage();
         }
 

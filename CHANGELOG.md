@@ -6,6 +6,9 @@ All notable changes to this project will be documented in this file.
  - Creating cookie file if does not exist
  - User *register* default country is GB
 
+### Changed:
+ - *reload* param added to Bot *getClientContext* method.
+
 ## [4.12.5] - 2016-09-25
 ### Fixed:
  - Bot *getLastError* method.
