@@ -231,6 +231,11 @@ class CurlHttpClient implements HttpClient
         }
 
         $cookieName = 'printerest_cookie_' . $username;
-        return sys_get_temp_dir() . DIRECTORY_SEPARATOR . $cookieName;
+        $cookieFilePath = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $cookieName;
+        if (!file_exists($cookieFilePath)) {
+            touch($cookieFilePath);
+        }
+
+        return $cookieFilePath;
     }
 }

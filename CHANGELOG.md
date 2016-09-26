@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [4.12.6] - 2016-09-26
+### Fixed:
+ - Creating cookie file if does not exist
+ - User *register* default country is GB
+
 ## [4.12.5] - 2016-09-25
 ### Fixed:
  - Bot *getLastError* method.
