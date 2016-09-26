@@ -58,7 +58,7 @@ class User extends Provider
      *
      * @return bool
      */
-    public function register($email, $password, $name, $country = "UK", $age = 18)
+    public function register($email, $password, $name, $country = 'GB', $age = 18)
     {
         $data = [
             "age"        => $age,

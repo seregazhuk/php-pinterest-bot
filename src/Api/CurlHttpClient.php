@@ -209,10 +209,9 @@ class CurlHttpClient implements HttpClient
      */
     protected function initCookieJar($username = '')
     {
-        $cookieFilePath = $this->getCookieFilePath($username);
+        $this->cookieJar = $this->getCookieFilePath($username);;
 
-        $this->cookieJar = $cookieFilePath;
-
+        echo $this->cookieJar, "\n";
         return $this;
     }
 
@@ -231,6 +230,11 @@ class CurlHttpClient implements HttpClient
         }
 
         $cookieName = 'printerest_cookie_' . $username;
-        return sys_get_temp_dir() . DIRECTORY_SEPARATOR . $cookieName;
+        $cookieFilePath = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $cookieName;
+        if (!file_exists($cookieFilePath)) {
+            touch($cookieFilePath);
+        }
+
+        return $cookieFilePath;
     }
 }

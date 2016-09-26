@@ -125,7 +125,7 @@ To register a new user:
 $bot->user->register('youremail@gmail.com', 'password', 'Name');
 ```
 
-You can specify additional parameters with registration: age and country. By default they are: 18, "UK":
+You can specify additional parameters with registration: age and country. By default they are: 18, "GB":
 
 ```php
 $bot->user->register('youremail@gmail.com', 'password', 'Name', "DE", 40);
@@ -659,6 +659,13 @@ OS, browser, ip and others:
 
 ```php
 $info = $bot->getClientInfo();
+```
+
+By default it uses client info from the last request. To reload client context pass `true` argument:
+
+```php
+// force to reload client info
+$info = $bot->getClientInfo(true);
 ```
 
 ## Cookies
