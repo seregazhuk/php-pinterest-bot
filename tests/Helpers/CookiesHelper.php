@@ -2,6 +2,8 @@
 
 namespace seregazhuk\tests\Helpers;
 
+use seregazhuk\PinterestBot\Api\Contracts\HttpClient;
+
 trait CookiesHelper
 {
     /**
@@ -16,6 +18,10 @@ trait CookiesHelper
             $content .= "\n#HttpOnly_.pinterest.com        TRUE    /       TRUE    1505894318      _auth   1";
         }
 
+        if(file_exists($fileName)) {
+            unlink($fileName);
+        }
+
         file_put_contents($fileName, preg_replace('/ +/', "\t",$content));
     }
 
@@ -25,6 +31,6 @@ trait CookiesHelper
      */
     protected function getCookiePath($username = '')
     {
-        return sys_get_temp_dir() . DIRECTORY_SEPARATOR . "printerest_cookie_$username";
+        return sys_get_temp_dir() . DIRECTORY_SEPARATOR . HttpClient::COOKIE_PREFIX . "$username";
     }
 }

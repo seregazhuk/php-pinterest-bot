@@ -226,11 +226,12 @@ class CurlHttpClient implements HttpClient
     protected function getCookieFilePath($username)
     {
         if(empty($username)) {
-            return tempnam(sys_get_temp_dir(), 'printerest_cookie_');
+            return tempnam(sys_get_temp_dir(), self::COOKIE_PREFIX);
         }
 
-        $cookieName = 'printerest_cookie_' . $username;
+        $cookieName = self::COOKIE_PREFIX . $username;
         $cookieFilePath = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $cookieName;
+
         if (!file_exists($cookieFilePath)) {
             touch($cookieFilePath);
         }
