@@ -18,9 +18,9 @@ This PHP library will help you to work with your Pinterest account without using
 
 To have an access to Pinterest API you need to go to <a target="_blank" href="http://developers.pinterest.com">developers.pinterest.com</a> 
 and register as a developer, then register your application, then wait for confirmation, and only then you 
-will get an access token. With this library you are already ready to go. Just use only your 
+will get an access token. With this library, you are ready to go. Just use only your 
 account login and password, like you do it in your browser. But even your account is not required, 
-if your don't use such operations as creating pins, writing comments or sending messages!
+if you don't use such operations as creating pins, writing comments or sending messages!
 
 - [Dependencies](#dependencies)
 - [Installation](#installation)
@@ -91,7 +91,7 @@ Login method returns `true` on success and `failse` if fails:
 
 ```php
 $result = $bot->user->login('mypinterestlogin', 'mypinterestpassword');
-if(!$resultt) {
+if(!$result) {
 	echo $bot->getLastError();
 	die();
 }
@@ -104,7 +104,7 @@ and force login requests, you can pass `false` as the third argument:
 $result = $bot->user->login('mypinterestlogin', 'mypinterestpassword', false);
 ```
 
-Or you may skip login, if you want. It is only required for such operations as likes, follows and making pins.
+Or you may skip login if you want. It is only required for such operations as likes, follows and making pins.
 You can get your current logged in status via *isLoggedIn* method:
 
 ```php
@@ -155,13 +155,13 @@ $boards = $bot->boards->forUser($username);
 ```
 
 Get full board info by boardName and userName. Here you can get board id, for further functions
-(for examaple, pin creating or following boards).
+(for example, pin creating or following boards).
 
 ```php
 $info = $bot->boards->info($username, $board);
 ```
 
-Create a new board. As third parameter you can pass privacy. It is *public* by default, or *secret* if private.
+Create a new board. As third parameter, you can pass privacy. It is *public* by default, or *secret* if private.
 
 ```php
 // create a public board
@@ -220,7 +220,7 @@ $suggestions = $bot->boards->getTitleSuggestionsFor($pinId);
 ```
 ## Pins
 
-Notice! Try not to be very aggressive when pinning or commenting pins, or pinterest will gonna ban you.
+Notice! Try not to be very aggressive when pinning or commenting pins, or Pinterest will gonna ban you.
 
 Get pin info by its id.
 ```php
@@ -245,7 +245,7 @@ You can specify a link for pin (source) as fourth argument. If not set, link is 
 $pinInfo = $bot->pins->create('http://exmaple.com/image.jpg', $boardId, 'pin description', 'http://site.com');
 ```
     
-Repin other pin by its id.
+Repin a pin by its id.
 
 ```php
 $pinInfo = $bot->pins->repin($pinId, $boardId, 'my repin');
@@ -277,7 +277,7 @@ $bot->pins->unLike($pinId);
 ```
 Write a comment.
 ```php
-$resultt = $bot->pins->comment($pinId, 'your comment'); 
+$result = $bot->pins->comment($pinId, 'your comment'); 
 // Result contains info about written comment. For example,
 // comment_id if you want to delete it.
 ```
@@ -435,7 +435,7 @@ foreach($bot->pinners->likes('username') as $like)
 
 ## Interests
 
-Get list of main categories.
+Get a list of main categories.
 
 ```php
 $categories = $bot->interests->getMain()
@@ -496,7 +496,7 @@ $topics = $bot->topics->getRelatedTopics('content-marketing');
 ## Conversations
 
 ### Write a message
-Write a message to user by id. You may specify one user by id, or pass an array of user ids. 
+Write a message to a user by id. You may specify one user by id, or pass an array of user ids. 
 
 ```php
 $bot->conversations->sendMessage($userId, 'message text');
@@ -526,7 +526,7 @@ $conversations = $bot->conversations->last();
 
 ## Search
 
-Search functions use pinterest pagination in fetching results and return generator.
+Search functions use Pinterest pagination in fetching results and return a generator object.
 
 ```php
 foreach($bot->pins->search('query') as $pin)
@@ -628,8 +628,8 @@ Array
  - "for teens", position = 1 -> the complete keyword is : "dress for teens"
  - "wedding", position = 0 -> the complete keywords is: "wedding dress"
  
-So, position = 0 mean the additional keyword should be putted before the search keyword 
-when make concatenation, and position = 1 is for the reverse case.
+So, position = 0 means the additional keyword should be put before the search keyword 
+when making concatenation, and position = 1 is for the reverse case.
 
 
 
@@ -683,6 +683,6 @@ $someCookieValue = $bot->getHttpClient()->cookie('cookieName');
 ```
 
 ## How can I thank you?
-Why not star the github repo? I'd love the attention!
+Why not star the GitHub repo? I'd love the attention!
 
 Thanks! 
