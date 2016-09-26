@@ -2,7 +2,6 @@
 
 namespace seregazhuk\PinterestBot\Api;
 
-use Guzzle\Http\Url;
 use ReflectionClass;
 use seregazhuk\PinterestBot\Api\Providers\Provider;
 use seregazhuk\PinterestBot\Exceptions\WrongProvider;
@@ -58,7 +57,8 @@ class ProvidersContainer
     {
         $provider = strtolower($provider);
 
-        // Check if an instance has already been initiated
+        // Check if an instance has already been initiated. If not
+        // build it and then add to the providers array.
         if (!isset($this->providers[$provider])) {
             $this->addProvider($provider);
         }
@@ -68,7 +68,7 @@ class ProvidersContainer
 
     /**
      * Creates provider by class name, and if success saves
-     * it to providers array. Provider class must be in PROVIDERS_NAMESPACE.
+     * it to providers array. Provider class must exist in PROVIDERS_NAMESPACE.
      *
      * @param string $provider
      *
@@ -103,7 +103,7 @@ class ProvidersContainer
     }
 
     /**
-     * Proxy method to Request object.
+     * Proxies call to Request object.
      *
      * @return string|null
      */
@@ -117,6 +117,8 @@ class ProvidersContainer
     }
 
     /**
+     * Proxies call to Response object.
+     *
      * @return array|null
      */
     public function getClientInfo()

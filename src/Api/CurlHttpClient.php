@@ -231,6 +231,7 @@ class CurlHttpClient implements HttpClient
 
         $cookieName = self::COOKIE_PREFIX . $username;
         $cookieFilePath = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $cookieName;
+
         if (!file_exists($cookieFilePath)) {
             touch($cookieFilePath);
         }
