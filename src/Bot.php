@@ -50,7 +50,6 @@ class Bot
      * Magic method to access different providers.
      *
      * @param string $provider
-     *
      * @return Provider
      */
     public function __get($provider)
