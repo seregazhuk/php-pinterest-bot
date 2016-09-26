@@ -2,10 +2,10 @@
 
 namespace seregazhuk\PinterestBot\Api\Contracts;
 
-use seregazhuk\PinterestBot\Helpers\Cookies;
-
 interface HttpClient
 {
+    const COOKIE_PREFIX = 'pinterest_cookie_';
+
     /**
      * Get curl errors.
      *

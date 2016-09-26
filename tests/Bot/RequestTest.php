@@ -121,7 +121,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
     /** @test */
     public function it_should_return_false_on_auto_login_when_auth_cookie_not_found()
     {
-        $cookieFilePath = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'printerest_cookie_test';
+        $cookieFilePath = $this->getCookiePath('test');
         $this->createCookieFile($cookieFilePath, false);
 
         $request = $this->createRequestObject();
@@ -131,7 +131,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
     /** @test */
     public function it_should_return_true_on_auto_login_when_auth_cookie_exist()
     {
-        $cookieFilePath = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'printerest_cookie_test';
+        $cookieFilePath = $this->getCookiePath('test');
         $this->createCookieFile($cookieFilePath);
 
         $request = $this->createRequestObject();
