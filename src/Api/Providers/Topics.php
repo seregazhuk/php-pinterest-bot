@@ -19,7 +19,7 @@ class Topics extends Provider
     protected $unFollowUrl = UrlBuilder::RESOURCE_UNFOLLOW_INTEREST;
 
     protected $entityIdName = 'interest_id';
-
+    protected $feedUrl = UrlBuilder::RESOURCE_GET_TOPIC_FEED;
 
 
     /**
@@ -34,23 +34,14 @@ class Topics extends Provider
     }
 
     /**
-     * Returns a feed of pins
-     * @param string $topic
-     * @param int $limit
-     * @return array|bool
+     * @param $interest
+     * @return array
      */
-    public function getPinsFor($topic, $limit = 0)
+    protected function getFeedRequestData($interest)
     {
-        $params = [
-            'data' => [
-                'interest'  => $topic,
-                'pins_only' => false,
-            ],
-            'url' => UrlBuilder::RESOURCE_GET_TOPIC_FEED
+        return [
+            'interest'  => $interest,
+            'pins_only' => false,
         ];
-
-        return $this->getPaginatedResponse(
-            $params, $limit
-        );
     }
 }
