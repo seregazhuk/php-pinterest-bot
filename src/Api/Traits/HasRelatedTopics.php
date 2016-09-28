@@ -4,10 +4,6 @@ namespace seregazhuk\PinterestBot\Api\Traits;
 
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 
-/**
- * Trait HasRelatedTopics
- * @package seregazhuk\PinterestBot\Api\Traits
- */
 trait HasRelatedTopics
 {
     use HandlesRequest;

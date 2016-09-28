@@ -10,7 +10,6 @@ use seregazhuk\PinterestBot\Api\SearchResponse;
 
 /**
  * Trait Searchable
- * @package seregazhuk\PinterestBot\Api\Traits
  *
  * @property string $searchScope
  * @property Request request

@@ -4,14 +4,8 @@ namespace seregazhuk\PinterestBot\Api\Traits;
 
 use Generator;
 
-/**
- * Class HasFeed
- * @package seregazhuk\PinterestBot\Api\Traits
- */
 trait HasFeed
 {
-    use HandlesRequest;
-
     /**
      * @param array $data
      * @param string $feedUrl
