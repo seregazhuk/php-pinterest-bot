@@ -57,10 +57,8 @@ class CurlHttpClient implements HttpClient
      */
     public function loadCookies($username = '')
     {
-        $this->initCookieJar($username);
-        $this->cookies->fill($this->cookieJar);
-
-        return $this;
+        return $this->initCookieJar($username)
+            ->fillCookies();
     }
 
     /**
@@ -73,14 +71,12 @@ class CurlHttpClient implements HttpClient
      */
     public function execute($url, $postString = '', array $headers = [])
     {
-        $this->headers = $headers;
-
-        $this->init($url, $postString);
+        $this->init($url, $postString, $headers);
 
         $res = curl_exec($this->curl);
         curl_close($this->curl);
 
-        $this->cookies->fill($this->cookieJar);
+        $this->fillCookies();
 
         return $res;
     }
@@ -90,10 +86,13 @@ class CurlHttpClient implements HttpClient
      *
      * @param string $url
      * @param string $postString
+     * @param array $headers
      * @return $this
      */
-    protected function init($url, $postString)
+    protected function init($url, $postString, $headers)
     {
+        $this->headers = $headers;
+
         $this->curl = curl_init($url);
 
         if (empty($this->cookieJar)) {
@@ -216,5 +215,15 @@ class CurlHttpClient implements HttpClient
         }
 
         return $cookieFilePath;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function fillCookies()
+    {
+        $this->cookies->fill($this->cookieJar);
+
+        return $this;
     }
 }
