@@ -7,13 +7,6 @@ interface HttpClient
     const COOKIE_PREFIX = 'pinterest_cookie_';
 
     /**
-     * Get curl errors.
-     *
-     * @return string
-     */
-    public function getErrors();
-
-    /**
      * Executes curl request.
      *
      * @param string $url

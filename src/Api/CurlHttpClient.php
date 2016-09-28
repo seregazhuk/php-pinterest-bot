@@ -86,16 +86,6 @@ class CurlHttpClient implements HttpClient
     }
 
     /**
-     * Get curl errors.
-     *
-     * @return string
-     */
-    public function getErrors()
-    {
-        return curl_error($this->curl);
-    }
-
-    /**
      * Initializes curl resource with options.
      *
      * @param string $url
