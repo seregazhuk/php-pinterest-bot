@@ -199,20 +199,20 @@ class CurlHttpClient implements HttpClient
      */
     protected function initCookieJar($username = '')
     {
-        $this->cookieJar = $this->getCookieFilePath($username);
+        $this->cookieJar = $this->initCookieFile($username);
 
         return $this;
     }
 
     /**
-     * Return cookie file name by username. If username is empty we use a
+     * Returns cookie file name by username. If username is empty we use a
      * random cookie name, to be sure we have different cookies
      * in parallel sessions.
      *
      * @param string $username
      * @return string
      */
-    protected function getCookieFilePath($username)
+    protected function initCookieFile($username)
     {
         if(empty($username)) {
             return tempnam(sys_get_temp_dir(), self::COOKIE_PREFIX);
