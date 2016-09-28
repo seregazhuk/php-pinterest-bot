@@ -78,7 +78,7 @@ class CurlHttpClient implements HttpClient
         $this->init($url, $postString);
 
         $res = curl_exec($this->curl);
-        $this->close();
+        curl_close($this->curl);
 
         $this->cookies->fill($this->cookieJar);
 
@@ -96,20 +96,10 @@ class CurlHttpClient implements HttpClient
     }
 
     /**
-     * Close the curl resource.
-     *
-     * @return void
-     */
-    protected function close()
-    {
-        curl_close($this->curl);
-    }
-
-    /**
      * Initializes curl resource with options.
      *
      * @param string $url
-     * @param $postString
+     * @param string $postString
      * @return $this
      */
     protected function init($url, $postString)
@@ -209,9 +199,8 @@ class CurlHttpClient implements HttpClient
      */
     protected function initCookieJar($username = '')
     {
-        $this->cookieJar = $this->getCookieFilePath($username);;
+        $this->cookieJar = $this->getCookieFilePath($username);
 
-        echo $this->cookieJar, "\n";
         return $this;
     }
 
