@@ -57,10 +57,8 @@ class CurlHttpClient implements HttpClient
      */
     public function loadCookies($username = '')
     {
-        $this->initCookieJar($username);
-        $this->cookies->fill($this->cookieJar);
-
-        return $this;
+        return $this->initCookieJar($username)
+            ->fillCookies();
     }
 
     /**
@@ -73,47 +71,28 @@ class CurlHttpClient implements HttpClient
      */
     public function execute($url, $postString = '', array $headers = [])
     {
-        $this->headers = $headers;
-
-        $this->init($url, $postString);
+        $this->init($url, $postString, $headers);
 
         $res = curl_exec($this->curl);
-        $this->close();
+        curl_close($this->curl);
 
-        $this->cookies->fill($this->cookieJar);
+        $this->fillCookies();
 
         return $res;
-    }
-
-    /**
-     * Get curl errors.
-     *
-     * @return string
-     */
-    public function getErrors()
-    {
-        return curl_error($this->curl);
-    }
-
-    /**
-     * Close the curl resource.
-     *
-     * @return void
-     */
-    protected function close()
-    {
-        curl_close($this->curl);
     }
 
     /**
      * Initializes curl resource with options.
      *
      * @param string $url
-     * @param $postString
+     * @param string $postString
+     * @param array $headers
      * @return $this
      */
-    protected function init($url, $postString)
+    protected function init($url, $postString, $headers)
     {
+        $this->headers = $headers;
+
         $this->curl = curl_init($url);
 
         if (empty($this->cookieJar)) {
@@ -209,21 +188,20 @@ class CurlHttpClient implements HttpClient
      */
     protected function initCookieJar($username = '')
     {
-        $this->cookieJar = $this->getCookieFilePath($username);;
+        $this->cookieJar = $this->initCookieFile($username);
 
-        echo $this->cookieJar, "\n";
         return $this;
     }
 
     /**
-     * Return cookie file name by username. If username is empty we use a
+     * Returns cookie file name by username. If username is empty we use a
      * random cookie name, to be sure we have different cookies
      * in parallel sessions.
      *
      * @param string $username
      * @return string
      */
-    protected function getCookieFilePath($username)
+    protected function initCookieFile($username)
     {
         if(empty($username)) {
             return tempnam(sys_get_temp_dir(), self::COOKIE_PREFIX);
@@ -237,5 +215,15 @@ class CurlHttpClient implements HttpClient
         }
 
         return $cookieFilePath;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function fillCookies()
+    {
+        $this->cookies->fill($this->cookieJar);
+
+        return $this;
     }
 }

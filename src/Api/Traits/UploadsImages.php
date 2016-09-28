@@ -9,7 +9,6 @@ use seregazhuk\PinterestBot\Exceptions\InvalidRequest;
 
 /**
  * Trait UploadsImages
- * @package seregazhuk\PinterestBot\Api\Traits
  *
  * @property Request $request
  * @property Response $response

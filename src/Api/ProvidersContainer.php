@@ -103,7 +103,8 @@ class ProvidersContainer
     }
 
     /**
-     * Proxies call to Request object.
+     * Proxies call to Request object and returns message from
+     * the error object.
      *
      * @return string|null
      */
@@ -117,7 +118,7 @@ class ProvidersContainer
     }
 
     /**
-     * Proxies call to Response object.
+     * Simply proxies call to Response object.
      *
      * @return array|null
      */

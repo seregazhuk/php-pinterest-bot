@@ -2,6 +2,7 @@
 
 namespace seregazhuk\PinterestBot\Api\Providers;
 
+use Generator;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Helpers\Pagination;
@@ -156,7 +157,7 @@ abstract class Provider
      * @param array $params
      * @param int $limit
      * @param string $method
-     * @return mixed
+     * @return Generator
      */
     protected function getPaginatedResponse(array $params, $limit, $method = 'getPaginatedData')
     {

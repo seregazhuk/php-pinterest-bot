@@ -2,10 +2,6 @@
 
 namespace seregazhuk\PinterestBot\Api\Traits;
 
-/**
- * Trait HasEntityIdName
- * @package seregazhuk\PinterestBot\Api\Traits
- */
 trait HasEntityIdName
 {
     /**

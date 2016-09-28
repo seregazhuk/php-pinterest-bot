@@ -2,13 +2,15 @@
 
 namespace seregazhuk\PinterestBot\Api\Providers;
 
+use Generator;
+use seregazhuk\PinterestBot\Api\Traits\HasFeed;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\Traits\Followable;
 use seregazhuk\PinterestBot\Api\Traits\HasRelatedTopics;
 
 class Topics extends Provider
 {
-    use Followable, HasRelatedTopics;
+    use Followable, HasRelatedTopics, HasFeed;
 
     /**
      * @var array
@@ -19,7 +21,6 @@ class Topics extends Provider
     protected $unFollowUrl = UrlBuilder::RESOURCE_UNFOLLOW_INTEREST;
 
     protected $entityIdName = 'interest_id';
-
 
 
     /**
@@ -34,23 +35,19 @@ class Topics extends Provider
     }
 
     /**
-     * Returns a feed of pins
-     * @param string $topic
+     * Returns a feed of pins.
+     *
+     * @param string $interest
      * @param int $limit
-     * @return array|bool
+     * @return Generator
      */
-    public function getPinsFor($topic, $limit = 0)
+    public function getPinsFor($interest, $limit = 0)
     {
-        $params = [
-            'data' => [
-                'interest'  => $topic,
-                'pins_only' => false,
-            ],
-            'url' => UrlBuilder::RESOURCE_GET_TOPIC_FEED
+        $data = [
+            'interest'  => $interest,
+            'pins_only' => false,
         ];
 
-        return $this->getPaginatedResponse(
-            $params, $limit
-        );
+        return $this->getFeed($data, UrlBuilder::RESOURCE_GET_TOPIC_FEED, $limit);
     }
 }

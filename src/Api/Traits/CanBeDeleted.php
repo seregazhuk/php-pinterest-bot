@@ -4,7 +4,6 @@ namespace seregazhuk\PinterestBot\Api\Traits;
 
 /**
  * Trait CanBeDeleted
- * @package seregazhuk\PinterestBot\Api\Traits
  *
  * @property string $deleteUrl
  */

@@ -9,7 +9,6 @@ use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 
 /**
  * Trait Followable
- * @package seregazhuk\PinterestBot\Api\Traits
  *
  * @property string $followUrl
  * @property string $unFollowUrl
