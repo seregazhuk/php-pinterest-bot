@@ -3,6 +3,7 @@
 namespace seregazhuk\PinterestBot\Api\Providers;
 
 use Iterator;
+use seregazhuk\PinterestBot\Api\Traits\HasFeed;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\Traits\Searchable;
 use seregazhuk\PinterestBot\Api\Traits\CanBeDeleted;
@@ -10,7 +11,7 @@ use seregazhuk\PinterestBot\Api\Traits\UploadsImages;
 
 class Pins extends Provider
 {
-    use Searchable, CanBeDeleted, UploadsImages;
+    use Searchable, CanBeDeleted, UploadsImages, HasFeed;
 
     protected $loginRequiredFor = [
         'like',
@@ -199,12 +200,9 @@ class Pins extends Provider
      */
     public function fromSource($source, $limit = 0)
     {
-        $params = [
-            'data' => ['domain' => $source],
-            'url'  => UrlBuilder::RESOURCE_DOMAIN_FEED,
-        ];
+        $data = ['source' => $source];
 
-        return $this->getPaginatedResponse($params, $limit);
+        return $this->getFeed($data, UrlBuilder::RESOURCE_DOMAIN_FEED, $limit);
     }
 
     /**
@@ -220,12 +218,9 @@ class Pins extends Provider
             return null;
         }
 
-        $params = [
-            'data' => ['aggregated_pin_data_id' => $aggregatedPinId],
-            'url'  => UrlBuilder::RESOURCE_ACTIVITY
-        ];
+        $data = ['aggregated_pin_data_id' => $aggregatedPinId];
 
-        return $this->getPaginatedResponse($params, $limit);
+        return $this->getFeed($data, UrlBuilder::RESOURCE_ACTIVITY, $limit);
     }
 
     /**
@@ -236,12 +231,7 @@ class Pins extends Provider
      */
     public function userFeed($limit = 0)
     {
-        $params = [
-            'data' => [],
-            'url'  => UrlBuilder::RESOURCE_USER_FEED
-        ];
-
-        return $this->getPaginatedResponse($params, $limit);
+        return $this->getFeed([], UrlBuilder::RESOURCE_USER_FEED, $limit);
     }
 
     /**
@@ -251,12 +241,7 @@ class Pins extends Provider
      */
     public function getRelatedPins($pinId, $limit = 0)
     {
-        $params = [
-            'data' => ['pin' => $pinId],
-            'url'  => UrlBuilder::RESOURCE_RELATED_PINS
-        ];
-
-        return $this->getPaginatedResponse($params, $limit);
+        return $this->getFeed(['pin' => $pinId], UrlBuilder::RESOURCE_RELATED_PINS, $limit);
     }
 
     /**
@@ -283,5 +268,14 @@ class Pins extends Provider
         return isset($pinInfo['aggregated_pin_data']['id']) ?
             $pinInfo['aggregated_pin_data']['id'] :
             null;
+    }
+
+    /**
+     * @param mixed $params
+     * @return array
+     */
+    protected function getFeedRequestData($params = [])
+    {
+        return ['domain' => $params['source']];
     }
 }

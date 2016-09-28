@@ -2,10 +2,13 @@
 
 namespace seregazhuk\PinterestBot\Api\Providers;
 
+use seregazhuk\PinterestBot\Api\Traits\HasFeed;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 
 class News extends Provider
 {
+    use HasFeed;
+
     /**
      * @var array
      */
@@ -29,11 +32,8 @@ class News extends Provider
      */
     public function all($limit = 0)
     {
-        $params = [
-            'data' => ['allow_stale' => true],
-            'url'  => UrlBuilder::RESOURCE_GET_LATEST_NEWS
-        ];
+        $data = ['allow_stale' => true];
 
-        return $this->getPaginatedResponse($params, $limit);
+        return $this->getFeed($data, UrlBuilder::RESOURCE_GET_LATEST_NEWS, $limit);
     }
 }

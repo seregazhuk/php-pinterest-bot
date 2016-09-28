@@ -2,12 +2,14 @@
 
 namespace seregazhuk\PinterestBot\Api\Providers;
 
+use Generator;
+use seregazhuk\PinterestBot\Api\Traits\HasFeed;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
-use seregazhuk\PinterestBot\Api\Traits\HasTopics;
+use seregazhuk\PinterestBot\Api\Traits\HasRelatedTopics;
 
 class Interests extends Provider
 {
-    use HasTopics;
+    use HasRelatedTopics, HasFeed;
 
     protected $feedUrl = UrlBuilder::RESOURCE_GET_CATEGORY_FEED;
 
@@ -33,14 +35,19 @@ class Interests extends Provider
     }
 
     /**
-     * @param $interest
-     * @return array
+     * Returns a feed of pins.
+     *
+     * @param string $interest
+     * @param int $limit
+     * @return Generator
      */
-    protected function getFeedRequestData($interest)
+    public function getPinsFor($interest, $limit = 0)
     {
-        return [
-            'feed'             => $interest,
-            'is_category_feed' => true,
-        ];
+       $data = [
+           'feed'             => $interest,
+           'is_category_feed' => true,
+       ];
+
+        return $this->getFeed($data, UrlBuilder::RESOURCE_GET_CATEGORY_FEED, $limit);
     }
 }
