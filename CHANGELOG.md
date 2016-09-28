@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [4.12.7] - ?
+### Fixed:
+ - Removed output cookie file path to console
+
 ## [4.12.6] - 2016-09-26
 ### Fixed:
  - Creating cookie file if does not exist
