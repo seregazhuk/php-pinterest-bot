@@ -2,13 +2,12 @@
 
 namespace seregazhuk\PinterestBot\Api\Providers;
 
-use Generator;
-use seregazhuk\PinterestBot\Api\Traits\HasRelatedTopics;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
+use seregazhuk\PinterestBot\Api\Traits\HasTopics;
 
 class Interests extends Provider
 {
-    use HasRelatedTopics;
+    use HasTopics;
 
     protected $feedUrl = UrlBuilder::RESOURCE_GET_CATEGORY_FEED;
 

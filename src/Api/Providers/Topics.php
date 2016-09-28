@@ -4,11 +4,11 @@ namespace seregazhuk\PinterestBot\Api\Providers;
 
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\Traits\Followable;
-use seregazhuk\PinterestBot\Api\Traits\HasRelatedTopics;
+use seregazhuk\PinterestBot\Api\Traits\HasTopics;
 
 class Topics extends Provider
 {
-    use Followable, HasRelatedTopics;
+    use Followable, HasTopics;
 
     /**
      * @var array

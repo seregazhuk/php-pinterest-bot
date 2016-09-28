@@ -11,7 +11,7 @@ use seregazhuk\PinterestBot\Helpers\UrlBuilder;
  *
  * @property string $feedUrl
  */
-trait HasRelatedTopics
+trait HasTopics
 {
     use HandlesRequest;
 
