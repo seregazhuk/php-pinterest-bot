@@ -200,7 +200,7 @@ class Pins extends Provider
      */
     public function fromSource($source, $limit = 0)
     {
-        $data = ['source' => $source];
+        $data = ['domain' => $source];
 
         return $this->getFeed($data, UrlBuilder::RESOURCE_DOMAIN_FEED, $limit);
     }
