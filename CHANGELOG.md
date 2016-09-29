@@ -1,9 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [4.12.7] - ?
+## [4.12.7] - 2016-09-26
 ### Fixed:
  - Removed output cookie file path to console
+ - Boards *info* method now returns only specified board
 
 ## [4.12.6] - 2016-09-26
 ### Fixed:
