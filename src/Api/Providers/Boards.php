@@ -60,7 +60,7 @@ class Boards extends Provider
             'field_set_key' => 'detailed',
         ];
 
-        return $this->execGetRequest($requestOptions, UrlBuilder::RESOURCE_GET_BOARDS);
+        return $this->execGetRequest($requestOptions, UrlBuilder::RESOURCE_GET_BOARD);
     }
 
     /**
