@@ -16,6 +16,7 @@ class UrlBuilder
      * Boards
      */
     const RESOURCE_GET_BOARDS = 'resource/BoardsResource/get/';
+    const RESOURCE_GET_BOARD = 'resource/BoardResource/get';
     const RESOURCE_GET_BOARD_FEED = 'resource/BoardFeedResource/get/';
     const RESOURCE_PROFILE_BOARDS = 'resource/ProfileBoardsResource/get/';
     const RESOURCE_FOLLOW_BOARD = 'resource/BoardFollowResource/create/';
