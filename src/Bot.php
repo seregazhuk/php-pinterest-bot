@@ -47,7 +47,7 @@ class Bot
     }
 
     /**
-     * Magic method to access different providers.
+     * Magic method to access different providers from the providers container.
      *
      * @param string $provider
      * @return Provider
@@ -58,7 +58,7 @@ class Bot
     }
 
     /**
-     *  Magic method to proxy calls to providers container.
+     *  All method calls are proxied to the providers container.
      *
      * @param string $method
      * @param array $parameters
@@ -70,7 +70,9 @@ class Bot
     }
 
     /**
-     * Returns client context from Pinterest response.
+     * Returns client context from Pinterest response. By default info returns from the last
+     * Pinterest response. If there was no response before or the argument $reload is
+     * true, we make a dummy request to the main page to update client context.
      *
      * @param bool $reload
      * @return array|null
@@ -79,9 +81,6 @@ class Bot
     {
         $clientInfo = $this->providersContainer->getClientInfo();
 
-        // If there was no request before or reload param is provided we
-        // simply visit the main page, to load client context
-        // information.
         if(is_null($clientInfo) || $reload) {
             $this->user->visitMainPage();
         }
