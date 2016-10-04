@@ -9,7 +9,8 @@ trait HasRelatedTopics
     use HandlesRequest;
 
     /**
-     * Returns a list of related topics
+     * Returns a list of related topics.
+     *
      * @param string $interest
      * @return array|bool
      */

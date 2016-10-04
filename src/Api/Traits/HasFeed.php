@@ -2,15 +2,13 @@
 
 namespace seregazhuk\PinterestBot\Api\Traits;
 
-use Generator;
-
 trait HasFeed
 {
     /**
      * @param array $data
      * @param string $feedUrl
      * @param int $limit
-     * @return Generator
+     * @return \Generator
      */
     protected function getFeed($data, $feedUrl, $limit)
     {
@@ -26,7 +24,7 @@ trait HasFeed
      * @param array $params
      * @param int $limit
      * @param string $method
-     * @return Generator
+     * @return \Generator
      */
     abstract protected function getPaginatedResponse(array $params, $limit, $method = 'getPaginatedData');
 }

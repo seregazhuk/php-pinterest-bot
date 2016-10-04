@@ -2,7 +2,6 @@
 
 namespace seregazhuk\PinterestBot\Api\Traits;
 
-use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
 
 trait HandlesRequest
