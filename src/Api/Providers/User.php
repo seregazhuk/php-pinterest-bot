@@ -3,6 +3,7 @@
 namespace seregazhuk\PinterestBot\Api\Providers;
 
 use LogicException;
+use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Api\Traits\UploadsImages;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 
@@ -290,12 +291,38 @@ class User extends Provider
     {
         $request = ['username_or_email' => $user];
 
-        return $this->execPostRequest($request, UrlBuilder::RESOURCE_RESET_PASSWORD_ASK);
+        return $this->execPostRequest($request, UrlBuilder::RESOURCE_RESET_PASSWORD_SEND_LINK);
     }
 
-    public function reset()
+    /**
+     * Set a new password by link from reset password email
+     *
+     * @param $link
+     * @param string $newPassword
+     * @return bool|Response
+     */
+    public function resetPassword($link, $newPassword)
     {
-        
+        // Visit link to get current reset token, username and token expiration
+        $this->execGetRequest([], $link);
+        $this->request->clearToken();
+
+        $passwordResetUrl = $this->request->getHttpClient()->getCurrentUrl();
+
+        $urlData = parse_url($passwordResetUrl);
+        $username = trim(str_replace('/pw/', '', $urlData['path']), '/');
+
+        $query = [];
+        parse_str($urlData['query'], $query);
+
+
+        return $this->execPostRequest([
+                'username'             => $username,
+                'new_password'         => $newPassword,
+                'new_password_confirm' => $newPassword,
+                'token'                => $query['t'],
+                'expiration'           => $query['e'],
+            ], UrlBuilder::RESOURCE_RESET_PASSWORD_UPDATE, true);
     }
 
 

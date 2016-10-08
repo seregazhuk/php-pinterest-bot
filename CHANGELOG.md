@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [4.13.0] - ???
+###Added:
+ - User *resetPassword* and *sendPasswordResetLink* methods to reset password.
+ - HttpClient *getCurrentUrl* method
+
 ## [4.12.7] - 2016-09-26
 ### Fixed:
  - Removed output cookie file path to console

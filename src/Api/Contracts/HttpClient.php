@@ -42,4 +42,9 @@ interface HttpClient
      * @return HttpClient
      */
     public function loadCookies($username = '');
+
+    /**
+     * @return string
+     */
+    public function getCurrentUrl();
 }

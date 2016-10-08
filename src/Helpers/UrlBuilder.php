@@ -15,8 +15,8 @@ class UrlBuilder
     /**
      * Password
      */
-    const RESOURCE_RESET_PASSWORD_ASK = 'resource/UserResetPasswordResource/create/';
-    const RESOURCE_RESET_PASSWORD_SET = 'resource/ResetPasswordFromEmailResource/update/';
+    const RESOURCE_RESET_PASSWORD_SEND_LINK = 'resource/UserResetPasswordResource/create/';
+    const RESOURCE_RESET_PASSWORD_UPDATE = 'resource/ResetPasswordFromEmailResource/update/';
 
     /**
      * Boards
@@ -149,6 +149,10 @@ class UrlBuilder
      */
     public static function buildApiUrl($resourceUrl)
     {
+        if(strpos($resourceUrl, 'http') !== false) {
+            return $resourceUrl;
+        }
+
         return self::URL_BASE . $resourceUrl;
     }
 
