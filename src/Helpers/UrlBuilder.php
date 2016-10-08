@@ -13,6 +13,12 @@ class UrlBuilder
     const RESOURCE_LOGIN = 'resource/UserSessionResource/create/';
 
     /**
+     * Password
+     */
+    const RESOURCE_RESET_PASSWORD_ASK = 'resource/UserResetPasswordResource/create/';
+    const RESOURCE_RESET_PASSWORD_SET = 'resource/ResetPasswordFromEmailResource/update/';
+
+    /**
      * Boards
      */
     const RESOURCE_GET_BOARDS = 'resource/BoardsResource/get/';

@@ -3,8 +3,8 @@
 namespace seregazhuk\PinterestBot\Api\Providers;
 
 use LogicException;
-use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\Traits\UploadsImages;
+use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 
 class User extends Provider
 {
@@ -278,6 +278,24 @@ class User extends Provider
         $this->request->login();
 
         return true;
+    }
+
+    /**
+     * Ask for password reset link in email
+     *
+     * @param string $user Username or user mail
+     * @return bool
+     */
+    public function sendPasswordResetLink($user)
+    {
+        $request = ['username_or_email' => $user];
+
+        return $this->execPostRequest($request, UrlBuilder::RESOURCE_RESET_PASSWORD_ASK);
+    }
+
+    public function reset()
+    {
+        
     }
 
 
