@@ -13,6 +13,12 @@ class UrlBuilder
     const RESOURCE_LOGIN = 'resource/UserSessionResource/create/';
 
     /**
+     * Password
+     */
+    const RESOURCE_RESET_PASSWORD_SEND_LINK = 'resource/UserResetPasswordResource/create/';
+    const RESOURCE_RESET_PASSWORD_UPDATE = 'resource/ResetPasswordFromEmailResource/update/';
+
+    /**
      * Boards
      */
     const RESOURCE_GET_BOARDS = 'resource/BoardsResource/get/';
@@ -143,6 +149,10 @@ class UrlBuilder
      */
     public static function buildApiUrl($resourceUrl)
     {
+        if(strpos($resourceUrl, 'http') !== false) {
+            return $resourceUrl;
+        }
+
         return self::URL_BASE . $resourceUrl;
     }
 

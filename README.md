@@ -147,6 +147,22 @@ $bot->user->convertToBusiness('businessName');
 $bot->user->convertToBusiness('businessName', 'http://yoursite.com');
 ```
 
+### Reset password. 
+You can send to your email a link to reset your password:
+
+```php
+$bot->user->sendPasswordResetLink('youremail@gmail.com');
+```
+
+Then your can grab a link from email and pass use it to reset password:
+
+```php
+$bot->user->resetPassword(
+    'https://post.pinterest.com/f/a/your-password-reset-params',
+    'newPassword'
+);
+```
+
 ## Boards
 
 Get all user's boards.

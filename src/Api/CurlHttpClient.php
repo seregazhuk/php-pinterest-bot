@@ -44,6 +44,11 @@ class CurlHttpClient implements HttpClient
      */
     protected $cookies;
 
+    /**
+     * @var string
+     */
+    protected $currentUrl;
+
     public function __construct(Cookies $cookies)
     {
         $this->cookies = $cookies;
@@ -74,10 +79,11 @@ class CurlHttpClient implements HttpClient
         $this->init($url, $postString, $headers);
 
         $res = curl_exec($this->curl);
+        $this->setCurrentUrl();
+
         curl_close($this->curl);
 
         $this->fillCookies();
-
         return $res;
     }
 
@@ -225,5 +231,18 @@ class CurlHttpClient implements HttpClient
         $this->cookies->fill($this->cookieJar);
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCurrentUrl()
+    {
+        return $this->currentUrl;
+    }
+
+    protected function setCurrentUrl()
+    {
+        $this->currentUrl = curl_getinfo($this->curl, CURLINFO_EFFECTIVE_URL);
     }
 }

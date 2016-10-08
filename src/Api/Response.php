@@ -25,6 +25,8 @@ class Response implements PaginatedResponse
     {
         $this->data = $data;
 
+        if(!$this->data) return;
+
         $this->lastError = $this->getValueByKey('resource_response.error', $this->data);
 
         $this->clientInfo = $this->getValueByKey('client_context', $this->data);
