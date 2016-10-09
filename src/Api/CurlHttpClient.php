@@ -49,6 +49,11 @@ class CurlHttpClient implements HttpClient
      */
     protected $currentUrl;
 
+    /**
+     * @var string
+     */
+    protected $cookiesPath;
+
     public function __construct(Cookies $cookies)
     {
         $this->cookies = $cookies;
@@ -185,6 +190,18 @@ class CurlHttpClient implements HttpClient
     }
 
     /**
+     * Set directory to store all cookie files.
+     * @param string $path
+     * @return $this
+     */
+    public function setCookiesPath($path)
+    {
+        $this->cookiesPath = $path;
+
+        return $this;
+    }
+
+    /**
      * Init cookie file for a specified username. If username is empty we use
      * common cookie file for all sessions. If file does not exist it will
      * be created in system temp directory.
@@ -210,17 +227,25 @@ class CurlHttpClient implements HttpClient
     protected function initCookieFile($username)
     {
         if(empty($username)) {
-            return tempnam(sys_get_temp_dir(), self::COOKIE_PREFIX);
+            return tempnam($this->getCookiesPath(), self::COOKIE_PREFIX);
         }
 
         $cookieName = self::COOKIE_PREFIX . $username;
-        $cookieFilePath = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $cookieName;
+        $cookieFilePath = $this->getCookiesPath() . DIRECTORY_SEPARATOR . $cookieName;
 
         if (!file_exists($cookieFilePath)) {
             touch($cookieFilePath);
         }
 
         return $cookieFilePath;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCookiesPath()
+    {
+        return $this->cookiesPath ? : sys_get_temp_dir();
     }
 
     /**

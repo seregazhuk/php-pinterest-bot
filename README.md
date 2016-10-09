@@ -82,7 +82,7 @@ will return only 2 pins of the search results.
 
 ## Account
 
-Login:
+### Login
 
 ```php
 $result = $bot->user->login('mypinterestlogin', 'mypinterestpassword');
@@ -119,6 +119,8 @@ To logout use *logout* method:
 $bot->user->logout();
 ```
 
+### Registration
+
 To register a new user:
 
 ```php
@@ -147,7 +149,7 @@ $bot->user->convertToBusiness('businessName');
 $bot->user->convertToBusiness('businessName', 'http://yoursite.com');
 ```
 
-### Reset password. 
+### Reset password
 You can send to your email a link to reset your password:
 
 ```php
@@ -161,6 +163,14 @@ $bot->user->resetPassword(
     'https://post.pinterest.com/f/a/your-password-reset-params',
     'newPassword'
 );
+```
+
+### Invite 
+
+To invite someone by email:
+
+```php
+$bot->user->invite($email)
 ```
 
 ## Boards
@@ -697,6 +707,16 @@ Cookie value by name:
 ```php
 $someCookieValue = $bot->getHttpClient()->cookie('cookieName');
 ```
+
+By default cookie files are stored in your system temp directory. You can set custom path to store cookies:
+
+```php
+$bot->getHttpClient()->setCookiesPath($yourCustomPathForCookies);
+
+$currentPath = $bot->getHttpClient()->getCookiesPath();
+```
+
+
 
 ## How can I thank you?
 Why not star the GitHub repo? I'd love the attention!
