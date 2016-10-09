@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 ###Added:
  - User *resetPassword* and *sendPasswordResetLink* methods to reset password.
  - HttpClient *getCurrentUrl* method
+ - HttpClient *setCookiesPath* method to change default store for cookie files.
 
 ## [4.12.7] - 2016-09-26
 ### Fixed:

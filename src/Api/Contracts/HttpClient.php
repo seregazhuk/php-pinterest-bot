@@ -44,7 +44,20 @@ interface HttpClient
     public function loadCookies($username = '');
 
     /**
+     * Returns current url after all redirects
      * @return string
      */
     public function getCurrentUrl();
+
+    /**
+     * Set directory to store all cookie files.
+     * @param string $path
+     * @return $this
+     */
+    public function setCookiesPath($path);
+
+    /**
+     * @return string
+     */
+    public function getCookiesPath();
 }
