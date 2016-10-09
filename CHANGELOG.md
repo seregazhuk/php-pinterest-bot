@@ -1,7 +1,7 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [4.13.0] - ???
+## [4.13.0] - 2016-10-09
 ### Added:
  - User *resetPassword* and *sendPasswordResetLink* methods to reset password.
  - HttpClient *getCurrentUrl* method

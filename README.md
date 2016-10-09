@@ -170,7 +170,7 @@ $bot->user->resetPassword(
 To invite someone by email:
 
 ```php
-$bot->user->invite($email)
+$bot->user->invite($email);
 ```
 
 ## Boards
