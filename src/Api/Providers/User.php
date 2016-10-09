@@ -20,7 +20,8 @@ class User extends Provider
         'changePassword',
         'isBanned',
         'deactivate',
-        'getUserName'
+        'getUserName',
+        'invite'
     ];
 
     const REGISTRATION_COMPLETE_EXPERIENCE_ID = '11:10105';
@@ -281,6 +282,21 @@ class User extends Provider
         return true;
     }
 
+    /**
+     * Send invite to email
+     * @param string $email
+     * @return bool|Response
+     */
+    public function invite($email)
+    {
+        $data = [
+            'email' => $email,
+            'type'  => 'email',
+        ];
+
+        return $this->execPostRequest($data, UrlBuilder::RESOURCE_INVITE);
+    }
+    
     /**
      * Ask for password reset link in email
      *

@@ -2,10 +2,11 @@
 All notable changes to this project will be documented in this file.
 
 ## [4.13.0] - ???
-###Added:
+### Added:
  - User *resetPassword* and *sendPasswordResetLink* methods to reset password.
  - HttpClient *getCurrentUrl* method
  - HttpClient *setCookiesPath* method to change default store for cookie files.
+ - User *invite* method to invite people by email.
 
 ## [4.12.7] - 2016-09-26
 ### Fixed:

@@ -123,6 +123,11 @@ class UrlBuilder
     const RESOURCE_GET_TOPIC_FEED = 'resource/TopicFeedResource/get';
     const RESOURCE_GET_TOPIC = 'resource/TopicResource/get';
 
+    /**
+     * Invite
+     */
+    const RESOURCE_INVITE = 'resource/EmailInviteSentResource/create/';
+
     const URL_BASE = 'https://uk.pinterest.com/';
     const HOST = 'uk.pinterest.com';
 
