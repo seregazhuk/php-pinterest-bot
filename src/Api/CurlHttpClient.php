@@ -81,14 +81,24 @@ class CurlHttpClient implements HttpClient
      */
     public function execute($url, $postString = '', array $headers = [])
     {
-        $this->init($url, $postString, $headers);
+        return $this
+            ->init($url, $postString, $headers)
+            ->callCurl();
+    }
 
+    /**
+     * @return mixed
+     */
+    protected function callCurl()
+    {
         $res = curl_exec($this->curl);
-        $this->setCurrentUrl();
+
+        $this->currentUrl = curl_getinfo($this->curl, CURLINFO_EFFECTIVE_URL);
 
         curl_close($this->curl);
 
         $this->fillCookies();
+
         return $res;
     }
 
@@ -264,10 +274,5 @@ class CurlHttpClient implements HttpClient
     public function getCurrentUrl()
     {
         return $this->currentUrl;
-    }
-
-    protected function setCurrentUrl()
-    {
-        $this->currentUrl = curl_getinfo($this->curl, CURLINFO_EFFECTIVE_URL);
     }
 }
