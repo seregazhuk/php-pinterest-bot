@@ -571,6 +571,13 @@ foreach($bot->boards->search('query') as $board);
 }
 ```
 
+**Notice!** generator object is not an array. If you want to fetch search results as an
+array use PHP `iterator_to_array()` function:
+
+```php
+$results = iterator_to_array($bot->pins->search('query'));
+```
+
 ## User Settings
 Change profile. Available settings are: *last_name*, *first_name*, *username*, *about*, *location*, *website_url* and
 *profile_image*:
