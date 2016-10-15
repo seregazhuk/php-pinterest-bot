@@ -23,8 +23,6 @@ class Response implements PaginatedResponse
 
     public function fill($data)
     {
-        if(!$data) return;
-
         $this->data = $data;
 
         $this->lastError = $this->getValueByKey('resource_response.error', $this->data);
