@@ -23,9 +23,9 @@ class Response implements PaginatedResponse
 
     public function fill($data)
     {
-        $this->data = $data;
+        if(!$data) return;
 
-        if(!$this->data) return;
+        $this->data = $data;
 
         $this->lastError = $this->getValueByKey('resource_response.error', $this->data);
 
@@ -91,8 +91,10 @@ class Response implements PaginatedResponse
      * @param mixed $default
      * @return array|bool|mixed
      */
-    protected function getValueByKey($key = '', array $data, $default = null)
+    protected function getValueByKey($key = '', $data, $default = null)
     {
+        if(!is_array($data)) return null;
+
         if(empty($key)) return $data;
 
         $indexes = explode('.', $key);
@@ -122,7 +124,7 @@ class Response implements PaginatedResponse
      */
     public function isOk()
     {
-        return !$this->hasErrors();
+        return !$this->hasErrors() && !$this->isEmpty();
     }
 
     /**
