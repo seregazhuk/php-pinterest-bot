@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [4.13.1] - 2016-10-15
+### Fixed:
+ - Fail on empty server response 
+
 ## [4.13.0] - 2016-10-09
 ### Added:
  - User *resetPassword* and *sendPasswordResetLink* methods to reset password.
