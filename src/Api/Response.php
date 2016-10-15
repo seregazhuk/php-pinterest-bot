@@ -91,8 +91,6 @@ class Response implements PaginatedResponse
      */
     protected function getValueByKey($key = '', $data, $default = null)
     {
-        if(!is_array($data)) return null;
-
         if(empty($key)) return $data;
 
         $indexes = explode('.', $key);
