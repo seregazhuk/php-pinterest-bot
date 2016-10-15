@@ -273,9 +273,8 @@ class User extends Provider
         ];
 
         $response = $this->execPostRequest($credentials, UrlBuilder::RESOURCE_LOGIN, true);
-        if ($response->hasErrors()) {
-            return false;
-        }
+
+        if (!$response->isOk()) return false;
 
         $this->request->login();
 

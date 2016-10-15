@@ -66,9 +66,7 @@ class Pins extends Provider
     {
         $requestOptions = ['pin_id' => (string)$pinId, 'text' => $text];
 
-        return $this
-            ->execPostRequest($requestOptions, UrlBuilder::RESOURCE_COMMENT_PIN, true)
-            ->isOk();
+        return $this->execPostRequest($requestOptions, UrlBuilder::RESOURCE_COMMENT_PIN);
     }
 
     /**
