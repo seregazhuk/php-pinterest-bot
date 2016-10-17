@@ -22,7 +22,8 @@ class Pins extends Provider
         'repin',
         'delete',
         'activity',
-        'userFeed'
+        'userFeed',
+        'visualSimilar'
     ];
 
     protected $searchScope  = 'pins';
@@ -242,6 +243,29 @@ class Pins extends Provider
         return $this->getFeed(['pin' => $pinId], UrlBuilder::RESOURCE_RELATED_PINS, $limit);
     }
 
+    /**
+     * @param int $pinId
+     * @param array $crop
+     * @return array|bool
+     */
+    public function visualSimilar($pinId, array $crop = [])
+    {
+        $data = [
+            'pin_id' => $pinId,
+            'crop' => $crop ? : [
+                "x" => 0.16,
+                "y" => 0.16,
+                "w" => 0.66,
+                "h" => 0.66,
+                "num_crop_actions" => 1
+            ],
+            'force_refresh' => true,
+            'keep_duplicates' => false
+        ];
+
+        return $this->execGetRequest($data, UrlBuilder::RESOURCE_VISUAL_SIMILAR_PINS);
+    }
+    
     /**
      * Calls Pinterest API to like or unlike Pin by ID.
      *

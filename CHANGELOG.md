@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [4.14.0] - ??
+## Added:
+ - Pins visual similar search via *visualSimilar*
+
 ## [4.13.1] - 2016-10-15
 ### Fixed:
  - Fail on empty server response 

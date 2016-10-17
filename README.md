@@ -364,6 +364,11 @@ foreach($bot->pins->getRelatedPins($pinId, 10) as $pin) {
 }
 ```
 
+Get visual similar pins:
+```php
+$result = $bot->pins->visualSimilar($pinId);
+```
+
 ## Pinners
 
 Follow/unfollow user by id.
