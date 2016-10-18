@@ -60,6 +60,7 @@ class Pins extends Provider
      *
      * @param int    $pinId
      * @param string $text  Comment
+     * @deprecated 4.14.0
      *
      * @return array|bool
      */
@@ -75,6 +76,7 @@ class Pins extends Provider
      *
      * @param int $pinId
      * @param int $commentId
+     * @deprecated 4.14.0
      *
      * @return bool
      */

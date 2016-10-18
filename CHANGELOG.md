@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 ## [4.14.0] - ??
 ## Added:
  - Pins visual similar search via *visualSimilar*
+ - Comments provider with *create* and *delete* methods
+ - Pins *comment* and *deleteComment* methods are deprecated
 
 ## [4.13.1] - 2016-10-15
 ### Fixed:
