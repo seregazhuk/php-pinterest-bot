@@ -303,14 +303,14 @@ $bot->pins->unLike($pinId);
 ```
 Write a comment.
 ```php
-$result = $bot->pins->comment($pinId, 'your comment'); 
+$result = $bot->comments->create($pinId, 'your comment'); 
 // Result contains info about written comment. For example,
 // comment_id if you want to delete it.
 ```
 
 Delete a comment.
 ```php
-$bot->pins->deleteComment($pinId, $commentId);
+$bot->comments->delete($pinId, $commentId);
 ```
 
 Get pins from a specific url. For example: https://pinterest.com/source/flickr.com/ will return 
