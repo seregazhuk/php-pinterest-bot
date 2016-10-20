@@ -557,6 +557,13 @@ $conversations = $bot->conversations->last();
 
 ## Search
 
+**Notice!** generator object is not an array. If you want to fetch search results as an
+array use PHP `iterator_to_array()` function:
+
+```php
+$results = iterator_to_array($bot->pins->search('query'));
+```
+
 Search functions use Pinterest pagination in fetching results and return a generator object.
 
 ```php
@@ -574,13 +581,6 @@ foreach($bot->boards->search('query') as $board);
 {
 	// ...
 }
-```
-
-**Notice!** generator object is not an array. If you want to fetch search results as an
-array use PHP `iterator_to_array()` function:
-
-```php
-$results = iterator_to_array($bot->pins->search('query'));
 ```
 
 ## User Settings
