@@ -68,7 +68,7 @@ class User extends Provider
             "password"   => $password,
             "country"    => $country,
             "first_name" => $name,
-            "container"  => "home_page"
+            "container"  => 'home_page',
         ];
 
         return $this->makeRegisterCall($data);

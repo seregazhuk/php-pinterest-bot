@@ -21,14 +21,14 @@ class Keywords extends Provider
 
         $result = $this->execGetRequest($requestOptions, UrlBuilder::getSearchUrl());
 
-        return $this->parseKeywordsFromRequest($result);
+        return $this->getKeywordsFromRequest($result);
     }
 
     /**
      * @param bool|array $response
      * @return bool|array
      */
-    protected function parseKeywordsFromRequest($response)
+    protected function getKeywordsFromRequest($response)
     {
         if (!isset($response['guides'])) return [];
 
