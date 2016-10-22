@@ -30,9 +30,9 @@ class Keywords extends Provider
      */
     protected function getKeywordsFromRequest($response)
     {
-        if (!isset($response['guides'])) return [];
-
         $keywords = $response['guides'];
+
+        if (!isset($keywords)) return [];
 
         return array_map(function ($keywordData) {
             return [
