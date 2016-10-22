@@ -14,7 +14,10 @@ class Keywords extends Provider
      */
     public function recommendedFor($query)
     {
-        $requestOptions = ['scope' => 'pins', 'query' => $query];
+        $requestOptions = [
+            'scope' => 'pins',
+            'query' => $query,
+        ];
 
         $result = $this->execGetRequest($requestOptions, UrlBuilder::getSearchUrl());
 
@@ -27,9 +30,7 @@ class Keywords extends Provider
      */
     protected function parseKeywordsFromRequest($response)
     {
-        if (empty($response) || !isset($response['guides'])) {
-            return [];
-        }
+        if (!isset($response['guides'])) return [];
 
         $keywords = $response['guides'];
 

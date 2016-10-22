@@ -7,6 +7,9 @@ All notable changes to this project will be documented in this file.
  - Comments provider with *create* and *delete* methods
  - Pins *comment* and *deleteComment* methods are deprecated
 
+### Removed:
+ - News *last* method
+
 ## [4.13.1] - 2016-10-15
 ### Fixed:
  - Fail on empty server response 

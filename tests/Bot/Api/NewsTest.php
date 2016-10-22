@@ -26,8 +26,8 @@ class NewsTest extends ProviderTest
         $this->apiShouldReturnPagination()
             ->apiShouldReturnEmpty();
 
-        $likes = $this->provider->all();
+        $news = $this->provider->all();
 
-        $this->assertIsPaginatedResponse($likes);
+        $this->assertIsPaginatedResponse($news);
     }
 }
