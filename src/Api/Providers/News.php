@@ -12,19 +12,10 @@ class News extends Provider
     /**
      * @var array
      */
-    protected $loginRequiredFor = ['last', 'all'];
-
-    /**
-     * Get user's latest news array.
-     * @deprecated 4.11.0
-     *
-     * @param $limit
-     * @return mixed
-     */
-    public function last($limit = 0)
-    {
-        return $this->all($limit);
-    }
+    protected $loginRequiredFor = [
+        'last',
+        'all',
+    ];
 
     /**
      * @param int $limit

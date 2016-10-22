@@ -12,7 +12,10 @@ class Pinners extends Provider
 {
     use Searchable, Followable;
 
-    protected $loginRequiredFor = ['follow', 'unFollow'];
+    protected $loginRequiredFor = [
+        'follow',
+        'unFollow',
+    ];
 
     protected $searchScope  = 'people';
     protected $entityIdName = 'user_id';

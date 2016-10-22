@@ -192,8 +192,8 @@ class Pins extends Provider
     }
 
     /**
-     * Get pins from a specific url. For example: https://pinterest.com/source/flickr.com/ will return
-     * recent Pins from flickr.com
+     * Get pins from a specific url. For example: https://pinterest.com/source/flickr.com/ will
+     * return recent Pins from flickr.com
      *
      * @param string $source
      * @param int $limit
@@ -215,9 +215,9 @@ class Pins extends Provider
      */
     public function activity($pinId, $limit = 0)
     {
-        if (!$aggregatedPinId = $this->getAggregatedPinId($pinId)) {
-            return null;
-        }
+        $aggregatedPinId = $this->getAggregatedPinId($pinId);
+
+        if (!$aggregatedPinId) return null;
 
         $data = ['aggregated_pin_data_id' => $aggregatedPinId];
 

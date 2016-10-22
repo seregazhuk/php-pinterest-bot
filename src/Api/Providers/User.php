@@ -4,8 +4,8 @@ namespace seregazhuk\PinterestBot\Api\Providers;
 
 use LogicException;
 use seregazhuk\PinterestBot\Api\Response;
-use seregazhuk\PinterestBot\Api\Traits\UploadsImages;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
+use seregazhuk\PinterestBot\Api\Traits\UploadsImages;
 
 class User extends Provider
 {
@@ -68,7 +68,7 @@ class User extends Provider
             "password"   => $password,
             "country"    => $country,
             "first_name" => $name,
-            "container"  => "home_page"
+            "container"  => 'home_page',
         ];
 
         return $this->makeRegisterCall($data);
@@ -312,7 +312,7 @@ class User extends Provider
     /**
      * Set a new password by link from reset password email
      *
-     * @param $link
+     * @param string $link
      * @param string $newPassword
      * @return bool|Response
      */
