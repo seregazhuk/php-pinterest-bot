@@ -16,7 +16,10 @@ class Comments extends Provider
      */
     public function create($pinId, $text)
     {
-        $requestOptions = ['pin_id' => (string)$pinId, 'text' => $text];
+        $requestOptions = [
+            'pin_id' => (string)$pinId,
+            'text'   => $text,
+        ];
 
         return $this->execPostRequest($requestOptions, UrlBuilder::RESOURCE_COMMENT_PIN);
     }
@@ -31,7 +34,10 @@ class Comments extends Provider
      */
     public function delete($pinId, $commentId)
     {
-        $requestOptions = ['pin_id' => $pinId, 'comment_id' => $commentId];
+        $requestOptions = [
+            'pin_id'     => $pinId,
+            'comment_id' => $commentId,
+        ];
 
         return $this->execPostRequest($requestOptions, UrlBuilder::RESOURCE_COMMENT_DELETE_PIN);
     }
