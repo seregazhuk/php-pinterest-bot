@@ -10,6 +10,9 @@ All notable changes to this project will be documented in this file.
 ### Removed:
  - News *last* method
  - AuthFailed exception
+ 
+ ### Fixed:
+  - User *profile* method
 
 ## [4.13.1] - 2016-10-15
 ### Fixed:
