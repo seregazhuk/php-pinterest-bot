@@ -2,7 +2,7 @@
 All notable changes to this project will be documented in this file.
 
 ## [4.13.2] - ??
-## Added:
+### Added:
  - Pins visual similar search via *visualSimilar*
  - Comments provider with *create* and *delete* methods
  - Pins *comment* and *deleteComment* methods are deprecated
@@ -11,8 +11,8 @@ All notable changes to this project will be documented in this file.
  - News *last* method
  - AuthFailed exception
  
- ### Fixed:
-  - 502 Pinterest response on request with no data
+### Fixed:
+ - 502 Pinterest response on request with no data
 
 ## [4.13.1] - 2016-10-15
 ### Fixed:
