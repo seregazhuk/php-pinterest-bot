@@ -217,7 +217,7 @@ class Pins extends Provider
     {
         $aggregatedPinId = $this->getAggregatedPinId($pinId);
 
-        if (!$aggregatedPinId) return null;
+        if (is_null($aggregatedPinId)) return null;
 
         $data = ['aggregated_pin_data_id' => $aggregatedPinId];
 
