@@ -1,7 +1,7 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [4.14.0] - ??
+## [4.13.2] - ??
 ## Added:
  - Pins visual similar search via *visualSimilar*
  - Comments provider with *create* and *delete* methods
@@ -10,6 +10,9 @@ All notable changes to this project will be documented in this file.
 ### Removed:
  - News *last* method
  - AuthFailed exception
+ 
+ ### Fixed:
+  - 502 Pinterest response on request with no data
 
 ## [4.13.1] - 2016-10-15
 ### Fixed:

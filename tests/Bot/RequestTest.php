@@ -49,7 +49,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
             'source_url' => '',
             'data'       => json_encode(
                 [
-                    'options' => [],
+                    'options' => new \stdClass(),
                     'context' => new \stdClass(),
                 ]
             ),
