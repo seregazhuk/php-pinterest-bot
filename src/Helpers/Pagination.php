@@ -34,7 +34,7 @@ class Pagination
      * @param string $method
      * @param array $params
      * @param int $limit
-     * @return \Generator
+     * @return \Generator|void
      */
     public function paginateOver($method, $params, $limit = 0)
     {
@@ -98,21 +98,6 @@ class Pagination
         return $limit && $resultsNum >= $limit;
     }
 
-    /**
-     * Remove 'module' data from response.
-     *
-     * @param array $response
-     *
-     * @return array mixed
-     */
-    protected function clearResponseFromMetaData($response)
-    {
-        if (isset($response['data'][0]['type']) && $response['data'][0]['type'] == 'module') {
-            array_shift($response['data']);
-        }
-
-        return $response;
-    }
 
     /**
      * Checks for -end- substring in bookmarks

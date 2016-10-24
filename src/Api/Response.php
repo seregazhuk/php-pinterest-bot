@@ -132,20 +132,6 @@ class Response implements PaginatedResponse
     }
 
     /**
-     * Remove 'module' data from response.
-     *
-     * @return array mixed
-     */
-    public function clearResponseFromMetaData()
-    {
-        if (isset($this->data['data'][0]['type']) && $this->data['data'][0]['type'] == 'module') {
-            array_shift($this->data['data']);
-        }
-
-        return $this->data;
-    }
-
-    /**
      * Check for error info in api response and save
      * it.
      *
@@ -201,13 +187,5 @@ class Response implements PaginatedResponse
     public function getClientInfo()
     {
         return $this->clientInfo;
-    }
-
-    /**
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->data;
     }
 }

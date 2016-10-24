@@ -41,6 +41,24 @@ class UserTest extends ProviderTest
     }
 
     /** @test */
+    public function it_should_return_ban_info_from_profile()
+    {
+        $profile = ['is_write_banned' => true];
+
+        $this->apiShouldReturnData($profile)
+            ->assertEquals($profile['is_write_banned'], $this->provider->isBanned());
+    }
+
+    /** @test */
+    public function it_should_return_username_from_profile()
+    {
+        $profile = ['username' => 'test'];
+
+        $this->apiShouldReturnData($profile)
+            ->assertEquals($profile['username'], $this->provider->getUserName());
+    }
+
+    /** @test */
     public function it_should_upload_image_when_editing_profile_with_local_image()
     {
         $attributes = [

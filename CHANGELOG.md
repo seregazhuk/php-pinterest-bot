@@ -1,7 +1,12 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [4.13.2] - ??
+## [4.13.3] - 2016-10-25
+### Fixed:
+ - Pinterest Headers version
+ - Pagination
+
+## [4.13.2] - 2016-10-23
 ### Added:
  - Pins visual similar search via *visualSimilar*
  - Comments provider with *create* and *delete* methods

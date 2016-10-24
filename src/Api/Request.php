@@ -57,7 +57,7 @@ class Request
         'DNT: 1',
         'X-Pinterest-AppState: active',
         'X-NEW-APP: 1',
-        'X-APP-VERSION: 4ed7174',
+        'X-APP-VERSION: f2d280f',
         'X-Requested-With: XMLHttpRequest',
     ];
 
@@ -191,6 +191,8 @@ class Request
      */
     public static function createQuery(array $data = [], $bookmarks = [])
     {
+        $data = empty($data) ? new \stdClass() : $data;
+
         $request = self::createRequestData(
             ['options' => $data], $bookmarks
         );
@@ -206,19 +208,19 @@ class Request
      */
     public static function createRequestData(array $data = [], $bookmarks = [])
     {
-        if (empty($data)) {
-            $data = ['options' => []];
-        }
-
         if (!empty($bookmarks)) {
             $data['options']['bookmarks'] = $bookmarks;
+        }
+
+        if (empty($data)) {
+            $data = ['options' => new \stdClass()];
         }
 
         $data['context'] = new \stdClass();
 
         return [
             'source_url' => '',
-            'data'       => json_encode($data, JSON_FORCE_OBJECT),
+            'data'       => json_encode($data),
         ];
     }
 
