@@ -109,7 +109,6 @@ abstract class Provider
     {
         $result = $this->request->exec($url, $postString);
 
-        print_r($result);die();
         $this->processResult($result);
 
         return $this;

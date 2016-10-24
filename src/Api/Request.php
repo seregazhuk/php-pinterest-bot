@@ -191,6 +191,8 @@ class Request
      */
     public static function createQuery(array $data = [], $bookmarks = [])
     {
+        $data = empty($data) ? new \stdClass() : $data;
+
         $request = self::createRequestData(
             ['options' => $data], $bookmarks
         );
