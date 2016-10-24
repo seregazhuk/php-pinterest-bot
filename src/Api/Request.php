@@ -208,12 +208,12 @@ class Request
      */
     public static function createRequestData(array $data = [], $bookmarks = [])
     {
-        if (empty($data)) {
-            $data = ['options' => new \stdClass()];
-        }
-
         if (!empty($bookmarks)) {
             $data['options']['bookmarks'] = $bookmarks;
+        }
+
+        if (empty($data)) {
+            $data = ['options' => new \stdClass()];
         }
 
         $data['context'] = new \stdClass();
