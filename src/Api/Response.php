@@ -202,12 +202,4 @@ class Response implements PaginatedResponse
     {
         return $this->clientInfo;
     }
-
-    /**
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->data;
-    }
 }
