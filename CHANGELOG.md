@@ -8,6 +8,8 @@ All notable changes to this project will be documented in this file.
  - *login*, *logout*, *register*, *registerBusiness*, *isLoggedIn* moved to Auth provider.
  -  *changePassword*, *sendPasswordResetLink* *resetPassword* moved to Password provider. Removed 
  *password* word from methods names (*change*, *sendResetLink*, *reset*).
+### Removed:
+- *comment* and *deleteComment* methods in Pins provider. Use Comments provider instead.
 
 ## [4.13.3] - 2016-10-25
 ### Fixed:

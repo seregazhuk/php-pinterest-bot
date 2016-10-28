@@ -41,26 +41,6 @@ class PinsTest extends ProviderTest
     }
 
     /** @test */
-    public function it_should_create_comments_for_pin()
-    {
-        $this->apiShouldReturnSuccess()
-            ->assertNotEmpty($this->provider->comment(1111, 'comment text'));
-
-        $this->apiShouldReturnError()
-            ->assertFalse($this->provider->comment(1111, 'comment text'));
-    }
-
-    /** @test */
-    public function it_should_delete_comments_for_pin()
-    {
-        $this->apiShouldReturnSuccess()
-            ->assertTrue($this->provider->deleteComment(1111, 1111));
-
-        $this->apiShouldReturnError()
-            ->assertFalse($this->provider->deleteComment(1111, 1111));
-    }
-
-    /** @test */
     public function it_should_create_new_pin()
     {
         $this->apiShouldCreatePin();
