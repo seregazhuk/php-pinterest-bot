@@ -60,4 +60,9 @@ interface HttpClient
      * @return string
      */
     public function getCookiesPath();
+
+    /**
+     * @return $this
+     */
+    public function removeCookies();
 }

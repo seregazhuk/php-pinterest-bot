@@ -85,12 +85,12 @@ will return only 2 pins of the search results.
 ### Login
 
 ```php
-$result = $bot->user->login('mypinterestlogin', 'mypinterestpassword');
+$result = $bot->auth->login('mypinterestlogin', 'mypinterestpassword');
 ```
 Login method returns `true` on success and `failse` if fails:
 
 ```php
-$result = $bot->user->login('mypinterestlogin', 'mypinterestpassword');
+$result = $bot->auth->login('mypinterestlogin', 'mypinterestpassword');
 if(!$result) {
 	echo $bot->getLastError();
 	die();
@@ -101,14 +101,14 @@ By default bot uses auto-login. It uses cookies, saved from the last session. To
 and force login requests, you can pass `false` as the third argument:
 
 ```php
-$result = $bot->user->login('mypinterestlogin', 'mypinterestpassword', false);
+$result = $bot->auth->login('mypinterestlogin', 'mypinterestpassword', false);
 ```
 
 Or you may skip login if you want. It is only required for such operations as likes, follows and making pins.
 You can get your current logged in status via *isLoggedIn* method:
 
 ```php
-if($bot->user->isLoggedIn()) {
+if($bot->auth->isLoggedIn()) {
 	// ...
 }
 ```
@@ -116,7 +116,13 @@ if($bot->user->isLoggedIn()) {
 To logout use *logout* method:
 
 ```php
-$bot->user->logout();
+$bot->auth->logout();
+```
+
+To clear cookies, pass `true` to *logout* method:
+
+```php
+$bot->auth->logout(true);
 ```
 
 ### Registration
@@ -124,42 +130,42 @@ $bot->user->logout();
 To register a new user:
 
 ```php
-$bot->user->register('youremail@gmail.com', 'password', 'Name');
+$bot->auth->register('youremail@gmail.com', 'password', 'Name');
 ```
 
 You can specify additional parameters with registration: age and country. By default they are: 18, "GB":
 
 ```php
-$bot->user->register('youremail@gmail.com', 'password', 'Name', "DE", 40);
+$bot->auth->register('youremail@gmail.com', 'password', 'Name', "DE", 40);
 ```
 
 Register a business account. The last parameter with website url is *optional*:
 
 ```php
-$bot->user->registerBusiness('youremail@gmail.com', 'password', 'BusinessName');
+$bot->auth->registerBusiness('youremail@gmail.com', 'password', 'BusinessName');
 
-$bot->user->registerBusiness('youremail@gmail.com', 'password', 'BusinessName', 'http://yoursite.com');
+$bot->auth->registerBusiness('youremail@gmail.com', 'password', 'BusinessName', 'http://yoursite.com');
 ```
 
 Convert your account to a business one. Requires log in. The last parameter with website url is *optional*:
 
 ```php
-$bot->user->convertToBusiness('businessName');
+$bot->auth->convertToBusiness('businessName');
 
-$bot->user->convertToBusiness('businessName', 'http://yoursite.com');
+$bot->auth->convertToBusiness('businessName', 'http://yoursite.com');
 ```
 
 ### Reset password
 You can send to your email a link to reset your password:
 
 ```php
-$bot->user->sendPasswordResetLink('youremail@gmail.com');
+$bot->password->sendResetLink('youremail@gmail.com');
 ```
 
 Then your can grab a link from email and pass use it to reset password:
 
 ```php
-$bot->user->resetPassword(
+$bot->password->reset(
     'https://post.pinterest.com/f/a/your-password-reset-params',
     'newPassword'
 );
@@ -618,7 +624,7 @@ if ($bot->user->isBanned() {
 
 Change you password:
 ```php
-$bot->user->changePassword('oldPassword', 'newPassword');
+$bot->password->change('oldPassword', 'newPassword');
 ```
 
 Deactivate current account:

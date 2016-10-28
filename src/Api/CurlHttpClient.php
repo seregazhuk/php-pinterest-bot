@@ -33,6 +33,7 @@ class CurlHttpClient implements HttpClient
     protected $curl;
 
     /**
+     * Path to cookies file
      * @var string
      */
     protected $cookieJar;
@@ -50,6 +51,7 @@ class CurlHttpClient implements HttpClient
     protected $currentUrl;
 
     /**
+     * Path to directory to store cookie file
      * @var string
      */
     protected $cookiesPath;
@@ -212,6 +214,16 @@ class CurlHttpClient implements HttpClient
     }
 
     /**
+     * @return $this
+     */
+    public function removeCookies()
+    {
+        unlink($this->cookieJar);
+
+        return $this;
+    }
+
+    /**
      * Init cookie file for a specified username. If username is empty we use
      * common cookie file for all sessions. If file does not exist it will
      * be created in system temp directory.
@@ -222,6 +234,7 @@ class CurlHttpClient implements HttpClient
     protected function initCookieJar($username = '')
     {
         $this->cookieJar = $this->initCookieFile($username);
+        echo $this->cookieJar , "\n";
 
         return $this;
     }

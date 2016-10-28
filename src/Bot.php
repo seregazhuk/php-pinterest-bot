@@ -2,6 +2,7 @@
 
 namespace seregazhuk\PinterestBot;
 
+use seregazhuk\PinterestBot\Api\Providers\Auth;
 use seregazhuk\PinterestBot\Api\Providers\News;
 use seregazhuk\PinterestBot\Api\Providers\Pins;
 use seregazhuk\PinterestBot\Api\Providers\User;
@@ -27,6 +28,7 @@ use seregazhuk\PinterestBot\Api\Providers\Conversations;
  * @property Interests $interests
  * @property Topics $topics
  * @property Conversations $conversations
+ * @property Auth $auth
  *
  * @method HttpClient getHttpClient
  * @method array|null getLastError
@@ -82,7 +84,7 @@ class Bot
         $clientInfo = $this->providersContainer->getClientInfo();
 
         if(is_null($clientInfo) || $reload) {
-            $this->user->visitMainPage();
+            $this->auth->visitMainPage();
         }
 
         return $this->providersContainer->getClientInfo();
