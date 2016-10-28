@@ -56,38 +56,6 @@ class Pins extends Provider
     }
 
     /**
-     * Write a comment for a pin with current id.
-     *
-     * @param int    $pinId
-     * @param string $text  Comment
-     * @deprecated 4.14.0
-     *
-     * @return array|bool
-     */
-    public function comment($pinId, $text)
-    {
-        $requestOptions = ['pin_id' => (string)$pinId, 'text' => $text];
-
-        return $this->execPostRequest($requestOptions, UrlBuilder::RESOURCE_COMMENT_PIN);
-    }
-
-    /**
-     * Delete a comment for a pin with current id.
-     *
-     * @param int $pinId
-     * @param int $commentId
-     * @deprecated 4.14.0
-     *
-     * @return bool
-     */
-    public function deleteComment($pinId, $commentId)
-    {
-        $requestOptions = ['pin_id' => $pinId, 'comment_id' => $commentId];
-
-        return $this->execPostRequest($requestOptions, UrlBuilder::RESOURCE_COMMENT_DELETE_PIN);
-    }
-
-    /**
      * Create a pin. Returns created pin info.
      *
      * @param string $imageUrl
