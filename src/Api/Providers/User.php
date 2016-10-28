@@ -2,7 +2,6 @@
 
 namespace seregazhuk\PinterestBot\Api\Providers;
 
-use LogicException;
 use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\Traits\UploadsImages;
@@ -50,58 +49,10 @@ class User extends Provider
     }
 
     /**
-     * Register a new user.
-     *
-     * @param string $email
-     * @param string $password
-     * @param string $name
-     * @param string $country
-     * @param int $age
-     *
-     * @return bool
-     */
-    public function register($email, $password, $name, $country = 'GB', $age = 18)
-    {
-        $data = [
-            "age"        => $age,
-            "email"      => $email,
-            "password"   => $password,
-            "country"    => $country,
-            "first_name" => $name,
-            "container"  => 'home_page',
-        ];
-
-        return $this->makeRegisterCall($data);
-    }
-
-    /**
-     * Register a new business account.
-     *
-     * @param string $email
-     * @param string $password
-     * @param string $businessName
-     * @param string $website
-     * @return bool|mixed
-     */
-    public function registerBusiness($email, $password, $businessName, $website = '')
-    {
-        $data = [
-            "email"         => $email,
-            "password"      => $password,
-            "website_url"   => $website,
-            "business_name" => $businessName,
-            "account_type"  => self::ACCOUNT_TYPE_OTHER,
-        ];
-
-        return $this->makeRegisterCall($data);
-    }
-
-    /**
      * Convert your account to a business one.
      *
      * @param string $businessName
      * @param string $websiteUrl
-     *
      * @return bool
      */
     public function convertToBusiness($businessName, $websiteUrl = '')
@@ -113,43 +64,6 @@ class User extends Provider
         ];
 
         return $this->execPostRequest($data, UrlBuilder::RESOURCE_CONVERT_TO_BUSINESS);
-    }
-
-    /**
-     * Login as pinner.
-     *
-     * @param string $username
-     * @param string $password
-     *
-     * @param bool $autoLogin
-     * @return bool
-     */
-    public function login($username, $password, $autoLogin = true)
-    {
-        if ($this->request->isLoggedIn()) return true;
-
-        $this->checkCredentials($username, $password);
-
-        // Trying to load previously saved cookies from last login
-        // session for this username.
-        if($autoLogin && $this->request->autoLogin($username)) {
-            return true;
-        }
-
-        return $this->processLogin($username, $password);
-    }
-
-    public function logout()
-    {
-        $this->request->logout();
-    }
-
-    /**
-     * @return bool
-     */
-    public function isLoggedIn()
-    {
-        return $this->request->isLoggedIn();
     }
 
     /**
@@ -179,22 +93,6 @@ class User extends Provider
     }
 
     /**
-     * @param string $oldPassword
-     * @param string $newPassword
-     * @return bool
-     */
-    public function changePassword($oldPassword, $newPassword)
-    {
-        $request = [
-            'old_password'         => $oldPassword,
-            'new_password'         => $newPassword,
-            'new_password_confirm' => $newPassword,
-        ];
-
-        return $this->execPostRequest($request, UrlBuilder::RESOURCE_CHANGE_PASSWORD);
-    }
-
-    /**
      * Deactivates your account.
      *
      * @param string $reason
@@ -217,71 +115,6 @@ class User extends Provider
     }
 
     /**
-     * Validates password and login.
-     *
-     * @param string $username
-     * @param string $password
-     */
-    protected function checkCredentials($username, $password)
-    {
-        if (!$username || !$password) {
-            throw new LogicException('You must set username and password to login.');
-        }
-    }
-
-    /**
-     * @return bool
-     */
-    protected function completeRegistration()
-    {
-        $this->request->setTokenFromCookies();
-
-        return $this->execPostRequest(
-                ['placed_experience_id' => self::REGISTRATION_COMPLETE_EXPERIENCE_ID],
-                UrlBuilder::RESOURCE_REGISTRATION_COMPLETE
-            );
-    }
-
-    /**
-     * @param array $data
-     * @return bool|mixed
-     */
-    protected function makeRegisterCall($data)
-    {
-        $this->visitMainPage();
-        $this->request->setTokenFromCookies();
-
-        if (!$this->execPostRequest($data, UrlBuilder::RESOURCE_CREATE_REGISTER)) {
-            return false;
-        }
-
-        return $this->completeRegistration();
-    }
-
-    /**
-     * @param string $username
-     * @param string $password
-     * @return bool
-     */
-    protected function processLogin($username, $password)
-    {
-        $this->request->clearToken();
-
-        $credentials = [
-            'username_or_email' => $username,
-            'password'          => $password,
-        ];
-
-        $response = $this->execPostRequest($credentials, UrlBuilder::RESOURCE_LOGIN, true);
-
-        if (!$response->isOk()) return false;
-
-        $this->request->login();
-
-        return true;
-    }
-
-    /**
      * Send invite to email
      * @param string $email
      * @return bool|Response
@@ -294,55 +127,5 @@ class User extends Provider
         ];
 
         return $this->execPostRequest($data, UrlBuilder::RESOURCE_INVITE);
-    }
-    
-    /**
-     * Ask for password reset link in email
-     *
-     * @param string $user Username or user mail
-     * @return bool
-     */
-    public function sendPasswordResetLink($user)
-    {
-        $request = ['username_or_email' => $user];
-
-        return $this->execPostRequest($request, UrlBuilder::RESOURCE_RESET_PASSWORD_SEND_LINK);
-    }
-
-    /**
-     * Set a new password by link from reset password email
-     *
-     * @param string $link
-     * @param string $newPassword
-     * @return bool|Response
-     */
-    public function resetPassword($link, $newPassword)
-    {
-        // Visit link to get current reset token, username and token expiration
-        $this->execGetRequest([], $link);
-        $this->request->clearToken();
-
-        $passwordResetUrl = $this->request->getHttpClient()->getCurrentUrl();
-
-        $urlData = parse_url($passwordResetUrl);
-        $username = trim(str_replace('/pw/', '', $urlData['path']), '/');
-
-        $query = [];
-        parse_str($urlData['query'], $query);
-
-
-        return $this->execPostRequest([
-                'username'             => $username,
-                'new_password'         => $newPassword,
-                'new_password_confirm' => $newPassword,
-                'token'                => $query['t'],
-                'expiration'           => $query['e'],
-            ], UrlBuilder::RESOURCE_RESET_PASSWORD_UPDATE, true);
-    }
-
-
-    public function visitMainPage()
-    {
-        $this->execGetRequest([], '');
     }
 }

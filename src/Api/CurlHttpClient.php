@@ -33,6 +33,7 @@ class CurlHttpClient implements HttpClient
     protected $curl;
 
     /**
+     * Path to cookies file
      * @var string
      */
     protected $cookieJar;
@@ -50,6 +51,7 @@ class CurlHttpClient implements HttpClient
     protected $currentUrl;
 
     /**
+     * Path to directory to store cookie file
      * @var string
      */
     protected $cookiesPath;
@@ -207,6 +209,16 @@ class CurlHttpClient implements HttpClient
     public function setCookiesPath($path)
     {
         $this->cookiesPath = $path;
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function removeCookies()
+    {
+        unlink($this->cookieJar);
 
         return $this;
     }

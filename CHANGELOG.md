@@ -1,6 +1,14 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [4.14.0] - ??
+### Added:
+ - $removeCookies param to *logout* method.
+### Changed:
+ - *login*, *logout*, *register*, *registerBusiness*, *isLoggedIn* moved to Auth provider.
+ -  *changePassword*, *sendPasswordResetLink* *resetPassword* moved to Password provider. Removed 
+ *password* word from methods names (*change*, *sendResetLink*, *reset*).
+
 ## [4.13.3] - 2016-10-25
 ### Fixed:
  - Pinterest Headers version

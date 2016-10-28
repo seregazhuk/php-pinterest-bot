@@ -163,12 +163,19 @@ class Request
     }
 
     /**
-     * Mark client as logged out.
+     * Mark client as logged out. If $removeCookies parameter
+     * is set removes cookies file.
+     *
+     * @param bool $removeCookies
      */
-    public function logout()
+    public function logout($removeCookies = false)
     {
         $this->clearToken();
         $this->loggedIn = false;
+
+        if($removeCookies) {
+            $this->httpClient->removeCookies();
+        }
     }
 
     /**
