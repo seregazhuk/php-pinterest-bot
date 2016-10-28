@@ -13,7 +13,7 @@ class Password extends Provider
      * @param string $user Username or user mail
      * @return bool
      */
-    public function sendPasswordResetLink($user)
+    public function sendResetLink($user)
     {
         $request = ['username_or_email' => $user];
 
@@ -27,7 +27,7 @@ class Password extends Provider
      * @param string $newPassword
      * @return bool|Response
      */
-    public function resetPassword($link, $newPassword)
+    public function reset($link, $newPassword)
     {
         // Visit link to get current reset token, username and token expiration
         $this->execGetRequest([], $link);
@@ -56,7 +56,7 @@ class Password extends Provider
      * @param string $newPassword
      * @return bool
      */
-    public function changePassword($oldPassword, $newPassword)
+    public function change($oldPassword, $newPassword)
     {
         $request = [
             'old_password'         => $oldPassword,
