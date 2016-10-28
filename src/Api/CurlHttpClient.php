@@ -234,7 +234,6 @@ class CurlHttpClient implements HttpClient
     protected function initCookieJar($username = '')
     {
         $this->cookieJar = $this->initCookieFile($username);
-        echo $this->cookieJar , "\n";
 
         return $this;
     }
