@@ -218,7 +218,7 @@ class CurlHttpClient implements HttpClient
      */
     public function removeCookies()
     {
-        unlink($this->cookieJar);
+        @unlink($this->cookieJar);
 
         return $this;
     }

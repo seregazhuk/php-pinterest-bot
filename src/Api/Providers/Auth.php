@@ -2,7 +2,6 @@
 
 namespace seregazhuk\PinterestBot\Api\Providers;
 
-use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 
 class Auth extends Provider
@@ -21,7 +20,6 @@ class Auth extends Provider
      *
      * @param string $username
      * @param string $password
-     *
      * @param bool $autoLogin
      * @return bool
      */
@@ -31,9 +29,10 @@ class Auth extends Provider
 
         $this->checkCredentials($username, $password);
 
-        // Trying to load previously saved cookies from last login
-        // session for this username.
-        if($autoLogin && $this->request->autoLogin($username)) {
+        // Trying to load previously saved cookies from last login session for this username.
+        // Then grab user profile info to check, if cookies are ok. If an empty response
+        // was returned, then send login request.
+        if($autoLogin && $this->processAutoLogin($username)) {
             return true;
         }
 
@@ -156,6 +155,7 @@ class Auth extends Provider
     protected function processLogin($username, $password)
     {
         $this->request->clearToken();
+        $this->request->getHttpClient()->removeCookies();
 
         $credentials = [
             'username_or_email' => $username,
@@ -171,8 +171,25 @@ class Auth extends Provider
         return true;
     }
 
+    /**
+     * @param string $username
+     * @return bool
+     */
+    protected function processAutoLogin($username)
+    {
+        return $this->request->autoLogin($username) && $this->getProfile();
+    }
+
     public function visitMainPage()
     {
         $this->execGetRequest([], '');
+    }
+
+    /**
+     * @return array
+     */
+    protected function getProfile()
+    {
+        return $this->execGetRequest([], UrlBuilder::RESOURCE_GET_USER_SETTINGS);
     }
 }
