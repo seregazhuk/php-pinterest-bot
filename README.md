@@ -87,7 +87,7 @@ will return only 2 pins of the search results.
 ```php
 $result = $bot->auth->login('mypinterestlogin', 'mypinterestpassword');
 ```
-Login method returns `true` on success and `failse` if fails:
+Login method returns `true` on success and `false` if fails:
 
 ```php
 $result = $bot->auth->login('mypinterestlogin', 'mypinterestpassword');
@@ -470,6 +470,16 @@ foreach($bot->pinners->likes('username') as $like)
 }
 ```
 
+Block pinner by id:
+
+```php
+// grab id of the user
+$pinnerInfo = $bot->pinners->info('username');
+
+// Pass id of the pinner to block
+$bot->pinners->block($pinnerInfo['id']);
+```
+
 ## Interests
 
 Get a list of main categories.
@@ -735,8 +745,6 @@ $bot->getHttpClient()->setCookiesPath($yourCustomPathForCookies);
 
 $currentPath = $bot->getHttpClient()->getCookiesPath();
 ```
-
-
 
 ## How can I thank you?
 Why not star the GitHub repo? I'd love the attention!
