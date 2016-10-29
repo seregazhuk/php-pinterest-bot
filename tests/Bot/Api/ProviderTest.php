@@ -73,7 +73,8 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->createRequestMock()
+        $this
+            ->createRequestMock()
             ->createResponseMock()
             ->createProviderInstance()
             ->setUpReflection();

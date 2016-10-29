@@ -10,7 +10,9 @@ All notable changes to this project will be documented in this file.
  -  *changePassword*, *sendPasswordResetLink* *resetPassword* moved to Password provider. Removed 
  *password* word from methods names (*change*, *sendResetLink*, *reset*).
 ### Removed:
-- *comment* and *deleteComment* methods in Pins provider. Use Comments provider instead.
+ - *comment* and *deleteComment* methods in Pins provider. Use Comments provider instead.
+### Fixed:
+ - Auto-login for blocked users 
 
 ## [4.13.3] - 2016-10-25
 ### Fixed:

@@ -2,7 +2,9 @@
 
 namespace seregazhuk\tests\Bot\Api;
 
+use seregazhuk\PinterestBot\Api\CurlHttpClient;
 use seregazhuk\PinterestBot\Api\Providers\Auth;
+use seregazhuk\PinterestBot\Helpers\Cookies;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 
 /**
@@ -93,6 +95,9 @@ class AuthTest extends ProviderTest
         $this->setIsLoggedInExpectation(false)
             ->apiShouldReturnSuccess();
 
+        $this->request->shouldReceive('getHttpClient')
+            ->andReturn(new CurlHttpClient(new Cookies()));
+
         $this->request
             ->shouldReceive('clearToken')
             ->once();
@@ -108,6 +113,10 @@ class AuthTest extends ProviderTest
     public function it_should_return_false_when_login_fails()
     {
         $this->setIsLoggedInExpectation(false);
+
+        $this->request->shouldReceive('getHttpClient')
+            ->andReturn(new CurlHttpClient(new Cookies()));
+
 
         $this->apiShouldReturnError();
         $this->request->shouldReceive('clearToken');

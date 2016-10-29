@@ -97,8 +97,10 @@ if(!$result) {
 }
 ```
 
-By default bot uses auto-login. It uses cookies, saved from the last session. To skip auto-login
-and force login requests, you can pass `false` as the third argument:
+By default bot uses auto-login. It uses cookies, saved from the last session. If auto-login fails, then bot will 
+send login requests. 
+
+To skip auto-login and force login requests, you can pass `false` as the third argument:
 
 ```php
 $result = $bot->auth->login('mypinterestlogin', 'mypinterestpassword', false);
