@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 ## [4.14.0] - ??
 ### Added:
  - $removeCookies param to *logout* method.
+ - *block* method in Pinners provider.
 ### Changed:
  - *login*, *logout*, *register*, *registerBusiness*, *isLoggedIn* moved to Auth provider.
  -  *changePassword*, *sendPasswordResetLink* *resetPassword* moved to Password provider. Removed 

@@ -3,6 +3,7 @@
 namespace seregazhuk\PinterestBot\Api\Providers;
 
 use Iterator;
+use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\Traits\Followable;
 use seregazhuk\PinterestBot\Api\Traits\Searchable;
@@ -123,6 +124,17 @@ class Pinners extends Provider
         return $this->paginate(
             $username, UrlBuilder::RESOURCE_USER_LIKES, $limit
         );
+    }
+
+    /**
+     * @param int $userId
+     * @return bool|Response
+     */
+    public function block($userId)
+    {
+        $data = ['blocked_user_id' => $userId];
+
+        return $this->execPostRequest($data, UrlBuilder::RESOURCE_BLOCK_USER, true);
     }
 
     /**

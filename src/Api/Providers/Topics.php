@@ -25,7 +25,6 @@ class Topics extends Provider
 
     protected $entityIdName = 'interest_id';
 
-
     /**
      * Get category info
      *

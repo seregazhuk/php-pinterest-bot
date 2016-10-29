@@ -17,7 +17,7 @@ class Comments extends Provider
     public function create($pinId, $text)
     {
         $requestOptions = [
-            'pin_id' => (string)$pinId,
+            'pin_id' => $pinId,
             'text'   => $text,
         ];
 
