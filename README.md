@@ -250,7 +250,7 @@ foreach($bot->boards->followers($boardId) as $follower)
 When you repin, Pinterest suggests you some board titles for it. You can get these
 suggestions for pin by its id:
 ```
-$suggestions = $bot->boards->getTitleSuggestionsFor($pinId);
+$suggestions = $bot->boards->titleSuggestionsFor($pinId);
 ```
 ## Pins
 

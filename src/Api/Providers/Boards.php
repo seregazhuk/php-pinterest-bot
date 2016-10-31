@@ -140,7 +140,7 @@ class Boards extends Provider
      * @param int $pinId
      * @return array|bool
      */
-    public function getTitleSuggestionsFor($pinId)
+    public function titleSuggestionsFor($pinId)
     {
         return $this->execGetRequest(['pin_id' => $pinId], UrlBuilder::RESOURCE_TITLE_SUGGESTIONS);
     }
