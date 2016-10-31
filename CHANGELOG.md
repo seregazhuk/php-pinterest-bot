@@ -1,10 +1,12 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [4.14.0] - ??
+## [5.0.0] - ??
 ### Added:
  - $removeCookies param to *logout* method.
  - *block* method in Pinners provider.
+ - *getCurrentUrl* method to receive the last visited page url.
+ 
 ### Changed:
  - *login*, *logout*, *register*, *registerBusiness*, *isLoggedIn* moved to Auth provider.
  -  *changePassword*, *sendPasswordResetLink* *resetPassword* moved to Password provider. Removed 
@@ -14,9 +16,11 @@ All notable changes to this project will be documented in this file.
  - Pins methods renamed: *getRelatedPins* to *related*, *userFeed* to *feed*
  - Topics methods renamed: *getInfo* to *info*, *getPinsFor* to *pins*
  - User methods renamed: *getUserName* to *username*
+ - Method *getHttpClient* renamed to *getHttpClient*
  
 ### Removed:
  - *comment* and *deleteComment* methods in Pins provider. Use Comments provider instead.
+ 
 ### Fixed:
  - Auto-login for blocked users 
 
@@ -45,7 +49,7 @@ All notable changes to this project will be documented in this file.
 ## [4.13.0] - 2016-10-09
 ### Added:
  - User *resetPassword* and *sendPasswordResetLink* methods to reset password.
- - HttpClient *getCurrentUrl* method
+ - HttpClient *parseCurrentUrl* method
  - HttpClient *setCookiesPath* method to change default store for cookie files.
  - User *invite* method to invite people by email.
 
