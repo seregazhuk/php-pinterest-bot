@@ -33,9 +33,7 @@ class Password extends Provider
         $this->execGetRequest([], $link);
         $this->request->clearToken();
 
-        $passwordResetUrl = $this->request->getHttpClient()->getCurrentUrl();
-
-        $urlData = parse_url($passwordResetUrl);
+        $urlData = $this->parseCurrentUrl();
         $username = trim(str_replace('/pw/', '', $urlData['path']), '/');
 
         $query = [];
@@ -65,5 +63,15 @@ class Password extends Provider
         ];
 
         return $this->execPostRequest($request, UrlBuilder::RESOURCE_CHANGE_PASSWORD);
+    }
+
+    /**
+     * @return string
+     */
+    protected function parseCurrentUrl()
+    {
+        $url = $this->request->getHttpClient()->getCurrentUrl();
+
+        return parse_url($url);
     }
 }
