@@ -95,7 +95,7 @@ class AuthTest extends ProviderTest
         $this->setIsLoggedInExpectation(false)
             ->apiShouldReturnSuccess();
 
-        $this->request->shouldReceive('getHttpClient')
+        $this->request->shouldReceive('httpClient')
             ->andReturn(new CurlHttpClient(new Cookies()));
 
         $this->request
@@ -114,7 +114,7 @@ class AuthTest extends ProviderTest
     {
         $this->setIsLoggedInExpectation(false);
 
-        $this->request->shouldReceive('getHttpClient')
+        $this->request->shouldReceive('httpClient')
             ->andReturn(new CurlHttpClient(new Cookies()));
 
 

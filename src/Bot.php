@@ -30,7 +30,7 @@ use seregazhuk\PinterestBot\Api\Providers\Conversations;
  * @property Conversations $conversations
  * @property Auth $auth
  *
- * @method HttpClient getHttpClient
+ * @method HttpClient httpClient
  * @method array|null getLastError
  */
 class Bot

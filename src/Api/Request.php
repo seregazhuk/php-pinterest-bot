@@ -313,7 +313,7 @@ class Request
     /**
      * @return HttpClient
      */
-    public function getHttpClient()
+    public function httpClient()
     {
         return $this->httpClient;
     }

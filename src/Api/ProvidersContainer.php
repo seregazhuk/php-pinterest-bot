@@ -135,6 +135,6 @@ class ProvidersContainer
      */
     public function getHttpClient()
     {
-        return $this->request->getHttpClient();
+        return $this->request->httpClient();
     }
 }

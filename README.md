@@ -704,7 +704,7 @@ It is possible to add some additional Curl options for bot requests. For example
 set proxy and user-agent like this:
 
 ```php
-$bot->getHttpClient()->setOptions([
+$bot->httpClient()->setOptions([
     CURLOPT_PROXY => 'xx.xx.xxx.xx:xxxx',
     CURLOPT_PROXYTYPE => CURLPROXY_HTTP // or CURLPROXY_SOCKS5,
     CURLOPT_USERAGENT => 'Your_User_Agent',
@@ -727,25 +727,25 @@ $info = $bot->getClientInfo(true);
 
 ## Cookies
 
-Current bot cookies are available through getHttpClient and cookie/cookies methods.
+Current bot cookies are available through httpClient and cookie/cookies methods.
 All cookies:
 
 ```php
-$cookies = $bot->getHttpClient()->cookies();
+$cookies = $bot->httpClient()->cookies();
 ```
 
 Cookie value by name:
 ```php
-$someCookieValue = $bot->getHttpClient()->cookie('cookieName');
+$someCookieValue = $bot->httpClient()->cookie('cookieName');
 ```
 
 By default cookie files are stored in your system temp directory. You can set custom path to store cookies. 
 **Notice!** This path should have write permissions:
 
 ```php
-$bot->getHttpClient()->setCookiesPath($yourCustomPathForCookies);
+$bot->httpClient()->setCookiesPath($yourCustomPathForCookies);
 
-$currentPath = $bot->getHttpClient()->getCookiesPath();
+$currentPath = $bot->httpClient()->getCookiesPath();
 ```
 
 ## How can I thank you?

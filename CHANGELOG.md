@@ -1,7 +1,7 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [4.14.0] - ??
+## [5.0.0] - ??
 ### Added:
  - $removeCookies param to *logout* method.
  - *block* method in Pinners provider.
@@ -14,6 +14,7 @@ All notable changes to this project will be documented in this file.
  - Pins methods renamed: *getRelatedPins* to *related*, *userFeed* to *feed*
  - Topics methods renamed: *getInfo* to *info*, *getPinsFor* to *pins*
  - User methods renamed: *getUserName* to *username*
+ - Method *getHttpClient* renamed to *httpClient*
  
 ### Removed:
  - *comment* and *deleteComment* methods in Pins provider. Use Comments provider instead.
