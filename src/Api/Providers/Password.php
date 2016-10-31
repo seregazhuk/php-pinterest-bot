@@ -33,7 +33,7 @@ class Password extends Provider
         $this->execGetRequest([], $link);
         $this->request->clearToken();
 
-        $passwordResetUrl = $this->request->httpClient()->getCurrentUrl();
+        $passwordResetUrl = $this->request->httpClient()->currentUrl();
 
         $urlData = parse_url($passwordResetUrl);
         $username = trim(str_replace('/pw/', '', $urlData['path']), '/');

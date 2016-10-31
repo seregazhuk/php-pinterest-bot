@@ -47,7 +47,7 @@ interface HttpClient
      * Returns current url after all redirects
      * @return string
      */
-    public function getCurrentUrl();
+    public function currentUrl();
 
     /**
      * Set directory to store all cookie files.

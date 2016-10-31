@@ -283,7 +283,7 @@ class CurlHttpClient implements HttpClient
     /**
      * @return string
      */
-    public function getCurrentUrl()
+    public function currentUrl()
     {
         return $this->currentUrl;
     }

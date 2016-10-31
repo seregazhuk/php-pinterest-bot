@@ -725,6 +725,11 @@ By default it uses client info from the last request. To reload client context p
 $info = $bot->getClientInfo(true);
 ```
 
+You can get an url of the last visited page:
+```php
+$url = $bot->httpClient()->currentUrl();
+```
+
 ## Cookies
 
 Current bot cookies are available through httpClient and cookie/cookies methods.
