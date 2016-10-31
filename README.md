@@ -250,7 +250,7 @@ foreach($bot->boards->followers($boardId) as $follower)
 When you repin, Pinterest suggests you some board titles for it. You can get these
 suggestions for pin by its id:
 ```
-$suggestions = $bot->boards->getTitleSuggestionsFor($pinId);
+$suggestions = $bot->boards->titleSuggestionsFor($pinId);
 ```
 ## Pins
 
@@ -329,14 +329,14 @@ foreach ($bot->pins->fromSource('flickr.com') as $pin) {
 }
 ```
 
-Get user pins feed. Method *userFeed()* returns Generator object.
+Get user pins feed. Method *feed()* returns Generator object.
 ```php
-foreach ($bot->pins->userFeed() as $pin) {
+foreach ($bot->pins->feed() as $pin) {
     //...
 }
 
 // only first 20 pins from feed
-foreach ($bot->pins->userFeed(20) as $pin) {
+foreach ($bot->pins->feed(20) as $pin) {
     //...
 }
 ```
@@ -360,14 +360,14 @@ foreach($bot->pins->activity($pinId, 5) as $activity) {
 
 Get related pins for current pin:
 ```php
-foreach($bot->pins->getRelatedPins($pinId) as $pin) {
+foreach($bot->pins->related($pinId) as $pin) {
 	//...
 }
 ```
 
 Get last 10 related pins for current pin:
 ```php
-foreach($bot->pins->getRelatedPins($pinId, 10) as $pin) {
+foreach($bot->pins->related($pinId, 10) as $pin) {
 	//...
 }
 ```
@@ -487,13 +487,13 @@ $bot->pinners->block($pinnerInfo['id']);
 Get a list of main categories.
 
 ```php
-$categories = $bot->interests->getMain()
+$categories = $bot->interests->main();
 ```
 
-Get category info by name (can be taken from *getMain()*).
+Get category info by name (can be taken from *main()*).
 
 ```php
-$info = $bot->interests->getInfo("gifts")
+$info = $bot->interests->info("gifts");
 ```
 
 Get related topics for interest:
@@ -505,7 +505,7 @@ $topics = $bot->interests->getRelatedTopics('videos');
 Get pins for specific interest:
 
 ```php
-foreach($bot->interests->getPinsFor('videos') as $pin) {
+foreach($bot->interests->pins('videos') as $pin) {
     // ...
 }
 ```
@@ -524,13 +524,13 @@ $bot->topics->unFollow('content-marketing');
 Get a topic info:
 
 ```php
-$info = $bot->topics->getInfo('content-marketing');
+$info = $bot->topics->info('content-marketing');
 ```
 
 Get pins for a specific topic:
 
 ```php
-foreach($bot->topics->getPinsFor('content-marketing') as $pin) {
+foreach($bot->topics->pins('content-marketing') as $pin) {
     // ...
 }
 ```
@@ -625,7 +625,7 @@ In result you can find your username, and all your account settings.
 
 Get your current username:
 ```php
-$username = $bot->user->getUserName();
+$username = $bot->user->username();
 ```
 
 Check if your account is banned:

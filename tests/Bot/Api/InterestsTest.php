@@ -27,7 +27,7 @@ class InterestsTest extends ProviderTest
         $categories = ['category1', 'category2'];
 
         $this->apiShouldReturnData($categories)
-            ->assertEquals($categories, $this->provider->getMain());
+            ->assertEquals($categories, $this->provider->main());
     }
 
     /** @test */
@@ -37,7 +37,7 @@ class InterestsTest extends ProviderTest
 
         $this->apiShouldReturnData($info);
 
-        $this->assertEquals($info, $this->provider->getInfo(1));
+        $this->assertEquals($info, $this->provider->info(1));
     }
 
     /** @test */
@@ -45,6 +45,6 @@ class InterestsTest extends ProviderTest
     {
         $this->apiShouldReturnPagination()
             ->apiShouldReturnEmpty()
-            ->assertCount(2, iterator_to_array($this->provider->getPinsFor('test')));
+            ->assertCount(2, iterator_to_array($this->provider->pins('test')));
     }
 }

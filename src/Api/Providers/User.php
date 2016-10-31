@@ -19,7 +19,7 @@ class User extends Provider
         'changePassword',
         'isBanned',
         'deactivate',
-        'getUserName',
+        'username',
         'invite'
     ];
 
@@ -85,7 +85,7 @@ class User extends Provider
      *
      * @return string
      */
-    public function getUserName()
+    public function username()
     {
         $profile = $this->profile();
 

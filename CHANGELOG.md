@@ -9,6 +9,12 @@ All notable changes to this project will be documented in this file.
  - *login*, *logout*, *register*, *registerBusiness*, *isLoggedIn* moved to Auth provider.
  -  *changePassword*, *sendPasswordResetLink* *resetPassword* moved to Password provider. Removed 
  *password* word from methods names (*change*, *sendResetLink*, *reset*).
+ - Boards *getTitleSuggestionsFor* renamed to *titleSuggestionsFor*
+ - Interests methods renamed: *getMain* to *main*, *getInfo* to *info*, *getPinsFor* to *pins*
+ - Pins methods renamed: *getRelatedPins* to *related*, *userFeed* to *feed*
+ - Topics methods renamed: *getInfo* to *info*, *getPinsFor* to *pins*
+ - User methods renamed: *getUserName* to *username*
+ 
 ### Removed:
  - *comment* and *deleteComment* methods in Pins provider. Use Comments provider instead.
 ### Fixed:
@@ -89,7 +95,7 @@ All notable changes to this project will be documented in this file.
 ### Added:
  - User *changePassword*, *deactivate* methods.
  - AuthRequired exception.
- - Pins *getRelatedPins* method.
+ - Pins *related* method.
  - Pinners *likes* method.
  - News *all* method.
  - Boards *getTitleSuggestionsFor* method.
@@ -101,11 +107,11 @@ All notable changes to this project will be documented in this file.
 
 ## [4.10.1] - 2016-09-13
 ### Fixed:
- - Checks in *getUserName* and *isBanned* methods
+ - Checks in *username* and *isBanned* methods
 
 ## [4.10.0] - 2016-09-12
 ### Added
- - User *isBanned* and *getUserName* methods
+ - User *isBanned* and *username* methods
 
 ## [4.9.0] - 2016-09-11
 ### Added:
@@ -163,7 +169,7 @@ All notable changes to this project will be documented in this file.
 ## [4.5.1] - 2016-08-09
 
 ### Fixed:
- - Pins method *userFeed* required login
+ - Pins method *feed* required login
 
 ## [4.5.0] - 2016-08-09
 

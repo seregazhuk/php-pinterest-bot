@@ -52,7 +52,7 @@ class TopicsTest extends ProviderTest
         $info = ['name' => 'category1'];
 
         $this->apiShouldReturnData($info)
-            ->assertEquals($info, $this->provider->getInfo(1));
+            ->assertEquals($info, $this->provider->info(1));
     }
 
     /** @test */
@@ -60,6 +60,6 @@ class TopicsTest extends ProviderTest
     {
         $this->apiShouldReturnPagination()
             ->apiShouldReturnEmpty()
-            ->assertIsPaginatedResponse($this->provider->getPinsFor('test'));
+            ->assertIsPaginatedResponse($this->provider->pins('test'));
     }
 }

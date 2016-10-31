@@ -173,7 +173,7 @@ class PinsTest extends ProviderTest
         $this->apiShouldReturnPagination()
             ->apiShouldReturnEmpty();
 
-        $res = $this->provider->userFeed();
+        $res = $this->provider->feed();
 
         $this->assertIsPaginatedResponse($res);
     }
@@ -185,7 +185,7 @@ class PinsTest extends ProviderTest
             ->apiShouldReturnEmpty();
 
         $pinId = 1;
-        $res = $this->provider->getRelatedPins($pinId);
+        $res = $this->provider->related($pinId);
 
         $this->assertIsPaginatedResponse($res);
     }

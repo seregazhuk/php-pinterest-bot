@@ -31,7 +31,7 @@ class Topics extends Provider
      * @param string $topic
      * @return array|bool
      */
-    public function getInfo($topic)
+    public function info($topic)
     {
         return $this->execGetRequest(["interest" => $topic], UrlBuilder::RESOURCE_GET_TOPIC);
     }
@@ -43,7 +43,7 @@ class Topics extends Provider
      * @param int $limit
      * @return Generator
      */
-    public function getPinsFor($interest, $limit = 0)
+    public function pins($interest, $limit = 0)
     {
         $data = [
             'interest'  => $interest,
