@@ -487,13 +487,13 @@ $bot->pinners->block($pinnerInfo['id']);
 Get a list of main categories.
 
 ```php
-$categories = $bot->interests->getMain()
+$categories = $bot->interests->main();
 ```
 
-Get category info by name (can be taken from *getMain()*).
+Get category info by name (can be taken from *main()*).
 
 ```php
-$info = $bot->interests->getInfo("gifts")
+$info = $bot->interests->info("gifts");
 ```
 
 Get related topics for interest:
@@ -505,7 +505,7 @@ $topics = $bot->interests->getRelatedTopics('videos');
 Get pins for specific interest:
 
 ```php
-foreach($bot->interests->getPinsFor('videos') as $pin) {
+foreach($bot->interests->pins('videos') as $pin) {
     // ...
 }
 ```
@@ -524,13 +524,13 @@ $bot->topics->unFollow('content-marketing');
 Get a topic info:
 
 ```php
-$info = $bot->topics->getInfo('content-marketing');
+$info = $bot->topics->info('content-marketing');
 ```
 
 Get pins for a specific topic:
 
 ```php
-foreach($bot->topics->getPinsFor('content-marketing') as $pin) {
+foreach($bot->topics->pins('content-marketing') as $pin) {
     // ...
 }
 ```

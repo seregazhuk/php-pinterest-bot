@@ -18,7 +18,7 @@ class Interests extends Provider
      * 
      * @return array|bool
      */
-    public function getMain()
+    public function main()
     {
         return $this->execGetRequest(["category_types" => "main"], UrlBuilder::RESOURCE_GET_CATEGORIES);
     }
@@ -29,7 +29,7 @@ class Interests extends Provider
      * @param string $category
      * @return array|bool
      */
-    public function getInfo($category)
+    public function info($category)
     {
         return $this->execGetRequest(["category" => $category], UrlBuilder::RESOURCE_GET_CATEGORY);
     }
@@ -41,7 +41,7 @@ class Interests extends Provider
      * @param int $limit
      * @return Generator
      */
-    public function getPinsFor($interest, $limit = 0)
+    public function pins($interest, $limit = 0)
     {
        $data = [
            'feed'             => $interest,

@@ -10,6 +10,8 @@ All notable changes to this project will be documented in this file.
  -  *changePassword*, *sendPasswordResetLink* *resetPassword* moved to Password provider. Removed 
  *password* word from methods names (*change*, *sendResetLink*, *reset*).
  - Boards *getTitleSuggestionsFor* renamed to *titleSuggestionsFor*
+ - Interests methods renamed: *getMain* to *main*, *getInfo* to *info*, *getPinsFor* to *pins*
+ 
 ### Removed:
  - *comment* and *deleteComment* methods in Pins provider. Use Comments provider instead.
 ### Fixed:
