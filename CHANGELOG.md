@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
  *password* word from methods names (*change*, *sendResetLink*, *reset*).
  - Boards *getTitleSuggestionsFor* renamed to *titleSuggestionsFor*
  - Interests methods renamed: *getMain* to *main*, *getInfo* to *info*, *getPinsFor* to *pins*
+ - Pins methods renamed: *getRelatedPins* to *related*, *userFeed* to *feed*
  
 ### Removed:
  - *comment* and *deleteComment* methods in Pins provider. Use Comments provider instead.
@@ -92,7 +93,7 @@ All notable changes to this project will be documented in this file.
 ### Added:
  - User *changePassword*, *deactivate* methods.
  - AuthRequired exception.
- - Pins *getRelatedPins* method.
+ - Pins *related* method.
  - Pinners *likes* method.
  - News *all* method.
  - Boards *getTitleSuggestionsFor* method.
@@ -166,7 +167,7 @@ All notable changes to this project will be documented in this file.
 ## [4.5.1] - 2016-08-09
 
 ### Fixed:
- - Pins method *userFeed* required login
+ - Pins method *feed* required login
 
 ## [4.5.0] - 2016-08-09
 

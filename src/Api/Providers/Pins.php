@@ -22,7 +22,7 @@ class Pins extends Provider
         'repin',
         'delete',
         'activity',
-        'userFeed',
+        'feed',
         'visualSimilar'
     ];
 
@@ -198,7 +198,7 @@ class Pins extends Provider
      * @param int $limit
      * @return Iterator
      */
-    public function userFeed($limit = 0)
+    public function feed($limit = 0)
     {
         return $this->getFeed([], UrlBuilder::RESOURCE_USER_FEED, $limit);
     }
@@ -208,7 +208,7 @@ class Pins extends Provider
      * @param int $limit
      * @return mixed
      */
-    public function getRelatedPins($pinId, $limit = 0)
+    public function related($pinId, $limit = 0)
     {
         return $this->getFeed(['pin' => $pinId], UrlBuilder::RESOURCE_RELATED_PINS, $limit);
     }

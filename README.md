@@ -329,14 +329,14 @@ foreach ($bot->pins->fromSource('flickr.com') as $pin) {
 }
 ```
 
-Get user pins feed. Method *userFeed()* returns Generator object.
+Get user pins feed. Method *feed()* returns Generator object.
 ```php
-foreach ($bot->pins->userFeed() as $pin) {
+foreach ($bot->pins->feed() as $pin) {
     //...
 }
 
 // only first 20 pins from feed
-foreach ($bot->pins->userFeed(20) as $pin) {
+foreach ($bot->pins->feed(20) as $pin) {
     //...
 }
 ```
@@ -360,14 +360,14 @@ foreach($bot->pins->activity($pinId, 5) as $activity) {
 
 Get related pins for current pin:
 ```php
-foreach($bot->pins->getRelatedPins($pinId) as $pin) {
+foreach($bot->pins->related($pinId) as $pin) {
 	//...
 }
 ```
 
 Get last 10 related pins for current pin:
 ```php
-foreach($bot->pins->getRelatedPins($pinId, 10) as $pin) {
+foreach($bot->pins->related($pinId, 10) as $pin) {
 	//...
 }
 ```
