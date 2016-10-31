@@ -55,7 +55,7 @@ class UserTest extends ProviderTest
         $profile = ['username' => 'test'];
 
         $this->apiShouldReturnData($profile)
-            ->assertEquals($profile['username'], $this->provider->getUserName());
+            ->assertEquals($profile['username'], $this->provider->username());
     }
 
     /** @test */

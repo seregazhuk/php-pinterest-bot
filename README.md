@@ -625,7 +625,7 @@ In result you can find your username, and all your account settings.
 
 Get your current username:
 ```php
-$username = $bot->user->getUserName();
+$username = $bot->user->username();
 ```
 
 Check if your account is banned:
