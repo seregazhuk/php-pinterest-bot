@@ -114,7 +114,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
         $request = $this->createRequestObject();
         $request->autoLogin('test');
 
-        $this->assertNotEmpty($request->httpClient()->cookies());
+        $this->assertNotEmpty($request->getHttpClient()->cookies());
         unlink($cookieFilePath);
     }
 

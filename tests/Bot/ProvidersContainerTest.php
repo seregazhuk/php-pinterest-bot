@@ -78,7 +78,7 @@ class ProvidersContainerTest extends PHPUnit_Framework_TestCase
     public function it_returns_http_client_instance()
     {
         $this->request
-            ->shouldReceive('httpClient')
+            ->shouldReceive('getHttpClient')
             ->andReturn(new CurlHttpClient(new Cookies()));
 
         $this->assertInstanceOf(HttpClient::class, $this->container->getHttpClient());
