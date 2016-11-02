@@ -226,7 +226,7 @@ class Request
         $data['context'] = new \stdClass();
 
         return [
-            'source_url' => '/testmum/second-one/',
+            'source_url' => '',
             'data'       => json_encode($data),
         ];
     }

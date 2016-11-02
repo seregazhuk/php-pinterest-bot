@@ -52,8 +52,8 @@ class UrlBuilder
     const RESOURCE_USER_FEED = 'resource/UserHomefeedResource/get/';
     const RESOURCE_RELATED_PINS = 'resource/RelatedPinFeedResource/get';
     const RESOURCE_VISUAL_SIMILAR_PINS = 'resource/VisualLiveSearchResource/get';
-    const RESOURCE_BULK_EDIT = 'resource/BulkEditResource/create/';
-
+    const RESOURCE_BULK_COPY = 'resource/BulkEditResource/create/';
+    const RESOURCE_BULK_MOVE = 'resource/BulkEditResource/update/';
     /**
      * Pinners
      */

@@ -223,14 +223,19 @@ class Pins extends Provider
      */
     public function copy($pinIds, $boardId)
     {
-        $pinIds = is_array($pinIds) ? $pinIds : [$pinIds];
+        return $this->bulkEdit($pinIds, $boardId, UrlBuilder::RESOURCE_BULK_COPY);
+    }
 
-        $data = [
-            'board_id' => (string)$boardId,
-            'pin_ids'  => $pinIds,
-        ];
-
-        return $this->execPostRequest($data, UrlBuilder::RESOURCE_BULK_EDIT);
+    /**
+     * Move pins to board
+     *
+     * @param int|array $pinIds
+     * @param int $boardId
+     * @return bool|Response
+     */
+    public function move($pinIds, $boardId)
+    {
+        return $this->bulkEdit($pinIds, $boardId, UrlBuilder::RESOURCE_BULK_MOVE);
     }
     
     /**
@@ -289,5 +294,23 @@ class Pins extends Provider
     protected function getFeedRequestData($params = [])
     {
         return ['domain' => $params['source']];
+    }
+
+    /**
+     * @param int|array $pinIds
+     * @param int $boardId
+     * @param string $editUrl
+     * @return bool
+     */
+    protected function bulkEdit($pinIds, $boardId, $editUrl)
+    {
+        $pinIds = is_array($pinIds) ? $pinIds : [$pinIds];
+
+        $data = [
+            'board_id' => (string)$boardId,
+            'pin_ids'  => $pinIds,
+        ];
+
+        return $this->execPostRequest($data, $editUrl);
     }
 }

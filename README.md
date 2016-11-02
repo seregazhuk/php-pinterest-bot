@@ -310,9 +310,11 @@ Like/dislike pin by id.
 $bot->pins->like($pinId);
 $bot->pins->unLike($pinId);
 ```
-Copy pins to board. To copy one pin, pass it's id as the first argument. Pass an array of ids to copy many pins:
+Copy/move pins to board. To copy/move one pin, pass it's id as the first argument. Pass an array of ids 
+to copy/move many pins:
 ```php
-$bot->pins->copy($pinId, $boardId); 
+$bot->pins->copy($pinId, $boardId);
+$bot->pins->move($pinId, $boardId);
 ```
 
 Write a comment.
