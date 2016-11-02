@@ -3,6 +3,7 @@
 namespace seregazhuk\PinterestBot\Api\Providers;
 
 use Iterator;
+use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Api\Traits\HasFeed;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\Traits\Searchable;
@@ -213,6 +214,25 @@ class Pins extends Provider
         return $this->getFeed(['pin' => $pinId], UrlBuilder::RESOURCE_RELATED_PINS, $limit);
     }
 
+    /**
+     * Copy pins to board
+     *
+     * @param array|int $pinIds
+     * @param int $boardId
+     * @return bool|Response
+     */
+    public function copy($pinIds, $boardId)
+    {
+        $pinIds = is_array($pinIds) ? $pinIds : [$pinIds];
+
+        $data = [
+            'board_id' => (string)$boardId,
+            'pin_ids'  => $pinIds,
+        ];
+
+        return $this->execPostRequest($data, UrlBuilder::RESOURCE_BULK_EDIT);
+    }
+    
     /**
      * @param int $pinId
      * @param array $crop

@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
  - $removeCookies param to *logout* method.
  - *block* method in Pinners provider.
  - *getCurrentUrl* method to receive the last visited page url.
+ - Pins *copy* method.
  
 ### Changed:
  - *login*, *logout*, *register*, *registerBusiness*, *isLoggedIn* moved to Auth provider.
