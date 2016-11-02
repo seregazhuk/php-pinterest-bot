@@ -317,6 +317,12 @@ $bot->pins->copy($pinId, $boardId);
 $bot->pins->move($pinId, $boardId);
 ```
 
+Delete pins from board. To delete one pin, pass it's id as the first argument. Pass an array of ids 
+to delete many pins:
+```php
+$bot->pins->deleteFromBoard($pinId, $boardId);
+```
+
 Write a comment.
 ```php
 $result = $bot->comments->create($pinId, 'your comment'); 

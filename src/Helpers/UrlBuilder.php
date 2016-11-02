@@ -54,6 +54,8 @@ class UrlBuilder
     const RESOURCE_VISUAL_SIMILAR_PINS = 'resource/VisualLiveSearchResource/get';
     const RESOURCE_BULK_COPY = 'resource/BulkEditResource/create/';
     const RESOURCE_BULK_MOVE = 'resource/BulkEditResource/update/';
+    const RESOURCE_BULK_DELETE = 'resource/BulkEditResource/delete/';
+
     /**
      * Pinners
      */

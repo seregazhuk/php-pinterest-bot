@@ -227,6 +227,18 @@ class Pins extends Provider
     }
 
     /**
+     * Delete pins from board.
+     *
+     * @param int|array $pinIds
+     * @param int $boardId
+     * @return bool
+     */
+    public function deleteFromBoard($pinIds, $boardId)
+    {
+        return $this->bulkEdit($pinIds, $boardId, UrlBuilder::RESOURCE_BULK_DELETE);
+    }
+
+    /**
      * Move pins to board
      *
      * @param int|array $pinIds
