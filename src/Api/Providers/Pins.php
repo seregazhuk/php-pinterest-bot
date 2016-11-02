@@ -3,6 +3,7 @@
 namespace seregazhuk\PinterestBot\Api\Providers;
 
 use Iterator;
+use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Api\Traits\HasFeed;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\Traits\Searchable;
@@ -16,10 +17,10 @@ class Pins extends Provider
     protected $loginRequiredFor = [
         'like',
         'unLike',
-        'comment',
-        'deleteComment',
         'create',
         'repin',
+        'copy',
+        'move',
         'delete',
         'activity',
         'feed',
@@ -214,6 +215,42 @@ class Pins extends Provider
     }
 
     /**
+     * Copy pins to board
+     *
+     * @param array|int $pinIds
+     * @param int $boardId
+     * @return bool|Response
+     */
+    public function copy($pinIds, $boardId)
+    {
+        return $this->bulkEdit($pinIds, $boardId, UrlBuilder::RESOURCE_BULK_COPY);
+    }
+
+    /**
+     * Delete pins from board.
+     *
+     * @param int|array $pinIds
+     * @param int $boardId
+     * @return bool
+     */
+    public function deleteFromBoard($pinIds, $boardId)
+    {
+        return $this->bulkEdit($pinIds, $boardId, UrlBuilder::RESOURCE_BULK_DELETE);
+    }
+
+    /**
+     * Move pins to board
+     *
+     * @param int|array $pinIds
+     * @param int $boardId
+     * @return bool|Response
+     */
+    public function move($pinIds, $boardId)
+    {
+        return $this->bulkEdit($pinIds, $boardId, UrlBuilder::RESOURCE_BULK_MOVE);
+    }
+    
+    /**
      * @param int $pinId
      * @param array $crop
      * @return array|bool
@@ -269,5 +306,23 @@ class Pins extends Provider
     protected function getFeedRequestData($params = [])
     {
         return ['domain' => $params['source']];
+    }
+
+    /**
+     * @param int|array $pinIds
+     * @param int $boardId
+     * @param string $editUrl
+     * @return bool
+     */
+    protected function bulkEdit($pinIds, $boardId, $editUrl)
+    {
+        $pinIds = is_array($pinIds) ? $pinIds : [$pinIds];
+
+        $data = [
+            'board_id' => (string)$boardId,
+            'pin_ids'  => $pinIds,
+        ];
+
+        return $this->execPostRequest($data, $editUrl);
     }
 }

@@ -304,11 +304,25 @@ Delete pin by id.
 ```php
 $bot->pins->delete($pinId);
 ```   
+
 Like/dislike pin by id.
 ```php
 $bot->pins->like($pinId);
 $bot->pins->unLike($pinId);
 ```
+Copy/move pins to board. To copy/move one pin, pass it's id as the first argument. Pass an array of ids 
+to copy/move many pins:
+```php
+$bot->pins->copy($pinId, $boardId);
+$bot->pins->move($pinId, $boardId);
+```
+
+Delete pins from board. To delete one pin, pass it's id as the first argument. Pass an array of ids 
+to delete many pins:
+```php
+$bot->pins->deleteFromBoard($pinId, $boardId);
+```
+
 Write a comment.
 ```php
 $result = $bot->comments->create($pinId, 'your comment'); 
