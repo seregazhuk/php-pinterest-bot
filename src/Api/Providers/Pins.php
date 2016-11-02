@@ -17,10 +17,10 @@ class Pins extends Provider
     protected $loginRequiredFor = [
         'like',
         'unLike',
-        'comment',
-        'deleteComment',
         'create',
         'repin',
+        'copy',
+        'move',
         'delete',
         'activity',
         'feed',
