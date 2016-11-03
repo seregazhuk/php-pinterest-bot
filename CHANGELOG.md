@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
  - *block* method in Pinners provider.
  - *getCurrentUrl* method to receive the last visited page url.
  - Pins *copy*, *move* and *deleteFromBoard* methods.
+ - Pinners *blockById* method.
  
 ### Changed:
  - *login*, *logout*, *register*, *registerBusiness*, *isLoggedIn* moved to Auth provider.
@@ -18,6 +19,7 @@ All notable changes to this project will be documented in this file.
  - Topics methods renamed: *getInfo* to *info*, *getPinsFor* to *pins*
  - User methods renamed: *getUserName* to *username*
  - Method *getHttpClient* renamed to *getHttpClient*
+ - Pinners *block* method by default uses username instead of id and returns boolean.
  
 ### Removed:
  - *comment* and *deleteComment* methods in Pins provider. Use Comments provider instead.

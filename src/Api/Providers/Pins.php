@@ -215,6 +215,7 @@ class Pins extends Provider
     }
 
     /**
+     * @codeCoverageIgnore
      * Copy pins to board
      *
      * @param array|int $pinIds
@@ -227,6 +228,7 @@ class Pins extends Provider
     }
 
     /**
+     * @codeCoverageIgnore
      * Delete pins from board.
      *
      * @param int|array $pinIds
@@ -239,6 +241,7 @@ class Pins extends Provider
     }
 
     /**
+     * @codeCoverageIgnore
      * Move pins to board
      *
      * @param int|array $pinIds
