@@ -123,6 +123,24 @@ class PinnersTest extends ProviderTest
         $this->assertIsPaginatedResponse($likes);
     }
 
+    /** @test */
+    public function it_should_block_user_by_id()
+    {
+        $this->apiShouldReturnSuccess()
+            ->assertTrue($this->provider->blockById(1111));
+
+        $this->apiShouldReturnError()
+            ->assertFalse($this->provider->blockById(1111));
+    }
+
+    /** @test */
+    public function it_proxies_block_by_username_to_block_by_id()
+    {
+        $this->apiShouldReturnData(['id' => 1111])
+            ->apiShouldReturnSuccess()
+            ->assertTrue($this->provider->block('test'));
+    }
+
     /**
      * @test
      * @expectedException \seregazhuk\PinterestBot\Exceptions\WrongFollowingType

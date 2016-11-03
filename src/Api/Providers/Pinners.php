@@ -61,6 +61,7 @@ class Pinners extends Provider
     }
 
     /**
+     * @codeCoverageIgnore
      * Get following people for pinner.
      *
      * @param string $username
@@ -73,6 +74,7 @@ class Pinners extends Provider
     }
 
     /**
+     * @codeCoverageIgnore
      * Get following boards for pinner.
      *
      * @param string $username
@@ -85,6 +87,7 @@ class Pinners extends Provider
     }
 
     /**
+     * @codeCoverageIgnore
      * Get following interests for pinner.
      *
      * @param string $username
@@ -127,14 +130,28 @@ class Pinners extends Provider
     }
 
     /**
+     * @param string $username
+     * @return bool|Response
+     */
+    public function block($username)
+    {
+        // Retrieve profile data to get user id
+        $profile = $this->info($username);
+
+        if(empty($profile)) return false;
+
+        return $this->blockById($profile['id']);
+    }
+
+    /**
      * @param int $userId
      * @return bool|Response
      */
-    public function block($userId)
+    public function blockById($userId)
     {
         $data = ['blocked_user_id' => $userId];
 
-        return $this->execPostRequest($data, UrlBuilder::RESOURCE_BLOCK_USER, true);
+        return $this->execPostRequest($data, UrlBuilder::RESOURCE_BLOCK_USER);
     }
 
     /**

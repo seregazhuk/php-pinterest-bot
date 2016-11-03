@@ -486,13 +486,14 @@ foreach($bot->pinners->likes('username') as $like)
 }
 ```
 
-Block pinner by id:
+Block a user:
 
 ```php
-// grab id of the user
-$pinnerInfo = $bot->pinners->info('username');
+// by name
+$bot->pinners->block('username');
 
-// Pass id of the pinner to block
+// by id. For example after calling info() method
+$pinnerInfo = $bot->pinners->info('username');
 $bot->pinners->block($pinnerInfo['id']);
 ```
 
