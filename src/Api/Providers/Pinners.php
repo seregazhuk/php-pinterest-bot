@@ -16,6 +16,8 @@ class Pinners extends Provider
     protected $loginRequiredFor = [
         'follow',
         'unFollow',
+        'block',
+        'blockById',
     ];
 
     protected $searchScope  = 'people';
