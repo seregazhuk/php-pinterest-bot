@@ -139,7 +139,7 @@ class Boards extends Provider
     /**
      * Returns title suggestions for pin.
      *
-     * @param int $pinId
+     * @param string $pinId
      * @return array|bool
      */
     public function titleSuggestionsFor($pinId)
