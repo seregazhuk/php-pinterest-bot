@@ -13,7 +13,6 @@ class News extends Provider
      * @var array
      */
     protected $loginRequiredFor = [
-        'last',
         'all',
     ];
 
