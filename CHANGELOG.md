@@ -26,6 +26,7 @@ All notable changes to this project will be documented in this file.
  
 ### Fixed:
  - Auto-login for blocked users 
+ - *logout* method requires bot to be logged in
 
 ## [4.13.3] - 2016-10-25
 ### Fixed:

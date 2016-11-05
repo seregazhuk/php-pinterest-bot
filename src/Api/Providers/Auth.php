@@ -6,11 +6,12 @@ use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 
 class Auth extends Provider
 {
-
     /**
      * @var array
      */
-    protected $loginRequiredFor = [];
+    protected $loginRequiredFor = [
+        'logout'
+    ];
 
     const REGISTRATION_COMPLETE_EXPERIENCE_ID = '11:10105';
     const ACCOUNT_TYPE_OTHER = 'other';
