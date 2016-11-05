@@ -7,6 +7,14 @@ use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 class Comments extends Provider
 {
     /**
+     * @var array
+     */
+    protected $loginRequiredFor = [
+        'delete',
+        'create',
+    ];
+
+    /**
      * Write a comment for a pin with current id.
      *
      * @param int    $pinId
