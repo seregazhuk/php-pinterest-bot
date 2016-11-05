@@ -38,15 +38,15 @@ class Password extends Provider
 
         $query = [];
         parse_str($urlData['query'], $query);
-
-
-        return $this->execPostRequest([
+        $request = [
             'username'             => $username,
             'new_password'         => $newPassword,
             'new_password_confirm' => $newPassword,
             'token'                => $query['t'],
             'expiration'           => $query['e'],
-        ], UrlBuilder::RESOURCE_RESET_PASSWORD_UPDATE, true);
+        ];
+
+        return $this->execPostRequest($request, UrlBuilder::RESOURCE_RESET_PASSWORD_UPDATE, true);
     }
 
     /**
