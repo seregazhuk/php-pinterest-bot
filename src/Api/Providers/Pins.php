@@ -7,12 +7,13 @@ use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Api\Traits\HasFeed;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\Traits\Searchable;
+use seregazhuk\PinterestBot\Api\Traits\SendsMessages;
 use seregazhuk\PinterestBot\Api\Traits\CanBeDeleted;
 use seregazhuk\PinterestBot\Api\Traits\UploadsImages;
 
 class Pins extends Provider
 {
-    use Searchable, CanBeDeleted, UploadsImages, HasFeed;
+    use Searchable, CanBeDeleted, UploadsImages, HasFeed, SendsMessages;
 
     protected $loginRequiredFor = [
         'like',
@@ -24,7 +25,8 @@ class Pins extends Provider
         'delete',
         'activity',
         'feed',
-        'visualSimilar'
+        'send',
+        'visualSimilar',
     ];
 
     protected $searchScope  = 'pins';
@@ -35,7 +37,7 @@ class Pins extends Provider
     /**
      * Likes pin with current ID.
      *
-     * @param int $pinId
+     * @param string $pinId
      *
      * @return bool
      */
@@ -47,7 +49,7 @@ class Pins extends Provider
     /**
      * Removes your like from pin with current ID.
      *
-     * @param int $pinId
+     * @param string $pinId
      *
      * @return bool
      */
@@ -146,7 +148,7 @@ class Pins extends Provider
     /**
      * Get information of a pin by PinID.
      *
-     * @param int $pinId
+     * @param string $pinId
      *
      * @return array|bool
      */
@@ -178,7 +180,7 @@ class Pins extends Provider
     /**
      * Get the latest pin activity with pagination.
      *
-     * @param int $pinId
+     * @param string $pinId
      * @param int $limit
      * @return Iterator|null
      */
@@ -205,7 +207,7 @@ class Pins extends Provider
     }
 
     /**
-     * @param int $pinId
+     * @param string $pinId
      * @param int $limit
      * @return mixed
      */
@@ -218,7 +220,7 @@ class Pins extends Provider
      * @codeCoverageIgnore
      * Copy pins to board
      *
-     * @param array|int $pinIds
+     * @param array|string $pinIds
      * @param int $boardId
      * @return bool|Response
      */
@@ -241,6 +243,22 @@ class Pins extends Provider
     }
 
     /**
+     * Send pin with message or by email.
+     *
+     * @param string $pinId
+     * @param string $text
+     * @param array|int $userIds
+     * @param array|int $emails
+     * @return bool
+     */
+    public function send($pinId, $text, $userIds, $emails)
+    {
+        $messageData = $this->buildMessageData($text, $pinId);
+
+        return $this->callSendMessage($userIds, $emails, $messageData);
+    }
+
+    /**
      * @codeCoverageIgnore
      * Move pins to board
      *
@@ -254,7 +272,7 @@ class Pins extends Provider
     }
     
     /**
-     * @param int $pinId
+     * @param string $pinId
      * @param array $crop
      * @return array|bool
      */
@@ -279,7 +297,7 @@ class Pins extends Provider
     /**
      * Calls Pinterest API to like or unlike Pin by ID.
      *
-     * @param int $pinId
+     * @param string $pinId
      * @param string $resourceUrl
      *
      * @return bool
@@ -290,7 +308,7 @@ class Pins extends Provider
     }
 
     /**
-     * @param int $pinId
+     * @param string $pinId
      * @return int|null
      */
     protected function getAggregatedPinId($pinId)

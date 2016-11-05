@@ -3,10 +3,13 @@
 namespace seregazhuk\PinterestBot\Api\Providers;
 
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
+use seregazhuk\PinterestBot\Api\Traits\SendsMessages;
 use seregazhuk\PinterestBot\Exceptions\InvalidRequest;
 
 class Conversations extends Provider
 {
+    use SendsMessages;
+
     /**
      * @var array
      */
@@ -19,7 +22,7 @@ class Conversations extends Provider
     /**
      * Send message to a user.
      *
-     * @param array|int $userId
+     * @param array|int $userIds
      * @param string $text
      * @param int|null $pinId
      *
@@ -27,11 +30,11 @@ class Conversations extends Provider
      *
      * @return bool
      */
-    public function sendMessage($userId, $text, $pinId = null)
+    public function sendMessage($userIds, $text, $pinId = null)
     {
-        $userId = is_array($userId) ? $userId : [$userId];
+        $messageData = $this->buildMessageData($text, $pinId);
 
-        return $this->callSendMessage($userId, $text, $pinId);
+        return $this->callSendMessage($userIds, [], $messageData);
     }
 
     /**
@@ -47,9 +50,9 @@ class Conversations extends Provider
      */
     public function sendEmail($emails, $text, $pinId = null)
     {
-        $emails = is_array($emails) ? $emails : [$emails];
+        $messageData = $this->buildMessageData($text, $pinId);
 
-        return $this->callSendMessage([], $text, $pinId, $emails);
+        return $this->callSendMessage([], $emails, $messageData);
     }
 
     /**
@@ -60,41 +63,5 @@ class Conversations extends Provider
     public function last()
     {
         return $this->execGetRequest([], UrlBuilder::RESOURCE_GET_LAST_CONVERSATIONS);
-    }
-
-    /**
-     * @param array|int $userId
-     * @param string $text
-     * @param int $pinId
-     * @param array $emails
-     *
-     * @throws InvalidRequest
-     *
-     * @return bool
-     */
-    protected function callSendMessage($userId, $text, $pinId, array $emails = [])
-    {
-        $this->guardAgainstEmptyData($userId, $emails);
-
-        $requestOptions = [
-            'pin'      => $pinId,
-            'text'     => $text,
-            'emails'   => $emails,
-            'user_ids' => $userId,
-        ];
-
-        return $this->execPostRequest($requestOptions, UrlBuilder::RESOURCE_SEND_MESSAGE);
-    }
-
-    /**
-     * @param $userId
-     * @param array $emails
-     * @throws InvalidRequest
-     */
-    protected function guardAgainstEmptyData($userId, array $emails)
-    {
-        if (empty($userId) && empty($emails)) {
-            throw new InvalidRequest('You must specify user_ids or emails to send message.');
-        }
     }
 }

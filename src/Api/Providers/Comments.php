@@ -35,7 +35,7 @@ class Comments extends Provider
     /**
      * Delete a comment for a pin with current id.
      *
-     * @param int $pinId
+     * @param string $pinId
      * @param int $commentId
      *
      * @return bool
