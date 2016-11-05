@@ -7,11 +7,12 @@ use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\Traits\Searchable;
 use seregazhuk\PinterestBot\Api\Traits\Followable;
 use seregazhuk\PinterestBot\Api\Traits\CanBeDeleted;
+use seregazhuk\PinterestBot\Api\Traits\SendsMessages;
 use seregazhuk\PinterestBot\Api\Contracts\PaginatedResponse;
 
 class Boards extends Provider
 {
-    use CanBeDeleted, Searchable, Followable;
+    use CanBeDeleted, Searchable, Followable, SendsMessages;
 
     /**
      * @var array
@@ -21,6 +22,7 @@ class Boards extends Provider
         'create',
         'follow',
         'unFollow',
+        'send',
     ];
 
     protected $searchScope  = 'boards';
@@ -145,4 +147,19 @@ class Boards extends Provider
         return $this->execGetRequest(['pin_id' => $pinId], UrlBuilder::RESOURCE_TITLE_SUGGESTIONS);
     }
 
+    /**
+     * Send board with message or by email.
+     *
+     * @param int $boardId
+     * @param string $text
+     * @param array|int $userIds
+     * @param array|int $emails
+     * @return bool
+     */
+    public function send($boardId, $text, $userIds, $emails)
+    {
+        $messageData = $this->buildMessageData($text, $boardId);
+
+        return $this->callSendMessage($userIds, $emails, $messageData);
+    }
 }

@@ -7,12 +7,13 @@ use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Api\Traits\HasFeed;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\Traits\Searchable;
+use seregazhuk\PinterestBot\Api\Traits\SendsMessages;
 use seregazhuk\PinterestBot\Api\Traits\CanBeDeleted;
 use seregazhuk\PinterestBot\Api\Traits\UploadsImages;
 
 class Pins extends Provider
 {
-    use Searchable, CanBeDeleted, UploadsImages, HasFeed;
+    use Searchable, CanBeDeleted, UploadsImages, HasFeed, SendsMessages;
 
     protected $loginRequiredFor = [
         'like',
@@ -24,7 +25,8 @@ class Pins extends Provider
         'delete',
         'activity',
         'feed',
-        'visualSimilar'
+        'send',
+        'visualSimilar',
     ];
 
     protected $searchScope  = 'pins';
@@ -238,6 +240,22 @@ class Pins extends Provider
     public function deleteFromBoard($pinIds, $boardId)
     {
         return $this->bulkEdit($pinIds, $boardId, UrlBuilder::RESOURCE_BULK_DELETE);
+    }
+
+    /**
+     * Send pin with message or by email.
+     *
+     * @param int $pinId
+     * @param string $text
+     * @param array|int $userIds
+     * @param array|int $emails
+     * @return bool
+     */
+    public function send($pinId, $text, $userIds, $emails)
+    {
+        $messageData = $this->buildMessageData($text, $pinId);
+
+        return $this->callSendMessage($userIds, $emails, $messageData);
     }
 
     /**

@@ -252,6 +252,18 @@ suggestions for pin by its id:
 ```
 $suggestions = $bot->boards->titleSuggestionsFor($pinId);
 ```
+
+Send board with message or by email:
+```php
+// send board with message
+$bot->boards->send($boardId, 'message', $userId); // to a user
+$bot->boards->send($boardId, 'message', [$userId1, $userId2]); // to many yusers
+
+// send board by email
+$bot->boards->send($boardId, 'message', [], 'friend@example.com'); // one email
+$bot->boards->send($boardId, 'message', [], ['friend1@example.com', 'friend2@example.com']); // many
+```
+
 ## Pins
 
 Notice! Try not to be very aggressive when pinning or commenting pins, or Pinterest will gonna ban you.
@@ -389,6 +401,17 @@ foreach($bot->pins->related($pinId, 10) as $pin) {
 Get visual similar pins:
 ```php
 $result = $bot->pins->visualSimilar($pinId);
+```
+
+Send pin with message or by email:
+```php
+// send pin with message
+$bot->boards->send($pinId, 'message', $userId); // to a user
+$bot->boards->send($pinId, 'message', [$userId1, $userId2]); // to many yusers
+
+// send pin by email
+$bot->boards->send($pinId, 'message', [], 'friend@example.com'); // one email
+$bot->boards->send($pinId, 'message', [], ['friend1@example.com', 'friend2@example.com']); // many
 ```
 
 ## Pinners
@@ -566,7 +589,7 @@ Write a message to a user by id. You may specify one user by id, or pass an arra
 $bot->conversations->sendMessage($userId, 'message text');
 ```
 
-Add pin by id to message.
+Attach pin by id to message.
 ```php
 $pinId = 123456789;
 $bot->conversations->sendMessage($userId, 'message text', $pinId);
