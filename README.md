@@ -30,7 +30,6 @@ if you don't use such operations as creating pins, writing comments or sending m
 - [Pins](#pins)
 - [Pinners](#pinners)
 - [Interests](#interests)
-- [Interests](#interests)
 - [Topics](#topics)
 - [Conversations](#conversations)
 - [Search](#search)
