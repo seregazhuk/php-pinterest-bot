@@ -233,7 +233,7 @@ class Pins extends Provider
      * @codeCoverageIgnore
      * Delete pins from board.
      *
-     * @param int|array $pinIds
+     * @param string|array $pinIds
      * @param int $boardId
      * @return bool
      */
@@ -247,8 +247,8 @@ class Pins extends Provider
      *
      * @param string $pinId
      * @param string $text
-     * @param array|int $userIds
-     * @param array|int $emails
+     * @param array|string $userIds
+     * @param array|string $emails
      * @return bool
      */
     public function send($pinId, $text, $userIds, $emails)
@@ -262,7 +262,7 @@ class Pins extends Provider
      * @codeCoverageIgnore
      * Move pins to board
      *
-     * @param int|array $pinIds
+     * @param string|array $pinIds
      * @param int $boardId
      * @return bool|Response
      */
