@@ -152,8 +152,8 @@ class Boards extends Provider
      *
      * @param int $boardId
      * @param string $text
-     * @param array|int $userIds
-     * @param array|int $emails
+     * @param array|string $userIds
+     * @param array|string $emails
      * @return bool
      */
     public function send($boardId, $text, $userIds, $emails)

@@ -22,7 +22,7 @@ class Conversations extends Provider
     /**
      * Send message to a user.
      *
-     * @param array|int $userIds
+     * @param array|string $userIds
      * @param string $text
      * @param int|null $pinId
      *
@@ -40,7 +40,7 @@ class Conversations extends Provider
     /**
      * Send email.
      *
-     * @param array|int $emails
+     * @param array|string $emails
      * @param string $text
      * @param int|null $pinId
      *

@@ -330,7 +330,7 @@ class Pins extends Provider
     }
 
     /**
-     * @param int|array $pinIds
+     * @param string|array $pinIds
      * @param int $boardId
      * @param string $editUrl
      * @return bool
