@@ -60,7 +60,7 @@ use seregazhuk\PinterestBot\Factories\PinterestBot;
 $bot = PinterestBot::create();
 
 // login
-$bot->user->login('mypinterestlogin', 'mypinterestpassword');
+$bot->auth->login('mypinterestlogin', 'mypinterestpassword');
 
 // get lists of your boards 
 $boards = $bot->boards->forUser('yourUserName');
