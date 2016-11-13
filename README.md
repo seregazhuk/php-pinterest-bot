@@ -521,7 +521,7 @@ $bot->pinners->block($pinnerInfo['id']);
 
 ## Interests
 
-Get a list of main categories.
+Get a list of main categories. Required bot to be logged in.
 
 ```php
 $categories = $bot->interests->main();
