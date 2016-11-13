@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [5.0.1] - 2016-11-13
+### Fixed:
+ - Interests *main* method requires to be logged in.
+
 ## [5.0.0] - 2016-11-08
 ### Added:
  - $removeCookies param to *logout* method.

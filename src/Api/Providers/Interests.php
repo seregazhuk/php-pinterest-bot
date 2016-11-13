@@ -13,6 +13,10 @@ class Interests extends Provider
 
     protected $feedUrl = UrlBuilder::RESOURCE_GET_CATEGORY_FEED;
 
+    protected $loginRequiredFor = [
+        'main',
+    ];
+
     /**
      * Get list of main categories
      * 
