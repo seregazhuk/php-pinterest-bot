@@ -259,6 +259,32 @@ class Pins extends Provider
     }
 
     /**
+     * Send pin with messages.
+     *
+     * @param int $pinId
+     * @param string $text
+     * @param array|string $userIds
+     * @return bool
+     */
+    public function sendWithMessage($pinId, $text, $userIds)
+    {
+        return $this->send($pinId, $text, $userIds, []);
+    }
+
+    /**
+     * Send pin with emails.
+     *
+     * @param int $pinId
+     * @param string $text
+     * @param array|string $emails
+     * @return bool
+     */
+    public function sendWithEmail($pinId, $text, $emails)
+    {
+        return $this->send($pinId, $text, [], $emails);
+    }
+
+    /**
      * @codeCoverageIgnore
      * Move pins to board
      *

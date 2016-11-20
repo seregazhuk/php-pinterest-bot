@@ -178,4 +178,30 @@ class Boards extends Provider
 
         return $this->callSendMessage($userIds, $emails, $messageData);
     }
+
+    /**
+     * Send board with messages.
+     *
+     * @param int $boardId
+     * @param string $text
+     * @param array|string $userIds
+     * @return bool
+     */
+    public function sendWithMessage($boardId, $text, $userIds)
+    {
+        return $this->send($boardId, $text, $userIds, []);
+    }
+
+    /**
+     * Send board with emails.
+     *
+     * @param int $boardId
+     * @param string $text
+     * @param array|string $emails
+     * @return bool
+     */
+    public function sendWithEmail($boardId, $text, $emails)
+    {
+        return $this->send($boardId, $text, [], $emails);
+    }
 }

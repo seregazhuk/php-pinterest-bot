@@ -255,12 +255,12 @@ $suggestions = $bot->boards->titleSuggestionsFor($pinId);
 Send board with message or by email:
 ```php
 // send board with message
-$bot->boards->send($boardId, 'message', $userId); // to a user
-$bot->boards->send($boardId, 'message', [$userId1, $userId2]); // to many yusers
+$bot->boards->sendWithMessage($boardId, 'message', $userId); // to a user
+$bot->boards->sendWithMessage($boardId, 'message', [$userId1, $userId2]); // to many yusers
 
 // send board by email
-$bot->boards->send($boardId, 'message', [], 'friend@example.com'); // one email
-$bot->boards->send($boardId, 'message', [], ['friend1@example.com', 'friend2@example.com']); // many
+$bot->boards->sendWithEmail($boardId, 'message', 'friend@example.com'); // one email
+$bot->boards->sendWithEmail($boardId, 'message', ['friend1@example.com', 'friend2@example.com']); // many
 ```
 
 ## Pins
@@ -405,12 +405,12 @@ $result = $bot->pins->visualSimilar($pinId);
 Send pin with message or by email:
 ```php
 // send pin with message
-$bot->boards->send($pinId, 'message', $userId); // to a user
-$bot->boards->send($pinId, 'message', [$userId1, $userId2]); // to many yusers
-
+$bot->pins->sendWithMessage($pinId, 'message', $userId); // to a user
+$bot->pins->sendWithMessage($pinId, 'message', [$userId1, $userId2]); // to many yusers
+Email
 // send pin by email
-$bot->boards->send($pinId, 'message', [], 'friend@example.com'); // one email
-$bot->boards->send($pinId, 'message', [], ['friend1@example.com', 'friend2@example.com']); // many
+$bot->pins->sendWithEmail($pinId, 'message', friend@example.com'); // one email
+$bot->pins->sendWithEmail($pinId, 'message', ['friend1@example.com', 'friend2@example.com']); // many
 ```
 
 ## Pinners

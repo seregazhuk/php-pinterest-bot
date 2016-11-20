@@ -3,7 +3,8 @@ All notable changes to this project will be documented in this file.
 
 ## [5.1.1] - ??
 ### Added:
- - Boards *createPrivate* method.
+ - Boards *createPrivate*, *sendWithMessage* and *sendWithEmail* methods.
+ - Pins *sendWithMessage* and *sendWithEmail* methods.
 
 ## [5.0.1] - 2016-11-13
 ### Fixed:
