@@ -670,6 +670,7 @@ Check if your account is banned:
 if ($bot->user->isBanned() {
     // ... you have ban
 }
+```
 
 Change you password:
 ```php
