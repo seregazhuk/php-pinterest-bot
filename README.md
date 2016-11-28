@@ -166,7 +166,7 @@ $bot->password->reset(
 );
 ```
 
-### Invite 
+### Invitation
 
 To invite someone by email:
 
