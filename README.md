@@ -120,12 +120,6 @@ To logout use *logout* method:
 $bot->auth->logout();
 ```
 
-To clear cookies, pass `true` to *logout* method:
-
-```php
-$bot->auth->logout(true);
-```
-
 ### Registration
 
 To register a new user:
@@ -788,6 +782,11 @@ By default cookie files are stored in your system temp directory. You can set cu
 $bot->getHttpClient()->setCookiesPath($yourCustomPathForCookies);
 
 $currentPath = $bot->getHttpClient()->getCookiesPath();
+```
+
+Remove your cookies:
+```php
+$bot->getHttpClient()->removeCookies();
 ```
 
 ## How can I thank you?

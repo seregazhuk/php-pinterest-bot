@@ -40,15 +40,9 @@ class Auth extends Provider
         return $this->processLogin($username, $password);
     }
 
-    /**
-     * If $removeCookies is set, cookie file will be removed
-     * from the file system.
-     *
-     * @param bool $removeCookies
-     */
-    public function logout($removeCookies = false)
+    public function logout()
     {
-        $this->request->logout($removeCookies);
+        $this->request->logout();
     }
 
     /**
