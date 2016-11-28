@@ -8,6 +8,13 @@ use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 class Password extends Provider
 {
     /**
+     * @var array
+     */
+    protected $loginRequiredFor = [
+        'change',
+    ];
+
+    /**
      * Ask for password reset link in email
      *
      * @param string $user Username or user mail

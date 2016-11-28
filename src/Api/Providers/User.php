@@ -16,7 +16,6 @@ class User extends Provider
     protected $loginRequiredFor = [
         'profile',
         'convertToBusiness',
-        'changePassword',
         'isBanned',
         'deactivate',
         'username',
