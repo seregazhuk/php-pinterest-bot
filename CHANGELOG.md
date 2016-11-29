@@ -19,7 +19,7 @@ All notable changes to this project will be documented in this file.
  - $removeCookies param to *logout* method.
  - *block* method in Pinners provider.
  - *getCurrentUrl* method to receive the last visited page url.
- - Pins *copy*, *move*, *deleteFromBoard*, *send* and *save* methods.
+ - Pins *copy*, *move*, *deleteFromBoard*, *send* and *saveOriginalImage* methods.
  - Pinners *blockById* method.
  - Boards *send* method.
  

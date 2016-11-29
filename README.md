@@ -324,7 +324,7 @@ $bot->pins->move($pinId, $boardId);
 
 Save image from pin to the disk. Saves original image of the pin to the specified path:
 ```php
-$imagePath = $bot->pins->save($pinId, $pathForPics);
+$imagePath = $bot->pins->saveOriginalImage($pinId, $pathForPics);
 ```
 
 Delete pins from board. To delete one pin, pass it's id as the first argument. Pass an array of ids 

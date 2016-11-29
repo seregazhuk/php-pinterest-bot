@@ -328,7 +328,7 @@ class Pins extends Provider
      * @param string $path
      * @return string|bool
      */
-    public function save($pinId, $path)
+    public function saveOriginalImage($pinId, $path)
     {
         $pinInfo = $this->info($pinId);
         if(!isset($pinInfo['images']['orig']['url'])) return false;
