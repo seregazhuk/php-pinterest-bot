@@ -13,13 +13,17 @@ All notable changes to this project will be documented in this file.
 ## [5.0.1] - 2016-11-13
 ### Fixed:
  - Interests *main* method requires to be logged in.
+ 
+### Added:
+ - Pins *saveOriginalImage* method.
+
 
 ## [5.0.0] - 2016-11-08
 ### Added:
  - $removeCookies param to *logout* method.
  - *block* method in Pinners provider.
  - *getCurrentUrl* method to receive the last visited page url.
- - Pins *copy*, *move*, *deleteFromBoard*, *send* and *saveOriginalImage* methods.
+ - Pins *copy*, *move*, *deleteFromBoard* and *send* methods.
  - Pinners *blockById* method.
  - Boards *send* method.
  
