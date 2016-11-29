@@ -319,6 +319,27 @@ class Pins extends Provider
 
         return $this->execGetRequest($data, UrlBuilder::RESOURCE_VISUAL_SIMILAR_PINS);
     }
+
+    /**
+     * Saves the pin original image to the specified path. On success
+     * returns full path to saved image. Otherwise returns false.
+     *
+     * @param int $pinId
+     * @param string $path
+     * @return string|bool
+     */
+    public function save($pinId, $path)
+    {
+        $pinInfo = $this->info($pinId);
+        if(!isset($pinInfo['images']['orig']['url'])) return false;
+
+        $originalUrl = $pinInfo['images']['orig']['url'];
+        $destination = $path . DIRECTORY_SEPARATOR . basename($originalUrl);
+
+        file_put_contents($destination, file_get_contents($originalUrl));
+
+        return $destination;
+    }
     
     /**
      * Calls Pinterest API to like or unlike Pin by ID.
