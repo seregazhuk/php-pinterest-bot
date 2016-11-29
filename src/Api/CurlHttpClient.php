@@ -171,7 +171,7 @@ class CurlHttpClient implements HttpClient
      * Set custom Curl options to override default
      *
      * @param array $options
-     * @return CurlHttpClient
+     * @return HttpClient
      */
     public function setOptions(array $options)
     {
@@ -288,5 +288,36 @@ class CurlHttpClient implements HttpClient
     public function getCurrentUrl()
     {
         return $this->currentUrl;
+    }
+
+    /**
+     * @param string $host '192.168.1.1'
+     * @param string $port '12345'
+     * @param string $auth Authentication string: 'username:password'
+     * @param string $type HTTP|SOCKS
+     * @return HttpClient
+     */
+    public function useProxy($host, $port, $auth = null, $type = null)
+    {
+        $proxy = [
+            CURLOPT_PROXY     => $host,
+            CURLOPT_PROXYPORT => $port,
+            CURLOPT_PROXYTYPE => $type ? $type : CURLPROXY_HTTP,
+        ];
+
+        if($auth) $proxy[CURLOPT_PROXYUSERPWD] = $auth;
+
+        return $this->setOptions($proxy);
+    }
+
+    /**
+     * @param string $host
+     * @param string $port
+     * @param null $auth
+     * @return HttpClient
+     */
+    public function useSocksProxy($host, $port, $auth = null)
+    {
+        return $this->useProxy($host, $port, CURLPROXY_SOCKS5, $auth);
     }
 }

@@ -734,6 +734,29 @@ $error = $bot->getLastError();
 echo $error;
 ```
 
+## Use proxy
+
+To set up proxy settings use *useProxy* method:
+```php
+$bot->getHttpClient()->useProxy('192.168.1.1', '12345');
+```
+
+By default it uses *http* proxy without authentication. If your 
+proxy requires authentication, pass auth string as the third parameter:
+
+```php
+$bot->getHttpClient()->useProxy('192.168.1.1', '12345', 'username:password');
+```
+
+Use *socks* proxy:
+
+```php
+$bot->getHttpClient()->useSocksProxy('192.168.1.1', '12345');
+
+// with authentication
+$bot->getHttpClient()->useSocksProxy('192.168.1.1', '12345', 'username:password');
+```
+
 ## Custom request settings
 
 It is possible to add some additional Curl options for bot requests. For example you can 

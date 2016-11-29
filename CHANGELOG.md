@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 ### Added:
  - Boards *createPrivate*, *sendWithMessage* and *sendWithEmail* methods.
  - Pins *sendWithMessage*, *sendWithEmail* and *saveOriginalImage* methods.
+ - HttpClient *useProxy* and *useSocksProxy* methods.
  
 ### Changed:
  - Removed $removeCookies param from *Auth::logout()* method. Use 
