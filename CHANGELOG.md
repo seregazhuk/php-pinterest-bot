@@ -4,8 +4,8 @@ All notable changes to this project will be documented in this file.
 ## [5.1.0] - ??
 ### Added:
  - Boards *createPrivate*, *sendWithMessage* and *sendWithEmail* methods.
- - Pins *sendWithMessage* and *sendWithEmail* methods.
-
+ - Pins *sendWithMessage*, *sendWithEmail* and *saveOriginalImage* methods.
+ 
 ### Changed:
  - Removed $removeCookies param from *Auth::logout()* method. Use 
  *bot->getHttpClient()->removeCookies()* to remove your cookies.
@@ -13,10 +13,6 @@ All notable changes to this project will be documented in this file.
 ## [5.0.1] - 2016-11-13
 ### Fixed:
  - Interests *main* method requires to be logged in.
- 
-### Added:
- - Pins *saveOriginalImage* method.
-
 
 ## [5.0.0] - 2016-11-08
 ### Added:
