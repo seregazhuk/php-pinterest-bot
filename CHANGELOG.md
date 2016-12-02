@@ -1,7 +1,7 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [5.1.0] - ??
+## [5.1.0] - 2016-12-02
 ### Added:
  - Boards *createPrivate*, *sendWithMessage* and *sendWithEmail* methods.
  - Pins *sendWithMessage*, *sendWithEmail* and *saveOriginalImage* methods.
