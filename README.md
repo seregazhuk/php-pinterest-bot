@@ -33,10 +33,10 @@ if you don't use such operations as creating pins, writing comments or sending m
 - [Topics](#topics)
 - [Conversations](#conversations)
 - [Search](#search)
-- [User Settings](#user-settings)
 - [News](#news)
 - [Keywords](#keywords)
 - [Errors handling](#errors-handling)
+- [Use proxy](#use-proxy)
 - [Custom request settings](#custom-request-settings)
 - [Cookies](#cookies)
 
@@ -164,6 +164,49 @@ $bot->password->reset(
     'https://post.pinterest.com/f/a/your-password-reset-params',
     'newPassword'
 );
+```
+
+### Profile
+Change profile. Available settings are: *last_name*, *first_name*, *username*, *about*, *location*, *website_url* and
+*profile_image*:
+```php
+$bot->user->profile(['first_name'=>'My_name']);
+```
+
+You can change your profile avatar by setting *profile_image* key with a path to image:  
+```php
+$bot->user->profile([
+	'first_name' => 'My_name',
+	'profile_image' => $path_to_file
+]);
+```
+
+You can get your current profile settings calling *profile* method without any params:
+```php
+$profile = $bot->user->profile();
+echo $profile['username']; //prints your username
+```
+In result you can find your username, and all your account settings.
+
+Get your current username:
+```php
+$username = $bot->user->username();
+```
+
+Check if your account is banned:
+```php
+if ($bot->user->isBanned() {
+    // ... you have ban
+}
+
+Change you password:
+```php
+$bot->password->change('oldPassword', 'newPassword');
+```
+
+Deactivate current account:
+```php
+$bot->user->deactivate();
 ```
 
 ### Invitation
@@ -635,49 +678,6 @@ foreach($bot->boards->search('query') as $board);
 {
 	// ...
 }
-```
-
-## User Settings
-Change profile. Available settings are: *last_name*, *first_name*, *username*, *about*, *location*, *website_url* and
-*profile_image*:
-```php
-$bot->user->profile(['first_name'=>'My_name']);
-```
-
-You can change your profile avatar by setting *profile_image* key with a path to image:  
-```php
-$bot->user->profile([
-	'first_name' => 'My_name',
-	'profile_image' => $path_to_file
-]);
-```
-
-You can get your current profile settings calling *profile* method without any params:
-```php
-$profile = $bot->user->profile();
-echo $profile['username']; //prints your username
-```
-In result you can find your username, and all your account settings.
-
-Get your current username:
-```php
-$username = $bot->user->username();
-```
-
-Check if your account is banned:
-```php
-if ($bot->user->isBanned() {
-    // ... you have ban
-}
-
-Change you password:
-```php
-$bot->password->change('oldPassword', 'newPassword');
-```
-
-Deactivate current account:
-```php
-$bot->user->deactivate();
 ```
 
 ## News
