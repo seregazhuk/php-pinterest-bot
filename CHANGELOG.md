@@ -1,6 +1,16 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [5.1.0] - 2016-12-02
+### Added:
+ - Boards *createPrivate*, *sendWithMessage* and *sendWithEmail* methods.
+ - Pins *sendWithMessage*, *sendWithEmail* and *saveOriginalImage* methods.
+ - HttpClient *useProxy* and *useSocksProxy* methods.
+ 
+### Changed:
+ - Removed $removeCookies param from *Auth::logout()* method. Use 
+ *bot->getHttpClient()->removeCookies()* to remove your cookies.
+
 ## [5.0.1] - 2016-11-13
 ### Fixed:
  - Interests *main* method requires to be logged in.
@@ -10,7 +20,7 @@ All notable changes to this project will be documented in this file.
  - $removeCookies param to *logout* method.
  - *block* method in Pinners provider.
  - *getCurrentUrl* method to receive the last visited page url.
- - Pins *copy*, *move* and *deleteFromBoard*, *send* methods.
+ - Pins *copy*, *move*, *deleteFromBoard* and *send* methods.
  - Pinners *blockById* method.
  - Boards *send* method.
  

@@ -14,6 +14,9 @@ class Boards extends Provider
 {
     use CanBeDeleted, Searchable, Followable, SendsMessages;
 
+    const BOARD_PRIVACY_PUBLIC = 'public';
+    const BOARD_PRIVACY_PRIVATE = 'secret';
+
     /**
      * @var array
      */
@@ -125,7 +128,7 @@ class Boards extends Provider
      *
      * @return bool
      */
-    public function create($name, $description, $privacy = 'public')
+    public function create($name, $description, $privacy = self::BOARD_PRIVACY_PUBLIC)
     {
         $requestOptions = [
             'name'        => $name,
@@ -134,6 +137,19 @@ class Boards extends Provider
         ];
 
         return $this->execPostRequest($requestOptions, UrlBuilder::RESOURCE_CREATE_BOARD);
+    }
+
+    /**
+     * Create a new board.
+     *
+     * @param string $name
+     * @param string $description
+     *
+     * @return bool
+     */
+    public function createPrivate($name, $description)
+    {
+       return $this->create($name, $description, self::BOARD_PRIVACY_PRIVATE);
     }
 
     /**
@@ -161,5 +177,31 @@ class Boards extends Provider
         $messageData = $this->buildMessageData($text, $boardId);
 
         return $this->callSendMessage($userIds, $emails, $messageData);
+    }
+
+    /**
+     * Send board with messages.
+     *
+     * @param int $boardId
+     * @param string $text
+     * @param array|string $userIds
+     * @return bool
+     */
+    public function sendWithMessage($boardId, $text, $userIds)
+    {
+        return $this->send($boardId, $text, $userIds, []);
+    }
+
+    /**
+     * Send board with emails.
+     *
+     * @param int $boardId
+     * @param string $text
+     * @param array|string $emails
+     * @return bool
+     */
+    public function sendWithEmail($boardId, $text, $emails)
+    {
+        return $this->send($boardId, $text, [], $emails);
     }
 }

@@ -33,10 +33,10 @@ if you don't use such operations as creating pins, writing comments or sending m
 - [Topics](#topics)
 - [Conversations](#conversations)
 - [Search](#search)
-- [User Settings](#user-settings)
 - [News](#news)
 - [Keywords](#keywords)
 - [Errors handling](#errors-handling)
+- [Use proxy](#use-proxy)
 - [Custom request settings](#custom-request-settings)
 - [Cookies](#cookies)
 
@@ -120,12 +120,6 @@ To logout use *logout* method:
 $bot->auth->logout();
 ```
 
-To clear cookies, pass `true` to *logout* method:
-
-```php
-$bot->auth->logout(true);
-```
-
 ### Registration
 
 To register a new user:
@@ -172,7 +166,58 @@ $bot->password->reset(
 );
 ```
 
-### Invite 
+### Profile
+Change profile. Available settings are:
+ - *last_name*, 
+ - *first_name*, 
+ - *username*, 
+ - *about*,
+ - *location*, 
+ - *website_url*,
+ - *country* (ISO2 code) 
+ - *profile_image*:
+```php
+$bot->user->profile(['first_name'=>'My_name']);
+```
+
+You can change your profile avatar by setting *profile_image* key with a path to image:  
+```php
+$bot->user->profile([
+	'first_name' => 'My_name',
+	'profile_image' => $path_to_file
+]);
+```
+
+You can get your current profile settings calling *profile* method without any params:
+```php
+$profile = $bot->user->profile();
+echo $profile['username']; //prints your username
+```
+In result you can find your username, and all your account settings.
+
+Get your current username:
+```php
+$username = $bot->user->username();
+```
+
+Check if your account is banned:
+```php
+if ($bot->user->isBanned() {
+    // ... you have ban
+}
+```
+
+Change you password:
+```php
+$bot->password->change('oldPassword', 'newPassword');
+```
+
+Deactivate current account:
+```php
+$bot->user->deactivate();
+```
+
+### Invitation
 
 To invite someone by email:
 
@@ -194,14 +239,14 @@ Get full board info by boardName and userName. Here you can get board id, for fu
 $info = $bot->boards->info($username, $board);
 ```
 
-Create a new board. As third parameter, you can pass privacy. It is *public* by default, or *secret* if private.
+Create a new board.
 
 ```php
 // create a public board
 $bot->boards->create('name', 'description');
 
 // create a private board
-$bot->boards->create('name', 'description', 'secret');
+$bot->boards->createPrivate('name', 'description');
 ```
 
 Update a board by id.
@@ -255,12 +300,12 @@ $suggestions = $bot->boards->titleSuggestionsFor($pinId);
 Send board with message or by email:
 ```php
 // send board with message
-$bot->boards->send($boardId, 'message', $userId); // to a user
-$bot->boards->send($boardId, 'message', [$userId1, $userId2]); // to many yusers
+$bot->boards->sendWithMessage($boardId, 'message', $userId); // to a user
+$bot->boards->sendWithMessage($boardId, 'message', [$userId1, $userId2]); // to many yusers
 
 // send board by email
-$bot->boards->send($boardId, 'message', [], 'friend@example.com'); // one email
-$bot->boards->send($boardId, 'message', [], ['friend1@example.com', 'friend2@example.com']); // many
+$bot->boards->sendWithEmail($boardId, 'message', 'friend@example.com'); // one email
+$bot->boards->sendWithEmail($boardId, 'message', ['friend1@example.com', 'friend2@example.com']); // many
 ```
 
 ## Pins
@@ -326,6 +371,11 @@ to copy/move many pins:
 ```php
 $bot->pins->copy($pinId, $boardId);
 $bot->pins->move($pinId, $boardId);
+```
+
+Save image from pin to the disk. Saves original image of the pin to the specified path:
+```php
+$imagePath = $bot->pins->saveOriginalImage($pinId, $pathForPics);
 ```
 
 Delete pins from board. To delete one pin, pass it's id as the first argument. Pass an array of ids 
@@ -405,12 +455,12 @@ $result = $bot->pins->visualSimilar($pinId);
 Send pin with message or by email:
 ```php
 // send pin with message
-$bot->boards->send($pinId, 'message', $userId); // to a user
-$bot->boards->send($pinId, 'message', [$userId1, $userId2]); // to many yusers
-
+$bot->pins->sendWithMessage($pinId, 'message', $userId); // to a user
+$bot->pins->sendWithMessage($pinId, 'message', [$userId1, $userId2]); // to many yusers
+Email
 // send pin by email
-$bot->boards->send($pinId, 'message', [], 'friend@example.com'); // one email
-$bot->boards->send($pinId, 'message', [], ['friend1@example.com', 'friend2@example.com']); // many
+$bot->pins->sendWithEmail($pinId, 'message', friend@example.com'); // one email
+$bot->pins->sendWithEmail($pinId, 'message', ['friend1@example.com', 'friend2@example.com']); // many
 ```
 
 ## Pinners
@@ -638,57 +688,6 @@ foreach($bot->boards->search('query') as $board);
 }
 ```
 
-## User Settings
-Change profile. Available settings are:
- - *last_name*, 
- - *first_name*, 
- - *username*, 
- - *about*,
- - *location*, 
- - *website_url*,
- - *country* (ISO2 code) 
- - *profile_image*:
-```php
-$bot->user->profile(['first_name'=>'My_name']);
-```
-
-You can change your profile avatar by setting *profile_image* key with a path to image:  
-```php
-$bot->user->profile([
-	'first_name' => 'My_name',
-	'profile_image' => $path_to_file
-]);
-```
-
-You can get your current profile settings calling *profile* method without any params:
-```php
-$profile = $bot->user->profile();
-echo $profile['username']; //prints your username
-```
-In result you can find your username, and all your account settings.
-
-Get your current username:
-```php
-$username = $bot->user->username();
-```
-
-Check if your account is banned:
-```php
-if ($bot->user->isBanned() {
-    // ... you have ban
-}
-```
-
-Change you password:
-```php
-$bot->password->change('oldPassword', 'newPassword');
-```
-
-Deactivate current account:
-```php
-$bot->user->deactivate();
-```
-
 ## News
 Get your current user's news. Returns Generator object.
 ```php
@@ -741,6 +740,29 @@ string that contains error from you last request to API:
 ```php
 $error = $bot->getLastError();
 echo $error;
+```
+
+## Use proxy
+
+To set up proxy settings use *useProxy* method:
+```php
+$bot->getHttpClient()->useProxy('192.168.1.1', '12345');
+```
+
+By default it uses *http* proxy without authentication. If your 
+proxy requires authentication, pass auth string as the third parameter:
+
+```php
+$bot->getHttpClient()->useProxy('192.168.1.1', '12345', 'username:password');
+```
+
+Use *socks* proxy:
+
+```php
+$bot->getHttpClient()->useSocksProxy('192.168.1.1', '12345');
+
+// with authentication
+$bot->getHttpClient()->useSocksProxy('192.168.1.1', '12345', 'username:password');
 ```
 
 ## Custom request settings
@@ -796,6 +818,11 @@ By default cookie files are stored in your system temp directory. You can set cu
 $bot->getHttpClient()->setCookiesPath($yourCustomPathForCookies);
 
 $currentPath = $bot->getHttpClient()->getCookiesPath();
+```
+
+Remove your cookies:
+```php
+$bot->getHttpClient()->removeCookies();
 ```
 
 ## How can I thank you?

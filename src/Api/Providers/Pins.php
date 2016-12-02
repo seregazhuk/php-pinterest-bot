@@ -259,6 +259,32 @@ class Pins extends Provider
     }
 
     /**
+     * Send pin with messages.
+     *
+     * @param int $pinId
+     * @param string $text
+     * @param array|string $userIds
+     * @return bool
+     */
+    public function sendWithMessage($pinId, $text, $userIds)
+    {
+        return $this->send($pinId, $text, $userIds, []);
+    }
+
+    /**
+     * Send pin with emails.
+     *
+     * @param int $pinId
+     * @param string $text
+     * @param array|string $emails
+     * @return bool
+     */
+    public function sendWithEmail($pinId, $text, $emails)
+    {
+        return $this->send($pinId, $text, [], $emails);
+    }
+
+    /**
      * @codeCoverageIgnore
      * Move pins to board
      *
@@ -292,6 +318,27 @@ class Pins extends Provider
         ];
 
         return $this->execGetRequest($data, UrlBuilder::RESOURCE_VISUAL_SIMILAR_PINS);
+    }
+
+    /**
+     * Saves the pin original image to the specified path. On success
+     * returns full path to saved image. Otherwise returns false.
+     *
+     * @param int $pinId
+     * @param string $path
+     * @return string|bool
+     */
+    public function saveOriginalImage($pinId, $path)
+    {
+        $pinInfo = $this->info($pinId);
+        if(!isset($pinInfo['images']['orig']['url'])) return false;
+
+        $originalUrl = $pinInfo['images']['orig']['url'];
+        $destination = $path . DIRECTORY_SEPARATOR . basename($originalUrl);
+
+        file_put_contents($destination, file_get_contents($originalUrl));
+
+        return $destination;
     }
     
     /**
