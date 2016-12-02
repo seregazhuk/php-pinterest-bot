@@ -167,8 +167,15 @@ $bot->password->reset(
 ```
 
 ### Profile
-Change profile. Available settings are: *last_name*, *first_name*, *username*, *about*, *location*, *website_url* and
-*profile_image*:
+Change profile. Available settings are:
+ - *last_name*, 
+ - *first_name*, 
+ - *username*, 
+ - *about*,
+ - *location*, 
+ - *website_url*,
+ - *country* (ISO2 code) 
+ - *profile_image*:
 ```php
 $bot->user->profile(['first_name'=>'My_name']);
 ```
@@ -198,6 +205,7 @@ Check if your account is banned:
 if ($bot->user->isBanned() {
     // ... you have ban
 }
+```
 
 Change you password:
 ```php
