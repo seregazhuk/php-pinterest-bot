@@ -2,9 +2,9 @@
 
 namespace seregazhuk\PinterestBot\Api\Traits;
 
-use Generator;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
+use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\SearchResponse;
 
@@ -79,18 +79,14 @@ trait Searchable
      * @param string $query
      * @param int $limit
      *
-     * @return \Iterator
+     * @return \Traversable
      */
-    public function search($query, $limit = 0)
+    public function search($query, $limit = Pagination::DEFAULT_LIMIT)
     {
-        return $this->getPaginatedResponse(
-            [
-                'query' => $query,
-                'scope' => $this->getSearchScope(),
-            ],
-            $limit,
-            'searchCall'
-        );
+        return (new Pagination($limit))
+            ->paginateOver(function($bookmarks = []) use ($query) {
+                return $this->searchCall($query, $this->getSearchScope(), $bookmarks);
+            });
     }
 
     /**
@@ -119,14 +115,6 @@ trait Searchable
 
         return $dataJson;
     }
-
-    /**
-     * @param array $params
-     * @param int $limit
-     * @param string $method
-     * @return Generator
-     */
-    abstract protected function getPaginatedResponse(array $params, $limit, $method = 'getPaginatedData');
 
     /**
      * @param string $res

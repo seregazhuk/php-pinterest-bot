@@ -2,10 +2,8 @@
 
 namespace seregazhuk\PinterestBot\Api\Providers;
 
-use Generator;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
-use seregazhuk\PinterestBot\Helpers\Pagination;
 
 /**
  * Class Provider.
@@ -13,12 +11,6 @@ use seregazhuk\PinterestBot\Helpers\Pagination;
  */
 abstract class Provider
 {
-    /**
-     * @var bool
-     */
-    protected $returnData = true;
-
-
     /**
      * List of methods that require logged status.
      *
@@ -151,17 +143,6 @@ abstract class Provider
     public function isLoggedIn()
     {
         return $this->request->isLoggedIn();
-    }
-
-    /**
-     * @param array $params
-     * @param int $limit
-     * @param string $method
-     * @return Generator
-     */
-    protected function getPaginatedResponse(array $params, $limit, $method = 'getPaginatedData')
-    {
-        return (new Pagination($this))->paginateOver($method, $params, $limit);
     }
 
     /**

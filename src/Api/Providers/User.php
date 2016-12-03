@@ -14,16 +14,16 @@ class User extends Provider
      * @var array
      */
     protected $loginRequiredFor = [
+        'invite',
         'profile',
-        'convertToBusiness',
+        'username',
         'isBanned',
         'deactivate',
-        'username',
-        'invite'
+        'convertToBusiness',
     ];
 
-    const REGISTRATION_COMPLETE_EXPERIENCE_ID = '11:10105';
     const ACCOUNT_TYPE_OTHER = 'other';
+    const REGISTRATION_COMPLETE_EXPERIENCE_ID = '11:10105';
 
     /**
      * Updates or returns user profile info. Gets associative array as a param. Available keys of array are:

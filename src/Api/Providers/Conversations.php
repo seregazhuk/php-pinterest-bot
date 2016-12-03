@@ -15,8 +15,8 @@ class Conversations extends Provider
      */
     protected $loginRequiredFor = [
         'last',
+        'sendEmail',
         'sendMessage',
-        'sendEmail'
     ];
 
     /**

@@ -140,7 +140,7 @@ trait ResponseHelper
      */
     public function assertIsPaginatedResponse($response, $count = 2)
     {
-        $this->assertInstanceOf(\Generator::class, $response);
+        $this->assertInstanceOf(\Traversable::class, $response);
         $this->assertCount($count, iterator_to_array($response));
     }
 }

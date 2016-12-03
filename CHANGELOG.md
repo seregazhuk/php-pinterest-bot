@@ -1,6 +1,14 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+
+## [5.1.1] - 2016-12-03
+### Added:
+ - To any pagination added *toArray* method to receive all pagination results as array. 
+
+### Fixed:
+ - Pins *activity* now returns an empty error for no results instead of null. 
+
 ## [5.1.0] - 2016-12-02
 ### Added:
  - Boards *createPrivate*, *sendWithMessage* and *sendWithEmail* methods.

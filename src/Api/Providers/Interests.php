@@ -2,8 +2,8 @@
 
 namespace seregazhuk\PinterestBot\Api\Providers;
 
-use Generator;
 use seregazhuk\PinterestBot\Api\Traits\HasFeed;
+use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\Traits\HasRelatedTopics;
 
@@ -13,6 +13,9 @@ class Interests extends Provider
 
     protected $feedUrl = UrlBuilder::RESOURCE_GET_CATEGORY_FEED;
 
+    /**
+     * @var array
+     */
     protected $loginRequiredFor = [
         'main',
     ];
@@ -43,9 +46,9 @@ class Interests extends Provider
      *
      * @param string $interest
      * @param int $limit
-     * @return Generator
+     * @return Pagination
      */
-    public function pins($interest, $limit = 0)
+    public function pins($interest, $limit = Pagination::DEFAULT_LIMIT)
     {
        $data = [
            'feed'             => $interest,

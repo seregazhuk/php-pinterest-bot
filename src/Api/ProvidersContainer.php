@@ -71,16 +71,11 @@ class ProvidersContainer
      * it to providers array. Provider class must exist in PROVIDERS_NAMESPACE.
      *
      * @param string $provider
-     *
      * @throws WrongProvider
      */
     protected function addProvider($provider)
     {
-        $className = self::PROVIDERS_NAMESPACE.ucfirst($provider);
-
-        if (!class_exists($className)) {
-            throw new WrongProvider("Provider $className not found.");
-        }
+        $className = $this->resolveProviderClass($provider);
 
         $this->providers[$provider] = $this->buildProvider($className);
     }
@@ -89,9 +84,7 @@ class ProvidersContainer
      * Build Provider object with reflection API.
      *
      * @param string $className
-     *
      * @throws WrongProvider
-     *
      * @return object
      */
     protected function buildProvider($className)
@@ -136,5 +129,21 @@ class ProvidersContainer
     public function getHttpClient()
     {
         return $this->request->getHttpClient();
+    }
+
+    /**
+     * @param $provider
+     * @return string
+     * @throws WrongProvider
+     */
+    protected function resolveProviderClass($provider)
+    {
+        $className = self::PROVIDERS_NAMESPACE . ucfirst($provider);
+
+        if (!class_exists($className)) {
+            throw new WrongProvider("Provider $className not found.");
+        }
+
+        return $className;
     }
 }

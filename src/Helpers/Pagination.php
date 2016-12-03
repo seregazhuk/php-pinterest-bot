@@ -2,15 +2,25 @@
 
 namespace seregazhuk\PinterestBot\Helpers;
 
-use seregazhuk\PinterestBot\Api\Providers\Provider;
+use Traversable;
 use seregazhuk\PinterestBot\Api\Contracts\PaginatedResponse;
 
-class Pagination
+/**
+ * Class Pagination
+ * Iterate through results of Pinterest Api. By default iterator will return 50 first
+ * pagination results. To change this behaviour specify another limit as the
+ * constructor param. For no limits specify zero.
+ *
+ * @package seregazhuk\PinterestBot\Helpers
+ */
+class Pagination implements \IteratorAggregate
 {
+    const DEFAULT_LIMIT = 50;
+
     /**
-     * @var Provider
+     * @var int
      */
-    protected $provider;
+    protected $limit;
 
     /**
      * @var array
@@ -18,30 +28,42 @@ class Pagination
     protected $bookmarks = [];
 
     /**
-     * @param Provider $provider
+     * @var callable
      */
-    public function __construct(Provider $provider)
+    protected $callback;
+
+    /**
+     * @param int $limit
+     */
+    public function __construct($limit = self::DEFAULT_LIMIT)
     {
-        $this->provider = $provider;
+        $this->limit = $limit;
     }
 
     /**
-     * Iterate through results of Api function call. By
-     * default generator will return all pagination results.
-     * To limit result batches, set $limit. Call function
-     * of object to get data.
+     * Sets a callback to make requests. Should be a closure
+     * that accepts a $bookmarks array as an argument.
      *
-     * @param string $method
-     * @param array $params
-     * @param int $limit
-     * @return \Generator
+     * @param callable $callback
+     * @return $this
      */
-    public function paginateOver($method, $params, $limit = 0)
+    public function paginateOver(callable $callback)
+    {
+        $this->callback = $callback;
+
+        return $this;
+    }
+
+    /**
+     * Retrieve an external iterator
+     * @return Traversable
+     */
+    public function getIterator()
     {
         $resultsNum = 0;
+
         while (true) {
-            $response = $this->callProviderRequest($method, $params);
-            $results = $this->processProviderResponse($response);
+            $results = $this->getCurrentResults();
 
             if (empty($results)) return;
 
@@ -49,7 +71,7 @@ class Pagination
                 $resultsNum++;
                 yield $result;
 
-                if ($this->reachesLimit($limit, $resultsNum) || $this->checkEndBookMarks()) {
+                if ($this->paginationFinished($resultsNum)) {
                     return;
                 }
             }
@@ -59,48 +81,63 @@ class Pagination
     }
 
     /**
-     * @param string $method
-     * @param array $params
-     * @return PaginatedResponse
+     * @return array
      */
-    protected function callProviderRequest($method, array $params)
+    public function toArray()
     {
-        $params['bookmarks'] = $this->bookmarks;
+        return iterator_to_array($this->getIterator());
+    }
 
-        return call_user_func_array([$this->provider, $method], $params);
+    /**
+     * @return array
+     */
+    protected function getCurrentResults()
+    {
+        $callback = $this->callback;
+
+        $response = $callback($this->bookmarks);
+
+        return $this->processResponse($response);
     }
 
     /**
      * @param PaginatedResponse $response
      * @return array
      */
-    protected function processProviderResponse(PaginatedResponse $response)
+    protected function processResponse(PaginatedResponse $response)
     {
-        if ($response->hasResponseData()) {
-            $this->bookmarks = $response->getBookmarks();
+        if ($response->isEmpty()) return [];
 
-            return $response->getResponseData();
-        }
+        $this->bookmarks = $response->getBookmarks();
 
-        return [];
+        return $response->getResponseData();
     }
 
     /**
-     * Check if we get batches limit in pagination.
+     * @param int $resultsNum
+     * @return bool
+     */
+    protected function paginationFinished($resultsNum)
+    {
+        return $this->reachesLimit($resultsNum) || $this->checkEndBookMarks();
+    }
+
+    /**
+     * Check if we get results limit in pagination.
      *
-     * @param int $limit
      * @param int $resultsNum
      *
      * @return bool
      */
-    protected function reachesLimit($limit, $resultsNum)
+    protected function reachesLimit($resultsNum)
     {
-        return $limit && $resultsNum >= $limit;
+        return $this->limit && $resultsNum >= $this->limit;
     }
 
 
     /**
-     * Checks for -end- substring in bookmarks
+     * Checks for -end- substring in bookmarks. This is pinterest sign of
+     * the finished pagination.
      *
      * @return bool
      */

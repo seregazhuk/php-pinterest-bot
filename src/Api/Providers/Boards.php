@@ -2,7 +2,7 @@
 
 namespace seregazhuk\PinterestBot\Api\Providers;
 
-use Generator;
+use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\Traits\Searchable;
 use seregazhuk\PinterestBot\Api\Traits\Followable;
@@ -21,11 +21,11 @@ class Boards extends Provider
      * @var array
      */
     protected $loginRequiredFor = [
+        'send',
         'delete',
         'create',
         'follow',
         'unFollow',
-        'send',
     ];
 
     protected $searchScope  = 'boards';
@@ -74,11 +74,14 @@ class Boards extends Provider
      * @param int $boardId
      * @param int $limit
      *
-     * @return Generator
+     * @return Pagination
      */
-    public function pins($boardId, $limit = 0)
+    public function pins($boardId, $limit = Pagination::DEFAULT_LIMIT)
     {
-        return $this->getPaginatedResponse(['boardId' => $boardId], $limit, 'getPinsFromBoard');
+        return (new Pagination($limit))
+            ->paginateOver(function($bookmarks = []) use ($boardId) {
+                return $this->getPinsFromBoard($boardId, $bookmarks);
+            });
     }
 
     /**

@@ -5,6 +5,7 @@ namespace seregazhuk\PinterestBot\Api\Providers;
 use Iterator;
 use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Api\Traits\HasFeed;
+use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\Traits\Searchable;
 use seregazhuk\PinterestBot\Api\Traits\SendsMessages;
@@ -15,17 +16,20 @@ class Pins extends Provider
 {
     use Searchable, CanBeDeleted, UploadsImages, HasFeed, SendsMessages;
 
+    /**
+     * @var array
+     */
     protected $loginRequiredFor = [
         'like',
-        'unLike',
-        'create',
-        'repin',
-        'copy',
-        'move',
-        'delete',
-        'activity',
         'feed',
         'send',
+        'copy',
+        'move',
+        'repin',
+        'unLike',
+        'create',
+        'delete',
+        'activity',
         'visualSimilar',
     ];
 
@@ -170,7 +174,7 @@ class Pins extends Provider
      * @param int $limit
      * @return Iterator
      */
-    public function fromSource($source, $limit = 0)
+    public function fromSource($source, $limit = Pagination::DEFAULT_LIMIT)
     {
         $data = ['domain' => $source];
 
@@ -182,13 +186,13 @@ class Pins extends Provider
      *
      * @param string $pinId
      * @param int $limit
-     * @return Iterator|null
+     * @return Iterator|array
      */
-    public function activity($pinId, $limit = 0)
+    public function activity($pinId, $limit = Pagination::DEFAULT_LIMIT)
     {
         $aggregatedPinId = $this->getAggregatedPinId($pinId);
 
-        if (is_null($aggregatedPinId)) return null;
+        if (is_null($aggregatedPinId)) return [];
 
         $data = ['aggregated_pin_data_id' => $aggregatedPinId];
 
@@ -201,7 +205,7 @@ class Pins extends Provider
      * @param int $limit
      * @return Iterator
      */
-    public function feed($limit = 0)
+    public function feed($limit = Pagination::DEFAULT_LIMIT)
     {
         return $this->getFeed([], UrlBuilder::RESOURCE_USER_FEED, $limit);
     }
@@ -211,7 +215,7 @@ class Pins extends Provider
      * @param int $limit
      * @return mixed
      */
-    public function related($pinId, $limit = 0)
+    public function related($pinId, $limit = Pagination::DEFAULT_LIMIT)
     {
         return $this->getFeed(['pin' => $pinId], UrlBuilder::RESOURCE_RELATED_PINS, $limit);
     }

@@ -2,8 +2,8 @@
 
 namespace seregazhuk\PinterestBot\Api\Providers;
 
-use Generator;
 use seregazhuk\PinterestBot\Api\Traits\HasFeed;
+use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\Traits\Followable;
 use seregazhuk\PinterestBot\Api\Traits\HasRelatedTopics;
@@ -41,9 +41,9 @@ class Topics extends Provider
      *
      * @param string $interest
      * @param int $limit
-     * @return Generator
+     * @return Pagination
      */
-    public function pins($interest, $limit = 0)
+    public function pins($interest, $limit = Pagination::DEFAULT_LIMIT)
     {
         $data = [
             'interest'  => $interest,
