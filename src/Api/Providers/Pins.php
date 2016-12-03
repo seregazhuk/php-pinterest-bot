@@ -172,7 +172,7 @@ class Pins extends Provider
      *
      * @param string $source
      * @param int $limit
-     * @return Iterator
+     * @return Pagination
      */
     public function fromSource($source, $limit = Pagination::DEFAULT_LIMIT)
     {
@@ -203,7 +203,7 @@ class Pins extends Provider
      * Get pins from user's feed
      *
      * @param int $limit
-     * @return Iterator
+     * @return Pagination
      */
     public function feed($limit = Pagination::DEFAULT_LIMIT)
     {
@@ -213,7 +213,7 @@ class Pins extends Provider
     /**
      * @param string $pinId
      * @param int $limit
-     * @return mixed
+     * @return Pagination
      */
     public function related($pinId, $limit = Pagination::DEFAULT_LIMIT)
     {
@@ -330,7 +330,7 @@ class Pins extends Provider
      *
      * @param int $pinId
      * @param string $path
-     * @return string|bool
+     * @return false|string
      */
     public function saveOriginalImage($pinId, $path)
     {
