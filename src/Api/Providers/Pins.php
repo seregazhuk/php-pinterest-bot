@@ -221,9 +221,9 @@ class Pins extends Provider
     }
 
     /**
-     * @codeCoverageIgnore
      * Copy pins to board
      *
+     * @codeCoverageIgnore
      * @param array|string $pinIds
      * @param int $boardId
      * @return bool|Response
@@ -234,9 +234,9 @@ class Pins extends Provider
     }
 
     /**
-     * @codeCoverageIgnore
      * Delete pins from board.
      *
+     * @codeCoverageIgnore
      * @param string|array $pinIds
      * @param int $boardId
      * @return bool
@@ -265,6 +265,7 @@ class Pins extends Provider
     /**
      * Send pin with messages.
      *
+     * @codeCoverageIgnore
      * @param int $pinId
      * @param string $text
      * @param array|string $userIds
@@ -278,6 +279,7 @@ class Pins extends Provider
     /**
      * Send pin with emails.
      *
+     * @codeCoverageIgnore
      * @param int $pinId
      * @param string $text
      * @param array|string $emails

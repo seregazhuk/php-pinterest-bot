@@ -170,6 +170,7 @@ class CurlHttpClient implements HttpClient
     /**
      * Set custom Curl options to override default
      *
+     * @codeCoverageIgnore
      * @param array $options
      * @return HttpClient
      */
@@ -203,6 +204,8 @@ class CurlHttpClient implements HttpClient
 
     /**
      * Set directory to store all cookie files.
+     *
+     * @codeCoverageIgnore
      * @param string $path
      * @return $this
      */
@@ -283,6 +286,7 @@ class CurlHttpClient implements HttpClient
     }
 
     /**
+     * @codeCoverageIgnore
      * @return string
      */
     public function getCurrentUrl()
@@ -311,6 +315,7 @@ class CurlHttpClient implements HttpClient
     }
 
     /**
+     * @codeCoverageIgnore
      * @param string $host
      * @param string $port
      * @param null $auth

@@ -124,14 +124,6 @@ class Response implements PaginatedResponse
     }
 
     /**
-     * @return bool
-     */
-    public function hasResponseData()
-    {
-        return (bool)$this->getValueByKey('resource_response.data', $this->data);
-    }
-
-    /**
      * Check for error info in api response and save
      * it.
      *
@@ -161,9 +153,7 @@ class Response implements PaginatedResponse
      */
     public function getPaginationData()
     {
-        if ($this->isEmpty() && $this->hasErrors()) {
-            return [];
-        }
+        if (!$this->isOk()) return [];
 
         $bookmarks = $this->getBookmarks();
         if ($data = $this->getResponseData()) {

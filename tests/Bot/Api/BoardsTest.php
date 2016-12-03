@@ -142,4 +142,16 @@ class BoardsTest extends ProviderTest
         $this->apiShouldReturnError()
             ->assertFalse($this->provider->update($boardId, $attributes));
     }
+
+    /** @test */
+    public function it_should_return_title_suggestions_for_pin()
+    {
+        $suggestions = ['Board1', 'Board2'];
+
+        $this->apiShouldReturnData($suggestions)
+            ->assertEquals($suggestions, $this->provider->titleSuggestionsFor(12345));
+
+        $this->apiShouldReturnError()
+            ->assertFalse($this->provider->titleSuggestionsFor(12345));
+    }
 }

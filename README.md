@@ -337,7 +337,12 @@ $pinInfo = $bot->pins->create('image.jpg', $boardId, 'pin description');
     
 You can specify a link for pin (source) as fourth argument. If not set, link is equal to image url.    
 ```php
-$pinInfo = $bot->pins->create('http://exmaple.com/image.jpg', $boardId, 'pin description', 'http://site.com');
+$pinInfo = $bot->pins->create(
+    'http://exmaple.com/image.jpg', 
+    $boardId, 
+    'pin description', 
+    'http://site.com'
+);
 ```
     
 Repin a pin by its id.
