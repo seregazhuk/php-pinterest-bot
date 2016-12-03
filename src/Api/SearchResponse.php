@@ -20,18 +20,6 @@ class SearchResponse implements PaginatedResponse
     }
 
     /**
-     * @return bool
-     */
-    public function hasResponseData()
-    {
-        $searchResults = $this
-            ->response
-            ->getData('module.tree.data.results', []);
-
-        return $searchResults ? : $this->response->hasResponseData();
-    }
-
-    /**
      * Parse bookmarks from response.
      *
      * @return array

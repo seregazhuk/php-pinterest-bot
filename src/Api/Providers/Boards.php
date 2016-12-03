@@ -145,6 +145,7 @@ class Boards extends Provider
     /**
      * Create a new board.
      *
+     * @codeCoverageIgnore
      * @param string $name
      * @param string $description
      *
@@ -184,7 +185,7 @@ class Boards extends Provider
 
     /**
      * Send board with messages.
-     *
+     * @codeCoverageIgnore
      * @param int $boardId
      * @param string $text
      * @param array|string $userIds
@@ -198,6 +199,7 @@ class Boards extends Provider
     /**
      * Send board with emails.
      *
+     * @codeCoverageIgnore
      * @param int $boardId
      * @param string $text
      * @param array|string $emails

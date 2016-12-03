@@ -76,4 +76,29 @@ class UserTest extends ProviderTest
         $this->apiShouldReturnSuccess()
             ->assertTrue($this->provider->profile($attributes));
     }
+
+    /** @test */
+    public function it_should_send_invitation_by_email()
+    {
+        $this->apiShouldReturnSuccess()
+            ->assertTrue($this->provider->invite('email@example.com'));
+
+        $this->apiShouldReturnError()
+            ->assertFalse($this->provider->invite('email@example.com'));
+    }
+
+    /** @test */
+    public function it_should_get_user_profile_and_send_request_when_deactivating()
+    {
+        $this->apiShouldReturnData(['id' => 1234])
+            ->apiShouldReturnSuccess()
+            ->assertTrue($this->provider->deactivate());
+
+        $this->apiShouldReturnData(['id' => 1234])
+            ->apiShouldReturnError()
+            ->assertFalse($this->provider->deactivate());
+
+        $this->apiShouldReturnSuccess()
+            ->assertFalse($this->provider->deactivate());
+    }
 }
