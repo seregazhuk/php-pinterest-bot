@@ -62,13 +62,11 @@ class Pagination
      */
     protected function processResponse(PaginatedResponse $response)
     {
-        if ($response->hasResponseData()) {
-            $this->bookmarks = $response->getBookmarks();
+        if ($response->isEmpty()) return [];
 
-            return $response->getResponseData();
-        }
+        $this->bookmarks = $response->getBookmarks();
 
-        return [];
+        return $response->getResponseData();
     }
 
     /**

@@ -20,4 +20,9 @@ interface PaginatedResponse
      * @return array|bool
      */
     public function getResponseData();
+
+    /**
+     * @return bool
+     */
+    public function isEmpty();
 }

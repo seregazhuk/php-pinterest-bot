@@ -56,4 +56,12 @@ class SearchResponse implements PaginatedResponse
 
         return $results ? : $this->response->getResponseData();
     }
+
+    /**
+     * @return bool
+     */
+    public function isEmpty()
+    {
+        return empty($this->getResponseData());
+    }
 }
