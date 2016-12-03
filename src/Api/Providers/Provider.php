@@ -148,17 +148,6 @@ abstract class Provider
     }
 
     /**
-     * @param array $params
-     * @param int $limit
-     * @param string $method
-     * @return Generator
-     */
-    protected function getPaginatedResponse(array $params, $limit, $method = 'getPaginatedData')
-    {
-        return (new Pagination($this))->paginateOver($method, $params, $limit);
-    }
-
-    /**
      * @param string $res
      * @return Response
      */

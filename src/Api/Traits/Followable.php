@@ -5,6 +5,7 @@ namespace seregazhuk\PinterestBot\Api\Traits;
 use Generator;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
+use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 
 /**
@@ -110,18 +111,11 @@ trait Followable
      */
     public function getFollowData($data, $resourceUrl, $limit = 0)
     {
-        $requestData = array_merge([$data, $resourceUrl]);
-
-        return $this->getPaginatedResponse($requestData, $limit);
+        return (new Pagination($limit))
+            ->paginateOver(function($bookmarks = []) use ($data, $resourceUrl) {
+                return $this->getPaginatedData($data, $resourceUrl, $bookmarks);
+            });
     }
-
-    /**
-     * @param array $params
-     * @param int $limit
-     * @param string $method
-     * @return Generator
-     */
-    abstract protected function getPaginatedResponse(array $params, $limit, $method = 'getPaginatedData');
 
     /**
      * @return string

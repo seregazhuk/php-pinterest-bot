@@ -182,13 +182,13 @@ class Pins extends Provider
      *
      * @param string $pinId
      * @param int $limit
-     * @return Iterator|null
+     * @return Iterator|array
      */
     public function activity($pinId, $limit = 0)
     {
         $aggregatedPinId = $this->getAggregatedPinId($pinId);
 
-        if (is_null($aggregatedPinId)) return null;
+        if (is_null($aggregatedPinId)) return [];
 
         $data = ['aggregated_pin_data_id' => $aggregatedPinId];
 

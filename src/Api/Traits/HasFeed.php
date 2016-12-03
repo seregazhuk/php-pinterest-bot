@@ -2,6 +2,8 @@
 
 namespace seregazhuk\PinterestBot\Api\Traits;
 
+use seregazhuk\PinterestBot\Helpers\Pagination;
+
 trait HasFeed
 {
     /**
@@ -12,19 +14,9 @@ trait HasFeed
      */
     protected function getFeed($data, $feedUrl, $limit)
     {
-        $params = [
-            'data' => $data,
-            'url'  => $feedUrl
-        ];
-
-        return $this->getPaginatedResponse($params, $limit);
+        return (new Pagination($limit))
+            ->paginateOver(function($bookmarks = []) use ($data, $feedUrl) {
+                return $this->getPaginatedData($data, $feedUrl, $bookmarks);
+            });
     }
-
-    /**
-     * @param array $params
-     * @param int $limit
-     * @param string $method
-     * @return \Generator
-     */
-    abstract protected function getPaginatedResponse(array $params, $limit, $method = 'getPaginatedData');
 }

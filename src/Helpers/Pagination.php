@@ -2,15 +2,14 @@
 
 namespace seregazhuk\PinterestBot\Helpers;
 
-use seregazhuk\PinterestBot\Api\Providers\Provider;
 use seregazhuk\PinterestBot\Api\Contracts\PaginatedResponse;
 
 class Pagination
 {
     /**
-     * @var Provider
+     * @var int
      */
-    protected $provider;
+    protected $limit;
 
     /**
      * @var array
@@ -18,11 +17,11 @@ class Pagination
     protected $bookmarks = [];
 
     /**
-     * @param Provider $provider
+     * @param int $limit
      */
-    public function __construct(Provider $provider)
+    public function __construct($limit = 0)
     {
-        $this->provider = $provider;
+        $this->limit = $limit;
     }
 
     /**
@@ -31,17 +30,16 @@ class Pagination
      * To limit result batches, set $limit. Call function
      * of object to get data.
      *
-     * @param string $method
-     * @param array $params
-     * @param int $limit
+     * @param callable $callback
      * @return \Generator
      */
-    public function paginateOver($method, $params, $limit = 0)
+    public function paginateOver(callable $callback)
     {
         $resultsNum = 0;
         while (true) {
-            $response = $this->callProviderRequest($method, $params);
-            $results = $this->processProviderResponse($response);
+
+            $response = $callback($this->bookmarks);
+            $results = $this->processResponse($response);
 
             if (empty($results)) return;
 
@@ -49,7 +47,7 @@ class Pagination
                 $resultsNum++;
                 yield $result;
 
-                if ($this->reachesLimit($limit, $resultsNum) || $this->checkEndBookMarks()) {
+                if ($this->paginationFinished($resultsNum)) {
                     return;
                 }
             }
@@ -59,22 +57,10 @@ class Pagination
     }
 
     /**
-     * @param string $method
-     * @param array $params
-     * @return PaginatedResponse
-     */
-    protected function callProviderRequest($method, array $params)
-    {
-        $params['bookmarks'] = $this->bookmarks;
-
-        return call_user_func_array([$this->provider, $method], $params);
-    }
-
-    /**
      * @param PaginatedResponse $response
      * @return array
      */
-    protected function processProviderResponse(PaginatedResponse $response)
+    protected function processResponse(PaginatedResponse $response)
     {
         if ($response->hasResponseData()) {
             $this->bookmarks = $response->getBookmarks();
@@ -83,6 +69,15 @@ class Pagination
         }
 
         return [];
+    }
+
+    /**
+     * @param int $resultsNum
+     * @return bool
+     */
+    protected function paginationFinished($resultsNum)
+    {
+        return $this->reachesLimit($this->limit, $resultsNum) || $this->checkEndBookMarks();
     }
 
     /**

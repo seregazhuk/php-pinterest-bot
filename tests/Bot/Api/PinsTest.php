@@ -164,7 +164,7 @@ class PinsTest extends ProviderTest
     public function it_should_return_null_for_empty_activity()
     {
         $this->apiShouldReturnSuccess()
-            ->assertNull($this->provider->activity(1));
+            ->assertEmpty($this->provider->activity(1));
     }
 
     /** @test */

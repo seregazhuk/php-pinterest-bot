@@ -4,6 +4,7 @@ namespace seregazhuk\PinterestBot\Api\Providers;
 
 use Iterator;
 use seregazhuk\PinterestBot\Api\Response;
+use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\Traits\Followable;
 use seregazhuk\PinterestBot\Api\Traits\Searchable;
@@ -165,11 +166,9 @@ class Pinners extends Provider
      */
     protected function paginate($username, $url, $limit)
     {
-        $params = [
-            'data' => ['username' => $username],
-            'url'  => $url,
-        ];
-
-        return $this->getPaginatedResponse($params, $limit);
+        return (new Pagination($limit))
+            ->paginateOver(function($bookmarks = []) use ($username, $url) {
+                return $this->getPaginatedData(['username' => $username], $url, $bookmarks);
+            });
     }
 }
