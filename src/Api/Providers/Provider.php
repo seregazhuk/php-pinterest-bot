@@ -14,12 +14,6 @@ use seregazhuk\PinterestBot\Helpers\Pagination;
 abstract class Provider
 {
     /**
-     * @var bool
-     */
-    protected $returnData = true;
-
-
-    /**
      * List of methods that require logged status.
      *
      * @var array

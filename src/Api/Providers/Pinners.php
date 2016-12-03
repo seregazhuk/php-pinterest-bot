@@ -15,8 +15,8 @@ class Pinners extends Provider
 
     protected $loginRequiredFor = [
         'follow',
-        'unFollow',
         'block',
+        'unFollow',
         'blockById',
     ];
 

@@ -21,11 +21,11 @@ class Boards extends Provider
      * @var array
      */
     protected $loginRequiredFor = [
+        'send',
         'delete',
         'create',
         'follow',
         'unFollow',
-        'send',
     ];
 
     protected $searchScope  = 'boards';

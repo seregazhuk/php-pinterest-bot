@@ -17,15 +17,15 @@ class Pins extends Provider
 
     protected $loginRequiredFor = [
         'like',
-        'unLike',
-        'create',
-        'repin',
-        'copy',
-        'move',
-        'delete',
-        'activity',
         'feed',
         'send',
+        'copy',
+        'move',
+        'repin',
+        'unLike',
+        'create',
+        'delete',
+        'activity',
         'visualSimilar',
     ];
 
