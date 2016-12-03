@@ -2,10 +2,8 @@
 
 namespace seregazhuk\PinterestBot\Api\Providers;
 
-use Generator;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
-use seregazhuk\PinterestBot\Helpers\Pagination;
 
 /**
  * Class Provider.

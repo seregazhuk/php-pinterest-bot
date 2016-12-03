@@ -2,7 +2,6 @@
 
 namespace seregazhuk\PinterestBot\Api\Providers;
 
-use Generator;
 use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\Traits\Searchable;
@@ -75,9 +74,9 @@ class Boards extends Provider
      * @param int $boardId
      * @param int $limit
      *
-     * @return Generator
+     * @return Pagination
      */
-    public function pins($boardId, $limit = 0)
+    public function pins($boardId, $limit = Pagination::DEFAULT_LIMIT)
     {
         return (new Pagination($limit))
             ->paginateOver(function($bookmarks = []) use ($boardId) {

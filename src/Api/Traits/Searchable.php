@@ -79,9 +79,9 @@ trait Searchable
      * @param string $query
      * @param int $limit
      *
-     * @return \Iterator
+     * @return \Traversable
      */
-    public function search($query, $limit = 0)
+    public function search($query, $limit = Pagination::DEFAULT_LIMIT)
     {
         return (new Pagination($limit))
             ->paginateOver(function($bookmarks = []) use ($query) {

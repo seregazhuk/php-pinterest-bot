@@ -2,10 +2,21 @@
 
 namespace seregazhuk\PinterestBot\Helpers;
 
+use Traversable;
 use seregazhuk\PinterestBot\Api\Contracts\PaginatedResponse;
 
-class Pagination
+/**
+ * Class Pagination
+ * Iterate through results of Api function call. By
+ * default generator will return all pagination results.
+ * To limit results, set $limit.
+ *
+ * @package seregazhuk\PinterestBot\Helpers
+ */
+class Pagination implements \IteratorAggregate
 {
+    const DEFAULT_LIMIT = 50;
+
     /**
      * @var int
      */
@@ -17,6 +28,11 @@ class Pagination
     protected $bookmarks = [];
 
     /**
+     * @var callable
+     */
+    protected $callback;
+
+    /**
      * @param int $limit
      */
     public function __construct($limit = 0)
@@ -25,20 +41,26 @@ class Pagination
     }
 
     /**
-     * Iterate through results of Api function call. By
-     * default generator will return all pagination results.
-     * To limit results, set $limit.
-     *
      * @param callable $callback
-     * @return \Generator
+     * @return $this
      */
     public function paginateOver(callable $callback)
     {
-        $resultsNum = 0;
-        while (true) {
+        $this->callback = $callback;
 
-            $response = $callback($this->bookmarks);
-            $results = $this->processResponse($response);
+        return $this;
+    }
+
+    /**
+     * Retrieve an external iterator
+     * @return Traversable
+     */
+    public function getIterator()
+    {
+        $resultsNum = 0;
+
+        while (true) {
+            $results = $this->getCurrentResults();
 
             if (empty($results)) return;
 
@@ -53,6 +75,26 @@ class Pagination
         }
 
         return;
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray()
+    {
+        return iterator_to_array($this->getIterator());
+    }
+
+    /**
+     * @return array
+     */
+    protected function getCurrentResults()
+    {
+        $callback = $this->callback;
+
+        $response = $callback($this->bookmarks);
+
+        return $this->processResponse($response);
     }
 
     /**
@@ -74,20 +116,19 @@ class Pagination
      */
     protected function paginationFinished($resultsNum)
     {
-        return $this->reachesLimit($this->limit, $resultsNum) || $this->checkEndBookMarks();
+        return $this->reachesLimit($resultsNum) || $this->checkEndBookMarks();
     }
 
     /**
      * Check if we get results limit in pagination.
      *
-     * @param int $limit
      * @param int $resultsNum
      *
      * @return bool
      */
-    protected function reachesLimit($limit, $resultsNum)
+    protected function reachesLimit($resultsNum)
     {
-        return $limit && $resultsNum >= $limit;
+        return $this->limit && $resultsNum >= $this->limit;
     }
 
 

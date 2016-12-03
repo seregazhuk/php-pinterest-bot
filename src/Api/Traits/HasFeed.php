@@ -10,7 +10,7 @@ trait HasFeed
      * @param array $data
      * @param string $feedUrl
      * @param int $limit
-     * @return \Generator
+     * @return Pagination
      */
     protected function getFeed($data, $feedUrl, $limit)
     {

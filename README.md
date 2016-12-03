@@ -69,13 +69,18 @@ $boards = $bot->boards->forUser('yourUserName');
 $bot->pins->create('http://exmaple.com/image.jpg', $boards[0]['id'], 'pin description');
 ```
 
-*Note*: Some functions use pinterest navigation through results, for example, get user followers or search queries. 
-These functions return a generator object with api results. By default functions  return all pinterest results, 
-but you can pass a limit num as a second argument. For example, 
+*Note*: Some methods use pinterest navigation through results, for example, get user followers/following, pins
+likes/dislikes, search and other feed queries. This means that for every batch of results there will be a 
+request to Pinterest. These methods return an iterator object with Pinterest api results.
+By default functions return the first 50 results. But you can specify another limit num as a second argument. Or pass 0
+for no limit. For example, 
 ```php 
 foreach($bot->pins->search('query', 2) as $pin) {
 	// ...
 }
+
+// get all results as array
+$results = $bot->pins->search('query', 2)->toArray();
 ```
 will return only 2 pins of the search results.
 

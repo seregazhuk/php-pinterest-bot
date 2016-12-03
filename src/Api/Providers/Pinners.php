@@ -55,7 +55,7 @@ class Pinners extends Provider
      * @return Iterator
      * @throws WrongFollowingType
      */
-    public function following($username, $type = UrlBuilder::FOLLOWING_PEOPLE, $limit = 0)
+    public function following($username, $type = UrlBuilder::FOLLOWING_PEOPLE, $limit = Pagination::DEFAULT_LIMIT)
     {
         $followingUrl = UrlBuilder::getFollowingUrlByType($type);
 
@@ -74,7 +74,7 @@ class Pinners extends Provider
      * @param int $limit
      * @return Iterator
      */
-    public function followingPeople($username, $limit = 0)
+    public function followingPeople($username, $limit = Pagination::DEFAULT_LIMIT)
     {
         return $this->following($username, UrlBuilder::FOLLOWING_PEOPLE, $limit);
     }
@@ -87,7 +87,7 @@ class Pinners extends Provider
      * @param int $limit
      * @return Iterator
      */
-    public function followingBoards($username, $limit = 0)
+    public function followingBoards($username, $limit = Pagination::DEFAULT_LIMIT)
     {
         return $this->following($username, UrlBuilder::FOLLOWING_BOARDS, $limit);
     }
@@ -101,7 +101,7 @@ class Pinners extends Provider
      * @return Iterator
      * @throws WrongFollowingType
      */
-    public function followingInterests($username, $limit = 0)
+    public function followingInterests($username, $limit = Pagination::DEFAULT_LIMIT)
     {
         return $this->following($username, UrlBuilder::FOLLOWING_INTERESTS, $limit);
     }
@@ -114,7 +114,7 @@ class Pinners extends Provider
      *
      * @return Iterator
      */
-    public function pins($username, $limit = 0)
+    public function pins($username, $limit = Pagination::DEFAULT_LIMIT)
     {
         return $this->paginate(
             $username, UrlBuilder::RESOURCE_USER_PINS, $limit
@@ -128,7 +128,7 @@ class Pinners extends Provider
      * @param int $limit
      * @return Iterator
      */
-    public function likes($username, $limit = 0)
+    public function likes($username, $limit = Pagination::DEFAULT_LIMIT)
     {
         return $this->paginate(
             $username, UrlBuilder::RESOURCE_USER_LIKES, $limit
@@ -165,7 +165,7 @@ class Pinners extends Provider
      * @param string $url
      * @param int $limit
      *
-     * @return Iterator
+     * @return \Traversable
      */
     protected function paginate($username, $url, $limit)
     {
