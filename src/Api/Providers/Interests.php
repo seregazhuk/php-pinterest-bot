@@ -13,6 +13,9 @@ class Interests extends Provider
 
     protected $feedUrl = UrlBuilder::RESOURCE_GET_CATEGORY_FEED;
 
+    /**
+     * @var array
+     */
     protected $loginRequiredFor = [
         'main',
     ];

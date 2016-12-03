@@ -14,6 +14,9 @@ class Pinners extends Provider
 {
     use Searchable, Followable;
 
+    /**
+     * @var array
+     */
     protected $loginRequiredFor = [
         'follow',
         'block',

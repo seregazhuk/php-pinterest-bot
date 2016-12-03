@@ -15,6 +15,9 @@ class Pins extends Provider
 {
     use Searchable, CanBeDeleted, UploadsImages, HasFeed, SendsMessages;
 
+    /**
+     * @var array
+     */
     protected $loginRequiredFor = [
         'like',
         'feed',
