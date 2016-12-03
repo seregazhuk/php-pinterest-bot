@@ -7,9 +7,9 @@ use seregazhuk\PinterestBot\Api\Contracts\PaginatedResponse;
 
 /**
  * Class Pagination
- * Iterate through results of Api function call. By
- * default generator will return all pagination results.
- * To limit results, set $limit.
+ * Iterate through results of Pinterest Api. By default iterator will return 50 first
+ * pagination results. To change this behaviour specify another limit as the
+ * constructor param. For no limits specify zero.
  *
  * @package seregazhuk\PinterestBot\Helpers
  */
@@ -35,12 +35,15 @@ class Pagination implements \IteratorAggregate
     /**
      * @param int $limit
      */
-    public function __construct($limit = 0)
+    public function __construct($limit = self::DEFAULT_LIMIT)
     {
         $this->limit = $limit;
     }
 
     /**
+     * Sets a callback to make requests. Should be a closure
+     * that accepts a $bookmarks array as an argument.
+     *
      * @param callable $callback
      * @return $this
      */
