@@ -27,8 +27,7 @@ class Pagination
     /**
      * Iterate through results of Api function call. By
      * default generator will return all pagination results.
-     * To limit result batches, set $limit. Call function
-     * of object to get data.
+     * To limit results, set $limit.
      *
      * @param callable $callback
      * @return \Generator
@@ -79,7 +78,7 @@ class Pagination
     }
 
     /**
-     * Check if we get batches limit in pagination.
+     * Check if we get results limit in pagination.
      *
      * @param int $limit
      * @param int $resultsNum
@@ -93,7 +92,8 @@ class Pagination
 
 
     /**
-     * Checks for -end- substring in bookmarks
+     * Checks for -end- substring in bookmarks. This is pinterest sign of
+     * the finished pagination.
      *
      * @return bool
      */
