@@ -147,6 +147,13 @@ $bot->auth->registerBusiness('youremail@gmail.com', 'password', 'BusinessName');
 $bot->auth->registerBusiness('youremail@gmail.com', 'password', 'BusinessName', 'http://yoursite.com');
 ```
 
+After registration you will receive a confirmation email. You can pass a link from this email to `confirmEmail` 
+method:
+
+```php
+$bot->auth->confirmEmail($linkFromEmail);
+```
+
 Convert your account to a business one. Requires log in. The last parameter with website url is *optional*:
 
 ```php

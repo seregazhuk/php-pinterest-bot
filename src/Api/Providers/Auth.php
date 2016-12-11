@@ -103,6 +103,15 @@ class Auth extends Provider
     }
 
     /**
+     * @param string $link
+     * @return array|bool
+     */
+    public function confirmEmail($link)
+    {
+        return $this->execGetRequest([], $link);
+    }
+
+    /**
      * Validates password and login.
      *
      * @param string $username

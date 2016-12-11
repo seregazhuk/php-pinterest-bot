@@ -33,6 +33,11 @@ class Pagination implements \IteratorAggregate
     protected $callback;
 
     /**
+     * @var int
+     */
+    protected $offset;
+
+    /**
      * @param int $limit
      */
     public function __construct($limit = self::DEFAULT_LIMIT)
@@ -78,6 +83,17 @@ class Pagination implements \IteratorAggregate
         }
 
         return;
+    }
+
+    /**
+     * @param int $offset
+     * @return $this
+     */
+    public function skip($offset)
+    {
+        $this->offset = $offset;
+
+        return $this;
     }
 
     /**
