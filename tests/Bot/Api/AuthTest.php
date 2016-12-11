@@ -27,10 +27,10 @@ class AuthTest extends ProviderTest
      */
     public function it_should_register_new_user()
     {
-        $this->setTokenFromCookiesExpectation(2);
+        $this->setTokenFromCookiesExpectation();
         $this->setProperty('request', $this->request);
 
-        $this->apiShouldReturnSuccess(3)
+        $this->apiShouldReturnSuccess(6)
             ->assertTrue($this->provider->register('email@email.com', 'test', 'name'));
     }
 
@@ -42,7 +42,7 @@ class AuthTest extends ProviderTest
         $this->setTokenFromCookiesExpectation();
         $this->setProperty('request', $this->request);
 
-        $this->apiShouldReturnError(2)
+        $this->apiShouldReturnError(3)
             ->assertFalse($this->provider->register('email@email.com', 'test', 'name'));
     }
 
@@ -51,10 +51,10 @@ class AuthTest extends ProviderTest
      */
     public function it_should_register_business_account()
     {
-        $this->setTokenFromCookiesExpectation(2);
+        $this->setTokenFromCookiesExpectation();
         $this->setProperty('request', $this->request);
 
-        $this->apiShouldReturnSuccess(3)
+        $this->apiShouldReturnSuccess(6)
             ->assertTrue($this->provider->registerBusiness('email@email.com', 'test', 'name'));
     }
 
@@ -66,7 +66,7 @@ class AuthTest extends ProviderTest
         $this->setTokenFromCookiesExpectation();
         $this->setProperty('request', $this->request);
 
-        $this->apiShouldReturnError(2)
+        $this->apiShouldReturnError(3)
             ->assertFalse($this->provider->registerBusiness('email@email.com', 'test', 'name'));
     }
 

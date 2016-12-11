@@ -2,6 +2,7 @@
 
 namespace seregazhuk\PinterestBot\Api\Providers;
 
+use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 
 class Auth extends Provider
@@ -64,6 +65,7 @@ class Auth extends Provider
             "password"   => $password,
             "country"    => $country,
             "first_name" => $name,
+            "gender"     => "male",
             "container"  => 'home_page',
         ];
 
@@ -114,11 +116,36 @@ class Auth extends Provider
     }
 
     /**
+     * @return bool|Response
+     */
+    protected function sendEmailVerificationRequest()
+    {
+        $actions = [
+            ['name' => 'unauth.signup_step_1.completed']
+        ];
+
+        return $this->sendRegisterActionRequest($actions);
+    }
+
+    /**
+     * @param array $actions
+     * @return bool|Response
+     */
+    protected function sendRegisterActionRequest($actions = [])
+    {
+        return $this->execPostRequest(
+            ['actions' => $actions],
+            UrlBuilder::RESOURCE_UPDATE_REGISTRATION_TRACK,
+            true
+        );
+    }
+
+    /**
      * @return bool
      */
     protected function completeRegistration()
     {
-        $this->request->setTokenFromCookies();
+        if(!$this->sendRegisterActions()) return false;
 
         return $this->execPostRequest(
             ['placed_experience_id' => self::REGISTRATION_COMPLETE_EXPERIENCE_ID],
@@ -135,9 +162,9 @@ class Auth extends Provider
         $this->visitMainPage();
         $this->request->setTokenFromCookies();
 
-        if (!$this->execPostRequest($data, UrlBuilder::RESOURCE_CREATE_REGISTER)) {
-            return false;
-        }
+        if(!$this->sendEmailVerificationRequest()) return false;
+
+        if(!$this->execPostRequest($data, UrlBuilder::RESOURCE_CREATE_REGISTER)) return false;
 
         return $this->completeRegistration();
     }
@@ -186,5 +213,26 @@ class Auth extends Provider
     protected function getProfile()
     {
         return $this->execGetRequest([], UrlBuilder::RESOURCE_GET_USER_SETTINGS);
+    }
+
+    /**
+     * @return bool
+     */
+    protected function sendRegisterActions()
+    {
+        $actions = [
+            ["name" => "multi_step_step_2_complete"],
+            ["name" => "signup_home_page"],
+            ["name" => "signup_referrer.other"],
+            ["name" => "signup_referrer_module.unauth_home_react_page"],
+            ["name" => "unauth.signup_step_2.completed"],
+            ["name" => "setting_new_window_location"],
+        ];
+
+        if(!$this->sendRegisterActionRequest($actions)) return false;
+
+        if(!$this->sendRegisterActionRequest()) return false;
+
+        return true;
     }
 }
