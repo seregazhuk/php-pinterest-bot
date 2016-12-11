@@ -78,11 +78,21 @@ for no limit. For example,
 foreach($bot->pins->search('query', 2) as $pin) {
 	// ...
 }
+```
 
+will return only 2 pins of the search results.
+
+To receive all results at once as array:
+```php
 // get all results as array
 $results = $bot->pins->search('query', 2)->toArray();
 ```
-will return only 2 pins of the search results.
+
+Skip some results:
+```php
+// skip first 50 results
+$results = $bot->pins->search('query', 2)->skip(50)->get();
+```
 
 ## Account
 

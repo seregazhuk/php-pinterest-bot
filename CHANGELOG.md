@@ -5,7 +5,9 @@ All notable changes to this project will be documented in this file.
 ## [5.1.2] - 2016-12-11
 ### Fixed:
  - Registration now sends confirmation emails. 
-
+ 
+### Added:
+ - *Skip* method to pagination.
 
 ## [5.1.1] - 2016-12-03
 ### Added:

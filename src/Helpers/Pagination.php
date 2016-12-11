@@ -60,6 +60,15 @@ class Pagination implements \IteratorAggregate
     }
 
     /**
+     * Syntax sugar for getIterator method
+     * @return Traversable
+     */
+    public function get()
+    {
+        return $this->getIterator();
+    }
+
+    /**
      * Retrieve an external iterator
      * @return Traversable
      */
@@ -74,15 +83,12 @@ class Pagination implements \IteratorAggregate
 
             foreach ($results as $result) {
                 $resultsNum++;
-                yield $result;
 
-                if ($this->paginationFinished($resultsNum)) {
-                    return;
-                }
+                if($resultsNum > $this->offset) yield $result;
+
+                if ($this->paginationFinished($resultsNum)) return;
             }
         }
-
-        return;
     }
 
     /**
