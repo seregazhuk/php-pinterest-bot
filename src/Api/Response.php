@@ -120,7 +120,7 @@ class Response implements PaginatedResponse
      */
     public function isOk()
     {
-        return !$this->hasErrors() && !$this->isEmpty();
+        return !$this->hasErrors();
     }
 
     /**
@@ -131,7 +131,7 @@ class Response implements PaginatedResponse
      */
     public function hasErrors()
     {
-        return !is_null($this->lastError);
+        return !empty($this->lastError);
     }
 
     /**

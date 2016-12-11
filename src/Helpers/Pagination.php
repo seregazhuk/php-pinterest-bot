@@ -33,6 +33,11 @@ class Pagination implements \IteratorAggregate
     protected $callback;
 
     /**
+     * @var int
+     */
+    protected $offset;
+
+    /**
      * @param int $limit
      */
     public function __construct($limit = self::DEFAULT_LIMIT)
@@ -55,6 +60,15 @@ class Pagination implements \IteratorAggregate
     }
 
     /**
+     * Syntax sugar for getIterator method
+     * @return Traversable
+     */
+    public function get()
+    {
+        return $this->getIterator();
+    }
+
+    /**
      * Retrieve an external iterator
      * @return Traversable
      */
@@ -69,15 +83,23 @@ class Pagination implements \IteratorAggregate
 
             foreach ($results as $result) {
                 $resultsNum++;
-                yield $result;
 
-                if ($this->paginationFinished($resultsNum)) {
-                    return;
-                }
+                if($resultsNum > $this->offset) yield $result;
+
+                if ($this->paginationFinished($resultsNum)) return;
             }
         }
+    }
 
-        return;
+    /**
+     * @param int $offset
+     * @return $this
+     */
+    public function skip($offset)
+    {
+        $this->offset = $offset;
+
+        return $this;
     }
 
     /**

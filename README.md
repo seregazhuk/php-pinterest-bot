@@ -78,11 +78,21 @@ for no limit. For example,
 foreach($bot->pins->search('query', 2) as $pin) {
 	// ...
 }
+```
 
+will return only 2 pins of the search results.
+
+To receive all results at once as array:
+```php
 // get all results as array
 $results = $bot->pins->search('query', 2)->toArray();
 ```
-will return only 2 pins of the search results.
+
+Skip some results:
+```php
+// skip first 50 results
+$results = $bot->pins->search('query', 2)->skip(50)->get();
+```
 
 ## Account
 
@@ -145,6 +155,13 @@ Register a business account. The last parameter with website url is *optional*:
 $bot->auth->registerBusiness('youremail@gmail.com', 'password', 'BusinessName');
 
 $bot->auth->registerBusiness('youremail@gmail.com', 'password', 'BusinessName', 'http://yoursite.com');
+```
+
+After registration you will receive a confirmation email. You can pass a link from this email to `confirmEmail` 
+method:
+
+```php
+$bot->auth->confirmEmail($linkFromEmail);
 ```
 
 Convert your account to a business one. Requires log in. The last parameter with website url is *optional*:
