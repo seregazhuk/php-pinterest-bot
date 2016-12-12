@@ -1,6 +1,12 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [5.1.3] - 2016-12-12
+### Fixed:
+ - Pagination offset.
+ 
+### Added:
+ - *take* method to pagination to set limits.
 
 ## [5.1.2] - 2016-12-11
 ### Fixed:

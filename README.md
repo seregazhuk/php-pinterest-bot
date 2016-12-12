@@ -75,7 +75,7 @@ request to Pinterest. These methods return an iterator object with Pinterest api
 By default functions return the first 50 results. But you can specify another limit num as a second argument. Or pass 0
 for no limit. For example, 
 ```php 
-foreach($bot->pins->search('query', 2) as $pin) {
+foreach($bot->pins->search('query', 20) as $pin) {
 	// ...
 }
 ```
@@ -85,14 +85,26 @@ will return only 2 pins of the search results.
 To receive all results at once as array:
 ```php
 // get all results as array
-$results = $bot->pins->search('query', 2)->toArray();
+$results = $bot->pins->search('query', 20)->toArray();
 ```
 
-Skip some results:
+Limit and offset in results:
 ```php
 // skip first 50 results
-$results = $bot->pins->search('query', 2)->skip(50)->get();
+$results = $bot->pins
+    ->search('query')
+    ->skip(50)
+    ->get();
+
+// skip first 50 results, and then take 20 
+$results = $bot->pins
+    ->search('query')
+    ->take(20)
+    ->skip(50)
+    ->get();
 ```
+
+To get all results pass `0` in `take()` method.
 
 ## Account
 

@@ -75,6 +75,7 @@ class Pagination implements \IteratorAggregate
     public function getIterator()
     {
         $resultsNum = 0;
+        $processed = 0;
 
         while (true) {
             $results = $this->getCurrentResults();
@@ -82,9 +83,12 @@ class Pagination implements \IteratorAggregate
             if (empty($results)) return;
 
             foreach ($results as $result) {
-                $resultsNum++;
+                $processed++;
 
-                if($resultsNum > $this->offset) yield $result;
+                if($processed > $this->offset) {
+                    yield $result;
+                    $resultsNum++;
+                }
 
                 if ($this->paginationFinished($resultsNum)) return;
             }
@@ -98,6 +102,17 @@ class Pagination implements \IteratorAggregate
     public function skip($offset)
     {
         $this->offset = $offset;
+
+        return $this;
+    }
+
+    /**
+     * @param int $limit
+     * @return $this
+     */
+    public function take($limit)
+    {
+        $this->limit = $limit;
 
         return $this;
     }
