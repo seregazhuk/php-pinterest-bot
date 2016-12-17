@@ -2,9 +2,16 @@
 
 namespace seregazhuk\PinterestBot\Api\Traits;
 
-use seregazhuk\PinterestBot\Exceptions\InvalidRequest;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
+use seregazhuk\PinterestBot\Exceptions\InvalidRequest;
 
+/**
+ * Trait SendsMessages
+ *
+ * @property $messageEntityName
+ *
+ * @package seregazhuk\PinterestBot\Api\Traits
+ */
 trait SendsMessages
 {
     use HandlesRequest;
@@ -34,17 +41,68 @@ trait SendsMessages
 
     /**
      * @param string $text
-     * @param string $pinId
-     * @param string $boardId
+     * @param string $entityId
      * @return array
      */
-    protected function buildMessageData($text = null, $pinId = null, $boardId = null)
+    protected function buildMessageData($text = null, $entityId = null)
     {
+        $entityName = $this->getMessageEntityName();
+
         return [
-            'pin'   => $pinId,
-            'text'  => $text,
-            'board' => $boardId,
+            $entityName => $entityId,
+            'text'      => $text,
         ];
+    }
+
+    /**
+     * Send item with message or by email.
+     *
+     * @param string $entityId
+     * @param string $text
+     * @param array|string $userIds
+     * @param array|string $emails
+     * @return bool
+     */
+    public function send($entityId, $text, $userIds, $emails)
+    {
+        $messageData = $this->buildMessageData($text, $entityId);
+
+        return $this->callSendMessage($userIds, $emails, $messageData);
+    }
+
+    /**
+     * Send item with messages.
+     * @codeCoverageIgnore
+     * @param int $entityId
+     * @param string $text
+     * @param array|string $userIds
+     * @return bool
+     */
+    public function sendWithMessage($entityId, $text, $userIds)
+    {
+        return $this->send($entityId, $text, $userIds, []);
+    }
+
+    /**
+     * Send entity with emails.
+     *
+     * @codeCoverageIgnore
+     * @param int $entityId
+     * @param string $text
+     * @param array|string $emails
+     * @return bool
+     */
+    public function sendWithEmail($entityId, $text, $emails)
+    {
+        return $this->send($entityId, $text, [], $emails);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getMessageEntityName()
+    {
+        return property_exists($this, 'messageEntityName') ? $this->messageEntityName : '';
     }
 
     /**
