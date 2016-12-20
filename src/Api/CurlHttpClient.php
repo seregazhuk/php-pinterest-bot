@@ -326,15 +326,4 @@ class CurlHttpClient implements HttpClient
     {
         return $this->useProxy($host, $port, CURLPROXY_SOCKS5, $auth);
     }
-
-    /**
-     * @param bool $debug
-     * @return HttpClient
-     */
-    public function setDebug($debug)
-    {
-        $this->debug = $debug;
-
-        return $this;
-    }
 }

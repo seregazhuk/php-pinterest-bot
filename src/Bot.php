@@ -84,7 +84,7 @@ class Bot
         $clientInfo = $this->providersContainer->getClientInfo();
 
         if(is_null($clientInfo) || $reload) {
-            $this->auth->visitMainPage();
+            $this->auth->visitPage();
         }
 
         return $this->providersContainer->getClientInfo();
