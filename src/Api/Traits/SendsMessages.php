@@ -8,7 +8,7 @@ use seregazhuk\PinterestBot\Exceptions\InvalidRequest;
 /**
  * Trait SendsMessages
  *
- * @property $messageEntityName
+ * @property string $messageEntityName
  *
  * @package seregazhuk\PinterestBot\Api\Traits
  */
