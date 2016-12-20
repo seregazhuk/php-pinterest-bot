@@ -4,9 +4,12 @@ namespace seregazhuk\PinterestBot\Api\Providers;
 
 use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
+use seregazhuk\PinterestBot\Api\Traits\SendsRegisterActions;
 
 class Auth extends Provider
 {
+    use SendsRegisterActions;
+
     /**
      * @var array
      */
@@ -87,11 +90,11 @@ class Auth extends Provider
             "email"         => $email,
             "password"      => $password,
             "website_url"   => $website,
-            "business_name" => $businessName,
             "account_type"  => self::ACCOUNT_TYPE_OTHER,
+            "business_name" => $businessName,
         ];
 
-        return $this->makeRegisterCall($data);
+        return $this->makeBusinessRegisterCall($data);
     }
 
     /**
@@ -108,7 +111,7 @@ class Auth extends Provider
      */
     public function confirmEmail($link)
     {
-        return $this->execGetRequest([], $link);
+        return $this->visitPage($link);
     }
 
     /**
@@ -127,7 +130,7 @@ class Auth extends Provider
     /**
      * @return bool|Response
      */
-    protected function sendEmailVerificationRequest()
+    protected function sendEmailVerificationAction()
     {
         $actions = [
             ['name' => 'unauth.signup_step_1.completed']
@@ -137,25 +140,10 @@ class Auth extends Provider
     }
 
     /**
-     * @param array $actions
-     * @return bool|Response
-     */
-    protected function sendRegisterActionRequest($actions = [])
-    {
-        return $this->execPostRequest(
-            ['actions' => $actions],
-            UrlBuilder::RESOURCE_UPDATE_REGISTRATION_TRACK,
-            true
-        );
-    }
-
-    /**
      * @return bool
      */
     protected function completeRegistration()
     {
-        if(!$this->sendRegisterActions()) return false;
-
         return $this->execPostRequest(
             ['placed_experience_id' => self::REGISTRATION_COMPLETE_EXPERIENCE_ID],
             UrlBuilder::RESOURCE_REGISTRATION_COMPLETE
@@ -168,12 +156,30 @@ class Auth extends Provider
      */
     protected function makeRegisterCall($data)
     {
-        $this->visitMainPage();
-        $this->request->setTokenFromCookies();
+        $this->visitPage();
 
-        if(!$this->sendEmailVerificationRequest()) return false;
+        if(!$this->sendEmailVerificationAction()) return false;
 
         if(!$this->execPostRequest($data, UrlBuilder::RESOURCE_CREATE_REGISTER)) return false;
+
+        if(!$this->sendPlainRegistrationActions()) return false;
+
+        return $this->completeRegistration();
+    }
+
+    /**
+     * @param array $data
+     * @return bool|mixed
+     */
+    protected function makeBusinessRegisterCall($data)
+    {
+        $this->visitPage('business/create/');
+
+        if(!$this->sendBusinessRegistrationInitActions()) return false;
+
+        if(!$this->execPostRequest($data, UrlBuilder::RESOURCE_CREATE_REGISTER)) return false;
+
+        if(!$this->sendBusinessRegistrationFinishActions()) return false;
 
         return $this->completeRegistration();
     }
@@ -209,11 +215,6 @@ class Auth extends Provider
     protected function processAutoLogin($username)
     {
         return $this->request->autoLogin($username) && $this->getProfile();
-    }
-
-    public function visitMainPage()
-    {
-        $this->execGetRequest([], '');
     }
 
     /**

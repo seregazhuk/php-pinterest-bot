@@ -178,4 +178,12 @@ class Response implements PaginatedResponse
     {
         return $this->clientInfo;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getRawData()
+    {
+        return $this->data;
+    }
 }

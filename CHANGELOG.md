@@ -1,6 +1,15 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [5.1.4] - 2016-12-20
+### Fixed:
+ - Pagination issue with only first result.
+ - Request headers.
+ 
+### Added:
+ - *getRawData()* method to Response to get the original response data from Pinterest.
+ - More detailed registration process.
+
 ## [5.1.3] - 2016-12-12
 ### Fixed:
  - Pagination offset.
