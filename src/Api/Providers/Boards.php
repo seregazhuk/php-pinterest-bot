@@ -36,7 +36,9 @@ class Boards extends Provider
     protected $unFollowUrl  = UrlBuilder::RESOURCE_UNFOLLOW_BOARD;
     protected $deleteUrl    = UrlBuilder::RESOURCE_DELETE_BOARD;
     protected $followersUrl = UrlBuilder::RESOURCE_BOARD_FOLLOWERS;
-    
+
+    protected $messageEntityName = 'board';
+
     /**
      * Get boards for user by username.
      *
@@ -165,48 +167,5 @@ class Boards extends Provider
     public function titleSuggestionsFor($pinId)
     {
         return $this->execGetRequest(['pin_id' => $pinId], UrlBuilder::RESOURCE_TITLE_SUGGESTIONS);
-    }
-
-    /**
-     * Send board with message or by email.
-     *
-     * @param int $boardId
-     * @param string $text
-     * @param array|string $userIds
-     * @param array|string $emails
-     * @return bool
-     */
-    public function send($boardId, $text, $userIds, $emails)
-    {
-        $messageData = $this->buildMessageData($text, $boardId);
-
-        return $this->callSendMessage($userIds, $emails, $messageData);
-    }
-
-    /**
-     * Send board with messages.
-     * @codeCoverageIgnore
-     * @param int $boardId
-     * @param string $text
-     * @param array|string $userIds
-     * @return bool
-     */
-    public function sendWithMessage($boardId, $text, $userIds)
-    {
-        return $this->send($boardId, $text, $userIds, []);
-    }
-
-    /**
-     * Send board with emails.
-     *
-     * @codeCoverageIgnore
-     * @param int $boardId
-     * @param string $text
-     * @param array|string $emails
-     * @return bool
-     */
-    public function sendWithEmail($boardId, $text, $emails)
-    {
-        return $this->send($boardId, $text, [], $emails);
     }
 }

@@ -17,7 +17,7 @@ class CurlHttpClient implements HttpClient
      * @var array
      */
     protected $options = [
-        CURLOPT_USERAGENT => 'Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0'
+        CURLOPT_USERAGENT => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.95 Safari/537.36'
     ];
 
     /**
@@ -133,14 +133,15 @@ class CurlHttpClient implements HttpClient
     protected function getDefaultHttpOptions()
     {
         return [
+            CURLOPT_REFERER        => UrlBuilder::URL_BASE,
+            CURLOPT_ENCODING       => 'gzip,deflate, br',
+            CURLOPT_FRESH_CONNECT => true,
+            CURLOPT_COOKIEJAR      => $this->cookieJar,
+            CURLOPT_HTTPHEADER     => $this->headers,
+            CURLOPT_COOKIEFILE     => $this->cookieJar,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_SSL_VERIFYPEER => false,
             CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_ENCODING       => 'gzip,deflate',
-            CURLOPT_HTTPHEADER     => $this->headers,
-            CURLOPT_REFERER        => UrlBuilder::URL_BASE,
-            CURLOPT_COOKIEFILE     => $this->cookieJar,
-            CURLOPT_COOKIEJAR      => $this->cookieJar,
         ];
     }
 
@@ -324,5 +325,16 @@ class CurlHttpClient implements HttpClient
     public function useSocksProxy($host, $port, $auth = null)
     {
         return $this->useProxy($host, $port, CURLPROXY_SOCKS5, $auth);
+    }
+
+    /**
+     * @param bool $debug
+     * @return HttpClient
+     */
+    public function setDebug($debug)
+    {
+        $this->debug = $debug;
+
+        return $this;
     }
 }

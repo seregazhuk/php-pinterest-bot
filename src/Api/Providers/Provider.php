@@ -146,6 +146,16 @@ abstract class Provider
     }
 
     /**
+     * Simply makes GET request to some url.
+     * @param string $url
+     * @return array|bool
+     */
+    public function visitPage($url = '')
+    {
+        return $this->execGetRequest([], $url);
+    }
+
+    /**
      * @param string $res
      * @return Response
      */

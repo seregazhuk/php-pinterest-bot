@@ -83,6 +83,7 @@ trait Followable
         }
 
         $post = ['data' => json_encode($dataJson, JSON_FORCE_OBJECT)];
+
         return UrlBuilder::buildRequestString($post);
     }
 

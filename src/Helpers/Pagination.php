@@ -2,8 +2,8 @@
 
 namespace seregazhuk\PinterestBot\Helpers;
 
-use Traversable;
 use seregazhuk\PinterestBot\Api\Contracts\PaginatedResponse;
+use Traversable;
 
 /**
  * Class Pagination
@@ -90,8 +90,10 @@ class Pagination implements \IteratorAggregate
                     $resultsNum++;
                 }
 
-                if ($this->paginationFinished($resultsNum)) return;
+                if ($this->reachesLimit($resultsNum)) return;
             }
+
+            if ($this->checkEndBookMarks()) return;
         }
     }
 
@@ -148,15 +150,6 @@ class Pagination implements \IteratorAggregate
         $this->bookmarks = $response->getBookmarks();
 
         return $response->getResponseData();
-    }
-
-    /**
-     * @param int $resultsNum
-     * @return bool
-     */
-    protected function paginationFinished($resultsNum)
-    {
-        return $this->reachesLimit($resultsNum) || $this->checkEndBookMarks();
     }
 
     /**

@@ -27,7 +27,6 @@ class AuthTest extends ProviderTest
      */
     public function it_should_register_new_user()
     {
-        $this->setTokenFromCookiesExpectation();
         $this->setProperty('request', $this->request);
 
         $this->apiShouldReturnSuccess(6)
@@ -39,10 +38,9 @@ class AuthTest extends ProviderTest
      */
     public function it_returns_false_when_error_in_registration()
     {
-        $this->setTokenFromCookiesExpectation();
         $this->setProperty('request', $this->request);
 
-        $this->apiShouldReturnError(3)
+        $this->apiShouldReturnError(2)
             ->assertFalse($this->provider->register('email@email.com', 'test', 'name'));
     }
 
@@ -51,7 +49,6 @@ class AuthTest extends ProviderTest
      */
     public function it_should_register_business_account()
     {
-        $this->setTokenFromCookiesExpectation();
         $this->setProperty('request', $this->request);
 
         $this->apiShouldReturnSuccess(6)
@@ -63,10 +60,9 @@ class AuthTest extends ProviderTest
      */
     public function it_should_return_false_when_error_in_business_registration()
     {
-        $this->setTokenFromCookiesExpectation();
         $this->setProperty('request', $this->request);
 
-        $this->apiShouldReturnError(3)
+        $this->apiShouldReturnError(2)
             ->assertFalse($this->provider->registerBusiness('email@email.com', 'test', 'name'));
     }
 
@@ -96,13 +92,9 @@ class AuthTest extends ProviderTest
             ->apiShouldReturnSuccess();
 
         $this->request->shouldReceive('getHttpClient')
-            ->andReturn(new CurlHttpClient(new Cookies()));
-
-        $this->request
+            ->andReturn(new CurlHttpClient(new Cookies()))
             ->shouldReceive('clearToken')
-            ->once();
-
-        $this->request
+            ->once()
             ->shouldReceive('login')
             ->once();
 
@@ -136,16 +128,6 @@ class AuthTest extends ProviderTest
     {
         $this->setIsLoggedInExpectation(true);
         $this->assertTrue($this->provider->isLoggedIn());
-    }
-    /**
-     * @param int $times
-     */
-    protected function setTokenFromCookiesExpectation($times = 1)
-    {
-        $this->request
-            ->shouldReceive('setTokenFromCookies')
-            ->times($times)
-            ->andReturnSelf();
     }
 
     /**

@@ -57,7 +57,7 @@ class Request
         'DNT: 1',
         'X-Pinterest-AppState: active',
         'X-NEW-APP: 1',
-        'X-APP-VERSION: aa0e0f3',
+        'X-APP-VERSION: d2d8d14',
         'X-Requested-With: XMLHttpRequest',
     ];
 
@@ -101,6 +101,8 @@ class Request
             ->httpClient
             ->execute($url, $postString, $headers);
 
+        $this->setTokenFromCookies();
+
         $this->filePathToUpload = null;
 
         return $result;
@@ -141,7 +143,7 @@ class Request
     {
         $this->httpClient->loadCookies($username);
 
-        if(!$this->httpClient->cookie('_auth')) {
+        if (!$this->httpClient->cookie('_auth')) {
             return false;
         }
 
@@ -160,6 +162,8 @@ class Request
         if(!empty($this->csrfToken)) {
             $this->loggedIn = true;
         }
+
+        return $this;
     }
 
     /**
@@ -229,9 +233,11 @@ class Request
      *
      * @return $this
      */
-    public function setTokenFromCookies()
+    protected function setTokenFromCookies()
     {
-        $this->csrfToken = $this->httpClient->cookie('csrftoken');
+        if($token = $this->httpClient->cookie('csrftoken')) {
+            $this->csrfToken = $token;
+        }
 
         return $this;
     }
@@ -246,6 +252,7 @@ class Request
             $this->getContentTypeHeader(),
             [
                 'Host: ' . UrlBuilder::HOST,
+                'Origin: ' . UrlBuilder::URL_BASE,
                 'X-CSRFToken: ' . $this->csrfToken
             ]
         );

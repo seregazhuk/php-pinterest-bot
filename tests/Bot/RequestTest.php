@@ -5,6 +5,7 @@ namespace seregazhuk\tests\Bot;
 use Mockery;
 use Mockery\Mock;
 use ReflectionClass;
+use Mockery\MockInterface;
 use PHPUnit_Framework_TestCase;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\tests\Helpers\CookiesHelper;
@@ -143,7 +144,10 @@ class RequestTest extends PHPUnit_Framework_TestCase
     /** @test */
     public function it_should_create_post_data_for_upload()
     {
-        $http = $this->getHttpObject();
+        $http = $this->getHttpObject()
+            ->shouldReceive('cookie')
+            ->getMock();
+
         $image = 'image.jpg';
         file_put_contents($image, '');
 
@@ -173,13 +177,11 @@ class RequestTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return Mock|HttpClient
+     * @return MockInterface|HttpClient
      */
     protected function getHttpObject()
     {
-        $mock = Mockery::mock(HttpClient::class);
-
-        return $mock;
+        return Mockery::mock(HttpClient::class);
     }
 
     /**

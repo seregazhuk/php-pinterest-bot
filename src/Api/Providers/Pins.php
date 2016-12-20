@@ -36,6 +36,8 @@ class Pins extends Provider
     protected $searchScope  = 'pins';
     protected $entityIdName = 'id';
 
+    protected $messageEntityName = 'pin';
+
     protected $deleteUrl = UrlBuilder::RESOURCE_DELETE_PIN;
     
     /**
@@ -244,50 +246,6 @@ class Pins extends Provider
     public function deleteFromBoard($pinIds, $boardId)
     {
         return $this->bulkEdit($pinIds, $boardId, UrlBuilder::RESOURCE_BULK_DELETE);
-    }
-
-    /**
-     * Send pin with message or by email.
-     *
-     * @param string $pinId
-     * @param string $text
-     * @param array|string $userIds
-     * @param array|string $emails
-     * @return bool
-     */
-    public function send($pinId, $text, $userIds, $emails)
-    {
-        $messageData = $this->buildMessageData($text, $pinId);
-
-        return $this->callSendMessage($userIds, $emails, $messageData);
-    }
-
-    /**
-     * Send pin with messages.
-     *
-     * @codeCoverageIgnore
-     * @param int $pinId
-     * @param string $text
-     * @param array|string $userIds
-     * @return bool
-     */
-    public function sendWithMessage($pinId, $text, $userIds)
-    {
-        return $this->send($pinId, $text, $userIds, []);
-    }
-
-    /**
-     * Send pin with emails.
-     *
-     * @codeCoverageIgnore
-     * @param int $pinId
-     * @param string $text
-     * @param array|string $emails
-     * @return bool
-     */
-    public function sendWithEmail($pinId, $text, $emails)
-    {
-        return $this->send($pinId, $text, [], $emails);
     }
 
     /**
