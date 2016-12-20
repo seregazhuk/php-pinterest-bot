@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [5.1.5] - 2016-12-20
+### Fixed:
+ - Bot *getClientInfo()* error.
+
 ## [5.1.4] - 2016-12-20
 ### Fixed:
  - Pagination issue with only first result.
