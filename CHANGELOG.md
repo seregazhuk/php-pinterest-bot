@@ -1,9 +1,9 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [5.1.5] - 2016-12-20
+## [5.1.6] - 2016-12-25
 ### Fixed:
- - Bot *getClientInfo()* error.
+ - Feed pagination error
 
 ## [5.1.4] - 2016-12-20
 ### Fixed:
