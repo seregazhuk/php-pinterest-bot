@@ -79,7 +79,7 @@ trait Searchable
      * @param string $query
      * @param int $limit
      *
-     * @return \Traversable
+     * @return Pagination
      */
     public function search($query, $limit = Pagination::DEFAULT_LIMIT)
     {

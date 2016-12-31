@@ -107,14 +107,6 @@ abstract class Provider
     }
 
     /**
-     * @return string
-     */
-    public function getEntityIdName()
-    {
-        return property_exists($this, 'entityIdName') ? $this->entityIdName : '';
-    }
-
-    /**
      * Executes pagination GET request.
      *
      * @param array $data

@@ -10,7 +10,7 @@ use seregazhuk\PinterestBot\Api\Traits\CanBeDeleted;
 use seregazhuk\PinterestBot\Api\Traits\SendsMessages;
 use seregazhuk\PinterestBot\Api\Contracts\PaginatedResponse;
 
-class Boards extends Provider
+class Boards extends EntityProvider
 {
     use CanBeDeleted, Searchable, Followable, SendsMessages;
 

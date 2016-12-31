@@ -37,7 +37,7 @@ class Password extends Provider
     public function reset($link, $newPassword)
     {
         // Visit link to get current reset token, username and token expiration
-        $this->execGetRequest([], $link);
+        $this->visitPage($link);
         $this->request->clearToken();
 
         $urlData = $this->parseCurrentUrl();
@@ -77,7 +77,10 @@ class Password extends Provider
      */
     protected function parseCurrentUrl()
     {
-        $url = $this->request->getHttpClient()->getCurrentUrl();
+        $url = $this
+            ->request
+            ->getHttpClient()
+            ->getCurrentUrl();
 
         return parse_url($url);
     }

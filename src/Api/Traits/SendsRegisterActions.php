@@ -12,7 +12,14 @@ trait SendsRegisterActions
     /**
      * @var array
      */
-    protected $plainRegistrationActions = [
+    protected $firstStepActions = [
+        ['name' => 'unauth.signup_step_1.completed']
+    ];
+
+    /**
+     * @var array
+     */
+    protected $secondStepActions = [
         ["name" => "multi_step_step_2_complete"],
         ["name" => "signup_home_page"],
         ["name" => "signup_referrer.other"],
@@ -22,78 +29,25 @@ trait SendsRegisterActions
     ];
 
     /**
-     * @var array
-     */
-    protected $businessRegistrationInitActions = [
-        ["name" => "create_business_account_singlestep.loaded"],
-        ["name" => "unauth_navigate.new_tab.BusinessAccountCreate"],
-
-        ["name" => "create_business_account_singlestep.emailFieldFocused"],
-        ["name" => "create_business_account_singlestep.passwordFieldFocused"],
-
-        ["name" => "create_business_account_singlestep.passwordFieldFocused"],
-        ["name" => "create_business_account_singlestep.businessNameFieldFocused"],
-        ["name" => "create_business_account_singlestep.businessTypeFieldFocused"],
-    ];
-
-    protected $businessRegistrationFinishActions = [
-        ["name" => "create_business_account_singlestep.submit_clicked"],
-        ["name" => "signup_unknown_placement"],
-        ["name" => "signup_referrer.direct"],
-        ["name" => "signup_referrer_module.business_account_create"],
-        ["name" => "create_business_account_singlestep.signup_success"],
-        ["name" => "setting_new_window_location"],
-    ];
-    /**
      * @return bool|Response
      */
     protected function sendEmailVerificationAction()
     {
-        $actions = [
-            ['name' => 'unauth.signup_step_1.completed']
-        ];
-
-        return $this->sendRegisterActionRequest($actions);
+        return $this->sendRegisterActionRequest($this->firstStepActions);
     }
 
     /**
      * @return bool
      */
-    protected function sendPlainRegistrationActions()
+    protected function sendRegistrationActions()
     {
-        if(!$this->sendRegisterActionRequest($this->plainRegistrationActions)) {
+        if(!$this->sendRegisterActionRequest($this->secondStepActions)) {
             return false;
         }
 
         return $this->sendRegisterActionRequest();
     }
 
-    /**
-     * @return bool
-     */
-    protected function sendBusinessRegistrationInitActions()
-    {
-        return $this->sendRegisterActionRequest([
-            ["name" => "create_business_account_singlestep.loaded"],
-            ["name" => "unauth_navigate.new_tab.BusinessAccountCreate"],
-            ["name" => "create_business_account_singlestep.emailFieldFocused"],
-            ["name" => "create_business_account_singlestep.passwordFieldFocused"],
-            ["name" => "create_business_account_singlestep.businessNameFieldFocused"],
-            ["name" => "create_business_account_singlestep.businessTypeFieldFocused"],
-         ]);
-    }
-
-    /**
-     * @return bool
-     */
-    protected function sendBusinessRegistrationFinishActions()
-    {
-        if(!$this->sendRegisterActionRequest($this->businessRegistrationFinishActions)) {
-            return false;
-        }
-
-        return $this->sendRegisterActionRequest();
-    }
 
     /**
      * @param array $actions
@@ -102,7 +56,7 @@ trait SendsRegisterActions
     protected function sendRegisterActionRequest($actions = [])
     {
         return $this->execPostRequest(
-            ['actions' => $actions], UrlBuilder::RESOURCE_UPDATE_REGISTRATION_TRACK
+            ['secondStepActions' => $actions], UrlBuilder::RESOURCE_UPDATE_REGISTRATION_TRACK
         );
     }
 }
