@@ -4,11 +4,12 @@ namespace seregazhuk\PinterestBot\Api\Providers;
 
 use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
+use seregazhuk\PinterestBot\Api\Traits\BusinessAccount;
 use seregazhuk\PinterestBot\Api\Traits\SendsRegisterActions;
 
 class Auth extends Provider
 {
-    use SendsRegisterActions;
+    use SendsRegisterActions, BusinessAccount;
 
     /**
      * @var array
@@ -30,7 +31,7 @@ class Auth extends Provider
      */
     public function login($username, $password, $autoLogin = true)
     {
-        if ($this->request->isLoggedIn()) return true;
+        if ($this->isLoggedIn()) return true;
 
         $this->checkCredentials($username, $password);
 
@@ -86,23 +87,9 @@ class Auth extends Provider
      */
     public function registerBusiness($email, $password, $businessName, $website = '')
     {
-        $data = [
-            "email"         => $email,
-            "password"      => $password,
-            "website_url"   => $website,
-            "account_type"  => self::ACCOUNT_TYPE_OTHER,
-            "business_name" => $businessName,
-        ];
+        $this->register($email, $password, $businessName);
 
-        return $this->makeBusinessRegisterCall($data);
-    }
-
-    /**
-     * @return bool
-     */
-    public function isLoggedIn()
-    {
-        return $this->request->isLoggedIn();
+        return $this->convertToBusiness($businessName, $website);
     }
 
     /**
@@ -162,24 +149,7 @@ class Auth extends Provider
 
         if(!$this->execPostRequest($data, UrlBuilder::RESOURCE_CREATE_REGISTER)) return false;
 
-        if(!$this->sendPlainRegistrationActions()) return false;
-
-        return $this->completeRegistration();
-    }
-
-    /**
-     * @param array $data
-     * @return bool|mixed
-     */
-    protected function makeBusinessRegisterCall($data)
-    {
-        $this->visitPage('business/create/');
-
-        if(!$this->sendBusinessRegistrationInitActions()) return false;
-
-        if(!$this->execPostRequest($data, UrlBuilder::RESOURCE_CREATE_REGISTER)) return false;
-
-        if(!$this->sendBusinessRegistrationFinishActions()) return false;
+        if(!$this->sendRegistrationActions()) return false;
 
         return $this->completeRegistration();
     }
@@ -223,26 +193,5 @@ class Auth extends Provider
     protected function getProfile()
     {
         return $this->execGetRequest([], UrlBuilder::RESOURCE_GET_USER_SETTINGS);
-    }
-
-    /**
-     * @return bool
-     */
-    protected function sendRegisterActions()
-    {
-        $actions = [
-            ["name" => "multi_step_step_2_complete"],
-            ["name" => "signup_home_page"],
-            ["name" => "signup_referrer.other"],
-            ["name" => "signup_referrer_module.unauth_home_react_page"],
-            ["name" => "unauth.signup_step_2.completed"],
-            ["name" => "setting_new_window_location"],
-        ];
-
-        if(!$this->sendRegisterActionRequest($actions)) return false;
-
-        if(!$this->sendRegisterActionRequest()) return false;
-
-        return true;
     }
 }

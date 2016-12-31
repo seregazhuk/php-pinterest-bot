@@ -10,7 +10,7 @@ class ProviderWrapper
     /**
      * @var Provider
      */
-    private $provider;
+    protected $provider;
 
     /**
      * @param Provider|object $provider

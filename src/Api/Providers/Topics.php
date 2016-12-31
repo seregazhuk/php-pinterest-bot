@@ -8,7 +8,7 @@ use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\Traits\Followable;
 use seregazhuk\PinterestBot\Api\Traits\HasRelatedTopics;
 
-class Topics extends Provider
+class Topics extends EntityProvider
 {
     use Followable, HasRelatedTopics, HasFeed;
 

@@ -10,7 +10,7 @@ use seregazhuk\PinterestBot\Api\Traits\Followable;
 use seregazhuk\PinterestBot\Api\Traits\Searchable;
 use seregazhuk\PinterestBot\Exceptions\WrongFollowingType;
 
-class Pinners extends Provider
+class Pinners extends EntityProvider
 {
     use Searchable, Followable;
 
@@ -52,7 +52,7 @@ class Pinners extends Provider
      * @param string $username
      * @param string $type
      * @param int $limit
-     * @return Iterator
+     * @return Pagination
      * @throws WrongFollowingType
      */
     public function following($username, $type = UrlBuilder::FOLLOWING_PEOPLE, $limit = Pagination::DEFAULT_LIMIT)
@@ -72,7 +72,7 @@ class Pinners extends Provider
      *
      * @param string $username
      * @param int $limit
-     * @return Iterator
+     * @return Pagination
      */
     public function followingPeople($username, $limit = Pagination::DEFAULT_LIMIT)
     {
@@ -85,7 +85,7 @@ class Pinners extends Provider
      *
      * @param string $username
      * @param int $limit
-     * @return Iterator
+     * @return Pagination
      */
     public function followingBoards($username, $limit = Pagination::DEFAULT_LIMIT)
     {
@@ -112,7 +112,7 @@ class Pinners extends Provider
      * @param string $username
      * @param int $limit
      *
-     * @return Iterator
+     * @return Pagination
      */
     public function pins($username, $limit = Pagination::DEFAULT_LIMIT)
     {
@@ -126,7 +126,7 @@ class Pinners extends Provider
      *
      * @param string $username
      * @param int $limit
-     * @return Iterator
+     * @return Pagination
      */
     public function likes($username, $limit = Pagination::DEFAULT_LIMIT)
     {
@@ -165,7 +165,7 @@ class Pinners extends Provider
      * @param string $url
      * @param int $limit
      *
-     * @return \Traversable
+     * @return Pagination
      */
     protected function paginate($username, $url, $limit)
     {

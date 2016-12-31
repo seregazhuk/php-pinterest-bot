@@ -12,7 +12,7 @@ use seregazhuk\PinterestBot\Api\Traits\SendsMessages;
 use seregazhuk\PinterestBot\Api\Traits\CanBeDeleted;
 use seregazhuk\PinterestBot\Api\Traits\UploadsImages;
 
-class Pins extends Provider
+class Pins extends EntityProvider
 {
     use Searchable, CanBeDeleted, UploadsImages, HasFeed, SendsMessages;
 
@@ -188,7 +188,7 @@ class Pins extends Provider
      *
      * @param string $pinId
      * @param int $limit
-     * @return Iterator|array
+     * @return Pagination
      */
     public function activity($pinId, $limit = Pagination::DEFAULT_LIMIT)
     {

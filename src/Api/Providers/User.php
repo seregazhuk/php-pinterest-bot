@@ -22,9 +22,6 @@ class User extends Provider
         'convertToBusiness',
     ];
 
-    const ACCOUNT_TYPE_OTHER = 'other';
-    const REGISTRATION_COMPLETE_EXPERIENCE_ID = '11:10105';
-
     /**
      * Updates or returns user profile info. Gets associative array as a param. Available keys of array are:
      * 'last_name', 'first_name', 'username', 'about', 'location' and 'website_url'.
@@ -45,24 +42,6 @@ class User extends Provider
         }
 
         return $this->execPostRequest($userInfo, UrlBuilder::RESOURCE_UPDATE_USER_SETTINGS);
-    }
-
-    /**
-     * Convert your account to a business one.
-     *
-     * @param string $businessName
-     * @param string $websiteUrl
-     * @return bool
-     */
-    public function convertToBusiness($businessName, $websiteUrl = '')
-    {
-        $data = [
-            'business_name' => $businessName,
-            'website_url'   => $websiteUrl,
-            'account_type'  => self::ACCOUNT_TYPE_OTHER,
-        ];
-
-        return $this->execPostRequest($data, UrlBuilder::RESOURCE_CONVERT_TO_BUSINESS);
     }
 
     /**

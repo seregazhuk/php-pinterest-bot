@@ -2,10 +2,9 @@
 
 namespace seregazhuk\tests\Bot\Api;
 
+use seregazhuk\PinterestBot\Helpers\Cookies;
 use seregazhuk\PinterestBot\Api\CurlHttpClient;
 use seregazhuk\PinterestBot\Api\Providers\Auth;
-use seregazhuk\PinterestBot\Helpers\Cookies;
-use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 
 /**
  * Class AuthTest.
@@ -51,7 +50,7 @@ class AuthTest extends ProviderTest
     {
         $this->setProperty('request', $this->request);
 
-        $this->apiShouldReturnSuccess(6)
+        $this->apiShouldReturnSuccess(7)
             ->assertTrue($this->provider->registerBusiness('email@email.com', 'test', 'name'));
     }
 
@@ -62,7 +61,7 @@ class AuthTest extends ProviderTest
     {
         $this->setProperty('request', $this->request);
 
-        $this->apiShouldReturnError(2)
+        $this->apiShouldReturnError(3)
             ->assertFalse($this->provider->registerBusiness('email@email.com', 'test', 'name'));
     }
 
@@ -91,7 +90,8 @@ class AuthTest extends ProviderTest
         $this->setIsLoggedInExpectation(false)
             ->apiShouldReturnSuccess();
 
-        $this->request->shouldReceive('getHttpClient')
+        $this->request
+            ->shouldReceive('getHttpClient')
             ->andReturn(new CurlHttpClient(new Cookies()))
             ->shouldReceive('clearToken')
             ->once()

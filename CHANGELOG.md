@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [5.1.7] - 2016-12-31
+### Fixed:
+ - Receiving confirmation email after registering business account.
+
 ## [5.1.6] - 2016-12-25
 ### Fixed:
  - Feed pagination error
