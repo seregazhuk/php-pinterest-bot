@@ -61,7 +61,7 @@ class AuthTest extends ProviderTest
     {
         $this->setProperty('request', $this->request);
 
-        $this->apiShouldReturnError(3)
+        $this->apiShouldReturnError(2)
             ->assertFalse($this->provider->registerBusiness('email@email.com', 'test', 'name'));
     }
 
