@@ -2,8 +2,9 @@
 
 namespace seregazhuk\PinterestBot\Helpers;
 
-use seregazhuk\PinterestBot\Api\Contracts\PaginatedResponse;
 use Traversable;
+use IteratorAggregate;
+use seregazhuk\PinterestBot\Api\Contracts\PaginatedResponse;
 
 /**
  * Class Pagination
@@ -13,7 +14,7 @@ use Traversable;
  *
  * @package seregazhuk\PinterestBot\Helpers
  */
-class Pagination implements \IteratorAggregate
+class Pagination implements IteratorAggregate
 {
     const DEFAULT_LIMIT = 50;
 

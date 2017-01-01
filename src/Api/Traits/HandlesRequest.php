@@ -22,7 +22,8 @@ trait HandlesRequest
      *
      * @param array $requestOptions
      * @param string $resourceUrl
-     * @return array|bool
+     * @param array $bookmarks
+     * @return array|bool|Response
      */
-    abstract protected function execGetRequest(array $requestOptions = [], $resourceUrl = '');
+    abstract protected function execGetRequest(array $requestOptions = [], $resourceUrl = '', $bookmarks = []);
 }

@@ -2,7 +2,6 @@
 
 namespace seregazhuk\PinterestBot\Api\Providers;
 
-use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\Traits\BusinessAccount;
 use seregazhuk\PinterestBot\Api\Traits\SendsRegisterActions;
@@ -19,7 +18,6 @@ class Auth extends Provider
     ];
 
     const REGISTRATION_COMPLETE_EXPERIENCE_ID = '11:10105';
-    const ACCOUNT_TYPE_OTHER = 'other';
 
     /**
      * Login as pinner.
@@ -77,7 +75,9 @@ class Auth extends Provider
     }
 
     /**
-     * Register a new business account.
+     * Register a new business account. At first we register a basic type account.
+     * Then convert it to a business one. This is done to receive a confirmation
+     * email after registration.
      *
      * @param string $email
      * @param string $password
@@ -87,7 +87,9 @@ class Auth extends Provider
      */
     public function registerBusiness($email, $password, $businessName, $website = '')
     {
-        $this->register($email, $password, $businessName);
+        $registration = $this->register($email, $password, $businessName);
+
+        if(!$registration) return false;
 
         return $this->convertToBusiness($businessName, $website);
     }
@@ -112,18 +114,6 @@ class Auth extends Provider
         if (!$username || !$password) {
             throw new \LogicException('You must set username and password to login.');
         }
-    }
-
-    /**
-     * @return bool|Response
-     */
-    protected function sendEmailVerificationAction()
-    {
-        $actions = [
-            ['name' => 'unauth.signup_step_1.completed']
-        ];
-
-        return $this->sendRegisterActionRequest($actions);
     }
 
     /**

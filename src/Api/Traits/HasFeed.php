@@ -11,6 +11,8 @@ use seregazhuk\PinterestBot\Helpers\Pagination;
  */
 trait HasFeed
 {
+    use HandlesRequest;
+
     /**
      * @param array $data
      * @param string $feedUrl
@@ -21,15 +23,7 @@ trait HasFeed
     {
         return (new Pagination($limit))
             ->paginateOver(function($bookmarks = []) use ($data, $feedUrl) {
-                return $this->getPaginatedData($data, $feedUrl, $bookmarks);
+                return $this->execGetRequest($data, $feedUrl, $bookmarks);
             });
     }
-
-    /**
-     * @param array $data
-     * @param string $url
-     * @param $bookmarks
-     * @return Response
-     */
-    abstract function getPaginatedData(array $data, $url, $bookmarks = []);
 }

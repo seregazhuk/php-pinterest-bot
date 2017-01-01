@@ -113,7 +113,7 @@ trait Followable
     {
         return (new Pagination($limit))
             ->paginateOver(function($bookmarks = []) use ($data, $resourceUrl) {
-                return $this->getPaginatedData($data, $resourceUrl, $bookmarks);
+                return $this->execGetRequest($data, $resourceUrl, $bookmarks);
             });
     }
 

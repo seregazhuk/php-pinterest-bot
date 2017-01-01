@@ -495,10 +495,9 @@ Send pin with message or by email:
 ```php
 // send pin with message
 $bot->pins->sendWithMessage($pinId, 'message', $userId); // to a user
-$bot->pins->sendWithMessage($pinId, 'message', [$userId1, $userId2]); // to many yusers
-Email
+$bot->pins->sendWithMessage($pinId, 'message', [$userId1, $userId2]); // to many users 
 // send pin by email
-$bot->pins->sendWithEmail($pinId, 'message', friend@example.com'); // one email
+$bot->pins->sendWithEmail($pinId, 'message', 'friend@example.com'); // one email
 $bot->pins->sendWithEmail($pinId, 'message', ['friend1@example.com', 'friend2@example.com']); // many
 ```
 

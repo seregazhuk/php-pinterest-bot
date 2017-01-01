@@ -17,7 +17,7 @@ trait SendsMessages
     use HandlesRequest;
 
     /**
-     * @param array|int $userIds
+     * @param array|string $userIds
      * @param array|string $emails
      *
      * @param array $data
