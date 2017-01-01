@@ -7,7 +7,6 @@ use seregazhuk\PinterestBot\Api\Response;
 
 /**
  * Class Provider.
- * @property string entityIdName
  */
 abstract class Provider
 {
@@ -64,32 +63,18 @@ abstract class Provider
      *
      * @param array $requestOptions
      * @param string $resourceUrl
-     * @return array|bool
-     */
-    protected function execGetRequest(array $requestOptions = [], $resourceUrl = '')
-    {
-        $query = Request::createQuery($requestOptions);
-
-        $this->execute($resourceUrl . "?{$query}");
-
-        return $this->response->getResponseData();
-    }
-
-    /**
-     * Executes a GET request to Pinterest API with pagination.
-     *
-     * @param array $requestOptions
-     * @param string $resourceUrl
      * @param array $bookmarks
-     * @return Response
+     * @return array|bool|Response
      */
-    protected function execGetRequestWithPagination(array $requestOptions, $resourceUrl, $bookmarks = [])
+    protected function execGetRequest(array $requestOptions = [], $resourceUrl = '', $bookmarks = null)
     {
         $query = Request::createQuery($requestOptions, $bookmarks);
 
         $this->execute($resourceUrl . "?{$query}");
 
-        return $this->response;
+        return is_null($bookmarks) ?
+            $this->response->getResponseData() :
+            $this->response;
     }
 
     /**
@@ -104,19 +89,6 @@ abstract class Provider
         $this->processResult($result);
 
         return $this;
-    }
-
-    /**
-     * Executes pagination GET request.
-     *
-     * @param array $data
-     * @param string $url
-     * @param array $bookmarks
-     * @return Response
-     */
-    public function getPaginatedData(array $data, $url, $bookmarks = [])
-    {
-        return $this->execGetRequestWithPagination($data, $url, $bookmarks);
     }
 
     /**

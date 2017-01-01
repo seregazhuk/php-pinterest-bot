@@ -2,7 +2,6 @@
 
 namespace seregazhuk\PinterestBot\Api\Providers;
 
-use Iterator;
 use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Api\Traits\HasFeed;
 use seregazhuk\PinterestBot\Helpers\Pagination;
@@ -42,9 +41,7 @@ class Pins extends EntityProvider
     
     /**
      * Likes pin with current ID.
-     *
      * @param string $pinId
-     *
      * @return bool
      */
     public function like($pinId)
@@ -54,9 +51,7 @@ class Pins extends EntityProvider
 
     /**
      * Removes your like from pin with current ID.
-     *
      * @param string $pinId
-     *
      * @return bool
      */
     public function unLike($pinId)
@@ -71,7 +66,6 @@ class Pins extends EntityProvider
      * @param int    $boardId
      * @param string $description
      * @param string $link
-     *
      * @return array
      */
     public function create($imageUrl, $boardId, $description = '', $link = '')
@@ -118,13 +112,13 @@ class Pins extends EntityProvider
     /**
      * Moves pin to a new board
      *
-     * @param int $pindId
+     * @param int $pinId
      * @param int $boardId
      * @return bool
      */
-    public function moveToBoard($pindId, $boardId)
+    public function moveToBoard($pinId, $boardId)
     {
-        return $this->edit($pindId, '', '', $boardId);
+        return $this->edit($pinId, '', '', $boardId);
     }
     
     /**
@@ -133,7 +127,6 @@ class Pins extends EntityProvider
      * @param int   $repinId
      * @param int   $boardId
      * @param string $description
-     *
      * @return array
      */
     public function repin($repinId, $boardId, $description = '')
@@ -155,7 +148,6 @@ class Pins extends EntityProvider
      * Get information of a pin by PinID.
      *
      * @param string $pinId
-     *
      * @return array|bool
      */
     public function info($pinId)
@@ -188,13 +180,13 @@ class Pins extends EntityProvider
      *
      * @param string $pinId
      * @param int $limit
-     * @return Pagination
+     * @return Pagination|false
      */
     public function activity($pinId, $limit = Pagination::DEFAULT_LIMIT)
     {
         $aggregatedPinId = $this->getAggregatedPinId($pinId);
 
-        if (is_null($aggregatedPinId)) return [];
+        if (is_null($aggregatedPinId)) return false;
 
         $data = ['aggregated_pin_data_id' => $aggregatedPinId];
 
@@ -310,7 +302,6 @@ class Pins extends EntityProvider
      *
      * @param string $pinId
      * @param string $resourceUrl
-     *
      * @return bool
      */
     protected function likePinMethodCall($pinId, $resourceUrl)

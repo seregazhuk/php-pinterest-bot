@@ -2,7 +2,6 @@
 
 namespace seregazhuk\PinterestBot\Api\Providers;
 
-use Iterator;
 use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
@@ -98,7 +97,7 @@ class Pinners extends EntityProvider
      *
      * @param string $username
      * @param int $limit
-     * @return Iterator
+     * @return Pagination
      * @throws WrongFollowingType
      */
     public function followingInterests($username, $limit = Pagination::DEFAULT_LIMIT)
@@ -171,7 +170,7 @@ class Pinners extends EntityProvider
     {
         return (new Pagination($limit))
             ->paginateOver(function($bookmarks = []) use ($username, $url) {
-                return $this->getPaginatedData(['username' => $username], $url, $bookmarks);
+                return $this->execGetRequest(['username' => $username], $url, $bookmarks);
             });
     }
 }

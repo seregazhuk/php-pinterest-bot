@@ -94,7 +94,7 @@ class Boards extends EntityProvider
      */
     public function getPinsFromBoard($boardId, $bookmarks = [])
     {
-        return $this->execGetRequestWithPagination(
+        return $this->execGetRequest(
             ['board_id' => $boardId],
             UrlBuilder::RESOURCE_GET_BOARD_FEED,
             $bookmarks
