@@ -2,8 +2,19 @@
 
 namespace seregazhuk\PinterestBot\Api\Providers;
 
+/**
+ * Class EntityProvider
+ * @package seregazhuk\PinterestBot\Api\Providers
+ *
+ * @property string entityIdName
+ */
 class EntityProvider extends Provider
 {
+    /**
+     * @var string
+     */
+    protected $entityIdName;
+
     /**
      * @return string
      */
