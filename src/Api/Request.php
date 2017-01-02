@@ -2,11 +2,11 @@
 
 namespace seregazhuk\PinterestBot\Api;
 
+use seregazhuk\PinterestBot\Api\Contracts\HttpClient;
+use seregazhuk\PinterestBot\Exceptions\InvalidRequest;
 use seregazhuk\PinterestBot\Helpers\Cookies;
 use seregazhuk\PinterestBot\Helpers\FileHelper;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
-use seregazhuk\PinterestBot\Api\Contracts\HttpClient;
-use seregazhuk\PinterestBot\Exceptions\InvalidRequest;
 
 /**
  * Class Request.
@@ -188,14 +188,15 @@ class Request
     /**
      * Create request string.
      *
-     * @param array  $data
-     * @param array  $bookmarks
-     *
+     * @param array $data
+     * @param array|null $bookmarks
      * @return string
      */
-    public static function createQuery(array $data = [], $bookmarks = [])
+    public static function createQuery(array $data = [], $bookmarks = null)
     {
         $data = empty($data) ? [] : $data;
+
+        $bookmarks = is_array($bookmarks) ? $bookmarks : [];
 
         $request = self::createRequestData(
             ['options' => $data], $bookmarks
@@ -206,8 +207,7 @@ class Request
 
     /**
      * @param array|object $data
-     * @param array        $bookmarks
-     *
+     * @param array $bookmarks
      * @return array
      */
     public static function createRequestData(array $data = [], $bookmarks = [])

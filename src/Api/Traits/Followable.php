@@ -97,24 +97,9 @@ trait Followable
      */
     public function followers($for, $limit = Pagination::DEFAULT_LIMIT)
     {
-        return $this->getFollowData(
+        return $this->paginate(
             [$this->getFollowersFor() => $for], $this->getFollowersUrl(), $limit
         );
-    }
-
-    /**
-     * @param array  $data
-     * @param string $resourceUrl
-     * @param int $limit
-     *
-     * @return Pagination
-     */
-    public function getFollowData($data, $resourceUrl, $limit = Pagination::DEFAULT_LIMIT)
-    {
-        return (new Pagination($limit))
-            ->paginateOver(function($bookmarks = []) use ($data, $resourceUrl) {
-                return $this->execGetRequest($data, $resourceUrl, $bookmarks);
-            });
     }
 
     /**
@@ -154,4 +139,13 @@ trait Followable
      * @return Response
      */
     abstract protected function processResult($res);
+
+    /**
+     * @param array  $data
+     * @param string $resourceUrl
+     * @param int $limit
+     *
+     * @return Pagination
+     */
+    abstract protected function paginate($data, $resourceUrl, $limit = Pagination::DEFAULT_LIMIT);
 }

@@ -2,14 +2,13 @@
 
 namespace seregazhuk\PinterestBot\Api\Providers;
 
-use seregazhuk\PinterestBot\Api\Traits\HasFeed;
 use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\Traits\HasRelatedTopics;
 
 class Interests extends Provider
 {
-    use HasRelatedTopics, HasFeed;
+    use HasRelatedTopics;
 
     protected $feedUrl = UrlBuilder::RESOURCE_GET_CATEGORY_FEED;
 
@@ -55,6 +54,6 @@ class Interests extends Provider
            'is_category_feed' => true,
        ];
 
-        return $this->getFeed($data, UrlBuilder::RESOURCE_GET_CATEGORY_FEED, $limit);
+        return $this->paginate($data, UrlBuilder::RESOURCE_GET_CATEGORY_FEED, $limit);
     }
 }

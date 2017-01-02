@@ -4,6 +4,7 @@ namespace seregazhuk\PinterestBot\Api\Providers;
 
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
+use seregazhuk\PinterestBot\Helpers\Pagination;
 
 /**
  * Class Provider.
@@ -107,6 +108,21 @@ abstract class Provider
     public function isLoggedIn()
     {
         return $this->request->isLoggedIn();
+    }
+
+    /**
+     * @param array  $data
+     * @param string $resourceUrl
+     * @param int $limit
+     *
+     * @return Pagination
+     */
+    protected function paginate($data, $resourceUrl, $limit = Pagination::DEFAULT_LIMIT)
+    {
+        return (new Pagination($limit))
+            ->paginateOver(function($bookmarks = []) use ($data, $resourceUrl) {
+                return $this->execGetRequest($data, $resourceUrl, $bookmarks);
+            });
     }
 
     /**
