@@ -3,7 +3,6 @@
 namespace seregazhuk\PinterestBot\Api\Providers;
 
 use seregazhuk\PinterestBot\Api\Response;
-use seregazhuk\PinterestBot\Api\Traits\HasFeed;
 use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\Traits\Searchable;
@@ -13,7 +12,7 @@ use seregazhuk\PinterestBot\Api\Traits\UploadsImages;
 
 class Pins extends EntityProvider
 {
-    use Searchable, CanBeDeleted, UploadsImages, HasFeed, SendsMessages;
+    use Searchable, CanBeDeleted, UploadsImages, SendsMessages;
 
     /**
      * @var array
@@ -172,7 +171,7 @@ class Pins extends EntityProvider
     {
         $data = ['domain' => $source];
 
-        return $this->getFeed($data, UrlBuilder::RESOURCE_DOMAIN_FEED, $limit);
+        return $this->paginate($data, UrlBuilder::RESOURCE_DOMAIN_FEED, $limit);
     }
 
     /**
@@ -190,7 +189,7 @@ class Pins extends EntityProvider
 
         $data = ['aggregated_pin_data_id' => $aggregatedPinId];
 
-        return $this->getFeed($data, UrlBuilder::RESOURCE_ACTIVITY, $limit);
+        return $this->paginate($data, UrlBuilder::RESOURCE_ACTIVITY, $limit);
     }
 
     /**
@@ -201,7 +200,7 @@ class Pins extends EntityProvider
      */
     public function feed($limit = Pagination::DEFAULT_LIMIT)
     {
-        return $this->getFeed([], UrlBuilder::RESOURCE_USER_FEED, $limit);
+        return $this->paginate([], UrlBuilder::RESOURCE_USER_FEED, $limit);
     }
 
     /**
@@ -211,7 +210,7 @@ class Pins extends EntityProvider
      */
     public function related($pinId, $limit = Pagination::DEFAULT_LIMIT)
     {
-        return $this->getFeed(['pin' => $pinId], UrlBuilder::RESOURCE_RELATED_PINS, $limit);
+        return $this->paginate(['pin' => $pinId], UrlBuilder::RESOURCE_RELATED_PINS, $limit);
     }
 
     /**

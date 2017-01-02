@@ -2,7 +2,6 @@
 
 namespace seregazhuk\PinterestBot\Api\Providers;
 
-use seregazhuk\PinterestBot\Api\Traits\HasFeed;
 use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\Traits\Followable;
@@ -10,7 +9,7 @@ use seregazhuk\PinterestBot\Api\Traits\HasRelatedTopics;
 
 class Topics extends EntityProvider
 {
-    use Followable, HasRelatedTopics, HasFeed;
+    use Followable, HasRelatedTopics;
 
     /**
      * @var array
@@ -50,6 +49,6 @@ class Topics extends EntityProvider
             'pins_only' => false,
         ];
 
-        return $this->getFeed($data, UrlBuilder::RESOURCE_GET_TOPIC_FEED, $limit);
+        return $this->paginate($data, UrlBuilder::RESOURCE_GET_TOPIC_FEED, $limit);
     }
 }

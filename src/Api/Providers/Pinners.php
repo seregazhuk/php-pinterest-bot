@@ -166,11 +166,8 @@ class Pinners extends EntityProvider
      *
      * @return Pagination
      */
-    protected function paginate($username, $url, $limit)
+    protected function paginate($username, $url, $limit = Pagination::DEFAULT_LIMIT)
     {
-        return (new Pagination($limit))
-            ->paginateOver(function($bookmarks = []) use ($username, $url) {
-                return $this->execGetRequest(['username' => $username], $url, $bookmarks);
-            });
+        return parent::paginate(['username' => $username], $url, $limit);
     }
 }
