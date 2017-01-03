@@ -26,10 +26,8 @@ class ProviderWrapper
      *
      * @param $method
      * @param $arguments
-     *
      * @throws AuthRequired
      * @throws InvalidRequest
-     *
      * @return mixed|null
      */
     public function __call($method, $arguments)

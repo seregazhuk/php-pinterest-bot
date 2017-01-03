@@ -2,17 +2,17 @@
 
 namespace seregazhuk\PinterestBot\Api;
 
-use seregazhuk\PinterestBot\Api\Contracts\HttpClient;
-use seregazhuk\PinterestBot\Exceptions\InvalidRequest;
-use seregazhuk\PinterestBot\Helpers\Cookies;
 use seregazhuk\PinterestBot\Helpers\FileHelper;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
+use seregazhuk\PinterestBot\Api\Contracts\HttpClient;
+use seregazhuk\PinterestBot\Exceptions\InvalidRequest;
 
 /**
  * Class Request.
  */
 class Request
 {
+    const DEFAULT_TOKEN = '1234';
 
     /**
      * @var HttpClient
@@ -57,7 +57,7 @@ class Request
         'DNT: 1',
         'X-Pinterest-AppState: active',
         'X-NEW-APP: 1',
-        'X-APP-VERSION: d2d8d14',
+        'X-APP-VERSION: 4f10e3b',
         'X-Requested-With: XMLHttpRequest',
     ];
 
@@ -114,8 +114,8 @@ class Request
     protected function getHttpHeaders()
     {
         $headers = $this->getDefaultHttpHeaders();
-        if ($this->csrfToken == Cookies::DEFAULT_TOKEN) {
-            $headers[] = 'Cookie: csrftoken=' . Cookies::DEFAULT_TOKEN . ';';
+        if ($this->csrfToken == self::DEFAULT_TOKEN) {
+            $headers[] = 'Cookie: csrftoken=' . self::DEFAULT_TOKEN . ';';
         }
 
         return $headers;
@@ -129,7 +129,7 @@ class Request
      */
     public function clearToken()
     {
-        $this->csrfToken = Cookies::DEFAULT_TOKEN;
+        $this->csrfToken = self::DEFAULT_TOKEN;
 
         return $this;
     }

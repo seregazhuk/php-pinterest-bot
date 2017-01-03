@@ -49,5 +49,4 @@ class Comments extends Provider
 
         return $this->execPostRequest($requestOptions, UrlBuilder::RESOURCE_COMMENT_DELETE_PIN);
     }
-
 }

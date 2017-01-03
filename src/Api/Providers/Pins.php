@@ -6,8 +6,8 @@ use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\Traits\Searchable;
-use seregazhuk\PinterestBot\Api\Traits\SendsMessages;
 use seregazhuk\PinterestBot\Api\Traits\CanBeDeleted;
+use seregazhuk\PinterestBot\Api\Traits\SendsMessages;
 use seregazhuk\PinterestBot\Api\Traits\UploadsImages;
 
 class Pins extends EntityProvider
@@ -183,13 +183,41 @@ class Pins extends EntityProvider
      */
     public function activity($pinId, $limit = Pagination::DEFAULT_LIMIT)
     {
+        return $this->getAggregatedActivity($pinId, [], $limit);
+    }
+
+    /**
+     * Get the pinners who have tied this pin
+     *
+     * @param string $pinId
+     * @param int $limit
+     * @return Pagination|false
+     */
+    public function tried($pinId, $limit = Pagination::DEFAULT_LIMIT)
+    {
+        $data = [
+            'field_set_key'    => 'did_it',
+            'show_did_it_feed' => true,
+        ];
+
+        return $this->getAggregatedActivity($pinId, $data, $limit);
+    }
+
+    /**
+     * @param string $pinId
+     * @param array $additionalData
+     * @param int $limit
+     * @return bool|Pagination
+     */
+    protected function getAggregatedActivity($pinId, $additionalData = [],  $limit)
+    {
         $aggregatedPinId = $this->getAggregatedPinId($pinId);
 
         if (is_null($aggregatedPinId)) return false;
 
-        $data = ['aggregated_pin_data_id' => $aggregatedPinId];
+        $additionalData['aggregated_pin_data_id'] = $aggregatedPinId;
 
-        return $this->paginate($data, UrlBuilder::RESOURCE_ACTIVITY, $limit);
+        return $this->paginate($additionalData, UrlBuilder::RESOURCE_ACTIVITY, $limit);
     }
 
     /**
@@ -294,6 +322,19 @@ class Pins extends EntityProvider
         file_put_contents($destination, file_get_contents($originalUrl));
 
         return $destination;
+    }
+
+    /**
+     * @param string $query
+     * @param int $limit
+     * @return Pagination
+     */
+    public function searchInMyPins($query, $limit = Pagination::DEFAULT_LIMIT)
+    {
+        return (new Pagination($limit))
+            ->paginateOver(function($bookmarks = []) use ($query) {
+                return $this->searchCall($query, 'my_pins', $bookmarks);
+            });
     }
     
     /**

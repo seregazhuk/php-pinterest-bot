@@ -40,7 +40,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
         $this->assertEmpty($this->getProperty('csrfToken'));
 
         $request->clearToken();
-        $this->assertEquals(Cookies::DEFAULT_TOKEN, $this->getProperty('csrfToken'));
+        $this->assertEquals(Request::DEFAULT_TOKEN, $this->getProperty('csrfToken'));
     }
 
     /** @test */
@@ -94,7 +94,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
 
         $request->logout();
         $this->assertFalse($request->isLoggedIn());
-        $this->assertEquals(Cookies::DEFAULT_TOKEN, $this->getProperty('csrfToken'));
+        $this->assertEquals(Request::DEFAULT_TOKEN, $this->getProperty('csrfToken'));
     }
 
     /**

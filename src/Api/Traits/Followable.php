@@ -141,7 +141,7 @@ trait Followable
     abstract protected function processResult($res);
 
     /**
-     * @param array  $data
+     * @param mixed $data
      * @param string $resourceUrl
      * @param int $limit
      *

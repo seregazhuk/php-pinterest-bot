@@ -106,4 +106,13 @@ class User extends Provider
 
         return $this->execPostRequest($data, UrlBuilder::RESOURCE_INVITE);
     }
+
+    /**
+     * Remove things you’ve recently searched for from search suggestions.
+     * @return bool|Response
+     */
+    public function clearSearchHistory()
+    {
+        return $this->execPostRequest([], UrlBuilder::RESOURCE_CLEAR_SEARCH_HISTORY);
+    }
 }

@@ -3,12 +3,11 @@
 namespace seregazhuk\PinterestBot\Api\Providers;
 
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
-use seregazhuk\PinterestBot\Api\Traits\BusinessAccount;
 use seregazhuk\PinterestBot\Api\Traits\SendsRegisterActions;
 
 class Auth extends Provider
 {
-    use SendsRegisterActions, BusinessAccount;
+    use SendsRegisterActions;
 
     /**
      * @var array
@@ -92,6 +91,24 @@ class Auth extends Provider
         if(!$registration) return false;
 
         return $this->convertToBusiness($businessName, $website);
+    }
+
+    /**
+     * Convert your account to a business one.
+     *
+     * @param string $businessName
+     * @param string $websiteUrl
+     * @return bool
+     */
+    public function convertToBusiness($businessName, $websiteUrl = '')
+    {
+        $data = [
+            'business_name' => $businessName,
+            'website_url'   => $websiteUrl,
+            'account_type'  => 'other',
+        ];
+
+        return $this->execPostRequest($data, UrlBuilder::RESOURCE_CONVERT_TO_BUSINESS);
     }
 
     /**

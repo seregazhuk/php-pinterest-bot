@@ -69,7 +69,8 @@ class CurlHttpClient implements HttpClient
      */
     public function loadCookies($username = '')
     {
-        return $this->initCookieJar($username)
+        return $this
+            ->initCookieJar($username)
             ->fillCookies();
     }
 
@@ -252,7 +253,7 @@ class CurlHttpClient implements HttpClient
      * @param string $username
      * @return string
      */
-    protected function initCookieFile($username)
+    protected function initCookieFile($username = '')
     {
         if(empty($username)) {
             return tempnam($this->getCookiesPath(), self::COOKIE_PREFIX);

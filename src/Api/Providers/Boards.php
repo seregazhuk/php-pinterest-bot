@@ -8,7 +8,6 @@ use seregazhuk\PinterestBot\Api\Traits\Searchable;
 use seregazhuk\PinterestBot\Api\Traits\Followable;
 use seregazhuk\PinterestBot\Api\Traits\CanBeDeleted;
 use seregazhuk\PinterestBot\Api\Traits\SendsMessages;
-use seregazhuk\PinterestBot\Api\Contracts\PaginatedResponse;
 
 class Boards extends EntityProvider
 {
@@ -80,24 +79,10 @@ class Boards extends EntityProvider
      */
     public function pins($boardId, $limit = Pagination::DEFAULT_LIMIT)
     {
-        return (new Pagination($limit))
-            ->paginateOver(function($bookmarks = []) use ($boardId) {
-                return $this->getPinsFromBoard($boardId, $bookmarks);
-            });
-    }
-
-    /**
-     * @param int   $boardId
-     * @param array $bookmarks
-     *
-     * @return PaginatedResponse
-     */
-    public function getPinsFromBoard($boardId, $bookmarks = [])
-    {
-        return $this->execGetRequest(
+        return $this->paginate(
             ['board_id' => $boardId],
             UrlBuilder::RESOURCE_GET_BOARD_FEED,
-            $bookmarks
+            $limit
         );
     }
 
