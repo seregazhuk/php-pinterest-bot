@@ -333,7 +333,7 @@ class Pins extends EntityProvider
     {
         return (new Pagination($limit))
             ->paginateOver(function($bookmarks = []) use ($query) {
-                return $this->searchCall($query, 'my_pins', $bookmarks);
+                return $this->execSearchRequest($query, 'my_pins', $bookmarks);
             });
     }
     

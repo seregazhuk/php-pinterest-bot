@@ -38,7 +38,7 @@ trait Searchable
      *
      * @return SearchResponse
      */
-    public function searchCall($query, $scope, $bookmarks = [])
+    public function execSearchRequest($query, $scope, $bookmarks = [])
     {
         $url = UrlBuilder::getSearchUrl($bookmarks);
         $get = $this->createSearchQuery($query, $scope, $bookmarks);
@@ -85,7 +85,7 @@ trait Searchable
     {
         return (new Pagination($limit))
             ->paginateOver(function($bookmarks = []) use ($query) {
-                return $this->searchCall($query, $this->getSearchScope(), $bookmarks);
+                return $this->execSearchRequest($query, $this->getSearchScope(), $bookmarks);
             });
     }
 
