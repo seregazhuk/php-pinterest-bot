@@ -4,9 +4,6 @@ namespace seregazhuk\PinterestBot\Helpers;
 
 class Cookies
 {
-    const TOKEN_NAME = 'csrftoken';
-    const DEFAULT_TOKEN = '1234';
-
     /**
      * @var array
      */

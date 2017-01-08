@@ -31,9 +31,8 @@ if you don't use such operations as creating pins, writing comments or sending m
 - [Pinners](#pinners)
 - [Interests](#interests)
 - [Topics](#topics)
-- [Conversations](#conversations)
 - [Search](#search)
-- [News](#news)
+- [Inbox](#inbox)
 - [Keywords](#keywords)
 - [Errors handling](#errors-handling)
 - [Use proxy](#use-proxy)
@@ -244,6 +243,11 @@ if ($bot->user->isBanned() {
 Change you password:
 ```php
 $bot->password->change('oldPassword', 'newPassword');
+```
+
+Remove things you’ve recently searched for from search suggestions:
+```php
+$bot->user->clearSearchHistory();
 ```
 
 Deactivate current account:
@@ -467,7 +471,9 @@ If you don't want to get all activity records, you can pass a limit as the secon
 Get  5 last activity records:
 
 ```php
-foreach($bot->pins->activity($pinId, 5) as $activity) {
+$activities = $bot->pins->activity($pinId, 5);
+// print_r($activities->toArray());
+foreach($activities as $activity) {
 	//...
 }
 ```
@@ -481,8 +487,19 @@ foreach($bot->pins->related($pinId) as $pin) {
 
 Get last 10 related pins for current pin:
 ```php
-foreach($bot->pins->related($pinId, 10) as $pin) {
+$related = $bot->pins->related($pinId, 10);
+// print_r($related->toArray());
+foreach($related as $pin) {
 	//...
+}
+```
+
+Get the pinners who have tied this pin:
+```php
+$pinners = $bot->pins->tried($pinId);
+// print_r($pinners->toArray()); 
+foreach($pinners as $pinner) {
+    // ...
 }
 ```
 
@@ -666,38 +683,6 @@ Get related topics for topic (similar as related topics for interest):
 $topics = $bot->topics->getRelatedTopics('content-marketing');
 ```
 
-
-## Conversations
-
-### Write a message
-Write a message to a user by id. You may specify one user by id, or pass an array of user ids. 
-
-```php
-$bot->conversations->sendMessage($userId, 'message text');
-```
-
-Attach pin by id to message.
-```php
-$pinId = 123456789;
-$bot->conversations->sendMessage($userId, 'message text', $pinId);
-```
-
-### Send email
-Email param may be string or array of emails.
-```php
-$bot->conversations->sendEmail('mail@domain.com', 'message text');
-```
-
-Attach pin to email.
-```php
-$bot->conversations->sendEmail('mail@domain.com', 'message text', $pindId);
-```
-
-Get array of last conversations.
-```php
-$conversations = $bot->conversations->last();
-```
-
 ## Search
 
 **Notice!** generator object is not an array. If you want to fetch search results as an
@@ -710,28 +695,90 @@ $results = iterator_to_array($bot->pins->search('query'));
 Search functions use Pinterest pagination in fetching results and return a generator object.
 
 ```php
+$pins = $bot->pins->search('query')->toArray();
+print_r($pins);
+
+// or iterate with requests
 foreach($bot->pins->search('query') as $pin)
 {
 	// ...
 }
 
+// search only in my pins
+$pins = $bot->pins->searchInMyPins('query')->toArray();
+
+
+// search in people
 foreach($bot->pinners->search('query') as $pinner)
 {
 	// ...
 }
 
+// search in boards
 foreach($bot->boards->search('query') as $board);
 {
 	// ...
 }
 ```
 
-## News
-Get your current user's news. Returns Generator object.
+## Inbox
+
+### News
+
+Get your current user's news:
 ```php
-foreach($bot->news->all() as $new) {
+// get result as array
+$news = $bot->inbox->news()->asArray();
+
+// iterate with requests
+foreach($bot->inbox->news() as $new) {
     // ...
 }
+```
+
+### Notifications
+
+Get user's notifications:
+```php
+// get result as array
+$notifications = $bot->inbox->notifications()->asArray();
+
+// iterate with requests
+foreach($bot->inbox->notifications() as $notification) {
+    // ...
+}
+```
+
+### Conversations
+
+Get array of last conversations.
+```php
+$conversations = $bot->inbox->conversations();
+print_r($conversations);
+```
+
+### Write a message
+Write a message to a user by id. You may specify one user by id, or pass an array of user ids. 
+
+```php
+$bot->inbox->sendMessage($userId, 'message text');
+```
+
+Attach pin by id to message.
+```php
+$pinId = 123456789;
+$bot->inbox->sendMessage($userId, 'message text', $pinId);
+```
+
+### Send email
+Email param may be string or array of emails.
+```php
+$bot->inbox->sendEmail('mail@domain.com', 'message text');
+```
+
+Attach pin to email.
+```php
+$bot->inbox->sendEmail('mail@domain.com', 'message text', $pindId);
 ```
 
 ## Keywords

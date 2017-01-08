@@ -111,7 +111,7 @@ abstract class Provider
     }
 
     /**
-     * @param array  $data
+     * @param mixed $data
      * @param string $resourceUrl
      * @param int $limit
      *
@@ -137,10 +137,9 @@ abstract class Provider
 
     /**
      * @param string $res
-     * @return Response
      */
     protected function processResult($res)
     {
-        return $this->response->fill(json_decode($res, true));
+        $this->response->fill(json_decode($res, true));
     }
 }

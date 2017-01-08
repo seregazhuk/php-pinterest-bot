@@ -93,11 +93,13 @@ class UrlBuilder
     const RESOURCE_CHANGE_PASSWORD = 'resource/UserPasswordResource/update/';
     const RESOURCE_DEACTIVATE_ACCOUNT = 'resource/DeactivateAccountResource/create/';
     const RESOURCE_BLOCK_USER = 'resource/UserBlockResource/create/';
+    const RESOURCE_CLEAR_SEARCH_HISTORY = 'resource/TypeaheadClearRecentResource/delete/';
 
     /**
      * News
      */
     const RESOURCE_GET_LATEST_NEWS = 'resource/NetworkStoriesResource/get/';
+    const RESOURCE_GET_NOTIFICATIONS = 'resource/NewsHubResource/get/';
 
     /**
      * Registration

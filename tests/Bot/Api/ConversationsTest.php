@@ -2,22 +2,22 @@
 
 namespace seregazhuk\tests\Bot\Api;
 
-use seregazhuk\PinterestBot\Api\Providers\Conversations;
+use seregazhuk\PinterestBot\Api\Providers\Inbox;
 
 /**
- * Class ConversationsTest.
+ * Class InboxTest.
  */
-class ConversationsTest extends ProviderTest
+class InboxTest extends ProviderTest
 {
     /**
-     * @var Conversations
+     * @var Inbox
      */
     protected $provider;
 
     /**
      * @var string
      */
-    protected $providerClass = Conversations::class;
+    protected $providerClass = Inbox::class;
 
     /** @test */
     public function it_should_send_messages()
@@ -64,17 +64,28 @@ class ConversationsTest extends ProviderTest
     }
 
     /** @test */
-    public function it_should_return_last_conversation()
+    public function it_should_return_conversations()
     {
-        $lastConversations = [
+        $lastInbox = [
             '1' => ['result'],
         ];
 
-        $this->apiShouldReturnData($lastConversations)
-            ->assertEquals($lastConversations, $this->provider->last());
+        $this->apiShouldReturnData($lastInbox)
+            ->assertEquals($lastInbox, $this->provider->conversations());
         
         $this->apiShouldReturnEmpty()
-            ->assertFalse($this->provider->last());
+            ->assertFalse($this->provider->conversations());
+    }
+
+    /** @test */
+    public function it_returns_users_news()
+    {
+        $this->apiShouldReturnPagination()
+            ->apiShouldReturnEmpty();
+
+        $news = $this->provider->news();
+
+        $this->assertIsPaginatedResponse($news);
     }
 
     /**

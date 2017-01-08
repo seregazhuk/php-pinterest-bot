@@ -8,7 +8,7 @@ namespace seregazhuk\PinterestBot\Api\Providers;
  *
  * @property string entityIdName
  */
-class EntityProvider extends Provider
+abstract class EntityProvider extends Provider
 {
     /**
      * @var string

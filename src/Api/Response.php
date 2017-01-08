@@ -21,6 +21,10 @@ class Response implements PaginatedResponse
      */
     protected $clientInfo;
 
+    /**
+     * @param mixed $data
+     * @return $this
+     */
     public function fill($data)
     {
         $this->data = $data;
@@ -28,13 +32,14 @@ class Response implements PaginatedResponse
         $this->lastError = $this->getValueByKey('resource_response.error', $this->data);
 
         $this->clientInfo = $this->getValueByKey('client_context', $this->data);
+
+        return $this;
     }
 
     /**
      * Check if specified data exists in response.
      *
      * @param null  $key
-     *
      * @return array|bool
      */
     public function getResponseData($key = null)
@@ -70,7 +75,6 @@ class Response implements PaginatedResponse
      * Data is stored in ['resource_response']['data'] array.
      *
      * @param string $key
-     *
      * @return bool|array
      */
     protected function parseResponseData($key)
