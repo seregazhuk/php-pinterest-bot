@@ -91,12 +91,9 @@ class AuthTest extends ProviderTest
             ->apiShouldReturnSuccess();
 
         $this->request
-            ->shouldReceive('getHttpClient')
-            ->andReturn(new CurlHttpClient(new Cookies()))
-            ->shouldReceive('clearToken')
-            ->once()
-            ->shouldReceive('login')
-            ->once();
+            ->shouldReceive('getHttpClient')->andReturn(new CurlHttpClient(new Cookies()))
+            ->shouldReceive('login')->once()
+            ->shouldReceive('dropCookies')->once();
 
         $this->assertTrue($this->provider->login('test', 'test', false));
     }
@@ -106,12 +103,12 @@ class AuthTest extends ProviderTest
     {
         $this->setIsLoggedInExpectation(false);
 
-        $this->request->shouldReceive('getHttpClient')
-            ->andReturn(new CurlHttpClient(new Cookies()));
+        $this->request
+            ->shouldReceive('getHttpClient')->andReturn(new CurlHttpClient(new Cookies()));
 
 
         $this->apiShouldReturnError();
-        $this->request->shouldReceive('clearToken');
+        $this->request->shouldReceive('dropCookies')->once();
 
         $this->assertFalse($this->provider->login('test', 'test', false));
     }

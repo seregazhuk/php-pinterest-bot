@@ -55,8 +55,9 @@ trait Followable
      */
     protected function followCall($entityId, $resourceUrl)
     {
-        $result = $this->request
-            ->exec($resourceUrl, $this->createFollowRequestQuery($entityId));
+        $query = $this->createFollowRequestQuery($entityId);
+
+        $result = $this->request->exec($resourceUrl, $query);
 
         $this->processResult($result);
 

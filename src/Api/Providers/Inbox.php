@@ -63,9 +63,7 @@ class Inbox extends Provider
      */
     public function sendMessage($userIds, $text, $pinId = null)
     {
-        $messageData = $this->buildMessageData($text, $pinId);
-
-        return $this->callSendMessage($userIds, [], $messageData);
+        return $this->send($pinId, $text, $userIds, []);
     }
 
     /**
@@ -79,8 +77,6 @@ class Inbox extends Provider
      */
     public function sendEmail($emails, $text, $pinId = null)
     {
-        $messageData = $this->buildMessageData($text, $pinId);
-
-        return $this->callSendMessage([], $emails, $messageData);
+        return $this->send($pinId, $text, [], $emails);
     }
 }

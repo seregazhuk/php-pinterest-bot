@@ -37,7 +37,6 @@ class Pinners extends EntityProvider
      * return info for logged user.
      *
      * @param string $username
-     *
      * @return array
      */
     public function info($username)

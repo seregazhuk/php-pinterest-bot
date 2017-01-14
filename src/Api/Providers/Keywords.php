@@ -9,7 +9,7 @@ class Keywords extends Provider
     /**
      * Get recommendations for query word. 
      * 
-     * @param $query
+     * @param string $query
      * @return array|bool
      */
     public function recommendedFor($query)
@@ -32,7 +32,7 @@ class Keywords extends Provider
     {
         $keywords = $response['guides'];
 
-        if (!isset($keywords)) return [];
+        if (empty($keywords)) return [];
 
         return array_map(function ($keywordData) {
             return [

@@ -157,7 +157,7 @@ class Response implements PaginatedResponse
      */
     public function getPaginationData()
     {
-        if (!$this->isOk()) return [];
+        if ($this->hasErrors()) return [];
 
         $bookmarks = $this->getBookmarks();
         if ($data = $this->getResponseData()) {

@@ -24,8 +24,7 @@ trait UploadsImages
      */
     public function upload($image)
     {
-        $result = $this->request
-            ->upload($image, UrlBuilder::IMAGE_UPLOAD);
+        $result = $this->request->upload($image, UrlBuilder::IMAGE_UPLOAD);
 
         $this->processResult($result);
 
