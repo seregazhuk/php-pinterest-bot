@@ -167,6 +167,6 @@ class Pinners extends EntityProvider
      */
     protected function paginateByUsername($username, $url, $limit = Pagination::DEFAULT_LIMIT)
     {
-        return parent::paginate(['username' => $username], $url, $limit);
+        return $this->paginate(['username' => $username], $url, $limit);
     }
 }
