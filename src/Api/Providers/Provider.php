@@ -140,6 +140,6 @@ abstract class Provider
      */
     protected function processResult($res)
     {
-        $this->response->fill(json_decode($res, true));
+        $this->response->fillFromJson($res);
     }
 }

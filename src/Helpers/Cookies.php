@@ -10,7 +10,7 @@ class Cookies
     protected $cookies = [];
 
     /**
-     * @param $name
+     * @param string $name
      * @return mixed
      */
     public function get($name)
@@ -53,7 +53,7 @@ class Cookies
     }
 
     /**
-     * @param $line
+     * @param string $line
      * @return bool
      */
     protected function isHttp($line)
@@ -62,7 +62,7 @@ class Cookies
     }
 
     /**
-     * @param $line
+     * @param string $line
      * @return bool
      */
     protected function isValid($line)
@@ -71,7 +71,7 @@ class Cookies
     }
 
     /**
-     * @param $line
+     * @param string $line
      * @return array|bool
      */
     protected function parseCookie($line)
@@ -93,7 +93,7 @@ class Cookies
     }
 
     /**
-     * @param $line
+     * @param string $line
      * @return array
      */
     protected function getCookieData($line)

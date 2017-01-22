@@ -2,6 +2,8 @@
 
 namespace seregazhuk\tests\Helpers;
 
+use seregazhuk\PinterestBot\Helpers\Pagination;
+
 /**
  * Class ResponseHelper.
  *
@@ -9,6 +11,14 @@ namespace seregazhuk\tests\Helpers;
  */
 trait ResponseHelper
 {
+    /**
+     * @var array
+     */
+    protected $paginatedResponse = [
+        ['id' => 1],
+        ['id' => 2],
+    ];
+
     /**
      * Create a dummy response from Pinterest.
      *
@@ -51,30 +61,47 @@ trait ResponseHelper
     /**
      * Create a dummy paginated response.
      *
+     * @param $response
      * @return array
      */
-    public function createPaginatedResponse()
+    public function createPaginatedResponse($response)
     {
         return [
             'resource_response' => [
-                'data' => [
-                    ['id' => 1],
-                    ['id' => 2],
-                ],
+                'data' => $response,
             ],
         ];
     }
 
     /**
+     * Create a dummy paginated response.
+     *
+     * @param $response
+     * @return array
+     */
+    public function createSearchResponse($response)
+    {
+        return [
+           'module' => [
+               'tree' => [
+                   'data' => [
+                       'results' => $response
+                   ]
+               ]
+            ]
+        ];
+    }
+
+
+    /**
      * @param array|null $response
      * @param int $times
-     * @param string $method
      * @return $this
      */
-    public function apiShouldReturn($response = [], $times = 1, $method = 'exec')
+    public function apiShouldReturn($response = [], $times = 1)
     {
         $this->request
-            ->shouldReceive($method)
+            ->shouldReceive('exec')
             ->times($times)
             ->andReturn(json_encode($response));
 
@@ -125,22 +152,44 @@ trait ResponseHelper
     }
 
     /**
+     * @param $response
      * @return $this
      */
-    public function apiShouldReturnPagination()
+    public function apiShouldReturnPagination($response)
     {
         return $this->apiShouldReturn(
-            $this->createPaginatedResponse()
+            $this->createPaginatedResponse($response)
+        );
+    }
+
+    /**
+     * @param array $response
+     * @return $this
+     */
+    public function apiShouldReturnSearchPagination($response)
+    {
+        return $this->apiShouldReturn(
+            $this->createSearchResponse($response)
         );
     }
 
     /**
      * @param mixed $response
-     * @param int $count
+     * @return $this
      */
-    public function assertIsPaginatedResponse($response, $count = 2)
+    public function assertIsPaginatedResponse($response)
     {
         $this->assertInstanceOf(\Traversable::class, $response);
-        $this->assertCount($count, iterator_to_array($response));
+
+        return $this;
+    }
+
+    /**
+     * @param $expected
+     * @param Pagination $response
+     */
+    public function assertPaginatedResponseEquals($expected, Pagination $response)
+    {
+        $this->assertEquals($expected, $response->toArray());
     }
 }

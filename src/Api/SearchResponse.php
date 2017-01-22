@@ -2,54 +2,19 @@
 
 namespace seregazhuk\PinterestBot\Api;
 
-use seregazhuk\PinterestBot\Api\Contracts\PaginatedResponse;
-
-class SearchResponse implements PaginatedResponse
+class SearchResponse extends Response
 {
-    /**
-     * @var Response
-     */
-    protected $response;
-
-    /**
-     * @param Response $response
-     */
-    public function __construct(Response $response)
+    protected function getRawBookmarksData()
     {
-        $this->response = $response;
+        return $this->getData('module.tree.resource.options.bookmarks', []);
     }
 
     /**
-     * Parse bookmarks from response.
-     *
+     * @param null $key
      * @return array
      */
-    public function getBookmarks()
+    public function getResponseData($key = null)
     {
-        $searchBookmarks = $this
-            ->response
-            ->getData('module.tree.resource.options.bookmarks', []);
-
-        return $searchBookmarks ? [$searchBookmarks[0]] : $this->response->getBookmarks();
-    }
-
-    /**
-     * @return array
-     */
-    public function getResponseData()
-    {
-        $results = $this
-            ->response
-            ->getData('module.tree.data.results', []);
-
-        return $results ? : $this->response->getResponseData();
-    }
-
-    /**
-     * @return bool
-     */
-    public function isEmpty()
-    {
-        return empty($this->getResponseData());
+        return $this->getData('module.tree.data.results', []);
     }
 }

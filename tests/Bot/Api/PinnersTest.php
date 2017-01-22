@@ -58,69 +58,51 @@ class PinnersTest extends ProviderTest
     /** @test */
     public function it_should_return_generator_with_user_followers()
     {
-        $this->apiShouldReturnPagination()
-            ->apiShouldReturnEmpty();
+        $response = $this->paginatedResponse;
 
-        $followers = $this->provider->followers('username');
-        $this->assertIsPaginatedResponse($followers);
+        $this->apiShouldReturnPagination($response)
+            ->assertIsPaginatedResponse($followers = $this->provider->followers('username'))
+            ->assertPaginatedResponseEquals($response, $followers);
     }
 
     /** @test */
     public function it_should_return_generator_with_following_users()
     {
-        $this->apiShouldReturnPagination()
-            ->apiShouldReturnEmpty();
+        $response = $this->paginatedResponse;
 
-        $following = $this->provider->following('username');
-
-        $this->assertIsPaginatedResponse($following);
+        $this->apiShouldReturnPagination($response)
+            ->assertIsPaginatedResponse($following = $this->provider->following('username'))
+            ->assertPaginatedResponseEquals($response, $following);
     }
 
     /** @test */
     public function it_should_return_generator_with_user_pins()
     {
-        $res = [
-            'resource'          => [
-                'options' => [
-                    'bookmarks' => ['my_bookmarks'],
-                ],
-            ],
-            'resource_response' => [
-                'data' => [
-                    ['id' => 1],
-                    ['id' => 2],
-                ],
-            ],
-        ];
-        $this->apiShouldReturn($res);
+        $response = $this->paginatedResponse;
 
-        $pins = $this->provider->pins('username', 2);
-        $this->assertIsPaginatedResponse($pins);
+        $this->apiShouldReturnPagination($response)
+            ->assertIsPaginatedResponse($pins = $this->provider->pins('username', 2))
+            ->assertPaginatedResponseEquals($response, $pins);
     }
 
     /** @test */
     public function it_should_return_generator_when_searching()
     {
-        $response['module']['tree']['data']['results'] = [
-            ['id' => 1],
-            ['id' => 2],
-        ];
+        $response = $this->paginatedResponse;
 
-        $this->apiShouldReturn($response);
-
-        $res = $this->provider->search('dogs', 2);
-        $this->assertIsPaginatedResponse($res);
+        $this->apiShouldReturnSearchPagination($response)
+            ->assertIsPaginatedResponse($res = $this->provider->search('dogs', 2))
+            ->assertPaginatedResponseEquals($response, $res);
     }
 
     /** @test */
     public function it_should_return_generator_with_user_likes()
     {
-        $this->apiShouldReturnPagination()
-            ->apiShouldReturnEmpty();
+        $response = $this->paginatedResponse;
 
-        $likes = $this->provider->likes('username');
-
-        $this->assertIsPaginatedResponse($likes);
+        $this->apiShouldReturnPagination($response)
+            ->assertIsPaginatedResponse($likes = $this->provider->likes('username'))
+            ->assertPaginatedResponseEquals($response, $likes);
     }
 
     /** @test */

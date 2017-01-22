@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [5.2.1] - 2017-01-22
+### Fixed:
+ - Pinners *followers()* methods.
+
 ## [5.2.0] - 2017-01-08
 ### Added:
  - User *clearSearchHistory()* to remove search suggestions.

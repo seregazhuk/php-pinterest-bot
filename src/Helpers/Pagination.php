@@ -4,6 +4,7 @@ namespace seregazhuk\PinterestBot\Helpers;
 
 use Traversable;
 use IteratorAggregate;
+use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Api\Contracts\PaginatedResponse;
 
 /**
@@ -94,7 +95,7 @@ class Pagination implements IteratorAggregate
                 if ($this->reachesLimit($resultsNum)) return;
             }
 
-            if ($this->checkEndBookMarks()) return;
+            if (empty($this->bookmarks)) return;
         }
     }
 
@@ -135,6 +136,7 @@ class Pagination implements IteratorAggregate
     {
         $callback = $this->callback;
 
+        /** @var Response $response */
         $response = $callback($this->bookmarks);
 
         return $this->processResponse($response);
@@ -163,17 +165,5 @@ class Pagination implements IteratorAggregate
     protected function reachesLimit($resultsNum)
     {
         return $this->limit && $resultsNum >= $this->limit;
-    }
-
-
-    /**
-     * Checks for -end- substring in bookmarks. This is pinterest sign of
-     * the finished pagination.
-     *
-     * @return bool
-     */
-    protected function checkEndBookMarks()
-    {
-        return !empty($this->bookmarks) && $this->bookmarks[0] == '-end-';
     }
 }

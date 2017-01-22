@@ -80,12 +80,9 @@ class InboxTest extends ProviderTest
     /** @test */
     public function it_returns_users_news()
     {
-        $this->apiShouldReturnPagination()
-            ->apiShouldReturnEmpty();
-
-        $news = $this->provider->news();
-
-        $this->assertIsPaginatedResponse($news);
+        $this->apiShouldReturnPagination($this->paginatedResponse)
+            ->assertIsPaginatedResponse($news = $this->provider->news())
+            ->assertPaginatedResponseEquals($this->paginatedResponse, $news);
     }
 
     /**

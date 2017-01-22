@@ -46,7 +46,7 @@ trait Searchable
 
         $this->processResult($result);
 
-        return new SearchResponse($this->response);
+        return (new SearchResponse())->fillFromJson($result);
     }
 
     /**

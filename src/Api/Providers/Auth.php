@@ -168,8 +168,7 @@ class Auth extends Provider
      */
     protected function processLogin($username, $password)
     {
-        $this->request->clearToken();
-        $this->request->getHttpClient()->removeCookies();
+        $this->request->dropCookies();
 
         $credentials = [
             'username_or_email' => $username,
@@ -178,7 +177,7 @@ class Auth extends Provider
 
         $response = $this->execPostRequest($credentials, UrlBuilder::RESOURCE_LOGIN, true);
 
-        if (!$response->isOk()) return false;
+        if ($response->hasErrors()) return false;
 
         $this->request->login();
 

@@ -317,4 +317,23 @@ class Request
     {
         return $this->httpClient;
     }
+
+    /**
+     * @return string
+     */
+    public function getCurrentUrl()
+    {
+        return $this->httpClient->getCurrentUrl();
+    }
+
+    /**
+     * @return $this
+     */
+    public function dropCookies()
+    {
+        $this->httpClient->removeCookies();
+        $this->clearToken();
+
+        return $this;
+    }
 }

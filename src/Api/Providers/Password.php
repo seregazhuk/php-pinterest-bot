@@ -79,7 +79,6 @@ class Password extends Provider
     {
         $url = $this
             ->request
-            ->getHttpClient()
             ->getCurrentUrl();
 
         return parse_url($url);

@@ -3,6 +3,7 @@
 namespace seregazhuk\PinterestBot\Api\Providers;
 
 use seregazhuk\PinterestBot\Api\Response;
+use seregazhuk\PinterestBot\Helpers\FileHelper;
 use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\Traits\Searchable;
@@ -307,7 +308,7 @@ class Pins extends EntityProvider
      * Saves the pin original image to the specified path. On success
      * returns full path to saved image. Otherwise returns false.
      *
-     * @param int $pinId
+     * @param string $pinId
      * @param string $path
      * @return false|string
      */
@@ -319,7 +320,7 @@ class Pins extends EntityProvider
         $originalUrl = $pinInfo['images']['orig']['url'];
         $destination = $path . DIRECTORY_SEPARATOR . basename($originalUrl);
 
-        file_put_contents($destination, file_get_contents($originalUrl));
+        FileHelper::saveTo($originalUrl, $destination);
 
         return $destination;
     }

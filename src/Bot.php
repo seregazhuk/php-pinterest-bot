@@ -3,7 +3,7 @@
 namespace seregazhuk\PinterestBot;
 
 use seregazhuk\PinterestBot\Api\Providers\Auth;
-use seregazhuk\PinterestBot\Api\Providers\News;
+use seregazhuk\PinterestBot\Api\Providers\Inbox;
 use seregazhuk\PinterestBot\Api\Providers\Pins;
 use seregazhuk\PinterestBot\Api\Providers\User;
 use seregazhuk\PinterestBot\Api\Providers\Topics;
@@ -14,24 +14,22 @@ use seregazhuk\PinterestBot\Api\Providers\Keywords;
 use seregazhuk\PinterestBot\Api\ProvidersContainer;
 use seregazhuk\PinterestBot\Api\Providers\Interests;
 use seregazhuk\PinterestBot\Api\Contracts\HttpClient;
-use seregazhuk\PinterestBot\Api\Providers\Conversations;
 
 /**
  * Class Bot.
  *
  * @property Pins $pins 
- * @property News $news
+ * @property Inbox $inbox
  * @property User $user
  * @property Boards $boards
  * @property Pinners $pinners
  * @property Keywords $keywords
  * @property Interests $interests
  * @property Topics $topics
- * @property Conversations $conversations
  * @property Auth $auth
  *
  * @method HttpClient getHttpClient
- * @method array|null getLastError
+ * @method string|null getLastError
  */
 class Bot
 {
