@@ -235,7 +235,7 @@ class Pins extends EntityProvider
     /**
      * @param string $pinId
      * @param int $limit
-     * @return mixed
+     * @return Pagination
      */
     public function related($pinId, $limit = Pagination::DEFAULT_LIMIT)
     {
@@ -310,7 +310,7 @@ class Pins extends EntityProvider
      *
      * @param string $pinId
      * @param string $path
-     * @return string|bool
+     * @return false|string
      */
     public function saveOriginalImage($pinId, $path)
     {

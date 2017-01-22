@@ -1,7 +1,7 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [5.2.0] - 2017-01-??
+## [5.2.0] - 2017-01-08
 ### Added:
  - User *clearSearchHistory()* to remove search suggestions.
  - Pins *tied()* returns the pinners who have tied this pin.
