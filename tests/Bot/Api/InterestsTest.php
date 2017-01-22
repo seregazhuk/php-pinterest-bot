@@ -2,8 +2,6 @@
 
 namespace seregazhuk\tests\Bot\Api;
 
-use seregazhuk\PinterestBot\Helpers\UrlBuilder;
-use seregazhuk\tests\Helpers\FollowResponseHelper;
 use seregazhuk\PinterestBot\Api\Providers\Interests;
 
 /**
@@ -43,8 +41,10 @@ class InterestsTest extends ProviderTest
     /** @test */
     public function it_should_return_generator_for_pins()
     {
-        $this->apiShouldReturnPagination()
-            ->apiShouldReturnEmpty()
-            ->assertCount(2, iterator_to_array($this->provider->pins('test')));
+        $response = $this->paginatedResponse;
+
+        $this->apiShouldReturnPagination($response)
+            ->assertIsPaginatedResponse($pins = $this->provider->pins('test'))
+            ->assertPaginatedResponseEquals($response, $pins);
     }
 }

@@ -61,7 +61,7 @@ class Pinners extends EntityProvider
             throw new WrongFollowingType("No following results for $type");
         }
 
-        return $this->paginate($username, $followingUrl, $limit);
+        return $this->paginateByUsername($username, $followingUrl, $limit);
     }
 
     /**
@@ -114,7 +114,7 @@ class Pinners extends EntityProvider
      */
     public function pins($username, $limit = Pagination::DEFAULT_LIMIT)
     {
-        return $this->paginate(
+        return $this->paginateByUsername(
             $username, UrlBuilder::RESOURCE_USER_PINS, $limit
         );
     }
@@ -128,7 +128,7 @@ class Pinners extends EntityProvider
      */
     public function likes($username, $limit = Pagination::DEFAULT_LIMIT)
     {
-        return $this->paginate(
+        return $this->paginateByUsername(
             $username, UrlBuilder::RESOURCE_USER_LIKES, $limit
         );
     }
@@ -165,7 +165,7 @@ class Pinners extends EntityProvider
      *
      * @return Pagination
      */
-    protected function paginate($username, $url, $limit = Pagination::DEFAULT_LIMIT)
+    protected function paginateByUsername($username, $url, $limit = Pagination::DEFAULT_LIMIT)
     {
         return parent::paginate(['username' => $username], $url, $limit);
     }

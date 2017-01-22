@@ -37,6 +37,15 @@ class Response implements PaginatedResponse
     }
 
     /**
+     * @param string $json
+     * @return static
+     */
+    public function fillFromJson($json)
+    {
+        return $this->fill(json_decode($json, true));
+    }
+
+    /**
      * Check if specified data exists in response.
      *
      * @param null  $key
@@ -98,6 +107,7 @@ class Response implements PaginatedResponse
         if(empty($key)) return $data;
 
         $indexes = explode('.', $key);
+
         $value = $data;
 
         foreach ($indexes as $index) {
@@ -145,8 +155,18 @@ class Response implements PaginatedResponse
      */
     public function getBookmarks()
     {
-        $bookmarks = $this->getValueByKey('resource.options.bookmarks', $this->data,  []);
-        return empty($bookmarks) ? [] : [$bookmarks[0]];
+        $bookmarks = $this->getRawBookmarksData();
+
+        if (empty($bookmarks)) return [];
+
+        if ($bookmarks[0] == '-end-') return [];
+
+        return $bookmarks;
+    }
+
+    protected function getRawBookmarksData()
+    {
+        return $this->getData('resource.options.bookmarks', []);
     }
 
     /**
@@ -160,6 +180,7 @@ class Response implements PaginatedResponse
         if ($this->hasErrors()) return [];
 
         $bookmarks = $this->getBookmarks();
+
         if ($data = $this->getResponseData()) {
             return ['data' => $data, 'bookmarks' => $bookmarks];
         }

@@ -2,8 +2,8 @@
 
 namespace seregazhuk\tests\Bot\Api;
 
-use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\Providers\Pins;
+use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 
 /**
  * Class PinsTest.
@@ -118,15 +118,11 @@ class PinsTest extends ProviderTest
     /** @test */
     public function it_should_return_generator_when_searching()
     {
-        $response['module']['tree']['data']['results'] = [
-            ['id' => 1],
-            ['id' => 2],
-        ];
+        $response = $this->paginatedResponse;
 
-        $this->apiShouldReturn($response);
-
-        $res = $this->provider->search('dogs', 2);
-        $this->assertIsPaginatedResponse($res);
+        $this->apiShouldReturnSearchPagination($response)
+            ->assertIsPaginatedResponse($res = $this->provider->search('dogs', 2))
+            ->assertPaginatedResponseEquals($response, $res);
     }
 
     /** @test */
@@ -142,22 +138,23 @@ class PinsTest extends ProviderTest
     /** @test */
     public function it_should_return_generator_with_pins_for_specific_site()
     {
-        $this->apiShouldReturnPagination()
-            ->apiShouldReturnEmpty();
+        $response = $this->paginatedResponse;
 
-        $pins = $this->provider->fromSource('flickr.ru');
-
-        $this->assertIsPaginatedResponse($pins);
+        $this->apiShouldReturnPagination($response)
+            ->assertIsPaginatedResponse($pins = $this->provider->fromSource('flickr.ru'))
+            ->assertPaginatedResponseEquals($response, $pins);
     }
 
     /** @test */
     public function it_should_return_generator_with_pin_activity()
     {
-        $pinData = ['aggregated_pin_data' => ['id' => 1]];
+        $pinData = ['aggregated_pin_data' => ['id' => 11]];
+        $response = $this->paginatedResponse;
+
         $this->apiShouldReturnData($pinData)
-            ->apiShouldReturnPagination()
-            ->apiShouldReturnEmpty()
-            ->assertIsPaginatedResponse($this->provider->activity(1));
+            ->apiShouldReturnPagination($response)
+            ->assertIsPaginatedResponse($activity = $this->provider->activity(1))
+            ->assertPaginatedResponseEquals($response, $activity);
     }
 
     /** @test */
@@ -170,24 +167,22 @@ class PinsTest extends ProviderTest
     /** @test */
     public function it_should_return_generator_for_users_feed()
     {
-        $this->apiShouldReturnPagination()
-            ->apiShouldReturnEmpty();
+        $response = $this->paginatedResponse;
 
-        $res = $this->provider->feed();
-
-        $this->assertIsPaginatedResponse($res);
+        $this->apiShouldReturnPagination($response)
+            ->assertIsPaginatedResponse($feed = $this->provider->feed())
+            ->assertPaginatedResponseEquals($response, $feed);
     }
 
     /** @test */
     public function it_should_return_generator_for_related_pins()
     {
-        $this->apiShouldReturnPagination()
-            ->apiShouldReturnEmpty();
+        $pinId= 1;
+        $response = $this->paginatedResponse;
 
-        $pinId = 1;
-        $res = $this->provider->related($pinId);
-
-        $this->assertIsPaginatedResponse($res);
+        $this->apiShouldReturnPagination($response)
+            ->assertIsPaginatedResponse($related = $this->provider->related($pinId))
+            ->assertPaginatedResponseEquals($response, $related);
     }
 
 

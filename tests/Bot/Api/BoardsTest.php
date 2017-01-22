@@ -26,15 +26,11 @@ class BoardsTest extends ProviderTest
     /** @test */
     public function it_should_should_return_generator_when_searching()
     {
-        $response['module']['tree']['data']['results'] = [
-            ['id' => 1],
-            ['id' => 2],
-        ];
+        $response = $this->paginatedResponse;
 
-        $this->apiShouldReturnPagination();
-
-        $res = $this->provider->search('dogs', 2);
-        $this->assertIsPaginatedResponse($res);
+        $this->apiShouldReturnSearchPagination($response)
+            ->assertIsPaginatedResponse($res = $this->provider->search('dogs', 2))
+            ->assertPaginatedResponseEquals($response, $res);
     }
 
     /** @test */
@@ -62,13 +58,12 @@ class BoardsTest extends ProviderTest
     /** @test */
     public function it_should_return_generator_for_boards_followers()
     {
-        $this->apiShouldReturnPagination()
-            ->apiShouldReturnEmpty();
-
         $boardId = 1;
-        $followers = $this->provider->followers($boardId);
+        $response = $this->paginatedResponse;
 
-        $this->assertIsPaginatedResponse($followers);
+        $this->apiShouldReturnPagination($response)
+            ->assertIsPaginatedResponse($followers = $this->provider->followers($boardId))
+            ->assertPaginatedResponseEquals($response, $followers);
     }
 
     /** @test */
@@ -98,13 +93,12 @@ class BoardsTest extends ProviderTest
     /** @test */
     public function it_should_return_generator_with_pins_for_specific_board()
     {
-        $this->apiShouldReturnPagination()
-            ->apiShouldReturnEmpty();
-
+        $response = $this->paginatedResponse;
         $boardId = 1;
-        $pins = $this->provider->pins($boardId);
 
-        $this->assertIsPaginatedResponse($pins);
+        $this->apiShouldReturnPagination($response)
+            ->assertIsPaginatedResponse($pins = $this->provider->pins($boardId))
+            ->assertPaginatedResponseEquals($response, $pins);
     }
 
     /** @test */
