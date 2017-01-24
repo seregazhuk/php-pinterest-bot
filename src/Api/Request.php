@@ -57,7 +57,7 @@ class Request
         'DNT: 1',
         'X-Pinterest-AppState: active',
         'X-NEW-APP: 1',
-        'X-APP-VERSION: 4f10e3b',
+        'X-APP-VERSION: 3f2a9cf',
         'X-Requested-With: XMLHttpRequest',
     ];
 
@@ -223,7 +223,7 @@ class Request
         $data['context'] = new \stdClass();
 
         return [
-            'source_url' => '',
+            'source_url' => '/?logged_out=true',
             'data'       => json_encode($data),
         ];
     }
