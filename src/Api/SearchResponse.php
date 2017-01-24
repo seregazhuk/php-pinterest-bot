@@ -6,7 +6,13 @@ class SearchResponse extends Response
 {
     protected function getRawBookmarksData()
     {
-        return $this->getData('module.tree.resource.options.bookmarks', []);
+        // First response is special and returns bookmarks in 'module.tree` array
+        $bookmarks = $this->getData('module.tree.resource.options.bookmarks', []);
+
+        // All the next responses look as expected
+        return empty($bookmarks) ?
+            parent::getRawBookmarksData() :
+            $bookmarks;
     }
 
     /**
@@ -15,6 +21,12 @@ class SearchResponse extends Response
      */
     public function getResponseData($key = null)
     {
-        return $this->getData('module.tree.data.results', []);
+        // First response is special and returns data in 'module.tree` array
+        $data = $this->getData('module.tree.data.results', []);
+
+        // All the next responses look as expected
+        return empty($data) ?
+            parent::getResponseData() :
+            $data;
     }
 }
