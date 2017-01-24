@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 ## [5.2.2] - 2017-01-24
 ### Fixed:
+ - Registration
+
+## [5.2.2] - 2017-01-24
+### Fixed:
  - Search method correctly works with limits.
 
 ## [5.2.1] - 2017-01-22

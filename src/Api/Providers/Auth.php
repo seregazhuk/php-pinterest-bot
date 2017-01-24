@@ -61,7 +61,7 @@ class Auth extends Provider
     public function register($email, $password, $name, $country = 'GB', $age = 18)
     {
         $data = [
-            "age"        => $age,
+            "age"        => (string)$age,
             "email"      => $email,
             "password"   => $password,
             "country"    => $country,
