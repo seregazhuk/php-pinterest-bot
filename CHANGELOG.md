@@ -1,7 +1,7 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [5.2.2] - 2017-01-24
+## [5.2.3] - 2017-01-24
 ### Fixed:
  - Registration
 
