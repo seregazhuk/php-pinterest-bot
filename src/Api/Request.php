@@ -223,7 +223,7 @@ class Request
         $data['context'] = new \stdClass();
 
         return [
-            'source_url' => '/?logged_out=true',
+            'source_url' => '',
             'data'       => json_encode($data),
         ];
     }
