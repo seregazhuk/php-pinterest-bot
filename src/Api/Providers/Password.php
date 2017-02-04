@@ -38,7 +38,7 @@ class Password extends Provider
     {
         // Visit link to get current reset token, username and token expiration
         $this->visitPage($link);
-        $this->request->clearToken();
+        $this->request->dropCookies();
 
         $urlData = $this->parseCurrentUrl();
         $username = trim(str_replace('/pw/', '', $urlData['path']), '/');

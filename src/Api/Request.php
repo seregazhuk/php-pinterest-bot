@@ -41,12 +41,6 @@ class Request
     protected $postFileData;
 
     /**
-     * @var array|null
-     */
-    protected $lastError;
-
-
-    /**
      * Common headers needed for every query.
      *
      * @var array
@@ -127,7 +121,7 @@ class Request
      *
      * @return $this
      */
-    public function clearToken()
+    protected function clearToken()
     {
         $this->csrfToken = self::DEFAULT_TOKEN;
 
@@ -300,14 +294,6 @@ class Request
             'Content-Type: multipart/form-data; boundary=' . $delimiter,
             'Content-Length: ' . strlen($this->postFileData)
         ];
-    }
-
-    /**
-     * @return array|null
-     */
-    public function getLastError()
-    {
-        return $this->lastError;
     }
 
     /**

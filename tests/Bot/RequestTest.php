@@ -3,7 +3,6 @@
 namespace seregazhuk\tests\Bot;
 
 use Mockery;
-use Mockery\Mock;
 use ReflectionClass;
 use Mockery\MockInterface;
 use PHPUnit_Framework_TestCase;
@@ -23,28 +22,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
     use ReflectionHelper, ResponseHelper, CookiesHelper;
 
     /** @test */
-    public function it_should_return_logged_in_status()
-    {
-        $request = $this->createRequestObject();
-        $this->setProperty('loggedIn', false);
-        $this->assertFalse($request->isLoggedIn());
-
-        $this->setProperty('loggedIn', true);
-        $this->assertTrue($request->isLoggedIn());
-    }
-
-    /** @test */
-    public function it_should_set_csrf_token_to_default_value_after_clear()
-    {
-        $request = $this->createRequestObject();
-        $this->assertEmpty($this->getProperty('csrfToken'));
-
-        $request->clearToken();
-        $this->assertEquals(Request::DEFAULT_TOKEN, $this->getProperty('csrfToken'));
-    }
-
-    /** @test */
-    public function it_should_create_simple_pinterest_request_object()
+    public function it_should_create_pinterest_empty_request_data()
     {
         $emptyRequest = [
             'source_url' => '',
@@ -56,22 +34,10 @@ class RequestTest extends PHPUnit_Framework_TestCase
             ),
         ];
 
-        $object = $this->createRequestObject();
-        $request = $object->createRequestData();
-        $this->assertEquals($emptyRequest, $request);
-        $this->assertEquals('', $request['source_url']);
-    }
+        $request = $this->createRequestObject();
+        $data = $request->createRequestData();
 
-    /** @test */
-    public function it_should_create_pinterest_request_object_with_data()
-    {
-        $data = ['key' => 'val'];
-
-        $object = $this->createRequestObject();
-        $request = $object->createRequestData($data);
-
-        $dataFromRequest = json_decode($request['data'], true);
-        $this->assertEquals($data['key'], $dataFromRequest['key']);
+        $this->assertEquals($emptyRequest, $data);
     }
 
     /** @test */
@@ -90,11 +56,10 @@ class RequestTest extends PHPUnit_Framework_TestCase
     public function it_should_clear_token_and_login_status_after_logout()
     {
         $request = $this->createRequestObject();
-        $this->setProperty('loggedIn', true);
 
         $request->logout();
+
         $this->assertFalse($request->isLoggedIn());
-        $this->assertEquals(Request::DEFAULT_TOKEN, $this->getProperty('csrfToken'));
     }
 
     /**
@@ -103,37 +68,40 @@ class RequestTest extends PHPUnit_Framework_TestCase
      */
     public function it_should_throw_exception_uploading_file_that_does_not_exist()
     {
-        $this->createRequestObject()->upload('image.jpg', 'http://uploadurl.com');
+        $this
+            ->createRequestObject()
+            ->upload('image.jpg', 'http://uploadurl.com');
     }
 
     /** @test */
     public function it_should_load_cookies_from_previously_saved_session_on_auto_login()
     {
-        $cookieFilePath = $this->getCookiePath('test');
-        $this->createCookieFile($cookieFilePath);
+        $this->createCookieFile();
 
         $request = $this->createRequestObject();
         $request->autoLogin('test');
 
-        $this->assertNotEmpty($request->getHttpClient()->cookies());
-        unlink($cookieFilePath);
+        $cookies = $request->getHttpClient()->cookies();
+
+        $this->assertNotEmpty($cookies);
+        $this->assertArrayHasKey('csrftoken', $cookies);
+        $this->assertTrue($request->isLoggedIn());
     }
 
     /** @test */
-    public function it_should_return_false_on_auto_login_when_auth_cookie_not_found()
+    public function it_should_not_login_on_auto_login_when_auth_cookie_not_found()
     {
-        $cookieFilePath = $this->getCookiePath('test');
-        $this->createCookieFile($cookieFilePath, false);
+        $this->createCookieFile(false);
 
         $request = $this->createRequestObject();
+
         $this->assertFalse($request->autoLogin('test'));
     }
 
     /** @test */
-    public function it_should_return_true_on_auto_login_when_auth_cookie_exist()
+    public function it_should_login_on_auto_login_when_auth_cookie_exist()
     {
-        $cookieFilePath = $this->getCookiePath('test');
-        $this->createCookieFile($cookieFilePath);
+        $this->createCookieFile();
 
         $request = $this->createRequestObject();
 
@@ -144,56 +112,62 @@ class RequestTest extends PHPUnit_Framework_TestCase
     /** @test */
     public function it_should_create_post_data_for_upload()
     {
-        $http = $this->getHttpObject()
-            ->shouldReceive('cookie')
-            ->getMock();
+        $http = $this->getHttpObject([
+            'cookie' => '',
+            'execute' => json_encode([])
+        ]);
 
         $image = 'image.jpg';
         file_put_contents($image, '');
 
-        $this->http_should_execute_and_return($http, json_encode([]));
         $request = $this->createRequestObject($http);
 
         $request->upload($image, 'http://uploadurl.com');
         $this->assertNotEmpty($this->getProperty('postFileData'));
+
         unlink($image);
     }
 
-    /**
-     * @param Mock $http
-     * @param mixed $returnsValue
-     * @param int $times
-     */
-    protected function http_should_execute_and_return($http, $returnsValue, $times = 1)
+    /** @test */
+    public function it_should_delegate_current_url_to_http_client()
     {
-        $http->shouldReceive('execute')
-            ->times($times)
-            ->andReturn($returnsValue);
+        $currentUrl = 'http://example.com';
+
+        $http = $this->getHttpObject(['getCurrentUrl' => $currentUrl]);
+
+        $request = $this->createRequestObject($http);
+
+        $this->assertEquals($currentUrl, $request->getCurrentUrl());
     }
 
-    protected function tearDown()
+    /** @test */
+    public function it_should_drop_cookies_and_clear_token_when_drop_cookies()
     {
-        Mockery::close();
+        $request = $this->createRequestObject();
+
+        $request->dropCookies();
+
+        $this->assertFalse($request->isLoggedIn());
     }
 
     /**
+     * @param array $methods
      * @return MockInterface|HttpClient
      */
-    protected function getHttpObject()
+    protected function getHttpObject($methods = [])
     {
-        return Mockery::mock(HttpClient::class);
+        return Mockery::mock(HttpClient::class, $methods);
     }
 
     /**
      * @param HttpClient $http
-     * @param string $userAgentString
      *
      * @return Request
      */
-    protected function createRequestObject(HttpClient $http = null, $userAgentString = '')
+    protected function createRequestObject(HttpClient $http = null)
     {
         $http = $http ? : new CurlHttpClient(new Cookies());
-        $request = new Request($http, $userAgentString);
+        $request = new Request($http);
 
         $this->reflection = new ReflectionClass($request);
         $this->setReflectedObject($request);
