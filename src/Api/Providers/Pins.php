@@ -84,7 +84,7 @@ class Pins extends EntityProvider
         ];
 
         return $this
-            ->execPostRequest($requestOptions, UrlBuilder::RESOURCE_CREATE_PIN, true)
+            ->post($requestOptions, UrlBuilder::RESOURCE_CREATE_PIN, true)
             ->getResponseData();
     }
 
@@ -106,7 +106,7 @@ class Pins extends EntityProvider
             'board_id'    => $boardId,
         ];
 
-        return $this->execPostRequest($requestOptions, UrlBuilder::RESOURCE_UPDATE_PIN);
+        return $this->post($requestOptions, UrlBuilder::RESOURCE_UPDATE_PIN);
     }
 
     /**
@@ -140,7 +140,7 @@ class Pins extends EntityProvider
         ];
 
         return $this
-            ->execPostRequest($requestOptions, UrlBuilder::RESOURCE_REPIN, true)
+            ->post($requestOptions, UrlBuilder::RESOURCE_REPIN, true)
             ->getResponseData();
     }
 
@@ -157,7 +157,7 @@ class Pins extends EntityProvider
             'field_set_key' => 'detailed',
         ];
 
-        return $this->execGetRequest($requestOptions, UrlBuilder::RESOURCE_PIN_INFO);
+        return $this->get($requestOptions, UrlBuilder::RESOURCE_PIN_INFO);
     }
 
     /**
@@ -301,7 +301,7 @@ class Pins extends EntityProvider
             'keep_duplicates' => false
         ];
 
-        return $this->execGetRequest($data, UrlBuilder::RESOURCE_VISUAL_SIMILAR_PINS);
+        return $this->get($data, UrlBuilder::RESOURCE_VISUAL_SIMILAR_PINS);
     }
 
     /**
@@ -347,7 +347,7 @@ class Pins extends EntityProvider
      */
     protected function likePinMethodCall($pinId, $resourceUrl)
     {
-        return $this->execPostRequest(['pin_id' => $pinId], $resourceUrl);
+        return $this->post(['pin_id' => $pinId], $resourceUrl);
     }
 
     /**
@@ -387,6 +387,6 @@ class Pins extends EntityProvider
             'pin_ids'  => $pinIds,
         ];
 
-        return $this->execPostRequest($data, $editUrl);
+        return $this->post($data, $editUrl);
     }
 }

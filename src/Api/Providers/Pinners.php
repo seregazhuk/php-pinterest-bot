@@ -41,7 +41,7 @@ class Pinners extends EntityProvider
      */
     public function info($username)
     {
-        return $this->execGetRequest(['username' => $username], UrlBuilder::RESOURCE_USER_INFO);
+        return $this->get(['username' => $username], UrlBuilder::RESOURCE_USER_INFO);
     }
 
     /**
@@ -155,7 +155,7 @@ class Pinners extends EntityProvider
     {
         $data = ['blocked_user_id' => $userId];
 
-        return $this->execPostRequest($data, UrlBuilder::RESOURCE_BLOCK_USER);
+        return $this->post($data, UrlBuilder::RESOURCE_BLOCK_USER);
     }
 
     /**

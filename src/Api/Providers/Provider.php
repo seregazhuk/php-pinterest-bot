@@ -49,11 +49,9 @@ abstract class Provider
      *
      * @return Response|bool
      */
-    protected function execPostRequest($requestOptions, $resourceUrl, $returnResponse = false)
+    protected function post($requestOptions, $resourceUrl, $returnResponse = false)
     {
-        $postString = Request::createQuery($requestOptions);
-
-        $this->execute($resourceUrl, $postString);
+        $this->execPost($resourceUrl, $requestOptions);
 
         return $returnResponse ? $this->response : $this->response->isOk();
 
@@ -67,11 +65,9 @@ abstract class Provider
      * @param array $bookmarks
      * @return array|bool|Response
      */
-    protected function execGetRequest(array $requestOptions = [], $resourceUrl = '', $bookmarks = null)
+    protected function get(array $requestOptions = [], $resourceUrl = '', $bookmarks = null)
     {
-        $query = Request::createQuery($requestOptions, $bookmarks);
-
-        $this->execute($resourceUrl . "?{$query}");
+        $this->execGet($resourceUrl, $requestOptions, $bookmarks);
 
         return is_null($bookmarks) ?
             $this->response->getResponseData() :
@@ -90,6 +86,29 @@ abstract class Provider
         $this->processResult($result);
 
         return $this;
+    }
+
+    /**
+     * @param string $resourceUrl
+     * @param array $requestOptions
+     * @param array|null $bookmarks
+     */
+    protected function execGet($resourceUrl = '', array $requestOptions = [], $bookmarks = null)
+    {
+        $query = Request::createQuery($requestOptions, $bookmarks);
+
+        $this->execute($resourceUrl . "?{$query}");
+    }
+
+    /**
+     * @param string $resourceUrl
+     * @param $requestOptions
+     */
+    protected function execPost($resourceUrl, $requestOptions)
+    {
+        $postString = Request::createQuery($requestOptions);
+
+        $this->execute($resourceUrl, $postString);
     }
 
     /**
@@ -121,7 +140,7 @@ abstract class Provider
     {
         return (new Pagination($limit))
             ->paginateOver(function($bookmarks = []) use ($data, $resourceUrl) {
-                return $this->execGetRequest($data, $resourceUrl, $bookmarks);
+                return $this->get($data, $resourceUrl, $bookmarks);
             });
     }
 
@@ -132,7 +151,7 @@ abstract class Provider
      */
     public function visitPage($url = '')
     {
-        return $this->execGetRequest([], $url);
+        return $this->get([], $url);
     }
 
     /**

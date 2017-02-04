@@ -24,7 +24,7 @@ class Password extends Provider
     {
         $request = ['username_or_email' => $user];
 
-        return $this->execPostRequest($request, UrlBuilder::RESOURCE_RESET_PASSWORD_SEND_LINK);
+        return $this->post($request, UrlBuilder::RESOURCE_RESET_PASSWORD_SEND_LINK);
     }
 
     /**
@@ -53,7 +53,7 @@ class Password extends Provider
             'expiration'           => $query['e'],
         ];
 
-        return $this->execPostRequest($request, UrlBuilder::RESOURCE_RESET_PASSWORD_UPDATE, true);
+        return $this->post($request, UrlBuilder::RESOURCE_RESET_PASSWORD_UPDATE, true);
     }
 
     /**
@@ -69,7 +69,7 @@ class Password extends Provider
             'new_password_confirm' => $newPassword,
         ];
 
-        return $this->execPostRequest($request, UrlBuilder::RESOURCE_CHANGE_PASSWORD);
+        return $this->post($request, UrlBuilder::RESOURCE_CHANGE_PASSWORD);
     }
 
     /**

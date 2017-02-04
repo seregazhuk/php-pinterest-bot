@@ -256,9 +256,9 @@ All notable changes to this project will be documented in this file.
 ## [4.5.0] - 2016-08-09
 
 ### Added:
- - Interests: get main categories 
- - Interests: get category info
- - Pins: get user feed
+ - Interests: execGet main categories 
+ - Interests: execGet category info
+ - Pins: execGet user feed
 
 ## [4.4.2] - 2016-07-06
 
@@ -322,7 +322,7 @@ All notable changes to this project will be documented in this file.
 ## [4.0.0] - 2016-06-12
 ### Changed:
  - generator objects now return an entity for each iteration, not an array of entities. For example, to 
- get search results there is no more need to make two nested loops:
+ execGet search results there is no more need to make two nested loops:
  
  ```php
  foreach($bot->pins->search('cats') as $pin) {

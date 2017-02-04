@@ -32,7 +32,7 @@ class Topics extends EntityProvider
      */
     public function info($topic)
     {
-        return $this->execGetRequest(["interest" => $topic], UrlBuilder::RESOURCE_GET_TOPIC);
+        return $this->get(["interest" => $topic], UrlBuilder::RESOURCE_GET_TOPIC);
     }
 
     /**

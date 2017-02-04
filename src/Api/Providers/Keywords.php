@@ -19,7 +19,7 @@ class Keywords extends Provider
             'query' => $query,
         ];
 
-        $result = $this->execGetRequest($requestOptions, UrlBuilder::getSearchUrl());
+        $result = $this->get($requestOptions, UrlBuilder::getSearchUrl());
 
         return $this->getKeywordsFromRequest($result);
     }

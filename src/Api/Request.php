@@ -223,7 +223,7 @@ class Request
     }
 
     /**
-     * Trying to get csrf token from cookies.
+     * Trying to execGet csrf token from cookies.
      *
      * @return $this
      */

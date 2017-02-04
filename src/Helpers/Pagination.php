@@ -156,7 +156,7 @@ class Pagination implements IteratorAggregate
     }
 
     /**
-     * Check if we get results limit in pagination.
+     * Check if we execGet results limit in pagination.
      *
      * @param int $resultsNum
      *

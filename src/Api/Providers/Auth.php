@@ -108,7 +108,7 @@ class Auth extends Provider
             'account_type'  => 'other',
         ];
 
-        return $this->execPostRequest($data, UrlBuilder::RESOURCE_CONVERT_TO_BUSINESS);
+        return $this->post($data, UrlBuilder::RESOURCE_CONVERT_TO_BUSINESS);
     }
 
     /**
@@ -138,7 +138,7 @@ class Auth extends Provider
      */
     protected function completeRegistration()
     {
-        return $this->execPostRequest(
+        return $this->post(
             ['placed_experience_id' => self::REGISTRATION_COMPLETE_EXPERIENCE_ID],
             UrlBuilder::RESOURCE_REGISTRATION_COMPLETE
         );
@@ -154,7 +154,7 @@ class Auth extends Provider
 
         if(!$this->sendEmailVerificationAction()) return false;
 
-        if(!$this->execPostRequest($data, UrlBuilder::RESOURCE_CREATE_REGISTER)) return false;
+        if(!$this->post($data, UrlBuilder::RESOURCE_CREATE_REGISTER)) return false;
 
         if(!$this->sendRegistrationActions()) return false;
 
@@ -175,7 +175,7 @@ class Auth extends Provider
             'password'          => $password,
         ];
 
-        $response = $this->execPostRequest($credentials, UrlBuilder::RESOURCE_LOGIN, true);
+        $response = $this->post($credentials, UrlBuilder::RESOURCE_LOGIN, true);
 
         if ($response->hasErrors()) return false;
 
@@ -198,6 +198,6 @@ class Auth extends Provider
      */
     protected function getProfile()
     {
-        return $this->execGetRequest([], UrlBuilder::RESOURCE_GET_USER_SETTINGS);
+        return $this->get([], UrlBuilder::RESOURCE_GET_USER_SETTINGS);
     }
 }

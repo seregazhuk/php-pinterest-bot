@@ -47,7 +47,7 @@ class Boards extends EntityProvider
      */
     public function forUser($username)
     {
-        return $this->execGetRequest(['username' => $username], UrlBuilder::RESOURCE_GET_BOARDS);
+        return $this->get(['username' => $username], UrlBuilder::RESOURCE_GET_BOARDS);
     }
 
     /**
@@ -66,7 +66,7 @@ class Boards extends EntityProvider
             'field_set_key' => 'detailed',
         ];
 
-        return $this->execGetRequest($requestOptions, UrlBuilder::RESOURCE_GET_BOARD);
+        return $this->get($requestOptions, UrlBuilder::RESOURCE_GET_BOARD);
     }
 
     /**
@@ -106,7 +106,7 @@ class Boards extends EntityProvider
             ], $attributes
         );
 
-        return $this->execPostRequest($requestOptions, UrlBuilder::RESOURCE_UPDATE_BOARD);
+        return $this->post($requestOptions, UrlBuilder::RESOURCE_UPDATE_BOARD);
     }
 
     /**
@@ -126,7 +126,7 @@ class Boards extends EntityProvider
             'privacy'     => $privacy,
         ];
 
-        return $this->execPostRequest($requestOptions, UrlBuilder::RESOURCE_CREATE_BOARD);
+        return $this->post($requestOptions, UrlBuilder::RESOURCE_CREATE_BOARD);
     }
 
     /**
@@ -151,6 +151,6 @@ class Boards extends EntityProvider
      */
     public function titleSuggestionsFor($pinId)
     {
-        return $this->execGetRequest(['pin_id' => $pinId], UrlBuilder::RESOURCE_TITLE_SUGGESTIONS);
+        return $this->get(['pin_id' => $pinId], UrlBuilder::RESOURCE_TITLE_SUGGESTIONS);
     }
 }

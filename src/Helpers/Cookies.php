@@ -98,7 +98,7 @@ class Cookies
      */
     protected function getCookieData($line)
     {
-        // get tokens in an array
+        // execGet tokens in an array
         $data = explode("\t", $line);
         // trim the tokens
         $data =  array_map('trim', $data);

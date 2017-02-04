@@ -29,7 +29,7 @@ class Comments extends Provider
             'text'   => $text,
         ];
 
-        return $this->execPostRequest($requestOptions, UrlBuilder::RESOURCE_COMMENT_PIN);
+        return $this->post($requestOptions, UrlBuilder::RESOURCE_COMMENT_PIN);
     }
 
     /**
@@ -47,6 +47,6 @@ class Comments extends Provider
             'comment_id' => $commentId,
         ];
 
-        return $this->execPostRequest($requestOptions, UrlBuilder::RESOURCE_COMMENT_DELETE_PIN);
+        return $this->post($requestOptions, UrlBuilder::RESOURCE_COMMENT_DELETE_PIN);
     }
 }

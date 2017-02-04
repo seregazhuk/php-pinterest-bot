@@ -49,7 +49,7 @@ class Inbox extends Provider
      */
     public function conversations()
     {
-        return $this->execGetRequest([], UrlBuilder::RESOURCE_GET_LAST_CONVERSATIONS);
+        return $this->get([], UrlBuilder::RESOURCE_GET_LAST_CONVERSATIONS);
     }
 
     /**

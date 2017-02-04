@@ -55,7 +55,7 @@ trait SendsRegisterActions
      */
     protected function sendRegisterActionRequest($actions = [])
     {
-        return $this->execPostRequest(
+        return $this->post(
             ['secondStepActions' => $actions], UrlBuilder::RESOURCE_UPDATE_REGISTRATION_TRACK
         );
     }

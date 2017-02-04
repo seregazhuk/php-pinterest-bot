@@ -10,16 +10,11 @@ class CookiesTest extends PHPUnit_Framework_TestCase
 {
     use CookiesHelper;
 
-    /**
-     * @var string
-     */
-    protected $cookieFileName = 'cookies.txt';
-
     /** @test */
     public function it_fills_cookies_from_file()
     {
         $cookies = new Cookies();
-        $cookies->fill($this->cookieFileName);
+        $cookies->fill($this->cookieFilePath);
 
         $parsedCookies = $cookies->all();
 
@@ -32,7 +27,7 @@ class CookiesTest extends PHPUnit_Framework_TestCase
     {
         $cookies = new Cookies();
 
-        $cookies->fill($this->cookieFileName);
+        $cookies->fill($this->cookieFilePath);
 
         $this->assertNull($cookies->get('unknown'));
     }
@@ -42,7 +37,7 @@ class CookiesTest extends PHPUnit_Framework_TestCase
     {
         $cookies = new Cookies();
 
-        $cookies->fill($this->cookieFileName);
+        $cookies->fill($this->cookieFilePath);
 
         $this->assertEquals('123456', $cookies->get('csrftoken'));
     }
@@ -52,14 +47,14 @@ class CookiesTest extends PHPUnit_Framework_TestCase
     {
         $cookies = new Cookies();
 
-        $cookies->fill($this->cookieFileName);
+        $cookies->fill($this->cookieFilePath);
 
         $this->assertEquals('123456', $cookies->getToken());
     }
 
     protected function setUp()
     {
-        $this->createCookieFile($this->cookieFileName);
+        $this->createCookieFile();
         parent::setUp();
     }
 
@@ -68,7 +63,7 @@ class CookiesTest extends PHPUnit_Framework_TestCase
      */
     protected function tearDown()
     {
-        unlink($this->cookieFileName);
+        unlink($this->cookieFilePath);
         parent::tearDown();
     }
 }

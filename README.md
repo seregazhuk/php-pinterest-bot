@@ -61,14 +61,14 @@ $bot = PinterestBot::create();
 // login
 $bot->auth->login('mypinterestlogin', 'mypinterestpassword');
 
-// get lists of your boards 
+// execGet lists of your boards 
 $boards = $bot->boards->forUser('yourUserName');
 
 // create a pin
 $bot->pins->create('http://exmaple.com/image.jpg', $boards[0]['id'], 'pin description');
 ```
 
-*Note*: Some methods use pinterest navigation through results, for example, get user followers/following, pins
+*Note*: Some methods use pinterest navigation through results, for example, execGet user followers/following, pins
 likes/dislikes, search and other feed queries. This means that for every batch of results there will be a 
 request to Pinterest. These methods return an iterator object with Pinterest api results.
 By default functions return the first 50 results. But you can specify another limit num as a second argument. Or pass 0
@@ -83,7 +83,7 @@ will return only 2 pins of the search results.
 
 To receive all results at once as array:
 ```php
-// get all results as array
+// execGet all results as array
 $results = $bot->pins->search('query', 20)->toArray();
 ```
 
@@ -93,17 +93,17 @@ Limit and offset in results:
 $results = $bot->pins
     ->search('query')
     ->skip(50)
-    ->get();
+    ->execGet();
 
 // skip first 50 results, and then take 20 
 $results = $bot->pins
     ->search('query')
     ->take(20)
     ->skip(50)
-    ->get();
+    ->execGet();
 ```
 
-To get all results pass `0` in `take()` method.
+To execGet all results pass `0` in `take()` method.
 
 ## Account
 
@@ -132,7 +132,7 @@ $result = $bot->auth->login('mypinterestlogin', 'mypinterestpassword', false);
 ```
 
 Or you may skip login if you want. It is only required for such operations as likes, follows and making pins.
-You can get your current logged in status via *isLoggedIn* method:
+You can execGet your current logged in status via *isLoggedIn* method:
 
 ```php
 if($bot->auth->isLoggedIn()) {
@@ -194,7 +194,7 @@ Then your can grab a link from email and pass use it to reset password:
 
 ```php
 $bot->password->reset(
-    'https://post.pinterest.com/f/a/your-password-reset-params',
+    'https://execPost.pinterest.com/f/a/your-password-reset-params',
     'newPassword'
 );
 ```
@@ -221,7 +221,7 @@ $bot->user->profile([
 ]);
 ```
 
-You can get your current profile settings calling *profile* method without any params:
+You can execGet your current profile settings calling *profile* method without any params:
 ```php
 $profile = $bot->user->profile();
 echo $profile['username']; //prints your username
@@ -270,7 +270,7 @@ Get all user's boards.
 $boards = $bot->boards->forUser($username);
 ```
 
-Get full board info by boardName and userName. Here you can get board id, for further functions
+Get full board info by boardName and userName. Here you can execGet board id, for further functions
 (for example, pin creating or following boards).
 
 ```php
@@ -329,7 +329,7 @@ foreach($bot->boards->followers($boardId) as $follower)
 }
 ```
 
-When you repin, Pinterest suggests you some board titles for it. You can get these
+When you repin, Pinterest suggests you some board titles for it. You can execGet these
 suggestions for pin by its id:
 ```
 $suggestions = $bot->boards->titleSuggestionsFor($pinId);
@@ -355,7 +355,7 @@ Get pin info by its id.
 $info = $bot->pins->info(1234567890);
 ```
 
-Create new pin. Accepts image url, board id, where to post image, description and preview url.
+Create new pin. Accepts image url, board id, where to execPost image, description and preview url.
 
 ```php
 $pinInfo = $bot->pins->create('http://exmaple.com/image.jpg', $boardId, 'pin description');
@@ -467,7 +467,7 @@ foreach ($bot->pins->activity($pinId) as $data) {
 }
 ```
 
-If you don't want to get all activity records, you can pass a limit as the second parameter.
+If you don't want to execGet all activity records, you can pass a limit as the second parameter.
 Get  5 last activity records:
 
 ```php
@@ -727,7 +727,7 @@ foreach($bot->boards->search('query') as $board);
 
 Get your current user's news:
 ```php
-// get result as array
+// execGet result as array
 $news = $bot->inbox->news()->asArray();
 
 // iterate with requests
@@ -740,7 +740,7 @@ foreach($bot->inbox->news() as $new) {
 
 Get user's notifications:
 ```php
-// get result as array
+// execGet result as array
 $notifications = $bot->inbox->notifications()->asArray();
 
 // iterate with requests
@@ -877,7 +877,7 @@ By default it uses client info from the last request. To reload client context p
 $info = $bot->getClientInfo(true);
 ```
 
-You can get an url of the last visited page:
+You can execGet an url of the last visited page:
 ```php
 $url = $bot->getHttpClient()->getCurrentUrl();
 ```
