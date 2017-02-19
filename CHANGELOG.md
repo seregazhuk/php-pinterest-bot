@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [5.3.0] - ??
+### Added:
+ - Pinners *tried* pins.
+
 ## [5.2.3] - 2017-01-24
 ### Fixed:
  - Registration

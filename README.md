@@ -313,7 +313,7 @@ $bot->boards->follow($boardId);
 $bot->boards->unfollow($boardId);
 ```
 
-Get all pins for board by id (returns Generator object).
+Get all pins for board by id (returns Pagination object).
 ```php
 foreach($bot->boards->pins($boardId) as $pin)
 {
@@ -321,7 +321,7 @@ foreach($bot->boards->pins($boardId) as $pin)
 }
 ```
 
-Get board followers. Uses pinterest api pagination (return Generator object).
+Get board followers. Uses pinterest api pagination (return Pagination object).
 ```php
 foreach($bot->boards->followers($boardId) as $follower)
 {
@@ -447,7 +447,7 @@ foreach ($bot->pins->fromSource('flickr.com') as $pin) {
 }
 ```
 
-Get user pins feed. Method *feed()* returns Generator object.
+Get user pins feed. Method *feed()* returns Pagination object.
 ```php
 foreach ($bot->pins->feed() as $pin) {
     //...
@@ -494,7 +494,7 @@ foreach($related as $pin) {
 }
 ```
 
-Get the pinners who have tied this pin:
+Get the pinners who have tried this pin:
 ```php
 $pinners = $bot->pins->tried($pinId);
 // print_r($pinners->toArray()); 
@@ -578,7 +578,7 @@ foreach($bot->pinners->followingInterests('username') as $interest)
 }
 ```
 
-Get user followers. Returns Generator object.
+Get user followers. Returns Pagination object.
 ```php
 foreach($bot->pinners->followers('username') as $follower)
 {
@@ -586,7 +586,7 @@ foreach($bot->pinners->followers('username') as $follower)
 }
 ```
 
-Get the newest pins of a pinner. Returns Generator object.
+Get the newest pins of a pinner. Returns Pagination object.
 
 ```php
 foreach($bot->pinners->pins('username') as $pin)
@@ -604,7 +604,7 @@ foreach($bot->pinners->pins('username', 20) as $pin)
 }
 ```
 
-Get pins that user likes. Returns Generator object.
+Get pins that user likes. Returns Pagination object.
 
 ```php
 foreach($bot->pinners->likes('username') as $like)
@@ -622,6 +622,15 @@ $bot->pinners->block('username');
 // by id. For example after calling info() method
 $pinnerInfo = $bot->pinners->info('username');
 $bot->pinners->block($pinnerInfo['id']);
+```
+
+Get user *Tried* pins:
+```php
+$pinns = $bot->pinners->tried($username);
+// print_r($pinns->toArray()); 
+foreach($pinns as $pin) {
+    // ...
+}
 ```
 
 ## Interests

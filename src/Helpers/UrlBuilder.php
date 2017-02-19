@@ -21,17 +21,17 @@ class UrlBuilder
     /**
      * Boards
      */
-    const RESOURCE_GET_BOARDS = 'resource/BoardsResource/execGet/';
+    const RESOURCE_GET_BOARDS = 'resource/BoardsResource/get/';
     const RESOURCE_GET_BOARD = 'resource/BoardResource/execGet';
-    const RESOURCE_GET_BOARD_FEED = 'resource/BoardFeedResource/execGet/';
-    const RESOURCE_PROFILE_BOARDS = 'resource/ProfileBoardsResource/execGet/';
+    const RESOURCE_GET_BOARD_FEED = 'resource/BoardFeedResource/get/';
+    const RESOURCE_PROFILE_BOARDS = 'resource/ProfileBoardsResource/get/';
     const RESOURCE_FOLLOW_BOARD = 'resource/BoardFollowResource/create/';
     const RESOURCE_UNFOLLOW_BOARD = 'resource/BoardFollowResource/delete/';
     const RESOURCE_DELETE_BOARD = 'resource/BoardResource/delete/';
     const RESOURCE_CREATE_BOARD = 'resource/BoardResource/create/';
     const RESOURCE_UPDATE_BOARD = 'resource/BoardResource/update/';
-    const RESOURCE_BOARD_FOLLOWERS = 'resource/BoardFollowersResource/execGet/';
-    const RESOURCE_FOLLOWING_BOARDS = 'resource/BoardFollowingResource/execGet/';
+    const RESOURCE_BOARD_FOLLOWERS = 'resource/BoardFollowersResource/get/';
+    const RESOURCE_FOLLOWING_BOARDS = 'resource/BoardFollowingResource/get/';
     const RESOURCE_TITLE_SUGGESTIONS = 'resource/BoardTitleSuggestionsResource/execGet';
 
     /**
@@ -40,16 +40,16 @@ class UrlBuilder
     const RESOURCE_CREATE_PIN = 'resource/PinResource/create/';
     const RESOURCE_UPDATE_PIN = 'resource/PinResource/update/';
     const RESOURCE_REPIN = 'resource/RepinResource/create/';
-    const RESOURCE_USER_FOLLOWERS = 'resource/UserFollowersResource/execGet/';
+    const RESOURCE_USER_FOLLOWERS = 'resource/UserFollowersResource/get/';
     const RESOURCE_DELETE_PIN = 'resource/PinResource/delete/';
     const RESOURCE_LIKE_PIN = 'resource/PinLikeResource/create/';
     const RESOURCE_UNLIKE_PIN = 'resource/PinLikeResource/delete/';
     const RESOURCE_COMMENT_PIN = 'resource/PinCommentResource/create/';
     const RESOURCE_COMMENT_DELETE_PIN = 'resource/PinCommentResource/delete/';
-    const RESOURCE_PIN_INFO = 'resource/PinResource/execGet/';
+    const RESOURCE_PIN_INFO = 'resource/PinResource/get/';
     const RESOURCE_DOMAIN_FEED = 'resource/DomainFeedResource/execGet';
     const RESOURCE_ACTIVITY = 'resource/AggregatedActivityFeedResource/execGet';
-    const RESOURCE_USER_FEED = 'resource/UserHomefeedResource/execGet/';
+    const RESOURCE_USER_FEED = 'resource/UserHomefeedResource/get/';
     const RESOURCE_RELATED_PINS = 'resource/RelatedPinFeedResource/execGet';
     const RESOURCE_VISUAL_SIMILAR_PINS = 'resource/VisualLiveSearchResource/execGet';
     const RESOURCE_BULK_COPY = 'resource/BulkEditResource/create/';
@@ -61,35 +61,37 @@ class UrlBuilder
      */
     const RESOURCE_FOLLOW_USER = 'resource/UserFollowResource/create/';
     const RESOURCE_UNFOLLOW_USER = 'resource/UserFollowResource/delete/';
-    const RESOURCE_USER_INFO = 'resource/UserResource/execGet/';
-    const RESOURCE_USER_FOLLOWING = 'resource/UserFollowingResource/execGet/';
-    const RESOURCE_USER_PINS = 'resource/UserPinsResource/execGet/';
-    const RESOURCE_USER_LIKES = 'resource/UserLikesResource/execGet/';
+    const RESOURCE_USER_INFO = 'resource/UserResource/get/';
+    const RESOURCE_USER_FOLLOWING = 'resource/UserFollowingResource/get/';
+    const RESOURCE_USER_PINS = 'resource/UserPinsResource/get/';
+    const RESOURCE_USER_LIKES = 'resource/UserLikesResource/get/';
+    const RESOURCE_USER_TRIED = 'resource/DidItUserFeedResource/get/';
+
 
     /**
      * Search
      */
-    const RESOURCE_SEARCH = 'resource/BaseSearchResource/execGet/';
-    const RESOURCE_SEARCH_WITH_PAGINATION = 'resource/SearchResource/execGet/';
+    const RESOURCE_SEARCH = 'resource/BaseSearchResource/get/';
+    const RESOURCE_SEARCH_WITH_PAGINATION = 'resource/SearchResource/get/';
 
     /**
      * Interests.
      */
     const RESOURCE_FOLLOW_INTEREST = 'resource/InterestFollowResource/create/';
     const RESOURCE_UNFOLLOW_INTEREST = 'resource/InterestFollowResource/delete/';
-    const RESOURCE_FOLLOWING_INTERESTS = 'resource/InterestFollowingResource/execGet/';
+    const RESOURCE_FOLLOWING_INTERESTS = 'resource/InterestFollowingResource/get/';
 
     /**
      * Conversations.
      */
     const RESOURCE_SEND_MESSAGE = 'resource/ConversationsResource/create/';
-    const RESOURCE_GET_LAST_CONVERSATIONS = 'resource/ConversationsResource/execGet/';
+    const RESOURCE_GET_LAST_CONVERSATIONS = 'resource/ConversationsResource/get/';
 
     /**
      * UserSettings
      */
     const RESOURCE_UPDATE_USER_SETTINGS = 'resource/UserSettingsResource/update/';
-    const RESOURCE_GET_USER_SETTINGS = 'resource/UserSettingsResource/execGet/';
+    const RESOURCE_GET_USER_SETTINGS = 'resource/UserSettingsResource/get/';
     const RESOURCE_CHANGE_PASSWORD = 'resource/UserPasswordResource/update/';
     const RESOURCE_DEACTIVATE_ACCOUNT = 'resource/DeactivateAccountResource/create/';
     const RESOURCE_BLOCK_USER = 'resource/UserBlockResource/create/';
@@ -98,8 +100,8 @@ class UrlBuilder
     /**
      * News
      */
-    const RESOURCE_GET_LATEST_NEWS = 'resource/NetworkStoriesResource/execGet/';
-    const RESOURCE_GET_NOTIFICATIONS = 'resource/NewsHubResource/execGet/';
+    const RESOURCE_GET_LATEST_NEWS = 'resource/NetworkStoriesResource/get/';
+    const RESOURCE_GET_NOTIFICATIONS = 'resource/NewsHubResource/get/';
 
     /**
      * Registration
@@ -119,9 +121,9 @@ class UrlBuilder
     /**
      * Categories
      */
-    const RESOURCE_GET_CATEGORIES = 'resource/CategoriesResource/execGet/';
-    const RESOURCE_GET_CATEGORY = 'resource/CategoryResource/execGet/';
-    const RESOURCE_GET_CATEGORIES_RELATED = 'resource/RelatedInterestsResource/execGet/';
+    const RESOURCE_GET_CATEGORIES = 'resource/CategoriesResource/get/';
+    const RESOURCE_GET_CATEGORY = 'resource/CategoryResource/get/';
+    const RESOURCE_GET_CATEGORIES_RELATED = 'resource/RelatedInterestsResource/get/';
     const RESOURCE_GET_CATEGORY_FEED = 'resource/CategoryFeedResource/execGet';
 
     /**

@@ -160,6 +160,16 @@ class Pinners extends EntityProvider
 
     /**
      * @param string $username
+     * @param int $limit
+     * @return Pagination
+     */
+    public function tried($username, $limit = Pagination::DEFAULT_LIMIT)
+    {
+        return $this->paginate(['username' => $username], UrlBuilder::RESOURCE_USER_TRIED, $limit);
+    }
+
+    /**
+     * @param string $username
      * @param string $url
      * @param int $limit
      *
