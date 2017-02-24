@@ -1,19 +1,19 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [5.2.3] - 2017-01-24
+## v5.2.3 - 2017-01-24
 ### Fixed:
  - Registration
 
-## [5.2.2] - 2017-01-24
+## v5.2.2 - 2017-01-24
 ### Fixed:
  - Search method correctly works with limits.
 
-## [5.2.1] - 2017-01-22
+## v5.2.1 - 2017-01-22
 ### Fixed:
  - Pinners *followers()* methods.
 
-## [5.2.0] - 2017-01-08
+## v5.2.0 - 2017-01-08
 ### Added:
  - User *clearSearchHistory()* to remove search suggestions.
  - Pins *tied()* returns the pinners who have tied this pin.
@@ -22,15 +22,15 @@ All notable changes to this project will be documented in this file.
 ### Removed:
  - News and Conversations providers, their methods moved to Inbox provider.
 
-## [5.1.7] - 2016-12-31
+## v5.1.7 - 2016-12-31
 ### Fixed:
  - Receiving confirmation email after registering business account.
 
-## [5.1.6] - 2016-12-25
+## v5.1.6 - 2016-12-25
 ### Fixed:
  - Feed pagination error
 
-## [5.1.4] - 2016-12-20
+## v5.1.4 - 2016-12-20
 ### Fixed:
  - Pagination issue with only first result.
  - Request headers.
@@ -39,28 +39,28 @@ All notable changes to this project will be documented in this file.
  - *getRawData()* method to Response to get the original response data from Pinterest.
  - More detailed registration process.
 
-## [5.1.3] - 2016-12-12
+## v5.1.3 - 2016-12-12
 ### Fixed:
  - Pagination offset.
  
 ### Added:
  - *take* method to pagination to set limits.
 
-## [5.1.2] - 2016-12-11
+## v5.1.2 - 2016-12-11
 ### Fixed:
  - Registration now sends confirmation emails. 
  
 ### Added:
  - *Skip* method to pagination.
 
-## [5.1.1] - 2016-12-03
+## v5.1.1 - 2016-12-03
 ### Added:
  - To any pagination added *toArray* method to receive all pagination results as array. 
 
 ### Fixed:
  - Pins *activity* now returns an empty error for no results instead of null. 
 
-## [5.1.0] - 2016-12-02
+## v5.1.0 - 2016-12-02
 ### Added:
  - Boards *createPrivate*, *sendWithMessage* and *sendWithEmail* methods.
  - Pins *sendWithMessage*, *sendWithEmail* and *saveOriginalImage* methods.
@@ -70,11 +70,11 @@ All notable changes to this project will be documented in this file.
  - Removed $removeCookies param from *Auth::logout()* method. Use 
  *bot->getHttpClient()->removeCookies()* to remove your cookies.
 
-## [5.0.1] - 2016-11-13
+## v5.0.1 - 2016-11-13
 ### Fixed:
  - Interests *main* method requires to be logged in.
 
-## [5.0.0] - 2016-11-08
+## v5.0.0 - 2016-11-08
 ### Added:
  - $removeCookies param to *logout* method.
  - *block* method in Pinners provider.
@@ -102,12 +102,12 @@ All notable changes to this project will be documented in this file.
  - Auto-login for blocked users 
  - *logout* method requires bot to be logged in
 
-## [4.13.3] - 2016-10-25
+## v4.13.3 - 2016-10-25
 ### Fixed:
  - Pinterest Headers version
  - Pagination
 
-## [4.13.2] - 2016-10-23
+## v4.13.2 - 2016-10-23
 ### Added:
  - Pins visual similar search via *visualSimilar*
  - Comments provider with *create* and *delete* methods
@@ -120,23 +120,23 @@ All notable changes to this project will be documented in this file.
 ### Fixed:
  - 502 Pinterest response on request with no data
 
-## [4.13.1] - 2016-10-15
+## v4.13.1 - 2016-10-15
 ### Fixed:
  - Fail on empty server response 
 
-## [4.13.0] - 2016-10-09
+## v4.13.0 - 2016-10-09
 ### Added:
  - User *resetPassword* and *sendPasswordResetLink* methods to reset password.
  - HttpClient *parseCurrentUrl* method
  - HttpClient *setCookiesPath* method to change default store for cookie files.
  - User *invite* method to invite people by email.
 
-## [4.12.7] - 2016-09-26
+## v4.12.7 - 2016-09-26
 ### Fixed:
  - Removed output cookie file path to console
  - Boards *info* method now returns only specified board
 
-## [4.12.6] - 2016-09-26
+## v4.12.6 - 2016-09-26
 ### Fixed:
  - Creating cookie file if does not exist
  - User *register* default country is GB
@@ -144,16 +144,16 @@ All notable changes to this project will be documented in this file.
 ### Changed:
  - *reload* param added to Bot *getClientContext* method.
 
-## [4.12.5] - 2016-09-25
+## v4.12.5 - 2016-09-25
 ### Fixed:
  - Bot *getLastError* method.
  - Random cookie file name for non-authorized sessions.
 
-## [4.12.4] - 2016-09-25
+## v4.12.4 - 2016-09-25
 ### Fixed:
  - Bot *getClientInfo* method with auto login.
 
-## [4.12.3] - 2016-09-25
+## v4.12.3 - 2016-09-25
 ### Added:
 - HttpClient *cookie* and *cookies* methods.
 - Auto-login from a previously saved session.
@@ -165,15 +165,15 @@ All notable changes to this project will be documented in this file.
  - HttpClient *setUserAgent* method, custom userAgent should be passed with 
  other Curl options via *setOptions* method.
 
-## [4.11.2] - 2016-09-18
+## v4.11.2 - 2016-09-18
 ### Fixed:
  - Images upload
 
-## [4.11.1] - 2016-09-18
+## v4.11.1 - 2016-09-18
 ### Added: 
  - Bot *getClientInfo* method.
 
-## [4.11.0] - 2016-09-16
+## v4.11.0 - 2016-09-16
 ### Added:
  - User *changePassword*, *deactivate* methods.
  - AuthRequired exception.
@@ -187,30 +187,30 @@ All notable changes to this project will be documented in this file.
  - Bot *getLastError* method returns string, not array.
  - News *last* method is deprecated.
 
-## [4.10.1] - 2016-09-13
+## v4.10.1 - 2016-09-13
 ### Fixed:
  - Checks in *username* and *isBanned* methods
 
-## [4.10.0] - 2016-09-12
+## v4.10.0 - 2016-09-12
 ### Added
  - User *isBanned* and *username* methods
 
-## [4.9.0] - 2016-09-11
+## v4.9.0 - 2016-09-11
 ### Added:
  - Get user profile info
 
-## [4.8.0] - 2016-09-11
+## v4.8.0 - 2016-09-11
 ### Added:
  - Get following boards/people/interests for a pinner
 
-## [4.7.0] - 2016-09-10
+## v4.7.0 - 2016-09-10
 ### Added:
  - New Topics provider
 ### Changed:
  - Follow/unfollow methods moved from Interest to Topics provider
  - Added getRelatedTopics to Interests provider
 
-## [4.6.1] - 2016-09-08
+## v4.6.1 - 2016-09-08
 ### Changed:
  - Provider::execGetRequest method now returns bool or array
  - Exceptions classes renamed
@@ -219,14 +219,14 @@ All notable changes to this project will be documented in this file.
 ### Fixed:
  - Fixed *getUnFollowUrl()* method in Followable trait
 
-## [4.6.0] - 2016-08-26
+## v4.6.0 - 2016-08-26
 ### Changed:
  - HttpClient cookie file name moved to property instead of constant
  - Custom curl options in HttpClient object
  - Removed deprecated methods (isLoggedIn, logout, login) from Bot class. Instead use User provider
  - Removed getRequest method from ProvidersContainer
  
-## [4.5.4] - 2016-08-26
+## v4.5.4 - 2016-08-26
 ### Changed:
  - Http contract renamed to HttpClient
  - Curl specific methods moved to CurlHttpClient
@@ -236,10 +236,10 @@ All notable changes to this project will be documented in this file.
 ### Fixed:
 - Upload problems
 
-## [4.5.3] - 2016-08-16
+## v4.5.3 - 2016-08-16
  - Fixed upload
 
-## [4.5.2] - 2016-08-16
+## v4.5.2 - 2016-08-16
 
 ### Changed:
  - Renamed ProviderLoginCheckWrapper to ProviderWrapper
@@ -248,35 +248,35 @@ All notable changes to this project will be documented in this file.
  - HttpInterface contract renamed to HttpClient
  - PaginatedResponse contract added
 
-## [4.5.1] - 2016-08-09
+## v4.5.1 - 2016-08-09
 
 ### Fixed:
  - Pins method *feed* required login
 
-## [4.5.0] - 2016-08-09
+## v4.5.0 - 2016-08-09
 
 ### Added:
  - Interests: get main categories 
  - Interests: get category info
  - Pins: get user feed
 
-## [4.4.2] - 2016-07-06
+## v4.4.2 - 2016-07-06
 
 ### Fixed: 
  - Pins *comment* method
 
-## [4.4.1] - 2016-07-02
+## v4.4.1 - 2016-07-02
 
 ### Fixed:
  - Pins *create* method uploads images.
 
-## [4.4.0] - 2016-07-02
+## v4.4.0 - 2016-07-02
 
 ### Added:
  - User *registerBusiness* for registration business accounts.
  - User *convertToBusiness* to convert simple account to a business one.
 
-## [4.3.0] - 2016-06-27
+## v4.3.0 - 2016-06-27
 
 ### Added:
  - User *register* method
@@ -290,7 +290,7 @@ All notable changes to this project will be documented in this file.
  - removed *RequestInterface* and *ResponseInterface*
  
 
-## [4.2.2] - 2016-06-19
+## v4.2.2 - 2016-06-19
 ### Fixed:
  - keywords *recommendedFor* method returns an empty array if no results
  - Response *hasErrors* method returns true on errors
@@ -298,12 +298,12 @@ All notable changes to this project will be documented in this file.
  - test changed for phpunit 4.0
  - Response *getBookmarks* method return empty array for no bookmarks
 
-## [4.2.1] - 2016-06-14
+## v4.2.1 - 2016-06-14
 ### Fixed:
  - news *last* method login requirement check
  - pagination empty result check
 
-## [4.2.0] - 2016-06-13
+## v4.2.0 - 2016-06-13
 ### Changed: 
  - functions with pagination accept a limit as a second argument, for example:
  ```php
@@ -315,11 +315,11 @@ All notable changes to this project will be documented in this file.
  - *activity* method in pins provider (requires login).
 	 
 
-## [4.1.0] - 2016-06-12
+## v4.1.0 - 2016-06-12
 ### Added:
  - bot logout method
 
-## [4.0.0] - 2016-06-12
+## v4.0.0 - 2016-06-12
 ### Changed:
  - generator objects now return an entity for each iteration, not an array of entities. For example, to 
  get search results there is no more need to make two nested loops:
@@ -332,37 +332,37 @@ All notable changes to this project will be documented in this file.
  
  The same is true about getting followers/following/pins for the user or board and getting pins from source. 
 
-## [3.3.1] - 2016-06-12
+## v3.3.1 - 2016-06-12
 ### Added:
  - isLoggedIn method
  - Response and Request refactoring
  - Better exception messages in ProviderLoginCheckWrapper
 
-## [3.2.3] - 2016-06-09
+## v3.2.3 - 2016-06-09
 ### Fixed:
  - Pins like/dislike
  - Response error check
 
-## [3.2.2] - 2016-06-05
+## v3.2.2 - 2016-06-05
 ### Updated:
  - Keywords provider
  	- recommendedFor($query) method returns terms and their positions.
 
-## [3.2.1] - 2016-06-05
+## v3.2.1 - 2016-06-05
 ### Updated:
  - Keywords provider
  	- recommendedFor($query) method returns items concatenated with the query request.
 
-## [3.2.0] - 2016-06-04
+## v3.2.0 - 2016-06-04
 ### Added:
  - Keywords provider
  	- recommendedFor($query) method.
 
-## [3.1.0] - 2016-06-04
+## v3.1.0 - 2016-06-04
 ### Added:
  - Change board (title, description, category and privacy)
 
-## [3.0.0] - 2016-05-29
+## v3.0.0 - 2016-05-29
 ### Changed:
  - News *latest* method renamed to *last*
  - Request and providers refactoring
@@ -370,49 +370,41 @@ All notable changes to this project will be documented in this file.
 ### Fixed:
  - Boards follow/unfollow request
 
-## [2.6.0] - 2016-05-28
+## v2.6.0 - 2016-05-28
 ### Updated:
  - Pagination refactoring
  - Requests refactoring
  - version up due to the previous features
 
-## [2.5.3] - 2016-05-28
+## v2.5.3 - 2016-05-28
 ### Added: 
 - Edit profile image
 - Get pins from specific source
 
-## [2.5.2] - 2016-05-23
+## v2.5.2 - 2016-05-23
 ### Added: 
 - Edit pin by id (change description, link and board)
 - Move pin to a new board
 
-## [2.5.1] - 2016-04-22
+## v2.5.1 - 2016-04-22
 ### Fixed:
 - Cookie file now is placed in os PHP temporary directory
 
-## [2.5.0] - 2016-03-12
+## v2.5.0 - 2016-03-12
 ### Added:
 - Specify link when creating pin as third argument
 
-## [2.4.2] - 2016-03-03
+## v2.4.2 - 2016-03-03
 ### Fixed:
 - Login requirements check for some methods
 
-## [2.4.1] - 2016-03-01
+## v2.4.1 - 2016-03-01
 ### Fixed:
 - sendMessage, sendMail array bugs fix
 
-## [2.4.0] - 2016-03-01
+## v2.4.0 - 2016-03-01
 ### Added:
 1. Changes in sendMessage:
 	- Many users at once
 	- Add pin to message
 2. Added sendMail method. Works like sendMessage, but pass email or array of emails instead of users ids.
-
-## 2016-02-11
-- Throws exception when login fails
-- Tests refactoring
-
-## 2016-02-06
-- Providers refactoring (loginRequired check before every method call added)
-- New providers: User for edit user settings (profile for example) and News for fetching user related news.
