@@ -2,6 +2,7 @@
 
 namespace seregazhuk\PinterestBot\Helpers;
 
+use ArrayIterator;
 use Traversable;
 use IteratorAggregate;
 use seregazhuk\PinterestBot\Api\Response;
@@ -76,6 +77,8 @@ class Pagination implements IteratorAggregate
      */
     public function getIterator()
     {
+        if(empty($this->callback)) return null;
+
         $resultsNum = 0;
         $processed = 0;
 
@@ -165,5 +168,39 @@ class Pagination implements IteratorAggregate
     protected function reachesLimit($resultsNum)
     {
         return $this->limit && $resultsNum >= $this->limit;
+    }
+
+    /**
+     * @return \Generator|void
+     */
+    protected function processCallback()
+    {
+        $resultsNum = 0;
+        $processed = 0;
+
+        while (true) {
+            $results = $this->getCurrentResults();
+
+            if (empty($results)) {
+                return;
+            }
+
+            foreach ($results as $result) {
+                $processed++;
+
+                if ($processed > $this->offset) {
+                    yield $result;
+                    $resultsNum++;
+                }
+
+                if ($this->reachesLimit($resultsNum)) {
+                    return;
+                }
+            }
+
+            if (empty($this->bookmarks)) {
+                return;
+            }
+        }
     }
 }

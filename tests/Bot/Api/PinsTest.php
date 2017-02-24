@@ -158,10 +158,10 @@ class PinsTest extends ProviderTest
     }
 
     /** @test */
-    public function it_should_return_null_for_empty_activity()
+    public function it_should_return_empty_array_for_empty_activity()
     {
         $this->apiShouldReturnSuccess()
-            ->assertEmpty($this->provider->activity(1));
+            ->assertEmpty($this->provider->activity(1)->toArray());
     }
 
     /** @test */

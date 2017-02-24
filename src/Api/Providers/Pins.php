@@ -180,7 +180,7 @@ class Pins extends EntityProvider
      *
      * @param string $pinId
      * @param int $limit
-     * @return Pagination|false
+     * @return Pagination
      */
     public function activity($pinId, $limit = Pagination::DEFAULT_LIMIT)
     {
@@ -192,7 +192,7 @@ class Pins extends EntityProvider
      *
      * @param string $pinId
      * @param int $limit
-     * @return Pagination|false
+     * @return Pagination
      */
     public function tried($pinId, $limit = Pagination::DEFAULT_LIMIT)
     {
@@ -208,13 +208,13 @@ class Pins extends EntityProvider
      * @param string $pinId
      * @param array $additionalData
      * @param int $limit
-     * @return bool|Pagination
+     * @return Pagination
      */
     protected function getAggregatedActivity($pinId, $additionalData = [],  $limit)
     {
         $aggregatedPinId = $this->getAggregatedPinId($pinId);
 
-        if (is_null($aggregatedPinId)) return false;
+        if (is_null($aggregatedPinId)) return new Pagination();
 
         $additionalData['aggregated_pin_data_id'] = $aggregatedPinId;
 

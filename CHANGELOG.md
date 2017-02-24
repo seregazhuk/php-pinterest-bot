@@ -1,9 +1,12 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [5.3.0] - ??
+## [5.2.4] - ??
 ### Added:
  - Pinners *tried* pins.
+
+### Fixed:
+ - Pins *activity()* and *tried()* methods always return Pagination object.
 
 ## [5.2.3] - 2017-01-24
 ### Fixed:
