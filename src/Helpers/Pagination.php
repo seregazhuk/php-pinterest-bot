@@ -2,8 +2,8 @@
 
 namespace seregazhuk\PinterestBot\Helpers;
 
-use ArrayIterator;
 use Traversable;
+use EmptyIterator;
 use IteratorAggregate;
 use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Api\Contracts\PaginatedResponse;
@@ -39,6 +39,16 @@ class Pagination implements IteratorAggregate
      * @var int
      */
     protected $offset;
+
+    /**
+     * @var int
+     */
+    protected $resultsNum;
+
+    /**
+     * @var int
+     */
+    protected $processed;
 
     /**
      * @param int $limit
@@ -77,29 +87,9 @@ class Pagination implements IteratorAggregate
      */
     public function getIterator()
     {
-        if(empty($this->callback)) return null;
+        if(empty($this->callback)) return new EmptyIterator();
 
-        $resultsNum = 0;
-        $processed = 0;
-
-        while (true) {
-            $results = $this->getCurrentResults();
-
-            if (empty($results)) return;
-
-            foreach ($results as $result) {
-                $processed++;
-
-                if($processed > $this->offset) {
-                    yield $result;
-                    $resultsNum++;
-                }
-
-                if ($this->reachesLimit($resultsNum)) return;
-            }
-
-            if (empty($this->bookmarks)) return;
-        }
+        return $this->processCallback();
     }
 
     /**
@@ -175,8 +165,8 @@ class Pagination implements IteratorAggregate
      */
     protected function processCallback()
     {
-        $resultsNum = 0;
-        $processed = 0;
+        $this->resultsNum = 0;
+        $this->processed = 0;
 
         while (true) {
             $results = $this->getCurrentResults();
@@ -186,14 +176,14 @@ class Pagination implements IteratorAggregate
             }
 
             foreach ($results as $result) {
-                $processed++;
+                $this->processed++;
 
-                if ($processed > $this->offset) {
+                if ($this->processed > $this->offset) {
                     yield $result;
-                    $resultsNum++;
+                    $this->resultsNum++;
                 }
 
-                if ($this->reachesLimit($resultsNum)) {
+                if ($this->reachesLimit($this->resultsNum)) {
                     return;
                 }
             }
