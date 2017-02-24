@@ -37,6 +37,7 @@ if you don't use such operations as creating pins, writing comments or sending m
 - [Use proxy](#use-proxy)
 - [Custom request settings](#custom-request-settings)
 - [Cookies](#cookies)
+- [Pagination](#pagination)
 
 ## Dependencies
 Library requires CURL extension and PHP 5.5.9 or above.
@@ -67,42 +68,9 @@ $boards = $bot->boards->forUser('yourUserName');
 $bot->pins->create('http://exmaple.com/image.jpg', $boards[0]['id'], 'pin description');
 ```
 
-*Note*: Some methods use pinterest navigation through results, for example, get user followers/following, pins
+*Note*: Some methods use pinterest navigation through results (with bookmarks), for example, get user followers/following, pins
 likes/dislikes, search and other feed queries. This means that for every batch of results there will be a 
-request to Pinterest. These methods return an iterator object with Pinterest api results.
-By default functions return the first 50 results. But you can specify another limit num as a second argument. Or pass 0
-for no limit. For example, 
-```php 
-foreach($bot->pins->search('query', 20) as $pin) {
-	// ...
-}
-```
-
-will return only 2 pins of the search results.
-
-To receive all results at once as array:
-```php
-// get all results as array
-$results = $bot->pins->search('query', 20)->toArray();
-```
-
-Limit and offset in results:
-```php
-// skip first 50 results
-$results = $bot->pins
-    ->search('query')
-    ->skip(50)
-    ->get();
-
-// skip first 50 results, and then take 20 
-$results = $bot->pins
-    ->search('query')
-    ->take(20)
-    ->skip(50)
-    ->get();
-```
-
-To get all results pass `0` in `take()` method.
+request to Pinterest. These methods return a [Pagination] object with Pinterest api results.
 
 ## Account
 
@@ -312,7 +280,7 @@ $bot->boards->follow($boardId);
 $bot->boards->unfollow($boardId);
 ```
 
-Get all pins for board by id (returns Generator object).
+Get all pins for board by id (returns [Pagination](#pagination) object).
 ```php
 foreach($bot->boards->pins($boardId) as $pin)
 {
@@ -320,7 +288,7 @@ foreach($bot->boards->pins($boardId) as $pin)
 }
 ```
 
-Get board followers. Uses pinterest api pagination (return Generator object).
+Get board followers. Uses pinterest api pagination (returns [Pagination](#pagination) object).
 ```php
 foreach($bot->boards->followers($boardId) as $follower)
 {
@@ -439,14 +407,14 @@ $bot->comments->delete($pinId, $commentId);
 ```
 
 Get pins from a specific url. For example: https://pinterest.com/source/flickr.com/ will return 
-recent pins from flickr.com:
+recent pins from flickr.com (returns [Pagination](#pagination) object):
 ```php
 foreach ($bot->pins->fromSource('flickr.com') as $pin) {
     // ...
 }
 ```
 
-Get user pins feed. Method *feed()* returns Generator object.
+Get user pins feed (returns [Pagination](#pagination) object).
 ```php
 foreach ($bot->pins->feed() as $pin) {
     //...
@@ -458,7 +426,7 @@ foreach ($bot->pins->feed(20) as $pin) {
 }
 ```
 
-Get activity of a pin:
+Get activity of a pin (returns [Pagination](#pagination) object):
 
 ```php
 foreach ($bot->pins->activity($pinId) as $data) {
@@ -477,7 +445,7 @@ foreach($activities as $activity) {
 }
 ```
 
-Get related pins for current pin:
+Get related pins for current pin (returns [Pagination](#pagination) object):
 ```php
 foreach($bot->pins->related($pinId) as $pin) {
 	//...
@@ -493,7 +461,7 @@ foreach($related as $pin) {
 }
 ```
 
-Get the pinners who have tied this pin:
+Get the pinners who have tied this pin (returns [Pagination](#pagination) object):
 ```php
 $pinners = $bot->pins->tried($pinId);
 // print_r($pinners->toArray()); 
@@ -532,7 +500,7 @@ Get user info by username.
 $userData = $bot->pinners->info($username);
 ```
 
-Get user following info. By default returns following users. Uses pinterest api pagination.
+Get user following info. By default returns following users. Returns [Pagination](#pagination) object.
 ```php
 foreach($bot->pinners->following('username') as $following)
 {
@@ -577,7 +545,7 @@ foreach($bot->pinners->followingInterests('username') as $interest)
 }
 ```
 
-Get user followers. Returns Generator object.
+Get user followers (returns [Pagination](#pagination) object)
 ```php
 foreach($bot->pinners->followers('username') as $follower)
 {
@@ -585,7 +553,7 @@ foreach($bot->pinners->followers('username') as $follower)
 }
 ```
 
-Get the newest pins of a pinner. Returns Generator object.
+Get the newest pins of a pinner (returns [Pagination](#pagination) object)
 
 ```php
 foreach($bot->pinners->pins('username') as $pin)
@@ -603,7 +571,7 @@ foreach($bot->pinners->pins('username', 20) as $pin)
 }
 ```
 
-Get pins that user likes. Returns Generator object.
+Get pins that user likes (returns [Pagination](#pagination) object)
 
 ```php
 foreach($bot->pinners->likes('username') as $like)
@@ -643,7 +611,7 @@ Get related topics for interest:
 $topics = $bot->interests->getRelatedTopics('videos');
 ```
 
-Get pins for specific interest:
+Get pins for specific interest (returns [Pagination](#pagination) object):
 
 ```php
 foreach($bot->interests->pins('videos') as $pin) {
@@ -668,7 +636,7 @@ Get a topic info:
 $info = $bot->topics->info('content-marketing');
 ```
 
-Get pins for a specific topic:
+Get pins for a specific topic (returns [Pagination](#pagination) object):
 
 ```php
 foreach($bot->topics->pins('content-marketing') as $pin) {
@@ -684,14 +652,7 @@ $topics = $bot->topics->getRelatedTopics('content-marketing');
 
 ## Search
 
-**Notice!** generator object is not an array. If you want to fetch search results as an
-array use PHP `iterator_to_array()` function:
-
-```php
-$results = iterator_to_array($bot->pins->search('query'));
-```
-
-Search functions use Pinterest pagination in fetching results and return a generator object.
+Search functions use Pinterest pagination in fetching results and return [Pagination](#pagination) object.
 
 ```php
 $pins = $bot->pins->search('query')->toArray();
@@ -724,10 +685,10 @@ foreach($bot->boards->search('query') as $board);
 
 ### News
 
-Get your current user's news:
+Get your current user's news (returns [Pagination](#pagination) object):
 ```php
 // get result as array
-$news = $bot->inbox->news()->asArray();
+$news = $bot->inbox->news()->toArray();
 
 // iterate with requests
 foreach($bot->inbox->news() as $new) {
@@ -737,10 +698,10 @@ foreach($bot->inbox->news() as $new) {
 
 ### Notifications
 
-Get user's notifications:
+Get user's notifications (returns [Pagination](#pagination) object):
 ```php
 // get result as array
-$notifications = $bot->inbox->notifications()->asArray();
+$notifications = $bot->inbox->notifications()->toArray();
 
 // iterate with requests
 foreach($bot->inbox->notifications() as $notification) {
@@ -908,6 +869,56 @@ Remove your cookies:
 ```php
 $bot->getHttpClient()->removeCookies();
 ```
+
+## Pagination
+
+Most of methods use Pinterest pagination. For example, when you run `$bot->pins->search('query')`, Pinterest returns
+only 20 results by request, you cannot get all the pins at once with only one request. So these methods return
+`Pagination` object. You can iterate over it to get results:
+
+```php
+$pagination = $bot->pins->search('query');
+foreach($pagination as $pin) {
+    // your code ...
+}
+ ```
+
+Or you can grab all results at once as an array, but it will require some time, to loop through all Pinterest pages to get these results:
+```php
+$pagination = $bot->pins->search('query');
+$results = $pagination->toArray();
+// or
+$results = $bot->pins->search('query')->toArray();
+```
+
+By default methods return the first 50 results. For example, `$bot->pins->search('query')` will return only first 50
+pins. But you can specify another limit num as a second argument. Or pass 0
+for no limit. For example,
+```php
+foreach($bot->pins->search('query', 20) as $pin) {
+	// ...
+}
+```
+
+will return only 20 pins of the search results.
+
+Limit and offset in results:
+```php
+// skip first 50 results
+$results = $bot->pins
+    ->search('query')
+    ->skip(50)
+    ->get();
+
+// skip first 50 results, and then take 20
+$results = $bot->pins
+    ->search('query')
+    ->take(20)
+    ->skip(50)
+    ->get();
+```
+
+To get all results pass `0` in `take()` method.
 
 ## How can I thank you?
 Why not star the GitHub repo? I'd love the attention!
