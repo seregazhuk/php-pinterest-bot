@@ -5,12 +5,13 @@ namespace seregazhuk\tests\Bot;
 use Mockery;
 use Mockery\MockInterface;
 use PHPUnit_Framework_TestCase;
-use seregazhuk\PinterestBot\Api\Contracts\HttpClient;
-use seregazhuk\PinterestBot\Api\CurlHttpClient;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
-use seregazhuk\PinterestBot\Api\ProvidersContainer;
 use seregazhuk\PinterestBot\Helpers\Cookies;
+use seregazhuk\PinterestBot\Api\CurlHttpClient;
+use seregazhuk\PinterestBot\Api\ProvidersContainer;
+use seregazhuk\PinterestBot\Api\Contracts\HttpClient;
+use seregazhuk\PinterestBot\Api\Providers\Core\ProviderWrapper;
 
 /**
  * Class ProvidersContainerTest.
@@ -48,10 +49,10 @@ class ProvidersContainerTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function it_should_return_provider_instance()
+    public function it_should_return_provider_wrapper_instance_when_accessing_providers()
     {
         $provider = $this->container->getProvider('pinners');
-        $this->assertNotEmpty($provider);
+        $this->assertInstanceOf(ProviderWrapper::class, $provider);
     }
 
     /**
@@ -64,7 +65,7 @@ class ProvidersContainerTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function it_should_proxy_client_info_to_response()
+    public function it_delegates_client_info_to_response()
     {
         $clientInfo = ['info'];
         $this->response
@@ -72,6 +73,17 @@ class ProvidersContainerTest extends PHPUnit_Framework_TestCase
             ->andReturn($clientInfo);
 
         $this->assertEquals($clientInfo, $this->container->getClientInfo());
+    }
+
+    /** @test */
+    public function it_delegates_last_error_to_response()
+    {
+        $error = ['message' => 'error'];
+        $this->response
+            ->shouldReceive('getLastError')
+            ->andReturn($error);
+
+        $this->assertEquals($error['message'], $this->container->getLastError());
     }
 
     /** @test */
