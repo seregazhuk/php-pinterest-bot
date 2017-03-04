@@ -246,7 +246,6 @@ class Pins extends EntityProvider
     /**
      * Copy pins to board
      *
-     * @codeCoverageIgnore
      * @param array|string $pinIds
      * @param int $boardId
      * @return bool|Response
@@ -259,7 +258,6 @@ class Pins extends EntityProvider
     /**
      * Delete pins from board.
      *
-     * @codeCoverageIgnore
      * @param string|array $pinIds
      * @param int $boardId
      * @return bool
@@ -270,7 +268,6 @@ class Pins extends EntityProvider
     }
 
     /**
-     * @codeCoverageIgnore
      * Move pins to board
      *
      * @param string|array $pinIds

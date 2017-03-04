@@ -35,16 +35,10 @@ class PinterestBot
         return new Request($httpClient);
     }
 
-    /**
-     * @codeCoverageIgnore
-     */
     private function __construct()
     {
     }
 
-    /**
-     * @codeCoverageIgnore
-     */
     private function __clone()
     {
     }

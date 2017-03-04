@@ -72,7 +72,6 @@ trait SendsMessages
 
     /**
      * Send item with messages.
-     * @codeCoverageIgnore
      * @param int $entityId
      * @param string $text
      * @param array|string $userIds
@@ -86,7 +85,6 @@ trait SendsMessages
     /**
      * Send entity with emails.
      *
-     * @codeCoverageIgnore
      * @param int $entityId
      * @param string $text
      * @param array|string $emails

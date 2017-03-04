@@ -66,7 +66,6 @@ class Pinners extends EntityProvider
     }
 
     /**
-     * @codeCoverageIgnore
      * Get following people for pinner.
      *
      * @param string $username
@@ -79,7 +78,6 @@ class Pinners extends EntityProvider
     }
 
     /**
-     * @codeCoverageIgnore
      * Get following boards for pinner.
      *
      * @param string $username
@@ -92,7 +90,6 @@ class Pinners extends EntityProvider
     }
 
     /**
-     * @codeCoverageIgnore
      * Get following interests for pinner.
      *
      * @param string $username
