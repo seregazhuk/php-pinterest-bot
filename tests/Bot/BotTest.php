@@ -17,20 +17,18 @@ use seregazhuk\PinterestBot\Api\ProvidersContainer;
 class BotTest extends PHPUnit_Framework_TestCase
 {
     /** @test */
-    public function it_should_return_last_error_from_response()
+    public function it_should_delegate_calls_to_provider_container()
     {
-        $error = ['message' => 'expected_error'];
-        $response = Mockery::mock(Response::class)
-            ->shouldReceive('getLastError')
-            ->andReturn($error)
+        /** @var ProvidersContainer $providersContainer */
+        $providersContainer = Mockery::mock(ProvidersContainer::class)
+            ->shouldReceive('method')
+            ->andReturn('OK')
+            ->once()
             ->getMock();
 
-        $request = new Request(new CurlHttpClient(new Cookies()));
-
-        $providersContainer = new ProvidersContainer($request, $response);
 
         $bot = new Bot($providersContainer);
 
-        $this->assertEquals($error['message'], $bot->getLastError());
+        $this->assertEquals('OK', $bot->method());
     }
 }
