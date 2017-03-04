@@ -89,6 +89,7 @@ class Response implements PaginatedResponse
     protected function parseResponseData($key)
     {
         $responseData = $this->getValueByKey('resource_response.data', $this->data);
+
         if(!$responseData) return false;
 
         return $key ?

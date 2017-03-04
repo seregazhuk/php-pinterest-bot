@@ -171,9 +171,7 @@ class Pagination implements IteratorAggregate
         while (true) {
             $results = $this->getCurrentResults();
 
-            if (empty($results)) {
-                return;
-            }
+            if (empty($results)) return;
 
             foreach ($results as $result) {
                 $this->processed++;
@@ -183,14 +181,10 @@ class Pagination implements IteratorAggregate
                     $this->resultsNum++;
                 }
 
-                if ($this->reachesLimit($this->resultsNum)) {
-                    return;
-                }
+                if ($this->reachesLimit($this->resultsNum)) return;
             }
 
-            if (empty($this->bookmarks)) {
-                return;
-            }
+            if (empty($this->bookmarks)) return;
         }
     }
 }
