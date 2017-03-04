@@ -3,6 +3,7 @@
 namespace seregazhuk\PinterestBot\Api\Providers;
 
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
+use seregazhuk\PinterestBot\Api\Providers\Core\Provider;
 
 class Keywords extends Provider
 {

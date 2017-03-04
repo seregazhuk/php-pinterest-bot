@@ -10,6 +10,7 @@ use seregazhuk\PinterestBot\Api\Traits\Searchable;
 use seregazhuk\PinterestBot\Api\Traits\CanBeDeleted;
 use seregazhuk\PinterestBot\Api\Traits\SendsMessages;
 use seregazhuk\PinterestBot\Api\Traits\UploadsImages;
+use seregazhuk\PinterestBot\Api\Providers\Core\EntityProvider;
 
 class Pins extends EntityProvider
 {

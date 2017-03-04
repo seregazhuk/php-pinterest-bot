@@ -4,6 +4,7 @@ namespace seregazhuk\PinterestBot\Api\Providers;
 
 use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
+use seregazhuk\PinterestBot\Api\Providers\Core\Provider;
 use seregazhuk\PinterestBot\Api\Traits\HasRelatedTopics;
 
 class Interests extends Provider

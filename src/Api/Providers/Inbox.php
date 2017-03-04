@@ -6,6 +6,7 @@ use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\Traits\SendsMessages;
 use seregazhuk\PinterestBot\Exceptions\InvalidRequest;
+use seregazhuk\PinterestBot\Api\Providers\Core\Provider;
 
 class Inbox extends Provider
 {

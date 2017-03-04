@@ -8,6 +8,7 @@ use seregazhuk\PinterestBot\Api\Traits\Searchable;
 use seregazhuk\PinterestBot\Api\Traits\Followable;
 use seregazhuk\PinterestBot\Api\Traits\CanBeDeleted;
 use seregazhuk\PinterestBot\Api\Traits\SendsMessages;
+use seregazhuk\PinterestBot\Api\Providers\Core\EntityProvider;
 
 class Boards extends EntityProvider
 {
@@ -43,11 +44,13 @@ class Boards extends EntityProvider
      *
      * @param string $username
      *
-     * @return array|bool
+     * @return array
      */
     public function forUser($username)
     {
-        return $this->get(['username' => $username], UrlBuilder::RESOURCE_GET_BOARDS);
+        $boards = $this->get(['username' => $username], UrlBuilder::RESOURCE_GET_BOARDS);
+
+        return empty($boards) ? [] : $boards;
     }
 
     /**

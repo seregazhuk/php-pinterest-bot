@@ -4,6 +4,7 @@ namespace seregazhuk\PinterestBot\Api\Providers;
 
 use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
+use seregazhuk\PinterestBot\Api\Providers\Core\Provider;
 
 class Password extends Provider
 {

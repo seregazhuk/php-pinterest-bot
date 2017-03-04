@@ -8,6 +8,7 @@ use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\Traits\Followable;
 use seregazhuk\PinterestBot\Api\Traits\Searchable;
 use seregazhuk\PinterestBot\Exceptions\WrongFollowingType;
+use seregazhuk\PinterestBot\Api\Providers\Core\EntityProvider;
 
 class Pinners extends EntityProvider
 {

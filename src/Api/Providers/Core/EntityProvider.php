@@ -1,6 +1,6 @@
 <?php
 
-namespace seregazhuk\PinterestBot\Api\Providers;
+namespace seregazhuk\PinterestBot\Api\Providers\Core;
 
 /**
  * Class EntityProvider

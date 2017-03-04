@@ -7,8 +7,8 @@ use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Helpers\Cookies;
 use seregazhuk\PinterestBot\Api\CurlHttpClient;
-use seregazhuk\PinterestBot\Api\Providers\Provider;
-use seregazhuk\PinterestBot\Api\Providers\ProviderWrapper;
+use seregazhuk\PinterestBot\Api\Providers\Core\Provider;
+use seregazhuk\PinterestBot\Api\Providers\Core\ProviderWrapper;
 
 class ProviderWrapperTest extends PHPUnit_Framework_TestCase
 {

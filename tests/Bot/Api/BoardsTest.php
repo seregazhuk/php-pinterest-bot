@@ -76,7 +76,7 @@ class BoardsTest extends ProviderTest
             ->assertEquals($boards, $this->provider->forUser($userName));
 
         $this->apiShouldReturnEmpty()
-            ->assertFalse($this->provider->forUser($userName));
+            ->assertEmpty($this->provider->forUser($userName));
     }
 
     /** @test */

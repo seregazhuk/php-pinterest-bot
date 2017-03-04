@@ -6,6 +6,7 @@ use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\Traits\Followable;
 use seregazhuk\PinterestBot\Api\Traits\HasRelatedTopics;
+use seregazhuk\PinterestBot\Api\Providers\Core\EntityProvider;
 
 class Topics extends EntityProvider
 {
