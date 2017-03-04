@@ -10,7 +10,7 @@ use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\tests\Helpers\ResponseHelper;
 use seregazhuk\tests\Helpers\ReflectionHelper;
-use seregazhuk\PinterestBot\Api\Providers\Provider;
+use seregazhuk\PinterestBot\Api\Providers\Core\Provider;
 
 /**
  * Class ProviderTest.
