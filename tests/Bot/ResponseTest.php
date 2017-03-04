@@ -132,4 +132,14 @@ class ResponseTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals($expected, $response->getPaginationData());
     }
+
+    /** @test */
+    public function it_can_check_for_containing_certain_keys()
+    {
+        $response = new Response();
+        $response->fill(['key' => 'value']);
+
+        $this->assertTrue($response->hasData('key'));
+        $this->assertFalse($response->hasData('foo'));
+    }
 }
