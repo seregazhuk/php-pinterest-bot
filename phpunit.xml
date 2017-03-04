@@ -23,7 +23,10 @@
                 <file>/src/Api/Providers/Boards.php</file>
                 <file>/src/Api/Providers/Comments.php</file>
                 <file>/src/Api/Providers/Inbox.php</file>
+                <file>/src/Api/Providers/Pins.php</file>
+                <file>/src/Api/Providers/Pinners.php</file>
                 <file>/src/Api/Providers/Interests.php</file>
+                <file>/src/Api/Providers/User.php</file>
             </exclude>
         </whitelist>
     </filter>
