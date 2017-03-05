@@ -99,4 +99,10 @@ abstract class ProviderTest extends PHPUnit_Framework_TestCase
 
         return $this;
     }
+
+    /** @test */
+    public function it_fills_response_object_with_json_data()
+    {
+        
+    }
 }

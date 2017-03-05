@@ -165,6 +165,14 @@ class Response implements PaginatedResponse
         return $bookmarks;
     }
 
+    /**
+     * @return bool
+     */
+    public function hasBookmarks()
+    {
+        return !! $this->getBookmarks();
+    }
+
     protected function getRawBookmarksData()
     {
         return $this->getData('resource.options.bookmarks', []);

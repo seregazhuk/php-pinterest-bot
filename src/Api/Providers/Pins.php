@@ -331,8 +331,8 @@ class Pins extends EntityProvider
     public function searchInMyPins($query, $limit = Pagination::DEFAULT_LIMIT)
     {
         return (new Pagination($limit))
-            ->paginateOver(function($bookmarks = []) use ($query) {
-                return $this->execSearchRequest($query, 'my_pins', $bookmarks);
+            ->paginateOver(function() use ($query) {
+                return $this->execSearchRequest($query, 'my_pins');
             });
     }
     

@@ -34,14 +34,15 @@ trait Searchable
      *
      * @param string $query
      * @param string $scope
-     * @param array  $bookmarks
-     *
      * @return SearchResponse
      */
-    public function execSearchRequest($query, $scope, $bookmarks = [])
+    public function execSearchRequest($query, $scope)
     {
-        $url = UrlBuilder::getSearchUrl($bookmarks);
-        $get = $this->createSearchQuery($query, $scope, $bookmarks);
+        $url = UrlBuilder::getSearchUrl(
+            $this->response->getBookmarks()
+        );
+
+        $get = $this->createSearchQuery($query, $scope);
         $result = $this->request->exec($url . '?' . $get);
 
         $this->processResult($result);
@@ -54,21 +55,20 @@ trait Searchable
      *
      * @param string $query
      * @param string $scope
-     * @param array $bookmarks
-     *
      * @return string
      */
-    protected function createSearchQuery($query, $scope, $bookmarks = [])
+    protected function createSearchQuery($query, $scope)
     {
-        $dataJson = $this->appendBookMarks(
-            $bookmarks,
+        $dataJson = $this->appendBookmarks(
             [
                 'scope' => $scope,
                 'query' => $query
             ]
         );
 
-        $request = Request::createRequestData($dataJson, $bookmarks);
+        $request = Request::createRequestData(
+            $dataJson, $this->response->getBookmarks()
+        );
 
         return UrlBuilder::buildRequestString($request);
     }
@@ -84,22 +84,21 @@ trait Searchable
     public function search($query, $limit = Pagination::DEFAULT_LIMIT)
     {
         return (new Pagination($limit))
-            ->paginateOver(function($bookmarks = []) use ($query) {
-                return $this->execSearchRequest($query, $this->getSearchScope(), $bookmarks);
+            ->paginateOver(function() use ($query) {
+                return $this->execSearchRequest($query, $this->getSearchScope());
             });
     }
 
     /**
-     * @param array $bookmarks
      * @param array $options
      *
      * @return array
      */
-    protected function appendBookMarks($bookmarks, $options)
+    protected function appendBookmarks($options)
     {
         $dataJson = ['options' => $options];
-        if (!empty($bookmarks)) {
-            $dataJson['options']['bookmarks'] = $bookmarks;
+        if ($this->response->hasBookmarks()) {
+            $dataJson['options']['bookmarks'] = $this->response->getBookmarks();
 
             return $dataJson;
         }

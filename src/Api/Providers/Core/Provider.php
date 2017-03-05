@@ -64,16 +64,18 @@ abstract class Provider
      *
      * @param array $requestOptions
      * @param string $resourceUrl
-     * @param array $bookmarks
      * @return array|bool|Response
      */
-    protected function get(array $requestOptions = [], $resourceUrl = '', $bookmarks = null)
+    protected function get(array $requestOptions = [], $resourceUrl = '')
     {
-        $query = Request::createQuery($requestOptions, $bookmarks);
+        $query = Request::createQuery(
+            $requestOptions,
+            $this->response->getBookmarks()
+        );
 
         $this->execute($resourceUrl . '?' . $query);
 
-        return is_null($bookmarks) ?
+        return !$this->response->hasBookmarks() ?
             $this->response->getResponseData() :
             $this->response;
     }
@@ -120,8 +122,8 @@ abstract class Provider
     protected function paginate($data, $resourceUrl, $limit = Pagination::DEFAULT_LIMIT)
     {
         return (new Pagination($limit))
-            ->paginateOver(function($bookmarks = []) use ($data, $resourceUrl) {
-                return $this->get($data, $resourceUrl, $bookmarks);
+            ->paginateOver(function() use ($data, $resourceUrl) {
+                return $this->get($data, $resourceUrl);
             });
     }
 

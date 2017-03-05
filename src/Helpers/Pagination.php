@@ -6,7 +6,6 @@ use Traversable;
 use EmptyIterator;
 use IteratorAggregate;
 use seregazhuk\PinterestBot\Api\Response;
-use seregazhuk\PinterestBot\Api\Contracts\PaginatedResponse;
 
 /**
  * Class Pagination
@@ -24,11 +23,6 @@ class Pagination implements IteratorAggregate
      * @var int
      */
     protected $limit;
-
-    /**
-     * @var array
-     */
-    protected $bookmarks = [];
 
     /**
      * @var callable
@@ -59,8 +53,7 @@ class Pagination implements IteratorAggregate
     }
 
     /**
-     * Sets a callback to make requests. Should be a closure
-     * that accepts a $bookmarks array as an argument.
+     * Sets a callback to make requests. Should be a closure.
      *
      * @param callable $callback
      * @return $this
@@ -122,31 +115,6 @@ class Pagination implements IteratorAggregate
         return iterator_to_array($this->getIterator());
     }
 
-    /**
-     * @return array
-     */
-    protected function getCurrentResults()
-    {
-        $callback = $this->callback;
-
-        /** @var Response $response */
-        $response = $callback($this->bookmarks);
-
-        return $this->processResponse($response);
-    }
-
-    /**
-     * @param PaginatedResponse $response
-     * @return array
-     */
-    protected function processResponse(PaginatedResponse $response)
-    {
-        if ($response->isEmpty()) return [];
-
-        $this->bookmarks = $response->getBookmarks();
-
-        return $response->getResponseData();
-    }
 
     /**
      * Check if we execGet results limit in pagination.
@@ -167,13 +135,15 @@ class Pagination implements IteratorAggregate
     {
         $this->resultsNum = 0;
         $this->processed = 0;
+        $callback = $this->callback;
 
         while (true) {
-            $results = $this->getCurrentResults();
+            /** @var Response $response */
+            $response = $callback();
 
-            if (empty($results)) return;
+            if ($response->isEmpty()) return;
 
-            foreach ($results as $result) {
+            foreach ($response->getResponseData() as $result) {
                 $this->processed++;
 
                 if ($this->processed > $this->offset) {
@@ -184,7 +154,7 @@ class Pagination implements IteratorAggregate
                 if ($this->reachesLimit($this->resultsNum)) return;
             }
 
-            if (empty($this->bookmarks)) return;
+            if (!$response->hasBookmarks()) return;
         }
     }
 }
