@@ -51,7 +51,9 @@ abstract class Provider
      */
     protected function post($requestOptions, $resourceUrl, $returnResponse = false)
     {
-        $this->execPost($resourceUrl, $requestOptions);
+        $postString = Request::createQuery($requestOptions);
+
+        $this->execute($resourceUrl, $postString);
 
         return $returnResponse ? $this->response : $this->response->isOk();
 
@@ -67,7 +69,9 @@ abstract class Provider
      */
     protected function get(array $requestOptions = [], $resourceUrl = '', $bookmarks = null)
     {
-        $this->execGet($resourceUrl, $requestOptions, $bookmarks);
+        $query = Request::createQuery($requestOptions, $bookmarks);
+
+        $this->execute($resourceUrl . '?' . $query);
 
         return is_null($bookmarks) ?
             $this->response->getResponseData() :
@@ -86,29 +90,6 @@ abstract class Provider
         $this->processResult($result);
 
         return $this;
-    }
-
-    /**
-     * @param string $resourceUrl
-     * @param array $requestOptions
-     * @param array|null $bookmarks
-     */
-    protected function execGet($resourceUrl = '', array $requestOptions = [], $bookmarks = null)
-    {
-        $query = Request::createQuery($requestOptions, $bookmarks);
-
-        $this->execute($resourceUrl . "?{$query}");
-    }
-
-    /**
-     * @param string $resourceUrl
-     * @param $requestOptions
-     */
-    protected function execPost($resourceUrl, $requestOptions)
-    {
-        $postString = Request::createQuery($requestOptions);
-
-        $this->execute($resourceUrl, $postString);
     }
 
     /**

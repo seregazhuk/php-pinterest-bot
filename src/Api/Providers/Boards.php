@@ -93,7 +93,7 @@ class Boards extends EntityProvider
 
     /**
      * Update board info. Gets boardId and an associative array as params. Available keys of the array are:
-     * 'category', 'description', 'privacy'.
+     * 'name', 'category', 'description', 'privacy'.
      *
      * - 'privacy' can be 'public' or 'secret'. 'public' by default.
      * - 'category' is 'other' by default.
