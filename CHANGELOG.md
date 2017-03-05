@@ -7,7 +7,8 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed:
  - Pins *activity()* and *tried()* methods always return Pagination object.
- - Boards *forUser* method returns empty array for no boards.
+ - Boards *forUser* method returns detailed information for every board. If no boards
+ are available it returns empty array.
 
 ## [5.2.3] - 2017-01-24
 ### Fixed:

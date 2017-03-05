@@ -44,13 +44,15 @@ class Boards extends EntityProvider
      *
      * @param string $username
      *
-     * @return array
+     * @return array|bool
      */
     public function forUser($username)
     {
-        $boards = $this->get(['username' => $username], UrlBuilder::RESOURCE_GET_BOARDS);
-
-        return empty($boards) ? [] : $boards;
+        $options = [
+            'username' => $username,
+            'field_set_key'=>'detailed',
+        ];
+        return $this->get($options, UrlBuilder::RESOURCE_GET_BOARDS);
     }
 
     /**
