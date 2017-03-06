@@ -57,9 +57,7 @@ trait Followable
     {
         $query = $this->createFollowRequestQuery($entityId);
 
-        $result = $this->request->exec($resourceUrl, $query);
-
-        $this->processResult($result);
+        $this->execute($resourceUrl, $query);
 
         return $this->response->isOk();
     }
@@ -136,10 +134,11 @@ trait Followable
     }
 
     /**
-     * @param string $res
-     * @return Response
+     * @param string $url
+     * @param string $postString
+     * @return $this
      */
-    abstract protected function processResult($res);
+    abstract protected function execute($url, $postString = "");
 
     /**
      * @param mixed $data

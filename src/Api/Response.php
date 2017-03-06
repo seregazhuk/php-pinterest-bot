@@ -23,6 +23,14 @@ class Response implements PaginatedResponse
 
     /**
      * @param mixed $data
+     */
+    public function __construct($data = null)
+    {
+        if($data) $this->fill($data);
+    }
+
+    /**
+     * @param mixed $data
      * @return $this
      */
     public function fill($data)

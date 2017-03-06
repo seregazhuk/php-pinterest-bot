@@ -75,9 +75,10 @@ abstract class Provider
 
         $this->execute($resourceUrl . '?' . $query);
 
-        return !$this->response->hasBookmarks() ?
-            $this->response->getResponseData() :
-            $this->response;
+        return $this->response->hasBookmarks() ?
+            $this->response :
+            $this->response->getResponseData();
+
     }
 
     /**
@@ -89,7 +90,7 @@ abstract class Provider
     {
         $result = $this->request->exec($url, $postString);
 
-        $this->processResult($result);
+        $this->response->fillFromJson($result);
 
         return $this;
     }
@@ -135,13 +136,5 @@ abstract class Provider
     public function visitPage($url = '')
     {
         return $this->get([], $url);
-    }
-
-    /**
-     * @param string $res
-     */
-    protected function processResult($res)
-    {
-        $this->response->fillFromJson($res);
     }
 }

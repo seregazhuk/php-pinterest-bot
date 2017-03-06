@@ -19,8 +19,6 @@ trait Searchable
 {
     use HandlesRequest;
     
-    protected $moduleSearchPage = 'SearchPage';
-
     /**
      * @return string
      */
@@ -43,11 +41,12 @@ trait Searchable
         );
 
         $get = $this->createSearchQuery($query, $scope);
-        $result = $this->request->exec($url . '?' . $get);
 
-        $this->processResult($result);
+        $this->execute($url . '?', $get);
 
-        return (new SearchResponse())->fillFromJson($result);
+        return new SearchResponse(
+            $this->response->getRawData()
+        );
     }
 
     /**
@@ -106,7 +105,7 @@ trait Searchable
         $dataJson = array_merge(
             $dataJson, [
                 'module' => [
-                    "name"    => $this->moduleSearchPage,
+                    "name"    => 'SearchPage',
                     "options" => $options,
                 ],
             ]
@@ -116,8 +115,9 @@ trait Searchable
     }
 
     /**
-     * @param string $res
-     * @return Response
+     * @param string $url
+     * @param string $postString
+     * @return $this
      */
-    abstract protected function processResult($res);
+    abstract protected function execute($url, $postString = "");
 }
