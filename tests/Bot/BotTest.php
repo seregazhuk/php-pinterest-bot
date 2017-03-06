@@ -5,10 +5,6 @@ namespace seregazhuk\tests;
 use Mockery;
 use PHPUnit_Framework_TestCase;
 use seregazhuk\PinterestBot\Bot;
-use seregazhuk\PinterestBot\Api\Request;
-use seregazhuk\PinterestBot\Api\Response;
-use seregazhuk\PinterestBot\Helpers\Cookies;
-use seregazhuk\PinterestBot\Api\CurlHttpClient;
 use seregazhuk\PinterestBot\Api\ProvidersContainer;
 
 /**

@@ -4,7 +4,7 @@ namespace seregazhuk\tests\Bot;
 
 use PHPUnit_Framework_TestCase;
 use seregazhuk\PinterestBot\Api\Response;
-use seregazhuk\tests\helpers\ResponseHelper;
+use seregazhuk\tests\Helpers\ResponseHelper;
 use seregazhuk\PinterestBot\Helpers\Pagination;
 
 /**
