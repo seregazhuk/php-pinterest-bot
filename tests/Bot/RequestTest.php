@@ -9,8 +9,8 @@ use PHPUnit_Framework_TestCase;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\tests\Helpers\CookiesHelper;
 use seregazhuk\PinterestBot\Helpers\Cookies;
-use seregazhuk\tests\helpers\ResponseHelper;
-use seregazhuk\tests\helpers\ReflectionHelper;
+use seregazhuk\tests\Helpers\ResponseHelper;
+use seregazhuk\tests\Helpers\ReflectionHelper;
 use seregazhuk\PinterestBot\Api\CurlHttpClient;
 use seregazhuk\PinterestBot\Api\Contracts\HttpClient;
 
