@@ -28,14 +28,7 @@ class ProviderTest extends PHPUnit_Framework_TestCase
     {
         $response = ['resource_response' => ['data' => 'value']];
 
-        $request = Mockery::mock(Request::class)
-            ->shouldReceive('exec')
-            ->andReturn(json_encode($response))
-            ->getMock();
-
-        /** @var Provider $provider */
-        $provider = Mockery::mock(Provider::class, [$request, new Response()])
-            ->makePartial();
+        $provider = $this->makeProvider($response);
 
         $responseData = $response['resource_response']['data'];
 
@@ -47,15 +40,23 @@ class ProviderTest extends PHPUnit_Framework_TestCase
     {
         $response = ['resource' => ['options' => ['bookmarks' => 'bookmarks_string']]];
 
+        $provider = $this->makeProvider($response);
+
+        $this->assertInstanceOf(Response::class, $provider->visitPage());
+    }
+
+    /**
+     * @param $response
+     * @return Mockery\Mock|Provider
+     */
+    protected function makeProvider($response)
+    {
         $request = Mockery::mock(Request::class)
             ->shouldReceive('exec')
             ->andReturn(json_encode($response))
             ->getMock();
 
-        /** @var Provider $provider */
-        $provider = Mockery::mock(Provider::class, [$request, new Response()])
+        return Mockery::mock(Provider::class, [$request, new Response()])
             ->makePartial();
-
-        $this->assertInstanceOf(Response::class, $provider->visitPage());
     }
 }
