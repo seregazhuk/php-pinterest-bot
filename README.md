@@ -21,7 +21,6 @@ will get an access token. With this library, you are ready to go. Just use only 
 account login and password, like you do it in your browser. But even your account is not required, 
 if you don't use such operations as creating pins, writing comments or sending messages!
 
-- [Dependencies](#dependencies)
 - [Installation](#installation)
 - [Quick Start](#quick-start)
 - [Account](#account)
@@ -39,11 +38,13 @@ if you don't use such operations as creating pins, writing comments or sending m
 - [Cookies](#cookies)
 - [Pagination](#pagination)
 
-## Dependencies
-Library requires CURL extension and PHP 5.5.9 or above.
 
 ## Installation
-Via composer:
+
+### Dependencies
+Library requires CURL extension and PHP 5.5.9 or above.
+
+Install via composer:
 ```
 composer require seregazhuk/pinterest-bot
 ```
