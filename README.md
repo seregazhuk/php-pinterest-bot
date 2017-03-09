@@ -925,7 +925,7 @@ To get all results pass `0` in `take()` method.
 
 ## How can I thank you?
 Why not star the GitHub repo? I'd love the attention!
-And you can donate project on PayPal
+And you can donate project on PayPal.
 [![Support me with some coffee](https://img.shields.io/badge/donate-paypal-orange.svg)](https://www.paypal.me/seregazhuk)
 
 Thanks! 
