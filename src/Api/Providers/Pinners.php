@@ -177,4 +177,22 @@ class Pinners extends EntityProvider
     {
         return $this->paginate(['username' => $username], $url, $limit);
     }
+
+    /**
+     * @param mixed $entityId
+     * @return int|null
+     */
+    protected function resolveEntityId($entityId)
+    {
+        // If user's id was passed we simply return it.
+        if(is_numeric($entityId)) return $entityId;
+
+        // Then we try to get user's info by username
+        $userInfo = $this->info($entityId);
+
+        // On success return users'id from his profile.
+        return isset($userInfo['id']) ?
+            $userInfo['id'] :
+            null;
+    }
 }

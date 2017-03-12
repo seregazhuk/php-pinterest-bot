@@ -21,7 +21,7 @@ trait Followable
     use HandlesRequest, HasEntityIdName;
 
     /**
-     * Follow user by user_id.
+     * Follow entity by its id.
      *
      * @param $entityId
      *
@@ -33,7 +33,7 @@ trait Followable
     }
 
     /**
-     * UnFollow user by user_id.
+     * UnFollow entity by its id.
      *
      * @param $entityId
      *
@@ -54,9 +54,23 @@ trait Followable
      */
     protected function followCall($entityId, $resourceUrl)
     {
+        $entityId = $this->resolveEntityId($entityId);
+
         $query = $this->createFollowRequest($entityId);
 
         return $this->post($query, $resourceUrl);
+    }
+
+    /**
+     * Is used for *overloading* follow/unfollow methods. When for pinners
+     * we can pass either user's name or id.
+     *
+     * @param mixed $entityId
+     * @return int|null
+     */
+    protected function resolveEntityId($entityId)
+    {
+        return $entityId;
     }
 
     /**

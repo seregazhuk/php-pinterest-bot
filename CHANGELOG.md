@@ -211,6 +211,7 @@ All notable changes to this project will be documented in this file.
 ## v4.8.0 - 2016-09-11
 ### Added:
  - Get following boards/people/interests for a pinner
+ - Pinners follow and unfollow methods accept both user's id or username.
 
 ## v4.7.0 - 2016-09-10
 ### Added:

@@ -490,11 +490,15 @@ $bot->pins->sendWithEmail($pinId, 'message', ['friend1@example.com', 'friend2@ex
 
 ## Pinners
 
-Follow/unfollow user by id.
+Follow/unfollow user. You can use both id or username.
+**Notice:** When using username, bot will make one additional request to resolve user'id for his name.
 
 ```php
 $bot->pinners->follow($userId);
 $bot->pinners->unfollow($userId);
+
+$bot->pinners->follow($username);
+$bot->pinners->unfollow($username);
 ```
 
 Get user info by username.
