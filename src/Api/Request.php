@@ -5,6 +5,7 @@ namespace seregazhuk\PinterestBot\Api;
 use seregazhuk\PinterestBot\Helpers\FileHelper;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\Contracts\HttpClient;
+use seregazhuk\PinterestBot\Exceptions\InvalidRequest;
 
 /**
  * Class Request.
@@ -67,6 +68,7 @@ class Request
      * @param string $pathToFile
      * @param string $url
      * @return string
+     * @throws InvalidRequest
      */
     public function upload($pathToFile, $url)
     {

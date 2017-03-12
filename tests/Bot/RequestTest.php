@@ -62,6 +62,17 @@ class RequestTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($request->isLoggedIn());
     }
 
+    /**
+     * @test
+     * @expectedException \seregazhuk\PinterestBot\Exceptions\InvalidRequest
+     */
+    public function it_should_throw_exception_uploading_file_that_does_not_exist()
+    {
+        $this
+            ->createRequestObject()
+            ->upload('image.jpg', 'http://uploadurl.com');
+    }
+
     /** @test */
     public function it_should_load_cookies_from_previously_saved_session_on_auto_login()
     {
