@@ -4,15 +4,16 @@
     <img src="logo.jpg" alt="Pinterest PHP Bot">
 </p>
 
-<p align="center">
-	<a href="https://travis-ci.org/seregazhuk/php-pinterest-bot"><img src="https://camo.githubusercontent.com/412fbc5888a7d03937daf554d662678477512375/68747470733a2f2f7472617669732d63692e6f72672f7365726567617a68756b2f7068702d70696e7465726573742d626f742e737667" alt="Build Status" data-canonical-src="https://travis-ci.org/seregazhuk/php-pinterest-bot.svg" style="max-width:100%;"></a>
-	<a href="https://circleci.com/gh/seregazhuk/php-pinterest-bot"><img src="https://camo.githubusercontent.com/3577832f301d8615a2275d36aa3e274765ffb995/68747470733a2f2f636972636c6563692e636f6d2f67682f7365726567617a68756b2f7068702d70696e7465726573742d626f742e7376673f7374796c653d736869656c64" alt="Circle CI" data-canonical-src="https://circleci.com/gh/seregazhuk/php-pinterest-bot.svg?style=shield" style="max-width:100%;"></a>
-	<a href="https://codeclimate.com/github/seregazhuk/php-pinterest-bot"><img src="https://camo.githubusercontent.com/d30f6b154177d3a589af46e154b31ec66ef05128/68747470733a2f2f636f6465636c696d6174652e636f6d2f6769746875622f7365726567617a68756b2f7068702d70696e7465726573742d626f742f6261646765732f6770612e737667" alt="Code Climate" data-canonical-src="https://codeclimate.com/github/seregazhuk/php-pinterest-bot/badges/gpa.svg" style="max-width:100%;"></a>
-	<a href="https://scrutinizer-ci.com/g/seregazhuk/php-pinterest-bot/?branch=master"><img src="https://camo.githubusercontent.com/c05b7ed73a9c49224fb982888fc7ac643fbec5f6/68747470733a2f2f7363727574696e697a65722d63692e636f6d2f672f7365726567617a68756b2f7068702d70696e7465726573742d626f742f6261646765732f7175616c6974792d73636f72652e706e673f623d6d6173746572" alt="Scrutinizer Code Quality" data-canonical-src="https://scrutinizer-ci.com/g/seregazhuk/php-pinterest-bot/badges/quality-score.png?b=master" style="max-width:100%;"></a>
-	<a href="https://codeclimate.com/github/seregazhuk/php-pinterest-bot/coverage"><img src="https://camo.githubusercontent.com/704321dd17ccb2c5de0e954e1c29a8cefa2572be/68747470733a2f2f636f6465636c696d6174652e636f6d2f6769746875622f7365726567617a68756b2f7068702d70696e7465726573742d626f742f6261646765732f636f7665726167652e737667" alt="Test Coverage" data-canonical-src="https://codeclimate.com/github/seregazhuk/php-pinterest-bot/badges/coverage.svg" style="max-width:100%;"></a>
-	<a href="https://packagist.org/packages/seregazhuk/pinterest-bot"><img class="spinned latest_stable_version_img" src="https://poser.pugx.org/seregazhuk/pinterest-bot/v/stable" style="display: inline;"></a>
-	<a href="https://packagist.org/packages/seregazhuk/pinterest-bot"><img src="https://camo.githubusercontent.com/8957462146926452326740b5c6255bbdb3abea67/68747470733a2f2f706f7365722e707567782e6f72672f7365726567617a68756b2f70696e7465726573742d626f742f646f776e6c6f616473" alt="Total Downloads" data-canonical-src="https://poser.pugx.org/seregazhuk/pinterest-bot/downloads" style="max-width:100%;"></a>
-</p>
+##
+<a href="https://travis-ci.org/seregazhuk/php-pinterest-bot"><img src="https://camo.githubusercontent.com/412fbc5888a7d03937daf554d662678477512375/68747470733a2f2f7472617669732d63692e6f72672f7365726567617a68756b2f7068702d70696e7465726573742d626f742e737667" alt="Build Status" data-canonical-src="https://travis-ci.org/seregazhuk/php-pinterest-bot.svg" style="max-width:100%;"></a>
+<a href="https://codeclimate.com/github/seregazhuk/php-pinterest-bot"><img src="https://camo.githubusercontent.com/d30f6b154177d3a589af46e154b31ec66ef05128/68747470733a2f2f636f6465636c696d6174652e636f6d2f6769746875622f7365726567617a68756b2f7068702d70696e7465726573742d626f742f6261646765732f6770612e737667" alt="Code Climate" data-canonical-src="https://codeclimate.com/github/seregazhuk/php-pinterest-bot/badges/gpa.svg" style="max-width:100%;"></a>
+<a href="https://scrutinizer-ci.com/g/seregazhuk/php-pinterest-bot/?branch=master"><img src="https://camo.githubusercontent.com/c05b7ed73a9c49224fb982888fc7ac643fbec5f6/68747470733a2f2f7363727574696e697a65722d63692e636f6d2f672f7365726567617a68756b2f7068702d70696e7465726573742d626f742f6261646765732f7175616c6974792d73636f72652e706e673f623d6d6173746572" alt="Scrutinizer Code Quality" data-canonical-src="https://scrutinizer-ci.com/g/seregazhuk/php-pinterest-bot/badges/quality-score.png?b=master" style="max-width:100%;"></a>
+<a href="https://codeclimate.com/github/seregazhuk/php-pinterest-bot/coverage"><img src="https://camo.githubusercontent.com/704321dd17ccb2c5de0e954e1c29a8cefa2572be/68747470733a2f2f636f6465636c696d6174652e636f6d2f6769746875622f7365726567617a68756b2f7068702d70696e7465726573742d626f742f6261646765732f636f7665726167652e737667" alt="Test Coverage" data-canonical-src="https://codeclimate.com/github/seregazhuk/php-pinterest-bot/badges/coverage.svg" style="max-width:100%;"></a>
+<a href="https://packagist.org/packages/seregazhuk/pinterest-bot"><img class="spinned latest_stable_version_img" src="https://poser.pugx.org/seregazhuk/pinterest-bot/v/stable" style="display: inline;"></a>
+<a href="https://packagist.org/packages/seregazhuk/pinterest-bot"><img src="https://camo.githubusercontent.com/8957462146926452326740b5c6255bbdb3abea67/68747470733a2f2f706f7365722e707567782e6f72672f7365726567617a68756b2f70696e7465726573742d626f742f646f776e6c6f616473" alt="Total Downloads" data-canonical-src="https://poser.pugx.org/seregazhuk/pinterest-bot/downloads" style="max-width:100%;"></a>
+
+[![Support me with some coffee](https://img.shields.io/badge/donate-paypal-orange.svg)](https://www.paypal.me/seregazhuk)
+
 
 This PHP library will help you to work with your Pinterest account without using any API account credentials. 
 
@@ -22,7 +23,6 @@ will get an access token. With this library, you are ready to go. Just use only 
 account login and password, like you do it in your browser. But even your account is not required, 
 if you don't use such operations as creating pins, writing comments or sending messages!
 
-- [Dependencies](#dependencies)
 - [Installation](#installation)
 - [Quick Start](#quick-start)
 - [Account](#account)
@@ -38,12 +38,15 @@ if you don't use such operations as creating pins, writing comments or sending m
 - [Use proxy](#use-proxy)
 - [Custom request settings](#custom-request-settings)
 - [Cookies](#cookies)
+- [Pagination](#pagination)
 
-## Dependencies
-Library requires CURL extension and PHP 5.5.9 or above.
 
 ## Installation
-Via composer:
+
+### Dependencies
+Library requires CURL extension and PHP 5.5.9 or above.
+
+Install via composer:
 ```
 composer require seregazhuk/pinterest-bot
 ```
@@ -61,49 +64,16 @@ $bot = PinterestBot::create();
 // login
 $bot->auth->login('mypinterestlogin', 'mypinterestpassword');
 
-// execGet lists of your boards 
+// get lists of your boards 
 $boards = $bot->boards->forUser('yourUserName');
 
 // create a pin
 $bot->pins->create('http://exmaple.com/image.jpg', $boards[0]['id'], 'pin description');
 ```
 
-*Note*: Some methods use pinterest navigation through results, for example, execGet user followers/following, pins
+*Note*: Some methods use pinterest navigation through results (with bookmarks), for example, get user followers/following, pins
 likes/dislikes, search and other feed queries. This means that for every batch of results there will be a 
-request to Pinterest. These methods return an iterator object with Pinterest api results.
-By default functions return the first 50 results. But you can specify another limit num as a second argument. Or pass 0
-for no limit. For example, 
-```php 
-foreach($bot->pins->search('query', 20) as $pin) {
-	// ...
-}
-```
-
-will return only 2 pins of the search results.
-
-To receive all results at once as array:
-```php
-// execGet all results as array
-$results = $bot->pins->search('query', 20)->toArray();
-```
-
-Limit and offset in results:
-```php
-// skip first 50 results
-$results = $bot->pins
-    ->search('query')
-    ->skip(50)
-    ->execGet();
-
-// skip first 50 results, and then take 20 
-$results = $bot->pins
-    ->search('query')
-    ->take(20)
-    ->skip(50)
-    ->execGet();
-```
-
-To execGet all results pass `0` in `take()` method.
+request to Pinterest. These methods return a [Pagination] object with Pinterest api results.
 
 ## Account
 
@@ -132,7 +102,7 @@ $result = $bot->auth->login('mypinterestlogin', 'mypinterestpassword', false);
 ```
 
 Or you may skip login if you want. It is only required for such operations as likes, follows and making pins.
-You can execGet your current logged in status via *isLoggedIn* method:
+You can get your current logged in status via *isLoggedIn* method:
 
 ```php
 if($bot->auth->isLoggedIn()) {
@@ -194,7 +164,7 @@ Then your can grab a link from email and pass use it to reset password:
 
 ```php
 $bot->password->reset(
-    'https://execPost.pinterest.com/f/a/your-password-reset-params',
+    'https://post.pinterest.com/f/a/your-password-reset-params',
     'newPassword'
 );
 ```
@@ -221,7 +191,7 @@ $bot->user->profile([
 ]);
 ```
 
-You can execGet your current profile settings calling *profile* method without any params:
+You can get your current profile settings calling *profile* method without any params:
 ```php
 $profile = $bot->user->profile();
 echo $profile['username']; //prints your username
@@ -270,7 +240,7 @@ Get all user's boards.
 $boards = $bot->boards->forUser($username);
 ```
 
-Get full board info by boardName and userName. Here you can execGet board id, for further functions
+Get full board info by boardName and userName. Here you can get board id, for further functions
 (for example, pin creating or following boards).
 
 ```php
@@ -313,7 +283,7 @@ $bot->boards->follow($boardId);
 $bot->boards->unfollow($boardId);
 ```
 
-Get all pins for board by id (returns Pagination object).
+Get all pins for board by id (returns [Pagination](#pagination) object).
 ```php
 foreach($bot->boards->pins($boardId) as $pin)
 {
@@ -321,7 +291,7 @@ foreach($bot->boards->pins($boardId) as $pin)
 }
 ```
 
-Get board followers. Uses pinterest api pagination (return Pagination object).
+Get board followers. Uses pinterest api pagination (returns [Pagination](#pagination) object).
 ```php
 foreach($bot->boards->followers($boardId) as $follower)
 {
@@ -329,7 +299,7 @@ foreach($bot->boards->followers($boardId) as $follower)
 }
 ```
 
-When you repin, Pinterest suggests you some board titles for it. You can execGet these
+When you repin, Pinterest suggests you some board titles for it. You can get these
 suggestions for pin by its id:
 ```
 $suggestions = $bot->boards->titleSuggestionsFor($pinId);
@@ -355,7 +325,7 @@ Get pin info by its id.
 $info = $bot->pins->info(1234567890);
 ```
 
-Create new pin. Accepts image url, board id, where to execPost image, description and preview url.
+Create new pin. Accepts image url, board id, where to post image, description and preview url.
 
 ```php
 $pinInfo = $bot->pins->create('http://exmaple.com/image.jpg', $boardId, 'pin description');
@@ -440,14 +410,14 @@ $bot->comments->delete($pinId, $commentId);
 ```
 
 Get pins from a specific url. For example: https://pinterest.com/source/flickr.com/ will return 
-recent pins from flickr.com:
+recent pins from flickr.com (returns [Pagination](#pagination) object):
 ```php
 foreach ($bot->pins->fromSource('flickr.com') as $pin) {
     // ...
 }
 ```
 
-Get user pins feed. Method *feed()* returns Pagination object.
+Get user pins feed (returns [Pagination](#pagination) object).
 ```php
 foreach ($bot->pins->feed() as $pin) {
     //...
@@ -459,7 +429,7 @@ foreach ($bot->pins->feed(20) as $pin) {
 }
 ```
 
-Get activity of a pin:
+Get activity of a pin (returns [Pagination](#pagination) object):
 
 ```php
 foreach ($bot->pins->activity($pinId) as $data) {
@@ -467,7 +437,7 @@ foreach ($bot->pins->activity($pinId) as $data) {
 }
 ```
 
-If you don't want to execGet all activity records, you can pass a limit as the second parameter.
+If you don't want to get all activity records, you can pass a limit as the second parameter.
 Get  5 last activity records:
 
 ```php
@@ -478,7 +448,7 @@ foreach($activities as $activity) {
 }
 ```
 
-Get related pins for current pin:
+Get related pins for current pin (returns [Pagination](#pagination) object):
 ```php
 foreach($bot->pins->related($pinId) as $pin) {
 	//...
@@ -494,7 +464,7 @@ foreach($related as $pin) {
 }
 ```
 
-Get the pinners who have tried this pin:
+Get the pinners who have tied this pin (returns [Pagination](#pagination) object):
 ```php
 $pinners = $bot->pins->tried($pinId);
 // print_r($pinners->toArray()); 
@@ -533,7 +503,7 @@ Get user info by username.
 $userData = $bot->pinners->info($username);
 ```
 
-Get user following info. By default returns following users. Uses pinterest api pagination.
+Get user following info. By default returns following users. Returns [Pagination](#pagination) object.
 ```php
 foreach($bot->pinners->following('username') as $following)
 {
@@ -578,7 +548,7 @@ foreach($bot->pinners->followingInterests('username') as $interest)
 }
 ```
 
-Get user followers. Returns Pagination object.
+Get user followers (returns [Pagination](#pagination) object)
 ```php
 foreach($bot->pinners->followers('username') as $follower)
 {
@@ -586,7 +556,7 @@ foreach($bot->pinners->followers('username') as $follower)
 }
 ```
 
-Get the newest pins of a pinner. Returns Pagination object.
+Get the newest pins of a pinner (returns [Pagination](#pagination) object)
 
 ```php
 foreach($bot->pinners->pins('username') as $pin)
@@ -604,7 +574,7 @@ foreach($bot->pinners->pins('username', 20) as $pin)
 }
 ```
 
-Get pins that user likes. Returns Pagination object.
+Get pins that user likes (returns [Pagination](#pagination) object)
 
 ```php
 foreach($bot->pinners->likes('username') as $like)
@@ -622,15 +592,6 @@ $bot->pinners->block('username');
 // by id. For example after calling info() method
 $pinnerInfo = $bot->pinners->info('username');
 $bot->pinners->block($pinnerInfo['id']);
-```
-
-Get user *Tried* pins:
-```php
-$pinns = $bot->pinners->tried($username);
-// print_r($pinns->toArray()); 
-foreach($pinns as $pin) {
-    // ...
-}
 ```
 
 ## Interests
@@ -653,7 +614,7 @@ Get related topics for interest:
 $topics = $bot->interests->getRelatedTopics('videos');
 ```
 
-Get pins for specific interest:
+Get pins for specific interest (returns [Pagination](#pagination) object):
 
 ```php
 foreach($bot->interests->pins('videos') as $pin) {
@@ -678,7 +639,7 @@ Get a topic info:
 $info = $bot->topics->info('content-marketing');
 ```
 
-Get pins for a specific topic:
+Get pins for a specific topic (returns [Pagination](#pagination) object):
 
 ```php
 foreach($bot->topics->pins('content-marketing') as $pin) {
@@ -694,14 +655,7 @@ $topics = $bot->topics->getRelatedTopics('content-marketing');
 
 ## Search
 
-**Notice!** generator object is not an array. If you want to fetch search results as an
-array use PHP `iterator_to_array()` function:
-
-```php
-$results = iterator_to_array($bot->pins->search('query'));
-```
-
-Search functions use Pinterest pagination in fetching results and return a generator object.
+Search functions use Pinterest pagination in fetching results and return [Pagination](#pagination) object.
 
 ```php
 $pins = $bot->pins->search('query')->toArray();
@@ -734,10 +688,10 @@ foreach($bot->boards->search('query') as $board);
 
 ### News
 
-Get your current user's news:
+Get your current user's news (returns [Pagination](#pagination) object):
 ```php
-// execGet result as array
-$news = $bot->inbox->news()->asArray();
+// get result as array
+$news = $bot->inbox->news()->toArray();
 
 // iterate with requests
 foreach($bot->inbox->news() as $new) {
@@ -747,10 +701,10 @@ foreach($bot->inbox->news() as $new) {
 
 ### Notifications
 
-Get user's notifications:
+Get user's notifications (returns [Pagination](#pagination) object):
 ```php
-// execGet result as array
-$notifications = $bot->inbox->notifications()->asArray();
+// get result as array
+$notifications = $bot->inbox->notifications()->toArray();
 
 // iterate with requests
 foreach($bot->inbox->notifications() as $notification) {
@@ -886,7 +840,7 @@ By default it uses client info from the last request. To reload client context p
 $info = $bot->getClientInfo(true);
 ```
 
-You can execGet an url of the last visited page:
+You can get an url of the last visited page:
 ```php
 $url = $bot->getHttpClient()->getCurrentUrl();
 ```
@@ -919,7 +873,60 @@ Remove your cookies:
 $bot->getHttpClient()->removeCookies();
 ```
 
+## Pagination
+
+Most of methods use Pinterest pagination. For example, when you run `$bot->pins->search('query')`, Pinterest returns
+only 20 results by request, you cannot get all the pins at once with only one request. So these methods return
+`Pagination` object. You can iterate over it to get results:
+
+```php
+$pagination = $bot->pins->search('query');
+foreach($pagination as $pin) {
+    // your code ...
+}
+ ```
+
+Or you can grab all results at once as an array, but it will require some time, to loop through all Pinterest pages to get these results:
+```php
+$pagination = $bot->pins->search('query');
+$results = $pagination->toArray();
+// or
+$results = $bot->pins->search('query')->toArray();
+```
+
+By default methods return the first 50 results. For example, `$bot->pins->search('query')` will return only first 50
+pins. But you can specify another limit num as a second argument. Or pass 0
+for no limit. For example,
+```php
+foreach($bot->pins->search('query', 20) as $pin) {
+	// ...
+}
+```
+
+will return only 20 pins of the search results.
+
+Limit and offset in results:
+```php
+// skip first 50 results
+$results = $bot->pins
+    ->search('query')
+    ->skip(50)
+    ->get();
+
+// skip first 50 results, and then take 20
+$results = $bot->pins
+    ->search('query')
+    ->take(20)
+    ->skip(50)
+    ->get();
+```
+
+To get all results pass `0` in `take()` method.
+
 ## How can I thank you?
 Why not star the GitHub repo? I'd love the attention!
+And you can donate project on PayPal.
+
+[![Support me with some coffee](https://img.shields.io/badge/donate-paypal-orange.svg)](https://www.paypal.me/seregazhuk)
 
 Thanks! 
