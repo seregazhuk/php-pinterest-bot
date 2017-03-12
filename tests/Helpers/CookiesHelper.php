@@ -42,7 +42,9 @@ trait CookiesHelper
 
     protected function tearDown()
     {
-        if(file_exists($this->cookieFilePath)) unlink($this->cookieFilePath);
+        if(file_exists($this->cookieFilePath)) {
+            unlink($this->cookieFilePath);
+        }
 
         Mockery::close();
     }
