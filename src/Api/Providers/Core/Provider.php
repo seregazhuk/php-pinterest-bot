@@ -122,10 +122,29 @@ abstract class Provider
      */
     protected function paginate($data, $resourceUrl, $limit = Pagination::DEFAULT_LIMIT)
     {
-        return (new Pagination($limit))
-            ->paginateOver(function() use ($data, $resourceUrl) {
+        return $this->paginateCustom(function() use ($data, $resourceUrl) {
                 return $this->get($data, $resourceUrl);
-            });
+            })
+            ->take($limit);
+    }
+
+    /**
+     * @param callable $callback
+     * @param int $limit
+     * @return Pagination
+     */
+    protected function paginateCustom(callable $callback, $limit = Pagination::DEFAULT_LIMIT)
+    {
+        $this->clearResponse();
+
+        return (new Pagination)
+            ->paginateOver($callback)
+            ->take($limit);
+    }
+
+    protected function clearResponse()
+    {
+        $this->response->fill([]);
     }
 
     /**

@@ -4,9 +4,9 @@ namespace seregazhuk\PinterestBot\Api\Traits;
 
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
+use seregazhuk\PinterestBot\Api\SearchResponse;
 use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
-use seregazhuk\PinterestBot\Api\SearchResponse;
 
 /**
  * Trait Searchable
@@ -34,40 +34,20 @@ trait Searchable
      */
     protected function execSearchRequest($query, $scope)
     {
-        $url = UrlBuilder::getSearchUrl(
-            $this->response->getBookmarks()
-        );
+        $url = $this->response->hasBookmarks() ?
+            UrlBuilder::RESOURCE_SEARCH_WITH_PAGINATION :
+            UrlBuilder::RESOURCE_SEARCH;
 
-        $get = $this->createSearchQuery($query, $scope);
+        $requestOptions = [
+            'scope' => $scope,
+            'query' => $query,
+        ];
 
-        $this->execute($url . '?', $get);
+        $this->get($requestOptions, $url);
 
         return new SearchResponse(
             $this->response->getRawData()
         );
-    }
-
-    /**
-     * Creates Pinterest API search request.
-     *
-     * @param string $query
-     * @param string $scope
-     * @return string
-     */
-    protected function createSearchQuery($query, $scope)
-    {
-        $dataJson = $this->appendBookmarks(
-            [
-                'scope' => $scope,
-                'query' => $query
-            ]
-        );
-
-        $request = Request::createRequestData(
-            $dataJson, $this->response->getBookmarks()
-        );
-
-        return UrlBuilder::buildRequestString($request);
     }
 
     /**
@@ -80,42 +60,8 @@ trait Searchable
      */
     public function search($query, $limit = Pagination::DEFAULT_LIMIT)
     {
-        return (new Pagination($limit))
-            ->paginateOver(function() use ($query) {
+        return $this->paginateCustom(function() use ($query) {
                 return $this->execSearchRequest($query, $this->getSearchScope());
-            });
+            })->take($limit);
     }
-
-    /**
-     * @param array $options
-     *
-     * @return array
-     */
-    protected function appendBookmarks($options)
-    {
-        $dataJson = ['options' => $options];
-        if ($this->response->hasBookmarks()) {
-            $dataJson['options']['bookmarks'] = $this->response->getBookmarks();
-
-            return $dataJson;
-        }
-
-        $dataJson = array_merge(
-            $dataJson, [
-                'module' => [
-                    "name"    => 'SearchPage',
-                    "options" => $options,
-                ],
-            ]
-        );
-
-        return $dataJson;
-    }
-
-    /**
-     * @param string $url
-     * @param string $postString
-     * @return $this
-     */
-    abstract protected function execute($url, $postString = "");
 }
