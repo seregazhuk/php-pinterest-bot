@@ -17,8 +17,6 @@ use seregazhuk\PinterestBot\Api\SearchResponse;
  */
 trait Searchable
 {
-    use HandlesRequest;
-    
     /**
      * @return string
      */
@@ -34,7 +32,7 @@ trait Searchable
      * @param string $scope
      * @return SearchResponse
      */
-    public function execSearchRequest($query, $scope)
+    protected function execSearchRequest($query, $scope)
     {
         $url = UrlBuilder::getSearchUrl(
             $this->response->getBookmarks()

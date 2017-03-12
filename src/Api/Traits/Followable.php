@@ -5,7 +5,6 @@ namespace seregazhuk\PinterestBot\Api\Traits;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Helpers\Pagination;
-use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 
 /**
  * Trait Followable
@@ -55,35 +54,28 @@ trait Followable
      */
     protected function followCall($entityId, $resourceUrl)
     {
-        $query = $this->createFollowRequestQuery($entityId);
+        $query = $this->createFollowRequest($entityId);
 
-        $this->execute($resourceUrl, $query);
-
-        return $this->response->isOk();
+        return $this->post($query, $resourceUrl);
     }
 
     /**
      * @param integer $entityId
-     * @return string
+     * @return array
      */
-    public function createFollowRequestQuery($entityId)
+    protected function createFollowRequest($entityId)
     {
         $entityName = $this->getEntityIdName();
 
         $dataJson = [
-            'options' => [
-                $entityName => (string)$entityId,
-            ],
-            'context' => [],
+            $entityName => (string)$entityId,
         ];
 
         if ($entityName == 'interest_id') {
-            $dataJson['options']['interest_list'] = 'favorited';
+            $dataJson['interest_list'] = 'favorited';
         }
 
-        $post = ['data' => json_encode($dataJson, JSON_FORCE_OBJECT)];
-
-        return UrlBuilder::buildRequestString($post);
+        return $dataJson;
     }
 
     /**
@@ -132,13 +124,6 @@ trait Followable
     {
         return property_exists($this, 'followersFor') ? $this->followersFor : '';
     }
-
-    /**
-     * @param string $url
-     * @param string $postString
-     * @return $this
-     */
-    abstract protected function execute($url, $postString = "");
 
     /**
      * @param mixed $data
