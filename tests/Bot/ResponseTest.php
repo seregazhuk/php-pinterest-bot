@@ -37,7 +37,7 @@ class ResponseTest extends PHPUnit_Framework_TestCase
         $response = new Response();
         $response->fill($this->createErrorApiResponse('some error'));
 
-        $this->assertEmpty($response->getResponseData());
+        $this->assertFalse($response->getResponseData());
 
         $lastError = $response->getLastError();
         $this->assertEquals('some error', $lastError['message']);

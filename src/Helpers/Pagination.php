@@ -5,7 +5,8 @@ namespace seregazhuk\PinterestBot\Helpers;
 use Traversable;
 use EmptyIterator;
 use IteratorAggregate;
-use seregazhuk\PinterestBot\Api\Response;
+use seregazhuk\PinterestBot\Api\Contracts\PaginatedResponse;
+
 
 /**
  * Class Pagination
@@ -135,15 +136,14 @@ class Pagination implements IteratorAggregate
     {
         $this->resultsNum = 0;
         $this->processed = 0;
-        $callback = $this->callback;
 
         while (true) {
-            /** @var Response $response */
-            $response = $callback();
+            /** @var PaginatedResponse $response */
+            $response = call_user_func($this->callback);
 
             if ($response->isEmpty()) return;
 
-            foreach ($response->getResponseData() as $result) {
+            foreach ($this->getResultsFromResponse($response) as $result) {
                 $this->processed++;
 
                 if ($this->processed > $this->offset) {
@@ -156,5 +156,16 @@ class Pagination implements IteratorAggregate
 
             if (!$response->hasBookmarks()) return;
         }
+    }
+
+    /**
+     * @param $response
+     * @return array
+     */
+    protected function getResultsFromResponse(PaginatedResponse $response)
+    {
+        $results = $response->getResponseData();
+
+        return $results ? : [];
     }
 }

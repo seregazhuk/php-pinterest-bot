@@ -57,12 +57,12 @@ class Response implements PaginatedResponse
      * Check if specified data exists in response.
      *
      * @param null  $key
-     * @return array
+     * @return array|bool
      */
     public function getResponseData($key = null)
     {
         if ($this->hasErrors()) {
-            return [];
+            return false;
         }
 
         return $this->parseResponseData($key);
