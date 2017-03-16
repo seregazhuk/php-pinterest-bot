@@ -17,7 +17,7 @@ interface PaginatedResponse
     public function hasBookmarks();
 
     /**
-     * @return array|bool
+     * @return array
      */
     public function getResponseData();
 

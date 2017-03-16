@@ -64,7 +64,7 @@ abstract class Provider
      *
      * @param array $requestOptions
      * @param string $resourceUrl
-     * @return array|bool|Response
+     * @return array|Response
      */
     protected function get(array $requestOptions = [], $resourceUrl = '')
     {
