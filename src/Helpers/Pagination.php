@@ -166,6 +166,6 @@ class Pagination implements IteratorAggregate
     {
         $results = $response->getResponseData();
 
-        return is_array($results) ? : [];
+        return $results === false ? [] : $results;
     }
 }
