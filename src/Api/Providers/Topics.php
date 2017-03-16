@@ -6,6 +6,7 @@ use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\Traits\Followable;
 use seregazhuk\PinterestBot\Api\Traits\HasRelatedTopics;
+use seregazhuk\PinterestBot\Api\Providers\Core\EntityProvider;
 
 class Topics extends EntityProvider
 {
@@ -32,7 +33,7 @@ class Topics extends EntityProvider
      */
     public function info($topic)
     {
-        return $this->execGetRequest(["interest" => $topic], UrlBuilder::RESOURCE_GET_TOPIC);
+        return $this->get(["interest" => $topic], UrlBuilder::RESOURCE_GET_TOPIC);
     }
 
     /**

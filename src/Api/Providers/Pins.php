@@ -10,6 +10,7 @@ use seregazhuk\PinterestBot\Api\Traits\Searchable;
 use seregazhuk\PinterestBot\Api\Traits\CanBeDeleted;
 use seregazhuk\PinterestBot\Api\Traits\SendsMessages;
 use seregazhuk\PinterestBot\Api\Traits\UploadsImages;
+use seregazhuk\PinterestBot\Api\Providers\Core\EntityProvider;
 
 class Pins extends EntityProvider
 {
@@ -84,7 +85,7 @@ class Pins extends EntityProvider
         ];
 
         return $this
-            ->execPostRequest($requestOptions, UrlBuilder::RESOURCE_CREATE_PIN, true)
+            ->post($requestOptions, UrlBuilder::RESOURCE_CREATE_PIN, true)
             ->getResponseData();
     }
 
@@ -106,7 +107,7 @@ class Pins extends EntityProvider
             'board_id'    => $boardId,
         ];
 
-        return $this->execPostRequest($requestOptions, UrlBuilder::RESOURCE_UPDATE_PIN);
+        return $this->post($requestOptions, UrlBuilder::RESOURCE_UPDATE_PIN);
     }
 
     /**
@@ -140,7 +141,7 @@ class Pins extends EntityProvider
         ];
 
         return $this
-            ->execPostRequest($requestOptions, UrlBuilder::RESOURCE_REPIN, true)
+            ->post($requestOptions, UrlBuilder::RESOURCE_REPIN, true)
             ->getResponseData();
     }
 
@@ -157,7 +158,7 @@ class Pins extends EntityProvider
             'field_set_key' => 'detailed',
         ];
 
-        return $this->execGetRequest($requestOptions, UrlBuilder::RESOURCE_PIN_INFO);
+        return $this->get($requestOptions, UrlBuilder::RESOURCE_PIN_INFO);
     }
 
     /**
@@ -180,7 +181,7 @@ class Pins extends EntityProvider
      *
      * @param string $pinId
      * @param int $limit
-     * @return Pagination|false
+     * @return Pagination
      */
     public function activity($pinId, $limit = Pagination::DEFAULT_LIMIT)
     {
@@ -192,7 +193,7 @@ class Pins extends EntityProvider
      *
      * @param string $pinId
      * @param int $limit
-     * @return Pagination|false
+     * @return Pagination
      */
     public function tried($pinId, $limit = Pagination::DEFAULT_LIMIT)
     {
@@ -208,13 +209,13 @@ class Pins extends EntityProvider
      * @param string $pinId
      * @param array $additionalData
      * @param int $limit
-     * @return bool|Pagination
+     * @return Pagination
      */
     protected function getAggregatedActivity($pinId, $additionalData = [],  $limit)
     {
         $aggregatedPinId = $this->getAggregatedPinId($pinId);
 
-        if (is_null($aggregatedPinId)) return false;
+        if (is_null($aggregatedPinId)) return new Pagination();
 
         $additionalData['aggregated_pin_data_id'] = $aggregatedPinId;
 
@@ -245,7 +246,6 @@ class Pins extends EntityProvider
     /**
      * Copy pins to board
      *
-     * @codeCoverageIgnore
      * @param array|string $pinIds
      * @param int $boardId
      * @return bool|Response
@@ -258,7 +258,6 @@ class Pins extends EntityProvider
     /**
      * Delete pins from board.
      *
-     * @codeCoverageIgnore
      * @param string|array $pinIds
      * @param int $boardId
      * @return bool
@@ -269,7 +268,6 @@ class Pins extends EntityProvider
     }
 
     /**
-     * @codeCoverageIgnore
      * Move pins to board
      *
      * @param string|array $pinIds
@@ -301,7 +299,7 @@ class Pins extends EntityProvider
             'keep_duplicates' => false
         ];
 
-        return $this->execGetRequest($data, UrlBuilder::RESOURCE_VISUAL_SIMILAR_PINS);
+        return $this->get($data, UrlBuilder::RESOURCE_VISUAL_SIMILAR_PINS);
     }
 
     /**
@@ -332,10 +330,9 @@ class Pins extends EntityProvider
      */
     public function searchInMyPins($query, $limit = Pagination::DEFAULT_LIMIT)
     {
-        return (new Pagination($limit))
-            ->paginateOver(function($bookmarks = []) use ($query) {
-                return $this->execSearchRequest($query, 'my_pins', $bookmarks);
-            });
+        return $this->paginateCustom(function() use ($query) {
+                return $this->execSearchRequest($query, 'my_pins');
+            })->take($limit);
     }
     
     /**
@@ -347,7 +344,7 @@ class Pins extends EntityProvider
      */
     protected function likePinMethodCall($pinId, $resourceUrl)
     {
-        return $this->execPostRequest(['pin_id' => $pinId], $resourceUrl);
+        return $this->post(['pin_id' => $pinId], $resourceUrl);
     }
 
     /**
@@ -387,6 +384,6 @@ class Pins extends EntityProvider
             'pin_ids'  => $pinIds,
         ];
 
-        return $this->execPostRequest($data, $editUrl);
+        return $this->post($data, $editUrl);
     }
 }

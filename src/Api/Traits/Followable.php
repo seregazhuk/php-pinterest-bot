@@ -5,7 +5,6 @@ namespace seregazhuk\PinterestBot\Api\Traits;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Helpers\Pagination;
-use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 
 /**
  * Trait Followable
@@ -22,7 +21,7 @@ trait Followable
     use HandlesRequest, HasEntityIdName;
 
     /**
-     * Follow user by user_id.
+     * Follow entity by its id.
      *
      * @param $entityId
      *
@@ -34,7 +33,7 @@ trait Followable
     }
 
     /**
-     * UnFollow user by user_id.
+     * UnFollow entity by its id.
      *
      * @param $entityId
      *
@@ -55,37 +54,42 @@ trait Followable
      */
     protected function followCall($entityId, $resourceUrl)
     {
-        $query = $this->createFollowRequestQuery($entityId);
+        $entityId = $this->resolveEntityId($entityId);
 
-        $result = $this->request->exec($resourceUrl, $query);
+        $query = $this->createFollowRequest($entityId);
 
-        $this->processResult($result);
+        return $this->post($query, $resourceUrl);
+    }
 
-        return $this->response->isOk();
+    /**
+     * Is used for *overloading* follow/unfollow methods. When for pinners
+     * we can pass either user's name or id.
+     *
+     * @param mixed $entityId
+     * @return int|null
+     */
+    protected function resolveEntityId($entityId)
+    {
+        return $entityId;
     }
 
     /**
      * @param integer $entityId
-     * @return string
+     * @return array
      */
-    public function createFollowRequestQuery($entityId)
+    protected function createFollowRequest($entityId)
     {
         $entityName = $this->getEntityIdName();
 
         $dataJson = [
-            'options' => [
-                $entityName => (string)$entityId,
-            ],
-            'context' => [],
+            $entityName => (string)$entityId,
         ];
 
         if ($entityName == 'interest_id') {
-            $dataJson['options']['interest_list'] = 'favorited';
+            $dataJson['interest_list'] = 'favorited';
         }
 
-        $post = ['data' => json_encode($dataJson, JSON_FORCE_OBJECT)];
-
-        return UrlBuilder::buildRequestString($post);
+        return $dataJson;
     }
 
     /**
@@ -134,12 +138,6 @@ trait Followable
     {
         return property_exists($this, 'followersFor') ? $this->followersFor : '';
     }
-
-    /**
-     * @param string $res
-     * @return Response
-     */
-    abstract protected function processResult($res);
 
     /**
      * @param mixed $data

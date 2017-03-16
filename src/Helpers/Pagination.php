@@ -3,9 +3,9 @@
 namespace seregazhuk\PinterestBot\Helpers;
 
 use Traversable;
+use EmptyIterator;
 use IteratorAggregate;
 use seregazhuk\PinterestBot\Api\Response;
-use seregazhuk\PinterestBot\Api\Contracts\PaginatedResponse;
 
 /**
  * Class Pagination
@@ -25,11 +25,6 @@ class Pagination implements IteratorAggregate
     protected $limit;
 
     /**
-     * @var array
-     */
-    protected $bookmarks = [];
-
-    /**
      * @var callable
      */
     protected $callback;
@@ -40,6 +35,16 @@ class Pagination implements IteratorAggregate
     protected $offset;
 
     /**
+     * @var int
+     */
+    protected $resultsNum;
+
+    /**
+     * @var int
+     */
+    protected $processed;
+
+    /**
      * @param int $limit
      */
     public function __construct($limit = self::DEFAULT_LIMIT)
@@ -48,8 +53,7 @@ class Pagination implements IteratorAggregate
     }
 
     /**
-     * Sets a callback to make requests. Should be a closure
-     * that accepts a $bookmarks array as an argument.
+     * Sets a callback to make requests. Should be a closure.
      *
      * @param callable $callback
      * @return $this
@@ -76,27 +80,9 @@ class Pagination implements IteratorAggregate
      */
     public function getIterator()
     {
-        $resultsNum = 0;
-        $processed = 0;
+        if(empty($this->callback)) return new EmptyIterator();
 
-        while (true) {
-            $results = $this->getCurrentResults();
-
-            if (empty($results)) return;
-
-            foreach ($results as $result) {
-                $processed++;
-
-                if($processed > $this->offset) {
-                    yield $result;
-                    $resultsNum++;
-                }
-
-                if ($this->reachesLimit($resultsNum)) return;
-            }
-
-            if (empty($this->bookmarks)) return;
-        }
+        return $this->processCallback();
     }
 
     /**
@@ -129,34 +115,9 @@ class Pagination implements IteratorAggregate
         return iterator_to_array($this->getIterator());
     }
 
-    /**
-     * @return array
-     */
-    protected function getCurrentResults()
-    {
-        $callback = $this->callback;
-
-        /** @var Response $response */
-        $response = $callback($this->bookmarks);
-
-        return $this->processResponse($response);
-    }
 
     /**
-     * @param PaginatedResponse $response
-     * @return array
-     */
-    protected function processResponse(PaginatedResponse $response)
-    {
-        if ($response->isEmpty()) return [];
-
-        $this->bookmarks = $response->getBookmarks();
-
-        return $response->getResponseData();
-    }
-
-    /**
-     * Check if we get results limit in pagination.
+     * Check if we execGet results limit in pagination.
      *
      * @param int $resultsNum
      *
@@ -165,5 +126,35 @@ class Pagination implements IteratorAggregate
     protected function reachesLimit($resultsNum)
     {
         return $this->limit && $resultsNum >= $this->limit;
+    }
+
+    /**
+     * @return \Generator|void
+     */
+    protected function processCallback()
+    {
+        $this->resultsNum = 0;
+        $this->processed = 0;
+        $callback = $this->callback;
+
+        while (true) {
+            /** @var Response $response */
+            $response = $callback();
+
+            if ($response->isEmpty()) return;
+
+            foreach ($response->getResponseData() as $result) {
+                $this->processed++;
+
+                if ($this->processed > $this->offset) {
+                    yield $result;
+                    $this->resultsNum++;
+                }
+
+                if ($this->reachesLimit($this->resultsNum)) return;
+            }
+
+            if (!$response->hasBookmarks()) return;
+        }
     }
 }

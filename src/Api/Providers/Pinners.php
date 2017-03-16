@@ -8,6 +8,7 @@ use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\Traits\Followable;
 use seregazhuk\PinterestBot\Api\Traits\Searchable;
 use seregazhuk\PinterestBot\Exceptions\WrongFollowingType;
+use seregazhuk\PinterestBot\Api\Providers\Core\EntityProvider;
 
 class Pinners extends EntityProvider
 {
@@ -41,7 +42,7 @@ class Pinners extends EntityProvider
      */
     public function info($username)
     {
-        return $this->execGetRequest(['username' => $username], UrlBuilder::RESOURCE_USER_INFO);
+        return $this->get(['username' => $username], UrlBuilder::RESOURCE_USER_INFO);
     }
 
     /**
@@ -65,7 +66,6 @@ class Pinners extends EntityProvider
     }
 
     /**
-     * @codeCoverageIgnore
      * Get following people for pinner.
      *
      * @param string $username
@@ -78,7 +78,6 @@ class Pinners extends EntityProvider
     }
 
     /**
-     * @codeCoverageIgnore
      * Get following boards for pinner.
      *
      * @param string $username
@@ -91,7 +90,6 @@ class Pinners extends EntityProvider
     }
 
     /**
-     * @codeCoverageIgnore
      * Get following interests for pinner.
      *
      * @param string $username
@@ -155,7 +153,17 @@ class Pinners extends EntityProvider
     {
         $data = ['blocked_user_id' => $userId];
 
-        return $this->execPostRequest($data, UrlBuilder::RESOURCE_BLOCK_USER);
+        return $this->post($data, UrlBuilder::RESOURCE_BLOCK_USER);
+    }
+
+    /**
+     * @param string $username
+     * @param int $limit
+     * @return Pagination
+     */
+    public function tried($username, $limit = Pagination::DEFAULT_LIMIT)
+    {
+        return $this->paginate(['username' => $username], UrlBuilder::RESOURCE_USER_TRIED, $limit);
     }
 
     /**
@@ -168,5 +176,23 @@ class Pinners extends EntityProvider
     protected function paginateByUsername($username, $url, $limit = Pagination::DEFAULT_LIMIT)
     {
         return $this->paginate(['username' => $username], $url, $limit);
+    }
+
+    /**
+     * @param mixed $entityId
+     * @return int|null
+     */
+    protected function resolveEntityId($entityId)
+    {
+        // If user's id was passed we simply return it.
+        if(is_numeric($entityId)) return $entityId;
+
+        // Then we try to get user's info by username
+        $userInfo = $this->info($entityId);
+
+        // On success return users'id from his profile.
+        return isset($userInfo['id']) ?
+            $userInfo['id'] :
+            null;
     }
 }

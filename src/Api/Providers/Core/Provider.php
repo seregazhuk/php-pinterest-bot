@@ -1,6 +1,6 @@
 <?php
 
-namespace seregazhuk\PinterestBot\Api\Providers;
+namespace seregazhuk\PinterestBot\Api\Providers\Core;
 
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
@@ -49,7 +49,7 @@ abstract class Provider
      *
      * @return Response|bool
      */
-    protected function execPostRequest($requestOptions, $resourceUrl, $returnResponse = false)
+    protected function post($requestOptions, $resourceUrl, $returnResponse = false)
     {
         $postString = Request::createQuery($requestOptions);
 
@@ -64,18 +64,21 @@ abstract class Provider
      *
      * @param array $requestOptions
      * @param string $resourceUrl
-     * @param array $bookmarks
      * @return array|bool|Response
      */
-    protected function execGetRequest(array $requestOptions = [], $resourceUrl = '', $bookmarks = null)
+    protected function get(array $requestOptions = [], $resourceUrl = '')
     {
-        $query = Request::createQuery($requestOptions, $bookmarks);
+        $query = Request::createQuery(
+            $requestOptions,
+            $this->response->getBookmarks()
+        );
 
-        $this->execute($resourceUrl . "?{$query}");
+        $this->execute($resourceUrl . '?' . $query);
 
-        return is_null($bookmarks) ?
-            $this->response->getResponseData() :
-            $this->response;
+        return $this->response->hasBookmarks() ?
+            $this->response :
+            $this->response->getResponseData();
+
     }
 
     /**
@@ -87,7 +90,7 @@ abstract class Provider
     {
         $result = $this->request->exec($url, $postString);
 
-        $this->processResult($result);
+        $this->response->fillFromJson($result);
 
         return $this;
     }
@@ -119,10 +122,23 @@ abstract class Provider
      */
     protected function paginate($data, $resourceUrl, $limit = Pagination::DEFAULT_LIMIT)
     {
-        return (new Pagination($limit))
-            ->paginateOver(function($bookmarks = []) use ($data, $resourceUrl) {
-                return $this->execGetRequest($data, $resourceUrl, $bookmarks);
-            });
+        return $this->paginateCustom(function() use ($data, $resourceUrl) {
+                return $this->get($data, $resourceUrl);
+            })->take($limit);
+    }
+
+    /**
+     * @param callable $callback
+     * @param int $limit
+     * @return Pagination
+     */
+    protected function paginateCustom(callable $callback, $limit = Pagination::DEFAULT_LIMIT)
+    {
+        $this->response->clear();
+
+        return (new Pagination)
+            ->paginateOver($callback)
+            ->take($limit);
     }
 
     /**
@@ -132,14 +148,6 @@ abstract class Provider
      */
     public function visitPage($url = '')
     {
-        return $this->execGetRequest([], $url);
-    }
-
-    /**
-     * @param string $res
-     */
-    protected function processResult($res)
-    {
-        $this->response->fillFromJson($res);
+        return $this->get([], $url);
     }
 }

@@ -26,16 +26,10 @@ trait UploadsImages
     {
         $result = $this->request->upload($image, UrlBuilder::IMAGE_UPLOAD);
 
-        $this->processResult($result);
+        $this->response->fillFromJson($result);
 
         return $this->response->hasData('success') ?
             $this->response->getData('image_url') :
             null;
     }
-
-    /**
-     * @param string $res
-     * @return Response
-     */
-    abstract protected function processResult($res);
 }

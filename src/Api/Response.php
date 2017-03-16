@@ -23,6 +23,14 @@ class Response implements PaginatedResponse
 
     /**
      * @param mixed $data
+     */
+    public function __construct($data = null)
+    {
+        if($data) $this->fill($data);
+    }
+
+    /**
+     * @param mixed $data
      * @return $this
      */
     public function fill($data)
@@ -89,6 +97,7 @@ class Response implements PaginatedResponse
     protected function parseResponseData($key)
     {
         $responseData = $this->getValueByKey('resource_response.data', $this->data);
+
         if(!$responseData) return false;
 
         return $key ?
@@ -164,6 +173,14 @@ class Response implements PaginatedResponse
         return $bookmarks;
     }
 
+    /**
+     * @return bool
+     */
+    public function hasBookmarks()
+    {
+        return !! $this->getBookmarks();
+    }
+
     protected function getRawBookmarksData()
     {
         return $this->getData('resource.options.bookmarks', []);
@@ -210,5 +227,10 @@ class Response implements PaginatedResponse
     public function getRawData()
     {
         return $this->data;
+    }
+
+    public function clear()
+    {
+        $this->fill([]);
     }
 }

@@ -4,6 +4,7 @@ namespace seregazhuk\PinterestBot\Api\Providers;
 
 use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
+use seregazhuk\PinterestBot\Api\Providers\Core\Provider;
 use seregazhuk\PinterestBot\Api\Traits\HasRelatedTopics;
 
 class Interests extends Provider
@@ -26,7 +27,7 @@ class Interests extends Provider
      */
     public function main()
     {
-        return $this->execGetRequest(["category_types" => "main"], UrlBuilder::RESOURCE_GET_CATEGORIES);
+        return $this->get(["category_types" => "main"], UrlBuilder::RESOURCE_GET_CATEGORIES);
     }
 
     /**
@@ -37,7 +38,7 @@ class Interests extends Provider
      */
     public function info($category)
     {
-        return $this->execGetRequest(["category" => $category], UrlBuilder::RESOURCE_GET_CATEGORY);
+        return $this->get(["category" => $category], UrlBuilder::RESOURCE_GET_CATEGORY);
     }
 
     /**

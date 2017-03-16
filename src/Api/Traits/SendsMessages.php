@@ -36,7 +36,7 @@ trait SendsMessages
             ],
             $data);
 
-        return $this->execPostRequest($requestOptions, UrlBuilder::RESOURCE_SEND_MESSAGE);
+        return $this->post($requestOptions, UrlBuilder::RESOURCE_SEND_MESSAGE);
     }
 
     /**
@@ -72,7 +72,6 @@ trait SendsMessages
 
     /**
      * Send item with messages.
-     * @codeCoverageIgnore
      * @param int $entityId
      * @param string $text
      * @param array|string $userIds
@@ -86,7 +85,6 @@ trait SendsMessages
     /**
      * Send entity with emails.
      *
-     * @codeCoverageIgnore
      * @param int $entityId
      * @param string $text
      * @param array|string $emails
@@ -106,13 +104,13 @@ trait SendsMessages
     }
 
     /**
-     * @param $userId
+     * @param array $userIds
      * @param array $emails
      * @throws InvalidRequest
      */
-    protected function guardAgainstEmptyData($userId, array $emails)
+    protected function guardAgainstEmptyData(array $userIds, array $emails)
     {
-        if (empty($userId) && empty($emails)) {
+        if (empty($userIds) && empty($emails)) {
             throw new InvalidRequest('You must specify user_ids or emails to send message.');
         }
     }

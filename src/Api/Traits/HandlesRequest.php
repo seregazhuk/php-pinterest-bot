@@ -15,15 +15,14 @@ trait HandlesRequest
      *
      * @return Response|bool
      */
-    abstract protected function execPostRequest($requestOptions, $resourceUrl, $returnResponse = false);
+    abstract protected function post($requestOptions, $resourceUrl, $returnResponse = false);
 
     /**
      * Executes a GET request to Pinterest API.
      *
      * @param array $requestOptions
      * @param string $resourceUrl
-     * @param array $bookmarks
      * @return array|bool|Response
      */
-    abstract protected function execGetRequest(array $requestOptions = [], $resourceUrl = '', $bookmarks = []);
+    abstract protected function get(array $requestOptions = [], $resourceUrl = '');
 }

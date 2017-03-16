@@ -1,10 +1,16 @@
 <?php
 
-namespace seregazhuk\PinterestBot\Api\Providers;
+namespace seregazhuk\PinterestBot\Api\Providers\Core;
 
 use seregazhuk\PinterestBot\Exceptions\AuthRequired;
 use seregazhuk\PinterestBot\Exceptions\InvalidRequest;
 
+/**
+ * Class ProviderWrapper is used to check for logged in status before any
+ * provider method is being invoked.
+ *
+ * @package seregazhuk\PinterestBot\Api\Providers\Core
+ */
 class ProviderWrapper
 {
     /**

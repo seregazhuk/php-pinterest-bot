@@ -19,8 +19,9 @@ class PinterestBot
     public static function create()
     {
         $request = self::makeRequest();
+        $response = self::makeResponse();
 
-        $providersContainer = new ProvidersContainer($request, new Response());
+        $providersContainer = self::buildProvidersContainer($request, $response);
 
         return new Bot($providersContainer);
     }
@@ -30,21 +31,41 @@ class PinterestBot
      */
     protected static function makeRequest()
     {
-        $httpClient = new CurlHttpClient(new Cookies());
+        $httpClient = self::buildHttpClient();
 
         return new Request($httpClient);
     }
 
     /**
-     * @codeCoverageIgnore
+     * @return Response
      */
+    protected static function makeResponse()
+    {
+        return new Response();
+    }
+
+    /**
+     * @return CurlHttpClient
+     */
+    protected static function buildHttpClient()
+    {
+        return new CurlHttpClient(new Cookies());
+    }
+
+    /**
+     * @param $request
+     * @param $response
+     * @return ProvidersContainer
+     */
+    protected static function buildProvidersContainer(Request $request, Response $response)
+    {
+        return new ProvidersContainer($request, $response);
+    }
+
     private function __construct()
     {
     }
 
-    /**
-     * @codeCoverageIgnore
-     */
     private function __clone()
     {
     }

@@ -5,6 +5,7 @@ namespace seregazhuk\PinterestBot\Api\Providers;
 use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\Traits\UploadsImages;
+use seregazhuk\PinterestBot\Api\Providers\Core\Provider;
 
 class User extends Provider
 {
@@ -34,14 +35,14 @@ class User extends Provider
     public function profile($userInfo = [])
     {
         if(empty($userInfo)) {
-            return $this->execGetRequest([], UrlBuilder::RESOURCE_GET_USER_SETTINGS);
+            return $this->get([], UrlBuilder::RESOURCE_GET_USER_SETTINGS);
         }
 
         if (isset($userInfo['profile_image'])) {
             $userInfo['profile_image_url'] = $this->upload($userInfo['profile_image']);
         }
 
-        return $this->execPostRequest($userInfo, UrlBuilder::RESOURCE_UPDATE_USER_SETTINGS);
+        return $this->post($userInfo, UrlBuilder::RESOURCE_UPDATE_USER_SETTINGS);
     }
 
     /**
@@ -89,7 +90,7 @@ class User extends Provider
             'explanation' => $explanation,
         ];
 
-        return $this->execPostRequest($request, UrlBuilder::RESOURCE_DEACTIVATE_ACCOUNT);
+        return $this->post($request, UrlBuilder::RESOURCE_DEACTIVATE_ACCOUNT);
     }
 
     /**
@@ -104,7 +105,7 @@ class User extends Provider
             'type'  => 'email',
         ];
 
-        return $this->execPostRequest($data, UrlBuilder::RESOURCE_INVITE);
+        return $this->post($data, UrlBuilder::RESOURCE_INVITE);
     }
 
     /**
@@ -113,6 +114,6 @@ class User extends Provider
      */
     public function clearSearchHistory()
     {
-        return $this->execPostRequest([], UrlBuilder::RESOURCE_CLEAR_SEARCH_HISTORY);
+        return $this->post([], UrlBuilder::RESOURCE_CLEAR_SEARCH_HISTORY);
     }
 }

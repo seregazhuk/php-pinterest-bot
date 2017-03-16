@@ -65,6 +65,8 @@ class UrlBuilder
     const RESOURCE_USER_FOLLOWING = 'resource/UserFollowingResource/get/';
     const RESOURCE_USER_PINS = 'resource/UserPinsResource/get/';
     const RESOURCE_USER_LIKES = 'resource/UserLikesResource/get/';
+    const RESOURCE_USER_TRIED = 'resource/DidItUserFeedResource/get/';
+
 
     /**
      * Search
@@ -182,19 +184,6 @@ class UrlBuilder
         );
     }
 
-    /**
-     * Return Pinterest API url for search requests.
-     *
-     * @param array $bookmarks
-     * 
-     * @return string
-     */
-    public static function getSearchUrl($bookmarks = [])
-    {
-        return empty($bookmarks) ?
-            self::RESOURCE_SEARCH :
-            self::RESOURCE_SEARCH_WITH_PAGINATION;
-    }
 
     /**
      * @param string $type

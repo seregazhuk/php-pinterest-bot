@@ -6,6 +6,7 @@ use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\Traits\SendsMessages;
 use seregazhuk\PinterestBot\Exceptions\InvalidRequest;
+use seregazhuk\PinterestBot\Api\Providers\Core\Provider;
 
 class Inbox extends Provider
 {
@@ -49,7 +50,7 @@ class Inbox extends Provider
      */
     public function conversations()
     {
-        return $this->execGetRequest([], UrlBuilder::RESOURCE_GET_LAST_CONVERSATIONS);
+        return $this->get([], UrlBuilder::RESOURCE_GET_LAST_CONVERSATIONS);
     }
 
     /**
