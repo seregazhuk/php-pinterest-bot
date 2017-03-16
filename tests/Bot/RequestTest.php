@@ -169,7 +169,7 @@ class RequestTest extends PHPUnit_Framework_TestCase
         $http = $http ? : new CurlHttpClient(new Cookies());
         $request = new Request($http);
 
-        $this->reflection = new ReflectionClass($request);
+
         $this->setReflectedObject($request);
 
         return $request;

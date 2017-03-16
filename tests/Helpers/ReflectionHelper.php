@@ -4,6 +4,11 @@ namespace seregazhuk\tests\Helpers;
 
 use ReflectionClass;
 
+/**
+ * Class ReflectionHelper
+ *
+ * Helper for getting access to protected and private properties.
+ */
 trait ReflectionHelper
 {
     /**
@@ -15,18 +20,6 @@ trait ReflectionHelper
      * @var object
      */
     protected $reflectedObject;
-
-    /**
-     * @return $this
-     */
-    protected function setUpReflection()
-    {
-        $this->reflection = new ReflectionClass($this->provider);
-        $this->setReflectedObject($this->provider);
-        $this->setProperty('request', $this->request);
-
-        return $this;
-    }
 
     /**
      * @param $property
@@ -54,10 +47,11 @@ trait ReflectionHelper
     }
 
     /**
-     * @param mixed $reflectedObject
+     * @param mixed $object
      */
-    public function setReflectedObject($reflectedObject)
+    public function setReflectedObject($object)
     {
-        $this->reflectedObject = $reflectedObject;
+        $this->reflection = new ReflectionClass($object);
+        $this->reflectedObject = $object;
     }
 }
