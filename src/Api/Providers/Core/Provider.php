@@ -124,8 +124,7 @@ abstract class Provider
     {
         return $this->paginateCustom(function() use ($data, $resourceUrl) {
                 return $this->get($data, $resourceUrl);
-            })
-            ->take($limit);
+            })->take($limit);
     }
 
     /**
@@ -135,16 +134,11 @@ abstract class Provider
      */
     protected function paginateCustom(callable $callback, $limit = Pagination::DEFAULT_LIMIT)
     {
-        $this->clearResponse();
+        $this->response->clear();
 
         return (new Pagination)
             ->paginateOver($callback)
             ->take($limit);
-    }
-
-    protected function clearResponse()
-    {
-        $this->response->fill([]);
     }
 
     /**

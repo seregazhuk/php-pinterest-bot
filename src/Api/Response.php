@@ -228,4 +228,9 @@ class Response implements PaginatedResponse
     {
         return $this->data;
     }
+
+    public function clear()
+    {
+        $this->fill([]);
+    }
 }

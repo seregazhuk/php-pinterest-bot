@@ -17,6 +17,8 @@ use seregazhuk\PinterestBot\Helpers\UrlBuilder;
  */
 trait Searchable
 {
+    use HasPagination, HandlesRequest;
+
     /**
      * @return string
      */

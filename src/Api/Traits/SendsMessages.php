@@ -104,13 +104,13 @@ trait SendsMessages
     }
 
     /**
-     * @param $userId
+     * @param array $userIds
      * @param array $emails
      * @throws InvalidRequest
      */
-    protected function guardAgainstEmptyData($userId, array $emails)
+    protected function guardAgainstEmptyData(array $userIds, array $emails)
     {
-        if (empty($userId) && empty($emails)) {
+        if (empty($userIds) && empty($emails)) {
             throw new InvalidRequest('You must specify user_ids or emails to send message.');
         }
     }
