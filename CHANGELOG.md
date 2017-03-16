@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## v5.2.5 - 2017-03-16
+### Fixed:
+ - Keywords provider fixed
+ - Response *getResponseData()* always returns array
+
 ## v5.2.4 - 2017-03-16
 ### Added:
  - Pinners *tried* pins.
