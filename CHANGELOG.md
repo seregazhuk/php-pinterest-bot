@@ -1,7 +1,7 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## v5.2.4 - ??
+## v5.2.4 - 2017-03-16
 ### Added:
  - Pinners *tried* pins.
  - Pinners follow and unfollow methods accept both user's id or username.
