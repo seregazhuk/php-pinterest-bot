@@ -20,7 +20,7 @@ class ProviderTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function it_returns_data_for_response_without_pagination()
+    public function it_returns_data_for_response()
     {
         $response = ['resource_response' => ['data' => 'value']];
 
@@ -29,16 +29,6 @@ class ProviderTest extends PHPUnit_Framework_TestCase
         $responseData = $response['resource_response']['data'];
 
         $this->assertEquals($responseData, $provider->visitPage());
-    }
-
-    /** @test */
-    public function it_returns_response_object_if_it_has_pagination()
-    {
-        $response = ['resource' => ['options' => ['bookmarks' => 'bookmarks_string']]];
-
-        $provider = $this->makeProvider($response);
-
-        $this->assertInstanceOf(Response::class, $provider->visitPage());
     }
 
     /**

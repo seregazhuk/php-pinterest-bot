@@ -22,7 +22,8 @@ trait HandlesRequest
      *
      * @param array $requestOptions
      * @param string $resourceUrl
+     * @param bool $returnResponse
      * @return array|bool|Response
      */
-    abstract protected function get(array $requestOptions = [], $resourceUrl = '');
+    abstract protected function get(array $requestOptions = [], $resourceUrl = '', $returnResponse = false);
 }
