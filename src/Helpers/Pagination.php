@@ -54,7 +54,7 @@ class Pagination implements IteratorAggregate
     }
 
     /**
-     * Sets a callback to make requests. Should be a closure.
+     * Sets a callback to make requests. Callback should return PaginatedResponse object.
      *
      * @param callable $callback
      * @return $this
