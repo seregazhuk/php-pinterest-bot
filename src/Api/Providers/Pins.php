@@ -84,9 +84,9 @@ class Pins extends EntityProvider
             'board_id'    => $boardId,
         ];
 
-        return $this
-            ->post($requestOptions, UrlBuilder::RESOURCE_CREATE_PIN, true)
-            ->getResponseData();
+        $this->post($requestOptions, UrlBuilder::RESOURCE_CREATE_PIN);
+
+        return $this->response->getResponseData();
     }
 
     /**
@@ -140,9 +140,9 @@ class Pins extends EntityProvider
             'pin_id'      => $repinId,
         ];
 
-        return $this
-            ->post($requestOptions, UrlBuilder::RESOURCE_REPIN, true)
-            ->getResponseData();
+        $this->post($requestOptions, UrlBuilder::RESOURCE_REPIN);
+
+        return $this->response->getResponseData();
     }
 
     /**
