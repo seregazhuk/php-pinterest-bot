@@ -67,6 +67,32 @@ class ProviderTest extends PHPUnit_Framework_TestCase
         $provider->dummyPaginate(['test' => 'test'], 'http://example.com')->toArray();
     }
 
+    /** @test */
+    public function it_should_return_response_object_if_required_for_get_request()
+    {
+        $provider = $this->makeProvider([]);
+
+        $this->assertInstanceOf(Response::class, $provider->dummyGet(true));
+    }
+
+    /** @test */
+    public function it_should_return_response_object_if_required_for_post_request()
+    {
+        $provider = $this->makeProvider([]);
+
+        $this->assertInstanceOf(Response::class, $provider->dummyPost(true));
+    }
+
+    /** @test */
+    public function it_should_return_bool_if_required_for_post_request()
+    {
+        $response = ['resource_response' => ['data' => 'value']];
+
+        $provider = $this->makeProvider($response);
+
+        $this->assertTrue($provider->dummyPost(false));
+    }
+
     /**
      * @param mixed $response
      * @param int $times
@@ -105,5 +131,23 @@ class DummyProvider extends Provider {
     public function dummyPaginate($data, $resourceUrl)
     {
         return $this->paginate($data, $resourceUrl);
+    }
+
+    /**
+     * @param bool $returnResponse
+     * @return array|bool|Response
+     */
+    public function dummyGet($returnResponse)
+    {
+        return $this->get([], '', $returnResponse);
+    }
+
+    /**
+     * @param bool $returnResponse
+     * @return array|bool|Response
+     */
+    public function dummyPost($returnResponse)
+    {
+        return $this->post([], '', $returnResponse);
     }
 }
