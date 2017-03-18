@@ -2,6 +2,7 @@
 
 namespace seregazhuk\tests\Bot;
 
+use Mockery;
 use PHPUnit_Framework_TestCase;
 use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\tests\Helpers\ResponseHelper;
@@ -118,6 +119,17 @@ class PaginationTest extends PHPUnit_Framework_TestCase
         $expected = array_slice($data, 0, $limit);
 
         $this->assertEquals($expected, $pagination->toArray());
+    }
+
+    /** @test */
+    public function it_stops_when_response_is_empty()
+    {
+        $pagination = new Pagination();
+        $pagination->paginateOver(function(){
+            return (new Response())->fill([]);
+        });
+
+        $this->assertCount(0, $pagination->toArray());
     }
 }
 
