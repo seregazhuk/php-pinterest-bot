@@ -120,7 +120,7 @@ abstract class Provider
     protected function paginate($data, $resourceUrl, $limit = Pagination::DEFAULT_LIMIT)
     {
         return $this
-            ->paginateCustom(function() use ($data, $resourceUrl) {
+            ->paginateCustom(function () use ($data, $resourceUrl) {
                 $this->get($data, $resourceUrl);
 
                 return $this->response;
