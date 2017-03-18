@@ -127,6 +127,8 @@ abstract class Provider
     }
 
     /**
+     * Accepts callback which should return PaginatedResponse object.
+     *
      * @param callable $callback
      * @param int $limit
      * @return Pagination

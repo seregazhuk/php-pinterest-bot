@@ -2,8 +2,6 @@
 
 namespace seregazhuk\tests\Helpers;
 
-use seregazhuk\PinterestBot\Helpers\Pagination;
-
 /**
  * Class ResponseHelper.
  *
@@ -34,11 +32,12 @@ trait ResponseHelper
     /**
      * Create a success dummy response.
      *
+     * @param mixed $data
      * @return array
      */
-    public function createSuccessApiResponse()
+    public function createSuccessApiResponse($data = 'success')
     {
-        return $this->createApiResponse(['data' => 'success']);
+        return $this->createApiResponse(['data' => $data]);
     }
 
     /**
@@ -70,6 +69,9 @@ trait ResponseHelper
             'resource_response' => [
                 'data' => $response,
             ],
+            'resource' => [
+                'options' => ['bookmarks' => 'my_bookrmarks']
+            ]
         ];
     }
 }

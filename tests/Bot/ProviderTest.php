@@ -6,6 +6,7 @@ use Mockery;
 use PHPUnit_Framework_TestCase;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
+use seregazhuk\tests\Helpers\ResponseHelper;
 use seregazhuk\PinterestBot\Api\Providers\Core\Provider;
 
 /**
@@ -13,6 +14,7 @@ use seregazhuk\PinterestBot\Api\Providers\Core\Provider;
  */
 class ProviderTest extends PHPUnit_Framework_TestCase
 {
+    use ResponseHelper;
 
     protected function tearDown()
     {
@@ -31,18 +33,121 @@ class ProviderTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($responseData, $provider->visitPage());
     }
 
-    /**
-     * @param $response
-     * @return Mockery\Mock|Provider
-     */
-    protected function makeProvider($response)
+    /** @test */
+    public function it_should_return_response_object_for_pagination()
     {
-        $request = Mockery::mock(Request::class)
+        $paginatedResponse = $this->createPaginatedResponse($this->paginatedResponse);
+
+        $request = $this->makeRequest($paginatedResponse, 2);
+        $request
             ->shouldReceive('exec')
+            ->once()
+            ->andReturn(json_encode([]));
+
+        /** @var DummyProvider $provider */
+        $provider = Mockery::mock(DummyProvider::class, [$request, new Response()])
+            ->makePartial();
+
+        $provider->dummyPaginate(['test' => 'test'], 'http://example.com')->toArray();
+    }
+
+    /** @test */
+    public function it_should_clear_response_before_pagination()
+    {
+        $response = Mockery::mock(Response::class)
+            ->shouldReceive('clear')
+            ->once()
+            ->getMock()
+            ->makePartial();
+
+        /** @var DummyProvider $provider */
+        $provider = Mockery::mock(DummyProvider::class, [$this->makeRequest([]), $response])
+            ->makePartial();
+
+        $provider->dummyPaginate(['test' => 'test'], 'http://example.com')->toArray();
+    }
+
+    /** @test */
+    public function it_should_return_response_object_if_required_for_get_request()
+    {
+        $provider = $this->makeProvider([]);
+
+        $this->assertInstanceOf(Response::class, $provider->dummyGet(true));
+    }
+
+    /** @test */
+    public function it_should_return_response_object_if_required_for_post_request()
+    {
+        $provider = $this->makeProvider([]);
+
+        $this->assertInstanceOf(Response::class, $provider->dummyPost(true));
+    }
+
+    /** @test */
+    public function it_should_return_bool_if_required_for_post_request()
+    {
+        $response = ['resource_response' => ['data' => 'value']];
+
+        $provider = $this->makeProvider($response);
+
+        $this->assertTrue($provider->dummyPost(false));
+    }
+
+    /**
+     * @param mixed $response
+     * @param int $times
+     * @return Mockery\Mock|Provider|DummyProvider
+     */
+    protected function makeProvider($response, $times = 1)
+    {
+        $request = $this->makeRequest($response, $times);
+
+        return Mockery::mock(DummyProvider::class, [$request, new Response()])
+            ->makePartial();
+    }
+
+    /**
+     * @param mixed $response
+     * @param int $times
+     * @return Mockery\MockInterface
+     */
+    protected function makeRequest($response, $times = 1)
+    {
+        return Mockery::mock(Request::class)
+            ->shouldReceive('exec')
+            ->times($times)
             ->andReturn(json_encode($response))
             ->getMock();
+    }
+}
 
-        return Mockery::mock(Provider::class, [$request, new Response()])
-            ->makePartial();
+class DummyProvider extends Provider {
+
+    /**
+     * @param mixed $data
+     * @param string $resourceUrl
+     * @return \seregazhuk\PinterestBot\Helpers\Pagination
+     */
+    public function dummyPaginate($data, $resourceUrl)
+    {
+        return $this->paginate($data, $resourceUrl);
+    }
+
+    /**
+     * @param bool $returnResponse
+     * @return array|bool|Response
+     */
+    public function dummyGet($returnResponse)
+    {
+        return $this->get([], '', $returnResponse);
+    }
+
+    /**
+     * @param bool $returnResponse
+     * @return array|bool|Response
+     */
+    public function dummyPost($returnResponse)
+    {
+        return $this->post([], '', $returnResponse);
     }
 }

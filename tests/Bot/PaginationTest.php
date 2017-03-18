@@ -19,7 +19,7 @@ class PaginationTest extends PHPUnit_Framework_TestCase
     public function it_returns_first_result_when_no_bookmarks()
     {
         $pagination = new Pagination();
-        $responseData = $this->createPaginatedResponse($this->paginatedResponse);
+        $responseData = $this->createSuccessApiResponse($this->paginatedResponse);
 
         $pagination->paginateOver(function() use ($responseData){
             return (new Response())->fill($responseData);
