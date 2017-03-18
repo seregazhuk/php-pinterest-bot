@@ -29,6 +29,8 @@
                 <file>./src/Api/Providers/Password.php</file>
                 <file>./src/Api/Providers/Interests.php</file>
                 <file>./src/Api/Providers/User.php</file>
+                <file>./src/Api/Providers/Auth.php</file>
+                <file>./src/Api/Providers/Keywords.php</file>
             </exclude>
         </whitelist>
     </filter>

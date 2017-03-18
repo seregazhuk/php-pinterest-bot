@@ -176,9 +176,9 @@ class Auth extends Provider
             'password'          => $password,
         ];
 
-        $response = $this->post($credentials, UrlBuilder::RESOURCE_LOGIN, true);
+        $this->post($credentials, UrlBuilder::RESOURCE_LOGIN);
 
-        if ($response->hasErrors()) return false;
+        if ($this->response->hasErrors()) return false;
 
         $this->request->login();
 
