@@ -2,7 +2,6 @@
 
 namespace seregazhuk\tests\Bot;
 
-use Mockery;
 use PHPUnit_Framework_TestCase;
 use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\tests\Helpers\ResponseHelper;
@@ -41,9 +40,7 @@ class PaginationTest extends PHPUnit_Framework_TestCase
     public function it_uses_bookmarks_for_iteration_over_responses()
     {
         $pagination = new Pagination();
-        $responseData = $this->createPaginatedResponse($this->paginatedResponse);
-        $responseData['resource'] = ['options' => ['bookmarks' => 'my_bookrmarks']];
-
+        $responseData = $this->createPaginatedResponse($this->paginatedResponse, 'my_bookrmarks');
 
         $pagination->paginateOver(function() use ($responseData){
             return (new Response())->fill($responseData);
@@ -63,8 +60,7 @@ class PaginationTest extends PHPUnit_Framework_TestCase
             $data[] = ['id'=> $value];
         }
 
-        $responseData = $this->createPaginatedResponse($data);
-        $responseData['resource'] = ['options' => ['bookmarks' => 'my_bookrmarks']];
+        $responseData = $this->createPaginatedResponse($data, 'my_bookrmarks');
 
         $pagination->paginateOver(function() use ($responseData){
             return (new Response())->fill($responseData);
@@ -85,8 +81,7 @@ class PaginationTest extends PHPUnit_Framework_TestCase
             $data[] = ['id'=> $value];
         }
 
-        $responseData = $this->createPaginatedResponse($data);
-        $responseData['resource'] = ['options' => ['bookmarks' => 'my_bookrmarks']];
+        $responseData = $this->createPaginatedResponse($data, 'my_bookrmarks');
 
         $pagination = new Pagination();
         $pagination->paginateOver(function() use ($responseData){
@@ -108,8 +103,7 @@ class PaginationTest extends PHPUnit_Framework_TestCase
             $data[] = ['id'=> $value];
         }
 
-        $responseData = $this->createPaginatedResponse($data);
-        $responseData['resource'] = ['options' => ['bookmarks' => 'my_bookrmarks']];
+        $responseData = $this->createPaginatedResponse($data, 'my_bookrmarks');
 
         $pagination = new Pagination($limit);
         $pagination->paginateOver(function() use ($responseData){
