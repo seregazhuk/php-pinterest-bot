@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## v5.2.5 - 2017-03-18
+### Fixed:
+ - Pagination fails on last response.
+
 ## v5.2.4 - 2017-03-16
 ### Added:
  - Pinners *tried* pins.
@@ -10,6 +14,7 @@ All notable changes to this project will be documented in this file.
  - Pins *activity()* and *tried()* methods always return Pagination object.
  - Boards *forUser* method returns detailed information for every board. If no boards
  are available it returns empty array.
+  - Pagination processes *getResponseData()* as array
 
 ## v5.2.3 - 2017-01-24
 ### Fixed:

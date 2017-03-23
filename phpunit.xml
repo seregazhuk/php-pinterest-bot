@@ -19,14 +19,18 @@
         <whitelist>
             <directory suffix=".php">./src/</directory>
             <exclude>
-                <file>/src/Api/Providers/Topics.php</file>
-                <file>/src/Api/Providers/Boards.php</file>
-                <file>/src/Api/Providers/Comments.php</file>
-                <file>/src/Api/Providers/Inbox.php</file>
-                <file>/src/Api/Providers/Pins.php</file>
-                <file>/src/Api/Providers/Pinners.php</file>
-                <file>/src/Api/Providers/Interests.php</file>
-                <file>/src/Api/Providers/User.php</file>
+                <file>./src/Api/Providers/Core/EntityProvider.php</file>
+                <file>./src/Api/Providers/Topics.php</file>
+                <file>./src/Api/Providers/Boards.php</file>
+                <file>./src/Api/Providers/Comments.php</file>
+                <file>./src/Api/Providers/Inbox.php</file>
+                <file>./src/Api/Providers/Pins.php</file>
+                <file>./src/Api/Providers/Pinners.php</file>
+                <file>./src/Api/Providers/Password.php</file>
+                <file>./src/Api/Providers/Interests.php</file>
+                <file>./src/Api/Providers/User.php</file>
+                <file>./src/Api/Providers/Auth.php</file>
+                <file>./src/Api/Providers/Keywords.php</file>
             </exclude>
         </whitelist>
     </filter>

@@ -54,7 +54,7 @@ class Password extends Provider
             'expiration'           => $query['e'],
         ];
 
-        return $this->post($request, UrlBuilder::RESOURCE_RESET_PASSWORD_UPDATE, true);
+        return $this->post($request, UrlBuilder::RESOURCE_RESET_PASSWORD_UPDATE);
     }
 
     /**

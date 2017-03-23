@@ -45,17 +45,16 @@ abstract class Provider
      *
      * @param array $requestOptions
      * @param string $resourceUrl
-     * @param bool $returnResponse
      *
      * @return Response|bool
      */
-    protected function post($requestOptions, $resourceUrl, $returnResponse = false)
+    protected function post($requestOptions, $resourceUrl)
     {
         $postString = Request::createQuery($requestOptions);
 
         $this->execute($resourceUrl, $postString);
 
-        return $returnResponse ? $this->response : $this->response->isOk();
+        return $this->response->isOk();
 
     }
 
@@ -75,9 +74,7 @@ abstract class Provider
 
         $this->execute($resourceUrl . '?' . $query);
 
-        return $this->response->hasBookmarks() ?
-            $this->response :
-            $this->response->getResponseData();
+        return $this->response->getResponseData();
 
     }
 
@@ -122,12 +119,17 @@ abstract class Provider
      */
     protected function paginate($data, $resourceUrl, $limit = Pagination::DEFAULT_LIMIT)
     {
-        return $this->paginateCustom(function() use ($data, $resourceUrl) {
-                return $this->get($data, $resourceUrl);
+        return $this
+            ->paginateCustom(function () use ($data, $resourceUrl) {
+                $this->get($data, $resourceUrl);
+
+                return $this->response;
             })->take($limit);
     }
 
     /**
+     * Accepts callback which should return PaginatedResponse object.
+     *
      * @param callable $callback
      * @param int $limit
      * @return Pagination
