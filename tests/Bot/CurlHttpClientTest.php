@@ -37,4 +37,11 @@ class CurlHttpClientTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(file_exists($this->getCookiePath('test_name')));
     }
 
+    /** @test */
+    public function it_shouldnt_fill_cookies_when_cookies_file_doesnt_exist()
+    {
+        $client = new CurlHttpClient(new Cookies());
+        $client->loadCookies('test_name');
+    }
+
 }
