@@ -227,6 +227,8 @@ class CurlHttpClient implements HttpClient
             unlink($this->cookieJar);
         }
 
+        $this->cookieJar = null;
+
         return $this;
     }
 
@@ -314,6 +316,16 @@ class CurlHttpClient implements HttpClient
         if($auth) $proxy[CURLOPT_PROXYUSERPWD] = $auth;
 
         return $this->setOptions($proxy);
+    }
+
+    public function dontUseProxy()
+    {
+        unset($this->options[CURLOPT_PROXY]);
+        unset($this->options[CURLOPT_PROXYPORT]);
+        unset($this->options[CURLOPT_PROXYTYPE]);
+        unset($this->options[CURLOPT_PROXYUSERPWD]);
+
+        return $this;
     }
 
     /**

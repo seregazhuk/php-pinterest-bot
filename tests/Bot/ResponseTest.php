@@ -17,7 +17,7 @@ class ResponseTest extends PHPUnit_Framework_TestCase
     public function it_should_return_data_from_response()
     {
         $response = new Response();
-        $response->fill($this->createApiResponse(['data' => 'some data']));
+        $response->fill($this->createSuccessApiResponse('some data'));
 
         $this->assertEquals('some data', $response->getResponseData());
     }
@@ -26,7 +26,7 @@ class ResponseTest extends PHPUnit_Framework_TestCase
     public function it_should_return_value_by_key_from_response()
     {
         $response = new Response();
-        $response->fill($this->createApiResponse(['data' => ['key' => 'value']]));
+        $response->fill($this->createSuccessApiResponse(['key' => 'value']));
 
         $this->assertEquals('value', $response->getResponseData('key'));
     }
@@ -51,7 +51,7 @@ class ResponseTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($response->isEmpty());
 
         $responseWithError = new Response();
-        $response->fill($this->createErrorApiResponse('some error'));
+        $response->fill($this->createErrorApiResponse());
 
         $this->assertTrue($responseWithError->isEmpty());
     }
@@ -69,9 +69,13 @@ class ResponseTest extends PHPUnit_Framework_TestCase
     public function it_should_check_responses_with_errors()
     {
         $response = new Response();
-        $response->fill($this->createErrorApiResponse('some error'));
+        $response->fill($this->createErrorApiResponse());
         $this->assertTrue($response->hasErrors());
+    }
 
+    /** @test */
+    public function it_should_check_responses_without_errors()
+    {
         $response = new Response();
         $response->fill($this->createSuccessApiResponse());
         $this->assertFalse($response->hasErrors());
@@ -82,7 +86,7 @@ class ResponseTest extends PHPUnit_Framework_TestCase
     public function it_should_return_bookmarks_string_from_response()
     {
         $response = new Response();
-        $response->fill(['resource' => ['options' => ['bookmarks' => ['my_bookmarks_string']]]]);
+        $response->fill($this->createPaginatedResponse([], 'my_bookmarks_string'));
         $this->assertEquals(['my_bookmarks_string'], $response->getBookmarks());
 
         $response = new Response();
@@ -114,16 +118,10 @@ class ResponseTest extends PHPUnit_Framework_TestCase
     /** @test */
     public function it_should_return_data_and_bookmarks_from_response_with_pagination()
     {
-        $dataWithBookmarks = [
-            'resource'          => [
-                'options' => ['bookmarks' => ['my_bookmarks_string']]
-            ],
-            'resource_response' => [
-                'data' => 'some data'
-            ]
-        ];
         $response = new Response();
-        $response->fill($dataWithBookmarks);
+        $response->fill(
+            $this->createPaginatedResponse('some data', 'my_bookmarks_string')
+        );
 
         $expected = [
             'data'      => 'some data',

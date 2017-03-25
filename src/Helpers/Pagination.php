@@ -7,7 +7,6 @@ use EmptyIterator;
 use IteratorAggregate;
 use seregazhuk\PinterestBot\Api\Contracts\PaginatedResponse;
 
-
 /**
  * Class Pagination
  * Iterate through results of Pinterest Api. By default iterator will return 50 first

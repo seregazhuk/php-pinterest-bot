@@ -817,6 +817,11 @@ $bot->getHttpClient()->useSocksProxy('192.168.1.1', '12345');
 $bot->getHttpClient()->useSocksProxy('192.168.1.1', '12345', 'username:password');
 ```
 
+If you need to stop sending requests via proxy:
+```php
+$bot->getHttpClient()->dontUseProxy();
+```
+
 ## Custom request settings
 
 It is possible to add some additional Curl options for bot requests. For example you can 

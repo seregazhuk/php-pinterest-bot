@@ -61,16 +61,17 @@ trait ResponseHelper
      * Create a dummy paginated response.
      *
      * @param mixed $response
+     * @param string $bookmarks
      * @return array
      */
-    public function createPaginatedResponse($response)
+    public function createPaginatedResponse($response, $bookmarks = '')
     {
         return [
             'resource_response' => [
                 'data' => $response,
             ],
             'resource' => [
-                'options' => ['bookmarks' => 'my_bookrmarks']
+                'options' => ['bookmarks' => [$bookmarks]]
             ]
         ];
     }
