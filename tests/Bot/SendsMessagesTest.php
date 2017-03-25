@@ -17,7 +17,9 @@ class SendsMessagesTest extends PHPUnit_Framework_TestCase
         $this->setExpectedException(InvalidRequest::class);
         /** @var SendsMessages $object */
         $object = $this->getMockForTrait(SendsMessages::class);
-        $object->expects($this->any())
+
+        $object
+            ->expects($this->any())
              ->method('post');
 
         $object->send(1, 'message', [], []);

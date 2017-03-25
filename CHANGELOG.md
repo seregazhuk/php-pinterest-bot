@@ -1,6 +1,14 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## v5.2.6 - 2017-03-25
+### Added:
+ - HttpClient *dontUseProxy()* method to stop sending requests via proxy
+
+### Fixed:
+ - Additional info added in pins *related()* method.
+ - Auth *login()* method always returns true, if proxy doesn't work
+
 ## v5.2.5 - 2017-03-18
 ### Fixed:
  - Pagination fails on last response.

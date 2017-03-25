@@ -82,4 +82,9 @@ interface HttpClient
      * @return HttpClient
      */
     public function useSocksProxy($host, $port, $auth = null);
+
+    /**
+     * @return HttpClient
+     */
+    public function dontUseProxy();
 }
