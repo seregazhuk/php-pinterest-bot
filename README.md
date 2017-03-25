@@ -19,8 +19,9 @@ This PHP library will help you to work with your Pinterest account without using
 
 To have an access to Pinterest API you need to go to <a target="_blank" href="http://developers.pinterest.com">developers.pinterest.com</a> 
 and register as a developer, then register your application, then wait for confirmation, and only then you 
-will get an access token. With this library, you are ready to go. Just use only your 
-account login and password, like you do it in your browser. But even your account is not required, 
+will get an access token. Furthermore, its public API is very poor and has a very limited set of features. With this
+library you have the entire set of functions, which available on Pinterest website. And there is no need to register an
+application to receive an access token. Just use your account login and password, like you do it in your browser. But even your account is not required,
 if you don't use such operations as creating pins, writing comments or sending messages!
 
 - [Installation](#installation)
