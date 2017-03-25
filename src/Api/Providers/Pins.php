@@ -2,15 +2,15 @@
 
 namespace seregazhuk\PinterestBot\Api\Providers;
 
+use seregazhuk\PinterestBot\Api\Providers\Core\EntityProvider;
 use seregazhuk\PinterestBot\Api\Response;
+use seregazhuk\PinterestBot\Api\Traits\CanBeDeleted;
+use seregazhuk\PinterestBot\Api\Traits\Searchable;
+use seregazhuk\PinterestBot\Api\Traits\SendsMessages;
+use seregazhuk\PinterestBot\Api\Traits\UploadsImages;
 use seregazhuk\PinterestBot\Helpers\FileHelper;
 use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
-use seregazhuk\PinterestBot\Api\Traits\Searchable;
-use seregazhuk\PinterestBot\Api\Traits\CanBeDeleted;
-use seregazhuk\PinterestBot\Api\Traits\SendsMessages;
-use seregazhuk\PinterestBot\Api\Traits\UploadsImages;
-use seregazhuk\PinterestBot\Api\Providers\Core\EntityProvider;
 
 class Pins extends EntityProvider
 {
@@ -240,7 +240,12 @@ class Pins extends EntityProvider
      */
     public function related($pinId, $limit = Pagination::DEFAULT_LIMIT)
     {
-        return $this->paginate(['pin' => $pinId], UrlBuilder::RESOURCE_RELATED_PINS, $limit);
+        $requestData = [
+            'pin'      => $pinId,
+            'add_vase' => true,
+        ];
+        
+        return $this->paginate($requestData, UrlBuilder::RESOURCE_RELATED_PINS, $limit);
     }
 
     /**

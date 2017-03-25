@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## v5.2.6 - 2017-03-25
+### Fixed:
+ - Additional info added in pins *related* method.
+
 ## v5.2.5 - 2017-03-18
 ### Fixed:
  - Pagination fails on last response.
