@@ -240,6 +240,11 @@ Get all user's boards.
 $boards = $bot->boards->forUser($username);
 ```
 
+Get all current logged-in user's boards.
+```php
+$boards = $bot->boards->forMe();
+```
+
 Get full board info by boardName and userName. Here you can get board id, for further functions
 (for example, pin creating or following boards).
 
