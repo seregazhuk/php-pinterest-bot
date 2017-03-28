@@ -2,6 +2,7 @@
 
 namespace seregazhuk\PinterestBot\Api\Providers;
 
+use seregazhuk\PinterestBot\Api\Registration;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\Providers\Core\Provider;
 use seregazhuk\PinterestBot\Api\Traits\SendsRegisterActions;
@@ -51,27 +52,26 @@ class Auth extends Provider
     /**
      * Register a new user.
      *
-     * @param string $email
+     * @param mixed $email
      * @param string $password
      * @param string $name
-     * @param string $country
-     * @param int $age
+     * @param string $country @deprecated
+     * @param int $age @deprecated
      *
      * @return bool
      */
-    public function register($email, $password, $name, $country = 'GB', $age = 18)
+    public function register($email, $password = null, $name = null, $country = 'GB', $age = 18)
     {
-        $data = [
-            "age"        => (string)$age,
-            "email"      => $email,
-            "password"   => $password,
-            "country"    => $country,
-            "first_name" => $name,
-            "gender"     => "male",
-            "container"  => 'home_page',
-        ];
+        if($email instanceof Registration) {
+            $registration = $email;
+        } else {
+            $registration = (new Registration($email, $password, $name))
+                ->setCountry($country)
+                ->setAge($age)
+                ->setGender("male");
+        }
 
-        return $this->makeRegisterCall($data);
+        return $this->makeRegisterCall($registration);
     }
 
     /**
@@ -146,16 +146,16 @@ class Auth extends Provider
     }
 
     /**
-     * @param array $data
+     * @param Registration $registration
      * @return bool|mixed
      */
-    protected function makeRegisterCall($data)
+    protected function makeRegisterCall(Registration $registration)
     {
         $this->visitPage();
 
         if(!$this->sendEmailVerificationAction()) return false;
 
-        if(!$this->post($data, UrlBuilder::RESOURCE_CREATE_REGISTER)) return false;
+        if(!$this->post($registration->toArray(), UrlBuilder::RESOURCE_CREATE_REGISTER)) return false;
 
         if(!$this->sendRegistrationActions()) return false;
 
