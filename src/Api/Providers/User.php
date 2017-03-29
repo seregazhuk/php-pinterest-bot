@@ -3,6 +3,7 @@
 namespace seregazhuk\PinterestBot\Api\Providers;
 
 use seregazhuk\PinterestBot\Api\Response;
+use seregazhuk\PinterestBot\Api\Forms\Profile;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\Traits\UploadsImages;
 use seregazhuk\PinterestBot\Api\Providers\Core\Provider;
@@ -30,12 +31,18 @@ class User extends Provider
      *
      * @param array $userInfo If empty returns current user profile.
      *
-     * @return bool|array
+     * @return bool|array|Profile
      */
-    public function profile($userInfo = [])
+    public function profile($userInfo = null)
     {
+        // If we call method without params, return current user profile data.
         if(empty($userInfo)) {
             return $this->get([], UrlBuilder::RESOURCE_GET_USER_SETTINGS);
+        }
+
+        // If we have a form object, convert it to array
+        if($userInfo instanceof Profile) {
+            $userInfo = $userInfo->toArray();
         }
 
         if (isset($userInfo['profile_image'])) {
