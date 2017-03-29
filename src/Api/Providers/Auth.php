@@ -2,8 +2,8 @@
 
 namespace seregazhuk\PinterestBot\Api\Providers;
 
-use seregazhuk\PinterestBot\Api\Registration;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
+use seregazhuk\PinterestBot\Api\Forms\Registration;
 use seregazhuk\PinterestBot\Api\Providers\Core\Provider;
 use seregazhuk\PinterestBot\Api\Traits\SendsRegisterActions;
 

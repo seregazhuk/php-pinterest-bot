@@ -1,6 +1,6 @@
 <?php
 
-namespace seregazhuk\PinterestBot\Api;
+namespace seregazhuk\PinterestBot\Api\Forms;
 
 class Registration
 {
