@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 
 ## v5.2.7 - ??
 ### Added:
+ - Auth *register* and *registerBusiness* methods accept Regstration form object.
+ - User *profile* method accepts Profile form object.
  - Boards *forMe* method to get boards of current logged-in user.
 
 ### Fixed:

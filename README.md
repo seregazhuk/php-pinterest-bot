@@ -124,10 +124,18 @@ To register a new user:
 $bot->auth->register('youremail@gmail.com', 'password', 'Name');
 ```
 
-You can specify additional parameters with registration: age and country. By default they are: 18, "GB":
-
+Use `Registration` form object with fluent interface for specifying additional parameters:
 ```php
-$bot->auth->register('youremail@gmail.com', 'password', 'Name', "DE", 40);
+
+use seregazhuk\PinterestBot\Api\Forms\Registration;
+
+$registration = new Registration('youremail@gmail.com', 'password', 'name');
+$registration
+    ->setAge(30)
+    ->setCountry('DE')
+    ->setMaleGender(); // ->setFemaleGender()
+
+$bot->auth->register($registration);
 ```
 
 Register a business account. The last parameter with website url is *optional*:
@@ -136,6 +144,21 @@ Register a business account. The last parameter with website url is *optional*:
 $bot->auth->registerBusiness('youremail@gmail.com', 'password', 'BusinessName');
 
 $bot->auth->registerBusiness('youremail@gmail.com', 'password', 'BusinessName', 'http://yoursite.com');
+```
+
+Variant with Registration form:
+
+```php
+use seregazhuk\PinterestBot\Api\Forms\Registration;
+
+$registration = new Registration('youremail@gmail.com', 'password', 'name');
+$registration
+    ->setAge(30)
+    ->setCountry('DE')
+    ->setMaleGender()
+    ->setSite('http://yoursite.com');
+
+$bot->auth->registerBusiness($registration);
 ```
 
 After registration you will receive a confirmation email. You can pass a link from this email to `confirmEmail` 

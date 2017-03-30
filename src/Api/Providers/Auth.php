@@ -52,7 +52,7 @@ class Auth extends Provider
     /**
      * Register a new user.
      *
-     * @param mixed $email
+     * @param string|Registration $registrationForm
      * @param string $password
      * @param string $name
      * @param string $country @deprecated
@@ -60,18 +60,16 @@ class Auth extends Provider
      *
      * @return bool
      */
-    public function register($email, $password = null, $name = null, $country = 'GB', $age = 18)
+    public function register($registrationForm, $password = null, $name = null, $country = 'GB', $age = 18)
     {
-        if($email instanceof Registration) {
-            $registration = $email;
-        } else {
-            $registration = (new Registration($email, $password, $name))
+        if(!$registrationForm instanceof Registration) {
+            $registrationForm = (new Registration($registrationForm, $password, $name))
                 ->setCountry($country)
                 ->setAge($age)
                 ->setGender("male");
         }
 
-        return $this->makeRegisterCall($registration);
+        return $this->makeRegisterCall($registrationForm);
     }
 
     /**
@@ -79,19 +77,22 @@ class Auth extends Provider
      * Then convert it to a business one. This is done to receive a confirmation
      * email after registration.
      *
-     * @param string $email
+     * @param string|Registration $registrationForm
      * @param string $password
-     * @param string $businessName
+     * @param string $name
      * @param string $website
      * @return bool|mixed
      */
-    public function registerBusiness($email, $password, $businessName, $website = '')
+    public function registerBusiness($registrationForm, $password, $name, $website = '')
     {
-        $registration = $this->register($email, $password, $businessName);
+        $registration = $this->register($registrationForm, $password, $name);
 
         if(!$registration) return false;
 
-        return $this->convertToBusiness($businessName, $website);
+        $website = ($registrationForm instanceof Registration) ?
+            $registrationForm->getSite() : $website;
+
+        return $this->convertToBusiness($name, $website);
     }
 
     /**
@@ -146,16 +147,16 @@ class Auth extends Provider
     }
 
     /**
-     * @param Registration $registration
+     * @param Registration $registrationForm
      * @return bool|mixed
      */
-    protected function makeRegisterCall(Registration $registration)
+    protected function makeRegisterCall(Registration $registrationForm)
     {
         $this->visitPage();
 
         if(!$this->sendEmailVerificationAction()) return false;
 
-        if(!$this->post($registration->toArray(), UrlBuilder::RESOURCE_CREATE_REGISTER)) return false;
+        if(!$this->post($registrationForm->toArray(), UrlBuilder::RESOURCE_CREATE_REGISTER)) return false;
 
         if(!$this->sendRegistrationActions()) return false;
 

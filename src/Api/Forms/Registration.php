@@ -10,6 +10,7 @@ class Registration
     protected $country = 'GB';
     protected $age = 18;
     protected $gender = 'male';
+    protected $site;
 
     /**
      * @param string $email
@@ -111,7 +112,26 @@ class Registration
             'age'       => $this->age,
             'gender'    => $this->gender,
             'country'   => $this->country,
-            'container' => 'home_page'
+            'site'      => $this->site,
+            'container' => 'home_page',
         ];
+    }
+
+    /**
+     * @param mixed $site
+     * @return Registration
+     */
+    public function setSite($site)
+    {
+        $this->site = $site;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSite()
+    {
+        return $this->site;
     }
 }
