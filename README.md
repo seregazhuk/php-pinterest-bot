@@ -376,7 +376,8 @@ $pinInfo = $bot->pins->create(
 );
 ```
     
-Repin a pin by its id.
+Repin a pin by its id. You need a pin id and a board id where you want to put this pin. The third parameter
+is a pin description and it is optional.
 
 ```php
 $pinInfo = $bot->pins->repin($pinId, $boardId, 'my repin');
@@ -407,6 +408,7 @@ Like/dislike pin by id.
 $bot->pins->like($pinId);
 $bot->pins->unLike($pinId);
 ```
+
 Copy/move pins to board. To copy/move one pin, pass it's id as the first argument. Pass an array of ids 
 to copy/move many pins:
 ```php
@@ -913,7 +915,7 @@ $bot->getHttpClient()->removeCookies();
 ## Pagination
 
 Most of methods use Pinterest pagination. For example, when you run `$bot->pins->search('query')`, Pinterest returns
-only 20 results by request, you cannot get all the pins at once with only one request. So these methods return
+only 20 results for request, you cannot get all the pins at once with only one request. So these methods return
 `Pagination` object. You can iterate over it to get results:
 
 ```php
