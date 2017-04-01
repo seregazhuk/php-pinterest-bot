@@ -582,9 +582,20 @@ foreach($bot->pinners->followingInterests('username') as $interest)
 }
 ```
 
-Get user followers (returns [Pagination](#pagination) object)
+Get user followers (returns [Pagination](#pagination) object). Accepts optional parameter `username`,
+whose subscribers need to receive.
+
 ```php
 foreach($bot->pinners->followers('username') as $follower)
+{
+	// ...
+}
+```
+
+Without arguments returns current users' followers:
+```php
+// returns my followers
+foreach($bot->pinners->followers() as $follower)
 {
 	// ...
 }
