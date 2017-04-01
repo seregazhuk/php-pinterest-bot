@@ -206,13 +206,10 @@ class Pinners extends EntityProvider
      */
     public function followers($username = '')
     {
-        if(empty($username)) {
-            $currentUserProfile = $this->get([], UrlBuilder::RESOURCE_GET_USER_SETTINGS);
+        $username = empty($username) ?
+            $this->resolveCurrentUsername() : $username;
 
-            if (!isset($currentUserProfile['username'])) new Pagination();
-
-            $username = $currentUserProfile['username'];
-        }
+        if(empty($username)) return new Pagination();
 
         return $this->getFollowers($username);
     }

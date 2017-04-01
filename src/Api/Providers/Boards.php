@@ -66,9 +66,9 @@ class Boards extends EntityProvider
      */
     public function forMe()
     {
-        $currentUserProfile = $this->get([], UrlBuilder::RESOURCE_GET_USER_SETTINGS);
+        $currentUserProfile = $this->resolveCurrentUsername();
 
-        if (!isset($currentUserProfile['username'])) return [];
+        if (!$currentUserProfile) return [];
 
         return $this->forUser($currentUserProfile['username']);
     }
