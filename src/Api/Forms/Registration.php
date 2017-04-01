@@ -2,7 +2,7 @@
 
 namespace seregazhuk\PinterestBot\Api\Forms;
 
-class Registration
+class Registration extends Form
 {
     protected $email;
     protected $password;

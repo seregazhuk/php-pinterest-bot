@@ -2,7 +2,7 @@
 
 namespace seregazhuk\PinterestBot\Api\Forms;
 
-class Profile
+class Profile extends Form
 {
     /**
      * @var string
