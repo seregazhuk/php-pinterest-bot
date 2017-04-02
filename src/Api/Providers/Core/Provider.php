@@ -5,6 +5,7 @@ namespace seregazhuk\PinterestBot\Api\Providers\Core;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Helpers\Pagination;
+use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 
 /**
  * Class Provider.
@@ -151,5 +152,17 @@ abstract class Provider
     public function visitPage($url = '')
     {
         return $this->get([], $url);
+    }
+
+    /**
+     * @return string|bool
+     */
+    protected function resolveCurrentUsername()
+    {
+        $currentUserProfile = $this->get([], UrlBuilder::RESOURCE_GET_USER_SETTINGS);
+
+        if (!isset($currentUserProfile['username'])) return false;
+
+        return $currentUserProfile['username'];
     }
 }

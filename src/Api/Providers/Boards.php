@@ -4,8 +4,8 @@ namespace seregazhuk\PinterestBot\Api\Providers;
 
 use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
-use seregazhuk\PinterestBot\Api\Traits\Searchable;
 use seregazhuk\PinterestBot\Api\Traits\Followable;
+use seregazhuk\PinterestBot\Api\Traits\Searchable;
 use seregazhuk\PinterestBot\Api\Traits\CanBeDeleted;
 use seregazhuk\PinterestBot\Api\Traits\SendsMessages;
 use seregazhuk\PinterestBot\Api\Providers\Core\EntityProvider;
@@ -21,6 +21,7 @@ class Boards extends EntityProvider
      * @var array
      */
     protected $loginRequiredFor = [
+        'my',
         'send',
         'delete',
         'create',
@@ -44,15 +45,32 @@ class Boards extends EntityProvider
      *
      * @param string $username
      *
-     * @return array|bool
+     * @return array
      */
     public function forUser($username)
     {
         $options = [
-            'username' => $username,
-            'field_set_key'=>'detailed',
+            'username'      => $username,
+            'field_set_key' => 'detailed',
         ];
-        return $this->get($options, UrlBuilder::RESOURCE_GET_BOARDS);
+
+        $result = $this->get($options, UrlBuilder::RESOURCE_GET_BOARDS);
+
+        return $result ? : [];
+    }
+
+    /**
+     * Get boards for current logged in user.
+     *
+     * @return array
+     */
+    public function forMe()
+    {
+        $currentUserProfile = $this->resolveCurrentUsername();
+
+        if (!$currentUserProfile) return [];
+
+        return $this->forUser($currentUserProfile['username']);
     }
 
     /**

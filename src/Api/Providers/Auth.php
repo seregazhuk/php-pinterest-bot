@@ -3,6 +3,7 @@
 namespace seregazhuk\PinterestBot\Api\Providers;
 
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
+use seregazhuk\PinterestBot\Api\Forms\Registration;
 use seregazhuk\PinterestBot\Api\Providers\Core\Provider;
 use seregazhuk\PinterestBot\Api\Traits\SendsRegisterActions;
 
@@ -51,27 +52,24 @@ class Auth extends Provider
     /**
      * Register a new user.
      *
-     * @param string $email
+     * @param string|Registration $registrationForm
      * @param string $password
      * @param string $name
-     * @param string $country
-     * @param int $age
+     * @param string $country @deprecated
+     * @param int $age @deprecated
      *
      * @return bool
      */
-    public function register($email, $password, $name, $country = 'GB', $age = 18)
+    public function register($registrationForm, $password = null, $name = null, $country = 'GB', $age = 18)
     {
-        $data = [
-            "age"        => (string)$age,
-            "email"      => $email,
-            "password"   => $password,
-            "country"    => $country,
-            "first_name" => $name,
-            "gender"     => "male",
-            "container"  => 'home_page',
-        ];
+        if(!$registrationForm instanceof Registration) {
+            $registrationForm = (new Registration($registrationForm, $password, $name))
+                ->setCountry($country)
+                ->setAge($age)
+                ->setGender("male");
+        }
 
-        return $this->makeRegisterCall($data);
+        return $this->makeRegisterCall($registrationForm);
     }
 
     /**
@@ -79,19 +77,22 @@ class Auth extends Provider
      * Then convert it to a business one. This is done to receive a confirmation
      * email after registration.
      *
-     * @param string $email
+     * @param string|Registration $registrationForm
      * @param string $password
-     * @param string $businessName
+     * @param string $name
      * @param string $website
      * @return bool|mixed
      */
-    public function registerBusiness($email, $password, $businessName, $website = '')
+    public function registerBusiness($registrationForm, $password, $name, $website = '')
     {
-        $registration = $this->register($email, $password, $businessName);
+        $registration = $this->register($registrationForm, $password, $name);
 
         if(!$registration) return false;
 
-        return $this->convertToBusiness($businessName, $website);
+        $website = ($registrationForm instanceof Registration) ?
+            $registrationForm->getSite() : $website;
+
+        return $this->convertToBusiness($name, $website);
     }
 
     /**
@@ -146,16 +147,16 @@ class Auth extends Provider
     }
 
     /**
-     * @param array $data
+     * @param Registration $registrationForm
      * @return bool|mixed
      */
-    protected function makeRegisterCall($data)
+    protected function makeRegisterCall(Registration $registrationForm)
     {
         $this->visitPage();
 
         if(!$this->sendEmailVerificationAction()) return false;
 
-        if(!$this->post($data, UrlBuilder::RESOURCE_CREATE_REGISTER)) return false;
+        if(!$this->post($registrationForm->toArray(), UrlBuilder::RESOURCE_CREATE_REGISTER)) return false;
 
         if(!$this->sendRegistrationActions()) return false;
 

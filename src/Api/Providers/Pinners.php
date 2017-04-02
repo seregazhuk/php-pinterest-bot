@@ -12,7 +12,10 @@ use seregazhuk\PinterestBot\Api\Providers\Core\EntityProvider;
 
 class Pinners extends EntityProvider
 {
-    use Searchable, Followable;
+    use Searchable;
+    use Followable {
+        followers as protected getFollowers;
+    }
 
     /**
      * @var array
@@ -194,5 +197,20 @@ class Pinners extends EntityProvider
         return isset($userInfo['id']) ?
             $userInfo['id'] :
             null;
+    }
+
+    /**
+     * Returns current user's followers when used without arguments.
+     * @param string $username
+     * @return array|Pagination
+     */
+    public function followers($username = '')
+    {
+        $username = empty($username) ?
+            $this->resolveCurrentUsername() : $username;
+
+        if(empty($username)) return new Pagination();
+
+        return $this->getFollowers($username);
     }
 }

@@ -1,6 +1,17 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## v5.2.7 - 2017-04-02
+### Added:
+ - Auth *register* and *registerBusiness* methods accept Regstration form object.
+ - User *profile* method accepts Profile form object.
+ - Pinners *followers* method returns current user's followers when used without arguments.
+ - Boards *forMe* method to get boards of current logged-in user.
+
+### Fixed:
+ - Boards *forMe* and *forUser* methods always return array. For no results they
+ return empty array.
+
 ## v5.2.6 - 2017-03-25
 ### Added:
  - HttpClient *dontUseProxy()* method to stop sending requests via proxy

@@ -17,7 +17,7 @@
 
 This PHP library will help you to work with your Pinterest account without using any API account credentials. 
 
-To have an access to Pinterest API you need to go to <a target="_blank" href="https://developers.pinterest.com">developers.pinterest.com</a> 
+To have an access to Pinterest API you need to go to <a target="_blank" href="https://developers.pinterest.com">developers.pinterest.com</a>
 and register as a developer, then register your application, then wait for confirmation, and only then you 
 will get an access token. Furthermore, its public API is very poor and has a very limited set of features. With this
 library you have the entire set of functions, which available on Pinterest website. And there is no need to register an
@@ -65,7 +65,7 @@ $bot = PinterestBot::create();
 // Login
 $bot->auth->login('mypinterestlogin', 'mypinterestpassword');
 
-// Get lists of your boards 
+// Get lists of your boards
 $boards = $bot->boards->forUser('yourUserName');
 
 // Create a pin
@@ -126,10 +126,18 @@ To register a new user:
 $bot->auth->register('youremail@gmail.com', 'password', 'Name');
 ```
 
-You can specify additional parameters with registration: age and country. By default they are: 18, "GB":
-
+Use `Registration` form object with fluent interface for specifying additional parameters:
 ```php
-$bot->auth->register('youremail@gmail.com', 'password', 'Name', "DE", 40);
+
+use seregazhuk\PinterestBot\Api\Forms\Registration;
+
+$registration = new Registration('youremail@gmail.com', 'password', 'name');
+$registration
+    ->setAge(30)
+    ->setCountry('DE')
+    ->setMaleGender(); // ->setFemaleGender()
+
+$bot->auth->register($registration);
 ```
 
 Register a business account. The last parameter with website url is *optional*:
@@ -140,7 +148,22 @@ $bot->auth->registerBusiness('youremail@gmail.com', 'password', 'BusinessName');
 $bot->auth->registerBusiness('youremail@gmail.com', 'password', 'BusinessName', 'http://yoursite.com');
 ```
 
-After registration you will receive a confirmation email. You can pass a link from this email to `confirmEmail` 
+Variant with Registration form:
+
+```php
+use seregazhuk\PinterestBot\Api\Forms\Registration;
+
+$registration = new Registration('youremail@gmail.com', 'password', 'name');
+$registration
+    ->setAge(30)
+    ->setCountry('DE')
+    ->setMaleGender()
+    ->setSite('http://yoursite.com');
+
+$bot->auth->registerBusiness($registration);
+```
+
+After registration you will receive a confirmation email. You can pass a link from this email to `confirmEmail`
 method:
 
 ```php
@@ -172,25 +195,32 @@ $bot->password->reset(
 ```
 
 ### Profile
-Change profile. Available settings are:
- - *last_name*, 
- - *first_name*, 
- - *username*, 
- - *about*,
- - *location*, 
- - *website_url*,
- - *country* (ISO2 code) 
- - *profile_image*:
+Change profile. To update profile you need to setup `Profile` form object. It has following methods:
+ - `setLastName()`,
+ - `setFirstName()`,
+ - `setUserName()`,
+ - `setAbout()`,
+ - `setLocation()`,
+ - `setWebsiteUrl()`,
+ - `setCountry()` (ISO2 code)
+ - `setImage()`:
 ```php
-$bot->user->profile(['first_name'=>'My_name']);
+use seregazhuk\PinterestBot\Api\Forms\Profile
+
+$profileForm = (new Profile())
+            ->setFirstName('John')
+            ->setLastName('Doe')
+            ->setAbout('My bio')
+            ->setCountry('UK');
+$bot->user->profile($profileForm);
 ```
 
-You can change your profile avatar by setting *profile_image* key with a path to image:  
+You can change your profile avatar by using `setImage()` method and a path to your image:
 ```php
-$bot->user->profile([
-    'first_name' => 'My_name',
-    'profile_image' => $path_to_file,
-]);
+use seregazhuk\PinterestBot\Api\Forms\Profile
+
+$profileForm = (new Profile())->setImage($pathToFile);
+$bot->user->profile($profileForm);
 ```
 
 You can get your current profile settings calling *profile* method without any params:
@@ -198,6 +228,7 @@ You can get your current profile settings calling *profile* method without any p
 $profile = $bot->user->profile();
 echo $profile['username']; // Prints your username
 ```
+
 In result you can find your username, and all your account settings.
 
 Get your current username:
@@ -240,6 +271,11 @@ $bot->user->invite($email);
 Get all user's boards:
 ```php
 $boards = $bot->boards->forUser($username);
+```
+
+Get all current logged-in user's boards.
+```php
+$boards = $bot->boards->forMe();
 ```
 
 Get full board info by boardName and userName. Here you can get board id, for further functions
@@ -338,17 +374,18 @@ You can pass a path to your local image. It will be uploaded to Pinterest:
 $pinInfo = $bot->pins->create('image.jpg', $boardId, 'Pin description');
 ```
     
-You can specify a link for pin (source) as fourth argument. If not set, link is equal to image url:    
+You can specify a link for pin (source) as fourth argument. If not set, link is equal to image url:
 ```php
 $pinInfo = $bot->pins->create(
     'http://exmaple.com/image.jpg', 
     $boardId, 
-    'Pin description', 
+    'Pin description',
     'http://site.com',
 );
 ```
     
-Repin a pin by its id:
+Repin a pin by its id. You need a pin id and a board id where you want to put this pin. The third parameter
+is a pin description and it is optional.
 
 ```php
 $pinInfo = $bot->pins->repin($pinId, $boardId, 'my repin');
@@ -380,7 +417,8 @@ Like/dislike pin by id:
 $bot->pins->like($pinId);
 $bot->pins->unLike($pinId);
 ```
-Copy/move pins to board. To copy/move one pin, pass it's id as the first argument. Pass an array of ids 
+
+Copy/move pins to board. To copy/move one pin, pass it's id as the first argument. Pass an array of ids
 to copy/move many pins:
 ```php
 $bot->pins->copy($pinId, $boardId);
@@ -487,7 +525,7 @@ Send pin with message or by email:
 ```php
 // Send pin with message
 $bot->pins->sendWithMessage($pinId, 'message', $userId); // To a user
-$bot->pins->sendWithMessage($pinId, 'message', [$userId1, $userId2]); // To many users 
+$bot->pins->sendWithMessage($pinId, 'message', [$userId1, $userId2]); // To many users
 
 // Send pin by email
 $bot->pins->sendWithEmail($pinId, 'message', 'friend@example.com'); // One email
@@ -551,10 +589,21 @@ foreach($bot->pinners->followingInterests('username') as $interest) {
 }
 ```
 
-Get user followers (returns [Pagination](#pagination) object):
+Get user followers (returns [Pagination](#pagination) object). Accepts optional parameter `username`,
+whose subscribers need to receive.
+
 ```php
 foreach ($bot->pinners->followers('username') as $follower) {
     // ...
+}
+```
+
+Without arguments returns current users' followers:
+```php
+// returns my followers
+foreach($bot->pinners->followers() as $follower)
+{
+	// ...
 }
 ```
 
@@ -813,7 +862,7 @@ $bot->getHttpClient()->dontUseProxy();
 
 ## Custom request settings
 
-It is possible to add some additional Curl options for bot requests. For example, you can 
+It is possible to add some additional Curl options for bot requests. For example, you can
 set proxy and User Agent like this:
 
 ```php
@@ -874,7 +923,7 @@ $bot->getHttpClient()->removeCookies();
 ## Pagination
 
 Most of methods use Pinterest pagination. For example, when you run `$bot->pins->search('query')`, Pinterest returns
-only 20 results by request, you cannot get all the pins at once with only one request. So these methods return
+only 20 results for request, you cannot get all the pins at once with only one request. So these methods return
 `Pagination` object. You can iterate over it to get results:
 
 ```php
