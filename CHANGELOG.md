@@ -1,7 +1,7 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## v5.2.7 - ??
+## v5.2.7 - 2017-04-02
 ### Added:
  - Auth *register* and *registerBusiness* methods accept Regstration form object.
  - User *profile* method accepts Profile form object.
