@@ -51,7 +51,7 @@ class Request
         'DNT: 1',
         'X-Pinterest-AppState: active',
         'X-NEW-APP: 1',
-        'X-APP-VERSION: 3f2a9cf',
+        'X-APP-VERSION: 167e7a7',
         'X-Requested-With: XMLHttpRequest',
     ];
 
