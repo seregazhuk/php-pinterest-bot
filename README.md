@@ -193,25 +193,32 @@ $bot->password->reset(
 ```
 
 ### Profile
-Change profile. Available settings are:
- - *last_name*, 
- - *first_name*, 
- - *username*, 
- - *about*,
- - *location*, 
- - *website_url*,
- - *country* (ISO2 code) 
- - *profile_image*:
+Change profile. To update profile you need to setup `Profile` form object. It has following methods:
+ - `setLastName()`,
+ - `setFirstName()`,
+ - `setUserName()`,
+ - `setAbout()`,
+ - `setLocation()`,
+ - `setWebsiteUrl()`,
+ - `setCountry()` (ISO2 code)
+ - `setImage()`:
 ```php
-$bot->user->profile(['first_name'=>'My_name']);
+use seregazhuk\PinterestBot\Api\Forms\Profile
+
+$profileForm = (new Profile())
+            ->setFirstName('John')
+            ->setLastName('Doe')
+            ->setAbout('My bio')
+            ->setCountry('UK');
+$bot->user->profile($profileForm);
 ```
 
-You can change your profile avatar by setting *profile_image* key with a path to image:  
+You can change your profile avatar by using `setImage()` method and a path to your image:
 ```php
-$bot->user->profile([
-	'first_name' => 'My_name',
-	'profile_image' => $path_to_file
-]);
+use seregazhuk\PinterestBot\Api\Forms\Profile
+
+$profileForm = (new Profile())->setImage($pathToFile);
+$bot->user->profile($profileForm);
 ```
 
 You can get your current profile settings calling *profile* method without any params:
@@ -219,6 +226,7 @@ You can get your current profile settings calling *profile* method without any p
 $profile = $bot->user->profile();
 echo $profile['username']; //prints your username
 ```
+
 In result you can find your username, and all your account settings.
 
 Get your current username:

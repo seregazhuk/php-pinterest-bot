@@ -40,6 +40,11 @@ class Profile extends Form
     protected $image;
 
     /**
+     * @var string
+     */
+    protected $country;
+
+    /**
      * @param mixed $lastName
      * @return Profile
      */
@@ -123,5 +128,15 @@ class Profile extends Form
             'website_url'   => $this->websiteUrl,
             'profile_image' => $this->image,
         ];
+    }
+
+    /**
+     * @param string $country
+     * @return Profile
+     */
+    public function setCountry($country)
+    {
+        $this->country = $country;
+        return $this;
     }
 }
