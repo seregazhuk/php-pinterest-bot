@@ -19,6 +19,7 @@
         <whitelist>
             <directory suffix=".php">./src/</directory>
             <exclude>
+                <directory>./src/Api/Providers/Forms</directory>
                 <file>./src/Api/Providers/Core/EntityProvider.php</file>
                 <file>./src/Api/Providers/Topics.php</file>
                 <file>./src/Api/Providers/Boards.php</file>
