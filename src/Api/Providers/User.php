@@ -36,20 +36,9 @@ class User extends Provider
     public function profile($userInfo = null)
     {
         // If we call method without params, return current user profile data.
-        if(empty($userInfo)) {
-            return $this->get([], UrlBuilder::RESOURCE_GET_USER_SETTINGS);
-        }
+        if(empty($userInfo)) return $this->getProfile();
 
-        // If we have a form object, convert it to array
-        if($userInfo instanceof Profile) {
-            $userInfo = $userInfo->toArray();
-        }
-
-        if (isset($userInfo['profile_image'])) {
-            $userInfo['profile_image_url'] = $this->upload($userInfo['profile_image']);
-        }
-
-        return $this->post($userInfo, UrlBuilder::RESOURCE_UPDATE_USER_SETTINGS);
+        return $this->updateProfile($userInfo);
     }
 
     /**
@@ -122,5 +111,31 @@ class User extends Provider
     public function clearSearchHistory()
     {
         return $this->post([], UrlBuilder::RESOURCE_CLEAR_SEARCH_HISTORY);
+    }
+
+    /**
+     * @return array|bool|Response
+     */
+    protected function getProfile()
+    {
+        return $this->get([], UrlBuilder::RESOURCE_GET_USER_SETTINGS);
+    }
+
+    /**
+     * @param array|Profile $userInfo
+     * @return bool|Response
+     */
+    protected function updateProfile($userInfo)
+    {
+        // If we have a form object, convert it to array
+        if ($userInfo instanceof Profile) {
+            $userInfo = $userInfo->toArray();
+        }
+
+        if (isset($userInfo['profile_image'])) {
+            $userInfo['profile_image_url'] = $this->upload($userInfo['profile_image']);
+        }
+
+        return $this->post($userInfo, UrlBuilder::RESOURCE_UPDATE_USER_SETTINGS);
     }
 }

@@ -52,7 +52,7 @@ class Auth extends Provider
     /**
      * Register a new user.
      *
-     * @param string|Registration $registrationForm
+     * @param string|Registration $email
      * @param string $password
      * @param string $name
      * @param string $country @deprecated
@@ -60,14 +60,9 @@ class Auth extends Provider
      *
      * @return bool
      */
-    public function register($registrationForm, $password = null, $name = null, $country = 'GB', $age = 18)
+    public function register($email, $password = null, $name = null, $country = 'GB', $age = 18)
     {
-        if(!$registrationForm instanceof Registration) {
-            $registrationForm = (new Registration($registrationForm, $password, $name))
-                ->setCountry($country)
-                ->setAge($age)
-                ->setGender("male");
-        }
+        $registrationForm = $this->getRegistrationForm($email, $password, $name, $country, $age);
 
         return $this->makeRegisterCall($registrationForm);
     }
@@ -201,5 +196,38 @@ class Auth extends Provider
     protected function getProfile()
     {
         return $this->get([], UrlBuilder::RESOURCE_GET_USER_SETTINGS);
+    }
+
+    /**
+     * @param $registrationForm
+     * @param $password
+     * @param $name
+     * @param $country
+     * @param $age
+     * @return Registration
+     */
+    protected function fillRegistrationForm($registrationForm, $password, $name, $country, $age)
+    {
+        return (new Registration($registrationForm, $password, $name))
+            ->setCountry($country)
+            ->setAge($age)
+            ->setGender("male");
+    }
+
+    /**
+     * @param string $email
+     * @param string $password
+     * @param string $name
+     * @param string $country
+     * @param string $age
+     * @return Registration
+     */
+    protected function getRegistrationForm($email, $password, $name, $country, $age)
+    {
+        if($email instanceof Registration) return $email;
+
+        return $this->fillRegistrationForm(
+            $email, $password, $name, $country, $age
+        );
     }
 }
