@@ -15,7 +15,7 @@ $pins = $bot->pins->search('cats')->toArray();
 
 foreach($pins as $pin) {
     // put like
-    $bot->like($pin['id']);
+    $bot->pins->like($pin['id']);
     // repin to our board
     $bot->pins->repin($pin['id'], $board['id']);
     // write a comment
