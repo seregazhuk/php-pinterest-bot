@@ -26,6 +26,7 @@ if you don't use such operations as creating pins, writing comments or sending m
 
 - [Installation](#installation)
 - [Quick Start](#quick-start)
+- [Examples](#examples)
 - [Account](#account)
 - [Boards](#boards)
 - [Pins](#pins)
@@ -75,6 +76,15 @@ $bot->pins->create('http://exmaple.com/image.jpg', $boards[0]['id'], 'Pin descri
 *Note*: Some methods use pinterest navigation through results (with bookmarks), for example, get user followers/following, pins
 likes/dislikes, search and other feed queries. This means that for every batch of results there will be a 
 request to Pinterest. These methods return a [Pagination] object with Pinterest api results.
+
+## Examples
+Here you can find some simple scripts with most common tasks that can be done with bot:
+
+ - [Automate pinning]()
+ - [Multiple Accounts and Proxy]()
+ - [Comments, Likes And Repins]()
+ - [Followers]()
+ - [Parsing Pins]()
 
 ## Account
 
