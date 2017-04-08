@@ -9,11 +9,12 @@ use seregazhuk\PinterestBot\Api\Providers\User;
 use seregazhuk\PinterestBot\Api\Providers\Topics;
 use seregazhuk\PinterestBot\Api\Providers\Boards;
 use seregazhuk\PinterestBot\Api\Providers\Pinners;
-use seregazhuk\PinterestBot\Api\Providers\Provider;
+use seregazhuk\PinterestBot\Api\Providers\Comments;
 use seregazhuk\PinterestBot\Api\Providers\Keywords;
 use seregazhuk\PinterestBot\Api\ProvidersContainer;
 use seregazhuk\PinterestBot\Api\Providers\Interests;
 use seregazhuk\PinterestBot\Api\Contracts\HttpClient;
+use seregazhuk\PinterestBot\Api\Providers\Core\Provider;
 
 /**
  * Class Bot.
@@ -27,6 +28,7 @@ use seregazhuk\PinterestBot\Api\Contracts\HttpClient;
  * @property Interests $interests
  * @property Topics $topics
  * @property Auth $auth
+ * @property Comments $comments
  *
  * @method HttpClient getHttpClient
  * @method string|null getLastError
