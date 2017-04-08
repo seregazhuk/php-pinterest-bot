@@ -80,11 +80,11 @@ request to Pinterest. These methods return a [Pagination] object with Pinterest 
 ## Examples
 Here you can find some simple scripts with most common tasks that can be done with bot:
 
- - [Automate pinning]()
- - [Multiple Accounts and Proxy]()
- - [Comments, Likes And Repins]()
- - [Followers]()
- - [Parsing Pins]()
+ - [Automate pinning](blob/develop/examples/auto_pins.php)
+ - [Multiple Accounts and Proxy](blob/develop/examples/multiple_accounts_and_proxy.php)
+ - [Comments, Likes And Repins](blob/develop/examples/comments_likes_repins.php)
+ - [Followers](blob/develop/examples/followers.php)
+ - [Parsing Pins](blob/develop/examples/pins_parser.php)
 
 ## Account
 
