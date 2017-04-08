@@ -1,6 +1,12 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## v5.2.8 - ?
+### Added
+ - examples
+### Fixed:
+ - Annotations for *comments* in Bot class
+
 ## v5.2.7 - 2017-04-02
 ### Added:
  - Auth *register* and *registerBusiness* methods accept Regstration form object.
