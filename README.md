@@ -526,6 +526,18 @@ foreach ($pinners as $pinner) {
 }
 ```
 
+
+Get trending pins for a specific topic from http://pinterest.com/discover page. Uses topic id, that can be received
+from ``$bot->topics->explore()` method (returns [Pagination](#pagination) object):
+
+```php
+
+$trendingTopics = $bot->topics->explore();
+$firstTopicId = $trendingTopics[0]['id'];
+
+$pins = $bot->pins->explore($firstTopicId)->toArray();
+```
+
 Get visual similar pins:
 ```php
 $result = $bot->pins->visualSimilar($pinId);
@@ -709,6 +721,17 @@ Get related topics for topic (similar as related topics for interest):
 
 ```php
 $topics = $bot->topics->getRelatedTopics('content-marketing');
+```
+
+Get trending topics from http://pinterest.com/discover page. Then you can use an id of each topic
+to get trending pins for this topic with `$bot->pins->explore()` method:
+
+```php
+
+$trendingTopics = $bot->topics->explore();
+$firstTopicId = $trendingTopics[0]['id'];
+
+$pins = $bot->pins->explore($firstTopicId)->toArray();
 ```
 
 ## Search

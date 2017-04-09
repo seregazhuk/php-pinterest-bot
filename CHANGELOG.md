@@ -1,9 +1,12 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## v5.2.8 - ?
+## v5.2.8 - 2017-04-09
 ### Added
  - examples
+ - Topics *explore* method for getting trending topics
+ - Pins *explore* method for getting trending pins
+
 ### Fixed:
  - Annotations for *comments* in Bot class
 
