@@ -55,6 +55,7 @@ class UrlBuilder
     const RESOURCE_BULK_COPY = 'resource/BulkEditResource/create/';
     const RESOURCE_BULK_MOVE = 'resource/BulkEditResource/update/';
     const RESOURCE_BULK_DELETE = 'resource/BulkEditResource/delete/';
+    const RESOURCE_EXPLORE_PINS = 'resource/ExploreSectionFeedResource/get/';
 
     /**
      * Pinners
@@ -131,6 +132,7 @@ class UrlBuilder
      */
     const RESOURCE_GET_TOPIC_FEED = 'resource/TopicFeedResource/get';
     const RESOURCE_GET_TOPIC = 'resource/TopicResource/get';
+    const RESOURCE_EXPLORE_SECTIONS = 'resource/ExploreSectionsResource/get';
 
     /**
      * Invite

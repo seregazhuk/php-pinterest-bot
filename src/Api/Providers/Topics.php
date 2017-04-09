@@ -52,4 +52,21 @@ class Topics extends EntityProvider
 
         return $this->paginate($data, UrlBuilder::RESOURCE_GET_TOPIC_FEED, $limit);
     }
+
+    /**
+     * Returns an array of trending topics from http://pinterest.com/discover page. Then
+     * you can use an id of each topic to get trending pins for this topic with
+     * $bot->pins->explore() method.
+     *
+     * @return array
+     */
+    public function explore()
+    {
+        $data = [
+            "aux_fields" => [],
+            "offset"     => 180,
+        ];
+
+        return $this->get($data, UrlBuilder::RESOURCE_EXPLORE_SECTIONS);
+    }
 }

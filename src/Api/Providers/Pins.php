@@ -339,6 +339,26 @@ class Pins extends EntityProvider
                 return $this->execSearchRequest($query, 'my_pins');
             })->take($limit);
     }
+
+    /**
+     * Returns trending pins from http://pinterest.com/discover page. Uses topic id, that can be received
+     * from $bot->topics->explore() method.
+     *
+     * @param string $topicId
+     * @param int $limit
+     * @return Pagination
+     */
+    public function explore($topicId, $limit = Pagination::DEFAULT_LIMIT)
+    {
+        $data = [
+            "aux_fields" => [],
+            "prepend"    => false,
+            "offset"     => 180,
+            "section_id" => $topicId,
+        ];
+
+        return $this->paginate($data, UrlBuilder::RESOURCE_EXPLORE_PINS, $limit);
+    }
     
     /**
      * Calls Pinterest API to like or unlike Pin by ID.
