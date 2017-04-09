@@ -199,11 +199,11 @@ class Auth extends Provider
     }
 
     /**
-     * @param $registrationForm
-     * @param $password
-     * @param $name
-     * @param $country
-     * @param $age
+     * @param string $registrationForm
+     * @param string $password
+     * @param string $name
+     * @param string $country
+     * @param string $age
      * @return Registration
      */
     protected function fillRegistrationForm($registrationForm, $password, $name, $country, $age)
