@@ -528,7 +528,7 @@ foreach ($pinners as $pinner) {
 
 
 Get trending pins for a specific topic from http://pinterest.com/discover page. Uses topic id, that can be received
-from ``$bot->topics->explore()` method (returns [Pagination](#pagination) object):
+from `$bot->topics->explore()` method (returns [Pagination](#pagination) object):
 
 ```php
 
