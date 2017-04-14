@@ -38,6 +38,35 @@ class ResponseTest extends PHPUnit_Framework_TestCase
         $response->fill($this->createErrorApiResponse('some error'));
 
         $this->assertFalse($response->getResponseData());
+    }
+
+    /** @test */
+    public function it_should_store_last_error_message_from_response()
+    {
+        $response = new Response();
+        $response->fill($this->createErrorApiResponse('some error'));
+
+        $lastError = $response->getLastError();
+        $this->assertEquals('some error', $lastError['message']);
+    }
+
+    /** @test */
+    public function it_should_store_last_error_code_from_response()
+    {
+        $response = new Response();
+        $response->fill($this->createErrorApiResponseWithCode('some error'));
+
+        $lastError = $response->getLastError();
+        $this->assertEquals('some error', $lastError['code']);
+    }
+
+    /** @test */
+    public function last_error_stores_until_next_error_appears_in_response()
+    {
+        $response = new Response();
+        $response->fill($this->createErrorApiResponse('some error'));
+
+        $response->fill($this->createSuccessApiResponse('some data'));
 
         $lastError = $response->getLastError();
         $this->assertEquals('some error', $lastError['message']);

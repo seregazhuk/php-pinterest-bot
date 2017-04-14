@@ -37,7 +37,9 @@ class Response implements PaginatedResponse
     {
         $this->data = $data;
 
-        $this->lastError = $this->getValueByKey('resource_response.error', $this->data);
+        $error = $this->getValueByKey('resource_response.error', $this->data);
+
+        if($error) $this->lastError = $error;
 
         $this->clientInfo = $this->getValueByKey('client_context', $this->data);
 
