@@ -1,7 +1,7 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## v5.2.9 - ??
+## v5.2.9 - 2017-04-14
 ### Fixed:
  - storing last error from response
  - registration
