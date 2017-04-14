@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 ## v5.2.9 - ??
 ### Fixed:
  - storing last error from response
+ - registration
 
 ## v5.2.8 - 2017-04-09
 ### Added
