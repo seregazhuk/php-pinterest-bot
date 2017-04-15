@@ -58,6 +58,23 @@ trait ResponseHelper
     }
 
     /**
+     * Create an error dummy response.
+     *
+     * @param string $error
+     * @return array
+     */
+    public function createErrorApiResponseWithCode($error = 'error')
+    {
+        return $this->createApiResponse(
+            [
+                'error' => [
+                    'code' => $error,
+                ],
+            ]
+        );
+    }
+
+    /**
      * Create a dummy paginated response.
      *
      * @param mixed $response

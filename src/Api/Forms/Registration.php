@@ -105,15 +105,17 @@ class Registration extends Form
      */
     public function toArray()
     {
+
         return [
-            'name'      => $this->name,
-            'email'     => $this->email,
-            'password'  => $this->password,
-            'age'       => $this->age,
-            'gender'    => $this->gender,
-            'country'   => $this->country,
-            'site'      => $this->site,
-            'container' => 'home_page',
+            'first_name'    => $this->name,
+            'email'         => $this->email,
+            'password'      => $this->password,
+            'age'           => (string)$this->age,
+            'gender'        => $this->gender,
+            'country'       => $this->country,
+            'site'          => $this->site,
+            'container'     => 'home_page',
+            'visited_pages' => [],
         ];
     }
 
