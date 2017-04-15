@@ -953,6 +953,11 @@ Remove your cookies:
 $bot->getHttpClient()->removeCookies();
 ```
 
+Visit (click) a link. For example, when Pinterest sends you email with some link, and you want bot to visit it:
+```
+$bot->user->visitPage($url);
+```
+
 ## Pagination
 
 Most of methods use Pinterest pagination. For example, when you run `$bot->pins->search('query')`, Pinterest returns
