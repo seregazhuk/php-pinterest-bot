@@ -2,6 +2,7 @@
 
 namespace seregazhuk\PinterestBot\Api;
 
+use seregazhuk\PinterestBot\Helpers\ArrayHelper;
 use seregazhuk\PinterestBot\Api\Contracts\PaginatedResponse;
 
 class Response implements PaginatedResponse
@@ -37,13 +38,9 @@ class Response implements PaginatedResponse
     {
         $this->data = $data;
 
-        $error = $this->getValueByKey('resource_response.error', $this->data);
-
-        if($error) $this->lastError = $error;
-
-        $this->clientInfo = $this->getValueByKey('client_context', $this->data);
-
-        return $this;
+        return $this
+            ->fillError()
+            ->fillClientInfo();
     }
 
     /**
@@ -77,7 +74,7 @@ class Response implements PaginatedResponse
      */
     public function getData($key = '', $default = null)
     {
-        return $this->getValueByKey($key, $this->data, $default);
+        return ArrayHelper::getValueByKey($key, $this->data, $default);
     }
 
     /**
@@ -86,7 +83,7 @@ class Response implements PaginatedResponse
      */
     public function hasData($key = '')
     {
-        return !is_null($this->getValueByKey($key, $this->data));
+        return !is_null(ArrayHelper::getValueByKey($key, $this->data));
     }
 
     /**
@@ -98,36 +95,13 @@ class Response implements PaginatedResponse
      */
     protected function parseResponseData($key)
     {
-        $responseData = $this->getValueByKey('resource_response.data', $this->data);
+        $responseData = ArrayHelper::getValueByKey('resource_response.data', $this->data);
 
         if(!$responseData) return false;
 
         return $key ?
-            $this->getValueByKey($key, $responseData) :
+            ArrayHelper::getValueByKey($key, $responseData) :
             $responseData;
-    }
-
-    /**
-     * @param string $key
-     * @param array $data
-     * @param mixed $default
-     * @return array|bool|mixed
-     */
-    protected function getValueByKey($key = '', $data, $default = null)
-    {
-        if(empty($key)) return $data;
-
-        $indexes = explode('.', $key);
-
-        $value = $data;
-
-        foreach ($indexes as $index) {
-            if(!isset($value[$index])) return $default;
-
-            $value = $value[$index];
-        }
-
-        return $value;
     }
 
     /**
@@ -233,6 +207,22 @@ class Response implements PaginatedResponse
 
     public function clear()
     {
-        $this->fill([]);
+        return $this->fill([]);
+    }
+
+    protected function fillError()
+    {
+        $error = ArrayHelper::getValueByKey('resource_response.error', $this->data);
+
+        if ($error) $this->lastError = $error;
+
+        return $this;
+    }
+
+    protected function fillClientInfo()
+    {
+        $this->clientInfo = ArrayHelper::getValueByKey('client_context', $this->data);
+
+        return $this;
     }
 }
