@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## v5.3.2 - 2017-04-17
+### Fixed:
+ - Last error message. First goes message, then code if message is empty
+
 ## v5.3.1 - 2017-04-14
 ### Fixed:
  - Storing last error from response
