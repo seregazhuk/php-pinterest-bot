@@ -60,9 +60,7 @@ class Response implements PaginatedResponse
      */
     public function getResponseData($key = null)
     {
-        if ($this->hasErrors()) {
-            return false;
-        }
+        if ($this->hasErrors()) return false;
 
         return $this->parseResponseData($key);
     }
@@ -97,7 +95,7 @@ class Response implements PaginatedResponse
     {
         $responseData = ArrayHelper::getValueByKey('resource_response.data', $this->data);
 
-        if(!$responseData) return false;
+        if (!$responseData) return false;
 
         return $key ?
             ArrayHelper::getValueByKey($key, $responseData) :
@@ -172,10 +170,11 @@ class Response implements PaginatedResponse
     {
         if ($this->hasErrors()) return [];
 
-        $bookmarks = $this->getBookmarks();
-
         if ($data = $this->getResponseData()) {
-            return ['data' => $data, 'bookmarks' => $bookmarks];
+            return [
+                'data'      => $data,
+                'bookmarks' => $this->getBookmarks(),
+            ];
         }
 
         return [];
