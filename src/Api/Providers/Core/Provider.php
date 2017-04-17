@@ -123,7 +123,6 @@ abstract class Provider
         return $this
             ->paginateCustom(function () use ($data, $resourceUrl) {
                 $this->get($data, $resourceUrl);
-
                 return $this->response;
             })->take($limit);
     }

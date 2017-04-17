@@ -107,9 +107,9 @@ class ProvidersContainer
             ->response
             ->getLastError();
 
-        if(isset($error['code'])) return $error['code'];
-
         if(isset($error['message'])) return $error['message'];
+
+        if(isset($error['code'])) return $error['code'];
 
         return null;
     }

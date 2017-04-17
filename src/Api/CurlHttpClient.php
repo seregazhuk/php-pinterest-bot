@@ -94,7 +94,7 @@ class CurlHttpClient implements HttpClient
      */
     protected function callCurl()
     {
-        $res = curl_exec($this->curl);
+        $result = curl_exec($this->curl);
 
         $this->currentUrl = curl_getinfo($this->curl, CURLINFO_EFFECTIVE_URL);
 
@@ -102,7 +102,7 @@ class CurlHttpClient implements HttpClient
 
         $this->fillCookies();
 
-        return $res;
+        return $result;
     }
 
     /**
@@ -155,7 +155,7 @@ class CurlHttpClient implements HttpClient
      */
     protected function makeHttpOptions($postString = '')
     {
-        // Union custom Curl options and default.
+        // Union custom Curl options and default ones.
         $options = array_replace(
             $this->options,
             $this->getDefaultHttpOptions()
