@@ -87,6 +87,37 @@ class ProvidersContainerTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
+    public function it_should_return_last_message_from_response()
+    {
+        $error = [
+            'message' => null,
+            'code'    => 'error_code',
+        ];
+
+        $this->response
+            ->shouldReceive('getLastError')
+            ->andReturn($error);
+
+        $this->assertEquals($error['code'], $this->container->getLastError());
+    }
+
+    /** @test */
+    public function it_should_return_last_error_code_from_response()
+    {
+        $error = [
+            'message' => 'error_message',
+            'code'    => 'error_code',
+        ];
+
+        $this->response
+            ->shouldReceive('getLastError')
+            ->andReturn($error);
+
+        $this->assertEquals($error['message'], $this->container->getLastError());
+    }
+
+
+    /** @test */
     public function it_returns_http_client_instance()
     {
         $this->request
