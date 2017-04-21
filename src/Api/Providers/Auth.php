@@ -215,7 +215,7 @@ class Auth extends Provider
     }
 
     /**
-     * @param string $email
+     * @param string|Registration $email
      * @param string $password
      * @param string $name
      * @param string $country
