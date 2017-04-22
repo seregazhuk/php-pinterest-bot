@@ -2,13 +2,13 @@
 
 namespace seregazhuk\PinterestBot\Api\Providers;
 
+use seregazhuk\PinterestBot\Api\Providers\Core\EntityProvider;
 use seregazhuk\PinterestBot\Api\Response;
-use seregazhuk\PinterestBot\Helpers\Pagination;
-use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\Traits\Followable;
 use seregazhuk\PinterestBot\Api\Traits\Searchable;
 use seregazhuk\PinterestBot\Exceptions\WrongFollowingType;
-use seregazhuk\PinterestBot\Api\Providers\Core\EntityProvider;
+use seregazhuk\PinterestBot\Helpers\Pagination;
+use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 
 class Pinners extends EntityProvider
 {
@@ -210,7 +210,7 @@ class Pinners extends EntityProvider
             $this->resolveCurrentUsername() :
             $username;
 
-        if(empty($username)) return new Pagination();
+        if (!$username) return new Pagination();
 
         return $this->getFollowers($username);
     }

@@ -84,8 +84,8 @@ class Boards extends EntityProvider
     public function info($username, $board)
     {
         $requestOptions = [
-            'username'      => $username,
             'slug'          => $board,
+            'username'      => $username,
             'field_set_key' => 'detailed',
         ];
 
