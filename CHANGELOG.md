@@ -3,7 +3,7 @@ All notable changes to this project will be documented in this file.
 
 ## v5.3.3 - 2017-04-22
 ### Updated:
- - Pinterest version in request headers
+ - Pinterest request headers update
 
 ## v5.3.2 - 2017-04-17
 ### Fixed:
