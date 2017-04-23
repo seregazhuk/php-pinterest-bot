@@ -114,6 +114,16 @@ class User extends Provider
     }
 
     /**
+     * Simply makes GET request to some url.
+     * @param string $url
+     * @return array|bool
+     */
+    public function visitPage($url = '')
+    {
+        return $this->get([], $url);
+    }
+
+    /**
      * @return array|bool|Response
      */
     protected function getProfile()

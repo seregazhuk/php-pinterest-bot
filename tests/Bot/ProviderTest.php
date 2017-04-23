@@ -31,7 +31,7 @@ class ProviderTest extends PHPUnit_Framework_TestCase
 
         $responseData = $response['resource_response']['data'];
 
-        $this->assertEquals($responseData, $provider->visitPage());
+        $this->assertEquals($responseData, $provider->dummyGet());
     }
 
     /** @test */

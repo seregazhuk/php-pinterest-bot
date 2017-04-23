@@ -8,11 +8,12 @@ use seregazhuk\PinterestBot\Api\Traits\Followable;
 use seregazhuk\PinterestBot\Api\Traits\Searchable;
 use seregazhuk\PinterestBot\Api\Traits\CanBeDeleted;
 use seregazhuk\PinterestBot\Api\Traits\SendsMessages;
+use seregazhuk\PinterestBot\Api\Traits\ResolvesCurrentUsername;
 use seregazhuk\PinterestBot\Api\Providers\Core\EntityProvider;
 
 class Boards extends EntityProvider
 {
-    use CanBeDeleted, Searchable, Followable, SendsMessages;
+    use CanBeDeleted, Searchable, Followable, SendsMessages, ResolvesCurrentUsername;
 
     const BOARD_PRIVACY_PUBLIC = 'public';
     const BOARD_PRIVACY_PRIVATE = 'secret';
@@ -66,11 +67,11 @@ class Boards extends EntityProvider
      */
     public function forMe()
     {
-        $currentUserProfile = $this->resolveCurrentUsername();
+        $currentUserName = $this->resolveCurrentUsername();
 
-        if (!$currentUserProfile) return [];
+        if (!$currentUserName) return [];
 
-        return $this->forUser($currentUserProfile['username']);
+        return $this->forUser($currentUserName);
     }
 
     /**

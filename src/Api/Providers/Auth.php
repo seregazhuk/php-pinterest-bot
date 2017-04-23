@@ -114,7 +114,7 @@ class Auth extends Provider
      */
     public function confirmEmail($link)
     {
-        return $this->visitPage($link);
+        return $this->get([], $link);
     }
 
     /**
@@ -147,7 +147,7 @@ class Auth extends Provider
      */
     protected function makeRegisterCall(Registration $registrationForm)
     {
-        $this->visitPage();
+        $this->get([], '');
 
         if(!$this->sendEmailVerificationAction()) return false;
 

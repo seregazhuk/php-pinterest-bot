@@ -31,10 +31,11 @@ abstract class Provider
      * @var Response
      */
     protected $response;
+
     /**
      * @var ProvidersContainer
      */
-    private $container;
+    protected $container;
 
     /**
      * @param ProvidersContainer $container
@@ -148,27 +149,5 @@ abstract class Provider
         return (new Pagination)
             ->paginateOver($callback)
             ->take($limit);
-    }
-
-    /**
-     * Simply makes GET request to some url.
-     * @param string $url
-     * @return array|bool
-     */
-    public function visitPage($url = '')
-    {
-        return $this->get([], $url);
-    }
-
-    /**
-     * @return string|bool
-     */
-    protected function resolveCurrentUsername()
-    {
-        $currentUserProfile = $this->get([], UrlBuilder::RESOURCE_GET_USER_SETTINGS);
-
-        if (!isset($currentUserProfile['username'])) return false;
-
-        return $currentUserProfile['username'];
     }
 }

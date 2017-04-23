@@ -2,13 +2,14 @@
 
 namespace seregazhuk\PinterestBot\Api\Providers;
 
-use seregazhuk\PinterestBot\Api\Providers\Core\EntityProvider;
 use seregazhuk\PinterestBot\Api\Response;
+use seregazhuk\PinterestBot\Helpers\UrlBuilder;
+use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Api\Traits\Followable;
 use seregazhuk\PinterestBot\Api\Traits\Searchable;
 use seregazhuk\PinterestBot\Exceptions\WrongFollowingType;
-use seregazhuk\PinterestBot\Helpers\Pagination;
-use seregazhuk\PinterestBot\Helpers\UrlBuilder;
+use seregazhuk\PinterestBot\Api\Providers\Core\EntityProvider;
+use seregazhuk\PinterestBot\Api\Traits\ResolvesCurrentUsername;
 
 class Pinners extends EntityProvider
 {
@@ -16,6 +17,7 @@ class Pinners extends EntityProvider
     use Followable {
         followers as protected getFollowers;
     }
+    use ResolvesCurrentUsername;
 
     /**
      * @var array

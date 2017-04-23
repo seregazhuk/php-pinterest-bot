@@ -38,7 +38,7 @@ class Password extends Provider
     public function reset($link, $newPassword)
     {
         // Visit link to get current reset token, username and token expiration
-        $this->visitPage($link);
+        $this->get([], $link);
         $this->request->dropCookies();
 
         $urlData = $this->parseCurrentUrl();
