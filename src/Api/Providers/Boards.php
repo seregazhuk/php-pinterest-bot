@@ -4,16 +4,15 @@ namespace seregazhuk\PinterestBot\Api\Providers;
 
 use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
-use seregazhuk\PinterestBot\Api\Traits\Followable;
 use seregazhuk\PinterestBot\Api\Traits\Searchable;
 use seregazhuk\PinterestBot\Api\Traits\CanBeDeleted;
 use seregazhuk\PinterestBot\Api\Traits\SendsMessages;
 use seregazhuk\PinterestBot\Api\Traits\ResolvesCurrentUsername;
-use seregazhuk\PinterestBot\Api\Providers\Core\EntityProvider;
+use seregazhuk\PinterestBot\Api\Providers\Core\FollowableProvider;
 
-class Boards extends EntityProvider
+class Boards extends FollowableProvider
 {
-    use CanBeDeleted, Searchable, Followable, SendsMessages, ResolvesCurrentUsername;
+    use CanBeDeleted, Searchable, SendsMessages, ResolvesCurrentUsername;
 
     const BOARD_PRIVACY_PUBLIC = 'public';
     const BOARD_PRIVACY_PRIVATE = 'secret';

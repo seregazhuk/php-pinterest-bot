@@ -5,18 +5,14 @@ namespace seregazhuk\PinterestBot\Api\Providers;
 use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Helpers\Pagination;
-use seregazhuk\PinterestBot\Api\Traits\Followable;
 use seregazhuk\PinterestBot\Api\Traits\Searchable;
 use seregazhuk\PinterestBot\Exceptions\WrongFollowingType;
-use seregazhuk\PinterestBot\Api\Providers\Core\EntityProvider;
 use seregazhuk\PinterestBot\Api\Traits\ResolvesCurrentUsername;
+use seregazhuk\PinterestBot\Api\Providers\Core\FollowableProvider;
 
-class Pinners extends EntityProvider
+class Pinners extends FollowableProvider
 {
     use Searchable;
-    use Followable {
-        followers as protected getFollowers;
-    }
     use ResolvesCurrentUsername;
 
     /**
@@ -204,9 +200,10 @@ class Pinners extends EntityProvider
     /**
      * Returns current user's followers when used without arguments.
      * @param string $username
+     * @param int $limit
      * @return array|Pagination
      */
-    public function followers($username = '')
+    public function followers($username = '', $limit = Pagination::DEFAULT_LIMIT)
     {
         $username = empty($username) ?
             $this->resolveCurrentUsername() :
@@ -214,6 +211,6 @@ class Pinners extends EntityProvider
 
         if (!$username) return new Pagination();
 
-        return $this->getFollowers($username);
+        return parent::followers($username, $limit);
     }
 }
