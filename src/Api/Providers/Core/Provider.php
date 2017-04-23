@@ -2,6 +2,7 @@
 
 namespace seregazhuk\PinterestBot\Api\Providers\Core;
 
+use seregazhuk\PinterestBot\Api\ProvidersContainer;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Helpers\Pagination;
@@ -30,15 +31,21 @@ abstract class Provider
      * @var Response
      */
     protected $response;
+    /**
+     * @var ProvidersContainer
+     */
+    private $container;
 
     /**
-     * @param Request $request
-     * @param Response $response
+     * @param ProvidersContainer $container
+     * @internal param Request $request
+     * @internal param Response $response
      */
-    public function __construct(Request $request, Response $response)
+    public function __construct(ProvidersContainer $container)
     {
-        $this->request = $request;
-        $this->response = $response;
+        $this->container = $container;
+        $this->request = $container->getRequest();
+        $this->response = $container->getResponse();
     }
 
     /**

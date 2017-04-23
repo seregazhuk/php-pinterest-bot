@@ -90,7 +90,7 @@ class ProvidersContainer
     protected function buildProvider($className)
     {
         $provider = (new ReflectionClass($className))
-            ->newInstanceArgs([$this->request, $this->response]);
+            ->newInstanceArgs([$this]);
 
         return new ProviderWrapper($provider);
     }
@@ -149,5 +149,21 @@ class ProvidersContainer
         }
 
         return $className;
+    }
+
+    /**
+     * @return Request
+     */
+    public function getRequest()
+    {
+        return $this->request;
+    }
+
+    /**
+     * @return Response
+     */
+    public function getResponse()
+    {
+        return $this->response;
     }
 }
