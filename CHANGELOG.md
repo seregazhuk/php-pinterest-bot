@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## v5.3.5 - 2017-04-23
+### Fixed:
+ - Bot getClientInfo() method
+
 ## v5.3.4 - 2017-04-23
 ### Fixed:
  - Boards forMe method
