@@ -1,24 +1,30 @@
 <?php
 
-namespace seregazhuk\PinterestBot\Api\Traits;
+namespace seregazhuk\PinterestBot\Api\Providers\Core;
 
-use seregazhuk\PinterestBot\Api\Request;
-use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Helpers\Pagination;
 
-/**
- * Trait Followable
- *
- * @property string $followUrl
- * @property string $unFollowUrl
- * @property string $followersUrl
- * @property string $followersFor
- * @property Response $response
- * @property Request $request
- */
-trait Followable
+abstract class FollowableProvider extends EntityProvider
 {
-    use HandlesRequest, HasEntityIdName;
+    /**
+     * @var string
+     */
+    protected $followUrl;
+
+    /**
+     * @var string
+     */
+    protected $unFollowUrl;
+
+    /**
+     * @var string
+     */
+    protected $followersUrl;
+
+    /**
+     * @var string
+     */
+    protected $followersFor;
 
     /**
      * Follow entity by its id.
@@ -138,13 +144,4 @@ trait Followable
     {
         return property_exists($this, 'followersFor') ? $this->followersFor : '';
     }
-
-    /**
-     * @param mixed $data
-     * @param string $resourceUrl
-     * @param int $limit
-     *
-     * @return Pagination
-     */
-    abstract protected function paginate($data, $resourceUrl, $limit = Pagination::DEFAULT_LIMIT);
 }

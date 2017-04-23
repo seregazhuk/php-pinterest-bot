@@ -2,6 +2,7 @@
 
 namespace seregazhuk\PinterestBot\Api\Providers\Core;
 
+use seregazhuk\PinterestBot\Api\ProvidersContainer;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Helpers\Pagination;
@@ -32,13 +33,20 @@ abstract class Provider
     protected $response;
 
     /**
-     * @param Request $request
-     * @param Response $response
+     * @var ProvidersContainer
      */
-    public function __construct(Request $request, Response $response)
+    protected $container;
+
+    /**
+     * @param ProvidersContainer $container
+     * @internal param Request $request
+     * @internal param Response $response
+     */
+    public function __construct(ProvidersContainer $container)
     {
-        $this->request = $request;
-        $this->response = $response;
+        $this->container = $container;
+        $this->request = $container->getRequest();
+        $this->response = $container->getResponse();
     }
 
     /**
@@ -141,27 +149,5 @@ abstract class Provider
         return (new Pagination)
             ->paginateOver($callback)
             ->take($limit);
-    }
-
-    /**
-     * Simply makes GET request to some url.
-     * @param string $url
-     * @return array|bool
-     */
-    public function visitPage($url = '')
-    {
-        return $this->get([], $url);
-    }
-
-    /**
-     * @return string|bool
-     */
-    protected function resolveCurrentUsername()
-    {
-        $currentUserProfile = $this->get([], UrlBuilder::RESOURCE_GET_USER_SETTINGS);
-
-        if (!isset($currentUserProfile['username'])) return false;
-
-        return $currentUserProfile['username'];
     }
 }

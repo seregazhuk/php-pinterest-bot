@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## v5.3.4 - 2017-04-23
+### Fixed:
+ - Boards forMe method
+ - Pinners followers uses limit
+
 ## v5.3.3 - 2017-04-22
 ### Updated:
  - Pinterest request headers update

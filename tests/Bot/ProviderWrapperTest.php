@@ -7,6 +7,7 @@ use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Helpers\Cookies;
 use seregazhuk\PinterestBot\Api\CurlHttpClient;
+use seregazhuk\PinterestBot\Api\ProvidersContainer;
 use seregazhuk\PinterestBot\Api\Providers\Core\Provider;
 use seregazhuk\PinterestBot\Api\Providers\Core\ProviderWrapper;
 
@@ -47,7 +48,7 @@ class ProviderWrapperTest extends PHPUnit_Framework_TestCase
     {
         $request = new Request(new CurlHttpClient(new Cookies()));
 
-        $provider = new TestProvider($request, new Response());
+        $provider = new TestProvider(new ProvidersContainer($request, new Response()));
 
         return new ProviderWrapper($provider);
     }

@@ -7,6 +7,7 @@ use PHPUnit_Framework_TestCase;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\tests\Helpers\ResponseHelper;
+use seregazhuk\PinterestBot\Api\ProvidersContainer;
 use seregazhuk\PinterestBot\Api\Providers\Core\Provider;
 
 /**
@@ -30,7 +31,7 @@ class ProviderTest extends PHPUnit_Framework_TestCase
 
         $responseData = $response['resource_response']['data'];
 
-        $this->assertEquals($responseData, $provider->visitPage());
+        $this->assertEquals($responseData, $provider->dummyGet());
     }
 
     /** @test */
@@ -45,8 +46,7 @@ class ProviderTest extends PHPUnit_Framework_TestCase
             ->andReturn(json_encode([]));
 
         /** @var DummyProvider $provider */
-        $provider = Mockery::mock(DummyProvider::class, [$request, new Response()])
-            ->makePartial();
+        $provider = $this->makeProviderWithRequest($request);
 
         $provider->dummyPaginate(['test' => 'test'], 'http://example.com')->toArray();
     }
@@ -54,6 +54,7 @@ class ProviderTest extends PHPUnit_Framework_TestCase
     /** @test */
     public function it_should_clear_response_before_pagination()
     {
+        /** @var Response $response */
         $response = Mockery::mock(Response::class)
             ->shouldReceive('clear')
             ->once()
@@ -61,8 +62,7 @@ class ProviderTest extends PHPUnit_Framework_TestCase
             ->makePartial();
 
         /** @var DummyProvider $provider */
-        $provider = Mockery::mock(DummyProvider::class, [$this->makeRequest([]), $response])
-            ->makePartial();
+        $provider = $this->makeProviderWithResponse($response);
 
         $provider->dummyPaginate(['test' => 'test'], 'http://example.com')->toArray();
     }
@@ -87,14 +87,35 @@ class ProviderTest extends PHPUnit_Framework_TestCase
     {
         $request = $this->makeRequest($response, $times);
 
-        return Mockery::mock(DummyProvider::class, [$request, new Response()])
+        return $this->makeProviderWithRequest($request);
+    }
+
+    /**
+     * @param Request $request
+     * @return Mockery\Mock|Provider|DummyProvider
+     */
+    protected function makeProviderWithRequest(Request $request)
+    {
+        $container = new ProvidersContainer($request, new Response());
+        return Mockery::mock(DummyProvider::class, [$container])
+            ->makePartial();
+    }
+
+    /**
+     * @param Response $response
+     * @return Mockery\Mock|Provider|DummyProvider
+     */
+    protected function makeProviderWithResponse(Response $response)
+    {
+        $container = new ProvidersContainer($this->makeRequest([]), $response);
+        return Mockery::mock(DummyProvider::class, [$container])
             ->makePartial();
     }
 
     /**
      * @param mixed $response
      * @param int $times
-     * @return Mockery\MockInterface
+     * @return Mockery\MockInterface|Request
      */
     protected function makeRequest($response, $times = 1)
     {
