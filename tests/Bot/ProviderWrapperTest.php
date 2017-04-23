@@ -3,11 +3,11 @@
 namespace seregazhuk\tests\Bot;
 
 use PHPUnit_Framework_TestCase;
-use seregazhuk\PinterestBot\Api\ProvidersContainer;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Helpers\Cookies;
 use seregazhuk\PinterestBot\Api\CurlHttpClient;
+use seregazhuk\PinterestBot\Api\ProvidersContainer;
 use seregazhuk\PinterestBot\Api\Providers\Core\Provider;
 use seregazhuk\PinterestBot\Api\Providers\Core\ProviderWrapper;
 
