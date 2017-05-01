@@ -89,4 +89,16 @@ class Bot
 
         return $this->providersContainer->getClientInfo();
     }
+
+    /**
+     * Creates a timeout
+     * @param int $seconds
+     * @return $this
+     */
+    public function wait($seconds = 1)
+    {
+        sleep($seconds);
+        
+        return $this;
+    }
 }

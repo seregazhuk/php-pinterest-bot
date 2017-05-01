@@ -71,11 +71,18 @@ $boards = $bot->boards->forUser('yourUserName');
 
 // Create a pin
 $bot->pins->create('http://exmaple.com/image.jpg', $boards[0]['id'], 'Pin description');
+
+// Wait 5 seconds
+$bot->wait(5);
 ```
 
 *Note*: Some methods use pinterest navigation through results (with bookmarks), for example, get user followers/following, pins
 likes/dislikes, search and other feed queries. This means that for every batch of results there will be a 
-request to Pinterest. These methods return a [Pagination] object with Pinterest api results.
+request to Pinterest. These methods return a [Pagination](#pagination) object with Pinterest api results.
+
+**How to avoid banned from Pinterest**: don't bee too aggressive making pins or writing comments.
+Try to put some timeouts with `$bot->wait($seconds)` calls, so you will behave like a real person and not a bot,
+creating hundreds of pins in a minute.
 
 ## Examples
 Here you can find some simple scripts with most common tasks that can be done with bot:
