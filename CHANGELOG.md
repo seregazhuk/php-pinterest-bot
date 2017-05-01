@@ -1,7 +1,7 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## v5.3.5 - 2017-05-01
+## v5.3.6 - 2017-05-01
 ### Added
  - bot wait() method
 
