@@ -2,7 +2,6 @@
 
 namespace seregazhuk\PinterestBot\Api;
 
-use ReflectionClass;
 use seregazhuk\PinterestBot\Exceptions\WrongProvider;
 use seregazhuk\PinterestBot\Api\Contracts\HttpClient;
 use seregazhuk\PinterestBot\Api\Providers\Core\Provider;
@@ -89,8 +88,7 @@ class ProvidersContainer
      */
     protected function buildProvider($className)
     {
-        $provider = (new ReflectionClass($className))
-            ->newInstanceArgs([$this]);
+        $provider = new $className($this);
 
         return new ProviderWrapper($provider);
     }
