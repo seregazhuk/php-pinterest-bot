@@ -80,7 +80,7 @@ class ProvidersContainer
     }
 
     /**
-     * Build Provider object with reflection API.
+     * Build Provider object.
      *
      * @param string $className
      * @throws WrongProvider
