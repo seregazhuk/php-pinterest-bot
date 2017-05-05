@@ -103,9 +103,7 @@ class ProvidersContainer
      */
     public function getLastError()
     {
-        $error = $this
-            ->response
-            ->getLastError();
+        $error = $this->response->getLastError();
 
         if(isset($error['message'])) return $error['message'];
 
@@ -144,7 +142,9 @@ class ProvidersContainer
     {
         $className = self::PROVIDERS_NAMESPACE . ucfirst($provider);
 
-        if (!class_exists($className)) {
+        $isProvider = !is_subclass_of($className, Provider::class, true);
+
+        if (!class_exists($className) || $isProvider) {
             throw new WrongProvider("Provider $className not found.");
         }
 
