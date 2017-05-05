@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## v5.3.7 - ??
+### Fixed:
+ - resolving only providers from container
+
 ## v5.3.6 - 2017-05-01
 ### Added
  - bot wait() method

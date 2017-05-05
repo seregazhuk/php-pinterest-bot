@@ -2,7 +2,6 @@
 
 namespace seregazhuk\PinterestBot\Api;
 
-use ReflectionClass;
 use seregazhuk\PinterestBot\Exceptions\WrongProvider;
 use seregazhuk\PinterestBot\Api\Contracts\HttpClient;
 use seregazhuk\PinterestBot\Api\Providers\Core\Provider;
@@ -81,7 +80,7 @@ class ProvidersContainer
     }
 
     /**
-     * Build Provider object with reflection API.
+     * Build Provider object.
      *
      * @param string $className
      * @throws WrongProvider
@@ -89,8 +88,7 @@ class ProvidersContainer
      */
     protected function buildProvider($className)
     {
-        $provider = (new ReflectionClass($className))
-            ->newInstanceArgs([$this]);
+        $provider = new $className($this);
 
         return new ProviderWrapper($provider);
     }
@@ -103,9 +101,7 @@ class ProvidersContainer
      */
     public function getLastError()
     {
-        $error = $this
-            ->response
-            ->getLastError();
+        $error = $this->response->getLastError();
 
         if(isset($error['message'])) return $error['message'];
 
@@ -144,7 +140,9 @@ class ProvidersContainer
     {
         $className = self::PROVIDERS_NAMESPACE . ucfirst($provider);
 
-        if (!class_exists($className)) {
+        $isProvider = !is_subclass_of($className, Provider::class, true);
+
+        if (!class_exists($className) || $isProvider) {
             throw new WrongProvider("Provider $className not found.");
         }
 
