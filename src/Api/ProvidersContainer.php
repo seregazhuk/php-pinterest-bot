@@ -187,13 +187,22 @@ class ProvidersContainer
     {
         $className = self::PROVIDERS_NAMESPACE . ucfirst($provider);
 
-        $isProvider =  in_array(Provider::class, class_parents($className));
-
-        if (!class_exists($className) || !$isProvider) {
+        if (!$this->checkIsProviderClass($className)) {
             throw new WrongProvider("Provider $className not found.");
         }
 
         return $className;
+    }
+
+    /**
+     * @param string $className
+     * @return bool
+     */
+    protected function checkIsProviderClass($className)
+    {
+        if(!class_exists($className)) return false;
+
+        return in_array(Provider::class, class_parents($className));
     }
 
     /**
