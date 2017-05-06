@@ -25,13 +25,13 @@
         "ext-curl": "*"
     },
     "require-dev": {
-        "codeclimate/php-test-reporter": "dev-master",
+        "codeclimate/php-test-reporter": "^0.4.4",
         "mockery/mockery": "~0.9",
         "phpunit/phpunit": "~4.0"
     },
     "authors": [
         {
-            "name": "Serega Zhuk",
+            "name": "Seregey Zhuk",
             "email": "seregazhuk88@gmail.com",
             "role": "Developer"
         }
