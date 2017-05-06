@@ -2,11 +2,36 @@
 
 namespace seregazhuk\PinterestBot\Api;
 
+use seregazhuk\PinterestBot\Api\Providers\Auth;
+use seregazhuk\PinterestBot\Api\Providers\Boards;
+use seregazhuk\PinterestBot\Api\Providers\Comments;
+use seregazhuk\PinterestBot\Api\Providers\Inbox;
+use seregazhuk\PinterestBot\Api\Providers\Interests;
+use seregazhuk\PinterestBot\Api\Providers\Keywords;
+use seregazhuk\PinterestBot\Api\Providers\Pinners;
+use seregazhuk\PinterestBot\Api\Providers\Pins;
+use seregazhuk\PinterestBot\Api\Providers\Topics;
+use seregazhuk\PinterestBot\Api\Providers\User;
 use seregazhuk\PinterestBot\Exceptions\WrongProvider;
 use seregazhuk\PinterestBot\Api\Contracts\HttpClient;
 use seregazhuk\PinterestBot\Api\Providers\Core\Provider;
 use seregazhuk\PinterestBot\Api\Providers\Core\ProviderWrapper;
 
+/**
+ * @property Pins $pins
+ * @property Inbox $inbox
+ * @property User $user
+ * @property Boards $boards
+ * @property Pinners $pinners
+ * @property Keywords $keywords
+ * @property Interests $interests
+ * @property Topics $topics
+ * @property Auth $auth
+ * @property Comments $comments
+ *
+ * Class ProvidersContainer
+ * @package seregazhuk\PinterestBot\Api
+ */
 class ProvidersContainer
 {
     const PROVIDERS_NAMESPACE = 'seregazhuk\\PinterestBot\\Api\\Providers\\';
@@ -41,6 +66,19 @@ class ProvidersContainer
         $this->response = $response;
     }
 
+
+    /**
+     * Magic method to access different providers from the container.
+     *
+     * @param string $provider
+     * @return Provider
+     */
+    public function __get($provider)
+    {
+        return $this->getProvider($provider);
+    }
+
+
     /**
      * Gets provider object by name. If there is no such provider
      * in providers array, it will try to create it, then save
@@ -52,7 +90,7 @@ class ProvidersContainer
      *
      * @return Provider
      */
-    public function getProvider($provider)
+    protected function getProvider($provider)
     {
         $provider = strtolower($provider);
 
@@ -111,12 +149,21 @@ class ProvidersContainer
     }
 
     /**
-     * Simply proxies call to Response object.
+     * Returns client context from Pinterest response. By default info returns from the last
+     * Pinterest response. If there was no response before or the argument $reload is
+     * true, we make a dummy request to the main page to update client context.
      *
+     * @param bool $reload
      * @return array|null
      */
-    public function getClientInfo()
+    public function getClientInfo($reload = false)
     {
+        $clientInfo = $this->response->getClientInfo();
+
+        if(is_null($clientInfo) || $reload) {
+            $this->getProvider('user')->visitPage();
+        }
+
         return $this->response->getClientInfo();
     }
 
@@ -140,9 +187,9 @@ class ProvidersContainer
     {
         $className = self::PROVIDERS_NAMESPACE . ucfirst($provider);
 
-        $isProvider = !is_subclass_of($className, Provider::class, true);
+        $isProvider =  in_array(Provider::class, class_parents($className));
 
-        if (!class_exists($className) || $isProvider) {
+        if (!class_exists($className) || !$isProvider) {
             throw new WrongProvider("Provider $className not found.");
         }
 
@@ -163,5 +210,17 @@ class ProvidersContainer
     public function getResponse()
     {
         return $this->response;
+    }
+
+    /**
+     * Creates a timeout
+     * @param int $seconds
+     * @return $this
+     */
+    public function wait($seconds = 1)
+    {
+        sleep($seconds);
+
+        return $this;
     }
 }

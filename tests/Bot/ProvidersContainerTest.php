@@ -51,7 +51,7 @@ class ProvidersContainerTest extends PHPUnit_Framework_TestCase
     /** @test */
     public function it_should_return_provider_wrapper_instance_when_accessing_providers()
     {
-        $provider = $this->container->getProvider('pinners');
+        $provider = $this->container->pinners;
         $this->assertInstanceOf(ProviderWrapper::class, $provider);
     }
 
@@ -61,7 +61,7 @@ class ProvidersContainerTest extends PHPUnit_Framework_TestCase
      */
     public function it_should_throw_exception_on_getting_wrong_provider()
     {
-        $this->container->getProvider('unknown');
+        $this->container->unknown;
     }
 
     /** @test */
