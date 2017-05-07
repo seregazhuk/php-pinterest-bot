@@ -1,7 +1,7 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## v5.3.7 - ??
+## v5.3.7 - 2017-05-07
 ### Fixed:
  - resolving only providers from container
  - removed Bot unnecessary abstraction layer
