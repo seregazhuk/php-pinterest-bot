@@ -84,12 +84,21 @@ class Boards extends FollowableProvider
     public function info($username, $board)
     {
         $requestOptions = [
-            'slug'          => $board,
+            'slug'          => $this->formatBoardName($board),
             'username'      => $username,
             'field_set_key' => 'detailed',
         ];
 
         return $this->get($requestOptions, UrlBuilder::RESOURCE_GET_BOARD);
+    }
+
+    /**
+     * @param string $board
+     * @return string
+     */
+    protected function formatBoardName($board)
+    {
+        return strtolower(str_replace(' ', '-', $board));
     }
 
     /**

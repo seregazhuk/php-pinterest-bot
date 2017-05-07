@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## v5.3.8 - 2017-05-07
+### Fixed:
+ - boards *info()* method for boards with spaces in their names
+
 ## v5.3.7 - 2017-05-07
 ### Fixed:
  - resolving only providers from container
