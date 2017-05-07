@@ -2,7 +2,6 @@
 
 namespace seregazhuk\PinterestBot\Factories;
 
-use seregazhuk\PinterestBot\Bot;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Helpers\Cookies;
@@ -14,16 +13,14 @@ class PinterestBot
     /**
      * Initializes Bot instance and all its dependencies.
      *
-     * @return Bot
+     * @return ProvidersContainer
      */
     public static function create()
     {
         $request = self::makeRequest();
         $response = self::makeResponse();
 
-        $providersContainer = self::buildProvidersContainer($request, $response);
-
-        return new Bot($providersContainer);
+        return self::buildProvidersContainer($request, $response);
     }
 
     /**
