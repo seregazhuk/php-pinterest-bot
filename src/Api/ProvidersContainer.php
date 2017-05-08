@@ -222,6 +222,7 @@ class ProvidersContainer
     }
 
     /**
+     * @codeCoverageIgnore
      * Creates a timeout
      * @param int $seconds
      * @return $this
