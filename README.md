@@ -900,6 +900,13 @@ If you need to stop sending requests via proxy:
 $bot->getHttpClient()->dontUseProxy();
 ```
 
+Check if bot uses proxy:
+```php
+if($bot->getHttpClient()->usesProxy()) {
+    // ...
+}
+```
+
 ## Custom request settings
 
 It is possible to add some additional Curl options for bot requests. For example, you can
