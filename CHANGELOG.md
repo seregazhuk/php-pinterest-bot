@@ -1,7 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## v5.4.0 - ?
+## v5.3.9 - 2017-05-07
+### Fixed:
+ - Boards *forMe()* and Pinners *followers*() methods
+
 ### Added:
  - httpClient *usesProxy* method
 

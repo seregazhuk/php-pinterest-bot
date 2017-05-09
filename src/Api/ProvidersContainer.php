@@ -90,7 +90,7 @@ class ProvidersContainer
      *
      * @return Provider
      */
-    protected function getProvider($provider)
+    public function getProvider($provider)
     {
         $provider = strtolower($provider);
 
