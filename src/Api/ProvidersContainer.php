@@ -90,7 +90,7 @@ class ProvidersContainer
      *
      * @return Provider
      */
-    protected function getProvider($provider)
+    public function getProvider($provider)
     {
         $provider = strtolower($provider);
 
@@ -222,6 +222,7 @@ class ProvidersContainer
     }
 
     /**
+     * @codeCoverageIgnore
      * Creates a timeout
      * @param int $seconds
      * @return $this
