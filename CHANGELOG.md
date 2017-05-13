@@ -1,6 +1,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## v5.3.9 - 2017-05-07
+### Fixed:
+ - Boards *forMe()* and Pinners *followers*() methods
+
+### Added:
+ - httpClient *usesProxy* method
+
 ## v5.3.8 - 2017-05-07
 ### Fixed:
  - boards *info()* method for boards with spaces in their names
@@ -12,16 +19,16 @@ All notable changes to this project will be documented in this file.
 
 ## v5.3.6 - 2017-05-01
 ### Added
- - bot wait() method
+ - bot *wait()* method
 
 ## v5.3.5 - 2017-04-23
 ### Fixed:
- - Bot getClientInfo() method
+ - Bot *getClientInfo()* method
 
 ## v5.3.4 - 2017-04-23
 ### Fixed:
- - Boards forMe() method
- - Pinners followers() uses limit
+ - Boards *forMe()* method
+ - Pinners *followers()* uses limit
 
 ## v5.3.3 - 2017-04-22
 ### Updated:

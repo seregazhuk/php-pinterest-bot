@@ -35,8 +35,8 @@ class ProvidersContainerTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->response = Mockery::mock(Response::class);
-        $this->request = Mockery::mock(Request::class);
+        $this->response = Mockery::mock(Response::class)->makePartial();
+        $this->request = Mockery::mock(Request::class)->makePartial();
 
         $this->container = new ProvidersContainer(
             $this->request, $this->response
@@ -76,6 +76,26 @@ class ProvidersContainerTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
+    public function it_can_reload_client_info()
+    {
+        $clientInfo = ['info'];
+        $this->response
+            ->shouldReceive('getClientInfo')
+            ->once()
+            ->andReturn(null);
+
+        $this->request->shouldReceive('exec')->once();
+
+        $this->response
+            ->shouldReceive('getClientInfo')
+            ->once()
+            ->andReturn($clientInfo);
+
+
+        $this->assertEquals($clientInfo, $this->container->getClientInfo());
+    }
+
+    /** @test */
     public function it_delegates_last_error_to_response()
     {
         $error = ['message' => 'error'];
@@ -99,6 +119,16 @@ class ProvidersContainerTest extends PHPUnit_Framework_TestCase
             ->andReturn($error);
 
         $this->assertEquals($error['code'], $this->container->getLastError());
+    }
+
+    /** @test */
+    public function it_should_return_null_if_there_was_no_error_in_response()
+    {
+        $this->response
+            ->shouldReceive('getLastError')
+            ->andReturn(false);
+
+        $this->assertNull($this->container->getLastError());
     }
 
     /** @test */

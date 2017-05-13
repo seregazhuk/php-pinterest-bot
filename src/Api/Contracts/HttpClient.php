@@ -87,4 +87,9 @@ interface HttpClient
      * @return HttpClient
      */
     public function dontUseProxy();
+
+    /**
+     * @return bool
+     */
+    public function usesProxy();
 }

@@ -329,6 +329,14 @@ class CurlHttpClient implements HttpClient
     }
 
     /**
+     * @return bool
+     */
+    public function usesProxy()
+    {
+        return isset($this->options[CURLOPT_PROXY]);
+    }
+
+    /**
      * @codeCoverageIgnore
      * @param string $host
      * @param string $port
