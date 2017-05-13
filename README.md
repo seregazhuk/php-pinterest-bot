@@ -763,7 +763,7 @@ foreach($bot->pinners->search('query') as $pinner) {
 }
 
 // Search in boards
-foreach($bot->boards->search('query') as $board); {
+foreach($bot->boards->search('query') as $board) {
     // ...
 }
 ```
