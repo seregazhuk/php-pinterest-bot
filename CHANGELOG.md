@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## v5.3.10 - 2017-05-23
+### Fixed:
+ - Cookies error on empty filename
+
 ## v5.3.9 - 2017-05-07
 ### Fixed:
  - Boards *forMe()* and Pinners *followers*() methods
