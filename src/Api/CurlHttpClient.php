@@ -284,7 +284,7 @@ class CurlHttpClient implements HttpClient
      */
     protected function fillCookies()
     {
-        if(empty($this->cookieJar)) {
+        if(!empty($this->cookieJar)) {
             $this->cookies->fill($this->cookieJar);
         }
 
