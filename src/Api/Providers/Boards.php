@@ -185,4 +185,13 @@ class Boards extends FollowableProvider
     {
         return $this->get(['pin_id' => $pinId], UrlBuilder::RESOURCE_TITLE_SUGGESTIONS);
     }
+
+    /**
+     * Get boards invites
+     * @return array
+     */
+    public function invites()
+    {
+        return $this->get([], UrlBuilder::RESOURCE_BOARDS_INVITES);
+    }
 }

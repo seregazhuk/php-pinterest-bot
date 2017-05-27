@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
  - Profile setting `setLocal($locale)`
  - Profile setting `setAccountType($type)`
  - User `getCountries()` to list all avaiable countries for user profile
+ - Boards `invites()`
 
 ## v5.3.11 - 2017-05-23
 ### Fixed:

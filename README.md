@@ -382,6 +382,11 @@ $bot->boards->sendWithEmail($boardId, 'Message', 'friend@example.com'); // One e
 $bot->boards->sendWithEmail($boardId, 'Message', ['friend1@example.com', 'friend2@example.com']); // many
 ```
 
+Get your boards invites:
+```php
+$invites = $bot->boards->invites();
+```
+
 ## Pins
 
 Notice! Try not to be very aggressive when pinning or commenting pins, or Pinterest will gonna ban you.

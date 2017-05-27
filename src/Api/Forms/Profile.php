@@ -140,25 +140,6 @@ class Profile extends Form
     }
 
     /**
-     * @return array
-     */
-    public function toArray()
-    {
-        return [
-            'last_name'           => $this->lastName,
-            'first_name'          => $this->firstName,
-            'username'            => $this->userName,
-            'about'               => $this->about,
-            'location'            => $this->location,
-            'website_url'         => $this->websiteUrl,
-            'profile_image'       => $this->image,
-            'locale'              => $this->locale,
-            'account_type'        => $this->accountType,
-            'exclude_from_search' => $this->excludeFromSearch,
-        ];
-    }
-
-    /**
      * @param bool $excludeFromSearch
      * @return $this
      */
@@ -187,5 +168,24 @@ class Profile extends Form
     {
         $this->accountType = $accountType;
         return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray()
+    {
+        return [
+            'last_name'           => $this->lastName,
+            'first_name'          => $this->firstName,
+            'username'            => $this->userName,
+            'about'               => $this->about,
+            'location'            => $this->location,
+            'website_url'         => $this->websiteUrl,
+            'profile_image'       => $this->image,
+            'locale'              => $this->locale,
+            'account_type'        => $this->accountType,
+            'exclude_from_search' => $this->excludeFromSearch,
+        ];
     }
 }

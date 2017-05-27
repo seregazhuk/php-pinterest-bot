@@ -33,6 +33,7 @@ class UrlBuilder
     const RESOURCE_BOARD_FOLLOWERS = 'resource/BoardFollowersResource/get/';
     const RESOURCE_FOLLOWING_BOARDS = 'resource/BoardFollowingResource/get/';
     const RESOURCE_TITLE_SUGGESTIONS = 'resource/BoardTitleSuggestionsResource/get';
+    const RESOURCE_BOARDS_INVITES = 'resource/BoardInvitesResource/get/';
 
     /**
      * Pins
