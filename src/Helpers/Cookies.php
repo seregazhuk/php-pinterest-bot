@@ -46,7 +46,7 @@ class Cookies
         $this->cookies = [];
 
         foreach (file($file) as $line) {
-            if($cookie = $this->parseCookie($line)) {
+            if($cookie = $this->parseCookieLine($line)) {
                 $this->cookies[$cookie['name']] = $cookie;
             }
         }
@@ -65,7 +65,7 @@ class Cookies
      * @param string $line
      * @return bool
      */
-    protected function isValid($line)
+    protected function isValidLine($line)
     {
         return strlen($line) > 0 && $line[0] != '#' && substr_count($line, "\t") == 6;
     }
@@ -74,7 +74,7 @@ class Cookies
      * @param string $line
      * @return array|bool
      */
-    protected function parseCookie($line)
+    protected function parseCookieLine($line)
     {
         // detect http only cookies and remove #HttpOnly prefix
         $httpOnly = $this->isHttp($line);
@@ -83,7 +83,7 @@ class Cookies
             $line = substr($line, 10);
         }
 
-        if (!$this->isValid($line)) return false;
+        if (!$this->isValidLine($line)) return false;
 
         $data = $this->getCookieData($line);
 
