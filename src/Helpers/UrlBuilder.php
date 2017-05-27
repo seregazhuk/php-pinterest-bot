@@ -57,6 +57,7 @@ class UrlBuilder
     const RESOURCE_BULK_MOVE = 'resource/BulkEditResource/update/';
     const RESOURCE_BULK_DELETE = 'resource/BulkEditResource/delete/';
     const RESOURCE_EXPLORE_PINS = 'resource/ExploreSectionFeedResource/get/';
+    const RESOURCE_PIN_ANALYTICS = 'resource/OnPinAnalyticsResource/get/';
 
     /**
      * Pinners

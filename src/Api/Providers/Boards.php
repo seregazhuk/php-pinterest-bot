@@ -26,6 +26,7 @@ class Boards extends FollowableProvider
         'delete',
         'create',
         'follow',
+        'invites',
         'unFollow',
     ];
 

@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
  - Profile setting `setAccountType($type)`
  - User `getCountries()` to list all avaiable countries for user profile
  - Boards `invites()`
+ - Pins `analytics($pinId)`
 
 ## v5.3.11 - 2017-05-23
 ### Fixed:

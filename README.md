@@ -579,6 +579,11 @@ $bot->pins->sendWithEmail($pinId, 'message', 'friend@example.com'); // One email
 $bot->pins->sendWithEmail($pinId, 'message', ['friend1@example.com', 'friend2@example.com']); // Many
 ```
 
+Get your pin analytics, like numbers of clicks, views and repins;
+```php
+$analytics = $bot->pins->analytics($pinId);
+```
+
 ## Pinners
 
 Follow/unfollow user. You can use both id or username.
