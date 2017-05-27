@@ -97,6 +97,7 @@ class UrlBuilder
     const RESOURCE_DEACTIVATE_ACCOUNT = 'resource/DeactivateAccountResource/create/';
     const RESOURCE_BLOCK_USER = 'resource/UserBlockResource/create/';
     const RESOURCE_CLEAR_SEARCH_HISTORY = 'resource/TypeaheadClearRecentResource/delete/';
+    const RESOURCE_SESSIONS_HISTORY = 'resource/UserSessionStoreResource/get/';
 
     /**
      * News

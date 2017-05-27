@@ -126,6 +126,14 @@ class User extends Provider
     /**
      * @return array|bool|Response
      */
+    public function sessionsHistory()
+    {
+        return $this->get([], UrlBuilder::RESOURCE_SESSIONS_HISTORY);
+    }
+
+    /**
+     * @return array|bool|Response
+     */
     protected function getProfile()
     {
         return $this->get([], UrlBuilder::RESOURCE_GET_USER_SETTINGS);

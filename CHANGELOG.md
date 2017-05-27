@@ -1,9 +1,12 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## v5.3.12 - 2017-05-27
+## v5.4.0 - 2017-05-27
 ### Fixed:
  - Possible bug in `useProxy` when providing empty auth string
+
+### Added:
+ - User sessions history
 
 ## v5.3.11 - 2017-05-23
 ### Fixed:

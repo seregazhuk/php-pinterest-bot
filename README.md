@@ -221,6 +221,7 @@ Change profile. To update profile you need to setup `Profile` form object. It ha
  - `setWebsiteUrl()`,
  - `setCountry()` (ISO2 code)
  - `setImage()`:
+
 ```php
 use seregazhuk\PinterestBot\Api\Forms\Profile
 
@@ -233,6 +234,7 @@ $bot->user->profile($profileForm);
 ```
 
 You can change your profile avatar by using `setImage()` method and a path to your image:
+
 ```php
 use seregazhuk\PinterestBot\Api\Forms\Profile
 
@@ -241,6 +243,7 @@ $bot->user->profile($profileForm);
 ```
 
 You can get your current profile settings calling *profile* method without any params:
+
 ```php
 $profile = $bot->user->profile();
 echo $profile['username']; // Prints your username
@@ -249,6 +252,7 @@ echo $profile['username']; // Prints your username
 In result you can find your username, and all your account settings.
 
 Get your current username:
+
 ```php
 $username = $bot->user->username();
 ```
@@ -273,6 +277,12 @@ $bot->user->clearSearchHistory();
 Deactivate current account:
 ```php
 $bot->user->deactivate();
+```
+
+Get sessions history:
+
+```php
+$history = $bot->user->sessionsHistory();
 ```
 
 ### Invitation
