@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 ## v5.4.0 - 2017-05-27
 ### Fixed:
  - Possible bug in `useProxy` when providing empty auth string
+ - Numbers in api requests should always be cast to strings
 
 ### Added:
  - User sessions history

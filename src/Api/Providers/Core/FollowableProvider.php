@@ -87,9 +87,7 @@ abstract class FollowableProvider extends EntityProvider
     {
         $entityName = $this->getEntityIdName();
 
-        $dataJson = [
-            $entityName => (string)$entityId,
-        ];
+        $dataJson = [$entityName => $entityId];
 
         if ($entityName == 'interest_id') {
             $dataJson['interest_list'] = 'favorited';

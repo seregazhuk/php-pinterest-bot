@@ -368,7 +368,7 @@ class Pins extends EntityProvider
      */
     public function analytics($pinId)
     {
-        return $this->get(['pin_id' => (string)$pinId], UrlBuilder::RESOURCE_PIN_ANALYTICS);
+        return $this->get(['pin_id' => $pinId], UrlBuilder::RESOURCE_PIN_ANALYTICS);
     }
     
     /**
@@ -416,7 +416,7 @@ class Pins extends EntityProvider
         $pinIds = is_array($pinIds) ? $pinIds : [$pinIds];
 
         $data = [
-            'board_id' => (string)$boardId,
+            'board_id' => $boardId,
             'pin_ids'  => $pinIds,
         ];
 
