@@ -220,8 +220,9 @@ Change profile. To update profile you need to setup `Profile` form object. It ha
  - `setLocation($location)`,
  - `setWebsiteUrl($url)`,
  - `setCountry($code)` (ISO2 code). list of countries can be retrieved with `$bot->user->getCountries()` method,
- - `excludeFromSearch($book)`
- - `setLocale($locale)`, list of locales can be retrieved with `$bot->user->getLocales()` method
+ - `excludeFromSearch($bool)` to exclude your account from search results,
+ - `setLocale($locale)`, list of locales can be retrieved with `$bot->user->getLocales()` method,
+ - `setAccountType($type)`, list of available types can be retrieved with `$bot->user->getAccountTypes()` method,
  - `setImage($pathToImage)`:
 
 ```php

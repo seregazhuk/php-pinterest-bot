@@ -126,7 +126,7 @@ class User extends Provider
 
     /**
      * Get your account sessions history
-     * @return array|bool|Response
+     * @return array
      */
     public function sessionsHistory()
     {
@@ -135,20 +135,33 @@ class User extends Provider
 
     /**
      * Get list of available locales
-     * @return array|bool|Response
+     * @return array
      */
     public function getLocales()
     {
         return $this->get([], UrlBuilder::RESOURCE_AVAILABLE_LOCALES);
     }
 
+    /**
+     * Get list of available countries
+     * @return array
+     */
     public function getCountries()
     {
-        return $this->get([], UrlBuilder::RESOURCE_AVAILABLE_LOCALES);
+        return $this->get([], UrlBuilder::RESOURCE_AVAILABLE_COUNTRIES);
     }
 
     /**
-     * @return array|bool|Response
+     * Get list of available account types
+     * @return array
+     */
+    public function getAccountTypes()
+    {
+        return $this->get([], UrlBuilder::RESOURCE_AVAILABLE_ACCOUNT_TYPES);
+    }
+
+    /**
+     * @return array
      */
     protected function getProfile()
     {

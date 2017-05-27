@@ -100,6 +100,7 @@ class UrlBuilder
     const RESOURCE_SESSIONS_HISTORY = 'resource/UserSessionStoreResource/get/';
     const RESOURCE_AVAILABLE_LOCALES = 'resource/LocalesResource/get/';
     const RESOURCE_AVAILABLE_COUNTRIES = 'resource/CountriesResource/get/';
+    const RESOURCE_AVAILABLE_ACCOUNT_TYPES = 'resource/BusinessTypesResource/get/';
 
     /**
      * News

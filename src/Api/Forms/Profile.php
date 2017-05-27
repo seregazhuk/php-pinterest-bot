@@ -55,6 +55,11 @@ class Profile extends Form
     protected $locale = '';
 
     /**
+     * @var string
+     */
+    protected $accountType = 'other';
+
+    /**
      * @param mixed $lastName
      * @return Profile
      */
@@ -148,6 +153,7 @@ class Profile extends Form
             'website_url'         => $this->websiteUrl,
             'profile_image'       => $this->image,
             'locale'              => $this->locale,
+            'account_type'        => $this->accountType,
             'exclude_from_search' => $this->excludeFromSearch,
         ];
     }
@@ -160,6 +166,26 @@ class Profile extends Form
     {
         $this->excludeFromSearch = $excludeFromSearch;
 
+        return $this;
+    }
+
+    /**
+     * @param string $locale
+     * @return Profile
+     */
+    public function setLocale($locale)
+    {
+        $this->locale = $locale;
+        return $this;
+    }
+
+    /**
+     * @param string $accountType
+     * @return Profile
+     */
+    public function setAccountType($accountType)
+    {
+        $this->accountType = $accountType;
         return $this;
     }
 }
