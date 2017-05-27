@@ -98,6 +98,7 @@ class UrlBuilder
     const RESOURCE_BLOCK_USER = 'resource/UserBlockResource/create/';
     const RESOURCE_CLEAR_SEARCH_HISTORY = 'resource/TypeaheadClearRecentResource/delete/';
     const RESOURCE_SESSIONS_HISTORY = 'resource/UserSessionStoreResource/get/';
+    const RESOURCE_AVAILABLE_LOCALES = 'resource/LocalesResource/get/';
 
     /**
      * News

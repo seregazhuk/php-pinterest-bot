@@ -21,6 +21,7 @@ class User extends Provider
         'username',
         'isBanned',
         'deactivate',
+        'sessionsHistory',
         'convertToBusiness',
     ];
 
@@ -124,11 +125,21 @@ class User extends Provider
     }
 
     /**
+     * Get your account sessions history
      * @return array|bool|Response
      */
     public function sessionsHistory()
     {
         return $this->get([], UrlBuilder::RESOURCE_SESSIONS_HISTORY);
+    }
+
+    /**
+     * Get list of available locales
+     * @return array|bool|Response
+     */
+    public function getLocales()
+    {
+        return $this->get([], UrlBuilder::RESOURCE_AVAILABLE_LOCALES);
     }
 
     /**

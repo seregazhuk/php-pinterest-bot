@@ -221,6 +221,7 @@ Change profile. To update profile you need to setup `Profile` form object. It ha
  - `setWebsiteUrl($url)`,
  - `setCountry($code)` (ISO2 code),
  - `excludeFromSearch($book)`
+ - `setLocale($locale)`, list of locales get be retrieved with `$bot->user->getLocales()` method
  - `setImage($pathToImage)`:
 
 ```php

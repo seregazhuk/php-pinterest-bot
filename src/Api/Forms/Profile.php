@@ -50,6 +50,11 @@ class Profile extends Form
     protected $excludeFromSearch = false;
 
     /**
+     * @var string
+     */
+    protected $locale = '';
+
+    /**
      * @param mixed $lastName
      * @return Profile
      */
@@ -142,6 +147,7 @@ class Profile extends Form
             'location'            => $this->location,
             'website_url'         => $this->websiteUrl,
             'profile_image'       => $this->image,
+            'locale'              => $this->locale,
             'exclude_from_search' => $this->excludeFromSearch,
         ];
     }
