@@ -213,14 +213,15 @@ $bot->password->reset(
 
 ### Profile
 Change profile. To update profile you need to setup `Profile` form object. It has following methods:
- - `setLastName()`,
- - `setFirstName()`,
- - `setUserName()`,
- - `setAbout()`,
- - `setLocation()`,
- - `setWebsiteUrl()`,
- - `setCountry()` (ISO2 code)
- - `setImage()`:
+ - `setLastName($lastName)`,
+ - `setFirstName($firstName)`,
+ - `setUserName($username)`,
+ - `setAbout($bio)`,
+ - `setLocation($location)`,
+ - `setWebsiteUrl($url)`,
+ - `setCountry($code)` (ISO2 code),
+ - `excludeFromSearch($book)`
+ - `setImage($pathToImage)`:
 
 ```php
 use seregazhuk\PinterestBot\Api\Forms\Profile

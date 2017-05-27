@@ -45,6 +45,11 @@ class Profile extends Form
     protected $country;
 
     /**
+     * @var bool
+     */
+    protected $excludeFromSearch = false;
+
+    /**
      * @param mixed $lastName
      * @return Profile
      */
@@ -130,13 +135,25 @@ class Profile extends Form
     public function toArray()
     {
         return [
-            'last_name'     => $this->lastName,
-            'first_name'    => $this->firstName,
-            'username'      => $this->userName,
-            'about'         => $this->about,
-            'location'      => $this->location,
-            'website_url'   => $this->websiteUrl,
-            'profile_image' => $this->image,
+            'last_name'           => $this->lastName,
+            'first_name'          => $this->firstName,
+            'username'            => $this->userName,
+            'about'               => $this->about,
+            'location'            => $this->location,
+            'website_url'         => $this->websiteUrl,
+            'profile_image'       => $this->image,
+            'exclude_from_search' => $this->excludeFromSearch,
         ];
+    }
+
+    /**
+     * @param bool $excludeFromSearch
+     * @return $this
+     */
+    public function setExcludeFromSearch($excludeFromSearch)
+    {
+        $this->excludeFromSearch = $excludeFromSearch;
+
+        return $this;
     }
 }

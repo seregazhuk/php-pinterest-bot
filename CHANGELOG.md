@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added:
  - User sessions history
+ - Profile setting `excludeFromSearch($bool)` to exclude your account from search results
 
 ## v5.3.11 - 2017-05-23
 ### Fixed:
