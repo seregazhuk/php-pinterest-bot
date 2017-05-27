@@ -99,6 +99,7 @@ class UrlBuilder
     const RESOURCE_CLEAR_SEARCH_HISTORY = 'resource/TypeaheadClearRecentResource/delete/';
     const RESOURCE_SESSIONS_HISTORY = 'resource/UserSessionStoreResource/get/';
     const RESOURCE_AVAILABLE_LOCALES = 'resource/LocalesResource/get/';
+    const RESOURCE_AVAILABLE_COUNTRIES = 'resource/CountriesResource/get/';
 
     /**
      * News

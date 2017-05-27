@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
  - User sessions history
  - Profile setting `excludeFromSearch($bool)` to exclude your account from search results
  - Profile setting `setLocal($locale)`
+ - User `getCountries()` to list all avaiable countries for user profile
 
 ## v5.3.11 - 2017-05-23
 ### Fixed:

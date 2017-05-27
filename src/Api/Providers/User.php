@@ -142,6 +142,11 @@ class User extends Provider
         return $this->get([], UrlBuilder::RESOURCE_AVAILABLE_LOCALES);
     }
 
+    public function getCountries()
+    {
+        return $this->get([], UrlBuilder::RESOURCE_AVAILABLE_LOCALES);
+    }
+
     /**
      * @return array|bool|Response
      */
