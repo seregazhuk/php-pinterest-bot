@@ -110,7 +110,7 @@ class Registration extends Form
             'first_name'    => $this->name,
             'email'         => $this->email,
             'password'      => $this->password,
-            'age'           => (string)$this->age,
+            'age'           => $this->age,
             'gender'        => $this->gender,
             'country'       => $this->country,
             'site'          => $this->site,

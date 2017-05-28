@@ -33,6 +33,7 @@ class UrlBuilder
     const RESOURCE_BOARD_FOLLOWERS = 'resource/BoardFollowersResource/get/';
     const RESOURCE_FOLLOWING_BOARDS = 'resource/BoardFollowingResource/get/';
     const RESOURCE_TITLE_SUGGESTIONS = 'resource/BoardTitleSuggestionsResource/get';
+    const RESOURCE_BOARDS_INVITES = 'resource/BoardInvitesResource/get/';
 
     /**
      * Pins
@@ -56,6 +57,7 @@ class UrlBuilder
     const RESOURCE_BULK_MOVE = 'resource/BulkEditResource/update/';
     const RESOURCE_BULK_DELETE = 'resource/BulkEditResource/delete/';
     const RESOURCE_EXPLORE_PINS = 'resource/ExploreSectionFeedResource/get/';
+    const RESOURCE_PIN_ANALYTICS = 'resource/OnPinAnalyticsResource/get/';
 
     /**
      * Pinners
@@ -97,6 +99,10 @@ class UrlBuilder
     const RESOURCE_DEACTIVATE_ACCOUNT = 'resource/DeactivateAccountResource/create/';
     const RESOURCE_BLOCK_USER = 'resource/UserBlockResource/create/';
     const RESOURCE_CLEAR_SEARCH_HISTORY = 'resource/TypeaheadClearRecentResource/delete/';
+    const RESOURCE_SESSIONS_HISTORY = 'resource/UserSessionStoreResource/get/';
+    const RESOURCE_AVAILABLE_LOCALES = 'resource/LocalesResource/get/';
+    const RESOURCE_AVAILABLE_COUNTRIES = 'resource/CountriesResource/get/';
+    const RESOURCE_AVAILABLE_ACCOUNT_TYPES = 'resource/BusinessTypesResource/get/';
 
     /**
      * News
