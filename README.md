@@ -48,7 +48,7 @@ if you don't use such operations as creating pins, writing comments or sending m
 ### Dependencies
 Library requires CURL extension and PHP 5.5.9 or above.
 
-Install via [Composer](http://getcomposer.org]:
+Install via [Composer](http://getcomposer.org):
 ```
 composer require seregazhuk/pinterest-bot
 ```
