@@ -1,6 +1,20 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## v5.4.0 - 2017-05-28
+### Fixed:
+ - Possible bug in `useProxy` when providing empty auth string
+ - Numbers in api requests should always be cast to strings
+
+### Added:
+ - User sessions history
+ - Profile setting `excludeFromSearch($bool)` to exclude your account from search results
+ - Profile setting `setLocal($locale)`
+ - Profile setting `setAccountType($type)`
+ - User `getCountries()` to list all avaiable countries for user profile
+ - Boards `invites()`
+ - Pins `analytics($pinId)`
+
 ## v5.3.11 - 2017-05-23
 ### Fixed:
  - Cookies loading

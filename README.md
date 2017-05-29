@@ -213,14 +213,18 @@ $bot->password->reset(
 
 ### Profile
 Change profile. To update profile you need to setup `Profile` form object. It has following methods:
- - `setLastName()`,
- - `setFirstName()`,
- - `setUserName()`,
- - `setAbout()`,
- - `setLocation()`,
- - `setWebsiteUrl()`,
- - `setCountry()` (ISO2 code)
- - `setImage()`:
+ - `setLastName($lastName)`,
+ - `setFirstName($firstName)`,
+ - `setUserName($username)`,
+ - `setAbout($bio)`,
+ - `setLocation($location)`,
+ - `setWebsiteUrl($url)`,
+ - `setCountry($code)` (ISO2 code). list of countries can be retrieved with `$bot->user->getCountries()` method,
+ - `excludeFromSearch($bool)` to exclude your account from search results,
+ - `setLocale($locale)`, list of locales can be retrieved with `$bot->user->getLocales()` method,
+ - `setAccountType($type)` (only for business account) list of available types can be retrieved with `$bot->user->getAccountTypes()` method,
+ - `setImage($pathToImage)`:
+
 ```php
 use seregazhuk\PinterestBot\Api\Forms\Profile
 
@@ -233,6 +237,7 @@ $bot->user->profile($profileForm);
 ```
 
 You can change your profile avatar by using `setImage()` method and a path to your image:
+
 ```php
 use seregazhuk\PinterestBot\Api\Forms\Profile
 
@@ -241,6 +246,7 @@ $bot->user->profile($profileForm);
 ```
 
 You can get your current profile settings calling *profile* method without any params:
+
 ```php
 $profile = $bot->user->profile();
 echo $profile['username']; // Prints your username
@@ -249,6 +255,7 @@ echo $profile['username']; // Prints your username
 In result you can find your username, and all your account settings.
 
 Get your current username:
+
 ```php
 $username = $bot->user->username();
 ```
@@ -273,6 +280,12 @@ $bot->user->clearSearchHistory();
 Deactivate current account:
 ```php
 $bot->user->deactivate();
+```
+
+Get sessions history:
+
+```php
+$history = $bot->user->sessionsHistory();
 ```
 
 ### Invitation
@@ -367,6 +380,11 @@ $bot->boards->sendWithMessage($boardId, 'Message', [$userId1, $userId2]); // To 
 // Send board by email
 $bot->boards->sendWithEmail($boardId, 'Message', 'friend@example.com'); // One email
 $bot->boards->sendWithEmail($boardId, 'Message', ['friend1@example.com', 'friend2@example.com']); // many
+```
+
+Get your boards invites:
+```php
+$invites = $bot->boards->invites();
 ```
 
 ## Pins
@@ -559,6 +577,11 @@ $bot->pins->sendWithMessage($pinId, 'message', [$userId1, $userId2]); // To many
 // Send pin by email
 $bot->pins->sendWithEmail($pinId, 'message', 'friend@example.com'); // One email
 $bot->pins->sendWithEmail($pinId, 'message', ['friend1@example.com', 'friend2@example.com']); // Many
+```
+
+Get your pin analytics, like numbers of clicks, views and repins (only for business account);
+```php
+$analytics = $bot->pins->analytics($pinId);
 ```
 
 ## Pinners

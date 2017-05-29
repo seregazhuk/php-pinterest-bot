@@ -2,11 +2,10 @@
 
 namespace seregazhuk\PinterestBot\Api\Providers\Core;
 
-use seregazhuk\PinterestBot\Api\ProvidersContainer;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Helpers\Pagination;
-use seregazhuk\PinterestBot\Helpers\UrlBuilder;
+use seregazhuk\PinterestBot\Api\ProvidersContainer;
 
 /**
  * Class Provider.

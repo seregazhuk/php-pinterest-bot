@@ -315,7 +315,9 @@ class CurlHttpClient implements HttpClient
             CURLOPT_PROXYTYPE => $type ? $type : CURLPROXY_HTTP,
         ];
 
-        if($auth) $proxy[CURLOPT_PROXYUSERPWD] = $auth;
+        if(!is_null($auth)) {
+            $proxy[CURLOPT_PROXYUSERPWD] = $auth;
+        }
 
         return $this->setOptions($proxy);
     }

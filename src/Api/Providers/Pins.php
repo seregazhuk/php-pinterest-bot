@@ -30,6 +30,7 @@ class Pins extends EntityProvider
         'create',
         'delete',
         'activity',
+        'analytics',
         'visualSimilar',
     ];
 
@@ -359,6 +360,16 @@ class Pins extends EntityProvider
 
         return $this->paginate($data, UrlBuilder::RESOURCE_EXPLORE_PINS, $limit);
     }
+
+    /**
+     * Get pin analytics, like numbers of clicks, views and repins
+     * @param $pinId
+     * @return array|bool|Response
+     */
+    public function analytics($pinId)
+    {
+        return $this->get(['pin_id' => $pinId], UrlBuilder::RESOURCE_PIN_ANALYTICS);
+    }
     
     /**
      * Calls Pinterest API to like or unlike Pin by ID.
@@ -405,7 +416,7 @@ class Pins extends EntityProvider
         $pinIds = is_array($pinIds) ? $pinIds : [$pinIds];
 
         $data = [
-            'board_id' => (string)$boardId,
+            'board_id' => $boardId,
             'pin_ids'  => $pinIds,
         ];
 
