@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## v5.4.1 - 2017-05-31
+### Fixed:
+ - Added dependency for fileinfo extension
+
 ## v5.4.0 - 2017-05-28
 ### Fixed:
  - Possible bug in `useProxy` when providing empty auth string
