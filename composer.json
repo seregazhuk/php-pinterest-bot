@@ -22,7 +22,8 @@
     },
     "require": {
         "php": ">=5.5.9",
-        "ext-curl": "*"
+        "ext-curl": "*",
+        "ext-fileinfo": "*"
     },
     "require-dev": {
         "codeclimate/php-test-reporter": "^0.4.4",
