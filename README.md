@@ -48,7 +48,7 @@ if you don't use such operations as creating pins, writing comments or sending m
 ### Dependencies
 Library requires CURL extension and PHP 5.5.9 or above.
 
-Install via Composer:
+Install via [Composer](http://getcomposer.org):
 ```
 composer require seregazhuk/pinterest-bot
 ```
@@ -786,7 +786,7 @@ foreach($bot->pinners->search('query') as $pinner) {
 }
 
 // Search in boards
-foreach($bot->boards->search('query') as $board); {
+foreach($bot->boards->search('query') as $board) {
     // ...
 }
 ```
@@ -988,6 +988,11 @@ $currentPath = $bot->getHttpClient()->getCookiesPath();
 Remove your cookies:
 ```php
 $bot->getHttpClient()->removeCookies();
+```
+
+Visit (click) a link. For example, when Pinterest sends you email with some link, and you want bot to visit it:
+```
+$bot->user->visitPage($url);
 ```
 
 ## Pagination

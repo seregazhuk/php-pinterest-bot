@@ -122,7 +122,7 @@ class ProvidersContainer
      *
      * @param string $className
      * @throws WrongProvider
-     * @return object
+     * @return ProviderWrapper
      */
     protected function buildProvider($className)
     {
@@ -179,7 +179,7 @@ class ProvidersContainer
     }
 
     /**
-     * @param $provider
+     * @param string $provider
      * @return string
      * @throws WrongProvider
      */
