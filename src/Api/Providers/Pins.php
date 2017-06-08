@@ -103,10 +103,13 @@ class Pins extends EntityProvider
     {
         $requestOptions = [
             'id'          => $pindId,
-            'description' => $description,
-            'link'        => $link,
-            'board_id'    => $boardId,
+            'description' => stripslashes($description),
+
         ];
+
+        if (!is_null($boardId)) $requestOptions['board_id'] = $boardId;
+
+        if (!empty($link)) $requestOptions['link'] = stripslashes($link);
 
         return $this->post($requestOptions, UrlBuilder::RESOURCE_UPDATE_PIN);
     }
@@ -136,7 +139,7 @@ class Pins extends EntityProvider
         $requestOptions = [
             'board_id'    => $boardId,
             'description' => stripslashes($description),
-            'link'        => stripslashes($repinId),
+            'link'        => '',
             'is_video'    => null,
             'pin_id'      => $repinId,
         ];

@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## v5.4.1 - 2017-06-07
+### Fixed:
+ - Edit/repin pins
+
 ## v5.4.0 - 2017-05-28
 ### Fixed:
  - Possible bug in `useProxy` when providing empty auth string
