@@ -136,7 +136,7 @@ class Request
      */
     public function autoLogin($username)
     {
-        $this->httpClient->loadCookies($username);
+        $this->loadCookiesFor($username);
 
         if (!$this->httpClient->cookie('_auth')) {
             return false;
@@ -145,6 +145,17 @@ class Request
         $this->login();
 
         return true;
+    }
+
+    /**
+     * @param string $username
+     * @return $this
+     */
+    public function loadCookiesFor($username)
+    {
+        $this->httpClient->loadCookies($username);
+
+        return $this;
     }
 
     /**

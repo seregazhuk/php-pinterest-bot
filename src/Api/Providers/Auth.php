@@ -166,6 +166,7 @@ class Auth extends Provider
     protected function processLogin($username, $password)
     {
         $this->request->dropCookies();
+        $this->request->loadCookiesFor($username);
 
         $credentials = [
             'username_or_email' => $username,
