@@ -7,7 +7,7 @@ use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\Contracts\HttpClient;
 
 /**
- * Class CurlAdapter.
+ * Class CurlHttpClient.
  */
 class CurlHttpClient implements HttpClient
 {
