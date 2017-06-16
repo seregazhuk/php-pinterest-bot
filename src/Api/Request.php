@@ -153,6 +153,7 @@ class Request
      */
     public function loadCookiesFor($username)
     {
+        $this->dropCookies();
         $this->httpClient->loadCookies($username);
 
         return $this;
