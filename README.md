@@ -977,7 +977,7 @@ $someCookieValue = $bot->getHttpClient()->cookie('cookieName');
 ```
 
 By default cookie files are stored in your system temp directory. You can set custom path to store cookies. 
-**Notice!** This path should have write permissions:
+**Notice!** This path must have write permissions:
 
 ```php
 $bot->getHttpClient()->setCookiesPath($yourCustomPathForCookies);

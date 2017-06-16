@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## v5.4.3 - 2017-06-16
+### Fixed:
+ - Issue with autologin
+ - Issue with creating a cookie file for every new session
+
 ## v5.4.2 - 2017-06-07
 ### Fixed:
  - Edit/repin pins

@@ -2,10 +2,11 @@
 
 namespace seregazhuk\tests\Bot;
 
+use Mockery;
 use PHPUnit_Framework_TestCase;
-use seregazhuk\PinterestBot\Api\CurlHttpClient;
-use seregazhuk\PinterestBot\Helpers\Cookies;
 use seregazhuk\tests\Helpers\CookiesHelper;
+use seregazhuk\PinterestBot\Helpers\Cookies;
+use seregazhuk\PinterestBot\Api\CurlHttpClient;
 
 /**
  * Class RequestTest.
@@ -13,6 +14,11 @@ use seregazhuk\tests\Helpers\CookiesHelper;
 class CurlHttpClientTest extends PHPUnit_Framework_TestCase
 {
     use CookiesHelper;
+
+    protected function tearDown()
+    {
+        Mockery::close();
+    }
 
     /** @test */
     public function it_should_remove_cookies_file()
@@ -25,6 +31,7 @@ class CurlHttpClientTest extends PHPUnit_Framework_TestCase
         $client->loadCookies('test_name');
 
         $client->removeCookies();
+
         $this->assertFalse(file_exists($this->cookieFilePath));
     }
 
@@ -36,6 +43,20 @@ class CurlHttpClientTest extends PHPUnit_Framework_TestCase
 
         $this->assertTrue(file_exists($this->getCookiePath('test_name')));
     }
+
+    /** @test */
+    public function it_doesnt_create_a_cookie_file_for_anonymous_requests()
+    {
+        /** @var Mockery\MockInterface|CurlHttpClient $client */
+        $client = Mockery::mock(CurlHttpClient::class, [new Cookies()])
+            ->makePartial()
+            ->shouldAllowMockingProtectedMethods()
+            ->shouldNotReceive('initCookieFile')
+            ->getMock();
+
+        $client->loadCookies();
+    }
+
 
     /** @test */
     public function it_can_use_proxy_settings()
