@@ -62,13 +62,17 @@ class CurlHttpClient implements HttpClient
     }
 
     /**
-     * Load cookies for specified username
+     * Load cookies for a specified username. If a username is empty
+     * we don't provide a path to cookie, so no data will be
+     * stored on disk, only in memory.
      *
      * @param string $username
      * @return HttpClient
      */
     public function loadCookies($username = '')
     {
+        if(empty($username)) return $this;
+
         return $this
             ->initCookieJar($username)
             ->fillCookies();
@@ -118,10 +122,6 @@ class CurlHttpClient implements HttpClient
         $this->headers = $headers;
 
         $this->curl = curl_init($url);
-
-        if (empty($this->cookieJar)) {
-            $this->loadCookies();
-        }
 
         curl_setopt_array($this->curl, $this->makeHttpOptions($postString));
 
@@ -239,31 +239,24 @@ class CurlHttpClient implements HttpClient
     }
 
     /**
-     * Init cookie file for a specified username. If username is empty we use
-     * common cookie file for all sessions. If file does not exist it will
-     * be created in system temp directory.
-     *
      * @param $username
      * @return $this
      */
-    protected function initCookieJar($username = '')
+    protected function initCookieJar($username)
     {
         $this->cookieJar = $this->initCookieFile($username);
+
         return $this;
     }
 
     /**
-     * Returns cookie file name according to the provided username. If
-     * username is empty we don't provide a path to cookie, so no
-     * data will be stored on disk, only in memory.
+     * Returns cookie file name according to the provided username.
      *
      * @param string $username
      * @return string
      */
-    protected function initCookieFile($username = '')
+    protected function initCookieFile($username)
     {
-        if(empty($username)) return '';
-
         $cookieName = self::COOKIE_PREFIX . $username;
         $cookieFilePath = $this->getCookiesPath() . DIRECTORY_SEPARATOR . $cookieName;
 
