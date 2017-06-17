@@ -3,21 +3,19 @@
 namespace seregazhuk\PinterestBot\Api\Providers;
 
 use seregazhuk\PinterestBot\Api\Response;
+use seregazhuk\PinterestBot\Api\Traits\TryIt;
 use seregazhuk\PinterestBot\Helpers\FileHelper;
 use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\Traits\Searchable;
 use seregazhuk\PinterestBot\Api\Traits\CanBeDeleted;
 use seregazhuk\PinterestBot\Api\Traits\SendsMessages;
-use seregazhuk\PinterestBot\Api\Traits\UploadsImages;
 use seregazhuk\PinterestBot\Api\Providers\Core\EntityProvider;
-use szhuk\src\Api\Traits\TryIt;
 
 class Pins extends EntityProvider
 {
     use Searchable,
         CanBeDeleted,
-        UploadsImages,
         SendsMessages,
         TryIt;
 

@@ -1,14 +1,13 @@
 <?php
 
-namespace szhuk\src\Api\Traits;
+namespace seregazhuk\PinterestBot\Api\Traits;
 
 use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
-use seregazhuk\PinterestBot\Api\Traits\HandlesRequest;
 
 trait TryIt
 {
-    use HandlesRequest;
+    use HandlesRequest, UploadsImages;
 
     /**
      * Makes a DidIt activity record.
@@ -28,11 +27,11 @@ trait TryIt
     /**
      * @param string $pinId
      * @param string $tryItRecordId
-     * @param $comment
-     * @param $pathToImage
+     * @param string $comment
+     * @param string|null $pathToImage
      * @return bool|Response
      */
-    public function editTryIt($pinId, $tryItRecordId, $comment, $pathToImage)
+    public function editTryIt($pinId, $tryItRecordId, $comment, $pathToImage = null)
     {
         $data = $this->makeRequest($pinId, $comment, $pathToImage);
         $data['user_did_it_data_id'] = $tryItRecordId;
