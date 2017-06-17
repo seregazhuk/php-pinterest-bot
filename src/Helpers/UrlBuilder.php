@@ -58,6 +58,10 @@ class UrlBuilder
     const RESOURCE_BULK_DELETE = 'resource/BulkEditResource/delete/';
     const RESOURCE_EXPLORE_PINS = 'resource/ExploreSectionFeedResource/get/';
     const RESOURCE_PIN_ANALYTICS = 'resource/OnPinAnalyticsResource/get/';
+    const RESOURCE_TRY_PIN_CREATE = 'resource/DidItActivityResource/create/';
+    const RESOURCE_TRY_PIN_EDIT = 'resource/DidItActivityResource/update/';
+    const RESOURCE_TRY_PIN_DELETE = 'resource/DidItActivityResource/delete/';
+    const RESOURCE_TRY_PIN_IMAGE_UPLOAD = 'resource/DidItImageUploadResource/create/';
 
     /**
      * Pinners

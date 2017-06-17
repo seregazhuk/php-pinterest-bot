@@ -149,4 +149,20 @@ abstract class Provider
             ->paginateOver($callback)
             ->take($limit);
     }
+
+    /**
+     * @return Response
+     */
+    public function getResponse()
+    {
+        return $this->response;
+    }
+
+    /**
+     * @return Request
+     */
+    public function getRequest()
+    {
+        return $this->request;
+    }
 }
