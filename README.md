@@ -541,6 +541,8 @@ foreach ($relatedPins as $pin) {
 }
 ```
 
+### TryIt
+
 Get the pinners who have tied this pin (returns [Pagination](#pagination) object):
 ```php
 $pinners = $bot->pins->tried($pinId);
@@ -549,6 +551,31 @@ $pinners = $bot->pins->tried($pinId);
 foreach ($pinners as $pinner) {
     // ...
 }
+```
+
+Try a pin. The third parameter with path to image file is optional. Returns an array with data of the created record:
+```php
+$tryRecord = $bot->pins->tryIt($pinId, 'comment', 'pathToImage');
+```
+
+Delete your try. You can use an `id` field from data received when you created a tryIt record:
+```php
+$tryRecord = $bot->pins->tryIt($pinId, 'comment', 'pathToImage');
+
+// ...
+
+$bot->pins->deleteTryIt($tryRecord['id']);
+```
+
+Edit your try. You can use an `id` field from data received when you created a tryIt record. You also need a pin id for
+your try:
+
+```php
+$tryRecord = $bot->pins->tryIt($pinId, 'comment', 'pathToImage');
+
+// ...
+
+$bot->pins->editTryIt($tryRecord['pin']['id'], $tryRecord['id'], 'new comment', 'optionalPathToImage');
 ```
 
 

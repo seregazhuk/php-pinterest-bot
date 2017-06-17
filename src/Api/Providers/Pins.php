@@ -35,6 +35,9 @@ class Pins extends EntityProvider
         'activity',
         'analytics',
         'visualSimilar',
+        'tryIt',
+        'editTryIt',
+        'deleteTryIt',
     ];
 
     protected $searchScope  = 'pins';
@@ -193,23 +196,6 @@ class Pins extends EntityProvider
     public function activity($pinId, $limit = Pagination::DEFAULT_LIMIT)
     {
         return $this->getAggregatedActivity($pinId, [], $limit);
-    }
-
-    /**
-     * Get the pinners who have tied this pin
-     *
-     * @param string $pinId
-     * @param int $limit
-     * @return Pagination
-     */
-    public function tried($pinId, $limit = Pagination::DEFAULT_LIMIT)
-    {
-        $data = [
-            'field_set_key'    => 'did_it',
-            'show_did_it_feed' => true,
-        ];
-
-        return $this->getAggregatedActivity($pinId, $data, $limit);
     }
 
     /**

@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## v5.4.4 - ?
+### Added:
+ - Pins TryIt functionality
+
 ## v5.4.3 - 2017-06-16
 ### Fixed:
  - Issue with autologin

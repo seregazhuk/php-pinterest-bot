@@ -3,6 +3,7 @@
 namespace seregazhuk\PinterestBot\Api\Traits;
 
 use seregazhuk\PinterestBot\Api\Response;
+use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 
 trait TryIt
@@ -15,13 +16,15 @@ trait TryIt
      * @param string $pinId
      * @param string $comment
      * @param null|string $pathToImage
-     * @return bool|Response
+     * @return array
      */
     public function tryIt($pinId, $comment, $pathToImage = null)
     {
         $data = $this->makeRequest($pinId, $comment, $pathToImage);
 
-        return $this->post($data, UrlBuilder::RESOURCE_TRY_PIN_CREATE);
+        $this->post($data, UrlBuilder::RESOURCE_TRY_PIN_CREATE);
+
+        return $this->getResponse()->getResponseData();
     }
 
     /**
@@ -37,6 +40,23 @@ trait TryIt
         $data['user_did_it_data_id'] = $tryItRecordId;
 
         return $this->post($data, UrlBuilder::RESOURCE_TRY_PIN_EDIT);
+    }
+
+    /**
+     * Get the pinners who have tied this pin
+     *
+     * @param string $pinId
+     * @param int $limit
+     * @return Pagination
+     */
+    public function tried($pinId, $limit = Pagination::DEFAULT_LIMIT)
+    {
+        $data = [
+            'field_set_key'    => 'did_it',
+            'show_did_it_feed' => true,
+        ];
+
+        return $this->getAggregatedActivity($pinId, $data, $limit);
     }
 
     /**
