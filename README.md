@@ -541,6 +541,38 @@ foreach ($relatedPins as $pin) {
 }
 ```
 
+Get trending pins for a specific topic from http://pinterest.com/discover page. Uses topic id, that can be received
+from `$bot->topics->explore()` method (returns [Pagination](#pagination) object):
+
+```php
+
+$trendingTopics = $bot->topics->explore();
+$firstTopicId = $trendingTopics[0]['id'];
+
+$pins = $bot->pins->explore($firstTopicId)->toArray();
+```
+
+Get visual similar pins:
+```php
+$result = $bot->pins->visualSimilar($pinId);
+```
+
+Send pin with message or by email:
+```php
+// Send pin with message
+$bot->pins->sendWithMessage($pinId, 'message', $userId); // To a user
+$bot->pins->sendWithMessage($pinId, 'message', [$userId1, $userId2]); // To many users
+
+// Send pin by email
+$bot->pins->sendWithEmail($pinId, 'message', 'friend@example.com'); // One email
+$bot->pins->sendWithEmail($pinId, 'message', ['friend1@example.com', 'friend2@example.com']); // Many
+```
+
+Get your pin analytics, like numbers of clicks, views and repins (only for business account);
+```php
+$analytics = $bot->pins->analytics($pinId);
+```
+
 ### TryIt
 
 Get the pinners who have tied this pin (returns [Pagination](#pagination) object):
@@ -576,39 +608,6 @@ $tryRecord = $bot->pins->tryIt($pinId, 'comment', 'pathToImage');
 // ...
 
 $bot->pins->editTryIt($tryRecord['pin']['id'], $tryRecord['id'], 'new comment', 'optionalPathToImage');
-```
-
-
-Get trending pins for a specific topic from http://pinterest.com/discover page. Uses topic id, that can be received
-from `$bot->topics->explore()` method (returns [Pagination](#pagination) object):
-
-```php
-
-$trendingTopics = $bot->topics->explore();
-$firstTopicId = $trendingTopics[0]['id'];
-
-$pins = $bot->pins->explore($firstTopicId)->toArray();
-```
-
-Get visual similar pins:
-```php
-$result = $bot->pins->visualSimilar($pinId);
-```
-
-Send pin with message or by email:
-```php
-// Send pin with message
-$bot->pins->sendWithMessage($pinId, 'message', $userId); // To a user
-$bot->pins->sendWithMessage($pinId, 'message', [$userId1, $userId2]); // To many users
-
-// Send pin by email
-$bot->pins->sendWithEmail($pinId, 'message', 'friend@example.com'); // One email
-$bot->pins->sendWithEmail($pinId, 'message', ['friend1@example.com', 'friend2@example.com']); // Many
-```
-
-Get your pin analytics, like numbers of clicks, views and repins (only for business account);
-```php
-$analytics = $bot->pins->analytics($pinId);
 ```
 
 ## Pinners
