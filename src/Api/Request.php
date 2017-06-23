@@ -116,6 +116,13 @@ class Request
         return $headers;
     }
 
+    /**
+     * @return bool
+     */
+    public function hasToken()
+    {
+        return !empty($this->csrfToken) && $this->csrfToken != self::DEFAULT_TOKEN;
+    }
     
     /**
      * Clear token information.

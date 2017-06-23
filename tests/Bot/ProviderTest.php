@@ -123,6 +123,8 @@ class ProviderTest extends PHPUnit_Framework_TestCase
             ->shouldReceive('exec')
             ->times($times)
             ->andReturn(json_encode($response))
+            ->shouldReceive('hasToken')
+            ->andReturn(true)
             ->getMock();
     }
 }

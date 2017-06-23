@@ -63,16 +63,13 @@ class CurlHttpClient implements HttpClient
 
     /**
      * Load cookies for a specified username. If a username is empty
-     * we don't provide a path to cookie, so no data will be
-     * stored on disk, only in memory.
+     * we use a common file for all the anonymous requests.
      *
      * @param string $username
      * @return HttpClient
      */
     public function loadCookies($username = '')
     {
-        if(empty($username)) return $this;
-
         return $this
             ->initCookieJar($username)
             ->fillCookies();
@@ -123,6 +120,8 @@ class CurlHttpClient implements HttpClient
 
         $this->curl = curl_init($url);
 
+        if (empty($this->cookieJar)) $this->loadCookies();
+
         curl_setopt_array($this->curl, $this->makeHttpOptions($postString));
 
         return $this;
@@ -139,6 +138,7 @@ class CurlHttpClient implements HttpClient
             CURLOPT_FRESH_CONNECT  => true,
             CURLOPT_HTTPHEADER     => $this->headers,
             CURLOPT_COOKIEFILE     => $this->cookieJar,
+            CURLOPT_COOKIEJAR      => $this->cookieJar,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_SSL_VERIFYPEER => false,
             CURLOPT_FOLLOWLOCATION => true,
@@ -159,13 +159,6 @@ class CurlHttpClient implements HttpClient
             $this->options,
             $this->getDefaultHttpOptions()
         );
-
-        // Save cookies on disk only if we have a valid path to store
-        // cookies. The path is set when we try to login according
-        // to the provided username.
-        if(!empty($this->cookieJar)) {
-            $options[CURLOPT_COOKIEJAR] = $this->cookieJar;
-        }
 
         if (!empty($postString)) {
             $options[CURLOPT_POST] = true;

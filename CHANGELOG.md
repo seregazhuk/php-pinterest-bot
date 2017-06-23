@@ -1,9 +1,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## v5.4.4 - ?
+## v5.4.4 - 2017-06-23
 ### Added:
  - Pins TryIt functionality
+ 
+### Fixed:
+ - Registration
+ - Convertion to business account requires being logged in
 
 ## v5.4.3 - 2017-06-16
 ### Fixed:

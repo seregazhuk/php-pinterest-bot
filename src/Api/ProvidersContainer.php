@@ -2,16 +2,17 @@
 
 namespace seregazhuk\PinterestBot\Api;
 
-use seregazhuk\PinterestBot\Api\Providers\Auth;
-use seregazhuk\PinterestBot\Api\Providers\Boards;
-use seregazhuk\PinterestBot\Api\Providers\Comments;
-use seregazhuk\PinterestBot\Api\Providers\Inbox;
-use seregazhuk\PinterestBot\Api\Providers\Interests;
-use seregazhuk\PinterestBot\Api\Providers\Keywords;
-use seregazhuk\PinterestBot\Api\Providers\Pinners;
 use seregazhuk\PinterestBot\Api\Providers\Pins;
-use seregazhuk\PinterestBot\Api\Providers\Topics;
 use seregazhuk\PinterestBot\Api\Providers\User;
+use seregazhuk\PinterestBot\Api\Providers\Auth;
+use seregazhuk\PinterestBot\Api\Providers\Inbox;
+use seregazhuk\PinterestBot\Api\Providers\Boards;
+use seregazhuk\PinterestBot\Api\Providers\Topics;
+use seregazhuk\PinterestBot\Api\Providers\Pinners;
+use seregazhuk\PinterestBot\Api\Providers\Keywords;
+use seregazhuk\PinterestBot\Api\Providers\Comments;
+use seregazhuk\PinterestBot\Api\Providers\Password;
+use seregazhuk\PinterestBot\Api\Providers\Interests;
 use seregazhuk\PinterestBot\Exceptions\WrongProvider;
 use seregazhuk\PinterestBot\Api\Contracts\HttpClient;
 use seregazhuk\PinterestBot\Api\Providers\Core\Provider;
@@ -28,6 +29,7 @@ use seregazhuk\PinterestBot\Api\Providers\Core\ProviderWrapper;
  * @property Topics $topics
  * @property Auth $auth
  * @property Comments $comments
+ * @property Password $password
  *
  * Class ProvidersContainer
  * @package seregazhuk\PinterestBot\Api

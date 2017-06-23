@@ -15,7 +15,8 @@ class Auth extends Provider
      * @var array
      */
     protected $loginRequiredFor = [
-        'logout'
+        'logout',
+        'convertToBusiness',
     ];
 
     const REGISTRATION_COMPLETE_EXPERIENCE_ID = '11:10105';
@@ -147,8 +148,6 @@ class Auth extends Provider
      */
     protected function makeRegisterCall(Registration $registrationForm)
     {
-        $this->get([], '');
-
         if(!$this->sendEmailVerificationAction()) return false;
 
         if(!$this->post($registrationForm->toArray(), UrlBuilder::RESOURCE_CREATE_REGISTER)) return false;
