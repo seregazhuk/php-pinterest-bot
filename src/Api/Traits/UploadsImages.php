@@ -2,16 +2,11 @@
 
 namespace seregazhuk\PinterestBot\Api\Traits;
 
-use seregazhuk\PinterestBot\Api\Request;
-use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Exceptions\InvalidRequest;
 
 /**
  * Trait UploadsImages
- *
- * @property Request $request
- * @property Response $response
  */
 trait UploadsImages
 {
@@ -24,12 +19,13 @@ trait UploadsImages
      */
     public function upload($image)
     {
-        $result = $this->request->upload($image, UrlBuilder::IMAGE_UPLOAD);
+        $result = $this->getRequest()->upload($image, UrlBuilder::IMAGE_UPLOAD);
 
-        $this->response->fillFromJson($result);
+        $response = $this->getResponse();
+        $response->fillFromJson($result);
 
-        return $this->response->hasData('success') ?
-            $this->response->getData('image_url') :
+        return $response->hasData('success') ?
+            $response->getData('image_url') :
             null;
     }
 }

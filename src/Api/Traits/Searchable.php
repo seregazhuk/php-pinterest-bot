@@ -2,8 +2,6 @@
 
 namespace seregazhuk\PinterestBot\Api\Traits;
 
-use seregazhuk\PinterestBot\Api\Request;
-use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Api\SearchResponse;
 use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
@@ -12,8 +10,6 @@ use seregazhuk\PinterestBot\Helpers\UrlBuilder;
  * Trait Searchable
  *
  * @property string $searchScope
- * @property Request request
- * @property Response $response
  */
 trait Searchable
 {
@@ -36,7 +32,7 @@ trait Searchable
      */
     protected function execSearchRequest($query, $scope)
     {
-        $url = $this->response->hasBookmarks() ?
+        $url = $this->getResponse()->hasBookmarks() ?
             UrlBuilder::RESOURCE_SEARCH_WITH_PAGINATION :
             UrlBuilder::RESOURCE_SEARCH;
 
@@ -48,7 +44,7 @@ trait Searchable
         $this->get($requestOptions, $url);
 
         return new SearchResponse(
-            $this->response->getRawData()
+            $this->getResponse()->getRawData()
         );
     }
 

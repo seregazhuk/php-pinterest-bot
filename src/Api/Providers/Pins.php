@@ -3,18 +3,21 @@
 namespace seregazhuk\PinterestBot\Api\Providers;
 
 use seregazhuk\PinterestBot\Api\Response;
+use seregazhuk\PinterestBot\Api\Traits\TryIt;
 use seregazhuk\PinterestBot\Helpers\FileHelper;
 use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\Traits\Searchable;
 use seregazhuk\PinterestBot\Api\Traits\CanBeDeleted;
 use seregazhuk\PinterestBot\Api\Traits\SendsMessages;
-use seregazhuk\PinterestBot\Api\Traits\UploadsImages;
 use seregazhuk\PinterestBot\Api\Providers\Core\EntityProvider;
 
 class Pins extends EntityProvider
 {
-    use Searchable, CanBeDeleted, UploadsImages, SendsMessages;
+    use Searchable,
+        CanBeDeleted,
+        SendsMessages,
+        TryIt;
 
     /**
      * @var array
@@ -32,6 +35,9 @@ class Pins extends EntityProvider
         'activity',
         'analytics',
         'visualSimilar',
+        'tryIt',
+        'editTryIt',
+        'deleteTryIt',
     ];
 
     protected $searchScope  = 'pins';
@@ -190,23 +196,6 @@ class Pins extends EntityProvider
     public function activity($pinId, $limit = Pagination::DEFAULT_LIMIT)
     {
         return $this->getAggregatedActivity($pinId, [], $limit);
-    }
-
-    /**
-     * Get the pinners who have tied this pin
-     *
-     * @param string $pinId
-     * @param int $limit
-     * @return Pagination
-     */
-    public function tried($pinId, $limit = Pagination::DEFAULT_LIMIT)
-    {
-        $data = [
-            'field_set_key'    => 'did_it',
-            'show_did_it_feed' => true,
-        ];
-
-        return $this->getAggregatedActivity($pinId, $data, $limit);
     }
 
     /**

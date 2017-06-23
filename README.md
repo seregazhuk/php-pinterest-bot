@@ -541,17 +541,6 @@ foreach ($relatedPins as $pin) {
 }
 ```
 
-Get the pinners who have tied this pin (returns [Pagination](#pagination) object):
-```php
-$pinners = $bot->pins->tried($pinId);
-// print_r($pinners->toArray());
-
-foreach ($pinners as $pinner) {
-    // ...
-}
-```
-
-
 Get trending pins for a specific topic from http://pinterest.com/discover page. Uses topic id, that can be received
 from `$bot->topics->explore()` method (returns [Pagination](#pagination) object):
 
@@ -582,6 +571,43 @@ $bot->pins->sendWithEmail($pinId, 'message', ['friend1@example.com', 'friend2@ex
 Get your pin analytics, like numbers of clicks, views and repins (only for business account);
 ```php
 $analytics = $bot->pins->analytics($pinId);
+```
+
+### TryIt
+
+Get the pinners who have tied this pin (returns [Pagination](#pagination) object):
+```php
+$pinners = $bot->pins->tried($pinId);
+// print_r($pinners->toArray());
+
+foreach ($pinners as $pinner) {
+    // ...
+}
+```
+
+Try a pin. The third parameter with path to image file is optional. Returns an array with data of the created record:
+```php
+$tryRecord = $bot->pins->tryIt($pinId, 'comment', 'pathToImage');
+```
+
+Delete your try. You can use an `id` field from data received when you created a tryIt record:
+```php
+$tryRecord = $bot->pins->tryIt($pinId, 'comment', 'pathToImage');
+
+// ...
+
+$bot->pins->deleteTryIt($tryRecord['id']);
+```
+
+Edit your try. You can use an `id` field from data received when you created a tryIt record. You also need a pin id for
+your try:
+
+```php
+$tryRecord = $bot->pins->tryIt($pinId, 'comment', 'pathToImage');
+
+// ...
+
+$bot->pins->editTryIt($tryRecord['pin']['id'], $tryRecord['id'], 'new comment', 'optionalPathToImage');
 ```
 
 ## Pinners

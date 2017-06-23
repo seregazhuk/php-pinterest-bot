@@ -21,7 +21,8 @@ trait CanBeDeleted
     public function delete($entityId)
     {
         return $this->post(
-            [$this->getEntityIdName() => $entityId], $this->getDeleteUrl()
+            [$this->getEntityIdName() => $entityId],
+            $this->getDeleteUrl()
         );
     }
 

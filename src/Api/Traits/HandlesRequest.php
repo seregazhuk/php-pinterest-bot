@@ -2,6 +2,7 @@
 
 namespace seregazhuk\PinterestBot\Api\Traits;
 
+use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
 
 trait HandlesRequest
@@ -24,4 +25,14 @@ trait HandlesRequest
      * @return array|bool|Response
      */
     abstract protected function get(array $requestOptions = [], $resourceUrl = '');
+
+    /**
+     * @return Response
+     */
+    abstract public function getResponse();
+
+    /**
+     * @return Request
+     */
+    abstract public function getRequest();
 }

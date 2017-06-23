@@ -60,6 +60,9 @@ abstract class Provider
     {
         $postString = Request::createQuery($requestOptions);
 
+        // When executing POST request we need a csrf-token.
+        $this->initToken();
+
         $this->execute($resourceUrl, $postString);
 
         return $this->response->isOk();
@@ -148,5 +151,30 @@ abstract class Provider
         return (new Pagination)
             ->paginateOver($callback)
             ->take($limit);
+    }
+
+    /**
+     * @return Response
+     */
+    public function getResponse()
+    {
+        return $this->response;
+    }
+
+    /**
+     * @return Request
+     */
+    public function getRequest()
+    {
+        return $this->request;
+    }
+
+    protected function initToken()
+    {
+        if($this->request->hasToken()) return;
+
+        // Simply visit main page to fill the cookies
+        // and parse a token from them
+        $this->get([], '');
     }
 }

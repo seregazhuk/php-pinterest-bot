@@ -51,7 +51,7 @@ class Request
         'DNT: 1',
         'X-Pinterest-AppState: active',
         'X-NEW-APP: 1',
-        'X-APP-VERSION: 831c928',
+        'X-APP-VERSION: 71842d3',
         'X-Requested-With: XMLHttpRequest',
         'X-Pinterest-AppState:active',
     ];
@@ -116,6 +116,13 @@ class Request
         return $headers;
     }
 
+    /**
+     * @return bool
+     */
+    public function hasToken()
+    {
+        return !empty($this->csrfToken) && $this->csrfToken != self::DEFAULT_TOKEN;
+    }
     
     /**
      * Clear token information.
@@ -153,6 +160,7 @@ class Request
      */
     public function loadCookiesFor($username)
     {
+        $this->dropCookies();
         $this->httpClient->loadCookies($username);
 
         return $this;
