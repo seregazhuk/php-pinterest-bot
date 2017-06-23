@@ -8,7 +8,7 @@ use seregazhuk\PinterestBot\Helpers\Cookies;
 use seregazhuk\PinterestBot\Api\CurlHttpClient;
 
 /**
- * Class RequestTest.
+ * Class CurlHttpClientTest.
  */
 class CurlHttpClientTest extends PHPUnit_Framework_TestCase
 {
