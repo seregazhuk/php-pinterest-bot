@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 ### Fixed:
  - Registration
  - Convertion to business account requires being logged in
+ - Updated Pinterest X-APP-VERSION header
 
 ## v5.4.3 - 2017-06-16
 ### Fixed:
