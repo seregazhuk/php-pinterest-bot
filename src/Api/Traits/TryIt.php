@@ -11,6 +11,14 @@ trait TryIt
     use HandlesRequest, UploadsImages;
 
     /**
+     * @param string $pinId
+     * @param array $additionalData
+     * @param int $limit
+     * @return Pagination
+     */
+    abstract protected function getAggregatedActivity($pinId, $additionalData = [], $limit);
+
+    /**
      * Makes a DidIt activity record.
      *
      * @param string $pinId

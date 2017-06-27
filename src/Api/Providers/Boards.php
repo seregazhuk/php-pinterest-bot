@@ -193,6 +193,11 @@ class Boards extends FollowableProvider
      */
     public function invites()
     {
-        return $this->get([], UrlBuilder::RESOURCE_BOARDS_INVITES);
+        $data = [
+            'current_user' => true,
+            'field_set_key' => 'news',
+        ];
+
+        return $this->get($data, UrlBuilder::RESOURCE_BOARDS_INVITES);
     }
 }
