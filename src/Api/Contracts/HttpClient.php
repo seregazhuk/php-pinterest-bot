@@ -4,7 +4,7 @@ namespace seregazhuk\PinterestBot\Api\Contracts;
 
 interface HttpClient
 {
-    const COOKIE_PREFIX = 'pinterest_cookie_';
+    const COOKIE_PREFIX = 'pinterest_bot_cookie';
 
     /**
      * Executes curl request.
