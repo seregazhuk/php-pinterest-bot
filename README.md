@@ -266,6 +266,11 @@ Get your current username:
 $username = $bot->user->username();
 ```
 
+Get your current user id:
+```php
+$userId = $bot->user->id();
+```
+
 Check if your account is banned:
 ```php
 if ($bot->user->isBanned() {
