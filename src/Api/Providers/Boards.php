@@ -2,6 +2,7 @@
 
 namespace seregazhuk\PinterestBot\Api\Providers;
 
+use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\Traits\Searchable;
@@ -199,5 +200,85 @@ class Boards extends FollowableProvider
         ];
 
         return $this->get($data, UrlBuilder::RESOURCE_BOARDS_INVITES);
+    }
+
+    /**
+     * @param string $boardId
+     * @param string|array $emails
+     * @return bool|Response
+     */
+    public function sendInviteByEmail($boardId, $emails)
+    {
+        $emails = is_array($emails) ? $emails : [$emails];
+        $data = [
+            "board_id" => $boardId,
+            "emails" => $emails,
+        ];
+
+        return $this->post($data, UrlBuilder::RESOURCE_CREATE_EMAIL_INVITE);
+    }
+
+    /**
+     * @param string $boardId
+     * @param string|array $users
+     * @return bool|Response
+     */
+    public function sendInvite($boardId, $users)
+    {
+        $users = is_array($users) ? $users : [$users];
+
+        $isEmail = filter_var($users[0], FILTER_VALIDATE_EMAIL);
+
+        return $isEmail ?
+            $this->sendInviteByEmail($boardId, $users) :
+            $this->sendInviteByUserId($boardId, $users);
+    }
+
+    /**
+     * @param string $boardId
+     * @param string|array $userIds
+     * @return bool|Response
+     */
+    public function sendInviteByUserId($boardId, $userIds)
+    {
+        $userIds = is_array($userIds) ? $userIds : [$userIds];
+        $data = [
+            "board_id"         => $boardId,
+            "invited_user_ids" => $userIds,
+        ];
+
+        return $this->post($data, UrlBuilder::RESOURCE_CREATE_USER_ID_INVITE);
+    }
+
+    /**
+     * @param string $boardId
+     * @param string $userId
+     * @param bool $ban
+     * @return bool|Response
+     */
+    public function deleteInvite($boardId, $userId, $ban = false)
+    {
+        $data = [
+            "ban"             => $ban,
+            "board_id"        => $boardId,
+            "field_set_key"   => "boardEdit",
+            "invited_user_id" => $userId,
+        ];
+
+        return $this->post($data, UrlBuilder::RESOURCE_DELETE_INVITE);
+    }
+
+    /**
+     * @param string $boardId
+     * @return bool|Response
+     */
+    public function acceptInvite($boardId)
+    {
+        $data = [
+            'boardId'          => $boardId,
+            'invited_user_ids' => $this->container->user->id(),
+        ];
+
+        return $this->post($data, UrlBuilder::RESOURCE_ACCEPT_INVITE);
     }
 }

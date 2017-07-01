@@ -34,6 +34,10 @@ class UrlBuilder
     const RESOURCE_FOLLOWING_BOARDS = 'resource/BoardFollowingResource/get/';
     const RESOURCE_TITLE_SUGGESTIONS = 'resource/BoardTitleSuggestionsResource/get';
     const RESOURCE_BOARDS_INVITES = 'resource/BoardInvitesResource/get/';
+    const RESOURCE_CREATE_USER_ID_INVITE = 'resource/BoardInviteResource/create';
+    const RESOURCE_CREATE_EMAIL_INVITE = 'resource/BoardEmailInviteResource/create/';
+    const RESOURCE_ACCEPT_INVITE = 'resource/BoardInviteResource/update/';
+    const RESOURCE_DELETE_INVITE = 'resource/BoardInviteResource/delete/';
 
     /**
      * Pins
