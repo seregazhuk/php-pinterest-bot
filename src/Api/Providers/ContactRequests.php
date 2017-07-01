@@ -17,7 +17,7 @@ class ContactRequests extends Provider
     ];
 
 
-    public function requests()
+    public function all()
     {
         $requests = $this->get([], UrlBuilder::RESOURCE_CONTACTS_REQUESTS);
 

@@ -35,6 +35,7 @@ if you don't use such operations as creating pins, writing comments or sending m
 - [Topics](#topics)
 - [Search](#search)
 - [Inbox](#inbox)
+- [Contact Requests(#contact-requests)
 - [Keywords](#keywords)
 - [Errors handling](#errors-handling)
 - [Use proxy](#use-proxy)
@@ -382,9 +383,42 @@ $bot->boards->sendWithEmail($boardId, 'Message', 'friend@example.com'); // One e
 $bot->boards->sendWithEmail($boardId, 'Message', ['friend1@example.com', 'friend2@example.com']); // many
 ```
 
+### Invites
+
 Get your boards invites:
 ```php
 $invites = $bot->boards->invites();
+```
+
+Invite someone to your board:
+```php
+// to a user by email
+$bot->boards->sendInvite($boardId, 'someone@example.com');
+
+// to a user by user id
+$bot->boards->sendInvite($boardId, $userId);
+
+// to users by email
+$bot->boards->sendInvite($boardId, ['someone@example.com', 'somefriend@example.com']);
+// to users by user id
+$bot->boards->sendInvite($boardId, [$user1Id, $user2Id]);
+```
+
+Accept an invite to a board:
+```php
+$bot->boards->acceptInvite($boardId);
+```
+
+Ignore an invite to a board:
+```php
+$bot->boards->ignoreInvite($boardId);
+```
+
+Delete invite. Removes from the board collaborators, requires an id of the user, you want to remove from the board:
+```php
+$bot->boards->deleteInvite($boardId, $userId);
+// also you can ban a user specifying third argument as true
+$bot->boards->deleteInvite($boardId, $userId, true);
 ```
 
 ## Pins
@@ -875,6 +909,27 @@ $bot->inbox->sendEmail('mail@domain.com', 'message text');
 Attach pin to email:
 ```php
 $bot->inbox->sendEmail('mail@domain.com', 'message text', $pindId);
+```
+
+## Contact Requests
+When someone at first sends you an invitation to a board, you receive a contact request.
+Get a list of contact requests:
+
+```php
+$requests = $bot->contactRequests->all();
+```
+
+To accept or to ignore a request you need to specify a request ID. This ID can be received from the array
+returned in `$bot->contactRequests->all()` method.
+
+Accept a request:
+```php
+$bot->contactRequests->accept($requestId);
+```
+
+Ignore a request:
+```php
+$bot->contactRequests->ignore($requestId);
 ```
 
 ## Keywords

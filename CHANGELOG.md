@@ -1,11 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-
 ## v5.5.0 - 2017-07-01
 ### Added:
  - User `id()` helper to get current user id
  - Boards `sendInvite`, `acceptInvite`, `ignoreInvite` and `removeInvite`
+ - Contact requests
 
 ## v5.4.5 - 2017-06-27
 ### Added:
