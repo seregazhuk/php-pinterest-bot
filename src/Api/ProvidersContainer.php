@@ -31,7 +31,6 @@ use seregazhuk\PinterestBot\Api\Providers\Core\ProviderWrapper;
  * @property Auth $auth
  * @property Comments $comments
  * @property Password $password
- * @property ContactRequests $contactRequests
  *
  * Class ProvidersContainer
  * @package seregazhuk\PinterestBot\Api

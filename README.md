@@ -35,7 +35,12 @@ if you don't use such operations as creating pins, writing comments or sending m
 - [Topics](#topics)
 - [Search](#search)
 - [Inbox](#inbox)
-- [Contact Requests(#contact-requests)
+    - [News](#news)
+    - [Notifications](#notifications)
+    - [Conversations](#conversations)
+    - [Write a message](#write-a-message)
+    - [Send email](#send-email)
+    - [Contact requests](#contact-requests)
 - [Keywords](#keywords)
 - [Errors handling](#errors-handling)
 - [Use proxy](#use-proxy)
@@ -911,25 +916,25 @@ Attach pin to email:
 $bot->inbox->sendEmail('mail@domain.com', 'message text', $pindId);
 ```
 
-## Contact Requests
+### Contact requests
 When someone at first sends you an invitation to a board, you receive a contact request.
 Get a list of contact requests:
 
 ```php
-$requests = $bot->contactRequests->all();
+$requests = $bot->inbox->contactRequests();
 ```
 
 To accept or to ignore a request you need to specify a request ID. This ID can be received from the array
-returned in `$bot->contactRequests->all()` method.
+returned in `$bot->inbox->contactRequests()` method.
 
 Accept a request:
 ```php
-$bot->contactRequests->accept($requestId);
+$bot->inbox->acceptContactRequest($requestId);
 ```
 
 Ignore a request:
 ```php
-$bot->contactRequests->ignore($requestId);
+$bot->inbox->ignoreContactRequest($requestId);
 ```
 
 ## Keywords
