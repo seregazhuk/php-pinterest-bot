@@ -80,10 +80,10 @@ trait BoardsInvites
     public function deleteInvite($boardId, $userId, $ban = false)
     {
         $data = [
-            "ban"             => $ban,
-            "board_id"        => $boardId,
-            "field_set_key"   => "boardEdit",
-            "invited_user_id" => $userId,
+            'ban'             => $ban,
+            'board_id'        => $boardId,
+            'field_set_key'   => 'boardEdit',
+            'invited_user_id' => $userId,
         ];
 
         return $this->post($data, UrlBuilder::RESOURCE_DELETE_INVITE);
@@ -96,7 +96,7 @@ trait BoardsInvites
     public function ignoreInvite($boardId)
     {
         $data = [
-            'board_id'          => $boardId,
+            'board_id'         => $boardId,
             'invited_user_id' => $this->container->user->id(),
         ];
 
