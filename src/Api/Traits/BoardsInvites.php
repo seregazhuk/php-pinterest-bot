@@ -96,7 +96,7 @@ trait BoardsInvites
     public function ignoreInvite($boardId)
     {
         $data = [
-            'board_id'         => $boardId,
+            'board_id'        => $boardId,
             'invited_user_id' => $this->container->user->id(),
         ];
 
