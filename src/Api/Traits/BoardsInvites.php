@@ -110,8 +110,8 @@ trait BoardsInvites
     public function acceptInvite($boardId)
     {
         $data = [
-            'board_id'          => $boardId,
-            'invited_user_ids' => $this->container->user->id(),
+            'board_id'         => $boardId,
+            'invited_user_id' => $this->container->user->id(),
         ];
 
         return $this->post($data, UrlBuilder::RESOURCE_ACCEPT_INVITE);
