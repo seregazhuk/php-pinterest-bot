@@ -2,7 +2,6 @@
 
 namespace seregazhuk\PinterestBot\Api\Traits;
 
-use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 
 trait BoardsInvites
@@ -20,13 +19,15 @@ trait BoardsInvites
             'field_set_key' => 'news',
         ];
 
-        return $this->get($data, UrlBuilder::RESOURCE_BOARDS_INVITES);
+        $invites = $this->get($data, UrlBuilder::RESOURCE_BOARDS_INVITES);
+
+        return !$invites ? [] : $invites;
     }
 
     /**
      * @param string $boardId
      * @param string|array $emails
-     * @return bool|Response
+     * @return bool
      */
     public function sendInviteByEmail($boardId, $emails)
     {
@@ -42,7 +43,7 @@ trait BoardsInvites
     /**
      * @param string $boardId
      * @param string|array $users
-     * @return bool|Response
+     * @return bool
      */
     public function sendInvite($boardId, $users)
     {
@@ -58,7 +59,7 @@ trait BoardsInvites
     /**
      * @param string $boardId
      * @param string|array $userIds
-     * @return bool|Response
+     * @return bool
      */
     public function sendInviteByUserId($boardId, $userIds)
     {
@@ -75,7 +76,7 @@ trait BoardsInvites
      * @param string $boardId
      * @param string $userId
      * @param bool $ban
-     * @return bool|Response
+     * @return bool
      */
     public function deleteInvite($boardId, $userId, $ban = false)
     {
@@ -91,7 +92,7 @@ trait BoardsInvites
 
     /**
      * @param string $boardId
-     * @return bool|Response
+     * @return bool
      */
     public function ignoreInvite($boardId)
     {
@@ -105,7 +106,7 @@ trait BoardsInvites
 
     /**
      * @param string $boardId
-     * @return bool|Response
+     * @return bool
      */
     public function acceptInvite($boardId)
     {

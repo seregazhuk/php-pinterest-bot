@@ -2,6 +2,7 @@
 
 namespace seregazhuk\PinterestBot\Api;
 
+use seregazhuk\PinterestBot\Api\Providers\ContactRequests;
 use seregazhuk\PinterestBot\Api\Providers\Pins;
 use seregazhuk\PinterestBot\Api\Providers\User;
 use seregazhuk\PinterestBot\Api\Providers\Auth;
@@ -30,6 +31,7 @@ use seregazhuk\PinterestBot\Api\Providers\Core\ProviderWrapper;
  * @property Auth $auth
  * @property Comments $comments
  * @property Password $password
+ * @property ContactRequests $contactRequests
  *
  * Class ProvidersContainer
  * @package seregazhuk\PinterestBot\Api

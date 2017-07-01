@@ -78,6 +78,9 @@ class UrlBuilder
     const RESOURCE_USER_LIKES = 'resource/UserLikesResource/get/';
     const RESOURCE_USER_TRIED = 'resource/DidItUserFeedResource/get/';
 
+    const RESOURCE_CONTACTS_REQUESTS = 'resource/ContactRequestsResource/get';
+    const RESOURCE_CONTACT_REQUEST_ACCEPT = 'resource/ContactRequestAcceptResource/update/';
+    const RESOURCE_CONTACT_REQUEST_IGNORE = 'resource/ContactRequestIgnoreResource/delete/';
 
     /**
      * Search
