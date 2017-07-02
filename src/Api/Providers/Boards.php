@@ -6,13 +6,14 @@ use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\Traits\Searchable;
 use seregazhuk\PinterestBot\Api\Traits\CanBeDeleted;
+use seregazhuk\PinterestBot\Api\Traits\BoardsInvites;
 use seregazhuk\PinterestBot\Api\Traits\SendsMessages;
 use seregazhuk\PinterestBot\Api\Traits\ResolvesCurrentUsername;
 use seregazhuk\PinterestBot\Api\Providers\Core\FollowableProvider;
 
 class Boards extends FollowableProvider
 {
-    use CanBeDeleted, Searchable, SendsMessages, ResolvesCurrentUsername;
+    use CanBeDeleted, Searchable, SendsMessages, ResolvesCurrentUsername, BoardsInvites;
 
     const BOARD_PRIVACY_PUBLIC = 'public';
     const BOARD_PRIVACY_PRIVATE = 'secret';
@@ -28,6 +29,11 @@ class Boards extends FollowableProvider
         'follow',
         'invites',
         'unFollow',
+        'sendInvite',
+        'sendInviteByEmail',
+        'sendInviteByUserId',
+        'deleteInvite',
+        'acceptInvite',
     ];
 
     protected $searchScope  = 'boards';
@@ -187,17 +193,5 @@ class Boards extends FollowableProvider
         return $this->get(['pin_id' => $pinId], UrlBuilder::RESOURCE_TITLE_SUGGESTIONS);
     }
 
-    /**
-     * Get boards invites
-     * @return array
-     */
-    public function invites()
-    {
-        $data = [
-            'current_user' => true,
-            'field_set_key' => 'news',
-        ];
 
-        return $this->get($data, UrlBuilder::RESOURCE_BOARDS_INVITES);
-    }
 }

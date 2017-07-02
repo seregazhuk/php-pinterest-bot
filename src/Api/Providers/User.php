@@ -16,6 +16,7 @@ class User extends Provider
      * @var array
      */
     protected $loginRequiredFor = [
+        'id',
         'invite',
         'profile',
         'username',
@@ -63,9 +64,17 @@ class User extends Provider
      */
     public function username()
     {
-        $profile = $this->profile();
+        return $this->getProfileData('username');
+    }
 
-        return isset($profile['username']) ? $profile['username'] : '';
+    /**
+     * Returns current user id
+     *
+     * @return string
+     */
+    public function id()
+    {
+        return $this->getProfileData('id');
     }
 
     /**
@@ -184,5 +193,16 @@ class User extends Provider
         }
 
         return $this->post($userInfo, UrlBuilder::RESOURCE_UPDATE_USER_SETTINGS);
+    }
+
+    /**
+     * @param string $key
+     * @return mixed|string
+     */
+    protected function getProfileData($key)
+    {
+        $profile = $this->profile();
+
+        return isset($profile[$key]) ? $profile[$key] : '';
     }
 }

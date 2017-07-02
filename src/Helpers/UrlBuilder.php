@@ -34,6 +34,10 @@ class UrlBuilder
     const RESOURCE_FOLLOWING_BOARDS = 'resource/BoardFollowingResource/get/';
     const RESOURCE_TITLE_SUGGESTIONS = 'resource/BoardTitleSuggestionsResource/get';
     const RESOURCE_BOARDS_INVITES = 'resource/BoardInvitesResource/get/';
+    const RESOURCE_CREATE_USER_ID_INVITE = 'resource/BoardInviteResource/create';
+    const RESOURCE_CREATE_EMAIL_INVITE = 'resource/BoardEmailInviteResource/create/';
+    const RESOURCE_ACCEPT_INVITE = 'resource/BoardInviteResource/update/';
+    const RESOURCE_DELETE_INVITE = 'resource/BoardInviteResource/delete/';
 
     /**
      * Pins
@@ -74,6 +78,9 @@ class UrlBuilder
     const RESOURCE_USER_LIKES = 'resource/UserLikesResource/get/';
     const RESOURCE_USER_TRIED = 'resource/DidItUserFeedResource/get/';
 
+    const RESOURCE_CONTACTS_REQUESTS = 'resource/ContactRequestsResource/get';
+    const RESOURCE_CONTACT_REQUEST_ACCEPT = 'resource/ContactRequestAcceptResource/update/';
+    const RESOURCE_CONTACT_REQUEST_IGNORE = 'resource/ContactRequestIgnoreResource/delete/';
 
     /**
      * Search

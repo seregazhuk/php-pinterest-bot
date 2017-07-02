@@ -80,4 +80,43 @@ class Inbox extends Provider
     {
         return $this->send($pinId, $text, [], $emails);
     }
+
+    public function contactRequests()
+    {
+        $requests = $this->get([], UrlBuilder::RESOURCE_CONTACTS_REQUESTS);
+
+        return !$requests ? [] : $requests;
+    }
+
+    /**
+     * @param string $requestId
+     * @return bool
+     */
+    public function acceptContactRequest($requestId)
+    {
+        $data = [
+            'contact_request' => [
+                "type" => "contactrequest",
+                "id"   => $requestId,
+            ],
+        ];
+
+        return $this->post($data, UrlBuilder::RESOURCE_CONTACT_REQUEST_ACCEPT);
+    }
+
+    /**
+     * @param string $requestId
+     * @return bool
+     */
+    public function ignoreContactRequests($requestId)
+    {
+        $data = [
+            'contact_request' => [
+                "type" => "contactrequest",
+                "id"   => $requestId,
+            ],
+        ];
+
+        return $this->post($data, UrlBuilder::RESOURCE_CONTACT_REQUEST_IGNORE);
+    }
 }
