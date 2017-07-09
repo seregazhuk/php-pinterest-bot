@@ -13,7 +13,7 @@ All notable changes to this project will be documented in this file.
  - Contact requests
 
 ## v5.4.5 - 2017-06-27
-### Added:
+### Fixed:
  - Boards invites
 
 ## v5.4.4 - 2017-06-23

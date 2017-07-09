@@ -91,13 +91,13 @@ Try to put some timeouts with `$bot->wait($seconds)` calls, so you will behave l
 creating hundreds of pins in a minute.
 
 ## Examples
-Here you can find some simple scripts with most common tasks that can be done with bot:
+Here you can find articles with some examples of the most common tasks that can be done with the bot:
 
- - [Automate pinning](examples/auto_pins.php)
- - [Multiple Accounts and Proxy](examples/multiple_accounts_and_proxy.php)
- - [Comments, Likes And Repins](examples/comments_likes_repins.php)
- - [Followers](examples/followers.php)
- - [Parsing Pins](examples/pins_parser.php)
+ - [Automate pinning](http://seregazhuk.github.io/2017/03/25/build-pinterest-bot-with-php-auto-pin/) ([source code](examples/auto_pins.php))
+ - [Multiple Accounts and Proxy](http://seregazhuk.github.io/2017/03/28/build-printerest-bot-with-php-multiple-accounts/) ([source code](examples/multiple_accounts_and_proxy.php))
+ - [Comments, Likes And Repins](http://seregazhuk.github.io/2017/03/30/build-pinterest-bot-with-php-comments-and-repins/) ([source code](examples/comments_likes_repins.php))
+ - [Followers](http://seregazhuk.github.io/2017/04/01/build-pinterest-bit-with-php-followers/) ([source code](examples/followers.php))
+ - [Parsing Pins](http://seregazhuk.github.io/2017/04/04/build-pinterest-bot-with-php-parsing-pins/) ([source code](examples/pins_parser.php))
 
 ## Account
 
