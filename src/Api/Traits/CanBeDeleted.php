@@ -11,7 +11,7 @@ trait CanBeDeleted
 {
     use HandlesRequest, HasEntityIdName;
 
-    protected static function requiresLoginForCanBeDelete()
+    protected function requiresLoginForCanBeDelete()
     {
         return [
             'delete',

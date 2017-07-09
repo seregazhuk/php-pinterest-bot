@@ -6,14 +6,14 @@ use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\Traits\Searchable;
 use seregazhuk\PinterestBot\Api\Traits\CanBeDeleted;
-use seregazhuk\PinterestBot\Api\Traits\BoardsInvites;
+use seregazhuk\PinterestBot\Api\Traits\BoardInvites;
 use seregazhuk\PinterestBot\Api\Traits\SendsMessages;
 use seregazhuk\PinterestBot\Api\Traits\ResolvesCurrentUsername;
 use seregazhuk\PinterestBot\Api\Providers\Core\FollowableProvider;
 
 class Boards extends FollowableProvider
 {
-    use CanBeDeleted, Searchable, SendsMessages, ResolvesCurrentUsername, BoardsInvites;
+    use CanBeDeleted, Searchable, SendsMessages, ResolvesCurrentUsername, BoardInvites;
 
     const BOARD_PRIVACY_PUBLIC = 'public';
     const BOARD_PRIVACY_PRIVATE = 'secret';
@@ -23,17 +23,10 @@ class Boards extends FollowableProvider
      */
     protected $loginRequiredFor = [
         'my',
-        'send',
-        'delete',
         'create',
         'follow',
         'invites',
         'unFollow',
-        'sendInvite',
-        'sendInviteByEmail',
-        'sendInviteByUserId',
-        'deleteInvite',
-        'acceptInvite',
     ];
 
     protected $searchScope  = 'boards';

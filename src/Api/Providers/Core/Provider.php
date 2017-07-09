@@ -20,21 +20,6 @@ abstract class Provider
      */
     protected $loginRequiredFor = [];
 
-    protected function traitsRequireLogin()
-    {
-        $loginRequired = [];
-
-        foreach(trait_uses_recursive($this) as $trait) {
-            $class = basename(str_replace('\\', '/', $trait));
-
-            if(method_exists($trait, $method = 'requiresLoginFor' . $class)) {
-                $loginRequired = array_merge($loginRequired, forward_static_call([$this, $method]));
-            }
-        }
-
-        return $loginRequired;
-    }
-
     /**
      * Instance of the API Request.
      *
@@ -128,8 +113,26 @@ abstract class Provider
     {
         $methodsThatRequireLogin = array_merge($this->loginRequiredFor, self::traitsRequireLogin());
 
+
+        print_r($methodsThatRequireLogin); die();
         return in_array($method, $methodsThatRequireLogin);
     }
+
+    protected function traitsRequireLogin()
+    {
+        $loginRequired = [];
+
+        foreach(trait_uses_recursive($this) as $trait) {
+            $class = basename(str_replace('\\', '/', $trait));
+
+            if(method_exists($trait, $method = 'requiresLoginFor' . $class)) {
+                $loginRequired = array_merge($loginRequired, forward_static_call([$this, $method]));
+            }
+        }
+
+        return $loginRequired;
+    }
+
 
     /**
      * @return bool

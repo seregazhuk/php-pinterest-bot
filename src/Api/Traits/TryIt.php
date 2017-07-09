@@ -10,7 +10,7 @@ trait TryIt
 {
     use HandlesRequest, UploadsImages;
 
-    protected static function requiresLoginForTryIt()
+    protected function requiresLoginForTryIt()
     {
         return [
             'tryIt',

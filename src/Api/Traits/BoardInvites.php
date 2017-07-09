@@ -4,9 +4,19 @@ namespace seregazhuk\PinterestBot\Api\Traits;
 
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 
-trait BoardsInvites
+trait BoardInvites
 {
     use HandlesRequest;
+
+    protected function requiresLoginForBoardInvites() {
+        return [
+            'sendInvite',
+            'sendInviteByEmail',
+            'sendInviteByUserId',
+            'deleteInvite',
+            'acceptInvite',
+        ];
+    }
 
     /**
      * Get boards invites

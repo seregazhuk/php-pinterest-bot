@@ -16,7 +16,7 @@ trait SendsMessages
 {
     use HandlesRequest;
 
-    protected static function requiresLoginForSendsMessages()
+    protected function requiresLoginForSendsMessages()
     {
         return [
             'send',
