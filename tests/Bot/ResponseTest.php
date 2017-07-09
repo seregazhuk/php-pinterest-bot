@@ -2,14 +2,14 @@
 
 namespace seregazhuk\tests\Bot;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\tests\Helpers\ResponseHelper;
 
 /**
  * Class ResponseTest.
  */
-class ResponseTest extends PHPUnit_Framework_TestCase
+class ResponseTest extends TestCase
 {
     use ResponseHelper;
 

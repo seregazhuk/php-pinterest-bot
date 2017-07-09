@@ -3,7 +3,7 @@
 namespace seregazhuk\tests\Bot\Api;
 
 use Mockery;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Api\ProvidersContainer;
@@ -13,7 +13,7 @@ use seregazhuk\PinterestBot\Api\Traits\ResolvesCurrentUsername;
 /**
  * Class ProviderTest.
  */
-class ResolvesCurrentUsernameTest extends PHPUnit_Framework_TestCase
+class ResolvesCurrentUsernameTest extends TestCase
 {
     protected function tearDown()
     {

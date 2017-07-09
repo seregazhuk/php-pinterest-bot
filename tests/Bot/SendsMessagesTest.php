@@ -2,14 +2,14 @@
 
 namespace seregazhuk\tests\Bot;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use seregazhuk\PinterestBot\Api\Traits\SendsMessages;
 use seregazhuk\PinterestBot\Exceptions\InvalidRequest;
 
 /**
  * Class RequestTest.
  */
-class SendsMessagesTest extends PHPUnit_Framework_TestCase
+class SendsMessagesTest extends TestCase
 {
     /** @test */
     public function it_doesnt_allow_to_send_messages_without_specifying_emails_or_users()

@@ -2,7 +2,7 @@
 
 namespace seregazhuk\tests\Bot;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use seregazhuk\tests\Helpers\CookiesHelper;
 use seregazhuk\PinterestBot\Helpers\Cookies;
 use seregazhuk\PinterestBot\Api\CurlHttpClient;
@@ -10,7 +10,7 @@ use seregazhuk\PinterestBot\Api\CurlHttpClient;
 /**
  * Class CurlHttpClientTest.
  */
-class CurlHttpClientTest extends PHPUnit_Framework_TestCase
+class CurlHttpClientTest extends TestCase
 {
     use CookiesHelper;
 
