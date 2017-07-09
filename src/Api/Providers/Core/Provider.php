@@ -113,8 +113,6 @@ abstract class Provider
     {
         $methodsThatRequireLogin = array_merge($this->loginRequiredFor, self::traitsRequireLogin());
 
-
-        print_r($methodsThatRequireLogin); die();
         return in_array($method, $methodsThatRequireLogin);
     }
 
