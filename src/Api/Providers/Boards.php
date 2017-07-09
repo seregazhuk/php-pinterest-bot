@@ -161,7 +161,6 @@ class Boards extends FollowableProvider
     /**
      * Create a new board.
      *
-     * @codeCoverageIgnore
      * @param string $name
      * @param string $description
      *
@@ -182,6 +181,4 @@ class Boards extends FollowableProvider
     {
         return $this->get(['pin_id' => $pinId], UrlBuilder::RESOURCE_TITLE_SUGGESTIONS);
     }
-
-
 }
