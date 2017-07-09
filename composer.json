@@ -10,6 +10,9 @@
     "minimum-stability": "dev",
     "license": "Mit",
     "autoload": {
+        "files": [
+            "src/Helpers/functions.php"
+        ],
         "psr-4": {
             "seregazhuk\\PinterestBot\\": "src"
         }

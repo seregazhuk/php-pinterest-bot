@@ -6,6 +6,7 @@ use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Api\ProvidersContainer;
+use function seregazhuk\trait_uses_recursive;
 
 /**
  * Class Provider.
@@ -18,6 +19,17 @@ abstract class Provider
      * @var array
      */
     protected $loginRequiredFor = [];
+
+    public static function traits()
+    {
+        $loginRequired = [];
+        foreach(trait_uses_recursive(static::class) as $trait) {
+            $loginRequired += forward_static_call(get_class($trait) . 'requiredLoginFor');
+        }
+
+        print_r($loginRequired);
+        die();
+    }
 
     /**
      * Instance of the API Request.
