@@ -2,7 +2,6 @@
 
 namespace seregazhuk\PinterestBot\Api;
 
-use seregazhuk\PinterestBot\Api\Providers\ContactRequests;
 use seregazhuk\PinterestBot\Api\Providers\Pins;
 use seregazhuk\PinterestBot\Api\Providers\User;
 use seregazhuk\PinterestBot\Api\Providers\Auth;
