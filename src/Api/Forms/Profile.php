@@ -47,17 +47,17 @@ class Profile extends Form
     /**
      * @var bool
      */
-    protected $excludeFromSearch = false;
+    protected $excludeFromSearch = null;
 
     /**
      * @var string
      */
-    protected $locale = '';
+    protected $locale = null;
 
     /**
      * @var string
      */
-    protected $accountType = 'other';
+    protected $accountType = null;
 
     /**
      * @param mixed $lastName
@@ -175,7 +175,7 @@ class Profile extends Form
      */
     public function toArray()
     {
-        return [
+        $data = [
             'last_name'           => $this->lastName,
             'first_name'          => $this->firstName,
             'username'            => $this->userName,
@@ -187,5 +187,9 @@ class Profile extends Form
             'account_type'        => $this->accountType,
             'exclude_from_search' => $this->excludeFromSearch,
         ];
+
+        return array_filter($data, function($item){
+            return !is_null($item);
+        });
     }
 }

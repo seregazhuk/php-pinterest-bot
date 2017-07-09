@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 ### Changed:
  - Moved to PHP version 5.6
  - Login required check refactoring
+ 
+### Fixed: 
+ - Profile form
 
 ## v5.5.0 - 2017-07-01
 ### Added:
