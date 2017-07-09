@@ -173,9 +173,9 @@ class Profile extends Form
     /**
      * @return array
      */
-    public function toArray()
+    public function getData()
     {
-        $data = [
+        return [
             'last_name'           => $this->lastName,
             'first_name'          => $this->firstName,
             'username'            => $this->userName,
@@ -187,9 +187,5 @@ class Profile extends Form
             'account_type'        => $this->accountType,
             'exclude_from_search' => $this->excludeFromSearch,
         ];
-
-        return array_filter($data, function($item){
-            return !is_null($item);
-        });
     }
 }
