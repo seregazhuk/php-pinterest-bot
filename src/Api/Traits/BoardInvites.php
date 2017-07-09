@@ -8,6 +8,9 @@ trait BoardInvites
 {
     use HandlesRequest;
 
+    /**
+     * @return array
+     */
     protected function requiresLoginForBoardInvites() {
         return [
             'sendInvite',
@@ -15,6 +18,7 @@ trait BoardInvites
             'sendInviteByUserId',
             'deleteInvite',
             'acceptInvite',
+            'invites',
         ];
     }
 

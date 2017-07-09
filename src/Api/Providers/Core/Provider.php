@@ -2,6 +2,7 @@
 
 namespace seregazhuk\PinterestBot\Api\Providers\Core;
 
+use function seregazhuk\class_uses_recursive;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Helpers\Pagination;
@@ -104,6 +105,7 @@ abstract class Provider
         return $this;
     }
 
+
     /**
      * @param string $method
      *
@@ -111,16 +113,16 @@ abstract class Provider
      */
     public function checkMethodRequiresLogin($method)
     {
-        $methodsThatRequireLogin = array_merge($this->loginRequiredFor, self::traitsRequireLogin());
+        $methodsThatRequireLogin = array_merge($this->loginRequiredFor, self::requiresLoginFor());
 
         return in_array($method, $methodsThatRequireLogin);
     }
 
-    protected function traitsRequireLogin()
+    protected function requiresLoginFor()
     {
         $loginRequired = [];
 
-        foreach(trait_uses_recursive($this) as $trait) {
+        foreach(class_parents($this) + class_uses_recursive($this) as $trait) {
             $class = basename(str_replace('\\', '/', $trait));
 
             if(method_exists($trait, $method = 'requiresLoginFor' . $class)) {

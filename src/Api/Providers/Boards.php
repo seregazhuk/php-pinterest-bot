@@ -24,9 +24,6 @@ class Boards extends FollowableProvider
     protected $loginRequiredFor = [
         'my',
         'create',
-        'follow',
-        'invites',
-        'unFollow',
     ];
 
     protected $searchScope  = 'boards';
