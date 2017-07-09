@@ -16,6 +16,15 @@ trait SendsMessages
 {
     use HandlesRequest;
 
+    protected static function requiresLoginForSendsMessages()
+    {
+        return [
+            'send',
+            'sendWithMessage',
+            'sendWithEmail',
+        ];
+    }
+
     /**
      * @param array|string $userIds
      * @param array|string $emails

@@ -16,19 +16,23 @@ abstract class Provider
     /**
      * List of methods that require logged status.
      *
-     * @var array
+     * @return array
      */
     protected $loginRequiredFor = [];
 
-    public static function traits()
+    protected function traitsRequireLogin()
     {
         $loginRequired = [];
-        foreach(trait_uses_recursive(static::class) as $trait) {
-            $loginRequired += forward_static_call(get_class($trait) . 'requiredLoginFor');
+
+        foreach(trait_uses_recursive($this) as $trait) {
+            $class = basename(str_replace('\\', '/', $trait));
+
+            if(method_exists($trait, $method = 'requiresLoginFor' . $class)) {
+                $loginRequired = array_merge($loginRequired, forward_static_call([$this, $method]));
+            }
         }
 
-        print_r($loginRequired);
-        die();
+        return $loginRequired;
     }
 
     /**
@@ -122,7 +126,9 @@ abstract class Provider
      */
     public function checkMethodRequiresLogin($method)
     {
-        return in_array($method, $this->loginRequiredFor);
+        $methodsThatRequireLogin = array_merge($this->loginRequiredFor, self::traitsRequireLogin());
+
+        return in_array($method, $methodsThatRequireLogin);
     }
 
     /**
