@@ -2,27 +2,25 @@
 
 namespace seregazhuk;
 
-if (! function_exists('get_array_data'))
-
-    if (! function_exists('class_uses_recursive')) {
-        /**
-         * Returns all traits used by a class, its subclasses and trait of their traits.
-         *
-         * @param  object|string  $class
-         * @return array
-         */
-        function class_uses_recursive($class)
-        {
-            if (is_object($class)) {
-                $class = get_class($class);
-            }
-            $results = [];
-            foreach (array_merge([$class => $class], class_parents($class)) as $class) {
-                $results += trait_uses_recursive($class);
-            }
-            return array_unique($results);
+if (! function_exists('class_uses_recursive')) {
+    /**
+     * Returns all traits used by a class, its subclasses and trait of their traits.
+     *
+     * @param  object|string  $class
+     * @return array
+     */
+    function class_uses_recursive($class)
+    {
+        if (is_object($class)) {
+            $class = get_class($class);
         }
+        $results = [];
+        foreach (array_merge([$class => $class], class_parents($class)) as $class) {
+            $results += trait_uses_recursive($class);
+        }
+        return array_unique($results);
     }
+}
 
 if (! function_exists('trait_uses_recursive')) {
     /**
