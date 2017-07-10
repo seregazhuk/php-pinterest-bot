@@ -2,7 +2,7 @@
 
 namespace seregazhuk\tests\Bot;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\tests\Helpers\ResponseHelper;
 use seregazhuk\PinterestBot\Helpers\Pagination;
@@ -10,7 +10,7 @@ use seregazhuk\PinterestBot\Helpers\Pagination;
 /**
  * Class RequestTest.
  */
-class PaginationTest extends PHPUnit_Framework_TestCase
+class PaginationTest extends TestCase
 {
     use ResponseHelper;
 

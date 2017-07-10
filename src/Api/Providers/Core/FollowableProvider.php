@@ -27,6 +27,17 @@ abstract class FollowableProvider extends EntityProvider
     protected $followersFor;
 
     /**
+     * @return array
+     */
+    protected function requiresLoginForFollowableProvider()
+    {
+        return [
+            'follow',
+            'unfollow',
+        ];
+    }
+
+    /**
      * Follow entity by its id.
      *
      * @param $entityId

@@ -1,6 +1,14 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## v5.5.1 - 2017-07-10
+### Changed:
+ - Moved to PHP version 5.6
+ - Login required check refactoring
+ 
+### Fixed: 
+ - Profile form
+
 ## v5.5.0 - 2017-07-01
 ### Added:
  - User `id()` helper to get current user id

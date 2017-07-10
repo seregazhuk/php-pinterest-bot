@@ -4,7 +4,7 @@ namespace seregazhuk\tests\Bot;
 
 use Mockery;
 use Mockery\MockInterface;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Helpers\Cookies;
@@ -16,7 +16,7 @@ use seregazhuk\PinterestBot\Api\Providers\Core\ProviderWrapper;
 /**
  * Class ProvidersContainerTest.
  */
-class ProvidersContainerTest extends PHPUnit_Framework_TestCase
+class ProvidersContainerTest extends TestCase
 {
     /**
      * @var ProvidersContainer

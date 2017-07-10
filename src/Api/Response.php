@@ -2,7 +2,7 @@
 
 namespace seregazhuk\PinterestBot\Api;
 
-use seregazhuk\PinterestBot\Helpers\ArrayHelper;
+use function seregazhuk\get_array_data;
 use seregazhuk\PinterestBot\Api\Contracts\PaginatedResponse;
 
 class Response implements PaginatedResponse
@@ -72,7 +72,7 @@ class Response implements PaginatedResponse
      */
     public function getData($key = '', $default = null)
     {
-        return ArrayHelper::getValueByKey($key, $this->data, $default);
+        return get_array_data($key, $this->data, $default);
     }
 
     /**
@@ -81,7 +81,7 @@ class Response implements PaginatedResponse
      */
     public function hasData($key = '')
     {
-        return !is_null(ArrayHelper::getValueByKey($key, $this->data));
+        return !is_null(get_array_data($key, $this->data));
     }
 
     /**
@@ -93,12 +93,12 @@ class Response implements PaginatedResponse
      */
     protected function parseResponseData($key)
     {
-        $responseData = ArrayHelper::getValueByKey('resource_response.data', $this->data);
+        $responseData = get_array_data('resource_response.data', $this->data);
 
         if (!$responseData) return false;
 
         return $key ?
-            ArrayHelper::getValueByKey($key, $responseData) :
+            get_array_data($key, $responseData) :
             $responseData;
     }
 
@@ -211,7 +211,7 @@ class Response implements PaginatedResponse
 
     protected function fillError()
     {
-        $error = ArrayHelper::getValueByKey('resource_response.error', $this->data);
+        $error = get_array_data('resource_response.error', $this->data);
 
         if ($error) $this->lastError = $error;
 
@@ -220,7 +220,7 @@ class Response implements PaginatedResponse
 
     protected function fillClientInfo()
     {
-        $this->clientInfo = ArrayHelper::getValueByKey('client_context', $this->data);
+        $this->clientInfo = get_array_data('client_context', $this->data);
 
         return $this;
     }

@@ -103,7 +103,7 @@ class Registration extends Form
     /**
      * @return array
      */
-    public function toArray()
+    public function getData()
     {
 
         return [

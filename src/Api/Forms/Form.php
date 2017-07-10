@@ -4,5 +4,17 @@ namespace seregazhuk\PinterestBot\Api\Forms;
 
 abstract class Form
 {
-    abstract public function toArray();
+    /**
+     * @return array
+     */
+    abstract protected function getData();
+
+    /**
+     * @return array
+     */
+    public function toArray(){
+        return array_filter($this->getData(), function($item){
+            return !is_null($item);
+        });
+    }
 }
