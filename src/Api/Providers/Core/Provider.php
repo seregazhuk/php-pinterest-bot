@@ -56,14 +56,14 @@ abstract class Provider
      * @param array $requestOptions
      * @param string $resourceUrl
      *
-     * @return Response|bool
+     * @return bool
      */
-    protected function post($requestOptions, $resourceUrl)
+    protected function post(array $requestOptions = [], $resourceUrl)
     {
         $postString = Request::createQuery($requestOptions);
 
         // When executing POST request we need a csrf-token.
-        $this->initToken();
+        $this->initTokenIfRequired();
 
         $this->execute($resourceUrl, $postString);
 
@@ -76,7 +76,7 @@ abstract class Provider
      *
      * @param array $requestOptions
      * @param string $resourceUrl
-     * @return array|bool|Response
+     * @return array|bool
      */
     protected function get(array $requestOptions = [], $resourceUrl = '')
     {
@@ -118,6 +118,9 @@ abstract class Provider
         return in_array($method, $methodsThatRequireLogin);
     }
 
+    /**
+     * @return array
+     */
     protected function requiresLoginFor()
     {
         $loginRequired = [];
@@ -190,7 +193,7 @@ abstract class Provider
         return $this->request;
     }
 
-    protected function initToken()
+    protected function initTokenIfRequired()
     {
         if($this->request->hasToken()) return;
 
