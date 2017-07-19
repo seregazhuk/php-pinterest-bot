@@ -13,16 +13,16 @@ trait HandlesRequest
      * @param array $requestOptions
      * @param string $resourceUrl
      *
-     * @return Response|bool
+     * @return bool
      */
-    abstract protected function post($requestOptions, $resourceUrl);
+    abstract protected function post(array $requestOptions = [], $resourceUrl);
 
     /**
      * Executes a GET request to Pinterest API.
      *
      * @param array $requestOptions
      * @param string $resourceUrl
-     * @return array|bool|Response
+     * @return bool|array
      */
     abstract protected function get(array $requestOptions = [], $resourceUrl = '');
 
