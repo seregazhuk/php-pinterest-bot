@@ -22,7 +22,7 @@ trait HandlesRequest
      *
      * @param array $requestOptions
      * @param string $resourceUrl
-     * @return bool
+     * @return bool|array
      */
     abstract protected function get(array $requestOptions = [], $resourceUrl = '');
 
