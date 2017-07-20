@@ -60,7 +60,7 @@ class Profile extends Form
     protected $accountType = 'other';
 
     /**
-     * @param mixed $lastName
+     * @param string $lastName
      * @return Profile
      */
     public function setLastName($lastName)
@@ -70,7 +70,7 @@ class Profile extends Form
     }
 
     /**
-     * @param mixed $firstName
+     * @param string $firstName
      * @return Profile
      */
     public function setFirstName($firstName)
@@ -80,7 +80,7 @@ class Profile extends Form
     }
 
     /**
-     * @param mixed $userName
+     * @param string $userName
      * @return Profile
      */
     public function setUserName($userName)
@@ -90,7 +90,7 @@ class Profile extends Form
     }
 
     /**
-     * @param mixed $about
+     * @param string $about
      * @return Profile
      */
     public function setAbout($about)
@@ -100,7 +100,7 @@ class Profile extends Form
     }
 
     /**
-     * @param mixed $location
+     * @param string $location
      * @return Profile
      */
     public function setLocation($location)
@@ -110,7 +110,7 @@ class Profile extends Form
     }
 
     /**
-     * @param mixed $websiteUrl
+     * @param string $websiteUrl
      * @return Profile
      */
     public function setWebsiteUrl($websiteUrl)
@@ -120,7 +120,7 @@ class Profile extends Form
     }
 
     /**
-     * @param mixed $image
+     * @param string $image
      * @return Profile
      */
     public function setImage($image)
