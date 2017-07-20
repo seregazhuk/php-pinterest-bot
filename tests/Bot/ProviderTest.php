@@ -3,7 +3,7 @@
 namespace seregazhuk\tests\Bot\Api;
 
 use Mockery;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\tests\Helpers\ResponseHelper;
@@ -13,7 +13,7 @@ use seregazhuk\PinterestBot\Api\Providers\Core\Provider;
 /**
  * Class ProviderTest.
  */
-class ProviderTest extends PHPUnit_Framework_TestCase
+class ProviderTest extends TestCase
 {
     use ResponseHelper;
 

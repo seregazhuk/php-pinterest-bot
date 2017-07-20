@@ -11,6 +11,13 @@ trait CanBeDeleted
 {
     use HandlesRequest, HasEntityIdName;
 
+    protected function requiresLoginForCanBeDelete()
+    {
+        return [
+            'delete',
+        ];
+    }
+
     /**
      * Delete entity by ID.
      *

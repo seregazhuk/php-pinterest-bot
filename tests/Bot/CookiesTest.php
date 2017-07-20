@@ -1,6 +1,6 @@
 <?php
 
-namespace szhuk\tests\Bot\Helpers;
+namespace seregazhuk\tests\Bot\Helpers;
 
 use PHPUnit_Framework_TestCase;
 use seregazhuk\tests\Helpers\CookiesHelper;

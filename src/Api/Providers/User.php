@@ -192,6 +192,8 @@ class User extends Provider
             $userInfo['profile_image_url'] = $this->upload($userInfo['profile_image']);
         }
 
+        print_r($userInfo); die();
+
         return $this->post($userInfo, UrlBuilder::RESOURCE_UPDATE_USER_SETTINGS);
     }
 

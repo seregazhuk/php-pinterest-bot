@@ -47,17 +47,17 @@ class Profile extends Form
     /**
      * @var bool
      */
-    protected $excludeFromSearch = false;
+    protected $excludeFromSearch = null;
 
     /**
      * @var string
      */
-    protected $locale = '';
+    protected $locale = null;
 
     /**
      * @var string
      */
-    protected $accountType = 'other';
+    protected $accountType = null;
 
     /**
      * @param string $lastName
@@ -173,7 +173,7 @@ class Profile extends Form
     /**
      * @return array
      */
-    public function toArray()
+    public function getData()
     {
         return [
             'last_name'           => $this->lastName,

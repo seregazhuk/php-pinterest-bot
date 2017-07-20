@@ -25,19 +25,15 @@ class Pins extends EntityProvider
     protected $loginRequiredFor = [
         'like',
         'feed',
-        'send',
         'copy',
         'move',
         'repin',
         'unLike',
         'create',
-        'delete',
         'activity',
         'analytics',
         'visualSimilar',
-        'tryIt',
-        'editTryIt',
-        'deleteTryIt',
+
     ];
 
     protected $searchScope  = 'pins';

@@ -4,9 +4,23 @@ namespace seregazhuk\PinterestBot\Api\Traits;
 
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 
-trait BoardsInvites
+trait BoardInvites
 {
     use HandlesRequest;
+
+    /**
+     * @return array
+     */
+    protected function requiresLoginForBoardInvites() {
+        return [
+            'sendInvite',
+            'sendInviteByEmail',
+            'sendInviteByUserId',
+            'deleteInvite',
+            'acceptInvite',
+            'invites',
+        ];
+    }
 
     /**
      * Get boards invites
@@ -96,12 +110,7 @@ trait BoardsInvites
      */
     public function ignoreInvite($boardId)
     {
-        $data = [
-            'board_id'        => $boardId,
-            'invited_user_id' => $this->container->user->id(),
-        ];
-
-        return $this->post($data, UrlBuilder::RESOURCE_DELETE_INVITE);
+        return $this->makeInviteCall($boardId, UrlBuilder::RESOURCE_DELETE_INVITE);
     }
 
     /**
@@ -110,11 +119,21 @@ trait BoardsInvites
      */
     public function acceptInvite($boardId)
     {
+        return $this->makeInviteCall($boardId, UrlBuilder::RESOURCE_ACCEPT_INVITE);
+    }
+
+    /**
+     * @param string $boardId
+     * @param string $endpoint
+     * @return bool
+     */
+    protected function makeInviteCall($boardId, $endpoint)
+    {
         $data = [
-            'board_id'         => $boardId,
+            'board_id'        => $boardId,
             'invited_user_id' => $this->container->user->id(),
         ];
 
-        return $this->post($data, UrlBuilder::RESOURCE_ACCEPT_INVITE);
+        return $this->post($data, $endpoint);
     }
 }

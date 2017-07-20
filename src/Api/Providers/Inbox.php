@@ -94,14 +94,9 @@ class Inbox extends Provider
      */
     public function acceptContactRequest($requestId)
     {
-        $data = [
-            'contact_request' => [
-                "type" => "contactrequest",
-                "id"   => $requestId,
-            ],
-        ];
-
-        return $this->post($data, UrlBuilder::RESOURCE_CONTACT_REQUEST_ACCEPT);
+        return $this->makeContactRequestCall(
+            $requestId, UrlBuilder::RESOURCE_CONTACT_REQUEST_ACCEPT
+        );
     }
 
     /**
@@ -110,6 +105,18 @@ class Inbox extends Provider
      */
     public function ignoreContactRequests($requestId)
     {
+        return $this->makeContactRequestCall(
+            $requestId, UrlBuilder::RESOURCE_CONTACT_REQUEST_IGNORE
+        );
+    }
+
+    /**
+     * @param string $requestId
+     * @param $endpoint
+     * @return bool
+     */
+    protected function makeContactRequestCall($requestId, $endpoint)
+    {
         $data = [
             'contact_request' => [
                 "type" => "contactrequest",
@@ -117,6 +124,6 @@ class Inbox extends Provider
             ],
         ];
 
-        return $this->post($data, UrlBuilder::RESOURCE_CONTACT_REQUEST_IGNORE);
+        return $this->post($data, $endpoint);
     }
 }

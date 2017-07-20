@@ -3,9 +3,8 @@
 namespace seregazhuk\tests\Bot;
 
 use Mockery;
-use ReflectionClass;
 use Mockery\MockInterface;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\tests\Helpers\CookiesHelper;
 use seregazhuk\PinterestBot\Helpers\Cookies;
@@ -17,7 +16,7 @@ use seregazhuk\PinterestBot\Api\Contracts\HttpClient;
 /**
  * Class RequestTest.
  */
-class RequestTest extends PHPUnit_Framework_TestCase
+class RequestTest extends TestCase
 {
     use ReflectionHelper, ResponseHelper, CookiesHelper;
 

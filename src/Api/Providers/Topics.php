@@ -11,14 +11,6 @@ class Topics extends FollowableProvider
 {
     use HasRelatedTopics;
 
-    /**
-     * @var array
-     */
-    protected $loginRequiredFor = [
-        'follow',
-        'unFollow',
-    ];
-
     protected $followUrl   = UrlBuilder::RESOURCE_FOLLOW_INTEREST;
     protected $unFollowUrl = UrlBuilder::RESOURCE_UNFOLLOW_INTEREST;
 

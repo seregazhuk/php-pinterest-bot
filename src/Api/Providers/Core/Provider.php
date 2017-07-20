@@ -2,10 +2,12 @@
 
 namespace seregazhuk\PinterestBot\Api\Providers\Core;
 
+use function seregazhuk\class_uses_recursive;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Api\ProvidersContainer;
+use function seregazhuk\trait_uses_recursive;
 
 /**
  * Class Provider.
@@ -15,7 +17,7 @@ abstract class Provider
     /**
      * List of methods that require logged status.
      *
-     * @var array
+     * @return array
      */
     protected $loginRequiredFor = [];
 
@@ -54,14 +56,14 @@ abstract class Provider
      * @param array $requestOptions
      * @param string $resourceUrl
      *
-     * @return Response|bool
+     * @return bool
      */
-    protected function post($requestOptions, $resourceUrl)
+    protected function post(array $requestOptions = [], $resourceUrl)
     {
         $postString = Request::createQuery($requestOptions);
 
         // When executing POST request we need a csrf-token.
-        $this->initToken();
+        $this->initTokenIfRequired();
 
         $this->execute($resourceUrl, $postString);
 
@@ -74,7 +76,7 @@ abstract class Provider
      *
      * @param array $requestOptions
      * @param string $resourceUrl
-     * @return array|bool|Response
+     * @return array|bool
      */
     protected function get(array $requestOptions = [], $resourceUrl = '')
     {
@@ -103,6 +105,7 @@ abstract class Provider
         return $this;
     }
 
+
     /**
      * @param string $method
      *
@@ -110,8 +113,29 @@ abstract class Provider
      */
     public function checkMethodRequiresLogin($method)
     {
-        return in_array($method, $this->loginRequiredFor);
+        $methodsThatRequireLogin = array_merge($this->loginRequiredFor, self::requiresLoginFor());
+
+        return in_array($method, $methodsThatRequireLogin);
     }
+
+    /**
+     * @return array
+     */
+    protected function requiresLoginFor()
+    {
+        $loginRequired = [];
+
+        foreach(class_parents($this) + class_uses_recursive($this) as $trait) {
+            $class = basename(str_replace('\\', '/', $trait));
+
+            if(method_exists($trait, $method = 'requiresLoginFor' . $class)) {
+                $loginRequired = array_merge($loginRequired, forward_static_call([$this, $method]));
+            }
+        }
+
+        return $loginRequired;
+    }
+
 
     /**
      * @return bool
@@ -169,7 +193,7 @@ abstract class Provider
         return $this->request;
     }
 
-    protected function initToken()
+    protected function initTokenIfRequired()
     {
         if($this->request->hasToken()) return;
 

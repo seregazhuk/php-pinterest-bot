@@ -10,6 +10,15 @@ trait TryIt
 {
     use HandlesRequest, UploadsImages;
 
+    protected function requiresLoginForTryIt()
+    {
+        return [
+            'tryIt',
+            'editTryIt',
+            'deleteTryIt',
+        ];
+    }
+
     /**
      * @param string $pinId
      * @param array $additionalData

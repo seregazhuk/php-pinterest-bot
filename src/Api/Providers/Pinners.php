@@ -19,9 +19,7 @@ class Pinners extends FollowableProvider
      * @var array
      */
     protected $loginRequiredFor = [
-        'follow',
         'block',
-        'unFollow',
         'blockById',
     ];
 
