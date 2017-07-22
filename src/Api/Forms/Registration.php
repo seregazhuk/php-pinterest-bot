@@ -4,12 +4,39 @@ namespace seregazhuk\PinterestBot\Api\Forms;
 
 class Registration extends Form
 {
+    /**
+     * @var string
+     */
     protected $email;
+
+    /**
+     * @var string
+     */
     protected $password;
+
+    /**
+     * @var string
+     */
     protected $name;
+
+    /**
+     * @var string
+     */
     protected $country = 'GB';
+
+    /**
+     * @var int
+     */
     protected $age = 18;
+
+    /**
+     * @var string
+     */
     protected $gender = 'male';
+
+    /**
+     * @var string
+     */
     protected $site;
 
     /**
@@ -35,7 +62,7 @@ class Registration extends Form
     }
 
     /**
-     * @param mixed $password
+     * @param string $password
      * @return Registration
      */
     public function setPassword($password)
@@ -45,7 +72,7 @@ class Registration extends Form
     }
 
     /**
-     * @param mixed $name
+     * @param string $name
      * @return Registration
      */
     public function setName($name)
@@ -55,7 +82,7 @@ class Registration extends Form
     }
 
     /**
-     * @param mixed $country
+     * @param string $country
      * @return Registration
      */
     public function setCountry($country)
@@ -65,7 +92,7 @@ class Registration extends Form
     }
 
     /**
-     * @param mixed $age
+     * @param int $age
      * @return Registration
      */
     public function setAge($age)
@@ -75,7 +102,7 @@ class Registration extends Form
     }
 
     /**
-     * @param mixed $gender
+     * @param string $gender
      * @return Registration
      */
     public function setGender($gender)
@@ -120,7 +147,7 @@ class Registration extends Form
     }
 
     /**
-     * @param mixed $site
+     * @param string $site
      * @return Registration
      */
     public function setSite($site)

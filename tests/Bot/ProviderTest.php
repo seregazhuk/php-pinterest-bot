@@ -77,12 +77,20 @@ class ProviderTest extends TestCase
         $this->assertTrue($provider->dummyPost());
     }
 
+    /** @test */
+    public function it_merges_required_login_methods_from_included_traits()
+    {
+        $provider = $provider = $this->makeProvider($response = [], $times = 0);
+        $this->assertTrue($provider->checkMethodRequiresLogin('method1'));
+        $this->assertTrue($provider->checkMethodRequiresLogin('method2'));
+    }
+
     /**
-     * @param mixed $response
+     * @param array $response
      * @param int $times
      * @return Mockery\Mock|Provider|DummyProvider
      */
-    protected function makeProvider($response, $times = 1)
+    protected function makeProvider($response = [], $times = 1)
     {
         $request = $this->makeRequest($response, $times);
 
@@ -128,8 +136,7 @@ class ProviderTest extends TestCase
     }
 }
 
-class DummyProvider extends Provider
-{
+class DummyProvider extends Provider {
     use DummyProviderTrait;
 
     /**
@@ -166,13 +173,11 @@ class DummyProvider extends Provider
     }
 }
 
-trait DummyProviderTrait
-{
+trait DummyProviderTrait {
     /**
      * @return array
      */
-    protected function requiresLoginForDummyProviderTrait()
-    {
+    protected function requiresLoginForDummyProviderTrait() {
         return [
             'method2',
         ];
