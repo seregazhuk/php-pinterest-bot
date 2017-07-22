@@ -12,8 +12,9 @@ abstract class Form
     /**
      * @return array
      */
-    public function toArray(){
-        return array_filter($this->getData(), function($item){
+    public function toArray()
+    {
+        return array_filter($this->getData(), function ($item) {
             return !is_null($item);
         });
     }

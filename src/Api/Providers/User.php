@@ -38,7 +38,7 @@ class User extends Provider
     public function profile($userInfo = null)
     {
         // If we call method without params, return current user profile data.
-        if(empty($userInfo)) return $this->getProfile();
+        if (empty($userInfo)) return $this->getProfile();
 
         return $this->updateProfile($userInfo);
     }
@@ -52,9 +52,9 @@ class User extends Provider
     {
         $profile = $this->profile();
 
-       return isset($profile['is_write_banned']) ?
-           (bool)$profile['is_write_banned'] :
-           false;
+        return isset($profile['is_write_banned']) ?
+            (bool)$profile['is_write_banned'] :
+            false;
     }
 
     /**
@@ -88,7 +88,7 @@ class User extends Provider
     {
         $profile = $this->profile();
 
-        if(!isset($profile['id'])) return false;
+        if (!isset($profile['id'])) return false;
 
         $request = [
             'user_id'     => $profile['id'],
@@ -191,8 +191,6 @@ class User extends Provider
         if (isset($userInfo['profile_image'])) {
             $userInfo['profile_image_url'] = $this->upload($userInfo['profile_image']);
         }
-
-        print_r($userInfo); die();
 
         return $this->post($userInfo, UrlBuilder::RESOURCE_UPDATE_USER_SETTINGS);
     }

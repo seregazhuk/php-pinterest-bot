@@ -30,7 +30,7 @@ class Pinners extends FollowableProvider
     protected $followUrl    = UrlBuilder::RESOURCE_FOLLOW_USER;
     protected $unFollowUrl  = UrlBuilder::RESOURCE_UNFOLLOW_USER;
     protected $followersUrl = UrlBuilder::RESOURCE_USER_FOLLOWERS;
-    
+
     /**
      * Get user info.
      * If username param is not specified, will
@@ -57,7 +57,7 @@ class Pinners extends FollowableProvider
     {
         $followingUrl = UrlBuilder::getFollowingUrlByType($type);
 
-        if(empty($followingUrl)) {
+        if (empty($followingUrl)) {
             throw new WrongFollowingType("No following results for $type");
         }
 
@@ -139,7 +139,7 @@ class Pinners extends FollowableProvider
         // Retrieve profile data to get user id
         $profile = $this->info($username);
 
-        if(empty($profile)) return false;
+        if (empty($profile)) return false;
 
         return $this->blockById($profile['id']);
     }
@@ -184,7 +184,7 @@ class Pinners extends FollowableProvider
     protected function resolveEntityId($entityId)
     {
         // If user's id was passed we simply return it.
-        if(is_numeric($entityId)) return $entityId;
+        if (is_numeric($entityId)) return $entityId;
 
         // Then we try to get user's info by username
         $userInfo = $this->info($entityId);

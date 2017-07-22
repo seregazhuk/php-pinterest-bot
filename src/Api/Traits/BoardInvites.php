@@ -11,7 +11,8 @@ trait BoardInvites
     /**
      * @return array
      */
-    protected function requiresLoginForBoardInvites() {
+    protected function requiresLoginForBoardInvites()
+    {
         return [
             'sendInvite',
             'sendInviteByEmail',
@@ -29,7 +30,7 @@ trait BoardInvites
     public function invites()
     {
         $data = [
-            'current_user' => true,
+            'current_user'  => true,
             'field_set_key' => 'news',
         ];
 
@@ -48,7 +49,7 @@ trait BoardInvites
         $emails = is_array($emails) ? $emails : [$emails];
         $data = [
             "board_id" => $boardId,
-            "emails" => $emails,
+            "emails"   => $emails,
         ];
 
         return $this->post($data, UrlBuilder::RESOURCE_CREATE_EMAIL_INVITE);

@@ -74,7 +74,7 @@ class Password extends Provider
     }
 
     /**
-     * @return string
+     * @return mixed
      */
     protected function parseCurrentUrl()
     {

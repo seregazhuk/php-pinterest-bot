@@ -39,7 +39,7 @@ class ProviderTest extends TestCase
     {
         $paginatedResponse = $this->createPaginatedResponse($this->paginatedResponse);
 
-        $request = $this->makeRequest($paginatedResponse, 2);
+        $request = $this->makeRequest($paginatedResponse, $times = 2);
         $request
             ->shouldReceive('exec')
             ->once()
@@ -66,7 +66,6 @@ class ProviderTest extends TestCase
 
         $provider->dummyPaginate(['test' => 'test'], 'http://example.com')->toArray();
     }
-
 
     /** @test */
     public function it_should_return_bool_if_required_for_post_request()
@@ -107,7 +106,7 @@ class ProviderTest extends TestCase
      */
     protected function makeProviderWithResponse(Response $response)
     {
-        $container = new ProvidersContainer($this->makeRequest([]), $response);
+        $container = new ProvidersContainer($this->makeRequest(), $response);
         return Mockery::mock(DummyProvider::class, [$container])
             ->makePartial();
     }
@@ -117,7 +116,7 @@ class ProviderTest extends TestCase
      * @param int $times
      * @return Mockery\MockInterface|Request
      */
-    protected function makeRequest($response, $times = 1)
+    protected function makeRequest($response = [], $times = 1)
     {
         return Mockery::mock(Request::class)
             ->shouldReceive('exec')
@@ -129,7 +128,16 @@ class ProviderTest extends TestCase
     }
 }
 
-class DummyProvider extends Provider {
+class DummyProvider extends Provider
+{
+    use DummyProviderTrait;
+
+    /**
+     * @var array
+     */
+    protected $loginRequiredFor = [
+        'method1',
+    ];
 
     /**
      * @param mixed $data
@@ -155,5 +163,18 @@ class DummyProvider extends Provider {
     public function dummyPost()
     {
         return $this->post([], '');
+    }
+}
+
+trait DummyProviderTrait
+{
+    /**
+     * @return array
+     */
+    protected function requiresLoginForDummyProviderTrait()
+    {
+        return [
+            'method2',
+        ];
     }
 }

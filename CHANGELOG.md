@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+
+## v5.5.2 - 2017-07-22
+### Fixed:
+ - Profile update
+
 ## v5.5.1 - 2017-07-10
 ### Changed:
  - Moved to PHP version 5.6

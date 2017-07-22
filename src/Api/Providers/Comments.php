@@ -18,8 +18,8 @@ class Comments extends Provider
     /**
      * Write a comment for a pin with current id.
      *
-     * @param int    $pinId
-     * @param string $text  Comment
+     * @param int $pinId
+     * @param string $text Comment
      *
      * @return array|bool
      */

@@ -53,7 +53,7 @@ class Boards extends FollowableProvider
 
         $result = $this->get($options, UrlBuilder::RESOURCE_GET_BOARDS);
 
-        return $result ? : [];
+        return $result ?: [];
     }
 
     /**
@@ -143,7 +143,7 @@ class Boards extends FollowableProvider
      *
      * @param string $name
      * @param string $description
-     * @param string $privacy     Can be 'public' or 'secret'. 'public' by default.
+     * @param string $privacy Can be 'public' or 'secret'. 'public' by default.
      *
      * @return bool
      */
@@ -168,7 +168,7 @@ class Boards extends FollowableProvider
      */
     public function createPrivate($name, $description)
     {
-       return $this->create($name, $description, self::BOARD_PRIVACY_PRIVATE);
+        return $this->create($name, $description, self::BOARD_PRIVACY_PRIVATE);
     }
 
     /**

@@ -38,7 +38,7 @@ class Auth extends Provider
         // Trying to load previously saved cookies from last login session for this username.
         // Then grab user profile info to check, if cookies are ok. If an empty response
         // was returned, then send login request.
-        if($autoLogin && $this->processAutoLogin($username)) {
+        if ($autoLogin && $this->processAutoLogin($username)) {
             return true;
         }
 
@@ -83,7 +83,7 @@ class Auth extends Provider
     {
         $registration = $this->register($registrationForm, $password, $name);
 
-        if(!$registration) return false;
+        if (!$registration) return false;
 
         $website = ($registrationForm instanceof Registration) ?
             $registrationForm->getSite() : $website;
@@ -148,11 +148,11 @@ class Auth extends Provider
      */
     protected function makeRegisterCall(Registration $registrationForm)
     {
-        if(!$this->sendEmailVerificationAction()) return false;
+        if (!$this->sendEmailVerificationAction()) return false;
 
-        if(!$this->post($registrationForm->toArray(), UrlBuilder::RESOURCE_CREATE_REGISTER)) return false;
+        if (!$this->post($registrationForm->toArray(), UrlBuilder::RESOURCE_CREATE_REGISTER)) return false;
 
-        if(!$this->sendRegistrationActions()) return false;
+        if (!$this->sendRegistrationActions()) return false;
 
         return $this->completeRegistration();
     }
@@ -223,7 +223,7 @@ class Auth extends Provider
      */
     protected function getRegistrationForm($email, $password, $name, $country, $age)
     {
-        if($email instanceof Registration) return $email;
+        if ($email instanceof Registration) return $email;
 
         return $this->fillRegistrationForm(
             $email, $password, $name, $country, $age

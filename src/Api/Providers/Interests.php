@@ -22,7 +22,7 @@ class Interests extends Provider
 
     /**
      * Get list of main categories
-     * 
+     *
      * @return array|bool
      */
     public function main()
@@ -50,10 +50,10 @@ class Interests extends Provider
      */
     public function pins($interest, $limit = Pagination::DEFAULT_LIMIT)
     {
-       $data = [
-           'feed'             => $interest,
-           'is_category_feed' => true,
-       ];
+        $data = [
+            'feed'             => $interest,
+            'is_category_feed' => true,
+        ];
 
         return $this->paginate($data, UrlBuilder::RESOURCE_GET_CATEGORY_FEED, $limit);
     }
