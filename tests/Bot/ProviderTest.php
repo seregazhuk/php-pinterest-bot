@@ -39,7 +39,7 @@ class ProviderTest extends TestCase
     {
         $paginatedResponse = $this->createPaginatedResponse($this->paginatedResponse);
 
-        $request = $this->makeRequest($paginatedResponse, 2);
+        $request = $this->makeRequest($paginatedResponse, $times = 2);
         $request
             ->shouldReceive('exec')
             ->once()
@@ -78,12 +78,20 @@ class ProviderTest extends TestCase
         $this->assertTrue($provider->dummyPost());
     }
 
+    /** @test */
+    public function it_merges_required_login_methods_from_included_traits()
+    {
+        $provider = $provider = $this->makeProvider($response = [], $times = 0);
+        $this->assertTrue($provider->checkMethodRequiresLogin('method1'));
+        $this->assertTrue($provider->checkMethodRequiresLogin('method2'));
+    }
+
     /**
-     * @param mixed $response
+     * @param array $response
      * @param int $times
      * @return Mockery\Mock|Provider|DummyProvider
      */
-    protected function makeProvider($response, $times = 1)
+    protected function makeProvider($response = [], $times = 1)
     {
         $request = $this->makeRequest($response, $times);
 
@@ -107,7 +115,7 @@ class ProviderTest extends TestCase
      */
     protected function makeProviderWithResponse(Response $response)
     {
-        $container = new ProvidersContainer($this->makeRequest([]), $response);
+        $container = new ProvidersContainer($this->makeRequest(), $response);
         return Mockery::mock(DummyProvider::class, [$container])
             ->makePartial();
     }
@@ -117,7 +125,7 @@ class ProviderTest extends TestCase
      * @param int $times
      * @return Mockery\MockInterface|Request
      */
-    protected function makeRequest($response, $times = 1)
+    protected function makeRequest($response = [], $times = 1)
     {
         return Mockery::mock(Request::class)
             ->shouldReceive('exec')
@@ -130,6 +138,14 @@ class ProviderTest extends TestCase
 }
 
 class DummyProvider extends Provider {
+    use DummyProviderTrait;
+
+    /**
+     * @var array
+     */
+    protected $loginRequiredFor = [
+        'method1',
+    ];
 
     /**
      * @param mixed $data
@@ -155,5 +171,16 @@ class DummyProvider extends Provider {
     public function dummyPost()
     {
         return $this->post([], '');
+    }
+}
+
+trait DummyProviderTrait {
+    /**
+     * @return array
+     */
+    protected function requiresLoginForDummyProviderTrait() {
+        return [
+            'method2',
+        ];
     }
 }
