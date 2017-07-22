@@ -42,7 +42,7 @@ class Pins extends EntityProvider
     protected $messageEntityName = 'pin';
 
     protected $deleteUrl = UrlBuilder::RESOURCE_DELETE_PIN;
-    
+
     /**
      * Likes pin with current ID.
      * @param string $pinId
@@ -67,7 +67,7 @@ class Pins extends EntityProvider
      * Create a pin. Returns created pin info.
      *
      * @param string $imageUrl
-     * @param int    $boardId
+     * @param int $boardId
      * @param string $description
      * @param string $link
      * @return array
@@ -127,12 +127,12 @@ class Pins extends EntityProvider
     {
         return $this->edit($pinId, '', '', $boardId);
     }
-    
+
     /**
      * Make a repin.
      *
-     * @param int   $repinId
-     * @param int   $boardId
+     * @param int $repinId
+     * @param int $boardId
      * @param string $description
      * @return array
      */
@@ -233,7 +233,7 @@ class Pins extends EntityProvider
             'pin'      => $pinId,
             'add_vase' => true,
         ];
-        
+
         return $this->paginate($requestData, UrlBuilder::RESOURCE_RELATED_PINS, $limit);
     }
 
@@ -272,7 +272,7 @@ class Pins extends EntityProvider
     {
         return $this->bulkEdit($pinIds, $boardId, UrlBuilder::RESOURCE_BULK_MOVE);
     }
-    
+
     /**
      * @param string $pinId
      * @param array $crop
@@ -281,16 +281,16 @@ class Pins extends EntityProvider
     public function visualSimilar($pinId, array $crop = [])
     {
         $data = [
-            'pin_id' => $pinId,
-            'crop' => $crop ? : [
-                "x" => 0.16,
-                "y" => 0.16,
-                "w" => 0.66,
-                "h" => 0.66,
-                "num_crop_actions" => 1
+            'pin_id'          => $pinId,
+            'crop'            => $crop ?: [
+                "x"                => 0.16,
+                "y"                => 0.16,
+                "w"                => 0.66,
+                "h"                => 0.66,
+                "num_crop_actions" => 1,
             ],
-            'force_refresh' => true,
-            'keep_duplicates' => false
+            'force_refresh'   => true,
+            'keep_duplicates' => false,
         ];
 
         return $this->get($data, UrlBuilder::RESOURCE_VISUAL_SIMILAR_PINS);
@@ -307,7 +307,7 @@ class Pins extends EntityProvider
     public function saveOriginalImage($pinId, $path)
     {
         $pinInfo = $this->info($pinId);
-        if(!isset($pinInfo['images']['orig']['url'])) return false;
+        if (!isset($pinInfo['images']['orig']['url'])) return false;
 
         $originalUrl = $pinInfo['images']['orig']['url'];
         $destination = $path . DIRECTORY_SEPARATOR . basename($originalUrl);
@@ -324,9 +324,11 @@ class Pins extends EntityProvider
      */
     public function searchInMyPins($query, $limit = Pagination::DEFAULT_LIMIT)
     {
-        return $this->paginateCustom(function() use ($query) {
+        return $this->paginateCustom(
+            function () use ($query) {
                 return $this->execSearchRequest($query, 'my_pins');
-            })->take($limit);
+            }
+        )->take($limit);
     }
 
     /**
@@ -358,7 +360,7 @@ class Pins extends EntityProvider
     {
         return $this->get(['pin_id' => $pinId], UrlBuilder::RESOURCE_PIN_ANALYTICS);
     }
-    
+
     /**
      * Calls Pinterest API to like or unlike Pin by ID.
      *

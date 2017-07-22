@@ -67,7 +67,6 @@ class ProviderTest extends TestCase
         $provider->dummyPaginate(['test' => 'test'], 'http://example.com')->toArray();
     }
 
-
     /** @test */
     public function it_should_return_bool_if_required_for_post_request()
     {
