@@ -162,7 +162,7 @@ class Pinners extends FollowableProvider
      */
     public function tried($username, $limit = Pagination::DEFAULT_LIMIT)
     {
-        return $this->paginate(['username' => $username], UrlBuilder::RESOURCE_USER_TRIED, $limit);
+        return $this->paginate(UrlBuilder::RESOURCE_USER_TRIED, ['username' => $username], $limit);
     }
 
     /**
@@ -174,7 +174,7 @@ class Pinners extends FollowableProvider
      */
     protected function paginateByUsername($username, $url, $limit = Pagination::DEFAULT_LIMIT)
     {
-        return $this->paginate(['username' => $username], $url, $limit);
+        return $this->paginate($url, ['username' => $username], $limit);
     }
 
     /**

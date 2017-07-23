@@ -153,7 +153,7 @@ class DummyProvider extends Provider {
      */
     public function dummyPaginate($data, $resourceUrl)
     {
-        return $this->paginate($data, $resourceUrl);
+        return $this->paginate($resourceUrl, $data);
     }
 
     /**

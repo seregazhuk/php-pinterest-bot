@@ -55,6 +55,6 @@ class Interests extends Provider
             'is_category_feed' => true,
         ];
 
-        return $this->paginate($data, UrlBuilder::RESOURCE_GET_CATEGORY_FEED, $limit);
+        return $this->paginate(UrlBuilder::RESOURCE_GET_CATEGORY_FEED, $data, $limit);
     }
 }

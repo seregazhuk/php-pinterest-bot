@@ -118,7 +118,7 @@ abstract class FollowableProvider extends EntityProvider
     public function followers($for, $limit = Pagination::DEFAULT_LIMIT)
     {
         return $this->paginate(
-            [$this->getFollowersFor() => $for], $this->getFollowersUrl(), $limit
+            $this->getFollowersUrl(), [$this->getFollowersFor() => $for], $limit
         );
     }
 

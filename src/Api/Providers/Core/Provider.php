@@ -145,13 +145,12 @@ abstract class Provider
     }
 
     /**
-     * @param mixed $data
      * @param string $resourceUrl
+     * @param mixed $data
      * @param int $limit
-     *
      * @return Pagination
      */
-    protected function paginate($data, $resourceUrl, $limit = Pagination::DEFAULT_LIMIT)
+    protected function paginate($resourceUrl, $data, $limit = Pagination::DEFAULT_LIMIT)
     {
         return $this
             ->paginateCustom(function () use ($data, $resourceUrl) {

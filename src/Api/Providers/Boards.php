@@ -110,8 +110,8 @@ class Boards extends FollowableProvider
     public function pins($boardId, $limit = Pagination::DEFAULT_LIMIT)
     {
         return $this->paginate(
-            ['board_id' => $boardId],
             UrlBuilder::RESOURCE_GET_BOARD_FEED,
+            ['board_id' => $boardId],
             $limit
         );
     }

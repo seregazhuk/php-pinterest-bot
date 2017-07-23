@@ -179,7 +179,7 @@ class Pins extends EntityProvider
     {
         $data = ['domain' => $source];
 
-        return $this->paginate($data, UrlBuilder::RESOURCE_DOMAIN_FEED, $limit);
+        return $this->paginate(UrlBuilder::RESOURCE_DOMAIN_FEED, $data, $limit);
     }
 
     /**
@@ -208,7 +208,7 @@ class Pins extends EntityProvider
 
         $additionalData['aggregated_pin_data_id'] = $aggregatedPinId;
 
-        return $this->paginate($additionalData, UrlBuilder::RESOURCE_ACTIVITY, $limit);
+        return $this->paginate(UrlBuilder::RESOURCE_ACTIVITY, $additionalData, $limit);
     }
 
     /**
@@ -219,7 +219,7 @@ class Pins extends EntityProvider
      */
     public function feed($limit = Pagination::DEFAULT_LIMIT)
     {
-        return $this->paginate([], UrlBuilder::RESOURCE_USER_FEED, $limit);
+        return $this->paginate(UrlBuilder::RESOURCE_USER_FEED, [], $limit);
     }
 
     /**
@@ -234,7 +234,7 @@ class Pins extends EntityProvider
             'add_vase' => true,
         ];
 
-        return $this->paginate($requestData, UrlBuilder::RESOURCE_RELATED_PINS, $limit);
+        return $this->paginate(UrlBuilder::RESOURCE_RELATED_PINS, $requestData, $limit);
     }
 
     /**
@@ -348,7 +348,7 @@ class Pins extends EntityProvider
             "section_id" => $topicId,
         ];
 
-        return $this->paginate($data, UrlBuilder::RESOURCE_EXPLORE_PINS, $limit);
+        return $this->paginate(UrlBuilder::RESOURCE_EXPLORE_PINS, $data, $limit);
     }
 
     /**

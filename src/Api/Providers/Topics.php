@@ -41,7 +41,7 @@ class Topics extends FollowableProvider
             'pins_only' => false,
         ];
 
-        return $this->paginate($data, UrlBuilder::RESOURCE_GET_TOPIC_FEED, $limit);
+        return $this->paginate(UrlBuilder::RESOURCE_GET_TOPIC_FEED, $data, $limit);
     }
 
     /**

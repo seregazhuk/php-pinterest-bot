@@ -31,7 +31,7 @@ class Inbox extends Provider
     {
         $data = ['allow_stale' => true];
 
-        return $this->paginate($data, UrlBuilder::RESOURCE_GET_LATEST_NEWS, $limit);
+        return $this->paginate(UrlBuilder::RESOURCE_GET_LATEST_NEWS, $data, $limit);
     }
 
     /**
@@ -40,7 +40,7 @@ class Inbox extends Provider
      */
     public function notifications($limit = Pagination::DEFAULT_LIMIT)
     {
-        return $this->paginate([], UrlBuilder::RESOURCE_GET_NOTIFICATIONS, $limit);
+        return $this->paginate(UrlBuilder::RESOURCE_GET_NOTIFICATIONS, [], $limit);
     }
 
     /**
