@@ -17,8 +17,8 @@ trait HasRelatedTopics
     public function getRelatedTopics($interest)
     {
         return $this->get(
-            ['interest_name' => $interest],
-            UrlBuilder::RESOURCE_GET_CATEGORIES_RELATED
+            UrlBuilder::RESOURCE_GET_CATEGORIES_RELATED,
+            ['interest_name' => $interest]
         );
     }
 }

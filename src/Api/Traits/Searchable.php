@@ -41,7 +41,7 @@ trait Searchable
             'query' => $query,
         ];
 
-        $this->get($requestOptions, $url);
+        $this->get($url, $requestOptions);
 
         return new SearchResponse(
             $this->getResponse()->getRawData()

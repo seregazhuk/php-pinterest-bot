@@ -24,7 +24,7 @@ class Topics extends FollowableProvider
      */
     public function info($topic)
     {
-        return $this->get(["interest" => $topic], UrlBuilder::RESOURCE_GET_TOPIC);
+        return $this->get(UrlBuilder::RESOURCE_GET_TOPIC, ["interest" => $topic]);
     }
 
     /**
@@ -58,6 +58,6 @@ class Topics extends FollowableProvider
             "offset"     => 180,
         ];
 
-        return $this->get($data, UrlBuilder::RESOURCE_EXPLORE_SECTIONS);
+        return $this->get(UrlBuilder::RESOURCE_EXPLORE_SECTIONS, $data);
     }
 }

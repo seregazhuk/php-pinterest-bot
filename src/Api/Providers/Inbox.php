@@ -50,7 +50,7 @@ class Inbox extends Provider
      */
     public function conversations()
     {
-        return $this->get([], UrlBuilder::RESOURCE_GET_LAST_CONVERSATIONS);
+        return $this->get(UrlBuilder::RESOURCE_GET_LAST_CONVERSATIONS);
     }
 
     /**
@@ -83,7 +83,7 @@ class Inbox extends Provider
 
     public function contactRequests()
     {
-        $requests = $this->get([], UrlBuilder::RESOURCE_CONTACTS_REQUESTS);
+        $requests = $this->get(UrlBuilder::RESOURCE_CONTACTS_REQUESTS);
 
         return !$requests ? [] : $requests;
     }
@@ -124,6 +124,6 @@ class Inbox extends Provider
             ],
         ];
 
-        return $this->post($data, $endpoint);
+        return $this->post($endpoint, $data);
     }
 }

@@ -53,12 +53,11 @@ abstract class Provider
     /**
      * Executes a POST request to Pinterest API.
      *
-     * @param array $requestOptions
      * @param string $resourceUrl
-     *
+     * @param array $requestOptions
      * @return bool
      */
-    public function post(array $requestOptions = [], $resourceUrl)
+    public function post($resourceUrl, array $requestOptions = [])
     {
         $postString = Request::createQuery($requestOptions);
 
@@ -74,11 +73,11 @@ abstract class Provider
     /**
      * Executes a GET request to Pinterest API.
      *
-     * @param array $requestOptions
      * @param string $resourceUrl
+     * @param array $requestOptions
      * @return array|bool
      */
-    protected function get(array $requestOptions = [], $resourceUrl = '')
+    protected function get($resourceUrl = '', array $requestOptions = [])
     {
         $query = Request::createQuery(
             $requestOptions,
@@ -156,7 +155,7 @@ abstract class Provider
     {
         return $this
             ->paginateCustom(function () use ($data, $resourceUrl) {
-                $this->get($data, $resourceUrl);
+                $this->get($resourceUrl, $data);
                 return $this->response;
             })->take($limit);
     }
@@ -199,6 +198,6 @@ abstract class Provider
 
         // Simply visit main page to fill the cookies
         // and parse a token from them
-        $this->get([], '');
+        $this->get('', []);
     }
 }

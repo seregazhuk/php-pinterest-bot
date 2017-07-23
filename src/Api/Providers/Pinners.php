@@ -41,7 +41,7 @@ class Pinners extends FollowableProvider
      */
     public function info($username)
     {
-        return $this->get(['username' => $username], UrlBuilder::RESOURCE_USER_INFO);
+        return $this->get(UrlBuilder::RESOURCE_USER_INFO, ['username' => $username]);
     }
 
     /**
@@ -152,7 +152,7 @@ class Pinners extends FollowableProvider
     {
         $data = ['blocked_user_id' => $userId];
 
-        return $this->post($data, UrlBuilder::RESOURCE_BLOCK_USER);
+        return $this->post(UrlBuilder::RESOURCE_BLOCK_USER, $data);
     }
 
     /**

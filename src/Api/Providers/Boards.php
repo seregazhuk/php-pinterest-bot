@@ -52,7 +52,7 @@ class Boards extends FollowableProvider
             'field_set_key' => 'detailed',
         ];
 
-        $result = $this->get($options, UrlBuilder::RESOURCE_GET_BOARDS);
+        $result = $this->get(UrlBuilder::RESOURCE_GET_BOARDS, $options);
 
         return $result ?: [];
     }
@@ -87,7 +87,7 @@ class Boards extends FollowableProvider
             'field_set_key' => 'detailed',
         ];
 
-        return $this->get($requestOptions, UrlBuilder::RESOURCE_GET_BOARD);
+        return $this->get(UrlBuilder::RESOURCE_GET_BOARD, $requestOptions);
     }
 
     /**
@@ -136,7 +136,7 @@ class Boards extends FollowableProvider
             ], $attributes
         );
 
-        return $this->post($requestOptions, UrlBuilder::RESOURCE_UPDATE_BOARD);
+        return $this->post(UrlBuilder::RESOURCE_UPDATE_BOARD, $requestOptions);
     }
 
     /**
@@ -156,7 +156,7 @@ class Boards extends FollowableProvider
             'privacy'     => $privacy,
         ];
 
-        return $this->post($requestOptions, UrlBuilder::RESOURCE_CREATE_BOARD);
+        return $this->post(UrlBuilder::RESOURCE_CREATE_BOARD, $requestOptions);
     }
 
     /**
@@ -180,6 +180,6 @@ class Boards extends FollowableProvider
      */
     public function titleSuggestionsFor($pinId)
     {
-        return $this->get(['pin_id' => $pinId], UrlBuilder::RESOURCE_TITLE_SUGGESTIONS);
+        return $this->get(UrlBuilder::RESOURCE_TITLE_SUGGESTIONS, ['pin_id' => $pinId]);
     }
 }

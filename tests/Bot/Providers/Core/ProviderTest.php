@@ -161,7 +161,7 @@ class DummyProvider extends Provider {
      */
     public function dummyGet()
     {
-        return $this->get([], '');
+        return $this->get('', []);
     }
 
     /**
@@ -169,7 +169,7 @@ class DummyProvider extends Provider {
      */
     public function dummyPost()
     {
-        return $this->post([], '');
+        return $this->post('', []);
     }
 }
 

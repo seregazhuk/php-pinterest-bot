@@ -39,7 +39,7 @@ trait TryIt
     {
         $data = $this->makeRequest($pinId, $comment, $pathToImage);
 
-        $this->post($data, UrlBuilder::RESOURCE_TRY_PIN_CREATE);
+        $this->post(UrlBuilder::RESOURCE_TRY_PIN_CREATE, $data);
 
         return $this->getResponse()->getResponseData();
     }
@@ -56,7 +56,7 @@ trait TryIt
         $data = $this->makeRequest($pinId, $comment, $pathToImage);
         $data['user_did_it_data_id'] = $tryItRecordId;
 
-        return $this->post($data, UrlBuilder::RESOURCE_TRY_PIN_EDIT);
+        return $this->post(UrlBuilder::RESOURCE_TRY_PIN_EDIT, $data);
     }
 
     /**
@@ -83,8 +83,8 @@ trait TryIt
     public function deleteTryIt($tryItRecordId)
     {
         return $this->post(
-            ['user_did_it_data_id' => $tryItRecordId],
-            UrlBuilder::RESOURCE_TRY_PIN_DELETE
+            UrlBuilder::RESOURCE_TRY_PIN_DELETE,
+            ['user_did_it_data_id' => $tryItRecordId]
         );
     }
 
@@ -107,7 +107,7 @@ trait TryIt
         if ($pathToImage) {
             $request = ['image_url' => $this->upload($pathToImage)];
 
-            $this->post($request, UrlBuilder::RESOURCE_TRY_PIN_IMAGE_UPLOAD);
+            $this->post(UrlBuilder::RESOURCE_TRY_PIN_IMAGE_UPLOAD, $request);
 
             $data['image_signatures'] = $this->getResponse()->getResponseData('image_signature');
         }

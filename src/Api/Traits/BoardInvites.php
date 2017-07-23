@@ -34,7 +34,7 @@ trait BoardInvites
             'field_set_key' => 'news',
         ];
 
-        $invites = $this->get($data, UrlBuilder::RESOURCE_BOARDS_INVITES);
+        $invites = $this->get(UrlBuilder::RESOURCE_BOARDS_INVITES, $data);
 
         return !$invites ? [] : $invites;
     }
@@ -52,7 +52,7 @@ trait BoardInvites
             "emails"   => $emails,
         ];
 
-        return $this->post($data, UrlBuilder::RESOURCE_CREATE_EMAIL_INVITE);
+        return $this->post(UrlBuilder::RESOURCE_CREATE_EMAIL_INVITE, $data);
     }
 
     /**
@@ -84,7 +84,7 @@ trait BoardInvites
             "invited_user_ids" => $userIds,
         ];
 
-        return $this->post($data, UrlBuilder::RESOURCE_CREATE_USER_ID_INVITE);
+        return $this->post(UrlBuilder::RESOURCE_CREATE_USER_ID_INVITE, $data);
     }
 
     /**
@@ -102,7 +102,7 @@ trait BoardInvites
             'invited_user_id' => $userId,
         ];
 
-        return $this->post($data, UrlBuilder::RESOURCE_DELETE_INVITE);
+        return $this->post(UrlBuilder::RESOURCE_DELETE_INVITE, $data);
     }
 
     /**
@@ -135,6 +135,6 @@ trait BoardInvites
             'invited_user_id' => $this->container->user->id(),
         ];
 
-        return $this->post($data, $endpoint);
+        return $this->post($endpoint, $data);
     }
 }
