@@ -58,7 +58,7 @@ abstract class Provider
      *
      * @return bool
      */
-    protected function post(array $requestOptions = [], $resourceUrl)
+    public function post(array $requestOptions = [], $resourceUrl)
     {
         $postString = Request::createQuery($requestOptions);
 
