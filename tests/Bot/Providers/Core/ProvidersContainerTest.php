@@ -33,7 +33,7 @@ class ProvidersContainerTest extends TestCase
      */
     protected $request;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->response = Mockery::mock(Response::class)->makePartial();
         $this->request = Mockery::mock(Request::class)->makePartial();
@@ -41,9 +41,10 @@ class ProvidersContainerTest extends TestCase
         $this->container = new ProvidersContainer(
             $this->request, $this->response
         );
+        parent::setUp();
     }
 
-    public function tearDown()
+    protected function tearDown()
     {
         Mockery::close();
     }

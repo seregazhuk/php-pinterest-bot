@@ -24,7 +24,7 @@ class AuthTest extends TestCase
         $this->request = Mockery::spy(Request::class);
     }
 
-    public function tearDown()
+    protected function tearDown()
     {
         Mockery::close();
     }
@@ -32,7 +32,7 @@ class AuthTest extends TestCase
     /** @test */
     public function it_converts_simple_account_to_a_business_one()
     {
-        $provider = $this->makeProvider();
+        $provider = $this->getProvider();
 
         $provider->convertToBusiness('myBusinessName', 'http://example.com');
 
@@ -45,36 +45,47 @@ class AuthTest extends TestCase
         $this->assertWasPostRequest(UrlBuilder::RESOURCE_CONVERT_TO_BUSINESS, $request);
     }
 
-    protected function makeRequest($response = [])
+    /** @test */
+    public function it_confirms_emails()
     {
-        return Mockery::spy(Request::class)
-          ->shouldReceive('exec')
-          ->andReturn(json_encode($response))
-          ->andReturn(true)
-          ->shouldReceive('hasToken')
-          ->andReturn(true)
-          ->getMock();
+        $provider = $this->getProvider();
+        $provider->confirmEmail('http://some-link-form-email.com');
+
+        $this->assertWasGetRequest('http://some-link-form-email.com');
     }
 
     /**
      * @return Auth|MockInterface
      */
-    protected function makeProvider()
+    protected function getProvider()
     {
         $container = new ProvidersContainer($this->request, new Response());
         return new Auth($container);
     }
 
     /**
-     * @param $url
-     * @param $data
+     * @param string $url
+     * @param array $data
      */
-    protected function assertWasPostRequest($url, $data)
+    protected function assertWasPostRequest($url, array $data = [])
     {
         $postString = Request::createQuery($data);
 
         $this->request
             ->shouldHaveReceived('exec')
             ->withArgs([$url, $postString]);
+    }
+
+    /**
+     * @param string $url
+     * @param array $data
+     */
+    protected function assertWasGetRequest($url, array $data = [])
+    {
+        $query = Request::createQuery($data);
+
+        $this->request
+            ->shouldHaveReceived('exec')
+            ->with($url . '?' . $query, '');
     }
 }
