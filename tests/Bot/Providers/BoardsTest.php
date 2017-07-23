@@ -30,8 +30,12 @@ class BoardsTest extends BaseProviderTest
     {
         $provider = $this->getProvider();
         $this->login();
+        $this->setResponse(['username' => 'johnDoe']);
+
         $provider->forMe();
 
+
+        // Request to receive user settings
         $this->assertWasGetRequest(UrlBuilder::RESOURCE_GET_USER_SETTINGS);
     }
 

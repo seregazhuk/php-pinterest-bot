@@ -73,5 +73,16 @@ abstract class BaseProviderTest extends TestCase
         return new $providerClass($container);
     }
 
+    /**
+     * @param array $data
+     */
+    protected function setResponse(array $data)
+    {
+        $response = ['resource_response' => ['data' => $data]];
+        $this->request
+            ->shouldReceive('exec')
+            ->andReturn(json_encode($response));
+    }
+
     abstract protected function getProviderClass();
 }

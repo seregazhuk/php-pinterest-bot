@@ -197,6 +197,6 @@ abstract class Provider
 
         // Simply visit main page to fill the cookies
         // and parse a token from them
-        $this->get('', []);
+        $this->get('');
     }
 }
