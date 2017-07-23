@@ -23,6 +23,7 @@ class Boards extends FollowableProvider
      */
     protected $loginRequiredFor = [
         'my',
+        'forMe',
         'create',
     ];
 

@@ -1,6 +1,12 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## v5.5.3 - ?
+### Fixed:
+ - Boards `forMe()` method requires a bot to be logged-in.
+ 
+### Removed:
+ - `wait()` method
 
 ## v5.5.2 - 2017-07-22
 ### Fixed:

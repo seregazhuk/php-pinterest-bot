@@ -77,9 +77,6 @@ $boards = $bot->boards->forUser('yourUserName');
 
 // Create a pin
 $bot->pins->create('http://exmaple.com/image.jpg', $boards[0]['id'], 'Pin description');
-
-// Wait 5 seconds
-$bot->wait(5);
 ```
 
 *Note*: Some methods use pinterest navigation through results (with bookmarks), for example, get user followers/following, pins
