@@ -1,6 +1,6 @@
 <?php
 
-namespace seregazhuk\tests\Bot\Api;
+namespace seregazhuk\tests\Bot\Providers\Core;
 
 use Mockery;
 use PHPUnit\Framework\TestCase;

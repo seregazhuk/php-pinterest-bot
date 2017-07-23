@@ -1,6 +1,6 @@
 <?php
 
-namespace seregazhuk\tests\Bot;
+namespace seregazhuk\tests\Bot\Providers\Core;
 
 use Mockery;
 use Mockery\MockInterface;
