@@ -28,6 +28,11 @@ class BoardsTest extends BaseProviderTest
     /** @test */
     public function it_fetches_boards_for_current_user()
     {
+        $provider = $this->getProvider();
+        $this->login();
+        $provider->forMe();
+
+        $this->assertWasGetRequest(UrlBuilder::RESOURCE_GET_USER_SETTINGS);
     }
 
     protected function getProviderClass()

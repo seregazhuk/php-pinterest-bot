@@ -42,6 +42,13 @@ abstract class BaseProviderTest extends TestCase
             ->withArgs([$url, $postString]);
     }
 
+    protected function login()
+    {
+        $this->request
+            ->shouldReceive('isLoggedIn')
+            ->andReturn('true');
+    }
+
     /**
      * @param string $url
      * @param array $data
