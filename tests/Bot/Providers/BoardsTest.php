@@ -37,6 +37,28 @@ class BoardsTest extends BaseProviderTest
 
         // Request to receive user settings
         $this->assertWasGetRequest(UrlBuilder::RESOURCE_GET_USER_SETTINGS);
+
+        // Makes request for the retrieved username from the profile
+        $request = [
+            'username'      => 'johnDoe',
+            'field_set_key' => 'detailed',
+        ];
+        $this->assertWasGetRequest(UrlBuilder::RESOURCE_GET_BOARDS, $request);
+    }
+
+    /** @test */
+    public function it_fetches_info_for_a_specified_board()
+    {
+        $provider = $this->getProvider();
+
+        $provider->info('johnDoe', 'my-board-name');
+
+        $request = [
+            'slug'          => 'my-board-name',
+            'username'      => 'johnDoe',
+            'field_set_key' => 'detailed',
+        ];
+        $this->assertWasGetRequest(UrlBuilder::RESOURCE_GET_BOARD, $request);
     }
 
     protected function getProviderClass()
