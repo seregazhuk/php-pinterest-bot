@@ -26,6 +26,7 @@ abstract class BaseProviderTest extends TestCase
     {
         parent::setUp();
         $this->request = Mockery::spy(Request::class);
+        $this->request->shouldReceive('hasToken')->andReturn(true);
     }
 
     protected function tearDown()

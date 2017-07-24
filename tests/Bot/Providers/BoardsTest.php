@@ -61,6 +61,49 @@ class BoardsTest extends BaseProviderTest
         $this->assertWasGetRequest(UrlBuilder::RESOURCE_GET_BOARD, $request);
     }
 
+    /** @test */
+    public function it_formats_a_board_name_with_spaces_when_fetching_its_info()
+    {
+        $provider = $this->getProvider();
+
+        $provider->info('johnDoe', 'my board name');
+
+        $request = [
+            'slug'          => 'my-board-name',
+            'username'      => 'johnDoe',
+            'field_set_key' => 'detailed',
+        ];
+        $this->assertWasGetRequest(UrlBuilder::RESOURCE_GET_BOARD, $request);
+    }
+
+    /** @test */
+    public function it_creates_a_public_board()
+    {
+        $provider = $this->getProvider();
+        $provider->create('boardName', 'description');
+
+        $request = [
+            'name'        => 'boardName',
+            'description' => 'description',
+            'privacy'     => Boards::BOARD_PRIVACY_PUBLIC,
+        ];
+        $this->assertWasPostRequest(UrlBuilder::RESOURCE_CREATE_BOARD, $request);
+    }
+
+    /** @test */
+    public function it_creates_a_private_board()
+    {
+        $provider = $this->getProvider();
+        $provider->createPrivate('boardName', 'description');
+
+        $request = [
+            'name'        => 'boardName',
+            'description' => 'description',
+            'privacy'     => Boards::BOARD_PRIVACY_PRIVATE,
+        ];
+        $this->assertWasPostRequest(UrlBuilder::RESOURCE_CREATE_BOARD, $request);
+    }
+
     protected function getProviderClass()
     {
         return Boards::class;
