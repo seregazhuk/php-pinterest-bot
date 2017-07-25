@@ -34,7 +34,7 @@ abstract class BaseProviderTest extends TestCase
         Mockery::close();
     }
 
-    protected function assertWasPostRequest($url, array $data = [])
+    public function assertWasPostRequest($url, array $data = [])
     {
         $postString = Request::createQuery($data);
 
@@ -43,7 +43,7 @@ abstract class BaseProviderTest extends TestCase
             ->withArgs([$url, $postString]);
     }
 
-    protected function login()
+    public function login()
     {
         $this->request
             ->shouldReceive('isLoggedIn')
@@ -54,7 +54,7 @@ abstract class BaseProviderTest extends TestCase
      * @param string $url
      * @param array $data
      */
-    protected function assertWasGetRequest($url, array $data = [])
+    public function assertWasGetRequest($url, array $data = [])
     {
         $query = Request::createQuery($data);
 
@@ -84,6 +84,8 @@ abstract class BaseProviderTest extends TestCase
             ->shouldReceive('exec')
             ->andReturn(json_encode($response));
     }
+
+
 
     abstract protected function getProviderClass();
 }
