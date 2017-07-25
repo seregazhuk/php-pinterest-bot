@@ -129,6 +129,10 @@ class Boards extends FollowableProvider
      */
     public function update($boardId, $attributes)
     {
+        if (isset($attributes['name'])) {
+            $attributes['name'] = $this->formatBoardName($attributes['name']);
+        }
+
         $requestOptions = array_merge(
             [
                 'board_id' => $boardId,

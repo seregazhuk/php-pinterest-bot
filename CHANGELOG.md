@@ -4,7 +4,8 @@ All notable changes to this project will be documented in this file.
 ## v5.5.3 - ?
 ### Fixed:
  - Boards `forMe()` method requires a bot to be logged-in.
- 
+ - Boards `update()` method works with titles which has spaces.  
+  
 ### Removed:
  - `wait()` method
 

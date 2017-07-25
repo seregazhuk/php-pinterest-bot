@@ -104,6 +104,29 @@ class BoardsTest extends BaseProviderTest
         $this->assertWasPostRequest(UrlBuilder::RESOURCE_CREATE_BOARD, $request);
     }
 
+    /** @test */
+    public function it_fetches_board_titles_suggestions_for_a_specified_pin()
+    {
+        $provider = $this->getProvider();
+        $provider->titleSuggestionsFor('123');
+
+        $this->assertWasGetRequest(UrlBuilder::RESOURCE_TITLE_SUGGESTIONS, ['pin_id' => '123']);
+    }
+
+    /** @test */
+    public function it_updates_a_board_info()
+    {
+        $provider = $this->getProvider();
+        $provider->update('12345', ['name' => 'new']);
+
+        $expectedRequest = [
+            'board_id' => '12345',
+            'category' => 'other',
+            'name' => 'new',
+        ];
+        $this->assertWasPostRequest(UrlBuilder::RESOURCE_UPDATE_BOARD, $expectedRequest);
+    }
+
     protected function getProviderClass()
     {
         return Boards::class;
