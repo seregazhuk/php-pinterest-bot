@@ -16,7 +16,7 @@ class KeywordsTest extends BaseProviderTest
     public function it_fetches_recommended_keywords()
     {
         $provider = $this->getProvider();
-        $this->apiShouldReturn($this->getSearchResponse());
+        $this->pinterestShouldReturn($this->getSearchResponse());
 
         $recommended = $provider->recommendedFor('johnDoe');
 

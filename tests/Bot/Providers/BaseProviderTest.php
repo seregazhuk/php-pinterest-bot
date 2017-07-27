@@ -54,7 +54,7 @@ abstract class BaseProviderTest extends TestCase
      * @param mixed $data
      * @return $this
      */
-    public function apiShouldReturn($data)
+    public function pinterestShouldReturn($data)
     {
         $response = ['resource_response' => ['data' => $data]];
 
