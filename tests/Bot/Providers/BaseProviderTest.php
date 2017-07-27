@@ -51,6 +51,21 @@ abstract class BaseProviderTest extends TestCase
     }
 
     /**
+     * @param mixed $data
+     * @return $this
+     */
+    public function apiShouldReturn($data)
+    {
+        $response = ['resource_response' => ['data' => $data]];
+
+        $this->request
+            ->shouldReceive('exec')
+            ->andReturn(json_encode($response));
+
+        return $this;
+    }
+
+    /**
      * @param string $url
      * @param array $data
      */
