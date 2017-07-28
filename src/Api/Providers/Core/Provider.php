@@ -40,8 +40,6 @@ abstract class Provider
 
     /**
      * @param ProvidersContainer $container
-     * @internal param Request $request
-     * @internal param Response $response
      */
     public function __construct(ProvidersContainer $container)
     {
@@ -55,9 +53,10 @@ abstract class Provider
      *
      * @param string $resourceUrl
      * @param array $requestOptions
-     * @return bool
+     * @param bool $returnData
+     * @return bool|array
      */
-    public function post($resourceUrl, array $requestOptions = [])
+    public function post($resourceUrl, array $requestOptions = [], $returnData = false)
     {
         $postString = Request::createQuery($requestOptions);
 
@@ -66,8 +65,9 @@ abstract class Provider
 
         $this->execute($resourceUrl, $postString);
 
-        return $this->response->isOk();
-
+        return $returnData ?
+            $this->response->getResponseData() :
+            $this->response->isOk();
     }
 
     /**

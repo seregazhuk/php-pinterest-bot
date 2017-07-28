@@ -66,6 +66,7 @@ class UrlBuilder
     const RESOURCE_TRY_PIN_EDIT = 'resource/DidItActivityResource/update/';
     const RESOURCE_TRY_PIN_DELETE = 'resource/DidItActivityResource/delete/';
     const RESOURCE_TRY_PIN_IMAGE_UPLOAD = 'resource/DidItImageUploadResource/create/';
+    const RESOURCE_SHARE_VIA_SOCIAL = 'resource/CreateExternalInviteResource/create/';
 
     /**
      * Pinners
