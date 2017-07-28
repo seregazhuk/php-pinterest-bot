@@ -44,18 +44,18 @@ trait CanBeShared
      * @param string $pinId
      * @return array|bool
      */
-    public function markAsGood($pinId)
+    public function reactAsGood($pinId)
     {
-        return $this->markPinInConversation($pinId,  "👍");
+        return $this->reactOnPinInConversation($pinId,  "👍");
     }
 
     /**
      * @param string $pinId
      * @return array|bool
      */
-    public function markAsBad($pinId)
+    public function reactAsBad($pinId)
     {
-        return $this->markPinInConversation($pinId,  "👎");
+        return $this->reactOnPinInConversation($pinId,  "👎");
     }
 
     /**
@@ -63,7 +63,7 @@ trait CanBeShared
      * @param string $reaction
      * @return array|bool
      */
-    protected function markPinInConversation($pinId, $reaction)
+    protected function reactOnPinInConversation($pinId, $reaction)
     {
         $request = [
             "user_ids"=> [$this->resolveCurrentUserId()],

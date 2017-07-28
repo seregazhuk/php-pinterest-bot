@@ -4,7 +4,11 @@ All notable changes to this project will be documented in this file.
 ## v5.5.3 - ?
 ### Fixed:
  - Boards `forMe()` method requires a bot to be logged-in.
- - Boards `update()` method works with titles which has spaces.  
+ - Boards `update()` method works with titles which has spaces.
+   
+### Added:
+ - Pins `share()` to get link for sharing a pin and asking for reacting (like/dislike).
+ - Pins `reactAsGood()`/`reactAsBad()` to react when you were given a sharing link with a pin.
   
 ### Removed:
  - `wait()` method
