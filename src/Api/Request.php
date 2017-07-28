@@ -226,8 +226,6 @@ class Request
      */
     public static function createRequestData(array $data = [], $bookmarks = [])
     {
-        $data = self::prepareArrayToJson($data);
-
         if (!empty($bookmarks)) {
             $data['options']['bookmarks'] = $bookmarks;
         }
@@ -238,28 +236,14 @@ class Request
 
         $data['context'] = new \stdClass();
 
+        //if(!empty($data['options'])) {
+        //    var_dump($data['options'], json_encode($data)); die();
+        //}
+
         return [
             'source_url' => '',
             'data'       => json_encode($data),
         ];
-    }
-
-    /**
-     * Cast all non-array values to strings
-     *
-     * @param $array
-     * @return array
-     */
-    protected static function prepareArrayToJson(array $array)
-    {
-        $result = [];
-        foreach ($array as $key => $value) {
-            $result[$key] = is_array($value) ?
-                self::prepareArrayToJson($value) :
-                strval($value);
-        }
-
-        return $result;
     }
 
     /**

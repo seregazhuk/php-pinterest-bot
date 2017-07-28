@@ -98,7 +98,8 @@ abstract class FollowableProvider extends EntityProvider
     {
         $entityName = $this->getEntityIdName();
 
-        $dataJson = [$entityName => $entityId];
+        // Pinterest requires antityId to be a string
+        $dataJson = [$entityName => (string)$entityId];
 
         if ($entityName == 'interest_id') {
             $dataJson['interest_list'] = 'favorited';

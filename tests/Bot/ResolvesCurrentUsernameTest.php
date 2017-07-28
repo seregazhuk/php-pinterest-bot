@@ -8,7 +8,7 @@ use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Api\ProvidersContainer;
 use seregazhuk\PinterestBot\Api\Providers\Core\Provider;
-use seregazhuk\PinterestBot\Api\Traits\ResolvesCurrentUsername;
+use seregazhuk\PinterestBot\Api\Traits\ResolvesCurrent;
 
 /**
  * Class ProviderTest.
@@ -70,7 +70,7 @@ class ResolvesCurrentUsernameTest extends TestCase
 
 class DummyUsernameProvider extends Provider {
 
-    use ResolvesCurrentUsername;
+    use ResolvesCurrent;
 
     /**
      * @return array|bool|Response

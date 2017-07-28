@@ -6,42 +6,71 @@ use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 
 trait CanBeShared
 {
-    use HandlesRequest;
+    use HandlesRequest, ResolvesCurrent;
 
     /**
-     * @param string $pinId
-     * @return bool
+     * @return array
      */
-    public function shareViaTwitter($pinId)
+    protected function requiresLoginForCanBeShared()
     {
-        return $this->share($pinId, $twitterChannel = 9);
+        return [
+            'share',
+            'markAsGood',
+            'markAsBad',
+        ];
     }
 
     /**
      * @param string $pinId
-     * @return bool
+     * @return string
      */
-    public function shareViaFacebook($pinId)
-    {
-        return $this->share($pinId, $facebookChannel = 5);
-    }
-
-    /**
-     * @param string $pinId
-     * @param string $channelId
-     * @return bool
-     */
-    protected function share($pinId, $channelId)
+    public function share($pinId)
     {
         $request = [
             "invite_type" => [
-                "invite_category" => 3,
-                "invite_object"   => 1,
-                "invite_channel"  => $channelId,
+                "invite_category" => 3, // magic numbers, but I have
+                "invite_object"   => 1, // no idea what do they mean
+                "invite_channel"  => $linkChannel = 12,
             ],
             "object_id"   => $pinId,
         ];
 
-        return $this->post(UrlBuilder::RESOURCE_SHARE_VIA_SOCIAL, $request);
+        $response = $this->post(UrlBuilder::RESOURCE_SHARE_VIA_SOCIAL, $request, true);
+
+        return isset($response['invite_url']) ? $response['invite_url'] : '';
+    }
+
+    /**
+     * @param string $pinId
+     * @return array|bool
+     */
+    public function markAsGood($pinId)
+    {
+        return $this->markPinInConversation($pinId,  "👍");
+    }
+
+    /**
+     * @param string $pinId
+     * @return array|bool
+     */
+    public function markAsBad($pinId)
+    {
+        return $this->markPinInConversation($pinId,  "👎");
+    }
+
+    /**
+     * @param string $pinId
+     * @param string $reaction
+     * @return array|bool
+     */
+    protected function markPinInConversation($pinId, $reaction)
+    {
+        $request = [
+            "user_ids"=> [$this->resolveCurrentUserId()],
+            "pin" => (string)$pinId,
+            "text" => $reaction,
+        ];
+
+        return $this->post(UrlBuilder::RESOURCE_SEND_MESSAGE, $request);
     }
 }

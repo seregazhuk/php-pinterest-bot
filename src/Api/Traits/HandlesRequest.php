@@ -14,7 +14,7 @@ trait HandlesRequest
      * @param array $requestOptions
      * @param bool $returnData
      *
-     * @return bool
+     * @return bool|array
      */
     abstract protected function post($resourceUrl, array $requestOptions = [], $returnData = false);
 

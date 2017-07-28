@@ -7,13 +7,13 @@ use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Api\Traits\Searchable;
 use seregazhuk\PinterestBot\Exceptions\WrongFollowingType;
-use seregazhuk\PinterestBot\Api\Traits\ResolvesCurrentUsername;
+use seregazhuk\PinterestBot\Api\Traits\ResolvesCurrent;
 use seregazhuk\PinterestBot\Api\Providers\Core\FollowableProvider;
 
 class Pinners extends FollowableProvider
 {
     use Searchable;
-    use ResolvesCurrentUsername;
+    use ResolvesCurrent;
 
     /**
      * @var array

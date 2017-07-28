@@ -8,6 +8,7 @@ use seregazhuk\PinterestBot\Helpers\FileHelper;
 use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\Traits\Searchable;
+use seregazhuk\PinterestBot\Api\Traits\CanBeShared;
 use seregazhuk\PinterestBot\Api\Traits\CanBeDeleted;
 use seregazhuk\PinterestBot\Api\Traits\SendsMessages;
 use seregazhuk\PinterestBot\Api\Providers\Core\EntityProvider;
@@ -17,7 +18,8 @@ class Pins extends EntityProvider
     use Searchable,
         CanBeDeleted,
         SendsMessages,
-        TryIt;
+        TryIt,
+        CanBeShared;
 
     /**
      * @var array
@@ -358,6 +360,9 @@ class Pins extends EntityProvider
      */
     public function analytics($pinId)
     {
+        // Pinterest requires pinId to be a string
+        $pinId = (string)$pinId;
+
         return $this->get(UrlBuilder::RESOURCE_PIN_ANALYTICS, ['pin_id' => $pinId]);
     }
 
