@@ -42,31 +42,34 @@ trait CanBeShared
 
     /**
      * @param string $pinId
+     * @param $userId
      * @return array|bool
      */
-    public function leaveGoodReaction($pinId)
+    public function leaveGoodReaction($pinId, $userId)
     {
-        return $this->reactOnPinInConversation($pinId, "👍");
+        return $this->reactOnPinInConversation($pinId, $userId, "👍");
     }
 
     /**
      * @param string $pinId
+     * @param $userId
      * @return array|bool
      */
-    public function leaveBadReaction($pinId)
+    public function leaveBadReaction($pinId, $userId)
     {
-        return $this->reactOnPinInConversation($pinId, "👎");
+        return $this->reactOnPinInConversation($pinId, $userId, "👎");
     }
 
     /**
      * @param string $pinId
+     * @param string $userId
      * @param string $reaction
      * @return array|bool
      */
-    protected function reactOnPinInConversation($pinId, $reaction)
+    protected function reactOnPinInConversation($pinId, $userId, $reaction)
     {
         $request = [
-            "user_ids" => [$this->resolveCurrentUserId()],
+            "user_ids" => [$userId],
             "pin"      => (string)$pinId,
             "text"     => $reaction,
         ];

@@ -619,12 +619,12 @@ Share a link with a pin where a user can leave his or her reaction on this pin (
 $link = $bot->pins->share($pinId);
 ```
 
-Leave a reaction when you were given a sharing link with a pin:
+Leave a reaction when you were given a sharing link with a pin. You need to know a pinId and a userId, who sent you a link:
 ```php
 // like
-$bot->pins->leaveGoodReaction($pinId);
+$bot->pins->leaveGoodReaction($pinId, $userId);
 // don't like
-$bot->pins->leaveBadReaction($pinId);
+$bot->pins->leaveBadReaction($pinId, $userId);
 ```
 
 ### TryIt
