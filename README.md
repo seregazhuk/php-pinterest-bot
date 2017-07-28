@@ -614,6 +614,19 @@ Get your pin analytics, like numbers of clicks, views and repins (only for busin
 $analytics = $bot->pins->analytics($pinId);
 ```
 
+Share a link with a pin where a user can leave his or her reaction on this pin (like or dislike):
+```php
+$link = $bot->pins->share($pinId);
+```
+
+Leave a reaction when you were given a sharing link with a pin:
+```php
+// like
+$bot->pins->leaveGoodReaction($pinId);
+// don't like
+$bot->pins->leaveBadReaction($pinId);
+```
+
 ### TryIt
 
 Get the pinners who have tied this pin (returns [Pagination](#pagination) object):

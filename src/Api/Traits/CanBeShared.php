@@ -44,18 +44,18 @@ trait CanBeShared
      * @param string $pinId
      * @return array|bool
      */
-    public function reactAsGood($pinId)
+    public function leaveGoodReaction($pinId)
     {
-        return $this->reactOnPinInConversation($pinId,  "👍");
+        return $this->reactOnPinInConversation($pinId, "👍");
     }
 
     /**
      * @param string $pinId
      * @return array|bool
      */
-    public function reactAsBad($pinId)
+    public function leaveBadReaction($pinId)
     {
-        return $this->reactOnPinInConversation($pinId,  "👎");
+        return $this->reactOnPinInConversation($pinId, "👎");
     }
 
     /**
@@ -66,9 +66,9 @@ trait CanBeShared
     protected function reactOnPinInConversation($pinId, $reaction)
     {
         $request = [
-            "user_ids"=> [$this->resolveCurrentUserId()],
-            "pin" => (string)$pinId,
-            "text" => $reaction,
+            "user_ids" => [$this->resolveCurrentUserId()],
+            "pin"      => (string)$pinId,
+            "text"     => $reaction,
         ];
 
         return $this->post(UrlBuilder::RESOURCE_SEND_MESSAGE, $request);
