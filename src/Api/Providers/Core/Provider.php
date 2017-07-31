@@ -91,28 +91,14 @@ abstract class Provider
 
     /**
      * @param string $url
-     * @return string
-     */
-    protected function getHtml($url)
-    {
-        $this->execute($url, '', false);
-
-        return $this->response->getRawData();
-    }
-
-    /**
-     * @param string $url
      * @param string $postString
-     * @param bool $expectsJson
      * @return $this
      */
-    protected function execute($url, $postString = "", $expectsJson = true)
+    protected function execute($url, $postString = "")
     {
-        $result = $this->request->exec($url, $postString, $expectsJson);
+        $result = $this->request->exec($url, $postString);
 
-        if($expectsJson) $result = json_decode($result, true);
-
-        $this->response->fill($result);
+        $this->response->fillFromJson($result);
 
         return $this;
     }

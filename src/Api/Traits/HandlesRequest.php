@@ -29,14 +29,6 @@ trait HandlesRequest
     abstract protected function get($resourceUrl = '', array $requestOptions = []);
 
     /**
-     * Low level request method, which simply returns html for the specified url.
-     *
-     * @param string $url
-     * @return string
-     */
-    abstract protected function getHtml($url);
-
-    /**
      * @return Response
      */
     abstract public function getResponse();

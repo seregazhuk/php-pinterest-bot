@@ -53,7 +53,8 @@ class Request
         'X-NEW-APP: 1',
         'X-APP-VERSION: 71842d3',
         'X-Pinterest-AppState:active',
-    ];
+        'X-Requested-With: XMLHttpRequest',
+];
 
     /**
      * @param HttpClient $http
@@ -83,13 +84,12 @@ class Request
      * @param string $resourceUrl
      * @param string $postString
      *
-     * @param bool $expectsJson
      * @return string
      */
-    public function exec($resourceUrl, $postString = '', $expectsJson = true)
+    public function exec($resourceUrl, $postString = '')
     {
         $url = UrlBuilder::buildApiUrl($resourceUrl);
-        $headers = $this->getHttpHeaders($expectsJson);
+        $headers = $this->getHttpHeaders();
         $postString = $this->filePathToUpload ? $this->postFileData : $postString;
 
         $result = $this
@@ -104,18 +104,13 @@ class Request
     }
 
     /**
-     * @param bool $expectsJson
      * @return array
      */
-    protected function getHttpHeaders($expectsJson)
+    protected function getHttpHeaders()
     {
         $headers = $this->getDefaultHttpHeaders();
         if ($this->csrfToken == self::DEFAULT_TOKEN) {
             $headers[] = 'Cookie: csrftoken=' . self::DEFAULT_TOKEN . ';';
-        }
-
-        if($expectsJson) {
-            //$headers[] = 'X-Requested-With: XMLHttpRequest';
         }
 
         return $headers;

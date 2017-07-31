@@ -76,9 +76,4 @@ trait CanBeShared
 
         return $this->post(UrlBuilder::RESOURCE_SEND_MESSAGE, $request);
     }
-
-    public function react($link)
-    {
-        var_dump($this->getHtml($link)); die('a');
-    }
 }

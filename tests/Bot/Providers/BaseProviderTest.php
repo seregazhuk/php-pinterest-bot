@@ -38,15 +38,14 @@ abstract class BaseProviderTest extends TestCase
     /**
      * @param string $url
      * @param array $data
-     * @param bool $expectsJson
      */
-    public function assertWasPostRequest($url, array $data = [], $expectsJson = true)
+    public function assertWasPostRequest($url, array $data = [])
     {
         $postString = Request::createQuery($data);
 
         $this->request
             ->shouldHaveReceived('exec')
-            ->withArgs([$url, $postString, $expectsJson]);
+            ->withArgs([$url, $postString]);
     }
 
     public function login()
@@ -74,15 +73,14 @@ abstract class BaseProviderTest extends TestCase
     /**
      * @param string $url
      * @param array $data
-     * @param bool $expectsJson
      */
-    public function assertWasGetRequest($url, array $data = [], $expectsJson = true)
+    public function assertWasGetRequest($url, array $data = [])
     {
         $query = Request::createQuery($data);
 
         $this->request
             ->shouldHaveReceived('exec')
-            ->with($url . '?' . $query, '', $expectsJson);
+            ->with($url . '?' . $query, '');
     }
 
     /**
