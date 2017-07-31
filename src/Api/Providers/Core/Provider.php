@@ -99,6 +99,9 @@ abstract class Provider
     {
         $result = $this->request->exec($url, $postString);
 
+        var_dump($url); die();
+        print_r($result);
+        die();
         $this->response->fillFromJson($result);
 
         return $this;

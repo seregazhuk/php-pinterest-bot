@@ -9,7 +9,7 @@ use seregazhuk\PinterestBot\Api\Providers\Core\Provider;
 /**
  * @property ProvidersContainer container
  */
-trait ResolvesCurrent
+trait ResolvesCurrentUser
 {
     /**
      * @return string

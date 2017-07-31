@@ -2,6 +2,7 @@
 
 namespace seregazhuk\PinterestBot\Api\Providers;
 
+use seregazhuk\PinterestBot\Api\Traits\ResolvesCurrentUser;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\Forms\Registration;
 use seregazhuk\PinterestBot\Api\Providers\Core\Provider;
@@ -9,7 +10,7 @@ use seregazhuk\PinterestBot\Api\Traits\SendsRegisterActions;
 
 class Auth extends Provider
 {
-    use SendsRegisterActions;
+    use SendsRegisterActions, ResolvesCurrentUser;
 
     /**
      * @var array
@@ -186,15 +187,7 @@ class Auth extends Provider
      */
     protected function processAutoLogin($username)
     {
-        return $this->request->autoLogin($username) && $this->getProfile();
-    }
-
-    /**
-     * @return array
-     */
-    protected function getProfile()
-    {
-        return $this->get(UrlBuilder::RESOURCE_GET_USER_SETTINGS);
+        return $this->request->autoLogin($username) && $this->resolveCurrentUserId();
     }
 
     /**

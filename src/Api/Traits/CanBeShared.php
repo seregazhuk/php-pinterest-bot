@@ -6,7 +6,7 @@ use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 
 trait CanBeShared
 {
-    use HandlesRequest, ResolvesCurrent;
+    use HandlesRequest, ResolvesCurrentUser;
 
     /**
      * @return array
@@ -75,5 +75,13 @@ trait CanBeShared
         ];
 
         return $this->post(UrlBuilder::RESOURCE_SEND_MESSAGE, $request);
+    }
+
+    public function react($link)
+    {
+        $this->container->user->visitPage($link);
+
+        $html = $this->getResponse()->getRawData();
+        print_r(($html['module'])['html']); die();
     }
 }
