@@ -52,7 +52,6 @@ class Request
         'X-Pinterest-AppState: active',
         'X-NEW-APP: 1',
         'X-APP-VERSION: 71842d3',
-        'X-Requested-With: XMLHttpRequest',
         'X-Pinterest-AppState:active',
     ];
 
@@ -84,12 +83,13 @@ class Request
      * @param string $resourceUrl
      * @param string $postString
      *
+     * @param bool $expectsJson
      * @return string
      */
-    public function exec($resourceUrl, $postString = '')
+    public function exec($resourceUrl, $postString = '', $expectsJson = true)
     {
         $url = UrlBuilder::buildApiUrl($resourceUrl);
-        $headers = $this->getHttpHeaders();
+        $headers = $this->getHttpHeaders($expectsJson);
         $postString = $this->filePathToUpload ? $this->postFileData : $postString;
 
         $result = $this
@@ -104,13 +104,18 @@ class Request
     }
 
     /**
+     * @param bool $expectsJson
      * @return array
      */
-    protected function getHttpHeaders()
+    protected function getHttpHeaders($expectsJson)
     {
         $headers = $this->getDefaultHttpHeaders();
         if ($this->csrfToken == self::DEFAULT_TOKEN) {
             $headers[] = 'Cookie: csrftoken=' . self::DEFAULT_TOKEN . ';';
+        }
+
+        if($expectsJson) {
+            //$headers[] = 'X-Requested-With: XMLHttpRequest';
         }
 
         return $headers;
@@ -235,10 +240,6 @@ class Request
         }
 
         $data['context'] = new \stdClass();
-
-        //if(!empty($data['options'])) {
-        //    var_dump($data['options'], json_encode($data)); die();
-        //}
 
         return [
             'source_url' => '',

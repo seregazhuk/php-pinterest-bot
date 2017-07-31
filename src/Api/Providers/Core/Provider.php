@@ -87,26 +87,35 @@ abstract class Provider
         $this->execute($resourceUrl . '?' . $query);
 
         return $this->response->getResponseData();
-
     }
 
     /**
-     * @param $url
+     * @param string $url
+     * @return string
+     */
+    protected function getHtml($url)
+    {
+        $this->execute($url, '', false);
+
+        return $this->response->getRawData();
+    }
+
+    /**
+     * @param string $url
      * @param string $postString
+     * @param bool $expectsJson
      * @return $this
      */
-    protected function execute($url, $postString = "")
+    protected function execute($url, $postString = "", $expectsJson = true)
     {
-        $result = $this->request->exec($url, $postString);
+        $result = $this->request->exec($url, $postString, $expectsJson);
 
-        var_dump($url); die();
-        print_r($result);
-        die();
-        $this->response->fillFromJson($result);
+        if($expectsJson) $result = json_decode($result, true);
+
+        $this->response->fill($result);
 
         return $this;
     }
-
 
     /**
      * @param string $method
@@ -127,17 +136,16 @@ abstract class Provider
     {
         $loginRequired = [];
 
-        foreach(class_parents($this) + class_uses_recursive($this) as $trait) {
+        foreach (class_parents($this) + class_uses_recursive($this) as $trait) {
             $class = basename(str_replace('\\', '/', $trait));
 
-            if(method_exists($trait, $method = 'requiresLoginFor' . $class)) {
+            if (method_exists($trait, $method = 'requiresLoginFor' . $class)) {
                 $loginRequired = array_merge($loginRequired, forward_static_call([$this, $method]));
             }
         }
 
         return $loginRequired;
     }
-
 
     /**
      * @return bool
@@ -156,10 +164,12 @@ abstract class Provider
     protected function paginate($resourceUrl, $data, $limit = Pagination::DEFAULT_LIMIT)
     {
         return $this
-            ->paginateCustom(function () use ($data, $resourceUrl) {
-                $this->get($resourceUrl, $data);
-                return $this->response;
-            })->take($limit);
+            ->paginateCustom(
+                function () use ($data, $resourceUrl) {
+                    $this->get($resourceUrl, $data);
+                    return $this->response;
+                }
+            )->take($limit);
     }
 
     /**
@@ -196,7 +206,7 @@ abstract class Provider
 
     protected function initTokenIfRequired()
     {
-        if($this->request->hasToken()) return;
+        if ($this->request->hasToken()) return;
 
         // Simply visit main page to fill the cookies
         // and parse a token from them

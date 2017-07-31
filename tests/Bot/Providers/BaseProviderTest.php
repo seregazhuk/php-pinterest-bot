@@ -25,6 +25,7 @@ abstract class BaseProviderTest extends TestCase
     protected function setUp()
     {
         parent::setUp();
+
         $this->request = Mockery::spy(Request::class);
         $this->request->shouldReceive('hasToken')->andReturn(true);
     }
@@ -34,13 +35,18 @@ abstract class BaseProviderTest extends TestCase
         Mockery::close();
     }
 
-    public function assertWasPostRequest($url, array $data = [])
+    /**
+     * @param string $url
+     * @param array $data
+     * @param bool $expectsJson
+     */
+    public function assertWasPostRequest($url, array $data = [], $expectsJson = true)
     {
         $postString = Request::createQuery($data);
 
         $this->request
             ->shouldHaveReceived('exec')
-            ->withArgs([$url, $postString]);
+            ->withArgs([$url, $postString, $expectsJson]);
     }
 
     public function login()
@@ -68,14 +74,15 @@ abstract class BaseProviderTest extends TestCase
     /**
      * @param string $url
      * @param array $data
+     * @param bool $expectsJson
      */
-    public function assertWasGetRequest($url, array $data = [])
+    public function assertWasGetRequest($url, array $data = [], $expectsJson = true)
     {
         $query = Request::createQuery($data);
 
         $this->request
             ->shouldHaveReceived('exec')
-            ->with($url . '?' . $query, '');
+            ->with($url . '?' . $query, '', $expectsJson);
     }
 
     /**

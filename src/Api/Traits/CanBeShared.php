@@ -79,9 +79,6 @@ trait CanBeShared
 
     public function react($link)
     {
-        $this->container->user->visitPage($link);
-
-        $html = $this->getResponse()->getRawData();
-        print_r(($html['module'])['html']); die();
+        var_dump($this->getHtml($link)); die('a');
     }
 }
