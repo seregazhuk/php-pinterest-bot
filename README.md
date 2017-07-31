@@ -619,7 +619,11 @@ Share a link with a pin where a user can leave his or her reaction on this pin (
 $link = $bot->pins->share($pinId);
 ```
 
-Leave a reaction when you were given a sharing link with a pin. You need to know a pinId and a userId, who sent you a link:
+Leave a reaction when you were given a sharing link with a pin. 
+The link looks like this: `http://pin.it/cTwZfG_`. When you open it in your browser Pinterest redirects you to 
+the following url `https://www.pinterest.de/pin/332703491213209642/sent/?sfo=1&sender=731835145606177283&invite_code=6cb1d66946464b3f9d0084f623c7822b`.
+To *react* on this link you need to know a pinId (number after `pin`) and a userId (number after `sender`), who sent you a link:
+ 
 ```php
 // like
 $bot->pins->leaveGoodReaction($pinId, $senderId);
