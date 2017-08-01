@@ -10,7 +10,7 @@ use seregazhuk\PinterestBot\Helpers\UrlBuilder;
  * Class KeywordsTest
  * @method Keywords getProvider()
  */
-class KeywordsTest extends BaseProviderTest
+class KeywordsBaseTest extends ProviderBaseTest
 {
     /** @test */
     public function it_fetches_recommended_keywords()

@@ -9,7 +9,7 @@ use seregazhuk\PinterestBot\Helpers\UrlBuilder;
  * Class InboxTest
  * @method Inbox getProvider()
  */
-class InboxTest extends BaseProviderTest
+class InboxBaseTest extends ProviderBaseTest
 {
     /** @test */
     public function it_returns_conversations_for_a_current_user()

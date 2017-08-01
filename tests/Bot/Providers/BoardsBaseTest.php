@@ -9,7 +9,7 @@ use seregazhuk\PinterestBot\Helpers\UrlBuilder;
  * Class BoardsTest
  * @method Boards getProvider()
  */
-class BoardsTest extends BaseProviderTest
+class BoardsBaseTest extends ProviderBaseTest
 {
     /** @test */
     public function it_fetches_boards_for_a_specified_user()

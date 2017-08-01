@@ -10,7 +10,7 @@ use seregazhuk\PinterestBot\Api\ProvidersContainer;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
 
-abstract class BaseProviderTest extends TestCase
+abstract class ProviderBaseTest extends TestCase
 {
     /**
      * @var string
@@ -27,7 +27,10 @@ abstract class BaseProviderTest extends TestCase
         parent::setUp();
 
         $this->request = Mockery::spy(Request::class);
-        $this->request->shouldReceive('hasToken')->andReturn(true);
+
+        $this->request
+            ->shouldReceive('hasToken')
+            ->andReturn(true);
     }
 
     protected function tearDown()

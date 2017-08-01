@@ -10,7 +10,7 @@ use seregazhuk\PinterestBot\Helpers\UrlBuilder;
  *
  * @method Comments getProvider()
  */
-class CommentsTest extends BaseProviderTest
+class CommentsBaseTest extends ProviderBaseTest
 {
     /** @test */
     public function it_create_a_comment_for_a_pin()
