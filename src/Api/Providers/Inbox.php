@@ -20,6 +20,7 @@ class Inbox extends Provider
         'sendEmail',
         'sendMessage',
         'notifications',
+        'contactRequests',
         'conversations',
     ];
 
@@ -81,6 +82,11 @@ class Inbox extends Provider
         return $this->send($pinId, $text, [], $emails);
     }
 
+    /**
+     * Get current contact requests.
+     *
+     * @return array
+     */
     public function contactRequests()
     {
         $requests = $this->get(UrlBuilder::RESOURCE_CONTACTS_REQUESTS);

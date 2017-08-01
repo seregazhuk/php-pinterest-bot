@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 ### Fixed:
  - Boards `forMe()` method requires a bot to be logged-in.
  - Boards `update()` method works with titles which has spaces.
+ - Inbox `contactRequests()` method requires being logged in.
    
 ### Added:
  - Pins `share()` to get link for sharing a pin and asking for reacting (like/dislike).
