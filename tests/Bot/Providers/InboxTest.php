@@ -21,10 +21,16 @@ class InboxTest extends BaseProviderTest
     }
 
     /** @test */
-    public function it_returns_current_contact()
+    public function it_returns_current_contact_requests()
     {
-        
+        $provider = $this->getProvider();
+        $requests = $provider->contactRequests();
+
+        $this->assertInternalType('array', $requests);
+        $this->assertWasGetRequest(UrlBuilder::RESOURCE_CONTACTS_REQUESTS);
     }
+
+
     
     protected function getProviderClass()
     {

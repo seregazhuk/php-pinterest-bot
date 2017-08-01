@@ -109,7 +109,7 @@ class Inbox extends Provider
      * @param string $requestId
      * @return bool
      */
-    public function ignoreContactRequests($requestId)
+    public function ignoreContactRequest($requestId)
     {
         return $this->makeContactRequestCall(
             $requestId, UrlBuilder::RESOURCE_CONTACT_REQUEST_IGNORE

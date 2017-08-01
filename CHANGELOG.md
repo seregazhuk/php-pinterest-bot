@@ -6,7 +6,8 @@ All notable changes to this project will be documented in this file.
  - Boards `forMe()` method requires a bot to be logged-in.
  - Boards `update()` method works with titles which has spaces.
  - Inbox `contactRequests()` method requires being logged in.
-   
+ - Inbox `ignoreContactRequests()` method renamed to `ignoreContactRequest` (single form).
+ 
 ### Added:
  - Pins `share()` to get link for sharing a pin and asking for reacting (like/dislike).
  - Pins `reactAsGood()`/`reactAsBad()` to react when you were given a sharing link with a pin.
