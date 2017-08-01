@@ -40,11 +40,11 @@ abstract class ProviderBaseTest extends TestCase
 
     /**
      * @param string $url
-     * @param array $data
+     * @param array $requestData
      */
-    public function assertWasPostRequest($url, array $data = [])
+    public function assertWasPostRequest($url, array $requestData = [])
     {
-        $postString = Request::createQuery($data);
+        $postString = Request::createQuery($requestData);
 
         $this->request
             ->shouldHaveReceived('exec')
@@ -95,17 +95,6 @@ abstract class ProviderBaseTest extends TestCase
         $providerClass = $this->getProviderClass();
 
         return new $providerClass($container);
-    }
-
-    /**
-     * @param array $data
-     */
-    protected function setResponse(array $data)
-    {
-        $response = ['resource_response' => ['data' => $data]];
-        $this->request
-            ->shouldReceive('exec')
-            ->andReturn(json_encode($response));
     }
 
     abstract protected function getProviderClass();

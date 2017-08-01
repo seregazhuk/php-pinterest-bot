@@ -30,10 +30,9 @@ class BoardsBaseTest extends ProviderBaseTest
     {
         $provider = $this->getProvider();
         $this->login();
-        $this->setResponse(['username' => 'johnDoe']);
 
+        $this->pinterestShouldReturn(['username' => 'johnDoe']);
         $provider->forMe();
-
 
         // Request to receive user settings
         $this->assertWasGetRequest(UrlBuilder::RESOURCE_GET_USER_SETTINGS);

@@ -51,7 +51,7 @@ class UserTest extends ProviderBaseTest
     public function it_deactivates_current_user()
     {
         $provider = $this->getProvider();
-        $this->setResponse(['id' => 12345]);
+        $this->pinterestShouldReturn(['id' => 12345]);
 
         $provider->deactivate('my reason', 'I want to leave');
 
@@ -63,6 +63,38 @@ class UserTest extends ProviderBaseTest
 
         $this->assertWasGetRequest(UrlBuilder::RESOURCE_GET_USER_SETTINGS);
         $this->assertWasPostRequest(UrlBuilder::RESOURCE_DEACTIVATE_ACCOUNT, $request);
+    }
+
+    /** @test */
+    public function it_invites_new_users_by_email()
+    {
+        $provider = $this->getProvider();
+        $provider->invite('johnDoe@example.com');
+
+        $request = ['email' => 'johnDoe@example.com', 'type' => 'email'];
+
+        $this->assertWasPostRequest(
+            UrlBuilder::RESOURCE_INVITE,
+            $request
+        );
+    }
+
+    /** @test */
+    public function it_clears_current_user_search_history()
+    {
+        $provider = $this->getProvider();
+        $provider->clearSearchHistory();
+
+        $this->assertWasPostRequest(UrlBuilder::RESOURCE_CLEAR_SEARCH_HISTORY);
+    }
+
+    /** @test */
+    public function it_retrieves_current_user_sessions_history()
+    {
+        $provider = $this->getProvider();
+        $provider->sessionsHistory();
+
+        $this->assertWasGetRequest(UrlBuilder::RESOURCE_SESSIONS_HISTORY);
     }
 
     protected function getProviderClass()
