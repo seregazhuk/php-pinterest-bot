@@ -83,12 +83,12 @@ class User extends Provider
      */
     public function deactivate($reason = 'other', $explanation = '')
     {
-        $profile = $this->profile();
+        $id = $this->id();
 
-        if (!isset($profile['id'])) return false;
+        if (!isset($id)) return false;
 
         $request = [
-            'user_id'     => $profile['id'],
+            'user_id'     => $id,
             'reason'      => $reason,
             'explanation' => $explanation,
         ];

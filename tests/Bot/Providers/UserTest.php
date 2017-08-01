@@ -42,9 +42,27 @@ class UserTest extends ProviderBaseTest
 
         $provider->profile($profile);
         $this->assertWasPostRequest(
-          UrlBuilder::RESOURCE_UPDATE_USER_SETTINGS,
+            UrlBuilder::RESOURCE_UPDATE_USER_SETTINGS,
             $profile->toArray()
         );
+    }
+
+    /** @test */
+    public function it_deactivates_current_user()
+    {
+        $provider = $this->getProvider();
+        $this->setResponse(['id' => 12345]);
+
+        $provider->deactivate('my reason', 'I want to leave');
+
+        $request = [
+            'user_id'     => 12345,
+            'reason'      => 'my reason',
+            'explanation' => 'I want to leave',
+        ];
+
+        $this->assertWasGetRequest(UrlBuilder::RESOURCE_GET_USER_SETTINGS);
+        $this->assertWasPostRequest(UrlBuilder::RESOURCE_DEACTIVATE_ACCOUNT, $request);
     }
 
     protected function getProviderClass()
