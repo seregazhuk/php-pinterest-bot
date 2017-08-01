@@ -2,7 +2,6 @@
 
 namespace seregazhuk\PinterestBot\Api\Providers;
 
-use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Api\Traits\Searchable;
@@ -131,7 +130,7 @@ class Pinners extends FollowableProvider
 
     /**
      * @param string $username
-     * @return bool|Response
+     * @return bool
      */
     public function block($username)
     {
@@ -145,7 +144,7 @@ class Pinners extends FollowableProvider
 
     /**
      * @param int $userId
-     * @return bool|Response
+     * @return bool
      */
     public function blockById($userId)
     {
