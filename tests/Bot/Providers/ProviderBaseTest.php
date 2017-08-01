@@ -108,7 +108,5 @@ abstract class ProviderBaseTest extends TestCase
             ->andReturn(json_encode($response));
     }
 
-
-
     abstract protected function getProviderClass();
 }
