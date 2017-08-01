@@ -51,11 +51,7 @@ class User extends Provider
      */
     public function isBanned()
     {
-        $profile = $this->profile();
-
-        return isset($profile['is_write_banned']) ?
-            (bool)$profile['is_write_banned'] :
-            false;
+        return (bool)$this->getProfileData('is_write_banned');
     }
 
     /**
