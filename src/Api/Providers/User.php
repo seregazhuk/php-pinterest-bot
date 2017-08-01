@@ -4,13 +4,14 @@ namespace seregazhuk\PinterestBot\Api\Providers;
 
 use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Api\Forms\Profile;
+use seregazhuk\PinterestBot\Api\Traits\HasProfileSettings;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\Traits\UploadsImages;
 use seregazhuk\PinterestBot\Api\Providers\Core\Provider;
 
 class User extends Provider
 {
-    use UploadsImages;
+    use UploadsImages, HasProfileSettings;
 
     /**
      * @var array
@@ -140,33 +141,6 @@ class User extends Provider
     public function sessionsHistory()
     {
         return $this->get(UrlBuilder::RESOURCE_SESSIONS_HISTORY);
-    }
-
-    /**
-     * Get list of available locales
-     * @return array
-     */
-    public function getLocales()
-    {
-        return $this->get(UrlBuilder::RESOURCE_AVAILABLE_LOCALES);
-    }
-
-    /**
-     * Get list of available countries
-     * @return array
-     */
-    public function getCountries()
-    {
-        return $this->get(UrlBuilder::RESOURCE_AVAILABLE_COUNTRIES);
-    }
-
-    /**
-     * Get list of available account types
-     * @return array
-     */
-    public function getAccountTypes()
-    {
-        return $this->get(UrlBuilder::RESOURCE_AVAILABLE_ACCOUNT_TYPES);
     }
 
     /**
