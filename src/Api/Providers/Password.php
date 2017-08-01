@@ -23,9 +23,10 @@ class Password extends Provider
      */
     public function sendResetLink($user)
     {
-        $request = ['username_or_email' => $user];
-
-        return $this->post(UrlBuilder::RESOURCE_RESET_PASSWORD_SEND_LINK, $request);
+        return $this->post(
+            UrlBuilder::RESOURCE_RESET_PASSWORD_SEND_LINK,
+            ['username_or_email' => $user]
+        );
     }
 
     /**
