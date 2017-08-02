@@ -28,7 +28,16 @@ class InterestsTest extends ProviderBaseTest
 
         $this->assertWasGetRequest(UrlBuilder::RESOURCE_GET_CATEGORY, ['category' => 'some category']);
     }
-    
+
+    /** @test */
+    public function it_returns_related_topics_for_a_specified_interest()
+    {
+        $provider = $this->getProvider();
+        $provider->getRelatedTopics('interest-name');
+
+        $this->assertWasGetRequest(UrlBuilder::RESOURCE_GET_CATEGORIES_RELATED, ['interest_name' => 'interest-name']);
+    }
+
     /**
      * @return string
      */
