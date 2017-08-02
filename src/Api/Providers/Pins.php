@@ -89,7 +89,7 @@ class Pins extends EntityProvider
             'board_id'    => $boardId,
         ];
 
-        $this->post($requestOptions, UrlBuilder::RESOURCE_CREATE_PIN);
+        $this->post(UrlBuilder::RESOURCE_CREATE_PIN, $requestOptions);
 
         return $this->response->getResponseData();
     }
@@ -105,11 +105,9 @@ class Pins extends EntityProvider
      */
     public function edit($pindId, $description = '', $link = '', $boardId = null)
     {
-        $requestOptions = [
-            'id'          => $pindId,
-            'description' => stripslashes($description),
+        $requestOptions = ['id' => $pindId];
 
-        ];
+        if(!empty($description)) $requestOptions['description'] = $description;
 
         if (!is_null($boardId)) $requestOptions['board_id'] = $boardId;
 
