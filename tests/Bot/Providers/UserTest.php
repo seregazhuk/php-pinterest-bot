@@ -97,6 +97,24 @@ class UserTest extends ProviderBaseTest
         $this->assertWasGetRequest(UrlBuilder::RESOURCE_SESSIONS_HISTORY);
     }
 
+    /** @test */
+    public function it_returns_list_of_available_locales()
+    {
+        $provider = $this->getProvider();
+        $provider->getLocales();
+
+        $this->assertWasGetRequest(UrlBuilder::RESOURCE_AVAILABLE_LOCALES);
+    }
+
+    /** @test */
+    public function it_returns_list_of_available_countries()
+    {
+        $provider = $this->getProvider();
+        $provider->getCountries();
+
+        $this->assertWasGetRequest(UrlBuilder::RESOURCE_AVAILABLE_COUNTRIES);
+    }
+
     protected function getProviderClass()
     {
         return User::class;
