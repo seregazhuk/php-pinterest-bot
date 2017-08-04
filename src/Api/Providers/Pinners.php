@@ -148,9 +148,9 @@ class Pinners extends FollowableProvider
      */
     public function blockById($userId)
     {
-        $data = ['blocked_user_id' => $userId];
-
-        return $this->post(UrlBuilder::RESOURCE_BLOCK_USER, $data);
+        return $this->post(
+            UrlBuilder::RESOURCE_BLOCK_USER, ['blocked_user_id' => $userId]
+        );
     }
 
     /**
