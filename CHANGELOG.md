@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
  - Inbox `contactRequests()` method requires being logged in.
  - Inbox `ignoreContactRequests()` method renamed to `ignoreContactRequest.
  - Pins `moveToBoard()` removed pins description.
+ - PHPUnit version updated to 5.7.
  
 ### Added:
  - Pins `share()` to get link for sharing a pin and asking for reacting (like/dislike).
