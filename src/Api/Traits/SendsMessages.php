@@ -16,6 +16,9 @@ trait SendsMessages
 {
     use HandlesRequest;
 
+    /**
+     * @return array
+     */
     protected function requiresLoginForSendsMessages()
     {
         return [

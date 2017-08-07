@@ -10,6 +10,9 @@ trait TryIt
 {
     use HandlesRequest, UploadsImages;
 
+    /**
+     * @return array
+     */
     protected function requiresLoginForTryIt()
     {
         return [
