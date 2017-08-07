@@ -34,6 +34,18 @@ class TryItTest extends PinsTest
     }
 
     /** @test */
+    public function a_user_can_delete_a_try_it_record()
+    {
+        $provider = $this->getProvider();
+        $provider->deleteTryIt('1234567');
+
+        $this->assertWasPostRequest(
+            UrlBuilder::RESOURCE_TRY_PIN_DELETE,
+            ['user_did_it_data_id' => '1234567']
+        );
+    }
+
+    /** @test */
     public function it_can_fetch_users_who_have_tried_a_pin()
     {
         $provider = $this->getProvider();
