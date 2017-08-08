@@ -33,4 +33,13 @@ class ProfileSettingsTest extends UserTest
 
         $this->assertWasGetRequest(UrlBuilder::RESOURCE_AVAILABLE_COUNTRIES);
     }
+
+    /** @test */
+    public function it_returns_list_of_available_account_types()
+    {
+        $provider = $this->getProvider();
+        $provider->getAccountTypes();
+
+        $this->assertWasGetRequest(UrlBuilder::RESOURCE_AVAILABLE_ACCOUNT_TYPES);
+    }
 }
