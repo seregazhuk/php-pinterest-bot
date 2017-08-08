@@ -54,6 +54,24 @@ class InboxTest extends ProviderBaseTest
         );
     }
 
+    /** @test */
+    public function it_fetches_current_user_news()
+    {
+        $provider = $this->getProvider();
+        $provider->news()->toArray();
+
+        $this->assertWasGetRequest(UrlBuilder::RESOURCE_GET_LATEST_NEWS, ['allow_stale' => true]);
+    }
+
+    /** @test */
+    public function it_fetches_current_user_notifications()
+    {
+        $provider = $this->getProvider();
+        $provider->notifications()->toArray();
+
+        $this->assertWasGetRequest(UrlBuilder::RESOURCE_GET_NOTIFICATIONS);
+    }
+
     /**
      * @param string $requestId
      * @return array
