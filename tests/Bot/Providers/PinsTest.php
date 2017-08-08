@@ -42,6 +42,26 @@ class PinsTest extends ProviderBaseTest
         $this->assertWasGetRequest(UrlBuilder::RESOURCE_PIN_INFO, $request);
     }
 
+    /** @test */
+    public function it_fetches_pins_for_a_specified_source()
+    {
+        $provider = $this->getProvider();
+        $provider->fromSource('http://flickr.com')->toArray();
+
+        $this->assertWasGetRequest(UrlBuilder::RESOURCE_DOMAIN_FEED, ['domain' => 'http://flickr.com']);
+    }
+
+    /** @test */
+    public function it_fetches_users_activity_for_a_specified_pin()
+    {
+        $provider = $this->getProvider();
+        $this->pinterestShouldReturn(['aggregated_pin_data' => ['id' => '123456']]);
+
+        $provider->activity('123456')->toArray();
+
+        $this->assertWasGetRequest(UrlBuilder::RESOURCE_ACTIVITY, ['aggregated_pin_data_id' => '123456']);
+    }
+
     /**
      * @return string
      */
