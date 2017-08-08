@@ -171,7 +171,7 @@ class User extends Provider
      */
     protected function getProfileData($key)
     {
-        $profile = $this->profile();
+        $profile = $this->getProfile();
 
         return isset($profile[$key]) ? $profile[$key] : '';
     }

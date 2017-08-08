@@ -2,9 +2,14 @@
 
 namespace seregazhuk\tests\Bot\Providers;
 
+use seregazhuk\PinterestBot\Api\Providers\Pins;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 
-class TryItTest extends PinsTest
+/**
+ * Class TryItTest
+ * @method Pins getProvider()
+ */
+class TryItTest extends ProviderBaseTest
 {
     /** @test */
     public function a_user_can_try_a_pin()
@@ -59,5 +64,13 @@ class TryItTest extends PinsTest
             'aggregated_pin_data_id' => '56789'
         ];
         $this->assertWasGetRequest(UrlBuilder::RESOURCE_ACTIVITY, $request);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getProviderClass()
+    {
+        return Pins::class;
     }
 }

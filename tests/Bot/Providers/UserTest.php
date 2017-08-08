@@ -90,6 +90,36 @@ class UserTest extends ProviderBaseTest
         $this->assertWasPostRequest(UrlBuilder::RESOURCE_CLEAR_SEARCH_HISTORY);
     }
 
+    /** @test */
+    public function it_fetches_current_user_name()
+    {
+        $provider = $this->getProvider();
+        $this->pinterestShouldReturn(['username' => 'johnDoe']);
+
+        $this->assertEquals('johnDoe', $provider->username());
+    }
+
+    /** @test */
+    public function it_fetches_current_user_id()
+    {
+        $provider = $this->getProvider();
+        $this->pinterestShouldReturn(['id' => '12345']);
+
+        $this->assertEquals('12345', $provider->id());
+    }
+
+    /** @test */
+    public function it_fetches_current_user_ban_status()
+    {
+        $provider = $this->getProvider();
+
+        $this->pinterestShouldReturn(['is_write_banned' => true], $times = 1);
+        $this->assertTrue($provider->isBanned());
+
+        $this->pinterestShouldReturn(['is_write_banned' => false], $times = 1);
+        $this->assertFalse($provider->isBanned());
+    }
+
     protected function getProviderClass()
     {
         return User::class;

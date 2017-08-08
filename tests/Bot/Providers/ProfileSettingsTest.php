@@ -2,11 +2,15 @@
 
 namespace seregazhuk\tests\Bot\Providers;
 
+use seregazhuk\PinterestBot\Api\Providers\User;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 
-class ProfileSettingsTest extends UserTest
+/**
+ * Class ProfileSettingsTest
+ * @method User getProvider()
+ */
+class ProfileSettingsTest extends ProviderBaseTest
 {
-
     /** @test */
     public function it_retrieves_current_user_sessions_history()
     {
@@ -41,5 +45,10 @@ class ProfileSettingsTest extends UserTest
         $provider->getAccountTypes();
 
         $this->assertWasGetRequest(UrlBuilder::RESOURCE_AVAILABLE_ACCOUNT_TYPES);
+    }
+
+    protected function getProviderClass()
+    {
+        return User::class;
     }
 }

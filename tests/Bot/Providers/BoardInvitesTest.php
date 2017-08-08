@@ -2,9 +2,14 @@
 
 namespace seregazhuk\tests\Bot\Providers;
 
+use seregazhuk\PinterestBot\Api\Providers\Boards;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 
-class BoardInvitesTest extends BoardsTest
+/**
+ * Class BoardInvitesTest
+ * @method Boards getProvider()
+ */
+class BoardInvitesTest extends ProviderBaseTest
 {
     /** @test */
     public function it_returns_invites_for_a_current_user()
@@ -48,5 +53,10 @@ class BoardInvitesTest extends BoardsTest
             'board_id'        => '12345',
             'invited_user_id' => '56789',
         ]);
+    }
+
+    protected function getProviderClass()
+    {
+        return Boards::class;
     }
 }

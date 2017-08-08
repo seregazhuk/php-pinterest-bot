@@ -60,14 +60,16 @@ abstract class ProviderBaseTest extends TestCase
 
     /**
      * @param mixed $data
+     * @param null $times
      * @return $this
      */
-    public function pinterestShouldReturn($data)
+    public function pinterestShouldReturn($data, $times = null)
     {
         $response = ['resource_response' => ['data' => $data]];
 
         $this->request
             ->shouldReceive('exec')
+            ->times($times)
             ->andReturn(json_encode($response));
 
         return $this;
