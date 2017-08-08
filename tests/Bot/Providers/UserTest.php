@@ -51,6 +51,8 @@ class UserTest extends ProviderBaseTest
     public function it_deactivates_current_user()
     {
         $provider = $this->getProvider();
+
+        // To resolve a current user id
         $this->pinterestShouldReturn(['id' => 12345]);
 
         $provider->deactivate('my reason', 'I want to leave');

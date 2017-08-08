@@ -24,7 +24,10 @@ class PinnersTest extends ProviderBaseTest
     public function it_can_block_user_by_name()
     {
         $provider = $this->getProvider();
+
+        // Used to resolve a user by name
         $this->pinterestShouldReturn(['id' => '12345']);
+
         $provider->block('johnDoe');
 
         $this->assertWasPostRequest(UrlBuilder::RESOURCE_BLOCK_USER, ['blocked_user_id' => '12345']);
