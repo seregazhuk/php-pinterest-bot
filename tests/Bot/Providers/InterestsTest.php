@@ -38,6 +38,18 @@ class InterestsTest extends ProviderBaseTest
         $this->assertWasGetRequest(UrlBuilder::RESOURCE_GET_CATEGORIES_RELATED, ['interest_name' => 'interest-name']);
     }
 
+    /** @test */
+    public function it_fetches_pins_for_a_specified_interest()
+    {
+        $provider = $this->getProvider();
+        $provider->pins('some-interest')->toArray();
+
+        $this->assertWasGetRequest(UrlBuilder::RESOURCE_GET_CATEGORY_FEED, [
+            'feed'             => 'some-interest',
+            'is_category_feed' => true,
+        ]);
+    }
+
     /**
      * @return string
      */

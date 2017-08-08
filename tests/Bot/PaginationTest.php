@@ -125,6 +125,14 @@ class PaginationTest extends TestCase
 
         $this->assertCount(0, $pagination->toArray());
     }
+
+    /** @test */
+    public function it_has_helper_to_retrieve_an_iterator()
+    {
+        $pagination = (new Pagination())->get();
+
+        $this->assertInstanceOf(\Traversable::class, $pagination);
+    }
 }
 
 
