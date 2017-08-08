@@ -9,7 +9,7 @@ use seregazhuk\PinterestBot\Helpers\UrlBuilder;
  * Class AuthTest
  * @method Auth getProvider()
  */
-class AuthBaseTest extends ProviderBaseTest
+class AuthTest extends ProviderBaseTest
 {
     /** @test */
     public function it_converts_simple_account_to_a_business_one()
