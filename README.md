@@ -593,9 +593,13 @@ $firstTopicId = $trendingTopics[0]['id'];
 $pins = $bot->pins->explore($firstTopicId)->toArray();
 ```
 
-Get visual similar pins:
+Get visual similar pins (returns [Pagination](#pagination) object):
 ```php
-$result = $bot->pins->visualSimilar($pinId);
+$result = $bot->pins->visualSimilar($pinId)->toArray();
+
+foreach($bot->pins->visualSimilar($pinId) as $similarData) {
+    // ...
+}
 ```
 
 Send pin with message or by email:

@@ -275,14 +275,15 @@ class Pins extends EntityProvider
 
     /**
      * @param string $pinId
-     * @param array $crop
-     * @return array|bool
+     * @param int $limit
+     * @return Pagination
      */
-    public function visualSimilar($pinId, array $crop = [])
+    public function visualSimilar($pinId, $limit = Pagination::DEFAULT_LIMIT)
     {
         $data = [
             'pin_id'          => $pinId,
-            'crop'            => $crop ?: [
+            // Some magic numbers, I have no idea about them
+            'crop'            => [
                 "x"                => 0.16,
                 "y"                => 0.16,
                 "w"                => 0.66,
@@ -293,7 +294,7 @@ class Pins extends EntityProvider
             'keep_duplicates' => false,
         ];
 
-        return $this->get(UrlBuilder::RESOURCE_VISUAL_SIMILAR_PINS, $data);
+        return $this->paginate(UrlBuilder::RESOURCE_VISUAL_SIMILAR_PINS, $data, $limit);
     }
 
     /**

@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
  - Inbox `ignoreContactRequests()` method renamed to `ignoreContactRequest.
  - Pins `moveToBoard()` removed pins description.
  - PHPUnit version updated to 5.7.
+ - Pins `visualSimilar()` returns Pagination.
  
 ### Added:
  - Pins `share()` to get link for sharing a pin and asking for reacting (like/dislike).
