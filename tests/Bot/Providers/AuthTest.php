@@ -36,6 +36,15 @@ class AuthTest extends ProviderBaseTest
         $this->assertWasGetRequest('http://some-link-form-email.com');
     }
 
+    /** @test */
+    public function it_delegates_logout_to_request_object()
+    {
+        $provider = $this->getProvider();
+
+        $provider->logout();
+        $this->assertFalse($this->request->isLoggedIn());
+    }
+
     protected function getProviderClass()
     {
         return Auth::class;

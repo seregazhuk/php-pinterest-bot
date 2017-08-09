@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
  - Pins `moveToBoard()` removed pins description.
  - PHPUnit version updated to 5.7.
  - Pins `visualSimilar()` returns Pagination.
+ - Password `reset()` for invalid links.
  
 ### Added:
  - Pins `share()` to get link for sharing a pin and asking for reacting (like/dislike).

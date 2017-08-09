@@ -34,7 +34,7 @@ class Password extends Provider
      *
      * @param string $link
      * @param string $newPassword
-     * @return bool|Response
+     * @return bool
      */
     public function reset($link, $newPassword)
     {
@@ -43,10 +43,18 @@ class Password extends Provider
         $this->request->dropCookies();
 
         $urlData = $this->parseCurrentUrl();
+
+        if(!isset($urlData['query']) || !isset($urlData['path'])) return false;
+
         $username = trim(str_replace('/pw/', '', $urlData['path']), '/');
 
         $query = [];
+
+
         parse_str($urlData['query'], $query);
+
+        if(!isset($query['e']) || !isset($query['t'])) return false;
+
         $request = [
             'username'             => $username,
             'new_password'         => $newPassword,

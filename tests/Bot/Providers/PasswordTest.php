@@ -37,6 +37,27 @@ class PasswordTest extends ProviderBaseTest
         $this->assertWasPostRequest(UrlBuilder::RESOURCE_CHANGE_PASSWORD, $request);
     }
 
+    /** @test */
+    public function it_returns_false_when_reset_password_with_invalid_link()
+    {
+        $provider = $this->getProvider();
+        $this->assertFalse($provider->reset('http://example.com', 'newPassword'));
+    }
+
+
+    /** @test */
+    public function it_restores_a_password_by_a_link_from_email()
+    {
+        $provider = $this->getProvider();
+        $this->request
+            ->shouldReceive('getCurrentUrl')
+            ->andReturn('http://example.com/some-path/?t=token&e=12345');
+
+        $this->pinterestShouldReturn(true);
+
+        $this->assertTrue($provider->reset('http://example.com/some-path/?t=token&e=12345', 'newPassword'));
+    }
+
     /**
      * @return string
      */
