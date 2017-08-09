@@ -43,6 +43,18 @@ class TopicsTest extends ProviderBaseTest
         $this->assertWasGetRequest(UrlBuilder::RESOURCE_GET_CATEGORIES_RELATED, ['interest_name' => 'topic-name']);
     }
 
+    /** @test */
+    public function it_fetches_pins_for_a_specified_topic()
+    {
+        $provider = $this->getProvider();
+        $provider->pins('topic-name')->toArray();
+
+        $this->assertWasGetRequest(UrlBuilder::RESOURCE_GET_TOPIC_FEED, [
+            'interest'  => 'topic-name',
+            'pins_only' => false,
+        ]);
+    }
+
     protected function getProviderClass()
     {
         return Topics::class;
