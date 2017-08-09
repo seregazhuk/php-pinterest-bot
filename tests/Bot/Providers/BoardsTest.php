@@ -126,6 +126,15 @@ class BoardsTest extends ProviderBaseTest
         $this->assertWasPostRequest(UrlBuilder::RESOURCE_UPDATE_BOARD, $expectedRequest);
     }
 
+    /** @test */
+    public function it_fetches_pins_from_a_specified_board()
+    {
+        $provider = $this->getProvider();
+        $provider->pins('12345')->toArray();
+
+        $this->assertWasGetRequest(UrlBuilder::RESOURCE_GET_BOARD_FEED, ['board_id' => '12345']);
+    }
+
     protected function getProviderClass()
     {
         return Boards::class;
