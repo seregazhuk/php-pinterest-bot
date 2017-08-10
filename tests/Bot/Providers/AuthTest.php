@@ -42,7 +42,8 @@ class AuthTest extends ProviderBaseTest
         $provider = $this->getProvider();
 
         $provider->logout();
-        $this->assertFalse($this->request->isLoggedIn());
+
+        $this->request->shouldHaveReceived('logout');
     }
 
     protected function getProviderClass()

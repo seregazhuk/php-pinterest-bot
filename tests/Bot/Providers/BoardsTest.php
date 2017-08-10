@@ -135,6 +135,15 @@ class BoardsTest extends ProviderBaseTest
         $this->assertWasGetRequest(UrlBuilder::RESOURCE_GET_BOARD_FEED, ['board_id' => '12345']);
     }
 
+    /** @test */
+    public function it_deletes_a_board()
+    {
+        $provider = $this->getProvider();
+        $provider->delete('12345');
+
+        $this->assertWasPostRequest(UrlBuilder::RESOURCE_DELETE_BOARD, ['board_id' => '12345']);
+    }
+
     protected function getProviderClass()
     {
         return Boards::class;
