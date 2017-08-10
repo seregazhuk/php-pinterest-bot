@@ -71,6 +71,15 @@ class PinsTest extends ProviderBaseTest
         $this->assertWasPostRequest(UrlBuilder::RESOURCE_DELETE_PIN, ['id' => '12345']);
     }
 
+    /** @test */
+    public function it_fetches_analytics_about_a_pin()
+    {
+        $provider = $this->getProvider();
+        $provider->analytics('12345');
+
+        $this->assertWasGetRequest(UrlBuilder::RESOURCE_PIN_ANALYTICS, ['pin_id' => '12345']);
+    }
+
     /**
      * @return string
      */
