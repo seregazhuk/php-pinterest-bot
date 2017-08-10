@@ -80,6 +80,61 @@ class PinsTest extends ProviderBaseTest
         $this->assertWasGetRequest(UrlBuilder::RESOURCE_PIN_ANALYTICS, ['pin_id' => '12345']);
     }
 
+    /** @test */
+    public function it_fetches_trending_pins()
+    {
+        $provider = $this->getProvider();
+        $provider->explore($topicId = '12345')->toArray();
+
+        $request = [
+            "aux_fields" => [],
+            "prepend"    => false,
+            "offset"     => 180,
+            "section_id" => '12345',
+        ];
+        $this->assertWasGetRequest(UrlBuilder::RESOURCE_EXPLORE_PINS, $request);
+    }
+
+    /** @test */
+    public function it_fetches_visual_similar_pins_for_a_specified_one()
+    {
+        $provider = $this->getProvider();
+        $provider->visualSimilar('12345')->toArray();
+
+        $request = [
+            'pin_id'          => '12345',
+            // Some magic numbers, I have no idea about them
+            'crop'            => [
+                "x"                => 0.16,
+                "y"                => 0.16,
+                "w"                => 0.66,
+                "h"                => 0.66,
+                "num_crop_actions" => 1,
+            ],
+            'force_refresh'   => true,
+            'keep_duplicates' => false,
+        ];
+        $this->assertWasGetRequest(UrlBuilder::RESOURCE_VISUAL_SIMILAR_PINS, $request);
+    }
+
+    /** @test */
+    public function it_fetches_related_pins_for_a_specified_one()
+    {
+        $provider = $this->getProvider();
+        $provider->related('12345')->toArray();
+
+        $this->assertWasGetRequest(UrlBuilder::RESOURCE_RELATED_PINS, ['pin' => '12345', 'add_vase' => true]);
+    }
+
+    /** @test */
+    public function it_returns_a_current_user_feed()
+    {
+        $provider = $this->getProvider();
+        $provider->feed()->toArray();
+
+        $this->assertWasGetRequest(UrlBuilder::RESOURCE_USER_FEED);
+    }
+
     /**
      * @return string
      */
