@@ -135,6 +135,18 @@ class PinsTest extends ProviderBaseTest
         $this->assertWasGetRequest(UrlBuilder::RESOURCE_USER_FEED);
     }
 
+    /** @test */
+    public function a_user_can_search_in_own_pins()
+    {
+        $provider = $this->getProvider();
+        $provider->searchInMyPins('query')->toArray();
+
+        $this->assertWasGetRequest(UrlBuilder::RESOURCE_SEARCH, [
+            'scope' => 'my_pins',
+            'query' => 'query',
+        ]);
+    }
+
     /**
      * @return string
      */
