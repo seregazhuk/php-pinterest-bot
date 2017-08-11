@@ -69,6 +69,20 @@ class TopicsTest extends ProviderBaseTest
             ]);
     }
 
+    /** @test */
+    public function a_user_can_unfollow_a_topic()
+    {
+        $provider = $this->getProvider();
+        $provider->unfollow('12345');
+
+        $this->assertWasPostRequest(
+            UrlBuilder::RESOURCE_UNFOLLOW_INTEREST,
+            [
+                'interest_id' => '12345',
+                'interest_list' => 'favorited'
+            ]);
+    }
+
     protected function getProviderClass()
     {
         return Topics::class;

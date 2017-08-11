@@ -154,6 +154,16 @@ class BoardsTest extends ProviderBaseTest
         $this->assertWasPostRequest(UrlBuilder::RESOURCE_FOLLOW_BOARD, ['board_id' => '12345']);
     }
 
+    /** @test */
+    public function a_user_can_unfollow_a_board()
+    {
+        $provider = $this->getProvider();
+
+        $provider->unfollow('12345');
+
+        $this->assertWasPostRequest(UrlBuilder::RESOURCE_UNFOLLOW_BOARD, ['board_id' => '12345']);
+    }
+
     protected function getProviderClass()
     {
         return Boards::class;
