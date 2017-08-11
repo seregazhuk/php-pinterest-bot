@@ -55,6 +55,20 @@ class TopicsTest extends ProviderBaseTest
         ]);
     }
 
+    /** @test */
+    public function a_user_can_follow_a_topic()
+    {
+        $provider = $this->getProvider();
+        $provider->follow('12345');
+
+        $this->assertWasPostRequest(
+            UrlBuilder::RESOURCE_FOLLOW_INTEREST,
+            [
+                'interest_id' => '12345',
+                'interest_list' => 'favorited'
+            ]);
+    }
+
     protected function getProviderClass()
     {
         return Topics::class;

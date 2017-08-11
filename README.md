@@ -680,7 +680,7 @@ Follow/unfollow user. You can use both id or username.
 ```php
 $bot->pinners->follow($userId);
 $bot->pinners->unfollow($userId);
-
+// or
 $bot->pinners->follow($username);
 $bot->pinners->unfollow($username);
 ```

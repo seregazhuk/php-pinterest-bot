@@ -117,6 +117,17 @@ class PinnersTest extends ProviderBaseTest
         $this->assertWasGetRequest(UrlBuilder::RESOURCE_USER_FOLLOWERS, ['username' => 'johnDoe']);
     }
 
+    /** @test */
+    public function a_user_can_follow_another_user()
+    {
+        $provider = $this->getProvider();
+        $this->pinterestShouldReturn(['id' => '12345']);
+
+        $provider->follow('johnDoe');
+
+        $this->assertWasPostRequest(UrlBuilder::RESOURCE_FOLLOW_USER, ['user_id' => '12345']);
+    }
+
     protected function getProviderClass()
     {
         return Pinners::class;
