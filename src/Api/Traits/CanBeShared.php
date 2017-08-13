@@ -47,6 +47,7 @@ trait CanBeShared
 
         $response = $this->post(UrlBuilder::RESOURCE_SHARE_VIA_SOCIAL, $request, true);
 
+        var_dump($response);
         return isset($response['invite_url']) ? $response['invite_url'] : '';
     }
 
