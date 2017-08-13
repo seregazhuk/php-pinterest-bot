@@ -121,10 +121,10 @@ abstract class Provider
     {
         $loginRequired = [];
 
-        foreach (class_parents($this) + class_uses_recursive($this) as $trait) {
-            $class = basename(str_replace('\\', '/', $trait));
+        foreach (class_parents($this) + class_uses_recursive($this) as $traitOrParent) {
+            $class = basename(str_replace('\\', '/', $traitOrParent));
 
-            if (method_exists($trait, $method = 'requiresLoginFor' . $class)) {
+            if (method_exists($traitOrParent, $method = 'requiresLoginFor' . $class)) {
                 $loginRequired = array_merge($loginRequired, forward_static_call([$this, $method]));
             }
         }

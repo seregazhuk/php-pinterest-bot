@@ -22,6 +22,15 @@ class RegistrationTest extends ProviderBaseTest
         $this->assertWasPostRequest(UrlBuilder::RESOURCE_CREATE_REGISTER, $form->toArray());
     }
 
+    /** @test */
+    public function it_converts_account_to_business_type_when_registering_a_business_account()
+    {
+        $provider = $this->getProvider();
+        $provider->registerBusiness('johndoe@example.com', 'secret', 'johnDoe');
+
+        $this->assertWasPostRequest(UrlBuilder::RESOURCE_CONVERT_TO_BUSINESS);
+    }
+
     protected function getProviderClass()
     {
         return Auth::class;

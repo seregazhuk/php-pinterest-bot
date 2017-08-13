@@ -47,8 +47,17 @@ abstract class ProviderBaseTest extends TestCase
         $postString = Request::createQuery($requestData);
 
         $this->request
-            ->shouldHaveReceived('exec')
-            ->withArgs([$url, $postString]);
+            ->shouldHaveReceived('exec');
+
+        // When request data is empty we validate only request url.
+        // Otherwise we check for both params.
+        if(empty($requestData)){
+            $this->request->with(function($actualUrl) use ($url) {
+                return $actualUrl == $url;
+            });
+        } else {
+            $this->request->withArgs([$url, $postString]);
+        }
     }
 
     public function login()
