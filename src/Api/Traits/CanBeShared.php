@@ -21,16 +21,26 @@ trait CanBeShared
     }
 
     /**
-     * @param string $pinId
+     * @param int $pinId
      * @return string
      */
-    public function share($pinId)
+    public function shareViaTwitter($pinId)
+    {
+        return $this->share($pinId, $twitterChannel = 9);
+    }
+
+    /**
+     * @param string $pinId
+     * @param int $channel By default uses 12 (share via link)
+     * @return string
+     */
+    public function share($pinId, $channel = 12)
     {
         $request = [
             "invite_type" => [
                 "invite_category" => 3, // magic numbers, but I have
                 "invite_object"   => 1, // no idea what do they mean
-                "invite_channel"  => $linkChannel = 12,
+                "invite_channel"  => $channel,
             ],
             "object_id"   => $pinId,
         ];
