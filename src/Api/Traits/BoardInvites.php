@@ -9,7 +9,7 @@ trait BoardInvites
     use HandlesRequest;
 
     /**
-     * @return array
+     * @return string[]
      */
     protected function requiresLoginForBoardInvites()
     {
