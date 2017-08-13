@@ -8,6 +8,7 @@ use seregazhuk\PinterestBot\Helpers\FileHelper;
 use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\Traits\Searchable;
+use seregazhuk\PinterestBot\Api\Traits\CanBeShared;
 use seregazhuk\PinterestBot\Api\Traits\CanBeDeleted;
 use seregazhuk\PinterestBot\Api\Traits\SendsMessages;
 use seregazhuk\PinterestBot\Api\Providers\Core\EntityProvider;
@@ -17,7 +18,8 @@ class Pins extends EntityProvider
     use Searchable,
         CanBeDeleted,
         SendsMessages,
-        TryIt;
+        TryIt,
+        CanBeShared;
 
     /**
      * @var array
@@ -87,7 +89,7 @@ class Pins extends EntityProvider
             'board_id'    => $boardId,
         ];
 
-        $this->post($requestOptions, UrlBuilder::RESOURCE_CREATE_PIN);
+        $this->post(UrlBuilder::RESOURCE_CREATE_PIN, $requestOptions);
 
         return $this->response->getResponseData();
     }
@@ -103,17 +105,15 @@ class Pins extends EntityProvider
      */
     public function edit($pindId, $description = '', $link = '', $boardId = null)
     {
-        $requestOptions = [
-            'id'          => $pindId,
-            'description' => stripslashes($description),
+        $requestOptions = ['id' => $pindId];
 
-        ];
+        if(!empty($description)) $requestOptions['description'] = $description;
 
         if (!is_null($boardId)) $requestOptions['board_id'] = $boardId;
 
         if (!empty($link)) $requestOptions['link'] = stripslashes($link);
 
-        return $this->post($requestOptions, UrlBuilder::RESOURCE_UPDATE_PIN);
+        return $this->post(UrlBuilder::RESOURCE_UPDATE_PIN, $requestOptions);
     }
 
     /**
@@ -146,7 +146,7 @@ class Pins extends EntityProvider
             'pin_id'      => $repinId,
         ];
 
-        $this->post($requestOptions, UrlBuilder::RESOURCE_REPIN);
+        $this->post(UrlBuilder::RESOURCE_REPIN, $requestOptions);
 
         return $this->response->getResponseData();
     }
@@ -164,7 +164,7 @@ class Pins extends EntityProvider
             'field_set_key' => 'detailed',
         ];
 
-        return $this->get($requestOptions, UrlBuilder::RESOURCE_PIN_INFO);
+        return $this->get(UrlBuilder::RESOURCE_PIN_INFO, $requestOptions);
     }
 
     /**
@@ -179,7 +179,7 @@ class Pins extends EntityProvider
     {
         $data = ['domain' => $source];
 
-        return $this->paginate($data, UrlBuilder::RESOURCE_DOMAIN_FEED, $limit);
+        return $this->paginate(UrlBuilder::RESOURCE_DOMAIN_FEED, $data, $limit);
     }
 
     /**
@@ -208,7 +208,7 @@ class Pins extends EntityProvider
 
         $additionalData['aggregated_pin_data_id'] = $aggregatedPinId;
 
-        return $this->paginate($additionalData, UrlBuilder::RESOURCE_ACTIVITY, $limit);
+        return $this->paginate(UrlBuilder::RESOURCE_ACTIVITY, $additionalData, $limit);
     }
 
     /**
@@ -219,7 +219,7 @@ class Pins extends EntityProvider
      */
     public function feed($limit = Pagination::DEFAULT_LIMIT)
     {
-        return $this->paginate([], UrlBuilder::RESOURCE_USER_FEED, $limit);
+        return $this->paginate(UrlBuilder::RESOURCE_USER_FEED, [], $limit);
     }
 
     /**
@@ -234,7 +234,7 @@ class Pins extends EntityProvider
             'add_vase' => true,
         ];
 
-        return $this->paginate($requestData, UrlBuilder::RESOURCE_RELATED_PINS, $limit);
+        return $this->paginate(UrlBuilder::RESOURCE_RELATED_PINS, $requestData, $limit);
     }
 
     /**
@@ -275,14 +275,15 @@ class Pins extends EntityProvider
 
     /**
      * @param string $pinId
-     * @param array $crop
-     * @return array|bool
+     * @param int $limit
+     * @return Pagination
      */
-    public function visualSimilar($pinId, array $crop = [])
+    public function visualSimilar($pinId, $limit = Pagination::DEFAULT_LIMIT)
     {
         $data = [
             'pin_id'          => $pinId,
-            'crop'            => $crop ?: [
+            // Some magic numbers, I have no idea about them
+            'crop'            => [
                 "x"                => 0.16,
                 "y"                => 0.16,
                 "w"                => 0.66,
@@ -293,7 +294,7 @@ class Pins extends EntityProvider
             'keep_duplicates' => false,
         ];
 
-        return $this->get($data, UrlBuilder::RESOURCE_VISUAL_SIMILAR_PINS);
+        return $this->paginate(UrlBuilder::RESOURCE_VISUAL_SIMILAR_PINS, $data, $limit);
     }
 
     /**
@@ -348,7 +349,7 @@ class Pins extends EntityProvider
             "section_id" => $topicId,
         ];
 
-        return $this->paginate($data, UrlBuilder::RESOURCE_EXPLORE_PINS, $limit);
+        return $this->paginate(UrlBuilder::RESOURCE_EXPLORE_PINS, $data, $limit);
     }
 
     /**
@@ -358,7 +359,10 @@ class Pins extends EntityProvider
      */
     public function analytics($pinId)
     {
-        return $this->get(['pin_id' => $pinId], UrlBuilder::RESOURCE_PIN_ANALYTICS);
+        // Pinterest requires pinId to be a string
+        $pinId = (string)$pinId;
+
+        return $this->get(UrlBuilder::RESOURCE_PIN_ANALYTICS, ['pin_id' => $pinId]);
     }
 
     /**
@@ -370,7 +374,7 @@ class Pins extends EntityProvider
      */
     protected function likePinMethodCall($pinId, $resourceUrl)
     {
-        return $this->post(['pin_id' => $pinId], $resourceUrl);
+        return $this->post($resourceUrl, ['pin_id' => $pinId]);
     }
 
     /**
@@ -410,6 +414,6 @@ class Pins extends EntityProvider
             'pin_ids'  => $pinIds,
         ];
 
-        return $this->post($data, $editUrl);
+        return $this->post($editUrl, $data);
     }
 }

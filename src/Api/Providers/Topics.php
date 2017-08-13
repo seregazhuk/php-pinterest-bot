@@ -24,7 +24,7 @@ class Topics extends FollowableProvider
      */
     public function info($topic)
     {
-        return $this->get(["interest" => $topic], UrlBuilder::RESOURCE_GET_TOPIC);
+        return $this->get(UrlBuilder::RESOURCE_GET_TOPIC, ['interest' => $topic]);
     }
 
     /**
@@ -41,7 +41,7 @@ class Topics extends FollowableProvider
             'pins_only' => false,
         ];
 
-        return $this->paginate($data, UrlBuilder::RESOURCE_GET_TOPIC_FEED, $limit);
+        return $this->paginate(UrlBuilder::RESOURCE_GET_TOPIC_FEED, $data, $limit);
     }
 
     /**
@@ -54,10 +54,10 @@ class Topics extends FollowableProvider
     public function explore()
     {
         $data = [
-            "aux_fields" => [],
-            "offset"     => 180,
+            'aux_fields' => [],
+            'offset'     => 180,
         ];
 
-        return $this->get($data, UrlBuilder::RESOURCE_EXPLORE_SECTIONS);
+        return $this->get(UrlBuilder::RESOURCE_EXPLORE_SECTIONS, $data);
     }
 }

@@ -23,9 +23,10 @@ class Password extends Provider
      */
     public function sendResetLink($user)
     {
-        $request = ['username_or_email' => $user];
-
-        return $this->post($request, UrlBuilder::RESOURCE_RESET_PASSWORD_SEND_LINK);
+        return $this->post(
+            UrlBuilder::RESOURCE_RESET_PASSWORD_SEND_LINK,
+            ['username_or_email' => $user]
+        );
     }
 
     /**
@@ -33,19 +34,27 @@ class Password extends Provider
      *
      * @param string $link
      * @param string $newPassword
-     * @return bool|Response
+     * @return bool
      */
     public function reset($link, $newPassword)
     {
         // Visit link to get current reset token, username and token expiration
-        $this->get([], $link);
+        $this->get($link);
         $this->request->dropCookies();
 
         $urlData = $this->parseCurrentUrl();
+
+        if(!isset($urlData['query']) || !isset($urlData['path'])) return false;
+
         $username = trim(str_replace('/pw/', '', $urlData['path']), '/');
 
         $query = [];
+
+
         parse_str($urlData['query'], $query);
+
+        if(!isset($query['e']) || !isset($query['t'])) return false;
+
         $request = [
             'username'             => $username,
             'new_password'         => $newPassword,
@@ -54,7 +63,7 @@ class Password extends Provider
             'expiration'           => $query['e'],
         ];
 
-        return $this->post($request, UrlBuilder::RESOURCE_RESET_PASSWORD_UPDATE);
+        return $this->post(UrlBuilder::RESOURCE_RESET_PASSWORD_UPDATE, $request);
     }
 
     /**
@@ -70,7 +79,7 @@ class Password extends Provider
             'new_password_confirm' => $newPassword,
         ];
 
-        return $this->post($request, UrlBuilder::RESOURCE_CHANGE_PASSWORD);
+        return $this->post(UrlBuilder::RESOURCE_CHANGE_PASSWORD, $request);
     }
 
     /**

@@ -134,7 +134,7 @@ class CurlHttpClient implements HttpClient
     {
         return [
             CURLOPT_REFERER        => UrlBuilder::URL_BASE,
-            CURLOPT_ENCODING       => 'gzip,deflate, br',
+            CURLOPT_ENCODING       => 'gzip,deflate,br',
             CURLOPT_FRESH_CONNECT  => true,
             CURLOPT_HTTPHEADER     => $this->headers,
             CURLOPT_COOKIEFILE     => $this->cookieJar,

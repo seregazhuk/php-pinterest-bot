@@ -1,6 +1,6 @@
 <?php
 
-namespace seregazhuk\tests\Bot\Api;
+namespace seregazhuk\tests\Bot\Providers\Core;
 
 use Mockery;
 use PHPUnit\Framework\TestCase;
@@ -153,7 +153,7 @@ class DummyProvider extends Provider {
      */
     public function dummyPaginate($data, $resourceUrl)
     {
-        return $this->paginate($data, $resourceUrl);
+        return $this->paginate($resourceUrl, $data);
     }
 
     /**
@@ -161,7 +161,7 @@ class DummyProvider extends Provider {
      */
     public function dummyGet()
     {
-        return $this->get([], '');
+        return $this->get('', []);
     }
 
     /**
@@ -169,7 +169,7 @@ class DummyProvider extends Provider {
      */
     public function dummyPost()
     {
-        return $this->post([], '');
+        return $this->post('', []);
     }
 }
 

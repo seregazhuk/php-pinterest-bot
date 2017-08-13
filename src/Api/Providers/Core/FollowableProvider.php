@@ -75,7 +75,7 @@ abstract class FollowableProvider extends EntityProvider
 
         $query = $this->createFollowRequest($entityId);
 
-        return $this->post($query, $resourceUrl);
+        return $this->post($resourceUrl, $query);
     }
 
     /**
@@ -98,7 +98,8 @@ abstract class FollowableProvider extends EntityProvider
     {
         $entityName = $this->getEntityIdName();
 
-        $dataJson = [$entityName => $entityId];
+        // Pinterest requires antityId to be a string
+        $dataJson = [$entityName => (string)$entityId];
 
         if ($entityName == 'interest_id') {
             $dataJson['interest_list'] = 'favorited';
@@ -118,7 +119,7 @@ abstract class FollowableProvider extends EntityProvider
     public function followers($for, $limit = Pagination::DEFAULT_LIMIT)
     {
         return $this->paginate(
-            [$this->getFollowersFor() => $for], $this->getFollowersUrl(), $limit
+            $this->getFollowersUrl(), [$this->getFollowersFor() => $for], $limit
         );
     }
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace seregazhuk\tests\Bot;
+namespace seregazhuk\tests\Bot\Providers\Core;
 
 use PHPUnit\Framework\TestCase;
 use seregazhuk\PinterestBot\Api\Request;
