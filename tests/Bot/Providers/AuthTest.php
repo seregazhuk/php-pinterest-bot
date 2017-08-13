@@ -46,6 +46,17 @@ class AuthTest extends ProviderBaseTest
         $this->request->shouldHaveReceived('logout');
     }
 
+    /** @test */
+    public function it_skips_login_if_user_is_already_logged_in()
+    {
+        $provider = $this->getProvider();
+
+        $this->login();
+
+        $this->assertTrue($provider->login('JohnDoe', 'secret'));
+        $this->request->shouldNotHaveReceived('exec');
+    }
+
     protected function getProviderClass()
     {
         return Auth::class;

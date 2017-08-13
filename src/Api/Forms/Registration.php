@@ -97,8 +97,7 @@ class Registration extends Form
      */
     public function setAge($age)
     {
-        // Pinterest requires age to be a string
-        $this->age = (string)$age;
+        $this->age = $age;
         return $this;
     }
 
@@ -138,7 +137,7 @@ class Registration extends Form
             'first_name'    => $this->name,
             'email'         => $this->email,
             'password'      => $this->password,
-            'age'           => $this->age,
+            'age'           => (string)$this->age, // Pinterest requires age to be a string
             'gender'        => $this->gender,
             'country'       => $this->country,
             'site'          => $this->site,
