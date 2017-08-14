@@ -3,6 +3,7 @@
 namespace seregazhuk\tests\Bot\Providers;
 
 use seregazhuk\PinterestBot\Api\Providers\Pinners;
+use seregazhuk\PinterestBot\Exceptions\WrongFollowingType;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 
 /**
@@ -137,6 +138,14 @@ class PinnersTest extends ProviderBaseTest
         $provider->unfollow('johnDoe');
 
         $this->assertWasPostRequest(UrlBuilder::RESOURCE_UNFOLLOW_USER, ['user_id' => '12345']);
+    }
+
+    /** @test */
+    public function it_throws_exception_when_trying_to_fetching_unknown_following_entities()
+    {
+        $provider = $this->getProvider();
+        $this->setExpectedException(WrongFollowingType::class);
+        $provider->following('johnDoe', 'UNKNOWN');
     }
 
     protected function getProviderClass()
