@@ -82,10 +82,10 @@ class BoardInvitesTest extends ProviderBaseTest
         $provider->sendInvite($boardId = '12345', $userEmail = 'johndoe@example.com');
 
         $this->assertWasPostRequest(
-            UrlBuilder::RESOURCE_CREATE_USER_ID_INVITE, [
-            "board_id" => '12345',
-            "emails"   => [5678],
-        ]
+            UrlBuilder::RESOURCE_CREATE_EMAIL_INVITE, [
+                "board_id" => '12345',
+                "emails"   => ['johndoe@example.com'],
+            ]
         );
     }
 
