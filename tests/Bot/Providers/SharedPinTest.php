@@ -32,7 +32,7 @@ class SharedPinTest extends ProviderBaseTest
     public function a_user_can_share_a_pin_via_twitter()
     {
         $provider = $this->getProvider();
-        $provider->share('12345');
+        $provider->shareViaTwitter('12345');
 
         $request = [
             "invite_type" => [
