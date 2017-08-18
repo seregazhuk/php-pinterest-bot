@@ -143,9 +143,9 @@ class PinsTest extends ProviderBaseTest
 
         $this->assertWasGetRequest(
             UrlBuilder::RESOURCE_SEARCH, [
-            'scope' => 'my_pins',
-            'query' => 'query',
-        ]
+                'scope' => 'my_pins',
+                'query' => 'query',
+            ]
         );
     }
 
@@ -157,9 +157,9 @@ class PinsTest extends ProviderBaseTest
 
         $this->assertWasPostRequest(
             UrlBuilder::RESOURCE_BULK_COPY, [
-            'board_id' => '56789',
-            'pin_ids'  => ['12345'],
-        ]
+                'board_id' => '56789',
+                'pin_ids'  => ['12345'],
+            ]
         );
     }
 
@@ -171,9 +171,9 @@ class PinsTest extends ProviderBaseTest
 
         $this->assertWasPostRequest(
             UrlBuilder::RESOURCE_BULK_COPY, [
-            'board_id' => '56789',
-            'pin_ids'  => ['123', '456'],
-        ]
+                'board_id' => '56789',
+                'pin_ids'  => ['123', '456'],
+            ]
         );
     }
 
@@ -185,9 +185,9 @@ class PinsTest extends ProviderBaseTest
 
         $this->assertWasPostRequest(
             UrlBuilder::RESOURCE_BULK_DELETE, [
-            'board_id' => '12345678',
-            'pin_ids'  => ['1234', '5678'],
-        ]
+                'board_id' => '12345678',
+                'pin_ids'  => ['1234', '5678'],
+            ]
         );
     }
 
@@ -199,9 +199,9 @@ class PinsTest extends ProviderBaseTest
 
         $this->assertWasPostRequest(
             UrlBuilder::RESOURCE_BULK_MOVE, [
-            'board_id' => '6789',
-            'pin_ids'  => ['12345'],
-        ]
+                'board_id' => '6789',
+                'pin_ids'  => ['12345'],
+            ]
         );
     }
 
@@ -213,9 +213,9 @@ class PinsTest extends ProviderBaseTest
 
         $this->assertWasPostRequest(
             UrlBuilder::RESOURCE_BULK_MOVE, [
-            'board_id' => '6789',
-            'pin_ids'  => ['123', '456'],
-        ]
+                'board_id' => '6789',
+                'pin_ids'  => ['123', '456'],
+            ]
         );
     }
 
@@ -231,12 +231,12 @@ class PinsTest extends ProviderBaseTest
 
         $this->assertWasPostRequest(
             UrlBuilder::RESOURCE_REPIN, [
-            'board_id'    => '56789',
-            'description' => 'my new pin description',
-            'link'        => '',
-            'is_video'    => null,
-            'pin_id'      => '12345',
-        ]
+                'board_id'    => '56789',
+                'description' => 'my new pin description',
+                'link'        => '',
+                'is_video'    => null,
+                'pin_id'      => '12345',
+            ]
         );
     }
 
@@ -253,11 +253,11 @@ class PinsTest extends ProviderBaseTest
 
         $this->assertWasPostRequest(
             UrlBuilder::RESOURCE_UPDATE_PIN, [
-            'id'          => '12345',
-            'description' => 'my description',
-            'board_id'    => '5678',
-            'link'        => 'http://example.com',
-        ]
+                'id'          => '12345',
+                'description' => 'my description',
+                'board_id'    => '5678',
+                'link'        => 'http://example.com',
+            ]
         );
     }
 
@@ -274,12 +274,12 @@ class PinsTest extends ProviderBaseTest
 
         $this->assertWasPostRequest(
             UrlBuilder::RESOURCE_CREATE_PIN, [
-            'method'      => 'scraped',
-            'description' => 'my description for this pin',
-            'link'        => 'http://example.com',
-            'image_url'   => 'http://example.com/images/image.jpg',
-            'board_id'    => '12345678',
-        ]
+                'method'      => 'scraped',
+                'description' => 'my description for this pin',
+                'link'        => 'http://example.com',
+                'image_url'   => 'http://example.com/images/image.jpg',
+                'board_id'    => '12345678',
+            ]
         );
     }
 

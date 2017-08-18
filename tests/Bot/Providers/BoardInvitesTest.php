@@ -19,9 +19,9 @@ class BoardInvitesTest extends ProviderBaseTest
 
         $this->assertWasGetRequest(
             UrlBuilder::RESOURCE_BOARDS_INVITES, [
-            'current_user'  => true,
-            'field_set_key' => 'news',
-        ]
+                'current_user'  => true,
+                'field_set_key' => 'news',
+            ]
         );
         $this->assertInternalType('array', $invites);
     }
@@ -34,11 +34,11 @@ class BoardInvitesTest extends ProviderBaseTest
 
         $this->assertWasPostRequest(
             UrlBuilder::RESOURCE_DELETE_INVITE, [
-            'ban'             => false,
-            'board_id'        => '12345',
-            'field_set_key'   => 'boardEdit',
-            'invited_user_id' => '56789',
-        ]
+                'ban'             => false,
+                'board_id'        => '12345',
+                'field_set_key'   => 'boardEdit',
+                'invited_user_id' => '56789',
+            ]
         );
     }
 
@@ -55,9 +55,9 @@ class BoardInvitesTest extends ProviderBaseTest
 
         $this->assertWasPostRequest(
             UrlBuilder::RESOURCE_DELETE_INVITE, [
-            'board_id'        => '12345',
-            'invited_user_id' => '56789',
-        ]
+                'board_id'        => '12345',
+                'invited_user_id' => '56789',
+            ]
         );
     }
 
@@ -69,9 +69,9 @@ class BoardInvitesTest extends ProviderBaseTest
 
         $this->assertWasPostRequest(
             UrlBuilder::RESOURCE_CREATE_USER_ID_INVITE, [
-            "board_id"         => '12345',
-            "invited_user_ids" => [5678],
-        ]
+                "board_id"         => '12345',
+                "invited_user_ids" => [5678],
+            ]
         );
     }
 
@@ -98,10 +98,12 @@ class BoardInvitesTest extends ProviderBaseTest
         $provider->acceptInvite('12345');
 
         $this->assertWasGetRequest(UrlBuilder::RESOURCE_GET_USER_SETTINGS);
-        $this->assertWasPostRequest(UrlBuilder::RESOURCE_ACCEPT_INVITE, [
-            'board_id'        => '12345',
-            'invited_user_id' => '56789',
-        ]);
+        $this->assertWasPostRequest(
+            UrlBuilder::RESOURCE_ACCEPT_INVITE, [
+                'board_id'        => '12345',
+                'invited_user_id' => '56789',
+            ]
+        );
     }
 
     protected function getProviderClass()
