@@ -141,10 +141,12 @@ class PinsTest extends ProviderBaseTest
         $provider = $this->getProvider();
         $provider->searchInMyPins('query')->toArray();
 
-        $this->assertWasGetRequest(UrlBuilder::RESOURCE_SEARCH, [
+        $this->assertWasGetRequest(
+            UrlBuilder::RESOURCE_SEARCH, [
             'scope' => 'my_pins',
             'query' => 'query',
-        ]);
+        ]
+        );
     }
 
     /** @test */
@@ -153,10 +155,12 @@ class PinsTest extends ProviderBaseTest
         $provider = $this->getProvider();
         $provider->copy($pinId = '12345', $boardId = '56789');
 
-        $this->assertWasPostRequest(UrlBuilder::RESOURCE_BULK_COPY, [
+        $this->assertWasPostRequest(
+            UrlBuilder::RESOURCE_BULK_COPY, [
             'board_id' => '56789',
             'pin_ids'  => ['12345'],
-        ]);
+        ]
+        );
     }
 
     /** @test */
@@ -165,10 +169,12 @@ class PinsTest extends ProviderBaseTest
         $provider = $this->getProvider();
         $provider->copy($pinIds = ['123', '456'], $boardId = '56789');
 
-        $this->assertWasPostRequest(UrlBuilder::RESOURCE_BULK_COPY, [
+        $this->assertWasPostRequest(
+            UrlBuilder::RESOURCE_BULK_COPY, [
             'board_id' => '56789',
             'pin_ids'  => ['123', '456'],
-        ]);
+        ]
+        );
     }
 
     /** @test */
@@ -177,10 +183,12 @@ class PinsTest extends ProviderBaseTest
         $provider = $this->getProvider();
         $provider->deleteFromBoard($pinIds = ['1234', '5678'], $boardId = '12345678');
 
-        $this->assertWasPostRequest(UrlBuilder::RESOURCE_BULK_DELETE, [
+        $this->assertWasPostRequest(
+            UrlBuilder::RESOURCE_BULK_DELETE, [
             'board_id' => '12345678',
-            'pin_ids' => ['1234', '5678']
-        ]);
+            'pin_ids'  => ['1234', '5678'],
+        ]
+        );
     }
 
     /** @test */
@@ -189,23 +197,92 @@ class PinsTest extends ProviderBaseTest
         $provider = $this->getProvider();
         $provider->move($pinId = '12345', $boardId = '6789');
 
-        $this->assertWasPostRequest(UrlBuilder::RESOURCE_BULK_MOVE, [
+        $this->assertWasPostRequest(
+            UrlBuilder::RESOURCE_BULK_MOVE, [
             'board_id' => '6789',
-            'pin_ids' => ['12345']
-        ]);
+            'pin_ids'  => ['12345'],
+        ]
+        );
     }
 
-     /** @test */
+    /** @test */
     public function multiple_pins_can_be_moved_from_one_board_to_another()
     {
         $provider = $this->getProvider();
         $provider->move($pinIds = ['123', '456'], $boardId = '6789');
 
-        $this->assertWasPostRequest(UrlBuilder::RESOURCE_BULK_MOVE, [
+        $this->assertWasPostRequest(
+            UrlBuilder::RESOURCE_BULK_MOVE, [
             'board_id' => '6789',
-            'pin_ids' => ['123', '456']
-        ]);
+            'pin_ids'  => ['123', '456'],
+        ]
+        );
     }
+
+    /** @test */
+    public function a_pin_can_be_repinned_to_a_user_board()
+    {
+        $provider = $this->getProvider();
+        $provider->repin(
+            $pinId = '12345',
+            $boardId = '56789',
+            $description = 'my new pin description'
+        );
+
+        $this->assertWasPostRequest(
+            UrlBuilder::RESOURCE_REPIN, [
+            'board_id'    => '56789',
+            'description' => 'my new pin description',
+            'link'        => '',
+            'is_video'    => null,
+            'pin_id'      => '12345',
+        ]
+        );
+    }
+
+    /** @test */
+    public function a_user_can_edit_a_pin()
+    {
+        $provider = $this->getProvider();
+        $provider->edit(
+            $pinId = '12345',
+            $description = 'my description',
+            $link = 'http://example.com',
+            $boardId = '5678'
+        );
+
+        $this->assertWasPostRequest(
+            UrlBuilder::RESOURCE_UPDATE_PIN, [
+            'id'          => '12345',
+            'description' => 'my description',
+            'board_id'    => '5678',
+            'link'        => 'http://example.com',
+        ]
+        );
+    }
+
+    /** @test */
+    public function a_user_can_create_a_pin_with_image_from_a_link()
+    {
+        $provider = $this->getProvider();
+        $provider->create(
+            $imageUrl = 'http://example.com/images/image.jpg',
+            $boardId = '12345678',
+            $description = 'my description for this pin',
+            $link = 'http://example.com'
+        );
+
+        $this->assertWasPostRequest(
+            UrlBuilder::RESOURCE_CREATE_PIN, [
+            'method'      => 'scraped',
+            'description' => 'my description for this pin',
+            'link'        => 'http://example.com',
+            'image_url'   => 'http://example.com/images/image.jpg',
+            'board_id'    => '12345678',
+        ]
+        );
+    }
+
     /**
      * @return string
      */
