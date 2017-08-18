@@ -42,11 +42,13 @@ trait SendsMessages
 
         $this->guardAgainstEmptyData($userIds, $emails);
 
-        $requestOptions = array_merge([
+        $requestOptions = array_merge(
+            [
                 'emails'   => $emails,
                 'user_ids' => $userIds,
             ],
-            $data);
+            $data
+        );
 
         return $this->post(UrlBuilder::RESOURCE_SEND_MESSAGE, $requestOptions);
     }
