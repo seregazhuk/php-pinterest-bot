@@ -99,5 +99,8 @@ abstract class ProviderBaseTest extends TestCase
         return new $providerClass($container);
     }
 
+    /**
+     * @return string
+     */
     abstract protected function getProviderClass();
 }

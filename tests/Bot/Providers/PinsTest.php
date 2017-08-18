@@ -147,6 +147,65 @@ class PinsTest extends ProviderBaseTest
         ]);
     }
 
+    /** @test */
+    public function a_pin_can_be_copied_to_another_board()
+    {
+        $provider = $this->getProvider();
+        $provider->copy($pinId = '12345', $boardId = '56789');
+
+        $this->assertWasPostRequest(UrlBuilder::RESOURCE_BULK_COPY, [
+            'board_id' => '56789',
+            'pin_ids'  => ['12345'],
+        ]);
+    }
+
+    /** @test */
+    public function multiple_pins_can_be_copied_to_another_board()
+    {
+        $provider = $this->getProvider();
+        $provider->copy($pinIds = ['123', '456'], $boardId = '56789');
+
+        $this->assertWasPostRequest(UrlBuilder::RESOURCE_BULK_COPY, [
+            'board_id' => '56789',
+            'pin_ids'  => ['123', '456'],
+        ]);
+    }
+
+    /** @test */
+    public function multiple_pins_can_be_deleted_from_a_board()
+    {
+        $provider = $this->getProvider();
+        $provider->deleteFromBoard($pinIds = ['1234', '5678'], $boardId = '12345678');
+
+        $this->assertWasPostRequest(UrlBuilder::RESOURCE_BULK_DELETE, [
+            'board_id' => '12345678',
+            'pin_ids' => ['1234', '5678']
+        ]);
+    }
+
+    /** @test */
+    public function a_pin_can_be_moved_from_one_board_to_another()
+    {
+        $provider = $this->getProvider();
+        $provider->move($pinId = '12345', $boardId = '6789');
+
+        $this->assertWasPostRequest(UrlBuilder::RESOURCE_BULK_MOVE, [
+            'board_id' => '6789',
+            'pin_ids' => ['12345']
+        ]);
+    }
+
+     /** @test */
+    public function multiple_pins_can_be_moved_from_one_board_to_another()
+    {
+        $provider = $this->getProvider();
+        $provider->move($pinIds = ['123', '456'], $boardId = '6789');
+
+        $this->assertWasPostRequest(UrlBuilder::RESOURCE_BULK_MOVE, [
+            'board_id' => '6789',
+            'pin_ids' => ['123', '456']
+        ]);
+    }
     /**
      * @return string
      */
