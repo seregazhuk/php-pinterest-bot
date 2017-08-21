@@ -28,10 +28,13 @@ trait ResolvesCurrentUser
     }
 
     /**
-     * @return User|Provider
+     * @return User
      */
     protected function getUserProvider()
     {
-        return $this->container->getProvider('user');
+        /** @var User $userProvider */
+        $userProvider = $this->container->getProvider('user');
+
+        return $userProvider;
     }
 }

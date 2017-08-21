@@ -3,7 +3,11 @@
 namespace seregazhuk\PinterestBot\Api\Traits;
 
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
+use seregazhuk\PinterestBot\Api\ProvidersContainer;
 
+/**
+ * @property ProvidersContainer container
+ */
 trait BoardInvites
 {
     use HandlesRequest;
