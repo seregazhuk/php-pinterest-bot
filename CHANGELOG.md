@@ -1,6 +1,24 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## v5.5.3 - 2017-08-13
+### Fixed:
+ - Boards `forMe()` method requires a bot to be logged-in.
+ - Boards `update()` method works with titles which has spaces.
+ - Inbox `contactRequests()` method requires being logged in.
+ - Inbox `ignoreContactRequests()` method renamed to `ignoreContactRequest.
+ - Pins `moveToBoard()` removed pins description.
+ - PHPUnit version updated to 5.7.
+ - Pins `visualSimilar()` returns Pagination.
+ - Password `reset()` for invalid links.
+ 
+### Added:
+ - Pins `share()` to get link for sharing a pin and asking for reacting (like/dislike).
+ - Pins `reactAsGood()`/`reactAsBad()` to react when you were given a sharing link with a pin.
+ - Improved tests coverage
+  
+### Removed:
+ - `wait()` method
 
 ## v5.5.2 - 2017-07-22
 ### Fixed:

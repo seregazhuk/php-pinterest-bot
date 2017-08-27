@@ -20,6 +20,7 @@ class Inbox extends Provider
         'sendEmail',
         'sendMessage',
         'notifications',
+        'contactRequests',
         'conversations',
     ];
 
@@ -31,7 +32,7 @@ class Inbox extends Provider
     {
         $data = ['allow_stale' => true];
 
-        return $this->paginate($data, UrlBuilder::RESOURCE_GET_LATEST_NEWS, $limit);
+        return $this->paginate(UrlBuilder::RESOURCE_GET_LATEST_NEWS, $data, $limit);
     }
 
     /**
@@ -40,7 +41,7 @@ class Inbox extends Provider
      */
     public function notifications($limit = Pagination::DEFAULT_LIMIT)
     {
-        return $this->paginate([], UrlBuilder::RESOURCE_GET_NOTIFICATIONS, $limit);
+        return $this->paginate(UrlBuilder::RESOURCE_GET_NOTIFICATIONS, [], $limit);
     }
 
     /**
@@ -50,7 +51,7 @@ class Inbox extends Provider
      */
     public function conversations()
     {
-        return $this->get([], UrlBuilder::RESOURCE_GET_LAST_CONVERSATIONS);
+        return $this->get(UrlBuilder::RESOURCE_GET_LAST_CONVERSATIONS);
     }
 
     /**
@@ -81,9 +82,14 @@ class Inbox extends Provider
         return $this->send($pinId, $text, [], $emails);
     }
 
+    /**
+     * Get current contact requests.
+     *
+     * @return array
+     */
     public function contactRequests()
     {
-        $requests = $this->get([], UrlBuilder::RESOURCE_CONTACTS_REQUESTS);
+        $requests = $this->get(UrlBuilder::RESOURCE_CONTACTS_REQUESTS);
 
         return !$requests ? [] : $requests;
     }
@@ -103,7 +109,7 @@ class Inbox extends Provider
      * @param string $requestId
      * @return bool
      */
-    public function ignoreContactRequests($requestId)
+    public function ignoreContactRequest($requestId)
     {
         return $this->makeContactRequestCall(
             $requestId, UrlBuilder::RESOURCE_CONTACT_REQUEST_IGNORE
@@ -124,6 +130,6 @@ class Inbox extends Provider
             ],
         ];
 
-        return $this->post($data, $endpoint);
+        return $this->post($endpoint, $data);
     }
 }

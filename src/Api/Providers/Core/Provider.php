@@ -7,7 +7,6 @@ use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Api\ProvidersContainer;
-use function seregazhuk\trait_uses_recursive;
 
 /**
  * Class Provider.
@@ -40,8 +39,6 @@ abstract class Provider
 
     /**
      * @param ProvidersContainer $container
-     * @internal param Request $request
-     * @internal param Response $response
      */
     public function __construct(ProvidersContainer $container)
     {
@@ -53,12 +50,12 @@ abstract class Provider
     /**
      * Executes a POST request to Pinterest API.
      *
-     * @param array $requestOptions
      * @param string $resourceUrl
-     *
-     * @return bool
+     * @param array $requestOptions
+     * @param bool $returnData
+     * @return bool|array
      */
-    protected function post(array $requestOptions = [], $resourceUrl)
+    public function post($resourceUrl, array $requestOptions = [], $returnData = false)
     {
         $postString = Request::createQuery($requestOptions);
 
@@ -67,18 +64,19 @@ abstract class Provider
 
         $this->execute($resourceUrl, $postString);
 
-        return $this->response->isOk();
-
+        return $returnData ?
+            $this->response->getResponseData() :
+            $this->response->isOk();
     }
 
     /**
      * Executes a GET request to Pinterest API.
      *
-     * @param array $requestOptions
      * @param string $resourceUrl
+     * @param array $requestOptions
      * @return array|bool
      */
-    protected function get(array $requestOptions = [], $resourceUrl = '')
+    protected function get($resourceUrl = '', array $requestOptions = [])
     {
         $query = Request::createQuery(
             $requestOptions,
@@ -88,11 +86,10 @@ abstract class Provider
         $this->execute($resourceUrl . '?' . $query);
 
         return $this->response->getResponseData();
-
     }
 
     /**
-     * @param $url
+     * @param string $url
      * @param string $postString
      * @return $this
      */
@@ -104,7 +101,6 @@ abstract class Provider
 
         return $this;
     }
-
 
     /**
      * @param string $method
@@ -125,17 +121,16 @@ abstract class Provider
     {
         $loginRequired = [];
 
-        foreach(class_parents($this) + class_uses_recursive($this) as $trait) {
-            $class = basename(str_replace('\\', '/', $trait));
+        foreach (class_parents($this) + class_uses_recursive($this) as $traitOrParent) {
+            $class = basename(str_replace('\\', '/', $traitOrParent));
 
-            if(method_exists($trait, $method = 'requiresLoginFor' . $class)) {
+            if (method_exists($traitOrParent, $method = 'requiresLoginFor' . $class)) {
                 $loginRequired = array_merge($loginRequired, forward_static_call([$this, $method]));
             }
         }
 
         return $loginRequired;
     }
-
 
     /**
      * @return bool
@@ -146,19 +141,20 @@ abstract class Provider
     }
 
     /**
-     * @param mixed $data
      * @param string $resourceUrl
+     * @param mixed $data
      * @param int $limit
-     *
      * @return Pagination
      */
-    protected function paginate($data, $resourceUrl, $limit = Pagination::DEFAULT_LIMIT)
+    protected function paginate($resourceUrl, $data, $limit = Pagination::DEFAULT_LIMIT)
     {
         return $this
-            ->paginateCustom(function () use ($data, $resourceUrl) {
-                $this->get($data, $resourceUrl);
-                return $this->response;
-            })->take($limit);
+            ->paginateCustom(
+                function () use ($data, $resourceUrl) {
+                    $this->get($resourceUrl, $data);
+                    return $this->response;
+                }
+            )->take($limit);
     }
 
     /**
@@ -195,10 +191,10 @@ abstract class Provider
 
     protected function initTokenIfRequired()
     {
-        if($this->request->hasToken()) return;
+        if ($this->request->hasToken()) return;
 
         // Simply visit main page to fill the cookies
         // and parse a token from them
-        $this->get([], '');
+        $this->get('');
     }
 }

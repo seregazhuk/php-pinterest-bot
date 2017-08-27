@@ -22,7 +22,7 @@ class UrlBuilder
      * Boards
      */
     const RESOURCE_GET_BOARDS = 'resource/BoardsResource/get/';
-    const RESOURCE_GET_BOARD = 'resource/BoardResource/get';
+    const RESOURCE_GET_BOARD = 'resource/BoardResource/get/';
     const RESOURCE_GET_BOARD_FEED = 'resource/BoardFeedResource/get/';
     const RESOURCE_PROFILE_BOARDS = 'resource/ProfileBoardsResource/get/';
     const RESOURCE_FOLLOW_BOARD = 'resource/BoardFollowResource/create/';
@@ -52,11 +52,11 @@ class UrlBuilder
     const RESOURCE_COMMENT_PIN = 'resource/PinCommentResource/create/';
     const RESOURCE_COMMENT_DELETE_PIN = 'resource/PinCommentResource/delete/';
     const RESOURCE_PIN_INFO = 'resource/PinResource/get/';
-    const RESOURCE_DOMAIN_FEED = 'resource/DomainFeedResource/get';
-    const RESOURCE_ACTIVITY = 'resource/AggregatedActivityFeedResource/get';
+    const RESOURCE_DOMAIN_FEED = 'resource/DomainFeedResource/get/';
+    const RESOURCE_ACTIVITY = 'resource/AggregatedActivityFeedResource/get/';
     const RESOURCE_USER_FEED = 'resource/UserHomefeedResource/get/';
-    const RESOURCE_RELATED_PINS = 'resource/RelatedPinFeedResource/get';
-    const RESOURCE_VISUAL_SIMILAR_PINS = 'resource/VisualLiveSearchResource/get';
+    const RESOURCE_RELATED_PINS = 'resource/RelatedPinFeedResource/get/';
+    const RESOURCE_VISUAL_SIMILAR_PINS = 'resource/VisualLiveSearchResource/get/';
     const RESOURCE_BULK_COPY = 'resource/BulkEditResource/create/';
     const RESOURCE_BULK_MOVE = 'resource/BulkEditResource/update/';
     const RESOURCE_BULK_DELETE = 'resource/BulkEditResource/delete/';
@@ -66,6 +66,7 @@ class UrlBuilder
     const RESOURCE_TRY_PIN_EDIT = 'resource/DidItActivityResource/update/';
     const RESOURCE_TRY_PIN_DELETE = 'resource/DidItActivityResource/delete/';
     const RESOURCE_TRY_PIN_IMAGE_UPLOAD = 'resource/DidItImageUploadResource/create/';
+    const RESOURCE_SHARE_VIA_SOCIAL = 'resource/CreateExternalInviteResource/create/';
 
     /**
      * Pinners
@@ -125,7 +126,7 @@ class UrlBuilder
      * Registration
      */
     const RESOURCE_CREATE_REGISTER = 'resource/UserRegisterResource/create/';
-    const RESOURCE_CHECK_EMAIL = 'resource/EmailExistsResource/get';
+    const RESOURCE_CHECK_EMAIL = 'resource/EmailExistsResource/get/';
     const RESOURCE_SET_ORIENTATION = 'resource/OrientationContextResource/create/';
     const RESOURCE_UPDATE_REGISTRATION_TRACK = 'resource/UserRegisterTrackActionResource/update/';
     const RESOURCE_REGISTRATION_COMPLETE = 'resource/UserExperienceCompletedResource/update/';
@@ -142,14 +143,14 @@ class UrlBuilder
     const RESOURCE_GET_CATEGORIES = 'resource/CategoriesResource/get/';
     const RESOURCE_GET_CATEGORY = 'resource/CategoryResource/get/';
     const RESOURCE_GET_CATEGORIES_RELATED = 'resource/RelatedInterestsResource/get/';
-    const RESOURCE_GET_CATEGORY_FEED = 'resource/CategoryFeedResource/get';
+    const RESOURCE_GET_CATEGORY_FEED = 'resource/CategoryFeedResource/get/';
 
     /**
      * Topics
      */
-    const RESOURCE_GET_TOPIC_FEED = 'resource/TopicFeedResource/get';
-    const RESOURCE_GET_TOPIC = 'resource/TopicResource/get';
-    const RESOURCE_EXPLORE_SECTIONS = 'resource/ExploreSectionsResource/get';
+    const RESOURCE_GET_TOPIC_FEED = 'resource/TopicFeedResource/get/';
+    const RESOURCE_GET_TOPIC = 'resource/TopicResource/get/';
+    const RESOURCE_EXPLORE_SECTIONS = 'resource/ExploreSectionsResource/get/';
 
     /**
      * Invite

@@ -18,7 +18,7 @@ abstract class EntityProvider extends Provider
     /**
      * @return string
      */
-    public function getEntityIdName()
+    protected function getEntityIdName()
     {
         return property_exists($this, 'entityIdName') ? $this->entityIdName : '';
     }

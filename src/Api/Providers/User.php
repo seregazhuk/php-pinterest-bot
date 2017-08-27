@@ -4,13 +4,14 @@ namespace seregazhuk\PinterestBot\Api\Providers;
 
 use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Api\Forms\Profile;
+use seregazhuk\PinterestBot\Api\Traits\HasProfileSettings;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\Traits\UploadsImages;
 use seregazhuk\PinterestBot\Api\Providers\Core\Provider;
 
 class User extends Provider
 {
-    use UploadsImages;
+    use UploadsImages, HasProfileSettings;
 
     /**
      * @var array
@@ -50,11 +51,7 @@ class User extends Provider
      */
     public function isBanned()
     {
-        $profile = $this->profile();
-
-        return isset($profile['is_write_banned']) ?
-            (bool)$profile['is_write_banned'] :
-            false;
+        return (bool)$this->getProfileData('is_write_banned');
     }
 
     /**
@@ -86,17 +83,17 @@ class User extends Provider
      */
     public function deactivate($reason = 'other', $explanation = '')
     {
-        $profile = $this->profile();
+        $id = $this->id();
 
-        if (!isset($profile['id'])) return false;
+        if (!isset($id)) return false;
 
         $request = [
-            'user_id'     => $profile['id'],
+            'user_id'     => $id,
             'reason'      => $reason,
             'explanation' => $explanation,
         ];
 
-        return $this->post($request, UrlBuilder::RESOURCE_DEACTIVATE_ACCOUNT);
+        return $this->post(UrlBuilder::RESOURCE_DEACTIVATE_ACCOUNT, $request);
     }
 
     /**
@@ -111,7 +108,7 @@ class User extends Provider
             'type'  => 'email',
         ];
 
-        return $this->post($data, UrlBuilder::RESOURCE_INVITE);
+        return $this->post(UrlBuilder::RESOURCE_INVITE, $data);
     }
 
     /**
@@ -120,7 +117,7 @@ class User extends Provider
      */
     public function clearSearchHistory()
     {
-        return $this->post([], UrlBuilder::RESOURCE_CLEAR_SEARCH_HISTORY);
+        return $this->post(UrlBuilder::RESOURCE_CLEAR_SEARCH_HISTORY);
     }
 
     /**
@@ -130,7 +127,7 @@ class User extends Provider
      */
     public function visitPage($url = '')
     {
-        return $this->get([], $url);
+        return $this->get($url);
     }
 
     /**
@@ -139,34 +136,7 @@ class User extends Provider
      */
     public function sessionsHistory()
     {
-        return $this->get([], UrlBuilder::RESOURCE_SESSIONS_HISTORY);
-    }
-
-    /**
-     * Get list of available locales
-     * @return array
-     */
-    public function getLocales()
-    {
-        return $this->get([], UrlBuilder::RESOURCE_AVAILABLE_LOCALES);
-    }
-
-    /**
-     * Get list of available countries
-     * @return array
-     */
-    public function getCountries()
-    {
-        return $this->get([], UrlBuilder::RESOURCE_AVAILABLE_COUNTRIES);
-    }
-
-    /**
-     * Get list of available account types
-     * @return array
-     */
-    public function getAccountTypes()
-    {
-        return $this->get([], UrlBuilder::RESOURCE_AVAILABLE_ACCOUNT_TYPES);
+        return $this->get(UrlBuilder::RESOURCE_SESSIONS_HISTORY);
     }
 
     /**
@@ -174,7 +144,7 @@ class User extends Provider
      */
     protected function getProfile()
     {
-        return $this->get([], UrlBuilder::RESOURCE_GET_USER_SETTINGS);
+        return $this->get(UrlBuilder::RESOURCE_GET_USER_SETTINGS);
     }
 
     /**
@@ -192,7 +162,7 @@ class User extends Provider
             $userInfo['profile_image_url'] = $this->upload($userInfo['profile_image']);
         }
 
-        return $this->post($userInfo, UrlBuilder::RESOURCE_UPDATE_USER_SETTINGS);
+        return $this->post(UrlBuilder::RESOURCE_UPDATE_USER_SETTINGS, $userInfo);
     }
 
     /**
@@ -201,7 +171,7 @@ class User extends Provider
      */
     protected function getProfileData($key)
     {
-        $profile = $this->profile();
+        $profile = $this->getProfile();
 
         return isset($profile[$key]) ? $profile[$key] : '';
     }

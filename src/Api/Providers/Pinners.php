@@ -2,18 +2,16 @@
 
 namespace seregazhuk\PinterestBot\Api\Providers;
 
-use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Api\Traits\Searchable;
 use seregazhuk\PinterestBot\Exceptions\WrongFollowingType;
-use seregazhuk\PinterestBot\Api\Traits\ResolvesCurrentUsername;
+use seregazhuk\PinterestBot\Api\Traits\ResolvesCurrentUser;
 use seregazhuk\PinterestBot\Api\Providers\Core\FollowableProvider;
 
 class Pinners extends FollowableProvider
 {
-    use Searchable;
-    use ResolvesCurrentUsername;
+    use Searchable, ResolvesCurrentUser;
 
     /**
      * @var array
@@ -41,7 +39,7 @@ class Pinners extends FollowableProvider
      */
     public function info($username)
     {
-        return $this->get(['username' => $username], UrlBuilder::RESOURCE_USER_INFO);
+        return $this->get(UrlBuilder::RESOURCE_USER_INFO, ['username' => $username]);
     }
 
     /**
@@ -132,7 +130,7 @@ class Pinners extends FollowableProvider
 
     /**
      * @param string $username
-     * @return bool|Response
+     * @return bool
      */
     public function block($username)
     {
@@ -146,13 +144,13 @@ class Pinners extends FollowableProvider
 
     /**
      * @param int $userId
-     * @return bool|Response
+     * @return bool
      */
     public function blockById($userId)
     {
-        $data = ['blocked_user_id' => $userId];
-
-        return $this->post($data, UrlBuilder::RESOURCE_BLOCK_USER);
+        return $this->post(
+            UrlBuilder::RESOURCE_BLOCK_USER, ['blocked_user_id' => $userId]
+        );
     }
 
     /**
@@ -162,7 +160,7 @@ class Pinners extends FollowableProvider
      */
     public function tried($username, $limit = Pagination::DEFAULT_LIMIT)
     {
-        return $this->paginate(['username' => $username], UrlBuilder::RESOURCE_USER_TRIED, $limit);
+        return $this->paginate(UrlBuilder::RESOURCE_USER_TRIED, ['username' => $username], $limit);
     }
 
     /**
@@ -174,7 +172,7 @@ class Pinners extends FollowableProvider
      */
     protected function paginateByUsername($username, $url, $limit = Pagination::DEFAULT_LIMIT)
     {
-        return $this->paginate(['username' => $username], $url, $limit);
+        return $this->paginate($url, ['username' => $username], $limit);
     }
 
     /**

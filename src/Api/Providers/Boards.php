@@ -8,12 +8,12 @@ use seregazhuk\PinterestBot\Api\Traits\Searchable;
 use seregazhuk\PinterestBot\Api\Traits\CanBeDeleted;
 use seregazhuk\PinterestBot\Api\Traits\BoardInvites;
 use seregazhuk\PinterestBot\Api\Traits\SendsMessages;
-use seregazhuk\PinterestBot\Api\Traits\ResolvesCurrentUsername;
+use seregazhuk\PinterestBot\Api\Traits\ResolvesCurrentUser;
 use seregazhuk\PinterestBot\Api\Providers\Core\FollowableProvider;
 
 class Boards extends FollowableProvider
 {
-    use CanBeDeleted, Searchable, SendsMessages, ResolvesCurrentUsername, BoardInvites;
+    use CanBeDeleted, Searchable, SendsMessages, ResolvesCurrentUser, BoardInvites;
 
     const BOARD_PRIVACY_PUBLIC = 'public';
     const BOARD_PRIVACY_PRIVATE = 'secret';
@@ -23,6 +23,7 @@ class Boards extends FollowableProvider
      */
     protected $loginRequiredFor = [
         'my',
+        'forMe',
         'create',
     ];
 
@@ -51,7 +52,7 @@ class Boards extends FollowableProvider
             'field_set_key' => 'detailed',
         ];
 
-        $result = $this->get($options, UrlBuilder::RESOURCE_GET_BOARDS);
+        $result = $this->get(UrlBuilder::RESOURCE_GET_BOARDS, $options);
 
         return $result ?: [];
     }
@@ -86,7 +87,7 @@ class Boards extends FollowableProvider
             'field_set_key' => 'detailed',
         ];
 
-        return $this->get($requestOptions, UrlBuilder::RESOURCE_GET_BOARD);
+        return $this->get(UrlBuilder::RESOURCE_GET_BOARD, $requestOptions);
     }
 
     /**
@@ -109,8 +110,8 @@ class Boards extends FollowableProvider
     public function pins($boardId, $limit = Pagination::DEFAULT_LIMIT)
     {
         return $this->paginate(
-            ['board_id' => $boardId],
             UrlBuilder::RESOURCE_GET_BOARD_FEED,
+            ['board_id' => $boardId],
             $limit
         );
     }
@@ -128,6 +129,10 @@ class Boards extends FollowableProvider
      */
     public function update($boardId, $attributes)
     {
+        if (isset($attributes['name'])) {
+            $attributes['name'] = $this->formatBoardName($attributes['name']);
+        }
+
         $requestOptions = array_merge(
             [
                 'board_id' => $boardId,
@@ -135,7 +140,7 @@ class Boards extends FollowableProvider
             ], $attributes
         );
 
-        return $this->post($requestOptions, UrlBuilder::RESOURCE_UPDATE_BOARD);
+        return $this->post(UrlBuilder::RESOURCE_UPDATE_BOARD, $requestOptions);
     }
 
     /**
@@ -155,7 +160,7 @@ class Boards extends FollowableProvider
             'privacy'     => $privacy,
         ];
 
-        return $this->post($requestOptions, UrlBuilder::RESOURCE_CREATE_BOARD);
+        return $this->post(UrlBuilder::RESOURCE_CREATE_BOARD, $requestOptions);
     }
 
     /**
@@ -179,6 +184,6 @@ class Boards extends FollowableProvider
      */
     public function titleSuggestionsFor($pinId)
     {
-        return $this->get(['pin_id' => $pinId], UrlBuilder::RESOURCE_TITLE_SUGGESTIONS);
+        return $this->get(UrlBuilder::RESOURCE_TITLE_SUGGESTIONS, ['pin_id' => $pinId]);
     }
 }

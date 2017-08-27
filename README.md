@@ -79,9 +79,6 @@ $boards = $bot->boards->forUser('yourUserName');
 
 // Create a pin
 $bot->pins->create('http://exmaple.com/image.jpg', $boards[0]['id'], 'Pin description');
-
-// Wait 5 seconds
-$bot->wait(5);
 ```
 
 *Note*: Some methods use pinterest navigation through results (with bookmarks), for example, get user followers/following, pins
@@ -598,9 +595,13 @@ $firstTopicId = $trendingTopics[0]['id'];
 $pins = $bot->pins->explore($firstTopicId)->toArray();
 ```
 
-Get visual similar pins:
+Get visual similar pins (returns [Pagination](#pagination) object):
 ```php
-$result = $bot->pins->visualSimilar($pinId);
+$result = $bot->pins->visualSimilar($pinId)->toArray();
+
+foreach($bot->pins->visualSimilar($pinId) as $similarData) {
+    // ...
+}
 ```
 
 Send pin with message or by email:
@@ -617,6 +618,23 @@ $bot->pins->sendWithEmail($pinId, 'message', ['friend1@example.com', 'friend2@ex
 Get your pin analytics, like numbers of clicks, views and repins (only for business account);
 ```php
 $analytics = $bot->pins->analytics($pinId);
+```
+
+Share a link with a pin where a user can leave his or her reaction on this pin (like or dislike):
+```php
+$link = $bot->pins->share($pinId);
+```
+
+Leave a reaction when you were given a sharing link with a pin. 
+The link looks like this: `http://pin.it/cTwZfG_`. When you open it in your browser Pinterest redirects you to 
+the following url `https://www.pinterest.de/pin/332703491213209642/sent/?sfo=1&sender=731835145606177283&invite_code=6cb1d66946464b3f9d0084f623c7822b`.
+To *react* on this link you need to know a pinId (number after `pin`) and a userId (number after `sender`), who sent you a link:
+ 
+```php
+// like
+$bot->pins->leaveGoodReaction($pinId, $senderId);
+// don't like
+$bot->pins->leaveBadReaction($pinId, $senderId);
 ```
 
 ### TryIt
@@ -664,7 +682,7 @@ Follow/unfollow user. You can use both id or username.
 ```php
 $bot->pinners->follow($userId);
 $bot->pinners->unfollow($userId);
-
+// or
 $bot->pinners->follow($username);
 $bot->pinners->unfollow($username);
 ```

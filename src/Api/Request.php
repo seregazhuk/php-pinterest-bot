@@ -52,9 +52,9 @@ class Request
         'X-Pinterest-AppState: active',
         'X-NEW-APP: 1',
         'X-APP-VERSION: 71842d3',
-        'X-Requested-With: XMLHttpRequest',
         'X-Pinterest-AppState:active',
-    ];
+        'X-Requested-With: XMLHttpRequest',
+];
 
     /**
      * @param HttpClient $http
@@ -226,8 +226,6 @@ class Request
      */
     public static function createRequestData(array $data = [], $bookmarks = [])
     {
-        $data = self::prepareArrayToJson($data);
-
         if (!empty($bookmarks)) {
             $data['options']['bookmarks'] = $bookmarks;
         }
@@ -242,24 +240,6 @@ class Request
             'source_url' => '',
             'data'       => json_encode($data),
         ];
-    }
-
-    /**
-     * Cast all non-array values to strings
-     *
-     * @param $array
-     * @return array
-     */
-    protected static function prepareArrayToJson(array $array)
-    {
-        $result = [];
-        foreach ($array as $key => $value) {
-            $result[$key] = is_array($value) ?
-                self::prepareArrayToJson($value) :
-                strval($value);
-        }
-
-        return $result;
     }
 
     /**

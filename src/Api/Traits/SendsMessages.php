@@ -16,6 +16,9 @@ trait SendsMessages
 {
     use HandlesRequest;
 
+    /**
+     * @return array
+     */
     protected function requiresLoginForSendsMessages()
     {
         return [
@@ -39,13 +42,15 @@ trait SendsMessages
 
         $this->guardAgainstEmptyData($userIds, $emails);
 
-        $requestOptions = array_merge([
+        $requestOptions = array_merge(
+            [
                 'emails'   => $emails,
                 'user_ids' => $userIds,
             ],
-            $data);
+            $data
+        );
 
-        return $this->post($requestOptions, UrlBuilder::RESOURCE_SEND_MESSAGE);
+        return $this->post(UrlBuilder::RESOURCE_SEND_MESSAGE, $requestOptions);
     }
 
     /**
