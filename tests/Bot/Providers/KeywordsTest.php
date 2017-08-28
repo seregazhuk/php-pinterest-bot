@@ -2,7 +2,6 @@
 
 namespace seregazhuk\tests\Bot\Providers;
 
-use seregazhuk\PinterestBot\Api\Providers\Boards;
 use seregazhuk\PinterestBot\Api\Providers\Keywords;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 
