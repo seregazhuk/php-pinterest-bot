@@ -163,7 +163,9 @@ class ProvidersContainer
         $clientInfo = $this->response->getClientInfo();
 
         if(is_null($clientInfo) || $reload) {
-            $this->getProvider('user')->visitPage();
+            /** @var User $userProvider */
+            $userProvider = $this->getProvider('user');
+            $userProvider->visitPage();
         }
 
         return $this->response->getClientInfo();
