@@ -36,8 +36,6 @@ use seregazhuk\PinterestBot\Api\Providers\Core\ProviderWrapper;
  */
 class ProvidersContainer
 {
-    const PROVIDERS_NAMESPACE = 'seregazhuk\\PinterestBot\\Api\\Providers\\';
-
     /**
      * References to the request that travels
      * through the application.
@@ -189,7 +187,7 @@ class ProvidersContainer
      */
     protected function resolveProviderClass($provider)
     {
-        $className = self::PROVIDERS_NAMESPACE . ucfirst($provider);
+        $className = __NAMESPACE__ . '\\Providers\\' . ucfirst($provider);
 
         if (!$this->checkIsProviderClass($className)) {
             throw new WrongProvider("Provider $className not found.");
