@@ -69,7 +69,6 @@ class Request
      * @param string $pathToFile
      * @param string $url
      * @return string
-     * @throws InvalidRequest
      */
     public function upload($pathToFile, $url)
     {

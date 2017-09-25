@@ -60,7 +60,6 @@ class Inbox extends Provider
      * @param array|string $userIds
      * @param string $text
      * @param int|null $pinId
-     * @throws InvalidRequest
      * @return bool
      */
     public function sendMessage($userIds, $text, $pinId = null)
@@ -74,7 +73,6 @@ class Inbox extends Provider
      * @param array|string $emails
      * @param string $text
      * @param int|null $pinId
-     * @throws InvalidRequest
      * @return bool
      */
     public function sendEmail($emails, $text, $pinId = null)
