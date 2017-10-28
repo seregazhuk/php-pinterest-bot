@@ -8,19 +8,18 @@ use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Helpers\Cookies;
 use seregazhuk\PinterestBot\Api\CurlHttpClient;
 use seregazhuk\PinterestBot\Api\ProvidersContainer;
+use seregazhuk\PinterestBot\Exceptions\AuthRequired;
+use seregazhuk\PinterestBot\Exceptions\InvalidRequest;
 use seregazhuk\PinterestBot\Api\Providers\Core\Provider;
 use seregazhuk\PinterestBot\Api\Providers\Core\ProviderWrapper;
 
 class ProviderWrapperTest extends TestCase
 {
-    /**
-     * For not logged in request.
-     *
-     * @test
-     * @expectedException \seregazhuk\PinterestBot\Exceptions\AuthRequired
-     */
+    /** @test */
     public function it_should_fail_when_login_is_required()
     {
+        $this->setExpectedException(AuthRequired::class);
+
         $wrapper = $this->createWrapper();
         $wrapper->testFail();
     }
@@ -32,12 +31,10 @@ class ProviderWrapperTest extends TestCase
         $this->assertEquals('success', $wrapper->testSuccess());
     }
 
-    /**
-     * @test
-     * @expectedException \seregazhuk\PinterestBot\Exceptions\InvalidRequest
-     */
+    /** @test */
     public function it_should_throw_exception_when_calling_non_existed_method()
     {
+        $this->setExpectedException(InvalidRequest::class);
         $this->createWrapper()->badMethod();
     }
 

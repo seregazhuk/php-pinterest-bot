@@ -11,6 +11,7 @@ use seregazhuk\PinterestBot\Helpers\Cookies;
 use seregazhuk\PinterestBot\Api\CurlHttpClient;
 use seregazhuk\PinterestBot\Api\ProvidersContainer;
 use seregazhuk\PinterestBot\Api\Contracts\HttpClient;
+use seregazhuk\PinterestBot\Exceptions\WrongProvider;
 use seregazhuk\PinterestBot\Api\Providers\Core\ProviderWrapper;
 
 /**
@@ -56,12 +57,10 @@ class ProvidersContainerTest extends TestCase
         $this->assertInstanceOf(ProviderWrapper::class, $provider);
     }
 
-    /**
-     * @test
-     * @expectedException \seregazhuk\PinterestBot\Exceptions\WrongProvider
-     */
+    /** @test */
     public function it_should_throw_exception_on_getting_wrong_provider()
     {
+        $this->setExpectedException(WrongProvider::class);
         $this->container->unknown;
     }
 

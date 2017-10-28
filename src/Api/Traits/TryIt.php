@@ -107,14 +107,23 @@ trait TryIt
         // If an image was specified try to upload it first to Pinterest simple upload to
         // receive and image url. Then we upload it to special DidIt resource to
         // get an image signature for the request.
-        if ($pathToImage) {
-            $request = ['image_url' => $this->upload($pathToImage)];
-
-            $this->post(UrlBuilder::RESOURCE_TRY_PIN_IMAGE_UPLOAD, $request);
-
-            $data['image_signatures'] = $this->getResponse()->getResponseData('image_signature');
+        if (!empty($pathToImage)) {
+            $data['image_signature'] = $this->uploadImage($pathToImage);
         }
 
         return $data;
+    }
+
+    /**
+     * @param string $pathToImage
+     * @return string
+     */
+    protected function uploadImage($pathToImage)
+    {
+        $request = ['image_url' => $this->upload($pathToImage)];
+
+        $this->post(UrlBuilder::RESOURCE_TRY_PIN_IMAGE_UPLOAD, $request);
+
+        return $this->getResponse()->getResponseData('image_signature');
     }
 }
