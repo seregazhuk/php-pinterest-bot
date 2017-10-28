@@ -882,6 +882,13 @@ foreach($bot->boards->search('query') as $board) {
 }
 ```
 
+You can get type-ahead suggestions for you search query (returns pins, pinners and boards suggestions):
+ 
+```php
+$suggestions = $bot->suggestions->getForQuery('cats');
+```
+
+
 ## Inbox
 
 ### News

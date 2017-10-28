@@ -3,6 +3,7 @@
 namespace seregazhuk\PinterestBot\Api;
 
 use seregazhuk\PinterestBot\Api\Providers\Pins;
+use seregazhuk\PinterestBot\Api\Providers\Suggestions;
 use seregazhuk\PinterestBot\Api\Providers\User;
 use seregazhuk\PinterestBot\Api\Providers\Auth;
 use seregazhuk\PinterestBot\Api\Providers\Inbox;
@@ -19,25 +20,24 @@ use seregazhuk\PinterestBot\Api\Providers\Core\Provider;
 use seregazhuk\PinterestBot\Api\Providers\Core\ProviderWrapper;
 
 /**
- * @property Pins $pins
- * @property Inbox $inbox
- * @property User $user
- * @property Boards $boards
- * @property Pinners $pinners
- * @property Keywords $keywords
- * @property Interests $interests
- * @property Topics $topics
- * @property Auth $auth
- * @property Comments $comments
- * @property Password $password
+ * @property-read Pins $pins
+ * @property-read Inbox $inbox
+ * @property-read User $user
+ * @property-read Boards $boards
+ * @property-read Pinners $pinners
+ * @property-read Keywords $keywords
+ * @property-read Interests $interests
+ * @property-read Topics $topics
+ * @property-read Auth $auth
+ * @property-read Comments $comments
+ * @property-read Password $password
+ * @property-read Suggestions $suggestions
  *
  * Class ProvidersContainer
  * @package seregazhuk\PinterestBot\Api
  */
 class ProvidersContainer
 {
-    const PROVIDERS_NAMESPACE = 'seregazhuk\\PinterestBot\\Api\\Providers\\';
-
     /**
      * References to the request that travels
      * through the application.
@@ -162,7 +162,9 @@ class ProvidersContainer
         $clientInfo = $this->response->getClientInfo();
 
         if(is_null($clientInfo) || $reload) {
-            $this->getProvider('user')->visitPage();
+            /** @var User $userProvider */
+            $userProvider = $this->getProvider('user');
+            $userProvider->visitPage();
         }
 
         return $this->response->getClientInfo();
@@ -186,7 +188,7 @@ class ProvidersContainer
      */
     protected function resolveProviderClass($provider)
     {
-        $className = self::PROVIDERS_NAMESPACE . ucfirst($provider);
+        $className = __NAMESPACE__ . '\\Providers\\' . ucfirst($provider);
 
         if (!$this->checkIsProviderClass($className)) {
             throw new WrongProvider("Provider $className not found.");
