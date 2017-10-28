@@ -20,18 +20,18 @@ use seregazhuk\PinterestBot\Api\Providers\Core\Provider;
 use seregazhuk\PinterestBot\Api\Providers\Core\ProviderWrapper;
 
 /**
- * @property Pins $pins
- * @property Inbox $inbox
- * @property User $user
- * @property Boards $boards
- * @property Pinners $pinners
- * @property Keywords $keywords
- * @property Interests $interests
- * @property Topics $topics
- * @property Auth $auth
- * @property Comments $comments
- * @property Password $password
- * @property Suggestions $suggestions
+ * @property-read Pins $pins
+ * @property-read Inbox $inbox
+ * @property-read User $user
+ * @property-read Boards $boards
+ * @property-read Pinners $pinners
+ * @property-read Keywords $keywords
+ * @property-read Interests $interests
+ * @property-read Topics $topics
+ * @property-read Auth $auth
+ * @property-read Comments $comments
+ * @property-read Password $password
+ * @property-read Suggestions $suggestions
  *
  * Class ProvidersContainer
  * @package seregazhuk\PinterestBot\Api
