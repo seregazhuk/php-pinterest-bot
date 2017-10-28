@@ -11,7 +11,7 @@ class Suggestions extends Provider
      * @param string $query
      * @return array|bool
      */
-    public function forQuery($query)
+    public function getForQuery($query)
     {
         return $this->get(UrlBuilder::RESOURCE_TYPE_AHEAD_SUGGESTIONS, [
             'term' => $query,

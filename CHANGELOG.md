@@ -3,7 +3,7 @@ All notable changes to this project will be documented in this file.
 
 ## v5.5.4 - 2017-10-28
 ### Added:
- - Typeahead suggestions when you search
+ - Type-ahead suggestions for search query
 
 ## v5.5.3 - 2017-08-13
 ### Fixed:
