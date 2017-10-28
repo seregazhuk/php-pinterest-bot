@@ -123,7 +123,6 @@ class ProvidersContainer
      * Build Provider object.
      *
      * @param string $className
-     * @throws WrongProvider
      * @return ProviderWrapper
      */
     protected function buildProvider($className)

@@ -49,7 +49,6 @@ class Password extends Provider
 
         $query = [];
 
-
         parse_str($urlData['query'], $query);
 
         if(!isset($query['e']) || !isset($query['t'])) return false;
@@ -86,9 +85,7 @@ class Password extends Provider
      */
     protected function parseCurrentUrl()
     {
-        $url = $this
-            ->request
-            ->getCurrentUrl();
+        $url = $this->request->getCurrentUrl();
 
         return parse_url($url);
     }

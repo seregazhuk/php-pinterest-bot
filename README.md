@@ -17,11 +17,12 @@
 
 This PHP library will help you to work with your Pinterest account without using any API account credentials. 
 
-To have an access to Pinterest API you need to go to <a target="_blank" href="https://developers.pinterest.com">developers.pinterest.com</a>
-and register as a developer, then register your application, then wait for confirmation, and only then you 
-will get an access token. Furthermore, its public API is very poor and has a very limited set of features. With this
-library you have the entire set of functions, which available on Pinterest website. And there is no need to register an
-application to receive an access token. Just use your account login and password, like you do it in your browser. But even your account is not required,
+There is a lot of pain using Pinterest API: to get an access to it you need to go to register a developer account, then 
+register your application, then wait for confirmation, and only then you will get an access token. Furthermore, the
+public API is very poor and has a very limited set of features. 
+
+With this library you have the entire set of functions, which available on Pinterest website. And there is **no need to register an
+application to receive an access token**. Just use your account login and password, like you do it in your browser. But even your account is not required,
 if you don't use such operations as creating pins, writing comments or sending messages!
 
 - [Installation](#installation)
@@ -54,7 +55,9 @@ if you don't use such operations as creating pins, writing comments or sending m
 ### Dependencies
 Library requires CURL extension and PHP 5.5.9 or above.
 
-Install via [Composer](http://getcomposer.org):
+The recommended way to install this library is via [Composer](https://getcomposer.org). 
+[New to Composer?](https://getcomposer.org/doc/00-intro.md)
+
 ```
 composer require seregazhuk/pinterest-bot
 ```
