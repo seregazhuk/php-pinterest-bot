@@ -96,7 +96,7 @@ class Boards extends FollowableProvider
      */
     protected function formatBoardName($board)
     {
-        return strtolower(str_replace(' ', '-', $board));
+        return mb_strtolower(str_replace(' ', '-', $board));
     }
 
     /**
