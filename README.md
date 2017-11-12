@@ -796,7 +796,8 @@ $categories = $bot->interests->main();
 Get category info by name (can be taken from *main()*):
 
 ```php
-$info = $bot->interests->info("gifts");
+$info = $bot->interests->info("gifts"); 
+// gifts - can be any other string. Actualy it is a key field from one of the results returned by main() method.
 ```
 
 Get related topics for interest:
