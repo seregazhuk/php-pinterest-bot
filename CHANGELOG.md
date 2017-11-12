@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## v5.5.5 - 2017-11-12
+### Fixed:
+ - Multi-byte str-functions call
+
 ## v5.5.4 - 2017-10-28
 ### Added:
  - Type-ahead suggestions for search query
