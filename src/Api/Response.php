@@ -2,8 +2,8 @@
 
 namespace seregazhuk\PinterestBot\Api;
 
-use function seregazhuk\get_array_data;
 use seregazhuk\PinterestBot\Api\Contracts\PaginatedResponse;
+use function seregazhuk\PinterestBot\get_array_data;
 
 class Response implements PaginatedResponse
 {
@@ -81,7 +81,7 @@ class Response implements PaginatedResponse
      */
     public function hasData($key = '')
     {
-        return !is_null(get_array_data($key, $this->data));
+        return get_array_data($key, $this->data) !== null;
     }
 
     /**
@@ -142,7 +142,7 @@ class Response implements PaginatedResponse
 
         if (empty($bookmarks)) return [];
 
-        if ($bookmarks[0] == '-end-') return [];
+        if ($bookmarks[0] === '-end-') return [];
 
         return $bookmarks;
     }
@@ -152,7 +152,7 @@ class Response implements PaginatedResponse
      */
     public function hasBookmarks()
     {
-        return !! $this->getBookmarks();
+        return (bool) $this->getBookmarks();
     }
 
     protected function getRawBookmarksData()

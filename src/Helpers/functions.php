@@ -1,6 +1,6 @@
 <?php
 
-namespace seregazhuk;
+namespace seregazhuk\PinterestBot;
 
 if (! function_exists('class_uses_recursive')) {
     /**
