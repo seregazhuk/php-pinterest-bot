@@ -2,9 +2,9 @@
 
 namespace seregazhuk\PinterestBot\Api\Providers\Core;
 
-use function seregazhuk\class_uses_recursive;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
+use function seregazhuk\PinterestBot\class_uses_recursive;
 use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Api\ProvidersContainer;
 

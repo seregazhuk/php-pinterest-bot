@@ -55,8 +55,8 @@ class Auth extends Provider
      * Register a new user.
      *
      * @param string|Registration $email
-     * @param string $password
-     * @param string $name
+     * @param string|null $password
+     * @param string|null $name
      * @param string $country @deprecated
      * @param int $age @deprecated
      *
@@ -80,7 +80,7 @@ class Auth extends Provider
      * @param string $website
      * @return bool|mixed
      */
-    public function registerBusiness($registrationForm, $password, $name, $website = '')
+    public function registerBusiness($registrationForm, $password = null, $name = null, $website = '')
     {
         $registration = $this->register($registrationForm, $password, $name);
 

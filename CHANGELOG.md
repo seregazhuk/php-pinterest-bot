@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## v5.5.6 - 2017-11-21
+### Fixed:
+ - Use registration form in business register
+ - move helper functions to PinterestBot namespace 
+
 ## v5.5.5 - 2017-11-12
 ### Fixed:
  - Multi-byte str-functions call
