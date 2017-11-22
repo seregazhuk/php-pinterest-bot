@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## v5.5.7 - 2017-11-22
+### Fixed:
+ - helper functions auto-loading
+
 ## v5.5.6 - 2017-11-21
 ### Fixed:
  - Use registration form in business register
