@@ -18,6 +18,7 @@ class Pinners extends FollowableProvider
      */
     protected $loginRequiredFor = [
         'block',
+        'search',
         'blockById',
     ];
 

@@ -16,14 +16,6 @@ trait Searchable
     use HasPagination, HandlesRequest;
 
     /**
-     * @return string[]
-     */
-    protected function requiresLoginForSearchable()
-    {
-        return ['search'];
-    }
-
-    /**
      * @return string
      */
     protected function getSearchScope()
