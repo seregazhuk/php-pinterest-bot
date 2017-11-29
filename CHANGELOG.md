@@ -3,7 +3,7 @@ All notable changes to this project will be documented in this file.
 
 ## v5.5.8 - 2017-11-29
 ### Fixed:
- - Search functionality requires a bot to be logged in.
+ - Search functionality requires a bot to be logged in. Now all `search()` methods throw an exception if not logged in.
 
 ## v5.5.7 - 2017-11-22
 ### Fixed:

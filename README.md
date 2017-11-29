@@ -857,6 +857,7 @@ $pins = $bot->pins->explore($firstTopicId)->toArray();
 ```
 
 ## Search
+All `search()` methods require bot to be logged in.
 
 Search functions use Pinterest pagination in fetching results and return [Pagination](#pagination) object:
 
