@@ -96,7 +96,10 @@ class Boards extends FollowableProvider
      */
     protected function formatBoardName($board)
     {
-        return mb_strtolower(str_replace(' ', '-', $board));
+        $nameWithRemovedSpaces = str_replace(' ', '-', $board);
+        return function_exists('mb_strtolower') ?
+            mb_strtolower($nameWithRemovedSpaces) :
+            strtolower($nameWithRemovedSpaces);
     }
 
     /**
