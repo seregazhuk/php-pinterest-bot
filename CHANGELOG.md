@@ -1,7 +1,7 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## v5.5.8 - 2017-12-02
+## v5.5.9 - 2017-12-02
 ### Fixed:
  - use multibyte functions only if appropriate extension is installed
 
