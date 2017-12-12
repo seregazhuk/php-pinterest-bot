@@ -205,11 +205,9 @@ class Request
      * @param array|null $bookmarks
      * @return string
      */
-    public static function createQuery(array $data = [], $bookmarks = null)
+    public static function createQuery(array $data = [], array $bookmarks = [])
     {
         $data = empty($data) ? [] : $data;
-
-        $bookmarks = is_array($bookmarks) ? $bookmarks : [];
 
         $request = self::createRequestData(['options' => $data], $bookmarks);
 
