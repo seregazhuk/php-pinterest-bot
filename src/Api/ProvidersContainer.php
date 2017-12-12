@@ -68,12 +68,12 @@ class ProvidersContainer
         $this->response = $response;
     }
 
-
     /**
      * Magic method to access different providers from the container.
      *
      * @param string $provider
      * @return Provider
+     * @throws WrongProvider
      */
     public function __get($provider)
     {
@@ -156,12 +156,13 @@ class ProvidersContainer
      *
      * @param bool $reload
      * @return array|null
+     * @throws WrongProvider
      */
     public function getClientInfo($reload = false)
     {
         $clientInfo = $this->response->getClientInfo();
 
-        if(is_null($clientInfo) || $reload) {
+        if($clientInfo === null || $reload) {
             /** @var User $userProvider */
             $userProvider = $this->getProvider('user');
             $userProvider->visitPage();
@@ -203,7 +204,9 @@ class ProvidersContainer
      */
     protected function checkIsProviderClass($className)
     {
-        if(!class_exists($className)) return false;
+        if(!class_exists($className)) {
+            return false;
+        }
 
         return in_array(Provider::class, class_parents($className));
     }

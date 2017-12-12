@@ -2,6 +2,7 @@
 
 namespace seregazhuk\PinterestBot\Api\Traits;
 
+use seregazhuk\PinterestBot\Api\Providers\Core\Provider;
 use seregazhuk\PinterestBot\Api\Providers\User;
 use seregazhuk\PinterestBot\Api\ProvidersContainer;
 
@@ -27,13 +28,10 @@ trait ResolvesCurrentUser
     }
 
     /**
-     * @return User
+     * @return Provider|User
      */
     protected function getUserProvider()
     {
-        /** @var User $userProvider */
-        $userProvider = $this->container->getProvider('user');
-
-        return $userProvider;
+        return $this->container->getProvider('user');
     }
 }

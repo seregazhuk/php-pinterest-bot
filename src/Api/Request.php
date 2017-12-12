@@ -108,7 +108,7 @@ class Request
     protected function getHttpHeaders()
     {
         $headers = $this->getDefaultHttpHeaders();
-        if ($this->csrfToken == self::DEFAULT_TOKEN) {
+        if ($this->csrfToken === self::DEFAULT_TOKEN) {
             $headers[] = 'Cookie: csrftoken=' . self::DEFAULT_TOKEN . ';';
         }
 
@@ -120,7 +120,7 @@ class Request
      */
     public function hasToken()
     {
-        return !empty($this->csrfToken) && $this->csrfToken != self::DEFAULT_TOKEN;
+        return !empty($this->csrfToken) && $this->csrfToken !== self::DEFAULT_TOKEN;
     }
     
     /**
@@ -211,9 +211,7 @@ class Request
 
         $bookmarks = is_array($bookmarks) ? $bookmarks : [];
 
-        $request = self::createRequestData(
-            ['options' => $data], $bookmarks
-        );
+        $request = self::createRequestData(['options' => $data], $bookmarks);
 
         return UrlBuilder::buildRequestString($request);
     }
@@ -223,7 +221,7 @@ class Request
      * @param array $bookmarks
      * @return array
      */
-    public static function createRequestData(array $data = [], $bookmarks = [])
+    public static function createRequestData(array $data = [], array $bookmarks = [])
     {
         if (!empty($bookmarks)) {
             $data['options']['bookmarks'] = $bookmarks;
@@ -287,6 +285,7 @@ class Request
     /**
      * @param string $delimiter
      * @return $this
+     * @throws InvalidRequest
      */
     protected function buildFilePostData($delimiter)
     {
@@ -303,6 +302,7 @@ class Request
 
     /**
      * @return array
+     * @throws InvalidRequest
      */
     protected function makeHeadersForUpload()
     {

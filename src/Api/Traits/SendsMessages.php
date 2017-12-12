@@ -34,11 +34,12 @@ trait SendsMessages
      *
      * @param array $data
      * @return bool
+     * @throws InvalidRequest
      */
     protected function callSendMessage($userIds, $emails, array $data)
     {
-        $userIds = is_array($userIds) ? $userIds : [$userIds];
-        $emails = is_array($emails) ? $emails : [$emails];
+        $userIds = (array)$userIds;
+        $emails = (array)$emails;
 
         $this->guardAgainstEmptyData($userIds, $emails);
 
@@ -76,6 +77,7 @@ trait SendsMessages
      * @param array|string $userIds
      * @param array|string $emails
      * @return bool
+     * @throws InvalidRequest
      */
     public function send($entityId, $text, $userIds, $emails)
     {
@@ -90,6 +92,7 @@ trait SendsMessages
      * @param string $text
      * @param array|string $userIds
      * @return bool
+     * @throws InvalidRequest
      */
     public function sendWithMessage($entityId, $text, $userIds)
     {
@@ -103,6 +106,7 @@ trait SendsMessages
      * @param string $text
      * @param array|string $emails
      * @return bool
+     * @throws InvalidRequest
      */
     public function sendWithEmail($entityId, $text, $emails)
     {

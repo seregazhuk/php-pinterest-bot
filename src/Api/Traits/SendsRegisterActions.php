@@ -20,12 +20,12 @@ trait SendsRegisterActions
      * @var array
      */
     protected $secondStepActions = [
-        ["name" => "multi_step_step_2_complete"],
-        ["name" => "signup_home_page"],
-        ["name" => "signup_referrer.other"],
-        ["name" => "signup_referrer_module.unauth_home_react_page"],
-        ["name" => "unauth.signup_step_2.completed"],
-        ["name" => "setting_new_window_location"],
+        ['name' => 'multi_step_step_2_complete'],
+        ['name' => 'signup_home_page'],
+        ['name' => 'signup_referrer.other'],
+        ['name' => 'signup_referrer_module.unauth_home_react_page'],
+        ['name' => 'unauth.signup_step_2.completed'],
+        ['name' => 'setting_new_window_location'],
     ];
 
     /**
@@ -53,7 +53,7 @@ trait SendsRegisterActions
      * @param array $actions
      * @return bool|Response
      */
-    protected function sendRegisterActionRequest($actions = [])
+    protected function sendRegisterActionRequest(array $actions = [])
     {
         return $this->post(
            UrlBuilder::RESOURCE_UPDATE_REGISTRATION_TRACK,

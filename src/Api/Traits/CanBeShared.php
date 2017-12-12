@@ -37,12 +37,12 @@ trait CanBeShared
     public function share($pinId, $channel = 12)
     {
         $request = [
-            "invite_type" => [
-                "invite_category" => 3, // magic numbers, but I have
-                "invite_object"   => 1, // no idea what do they mean
-                "invite_channel"  => $channel,
+            'invite_type' => [
+                'invite_category' => 3, // magic numbers, but I have
+                'invite_object'   => 1, // no idea what do they mean
+                'invite_channel'  => $channel,
             ],
-            "object_id"   => $pinId,
+            'object_id'   => $pinId,
         ];
 
         $response = $this->post(UrlBuilder::RESOURCE_SHARE_VIA_SOCIAL, $request, true);
@@ -79,9 +79,9 @@ trait CanBeShared
     protected function reactOnPinInConversation($pinId, $userId, $reaction)
     {
         $request = [
-            "user_ids" => [$userId],
-            "pin"      => (string)$pinId,
-            "text"     => $reaction,
+            'user_ids' => [$userId],
+            'pin'      => (string)$pinId,
+            'text'     => $reaction,
         ];
 
         return $this->post(UrlBuilder::RESOURCE_SEND_MESSAGE, $request);

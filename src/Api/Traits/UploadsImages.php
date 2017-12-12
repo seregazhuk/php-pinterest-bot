@@ -15,7 +15,6 @@ trait UploadsImages
     /**
      * @param string $image
      * @return string|null
-     * @throws InvalidRequest
      */
     public function upload($image)
     {
