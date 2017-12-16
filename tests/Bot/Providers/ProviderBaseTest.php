@@ -12,15 +12,12 @@ use seregazhuk\PinterestBot\Api\Response;
 
 abstract class ProviderBaseTest extends TestCase
 {
+    use ApiRequestAssertions;
+
     /**
      * @var string
      */
     protected $providerClass = '';
-
-    /**
-     * @var Request|MockInterface
-     */
-    protected $request;
 
     protected function setUp()
     {
@@ -36,19 +33,6 @@ abstract class ProviderBaseTest extends TestCase
     protected function tearDown()
     {
         Mockery::close();
-    }
-
-    /**
-     * @param string $url
-     * @param array $requestData
-     */
-    public function assertWasPostRequest($url, array $requestData = [])
-    {
-        $postString = Request::createQuery($requestData);
-
-        $this->request
-            ->shouldHaveReceived('exec')
-            ->withArgs([$url, $postString]);
     }
 
     public function login()
@@ -73,19 +57,6 @@ abstract class ProviderBaseTest extends TestCase
             ->andReturn(json_encode($response));
 
         return $this;
-    }
-
-    /**
-     * @param string $url
-     * @param array $data
-     */
-    public function assertWasGetRequest($url, array $data = [])
-    {
-        $query = Request::createQuery($data);
-
-        $this->request
-            ->shouldHaveReceived('exec')
-            ->with($url . '?' . $query, '');
     }
 
     /**

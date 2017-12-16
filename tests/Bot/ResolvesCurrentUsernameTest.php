@@ -3,6 +3,7 @@
 namespace seregazhuk\tests\Bot\Api;
 
 use Mockery;
+use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
@@ -44,10 +45,15 @@ class ResolvesCurrentUsernameTest extends TestCase
         return $provider;
     }
 
+    /**
+     * @param string $username
+     * @return MockInterface|Request
+     */
     protected function makeRequest($username)
     {
         /** @var Request $request */
         $request = Mockery::mock(Request::class)
+            ->makePartial()
             ->shouldReceive('exec')
             ->andReturn(json_encode($this->makePinterestProfileResponse($username)))
             ->getMock();

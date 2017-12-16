@@ -57,7 +57,7 @@ abstract class Provider
      */
     public function post($resourceUrl, array $requestOptions = [], $returnData = false)
     {
-        $postString = Request::createQuery($requestOptions);
+        $postString = $this->request->createQuery($requestOptions);
 
         // When executing POST request we need a csrf-token.
         $this->initTokenIfRequired();
@@ -78,7 +78,7 @@ abstract class Provider
      */
     protected function get($resourceUrl = '', array $requestOptions = [])
     {
-        $query = Request::createQuery(
+        $query = $this->request->createQuery(
             $requestOptions,
             $this->response->getBookmarks()
         );

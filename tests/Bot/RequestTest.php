@@ -165,7 +165,7 @@ class RequestTest extends TestCase
      * @param array $methods
      * @return MockInterface|HttpClient
      */
-    protected function getHttpObject($methods = [])
+    protected function getHttpObject(array $methods = [])
     {
         return Mockery::mock(HttpClient::class, $methods);
     }

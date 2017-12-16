@@ -205,11 +205,11 @@ class Request
      * @param array|null $bookmarks
      * @return string
      */
-    public static function createQuery(array $data = [], array $bookmarks = [])
+    public function createQuery(array $data = [], array $bookmarks = [])
     {
         $data = empty($data) ? [] : $data;
 
-        $request = self::createRequestData(['options' => $data], $bookmarks);
+        $request = $this->createRequestData(['options' => $data], $bookmarks);
 
         return UrlBuilder::buildRequestString($request);
     }
@@ -219,7 +219,7 @@ class Request
      * @param array $bookmarks
      * @return array
      */
-    public static function createRequestData(array $data = [], array $bookmarks = [])
+    public function createRequestData(array $data = [], array $bookmarks = [])
     {
         if (!empty($bookmarks)) {
             $data['options']['bookmarks'] = $bookmarks;

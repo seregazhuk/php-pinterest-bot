@@ -135,7 +135,7 @@ class PinnersTest extends ProviderBaseTest
         $provider = $this->getProvider();
         $this->pinterestShouldReturn(['id' => '12345']);
 
-        $provider->unfollow('johnDoe');
+        $provider->unFollow('johnDoe');
 
         $this->assertWasPostRequest(UrlBuilder::RESOURCE_UNFOLLOW_USER, ['user_id' => '12345']);
     }

@@ -30,7 +30,7 @@ trait ApiRequestAssertions
      */
     protected function assertWasPostRequest($url, array $data = [])
     {
-        $postString = Request::createQuery($data);
+        $postString = $this->request->createQuery($data);
 
         $this->request
             ->shouldHaveReceived('exec')
@@ -43,7 +43,7 @@ trait ApiRequestAssertions
      */
     protected function assertWasGetRequest($url, array $data = [])
     {
-        $query = Request::createQuery($data);
+        $query = $this->request->createQuery($data);
 
         $this->request
             ->shouldHaveReceived('exec')
