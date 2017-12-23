@@ -72,6 +72,14 @@ class Boards extends FollowableProvider
     }
 
     /**
+     * @return array
+     */
+    public function my()
+    {
+        return $this->forMe();
+    }
+
+    /**
      * Get info about user's board.
      *
      * @param string $username
