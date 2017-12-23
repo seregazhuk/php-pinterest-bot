@@ -11,7 +11,7 @@ class BoardSections extends Provider
      * @param string $boardId
      * @return array|bool
      */
-    public function getForBoard($boardId)
+    public function forBoard($boardId)
     {
         return $this->get(UrlBuilder::RESOURCE_GET_BOARD_SECTIONS, ['board_id' => $boardId]);
     }
