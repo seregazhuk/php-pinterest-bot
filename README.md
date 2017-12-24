@@ -30,6 +30,7 @@ if you don't use such operations as creating pins, writing comments or sending m
 - [Examples](#examples)
 - [Account](#account)
 - [Boards](#boards)
+    - [Section](#board-sections)
 - [Pins](#pins)
 - [Pinners](#pinners)
 - [Interests](#interests)
@@ -391,6 +392,28 @@ $bot->boards->sendWithMessage($boardId, 'Message', [$userId1, $userId2]); // To 
 // Send board by email
 $bot->boards->sendWithEmail($boardId, 'Message', 'friend@example.com'); // One email
 $bot->boards->sendWithEmail($boardId, 'Message', ['friend1@example.com', 'friend2@example.com']); // many
+```
+
+#### Board Sections
+Every board can have several sections. Get a list of sections for a specified boardId. Returns an array of sections data.
+
+```php
+$sections = $bot->boardSections->forBoard($boardId);
+```
+
+Create a section for a board:
+```php
+$bot->boardSections->create($boardId, 'Section name');
+```
+
+Edit a section's name. You need a section id, which can be retrieved by calling ` $bot->boardSections->forBoard($boardId)`:
+```php
+$bot->boardSections->edit($sectionId', 'New section name');
+```
+
+Delete a section. You need a section id, which can be retrieved by calling ` $bot->boardSections->forBoard($boardId)`
+```php
+$bot->boardSections->delete($sectionId);
 ```
 
 ### Invites
