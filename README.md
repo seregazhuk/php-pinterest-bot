@@ -30,7 +30,7 @@ if you don't use such operations as creating pins, writing comments or sending m
 - [Examples](#examples)
 - [Account](#account)
 - [Boards](#boards)
-    - [Section](#board-sections)
+    - [Sections](#board-sections)
 - [Pins](#pins)
 - [Pinners](#pinners)
 - [Interests](#interests)
