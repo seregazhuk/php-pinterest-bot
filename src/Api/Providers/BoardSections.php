@@ -40,7 +40,7 @@ class BoardSections extends Provider
     public function edit($sectionId, $title)
     {
         $requestOptions = [
-            'board_id' => $sectionId,
+            'section_id' => $sectionId,
             'name' => $title,
         ];
 

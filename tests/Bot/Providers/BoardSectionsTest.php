@@ -21,6 +21,30 @@ class BoardSectionsTest extends ProviderBaseTest
         $this->assertWasGetRequest(UrlBuilder::RESOURCE_GET_BOARD_SECTIONS, ['board_id' => '12345']);
     }
 
+    /** @test */
+    public function it_edits_a_section()
+    {
+        $provider = $this->getProvider();
+
+        $provider->edit('12345', 'test');
+
+        $request = [
+            'section_id' => '12345',
+            'name'       => 'test',
+        ];
+        $this->assertWasPostRequest(UrlBuilder::RESOURCE_EDIT_BOARD_SECTION, $request);
+    }
+
+    /** @test */
+    public function it_removes_section()
+    {
+        $provider = $this->getProvider();
+
+        $provider->delete('12345');
+
+        $this->assertWasPostRequest(UrlBuilder::RESOURCE_DELETE_BOARD_SECTION, ['section_id' => '12345']);
+    }
+
     /**
      * @return string
      */
