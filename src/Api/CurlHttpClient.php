@@ -301,10 +301,10 @@ class CurlHttpClient implements HttpClient
         $proxy = [
             CURLOPT_PROXY     => $host,
             CURLOPT_PROXYPORT => $port,
-            CURLOPT_PROXYTYPE => $type ? $type : CURLPROXY_HTTP,
+            CURLOPT_PROXYTYPE => $type ?: CURLPROXY_HTTP,
         ];
 
-        if(!is_null($auth)) {
+        if(null !== $auth) {
             $proxy[CURLOPT_PROXYUSERPWD] = $auth;
         }
 
@@ -313,10 +313,12 @@ class CurlHttpClient implements HttpClient
 
     public function dontUseProxy()
     {
-        unset($this->options[CURLOPT_PROXY]);
-        unset($this->options[CURLOPT_PROXYPORT]);
-        unset($this->options[CURLOPT_PROXYTYPE]);
-        unset($this->options[CURLOPT_PROXYUSERPWD]);
+        unset(
+            $this->options[CURLOPT_PROXY],
+            $this->options[CURLOPT_PROXYPORT],
+            $this->options[CURLOPT_PROXYTYPE],
+            $this->options[CURLOPT_PROXYUSERPWD]
+        );
 
         return $this;
     }

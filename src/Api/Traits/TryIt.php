@@ -3,6 +3,7 @@
 namespace seregazhuk\PinterestBot\Api\Traits;
 
 use seregazhuk\PinterestBot\Api\Response;
+use seregazhuk\PinterestBot\Exceptions\InvalidRequest;
 use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 
@@ -28,7 +29,7 @@ trait TryIt
      * @param int $limit
      * @return Pagination
      */
-    abstract protected function getAggregatedActivity($pinId, $additionalData = [], $limit);
+    abstract protected function getAggregatedActivity($pinId, array $additionalData = [], $limit);
 
     /**
      * Makes a DidIt activity record.
@@ -96,6 +97,7 @@ trait TryIt
      * @param string $comment
      * @param string|null $pathToImage
      * @return array
+     * @throws InvalidRequest
      */
     protected function makeRequest($pinId, $comment, $pathToImage = null)
     {
@@ -107,7 +109,7 @@ trait TryIt
         // If an image was specified try to upload it first to Pinterest simple upload to
         // receive and image url. Then we upload it to special DidIt resource to
         // get an image signature for the request.
-        if (!empty($pathToImage)) {
+        if ($pathToImage !== null) {
             $data['image_signature'] = $this->uploadImage($pathToImage);
         }
 
@@ -117,6 +119,7 @@ trait TryIt
     /**
      * @param string $pathToImage
      * @return string
+     * @throws InvalidRequest
      */
     protected function uploadImage($pathToImage)
     {

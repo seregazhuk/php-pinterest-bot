@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__ . '/vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 use seregazhuk\PinterestBot\Factories\PinterestBot;
 $bot = PinterestBot::create();

@@ -24,7 +24,7 @@ trait ResponseHelper
      *
      * @return array
      */
-    public function createApiResponse($data = [])
+    public function createApiResponse(array $data = [])
     {
         return ['resource_response' => $data];
     }

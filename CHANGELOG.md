@@ -6,6 +6,18 @@ All notable changes to this project will be documented in this file.
  - Boards `my()` method (alias for method `forMe()`)
  - BoardSections provider
 
+## v5.5.9 - 2017-12-02
+### Fixed:
+ - use multibyte functions only if appropriate extension is installed
+
+## v5.5.8 - 2017-11-29
+### Fixed:
+ - Search functionality for pinners requires a bot to be logged in. Now `pinners->search()` call throws `AuthRequired` exception if not logged in.
+
+## v5.5.7 - 2017-11-22
+### Fixed:
+ - Helper functions auto-loading
+
 ## v5.5.6 - 2017-11-21
 ### Fixed:
  - Use registration form in business register

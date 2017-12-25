@@ -42,7 +42,7 @@ class RequestTest extends TestCase
     /** @test */
     public function it_should_create_pinterest_request_object_with_bookmarks()
     {
-        $bookmarks = 'bookmarks';
+        $bookmarks = ['bookmarks'];
 
         $object = $this->createRequestObject();
         $request = $object->createRequestData([], $bookmarks);
@@ -165,7 +165,7 @@ class RequestTest extends TestCase
      * @param array $methods
      * @return MockInterface|HttpClient
      */
-    protected function getHttpObject($methods = [])
+    protected function getHttpObject(array $methods = [])
     {
         return Mockery::mock(HttpClient::class, $methods);
     }

@@ -59,7 +59,7 @@ trait Searchable
     public function search($query, $limit = Pagination::DEFAULT_LIMIT)
     {
         return $this->paginateCustom(function () use ($query) {
-                return $this->execSearchRequest($query, $this->getSearchScope());
-            })->take($limit);
+            return $this->execSearchRequest($query, $this->getSearchScope());
+        })->take($limit);
     }
 }

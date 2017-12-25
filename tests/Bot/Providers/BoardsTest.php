@@ -159,7 +159,7 @@ class BoardsTest extends ProviderBaseTest
     {
         $provider = $this->getProvider();
 
-        $provider->unfollow('12345');
+        $provider->unFollow('12345');
 
         $this->assertWasPostRequest(UrlBuilder::RESOURCE_UNFOLLOW_BOARD, ['board_id' => '12345']);
     }

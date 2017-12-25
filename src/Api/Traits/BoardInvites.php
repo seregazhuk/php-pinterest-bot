@@ -50,10 +50,10 @@ trait BoardInvites
      */
     public function sendInviteByEmail($boardId, $emails)
     {
-        $emails = is_array($emails) ? $emails : [$emails];
+        $emails = (array)$emails;
         $data = [
-            "board_id" => $boardId,
-            "emails"   => $emails,
+            'board_id' => $boardId,
+            'emails'   => $emails,
         ];
 
         return $this->post(UrlBuilder::RESOURCE_CREATE_EMAIL_INVITE, $data);
@@ -66,7 +66,7 @@ trait BoardInvites
      */
     public function sendInvite($boardId, $users)
     {
-        $users = is_array($users) ? $users : [$users];
+        $users = (array)$users;
 
         $isEmail = filter_var($users[0], FILTER_VALIDATE_EMAIL);
 
@@ -82,7 +82,7 @@ trait BoardInvites
      */
     public function sendInviteByUserId($boardId, $userIds)
     {
-        $userIds = is_array($userIds) ? $userIds : [$userIds];
+        $userIds = (array)$userIds;
         $data = [
             "board_id"         => $boardId,
             "invited_user_ids" => $userIds,

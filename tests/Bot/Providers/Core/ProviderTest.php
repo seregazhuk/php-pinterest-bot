@@ -6,6 +6,7 @@ use Mockery;
 use PHPUnit\Framework\TestCase;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
+use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\tests\Helpers\ResponseHelper;
 use seregazhuk\PinterestBot\Api\ProvidersContainer;
 use seregazhuk\PinterestBot\Api\Providers\Core\Provider;
@@ -90,7 +91,7 @@ class ProviderTest extends TestCase
      * @param int $times
      * @return Mockery\Mock|Provider|DummyProvider
      */
-    protected function makeProvider($response = [], $times = 1)
+    protected function makeProvider(array $response = [], $times = 1)
     {
         $request = $this->makeRequest($response, $times);
 
@@ -120,13 +121,14 @@ class ProviderTest extends TestCase
     }
 
     /**
-     * @param mixed $response
+     * @param array $response
      * @param int $times
      * @return Mockery\MockInterface|Request
      */
-    protected function makeRequest($response = [], $times = 1)
+    protected function makeRequest(array $response = [], $times = 1)
     {
         return Mockery::mock(Request::class)
+            ->makePartial()
             ->shouldReceive('exec')
             ->times($times)
             ->andReturn(json_encode($response))
@@ -149,7 +151,7 @@ class DummyProvider extends Provider {
     /**
      * @param mixed $data
      * @param string $resourceUrl
-     * @return \seregazhuk\PinterestBot\Helpers\Pagination
+     * @return Pagination
      */
     public function dummyPaginate($data, $resourceUrl)
     {
@@ -161,7 +163,7 @@ class DummyProvider extends Provider {
      */
     public function dummyGet()
     {
-        return $this->get('', []);
+        return $this->get();
     }
 
     /**
@@ -169,7 +171,7 @@ class DummyProvider extends Provider {
      */
     public function dummyPost()
     {
-        return $this->post('', []);
+        return $this->post('');
     }
 }
 

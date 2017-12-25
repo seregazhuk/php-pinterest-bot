@@ -36,6 +36,9 @@ if you don't use such operations as creating pins, writing comments or sending m
 - [Interests](#interests)
 - [Topics](#topics)
 - [Search](#search)
+    - [Pins](#pins)
+    - [Pinners](#pinners)
+    - [Boards](#boards)
 - [Inbox](#inbox)
     - [News](#news)
     - [Notifications](#notifications)
@@ -881,7 +884,11 @@ $pins = $bot->pins->explore($firstTopicId)->toArray();
 
 ## Search
 
-Search functions use Pinterest pagination in fetching results and return [Pagination](#pagination) object:
+Search functions use Pinterest pagination in fetching results and return [Pagination](#pagination) object.
+
+### Pins
+The results may differ when you search for pins being logged in and when not. Under the hood Pinterest personalizes
+search results if you are logged in. So keep this in mind.
 
 ```php
 $pins = $bot->pins->search('query')->toArray();
@@ -894,12 +901,23 @@ foreach ($bot->pins->search('query') as $pin) {
 
 // Search only in my pins
 $pins = $bot->pins->searchInMyPins('query')->toArray();
+```
 
+### Pinners
+
+Pinterest allows to search for pinners only if you are logged in. If not, the bot throws `AuthRequired` exception.
+
+
+```php
 // Search in people
 foreach($bot->pinners->search('query') as $pinner) {
     // ...
 }
+```
 
+### Boards
+
+```php
 // Search in boards
 foreach($bot->boards->search('query') as $board) {
     // ...

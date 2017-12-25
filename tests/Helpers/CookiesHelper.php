@@ -26,7 +26,7 @@ trait CookiesHelper
             $content .= "\n#HttpOnly_.pinterest.com        TRUE    /       TRUE    1505894318      _auth   1";
         }
 
-        if(file_exists($this->cookieFilePath)) unlink($this->cookieFilePath);
+        if (file_exists($this->cookieFilePath)) unlink($this->cookieFilePath);
 
         file_put_contents($this->cookieFilePath, preg_replace('/ +/', "\t",$content));
     }
