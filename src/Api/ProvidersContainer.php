@@ -2,6 +2,7 @@
 
 namespace seregazhuk\PinterestBot\Api;
 
+use seregazhuk\PinterestBot\Api\Providers\BoardSections;
 use seregazhuk\PinterestBot\Api\Providers\Pins;
 use seregazhuk\PinterestBot\Api\Providers\Suggestions;
 use seregazhuk\PinterestBot\Api\Providers\User;
@@ -32,6 +33,7 @@ use seregazhuk\PinterestBot\Api\Providers\Core\ProviderWrapper;
  * @property-read Comments $comments
  * @property-read Password $password
  * @property-read Suggestions $suggestions
+ * @property-read BoardSections $boardSections
  *
  * Class ProvidersContainer
  * @package seregazhuk\PinterestBot\Api

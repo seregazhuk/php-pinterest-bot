@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## v5.6.0 - 2017-12-25
+### Added:
+ - Boards `my()` method (alias for method `forMe()`)
+ - BoardSections provider
+
 ## v5.5.9 - 2017-12-02
 ### Fixed:
  - use multibyte functions only if appropriate extension is installed

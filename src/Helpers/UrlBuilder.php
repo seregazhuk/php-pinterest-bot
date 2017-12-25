@@ -40,6 +40,14 @@ class UrlBuilder
     const RESOURCE_DELETE_INVITE = 'resource/BoardInviteResource/delete/';
 
     /**
+     * Board section
+     */
+    const RESOURCE_GET_BOARD_SECTIONS = 'resource/BoardSectionsResource/get/';
+    const RESOURCE_ADD_BOARD_SECTION = 'resource/BoardSectionResource/create/';
+    const RESOURCE_EDIT_BOARD_SECTION = 'resource/BoardSectionEditResource/create/';
+    const RESOURCE_DELETE_BOARD_SECTION = 'resource/BoardSectionEditResource/delete/';
+
+    /**
      * Pins
      */
     const RESOURCE_CREATE_PIN = 'resource/PinResource/create/';
