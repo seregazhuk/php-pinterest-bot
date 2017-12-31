@@ -35,7 +35,6 @@ class Pins extends EntityProvider
         'activity',
         'analytics',
         'visualSimilar',
-
     ];
 
     protected $searchScope  = 'pins';

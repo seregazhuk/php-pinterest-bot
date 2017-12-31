@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## v5.6.1 - 2017-12-31
+### Fixed:
+ - add login requirement for board sections
+
 ## v5.6.0 - 2017-12-25
 ### Added:
  - Boards `my()` method (alias for method `forMe()`)
