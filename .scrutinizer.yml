@@ -11,3 +11,4 @@ checks:
 filter:
     excluded_paths:
         - tests/*
+        - examples/*
