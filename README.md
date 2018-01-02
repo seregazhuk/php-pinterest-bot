@@ -411,7 +411,7 @@ $bot->boardSections->create($boardId, 'Section name');
 
 Edit a section's name. You need a section id, which can be retrieved by calling ` $bot->boardSections->forBoard($boardId)`:
 ```php
-$bot->boardSections->edit($sectionId', 'New section name');
+$bot->boardSections->edit($sectionId, 'New section name');
 ```
 
 Delete a section. You need a section id, which can be retrieved by calling ` $bot->boardSections->forBoard($boardId)`
