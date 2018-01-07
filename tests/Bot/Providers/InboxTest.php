@@ -14,8 +14,9 @@ class InboxTest extends ProviderBaseTest
     /** @test */
     public function it_returns_conversations_for_a_current_user()
     {
-        $provider = $this->getProvider();
-        $provider->conversations();
+        $this->login();
+
+        $this->getProvider()->conversations();
 
         $this->assertWasGetRequest(UrlBuilder::RESOURCE_GET_LAST_CONVERSATIONS);
     }
@@ -23,8 +24,9 @@ class InboxTest extends ProviderBaseTest
     /** @test */
     public function it_returns_current_contact_requests()
     {
-        $provider = $this->getProvider();
-        $requests = $provider->contactRequests();
+        $this->login();
+
+        $requests = $this->getProvider()->contactRequests();
 
         $this->assertInternalType('array', $requests);
         $this->assertWasGetRequest(UrlBuilder::RESOURCE_CONTACTS_REQUESTS);
@@ -33,8 +35,9 @@ class InboxTest extends ProviderBaseTest
     /** @test */
     public function it_accepts_contact_request()
     {
-        $provider = $this->getProvider();
-        $provider->acceptContactRequest('12345');
+        $this->login();
+
+        $this->getProvider()->acceptContactRequest('12345');
 
         $this->assertWasPostRequest(
             UrlBuilder::RESOURCE_CONTACT_REQUEST_ACCEPT,
@@ -45,8 +48,9 @@ class InboxTest extends ProviderBaseTest
     /** @test */
     public function it_ignores_contact_request()
     {
-        $provider = $this->getProvider();
-        $provider->ignoreContactRequest('12345');
+        $this->login();
+
+        $this->getProvider()->ignoreContactRequest('12345');
 
         $this->assertWasPostRequest(
             UrlBuilder::RESOURCE_CONTACT_REQUEST_IGNORE,
@@ -57,8 +61,9 @@ class InboxTest extends ProviderBaseTest
     /** @test */
     public function it_fetches_current_user_news()
     {
-        $provider = $this->getProvider();
-        $provider->news()->toArray();
+        $this->login();
+
+        $this->getProvider()->news()->toArray();
 
         $this->assertWasGetRequest(UrlBuilder::RESOURCE_GET_LATEST_NEWS, ['allow_stale' => true]);
     }
@@ -66,8 +71,9 @@ class InboxTest extends ProviderBaseTest
     /** @test */
     public function it_fetches_current_user_notifications()
     {
-        $provider = $this->getProvider();
-        $provider->notifications()->toArray();
+        $this->login();
+
+        $this->getProvider()->notifications()->toArray();
 
         $this->assertWasGetRequest(UrlBuilder::RESOURCE_GET_NOTIFICATIONS);
     }
@@ -80,8 +86,8 @@ class InboxTest extends ProviderBaseTest
     {
         return [
             'contact_request' => [
-                "type" => "contactrequest",
-                "id"   => $requestId,
+                'type' => 'contactrequest',
+                'id'   => $requestId,
             ],
         ];
     }

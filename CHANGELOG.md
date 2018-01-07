@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 ## v5.6.2 - ?
 ### Fixed:
  - crash for recommended keywords with no response 
+ - board invites require to be logged in
 
 ## v5.6.1 - 2017-12-31
 ### Fixed:

@@ -67,8 +67,7 @@ abstract class ProviderBaseTest extends TestCase
         $container = new ProvidersContainer($this->request, new Response());
         $providerClassName = $this->getProviderClass();
 
-        $providerName = lcfirst(substr($providerClassName, strrpos($providerClassName, '\\') + 1));
-        return $container->$providerName;
+        return new $providerClassName($container);
     }
 
     /**

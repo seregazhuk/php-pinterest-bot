@@ -65,18 +65,7 @@ class ProvidersContainerTest extends TestCase
     }
 
     /** @test */
-    public function it_delegates_client_info_to_response()
-    {
-        $clientInfo = ['info'];
-        $this->response
-            ->shouldReceive('getClientInfo')
-            ->andReturn($clientInfo);
-
-        $this->assertEquals($clientInfo, $this->container->getClientInfo());
-    }
-
-    /** @test */
-    public function it_can_reload_client_info()
+    public function it_reloads_client_info()
     {
         $clientInfo = ['info'];
         $this->response
@@ -91,61 +80,8 @@ class ProvidersContainerTest extends TestCase
             ->once()
             ->andReturn($clientInfo);
 
-
         $this->assertEquals($clientInfo, $this->container->getClientInfo());
     }
-
-    /** @test */
-    public function it_delegates_last_error_to_response()
-    {
-        $error = ['message' => 'error'];
-        $this->response
-            ->shouldReceive('getLastError')
-            ->andReturn($error);
-
-        $this->assertEquals($error['message'], $this->container->getLastError());
-    }
-
-    /** @test */
-    public function it_should_return_last_message_from_response()
-    {
-        $error = [
-            'message' => null,
-            'code'    => 'error_code',
-        ];
-
-        $this->response
-            ->shouldReceive('getLastError')
-            ->andReturn($error);
-
-        $this->assertEquals($error['code'], $this->container->getLastError());
-    }
-
-    /** @test */
-    public function it_should_return_null_if_there_was_no_error_in_response()
-    {
-        $this->response
-            ->shouldReceive('getLastError')
-            ->andReturn(false);
-
-        $this->assertNull($this->container->getLastError());
-    }
-
-    /** @test */
-    public function it_should_return_last_error_code_from_response()
-    {
-        $error = [
-            'message' => 'error_message',
-            'code'    => 'error_code',
-        ];
-
-        $this->response
-            ->shouldReceive('getLastError')
-            ->andReturn($error);
-
-        $this->assertEquals($error['message'], $this->container->getLastError());
-    }
-
 
     /** @test */
     public function it_returns_http_client_instance()

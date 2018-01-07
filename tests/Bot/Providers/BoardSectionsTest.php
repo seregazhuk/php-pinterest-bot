@@ -24,9 +24,8 @@ class BoardSectionsTest extends ProviderBaseTest
     /** @test */
     public function it_edits_a_section()
     {
-        $provider = $this->getProvider();
-
-        $provider->edit('12345', 'test');
+        $this->login();
+        $this->getProvider()->edit('12345', 'test');
 
         $request = [
             'section_id' => '12345',
@@ -38,9 +37,8 @@ class BoardSectionsTest extends ProviderBaseTest
     /** @test */
     public function it_removes_section()
     {
-        $provider = $this->getProvider();
-
-        $provider->delete('12345');
+        $this->login();
+        $this->getProvider()->delete('12345');
 
         $this->assertWasPostRequest(UrlBuilder::RESOURCE_DELETE_BOARD_SECTION, ['section_id' => '12345']);
     }
