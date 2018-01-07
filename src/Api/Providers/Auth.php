@@ -2,6 +2,7 @@
 
 namespace seregazhuk\PinterestBot\Api\Providers;
 
+use LogicException;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\Forms\Registration;
 use seregazhuk\PinterestBot\Api\Providers\Core\Provider;
@@ -124,11 +125,12 @@ class Auth extends Provider
      *
      * @param string $username
      * @param string $password
+     * @throws LogicException
      */
     protected function checkCredentials($username, $password)
     {
         if (!$username || !$password) {
-            throw new \LogicException('You must set username and password to login.');
+            throw new LogicException('You must set username and password to login.');
         }
     }
 
@@ -149,11 +151,17 @@ class Auth extends Provider
      */
     protected function makeRegisterCall(Registration $registrationForm)
     {
-        if (!$this->sendEmailVerificationAction()) return false;
+        if (!$this->sendEmailVerificationAction()) {
+            return false;
+        }
 
-        if (!$this->post(UrlBuilder::RESOURCE_CREATE_REGISTER, $registrationForm->toArray())) return false;
+        if (!$this->post(UrlBuilder::RESOURCE_CREATE_REGISTER, $registrationForm->toArray())) {
+            return false;
+        }
 
-        if (!$this->sendRegistrationActions()) return false;
+        if (!$this->sendRegistrationActions()) {
+            return false;
+        }
 
         return $this->completeRegistration();
     }
@@ -174,7 +182,9 @@ class Auth extends Provider
 
         $this->post(UrlBuilder::RESOURCE_LOGIN, $credentials);
 
-        if ($this->response->isEmpty()) return false;
+        if ($this->response->isEmpty()) {
+            return false;
+        }
 
         $this->request->login();
 

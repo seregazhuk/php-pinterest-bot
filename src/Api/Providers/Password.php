@@ -43,7 +43,10 @@ class Password extends Provider
 
         $urlData = $this->parseCurrentUrl();
 
-        if(!isset($urlData['query']) || !isset($urlData['path'])) return false;
+        $isValidUrlData = isset($urlData['query'], $urlData['path']);
+        if(!$isValidUrlData) {
+            return false;
+        }
 
         $username = trim(str_replace('/pw/', '', $urlData['path']), '/');
 
@@ -51,7 +54,10 @@ class Password extends Provider
 
         parse_str($urlData['query'], $query);
 
-        if(!isset($query['e']) || !isset($query['t'])) return false;
+        $isValidQuery = isset($query['e'], $query['t']);
+        if(!$isValidQuery) {
+            return false;
+        }
 
         $request = [
             'username'             => $username,

@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## v5.6.2 - ?
+### Fixed:
+ - crash for recommended keywords with no response 
+
 ## v5.6.1 - 2017-12-31
 ### Fixed:
  - add login requirement for board sections

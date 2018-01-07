@@ -22,7 +22,7 @@ class Keywords extends Provider
 
         $result = $this->get(UrlBuilder::RESOURCE_SEARCH, $requestOptions);
 
-        return $this->getKeywordsFromRequest($result);
+        return empty($result) ? [] : $this->getKeywordsFromRequest($result);
     }
 
     /**
@@ -33,7 +33,9 @@ class Keywords extends Provider
     {
         $keywords = $response['guides'];
 
-        if (empty($keywords)) return [];
+        if (empty($keywords)) {
+            return [];
+        }
 
         return array_map(function ($keywordData) {
             return [

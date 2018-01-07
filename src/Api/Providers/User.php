@@ -83,12 +83,14 @@ class User extends Provider
      */
     public function deactivate($reason = 'other', $explanation = '')
     {
-        $id = $this->id();
+        $userId = $this->id();
 
-        if (!isset($id)) return false;
+        if ($userId === null) {
+            return false;
+        }
 
         $request = [
-            'user_id'     => $id,
+            'user_id'     => $userId,
             'reason'      => $reason,
             'explanation' => $explanation,
         ];

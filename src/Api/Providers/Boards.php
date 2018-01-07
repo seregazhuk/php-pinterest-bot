@@ -66,7 +66,9 @@ class Boards extends FollowableProvider
     {
         $currentUserName = $this->resolveCurrentUsername();
 
-        if (!$currentUserName) return [];
+        if (!$currentUserName) {
+            return [];
+        }
 
         return $this->forUser($currentUserName);
     }

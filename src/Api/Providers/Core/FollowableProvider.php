@@ -71,9 +71,7 @@ abstract class FollowableProvider extends EntityProvider
      */
     protected function followCall($entityId, $resourceUrl)
     {
-        $entityId = $this->resolveEntityId($entityId);
-
-        $query = $this->createFollowRequest($entityId);
+        $query = $this->createFollowRequest($this->resolveEntityId($entityId));
 
         return $this->post($resourceUrl, $query);
     }
@@ -101,7 +99,7 @@ abstract class FollowableProvider extends EntityProvider
         // Pinterest requires antityId to be a string
         $dataJson = [$entityName => (string)$entityId];
 
-        if ($entityName == 'interest_id') {
+        if ($entityName === 'interest_id') {
             $dataJson['interest_list'] = 'favorited';
         }
 

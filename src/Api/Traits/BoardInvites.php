@@ -82,10 +82,9 @@ trait BoardInvites
      */
     public function sendInviteByUserId($boardId, $userIds)
     {
-        $userIds = (array)$userIds;
         $data = [
-            "board_id"         => $boardId,
-            "invited_user_ids" => $userIds,
+            'board_id'         => $boardId,
+            'invited_user_ids' => (array)$userIds,
         ];
 
         return $this->post(UrlBuilder::RESOURCE_CREATE_USER_ID_INVITE, $data);

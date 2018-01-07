@@ -61,6 +61,7 @@ class Inbox extends Provider
      * @param string $text
      * @param int|null $pinId
      * @return bool
+     * @throws InvalidRequest
      */
     public function sendMessage($userIds, $text, $pinId = null)
     {
@@ -74,6 +75,7 @@ class Inbox extends Provider
      * @param string $text
      * @param int|null $pinId
      * @return bool
+     * @throws InvalidRequest
      */
     public function sendEmail($emails, $text, $pinId = null)
     {
@@ -123,8 +125,8 @@ class Inbox extends Provider
     {
         $data = [
             'contact_request' => [
-                "type" => "contactrequest",
-                "id"   => $requestId,
+                'type' => 'contactrequest',
+                'id'   => $requestId,
             ],
         ];
 

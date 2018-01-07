@@ -106,11 +106,17 @@ class Pins extends EntityProvider
     {
         $requestOptions = ['id' => $pindId];
 
-        if(!empty($description)) $requestOptions['description'] = $description;
+        if(!empty($description)) {
+            $requestOptions['description'] = $description;
+        }
 
-        if (!is_null($boardId)) $requestOptions['board_id'] = $boardId;
+        if ($boardId !== null) {
+            $requestOptions['board_id'] = $boardId;
+        }
 
-        if (!empty($link)) $requestOptions['link'] = stripslashes($link);
+        if (!empty($link)) {
+            $requestOptions['link'] = stripslashes($link);
+        }
 
         return $this->post(UrlBuilder::RESOURCE_UPDATE_PIN, $requestOptions);
     }
@@ -203,7 +209,7 @@ class Pins extends EntityProvider
     {
         $aggregatedPinId = $this->getAggregatedPinId($pinId);
 
-        if (is_null($aggregatedPinId)) return new Pagination();
+        if ($aggregatedPinId === null) return new Pagination();
 
         $additionalData['aggregated_pin_data_id'] = $aggregatedPinId;
 
@@ -283,11 +289,11 @@ class Pins extends EntityProvider
             'pin_id'          => $pinId,
             // Some magic numbers, I have no idea about them
             'crop'            => [
-                "x"                => 0.16,
-                "y"                => 0.16,
-                "w"                => 0.66,
-                "h"                => 0.66,
-                "num_crop_actions" => 1,
+                'x'                => 0.16,
+                'y'                => 0.16,
+                'w'                => 0.66,
+                'h'                => 0.66,
+                'num_crop_actions' => 1,
             ],
             'force_refresh'   => true,
             'keep_duplicates' => false,
@@ -342,10 +348,10 @@ class Pins extends EntityProvider
     public function explore($topicId, $limit = Pagination::DEFAULT_LIMIT)
     {
         $data = [
-            "aux_fields" => [],
-            "prepend"    => false,
-            "offset"     => 180,
-            "section_id" => $topicId,
+            'aux_fields' => [],
+            'prepend'    => false,
+            'offset'     => 180,
+            'section_id' => $topicId,
         ];
 
         return $this->paginate(UrlBuilder::RESOURCE_EXPLORE_PINS, $data, $limit);
@@ -406,11 +412,9 @@ class Pins extends EntityProvider
      */
     protected function bulkEdit($pinIds, $boardId, $editUrl)
     {
-        $pinIds = is_array($pinIds) ? $pinIds : [$pinIds];
-
         $data = [
             'board_id' => $boardId,
-            'pin_ids'  => $pinIds,
+            'pin_ids'  => (array)$pinIds,
         ];
 
         return $this->post($editUrl, $data);

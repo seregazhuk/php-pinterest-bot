@@ -93,7 +93,7 @@ abstract class Provider
      * @param string $postString
      * @return $this
      */
-    protected function execute($url, $postString = "")
+    protected function execute($url, $postString = '')
     {
         $result = $this->request->exec($url, $postString);
 
@@ -191,10 +191,12 @@ abstract class Provider
 
     protected function initTokenIfRequired()
     {
-        if ($this->request->hasToken()) return;
+        if ($this->request->hasToken()) {
+            return;
+        }
 
         // Simply visit main page to fill the cookies
         // and parse a token from them
-        $this->get('');
+        $this->get();
     }
 }

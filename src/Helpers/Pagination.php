@@ -80,7 +80,9 @@ class Pagination implements IteratorAggregate
      */
     public function getIterator()
     {
-        if(empty($this->callback)) return new EmptyIterator();
+        if (empty($this->callback)) {
+            return new EmptyIterator();
+        }
 
         return $this->processCallback();
     }
@@ -114,7 +116,6 @@ class Pagination implements IteratorAggregate
     {
         return iterator_to_array($this->getIterator());
     }
-
 
     /**
      * Check if we execGet results limit in pagination.
