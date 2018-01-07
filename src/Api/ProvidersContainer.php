@@ -129,26 +129,20 @@ class ProvidersContainer
      */
     protected function buildProvider($className)
     {
-        $provider = new $className($this);
+        $provider = new $className($this, $this->request, $this->response);
 
         return new ProviderWrapper($provider);
     }
 
     /**
-     * Proxies call to Request object and returns message from
+     * Proxies call to Response object and returns message from
      * the error object.
      *
      * @return string|null
      */
     public function getLastError()
     {
-        $error = $this->response->getLastError();
-
-        if(isset($error['message'])) return $error['message'];
-
-        if(isset($error['code'])) return $error['code'];
-
-        return null;
+        return $this->response->getLastErrorText();
     }
 
     /**
@@ -211,21 +205,5 @@ class ProvidersContainer
         }
 
         return in_array(Provider::class, class_parents($className));
-    }
-
-    /**
-     * @return Request
-     */
-    public function getRequest()
-    {
-        return $this->request;
-    }
-
-    /**
-     * @return Response
-     */
-    public function getResponse()
-    {
-        return $this->response;
     }
 }

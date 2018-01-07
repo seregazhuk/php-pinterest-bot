@@ -46,8 +46,7 @@ class ResponseTest extends TestCase
         $response = new Response();
         $response->fill($this->createErrorApiResponse('some error'));
 
-        $lastError = $response->getLastError();
-        $this->assertEquals('some error', $lastError['message']);
+        $this->assertEquals('some error', $response->getLastErrorText());
     }
 
     /** @test */
@@ -56,8 +55,7 @@ class ResponseTest extends TestCase
         $response = new Response();
         $response->fill($this->createErrorApiResponseWithCode('some error'));
 
-        $lastError = $response->getLastError();
-        $this->assertEquals('some error', $lastError['code']);
+        $this->assertEquals('some error', $response->getLastErrorText());
     }
 
     /** @test */
@@ -65,11 +63,9 @@ class ResponseTest extends TestCase
     {
         $response = new Response();
         $response->fill($this->createErrorApiResponse('some error'));
-
         $response->fill($this->createSuccessApiResponse('some data'));
 
-        $lastError = $response->getLastError();
-        $this->assertEquals('some error', $lastError['message']);
+        $this->assertEquals('some error', $response->getLastErrorText());
     }
 
     /** @test */

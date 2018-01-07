@@ -13,7 +13,7 @@ class Response implements PaginatedResponse
     protected $data = [];
 
     /**
-     * @var array|null
+     * @var Error
      */
     protected $lastError;
 
@@ -27,7 +27,11 @@ class Response implements PaginatedResponse
      */
     public function __construct($data = null)
     {
-        if($data) $this->fill($data);
+        $this->lastError = new Error();
+
+        if($data) {
+            $this->fill($data);
+        }
     }
 
     /**
@@ -60,7 +64,9 @@ class Response implements PaginatedResponse
      */
     public function getResponseData($key = null)
     {
-        if ($this->hasErrors()) return false;
+        if ($this->hasErrors()) {
+            return false;
+        }
 
         return $this->parseResponseData($key);
     }
@@ -95,7 +101,9 @@ class Response implements PaginatedResponse
     {
         $responseData = get_array_data('resource_response.data', $this->data);
 
-        if (!$responseData) return false;
+        if (!$responseData) {
+            return false;
+        }
 
         return $key ?
             get_array_data($key, $responseData) :
@@ -121,14 +129,13 @@ class Response implements PaginatedResponse
     }
 
     /**
-     * Check for error info in api response and save
-     * it.
+     * Check for error info in api response and save it.
      *
      * @return bool
      */
     public function hasErrors()
     {
-        return !empty($this->lastError);
+        return !$this->lastError->isEmpty();
     }
 
     /**
@@ -140,9 +147,13 @@ class Response implements PaginatedResponse
     {
         $bookmarks = $this->getRawBookmarksData();
 
-        if (empty($bookmarks)) return [];
+        if (empty($bookmarks)) {
+            return [];
+        }
 
-        if ($bookmarks[0] === '-end-') return [];
+        if ($bookmarks[0] === '-end-') {
+            return [];
+        }
 
         return $bookmarks;
     }
@@ -181,11 +192,11 @@ class Response implements PaginatedResponse
     }
 
     /**
-     * @return array
+     * @return string|null
      */
-    public function getLastError()
+    public function getLastErrorText()
     {
-        return $this->lastError;
+        return $this->lastError->getText();
     }
 
     /**
@@ -211,9 +222,11 @@ class Response implements PaginatedResponse
 
     protected function fillError()
     {
-        $error = get_array_data('resource_response.error', $this->data);
+        $errorData = get_array_data('resource_response.error', $this->data);
 
-        if ($error) $this->lastError = $error;
+        if(!empty($errorData)) {
+            $this->lastError = new Error($errorData);
+        }
 
         return $this;
     }

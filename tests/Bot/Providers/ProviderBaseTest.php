@@ -39,7 +39,7 @@ abstract class ProviderBaseTest extends TestCase
     {
         $this->request
             ->shouldReceive('isLoggedIn')
-            ->andReturn('true');
+            ->andReturn(true);
     }
 
     /**
@@ -65,9 +65,10 @@ abstract class ProviderBaseTest extends TestCase
     protected function getProvider()
     {
         $container = new ProvidersContainer($this->request, new Response());
-        $providerClass = $this->getProviderClass();
+        $providerClassName = $this->getProviderClass();
 
-        return new $providerClass($container);
+        $providerName = lcfirst(substr($providerClassName, strrpos($providerClassName, '\\') + 1));
+        return $container->$providerName;
     }
 
     /**

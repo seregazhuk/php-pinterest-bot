@@ -39,12 +39,14 @@ abstract class Provider
 
     /**
      * @param ProvidersContainer $container
+     * @param Request $request
+     * @param Response $response
      */
-    public function __construct(ProvidersContainer $container)
+    public function __construct(ProvidersContainer $container, Request $request, Response $response)
     {
         $this->container = $container;
-        $this->request = $container->getRequest();
-        $this->response = $container->getResponse();
+        $this->request = $request;
+        $this->response = $response;
     }
 
     /**

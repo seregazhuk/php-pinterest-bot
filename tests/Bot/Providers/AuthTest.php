@@ -15,7 +15,7 @@ class AuthTest extends ProviderBaseTest
     public function it_converts_simple_account_to_a_business_one()
     {
         $provider = $this->getProvider();
-
+        $this->login();
         $provider->convertToBusiness('myBusinessName', 'http://example.com');
 
         $request = [
@@ -41,6 +41,7 @@ class AuthTest extends ProviderBaseTest
     {
         $provider = $this->getProvider();
 
+        $this->login();
         $provider->logout();
 
         $this->request->shouldHaveReceived('logout');

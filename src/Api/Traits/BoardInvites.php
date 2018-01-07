@@ -21,6 +21,7 @@ trait BoardInvites
             'sendInvite',
             'sendInviteByEmail',
             'sendInviteByUserId',
+            'ignoreInvite',
             'deleteInvite',
             'acceptInvite',
             'invites',

@@ -14,6 +14,7 @@ class BoardInvitesTest extends ProviderBaseTest
     /** @test */
     public function it_returns_invites_for_a_current_user()
     {
+        $this->login();
         $provider = $this->getProvider();
         $invites = $provider->invites();
 
@@ -29,6 +30,7 @@ class BoardInvitesTest extends ProviderBaseTest
     /** @test */
     public function it_deletes_invite_for_a_user_and_board()
     {
+        $this->login();
         $provider = $this->getProvider();
         $provider->deleteInvite('12345', '56789');
 
@@ -45,10 +47,8 @@ class BoardInvitesTest extends ProviderBaseTest
     /** @test */
     public function it_allows_a_user_to_ignore_an_invite()
     {
-        $provider = $this->getProvider();
-
-        // For resolving current user id
         $this->login();
+        $provider = $this->getProvider();
         $this->pinterestShouldReturn(['id' => '56789']);
 
         $provider->ignoreInvite('12345');
@@ -64,13 +64,14 @@ class BoardInvitesTest extends ProviderBaseTest
     /** @test */
     public function a_user_can_send_an_invitation_to_board_by_id()
     {
+        $this->login();
         $provider = $this->getProvider();
         $provider->sendInvite($boardId = '12345', $userId = 5678);
 
         $this->assertWasPostRequest(
             UrlBuilder::RESOURCE_CREATE_USER_ID_INVITE, [
-                "board_id"         => '12345',
-                "invited_user_ids" => [5678],
+                'board_id'         => '12345',
+                'invited_user_ids' => [5678],
             ]
         );
     }
@@ -78,13 +79,14 @@ class BoardInvitesTest extends ProviderBaseTest
     /** @test */
     public function a_user_can_send_an_invitation_to_board_by_email()
     {
+        $this->login();
         $provider = $this->getProvider();
         $provider->sendInvite($boardId = '12345', $userEmail = 'johndoe@example.com');
 
         $this->assertWasPostRequest(
             UrlBuilder::RESOURCE_CREATE_EMAIL_INVITE, [
-                "board_id" => '12345',
-                "emails"   => ['johndoe@example.com'],
+                'board_id' => '12345',
+                'emails'   => ['johndoe@example.com'],
             ]
         );
     }
