@@ -62,7 +62,7 @@ class ProviderWrapper
         $methodRequiresLogin = $this->provider->checkMethodRequiresLogin($method);
 
         if ($methodRequiresLogin && !$isLoggedIn) {
-            $errorMessage = $this->getErrorMethodCallMessage($method, "You must log in before.");
+            $errorMessage = $this->getErrorMethodCallMessage($method, 'You must log in before.');
             throw new AuthRequired($errorMessage);
         }
     }

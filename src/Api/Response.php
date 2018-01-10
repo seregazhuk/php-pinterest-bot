@@ -59,7 +59,7 @@ class Response implements PaginatedResponse
     /**
      * Check if specified data exists in response.
      *
-     * @param null  $key
+     * @param null $key
      * @return array|bool
      */
     public function getResponseData($key = null)
@@ -73,7 +73,7 @@ class Response implements PaginatedResponse
 
     /**
      * @param string $key
-     * @param null $default
+     * @param null|mixed $default
      * @return mixed
      */
     public function getData($key = '', $default = null)
@@ -94,10 +94,10 @@ class Response implements PaginatedResponse
      * Parse data from Pinterest Api response.
      * Data is stored in ['resource_response']['data'] array.
      *
-     * @param string $key
+     * @param string|null $key
      * @return bool|array
      */
-    protected function parseResponseData($key)
+    protected function parseResponseData($key = null)
     {
         $responseData = get_array_data('resource_response.data', $this->data);
 
@@ -179,7 +179,9 @@ class Response implements PaginatedResponse
      */
     public function getPaginationData()
     {
-        if ($this->hasErrors()) return [];
+        if ($this->hasErrors()) {
+            return [];
+        }
 
         if ($data = $this->getResponseData()) {
             return [
