@@ -3,7 +3,6 @@
 namespace seregazhuk\PinterestBot\Api\Traits;
 
 use seregazhuk\PinterestBot\Api\Response;
-use seregazhuk\PinterestBot\Exceptions\InvalidRequest;
 use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 
@@ -87,8 +86,7 @@ trait TryIt
     public function deleteTryIt($tryItRecordId)
     {
         return $this->post(
-            UrlBuilder::RESOURCE_TRY_PIN_DELETE,
-            ['user_did_it_data_id' => $tryItRecordId]
+            UrlBuilder::RESOURCE_TRY_PIN_DELETE, ['user_did_it_data_id' => $tryItRecordId]
         );
     }
 
@@ -97,7 +95,6 @@ trait TryIt
      * @param string $comment
      * @param string|null $pathToImage
      * @return array
-     * @throws InvalidRequest
      */
     protected function makeRequest($pinId, $comment, $pathToImage = null)
     {
@@ -119,7 +116,6 @@ trait TryIt
     /**
      * @param string $pathToImage
      * @return string
-     * @throws InvalidRequest
      */
     protected function uploadImage($pathToImage)
     {

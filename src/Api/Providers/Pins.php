@@ -209,7 +209,9 @@ class Pins extends EntityProvider
     {
         $aggregatedPinId = $this->getAggregatedPinId($pinId);
 
-        if ($aggregatedPinId === null) return new Pagination();
+        if ($aggregatedPinId === null) {
+            return new Pagination();
+        }
 
         $additionalData['aggregated_pin_data_id'] = $aggregatedPinId;
 
@@ -393,15 +395,6 @@ class Pins extends EntityProvider
         return isset($pinInfo['aggregated_pin_data']['id']) ?
             $pinInfo['aggregated_pin_data']['id'] :
             null;
-    }
-
-    /**
-     * @param mixed $params
-     * @return array
-     */
-    protected function getFeedRequestData($params = [])
-    {
-        return ['domain' => $params['source']];
     }
 
     /**
