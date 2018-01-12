@@ -2,6 +2,12 @@ build:
     environment:
         php:
             version: 5.6
+    nodes:
+        analysis:
+            project_setup:
+                override: true
+            tests:
+                override: [php-scrutinizer-run]
 
 checks:
     php:
