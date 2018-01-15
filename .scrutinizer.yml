@@ -9,6 +9,10 @@ build:
             tests:
                 override: [php-scrutinizer-run]
 
+tools:
+    php_cs_fixer:
+        config: { level: psr2 }
+
 checks:
     php:
         code_rating: true
