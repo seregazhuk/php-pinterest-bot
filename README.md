@@ -968,6 +968,10 @@ print_r($conversations);
 ```
 
 ### Write a message
+**Notice** that, when you are sending a message to unknown person Pinterest doesn't show your message. 
+It suggests this person to create a contact with you. Only then you can send messages, 
+see [Contact requests](#contact-requests)
+
 Write a message to a user by id. You may specify one user by id, or pass an array of user ids:
 
 ```php
@@ -992,7 +996,7 @@ $bot->inbox->sendEmail('mail@domain.com', 'message text', $pindId);
 ```
 
 ### Contact requests
-When someone at first sends you an invitation to a board, you receive a contact request.
+When someone at first sends you an invitation to a board or a message, you receive a contact request.
 Get a list of contact requests:
 
 ```php
