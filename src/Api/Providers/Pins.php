@@ -106,7 +106,7 @@ class Pins extends EntityProvider
     {
         $requestOptions = ['id' => $pindId];
 
-        if(!empty($description)) {
+        if (!empty($description)) {
             $requestOptions['description'] = $description;
         }
 
@@ -315,7 +315,9 @@ class Pins extends EntityProvider
     public function saveOriginalImage($pinId, $path)
     {
         $pinInfo = $this->info($pinId);
-        if (!isset($pinInfo['images']['orig']['url'])) return false;
+        if (!isset($pinInfo['images']['orig']['url'])) {
+            return false;
+        }
 
         $originalUrl = $pinInfo['images']['orig']['url'];
         $destination = $path . DIRECTORY_SEPARATOR . basename($originalUrl);

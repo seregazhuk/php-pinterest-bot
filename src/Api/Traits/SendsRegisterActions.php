@@ -41,7 +41,7 @@ trait SendsRegisterActions
      */
     protected function sendRegistrationActions()
     {
-        if(!$this->sendRegisterActionRequest($this->secondStepActions)) {
+        if (!$this->sendRegisterActionRequest($this->secondStepActions)) {
             return false;
         }
 

@@ -141,7 +141,9 @@ class Pagination implements IteratorAggregate
             /** @var PaginatedResponse $response */
             $response = call_user_func($this->callback);
 
-            if ($response->isEmpty()) return;
+            if ($response->isEmpty()) {
+                return;
+            }
 
             foreach ($this->getResultsFromResponse($response) as $result) {
                 $this->processed++;
@@ -151,10 +153,14 @@ class Pagination implements IteratorAggregate
                     $this->resultsNum++;
                 }
 
-                if ($this->reachesLimit($this->resultsNum)) return;
+                if ($this->reachesLimit($this->resultsNum)) {
+                    return;
+                }
             }
 
-            if (!$response->hasBookmarks()) return;
+            if (!$response->hasBookmarks()) {
+                return;
+            }
         }
     }
 

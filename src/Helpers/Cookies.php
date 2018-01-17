@@ -15,9 +15,9 @@ class Cookies
      */
     public function get($name)
     {
-        if(array_key_exists($name, $this->cookies)) {
+        if (array_key_exists($name, $this->cookies)) {
             return $this->cookies[$name]['value'];
-       }
+        }
 
         return null;
     }
@@ -46,7 +46,7 @@ class Cookies
         $this->cookies = [];
 
         foreach (file($file) as $line) {
-            if($cookie = $this->parseCookieLine($line)) {
+            if ($cookie = $this->parseCookieLine($line)) {
                 $this->cookies[$cookie['name']] = $cookie;
             }
         }
@@ -83,7 +83,9 @@ class Cookies
             $line = substr($line, 10);
         }
 
-        if (!$this->isValidLine($line)) return false;
+        if (!$this->isValidLine($line)) {
+            return false;
+        }
 
         $data = $this->getCookieData($line);
 

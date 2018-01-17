@@ -33,10 +33,10 @@ $accounts = [
  * @param string $folder
  * @return string
  */
-function getImage($folder) {
-
+function getImage($folder)
+{
     $images = glob("$folder/*.*");
-    if(empty($images)) {
+    if (empty($images)) {
         echo "No images for posting\n";
         die();
     }
@@ -46,11 +46,11 @@ function getImage($folder) {
 
 $bot = PinterestBot::create();
 
-foreach($accounts as $account) {
+foreach ($accounts as $account) {
     $bot->auth->login($account['login'], $account['password']);
 
     // add proxy
-    if(isset($account['proxy'])) {
+    if (isset($account['proxy'])) {
         $proxy = $account['proxy'];
         $bot->getHttpClient()->useProxy($proxy['host'], $proxy['port']);
     }

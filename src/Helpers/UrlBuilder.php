@@ -192,7 +192,7 @@ class UrlBuilder
      */
     public static function buildApiUrl($resourceUrl)
     {
-        if(strpos($resourceUrl, 'http') !== false) {
+        if (strpos($resourceUrl, 'http') !== false) {
             return $resourceUrl;
         }
 
@@ -226,7 +226,9 @@ class UrlBuilder
             self::FOLLOWING_PEOPLE    => self::RESOURCE_USER_FOLLOWING,
         ];
 
-        if(array_key_exists($type, $urls)) return $urls[$type];
+        if (array_key_exists($type, $urls)) {
+            return $urls[$type];
+        }
 
         return null;
     }

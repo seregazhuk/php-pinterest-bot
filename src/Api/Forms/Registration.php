@@ -133,7 +133,6 @@ class Registration extends Form
      */
     public function getData()
     {
-
         return [
             'first_name'    => $this->name,
             'email'         => $this->email,

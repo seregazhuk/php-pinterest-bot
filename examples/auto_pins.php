@@ -20,7 +20,7 @@ $boardId = $boards[0]['id'];
 
 // select image for posting
 $images = glob('images/*.*');
-if(empty($images)) {
+if (empty($images)) {
     echo "No images for posting\n";
     die();
 }

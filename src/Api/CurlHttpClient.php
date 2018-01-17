@@ -120,7 +120,9 @@ class CurlHttpClient implements HttpClient
 
         $this->curl = curl_init($url);
 
-        if (empty($this->cookieJar)) $this->loadCookies();
+        if (empty($this->cookieJar)) {
+            $this->loadCookies();
+        }
 
         curl_setopt_array($this->curl, $this->makeHttpOptions($postString));
 
@@ -273,7 +275,7 @@ class CurlHttpClient implements HttpClient
      */
     protected function fillCookies()
     {
-        if(!empty($this->cookieJar)) {
+        if (!empty($this->cookieJar)) {
             $this->cookies->fill($this->cookieJar);
         }
 
@@ -304,7 +306,7 @@ class CurlHttpClient implements HttpClient
             CURLOPT_PROXYTYPE => $type ?: CURLPROXY_HTTP,
         ];
 
-        if(null !== $auth) {
+        if (null !== $auth) {
             $proxy[CURLOPT_PROXYUSERPWD] = $auth;
         }
 

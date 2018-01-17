@@ -44,7 +44,7 @@ class Password extends Provider
         $urlData = $this->parseCurrentUrl();
 
         $isValidUrlData = isset($urlData['query'], $urlData['path']);
-        if(!$isValidUrlData) {
+        if (!$isValidUrlData) {
             return false;
         }
 
@@ -55,7 +55,7 @@ class Password extends Provider
         parse_str($urlData['query'], $query);
 
         $isValidQuery = isset($query['e'], $query['t']);
-        if(!$isValidQuery) {
+        if (!$isValidQuery) {
             return false;
         }
 
