@@ -45,14 +45,18 @@ function trait_uses_recursive($trait)
  */
 function get_array_data($key = '', $data, $default = null)
 {
-    if (empty($key)) return $data;
+    if (empty($key)) {
+        return $data;
+    }
 
     $indexes = explode('.', $key);
 
     $value = $data;
 
     foreach ($indexes as $index) {
-        if (!isset($value[$index])) return $default;
+        if (!isset($value[$index])) {
+            return $default;
+        }
 
         $value = $value[$index];
     }

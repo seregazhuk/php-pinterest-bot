@@ -172,7 +172,7 @@ class Request
     {
         $this->setTokenFromCookies();
 
-        if(!empty($this->csrfToken)) {
+        if (!empty($this->csrfToken)) {
             $this->loggedIn = true;
         }
 
@@ -244,7 +244,7 @@ class Request
      */
     protected function setTokenFromCookies()
     {
-        if($token = $this->httpClient->cookie('csrftoken')) {
+        if ($token = $this->httpClient->cookie('csrftoken')) {
             $this->csrfToken = $token;
         }
 

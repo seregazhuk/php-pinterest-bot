@@ -158,7 +158,7 @@ class ProvidersContainer
     {
         $clientInfo = $this->response->getClientInfo();
 
-        if($clientInfo === null || $reload) {
+        if ($clientInfo === null || $reload) {
             /** @var User $userProvider */
             $userProvider = $this->getProvider('user');
             $userProvider->visitPage();
@@ -200,7 +200,7 @@ class ProvidersContainer
      */
     protected function checkIsProviderClass($className)
     {
-        if(!class_exists($className)) {
+        if (!class_exists($className)) {
             return false;
         }
 

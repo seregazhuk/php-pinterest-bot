@@ -8,8 +8,8 @@ use seregazhuk\PinterestBot\Api\Providers\Core\Provider;
 class Keywords extends Provider
 {
     /**
-     * Get recommendations for query word. 
-     * 
+     * Get recommendations for query word.
+     *
      * @param string $query
      * @return array|bool
      */
