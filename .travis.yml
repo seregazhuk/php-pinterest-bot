@@ -9,6 +9,7 @@ addons:
       secure: "r9CStfHlDMsc1q9haPdjm8zLyjonsmv4PWvkL3+nhLCIkpP5lkMH2ur+AW8S/ouMnfgOFKUwQOwTgc9HIlVkKzz0BhEHP6inwbsMzTD3hM5WNFJ1ONnaj/wGmsvWNA0c4D2nfjWx4LYrDBbYubRQ36ZDzTMBz7DPwAfbPcBVanNtVXoNQJnETEWIYRjhIrCCMoHO9PusmkULGooeXIQxbvj4Wk76b3bHlqyPF+UO2qd7hR0/reEaMATiLHGbHJ82v1BkSs12Omu+HGgMd6giSBuBO7L2goeQCtS56DugSjI+tTEhkxUoEHd9kcWwCTw8Ip8JbUNtdOhKEhgJz6lNSN0YlyBv2C0nzBlJZzJW4AKsoO4LCjtU2a1qeg5UPGFFsY+0QnkZmsLfuh16fLjOGwWAWvHX39afSfoSH2Bvdip4wF70oO8wiO3cuK/v00onvh8HHFxnxsAEg44/PivuBaMkaoDzGj8CVgJB0FJ7+zRmmsjdi+6fp1km04vqQU7zjoqDFH1UgeF2rd/6101ixqLxXJ0x0g0xAVtME3ybjTD4dp9es2vHlONCJlMTijy6Hro6Lodk9iEkfJW9v+/UHDAj/Ba4KTGh8zOyp1nX45zdTLT6NUsVADUyEGYD9MewrVMEqUS4kHcH+6BfomULspWvt7pHu+6ThLmwzxQSeTo="
 
 before_script:
+  - composer self-update
   - composer install --prefer-source --no-interaction --dev
   - composer dump-autoload
  
