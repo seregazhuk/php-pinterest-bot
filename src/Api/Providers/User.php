@@ -39,7 +39,9 @@ class User extends Provider
     public function profile($userInfo = null)
     {
         // If we call method without params, return current user profile data.
-        if (empty($userInfo)) return $this->getProfile();
+        if (empty($userInfo)) {
+            return $this->getProfile();
+        }
 
         return $this->updateProfile($userInfo);
     }

@@ -33,7 +33,9 @@ class Auth extends Provider
      */
     public function login($username, $password, $autoLogin = true)
     {
-        if ($this->isLoggedIn()) return true;
+        if ($this->isLoggedIn()) {
+            return true;
+        }
 
         $this->checkCredentials($username, $password);
 
@@ -85,7 +87,9 @@ class Auth extends Provider
     {
         $registration = $this->register($registrationForm, $password, $name);
 
-        if (!$registration) return false;
+        if (!$registration) {
+            return false;
+        }
 
         $website = ($registrationForm instanceof Registration) ?
             $registrationForm->getSite() : $website;
@@ -226,7 +230,9 @@ class Auth extends Provider
      */
     protected function getRegistrationForm($email, $password, $name, $country, $age)
     {
-        if ($email instanceof Registration) return $email;
+        if ($email instanceof Registration) {
+            return $email;
+        }
 
         return $this->fillRegistrationForm(
             $email, $password, $name, $country, $age

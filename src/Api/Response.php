@@ -29,7 +29,7 @@ class Response implements PaginatedResponse
     {
         $this->lastError = new Error();
 
-        if($data) {
+        if ($data) {
             $this->fill($data);
         }
     }
@@ -226,7 +226,7 @@ class Response implements PaginatedResponse
     {
         $errorData = get_array_data('resource_response.error', $this->data);
 
-        if(!empty($errorData)) {
+        if (!empty($errorData)) {
             $this->lastError = new Error($errorData);
         }
 

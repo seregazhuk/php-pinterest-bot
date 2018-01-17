@@ -22,11 +22,11 @@ class Error
      */
     public function getText()
     {
-        if(isset($this->errorData['message'])) {
+        if (isset($this->errorData['message'])) {
             return $this->errorData['message'];
         }
 
-        if(isset($this->errorData['code'])) {
+        if (isset($this->errorData['code'])) {
             return $this->errorData['code'];
         }
 

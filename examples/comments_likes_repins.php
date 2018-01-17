@@ -13,7 +13,7 @@ $board = $bot->boards->info('my_username', 'Cats repins');
 
 $pins = $bot->pins->search('cats')->toArray();
 
-foreach($pins as $pin) {
+foreach ($pins as $pin) {
     // put like
     $bot->pins->like($pin['id']);
     // repin to our board
