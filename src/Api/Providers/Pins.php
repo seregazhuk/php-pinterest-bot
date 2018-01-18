@@ -83,7 +83,7 @@ class Pins extends EntityProvider
         $requestOptions = [
             'method'      => 'scraped',
             'description' => $description,
-            'link'        => empty($link) ? $imageUrl : $link,
+            'link'        => empty($link) ? '' : $link,
             'image_url'   => $imageUrl,
             'board_id'    => $boardId,
         ];

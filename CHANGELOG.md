@@ -1,10 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## v5.6.2 - ?
+## v5.6.2 - 2018-01-19
 ### Fixed:
  - crash for recommended keywords with no response 
  - board invites require to be logged in
+ - hide link when creating a pin if not explicitly provided 
 
 ## v5.6.1 - 2017-12-31
 ### Fixed:
