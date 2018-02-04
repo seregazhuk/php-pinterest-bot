@@ -950,11 +950,12 @@ foreach ($bot->inbox->news() as $new) {
 ### Notifications
 
 Get user's notifications (returns [Pagination](#pagination) object):
+
 ```php
 // Get result as array
 $notifications = $bot->inbox->notifications()->toArray();
 
-// Iterate with requests
+// Iterate over requests
 foreach ($bot->inbox->notifications() as $notification) {
     // ...
 }
@@ -962,10 +963,15 @@ foreach ($bot->inbox->notifications() as $notification) {
 
 ### Conversations
 
-Get array of last conversations:
+Get a list of last conversations (returns [Pagination](#pagination) object):
+
 ```php
 $conversations = $bot->inbox->conversations();
-print_r($conversations);
+
+// Iterate over conversations
+foreach($conversations as $conversation) {
+    // ...
+}
 ```
 
 ### Write a message
