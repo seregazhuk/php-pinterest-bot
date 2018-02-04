@@ -16,7 +16,7 @@ class InboxTest extends ProviderBaseTest
     {
         $this->login();
 
-        $this->getProvider()->conversations();
+        $this->getProvider()->conversations()->toArray();
 
         $this->assertWasGetRequest(UrlBuilder::RESOURCE_GET_LAST_CONVERSATIONS);
     }

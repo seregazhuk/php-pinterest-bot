@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## v5.6.3 - 2018-02-04
+### Fixed:
+ - pagination for inbox conversations
+
 ## v5.6.2 - 2018-01-19
 ### Fixed:
  - crash for recommended keywords with no response 

@@ -47,11 +47,12 @@ class Inbox extends Provider
     /**
      * Get last user conversations.
      *
-     * @return array|bool
+     * @param int $limit
+     * @return Pagination
      */
-    public function conversations()
+    public function conversations($limit = Pagination::DEFAULT_LIMIT)
     {
-        return $this->get(UrlBuilder::RESOURCE_GET_LAST_CONVERSATIONS);
+        return $this->paginate(UrlBuilder::RESOURCE_GET_LAST_CONVERSATIONS, [], $limit);
     }
 
     /**
