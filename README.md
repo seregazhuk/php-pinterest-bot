@@ -974,6 +974,18 @@ foreach($conversations as $conversation) {
 }
 ```
 
+Get messages for a specified conversation (returns [Pagination](#pagination) object). 
+Conversation id can be retrieved via `$bot->inbox->conversations()` method:
+
+```php
+$conversations = $bot->inbox->conversations()->toArray();
+
+// Iterate over messages
+foreach($bot->inbox->getMessages($conversations[0]['id']) as $message) {
+    // ...
+}
+```
+
 ### Write a message
 **Notice** that, when you are sending a message to unknown person Pinterest doesn't show your message. 
 It suggests this person to create a contact with you. Only then you can send messages, 

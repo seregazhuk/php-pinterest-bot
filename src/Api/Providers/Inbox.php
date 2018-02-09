@@ -56,6 +56,20 @@ class Inbox extends Provider
     }
 
     /**
+     * @param int $conversationId
+     * @param int $limit
+     * @return Pagination
+     */
+    public function getMessages($conversationId, $limit = Pagination::DEFAULT_LIMIT)
+    {
+        return $this->paginate(
+            UrlBuilder::RESOURCE_GET_CONVERSATION_MESSAGES,
+            ['conversation_id' => (string)$conversationId],
+            $limit
+        );
+    }
+
+    /**
      * Send message to a user.
      *
      * @param array|string $userIds

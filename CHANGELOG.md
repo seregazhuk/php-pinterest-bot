@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## v5.6.4 - 2018-02-09
+### Added:
+ - Inbox `getMessages()` to receive conversation messages
+
 ## v5.6.3 - 2018-02-04
 ### Fixed:
  - pagination for inbox conversations

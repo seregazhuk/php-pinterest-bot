@@ -109,6 +109,7 @@ class UrlBuilder
      * Conversations.
      */
     const RESOURCE_SEND_MESSAGE = 'resource/ConversationsResource/create/';
+    const RESOURCE_GET_CONVERSATION_MESSAGES = 'resource/ConversationMessagesResource/get/';
     const RESOURCE_GET_LAST_CONVERSATIONS = 'resource/ConversationsResource/get/';
 
     /**
