@@ -22,6 +22,16 @@ class InboxTest extends ProviderBaseTest
     }
 
     /** @test */
+    public function it_returns_messages_for_a_specified_conversation()
+    {
+        $this->login();
+
+        $this->getProvider()->getMessages(123)->toArray();
+
+        $this->assertWasGetRequest(UrlBuilder::RESOURCE_GET_CONVERSATION_MESSAGES, ['conversation_id' => 123]);
+    }
+
+    /** @test */
     public function it_returns_current_contact_requests()
     {
         $this->login();
