@@ -46,7 +46,7 @@ class BoardSections extends Provider
      * @param string $title
      * @return bool
      */
-    public function edit($sectionId, $title)
+    public function update($sectionId, $title)
     {
         $requestOptions = [
             'section_id' => $sectionId,

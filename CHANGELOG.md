@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## v5.6.5 - 2018-02-23
+### Changed:
+ - Board sections `edit()` renamed to `update()`
+
 ## v5.6.4 - 2018-02-09
 ### Added:
  - Inbox `getMessages()` to receive conversation messages

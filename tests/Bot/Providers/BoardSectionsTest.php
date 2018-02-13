@@ -25,7 +25,7 @@ class BoardSectionsTest extends ProviderBaseTest
     public function it_edits_a_section()
     {
         $this->login();
-        $this->getProvider()->edit('12345', 'test');
+        $this->getProvider()->update('12345', 'test');
 
         $request = [
             'section_id' => '12345',
