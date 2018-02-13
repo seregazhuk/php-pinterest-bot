@@ -1,10 +1,10 @@
 # Pinners
 
-- [Follow/unfollow](#follow/unfollow-users)
+- [Follow/unfollow](#followunfollow-users)
 - [User info](#user-info)
-- [Following boards/pinners/interests](#following-boards/pinners/interests)
-- [User's Followers](#user's-followers)
-- [User's pins](#user's-pins)
+- [Following boards/pinners/interests](#following-boardspinnersinterests)
+- [User followers](#user-followers)
+- [User pins](#user-pins)
 - [Liked pins](#liked-pins)
 - [Block a user](#block-a-user)
 
@@ -28,6 +28,7 @@ Get user info by username:
 $userData = $bot->pinners->info($username);
 ```
 ## Following boards/pinners/interests
+
 Get user following info. By default returns following users. Returns [Pagination](#pagination) object:
 ```php
 foreach ($bot->pinners->following('username') as $following) {
@@ -66,7 +67,7 @@ foreach($bot->pinners->followingInterests('username') as $interest) {
 }
 ```
 
-## User's Followers
+## User followers
 
 Get user followers (returns [Pagination](#pagination) object). Accepts optional parameter `username`,
 whose subscribers need to receive.
@@ -86,7 +87,7 @@ foreach($bot->pinners->followers() as $follower)
 }
 ```
 
-## User's pins
+## User pins
 
 Get the newest pins of a pinner (returns [Pagination](#pagination) object):
 
