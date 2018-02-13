@@ -6,7 +6,7 @@
 - [Create](#create)
 - [Update](#update)
 - [Delete](#delete)
-- [Follow/unfollow](#follow/unfollow)
+- [Follow/unfollow](#followunfollow)
 - [Board pins](#board-pins)
 - [Board followers](#board-followers)
 - [Title suggestions](#title-suggestions)

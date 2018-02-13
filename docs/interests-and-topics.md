@@ -1,23 +1,20 @@
 # Interests and Topics
 
-- [Interests](docs/interests.md)
+- [Interests](#interests)
     - [Main list](#main-interests-list)
     - [Category info](#category-info)
     - [Related topics](#related-topics)
     - [Interest pins](#interest-pins)
 - [Topics](#topics)
-    - [Follow/unfollow topic](#follow/unfollow-topic)
+    - [Follow/unfollow topic](#followunfollow-topic)
     - [Topic info](#topic-info)
     - [Topic pins](#topic-pins)
     - [Related topics for topic](#related-topics-for-topic)
     - [Trending topics](#trending-topics)
 
-- [Main list](#main-interests-list)
-- [Category info](#category-info)
-- [Related topics](#related-topics)
-- [Interest pins](#interest-pins)
+## Interests
 
-## Main interests list
+### Main interests list
 
 Get a list of main categories. Required bot to be logged in:
 
@@ -25,7 +22,7 @@ Get a list of main categories. Required bot to be logged in:
 $categories = $bot->interests->main();
 ```
 
-## Category info
+### Category info
 
 Get category info by name (can be taken from *main()*):
 
@@ -34,7 +31,7 @@ $info = $bot->interests->info("gifts");
 // gifts - can be any other string. Actualy it is a key field from one of the results returned by main() method.
 ```
 
-## Related topics
+### Related topics
 
 Get related topics for interest:
 
@@ -42,7 +39,7 @@ Get related topics for interest:
 $topics = $bot->interests->getRelatedTopics('videos');
 ```
 
-## Interest pins
+### Interest pins
 
 Get pins for specific interest (returns [Pagination](#pagination) object):
 
@@ -56,7 +53,7 @@ foreach ($bot->interests->pins('videos') as $pin) {
 
 Each interest has a list of related topics.
 
-## Follow/unfollow topic
+### Follow/unfollow topic
 Follow/unfollow a topic by name:
 
 ```php
@@ -64,7 +61,7 @@ $bot->topics->follow('content-marketing');
 $bot->topics->unFollow('content-marketing');
 ```
 
-## Topic info
+### Topic info
 
 Get a topic info:
 
@@ -72,7 +69,7 @@ Get a topic info:
 $info = $bot->topics->info('content-marketing');
 ```
 
-## Topic pins
+### Topic pins
 
 Get pins for a specific topic (returns [Pagination](#pagination) object):
 
@@ -82,7 +79,7 @@ foreach ($bot->topics->pins('content-marketing') as $pin) {
 }
 ```
 
-## Related topics for topic
+### Related topics for topic
 
 Get related topics for topic (similar as related topics for interest):
 
@@ -90,7 +87,7 @@ Get related topics for topic (similar as related topics for interest):
 $topics = $bot->topics->getRelatedTopics('content-marketing');
 ```
 
-## Trending topics
+### Trending topics
 
 Get trending topics from http://pinterest.com/discover page. Then you can use an id of each topic
 to get trending pins for this topic with `$bot->pins->explore()` method:
