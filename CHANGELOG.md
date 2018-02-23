@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 ## v5.6.6 - 2018-02-23
 ### Added:
  - hash-tags typeahead suggestions
+### Changed: 
  - suggestions `getForQuery()` renamed to `searchFor()`
 
 ## v5.6.5 - 2018-02-13
