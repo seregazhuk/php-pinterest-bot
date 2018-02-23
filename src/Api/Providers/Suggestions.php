@@ -9,13 +9,25 @@ class Suggestions extends Provider
 {
     /**
      * @param string $query
-     * @return array|bool
+     * @return array
      */
-    public function getForQuery($query)
+    public function searchFor($query)
     {
-        return $this->get(UrlBuilder::RESOURCE_TYPE_AHEAD_SUGGESTIONS, [
+        return (array) $this->get(UrlBuilder::RESOURCE_TYPE_AHEAD_SUGGESTIONS, [
             'term' => $query,
             'pin_scope' => 'pins'
+        ]);
+    }
+
+    /**
+     * @param string $query
+     * @return array
+     */
+    public function tagsFor($query)
+    {
+        return (array)$this->get(UrlBuilder::RESOURCE_HASHTAG_TYPE_AHEAD_SUGGESTIONS, [
+            'query' => '#' . $query,
+            'showPinCount' => true
         ]);
     }
 }

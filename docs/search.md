@@ -4,6 +4,7 @@
 - [Pinners](#search-in-pinners)
 - [Boards](#search-in-boards)
 - [Search suggestions](#search-suggestions)
+- [Tags suggestions](#tags-suggestions)
 
 Search functions use Pinterest pagination in fetching results and return [Pagination](#pagination) object.
 
@@ -50,5 +51,15 @@ foreach($bot->boards->search('query') as $board) {
 You can get type-ahead suggestions for you search query (returns pins, pinners and boards suggestions):
  
 ```php
-$suggestions = $bot->suggestions->getForQuery('cats');
+$suggestions = $bot->suggestions->searchFor('cats');
 ```
+
+## Tags suggestions
+
+You can get type-ahead suggestions for tags (returns tags and pins counts for these tags):
+ 
+```php
+$suggestions = $bot->suggestions->tagsFor('cats');
+```
+
+There is no need to prepend your query with `#` symbol. 

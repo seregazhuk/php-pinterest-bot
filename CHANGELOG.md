@@ -13,6 +13,11 @@ All notable changes to this project will be documented in this file.
 ### Fixed:
  - pagination for inbox conversations
 
+## v5.6.3 - 2018-02-23
+### Added:
+ - hash-tags typeahead suggestions
+ - suggestions `getForQuery()` renamed to `searchFor()`
+
 ## v5.6.2 - 2018-01-19
 ### Fixed:
  - crash for recommended keywords with no response 

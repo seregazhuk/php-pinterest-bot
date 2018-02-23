@@ -97,6 +97,7 @@ class UrlBuilder
     const RESOURCE_SEARCH = 'resource/BaseSearchResource/get/';
     const RESOURCE_SEARCH_WITH_PAGINATION = 'resource/SearchResource/get/';
     const RESOURCE_TYPE_AHEAD_SUGGESTIONS = 'resource/AdvancedTypeaheadResource/get';
+    const RESOURCE_HASHTAG_TYPE_AHEAD_SUGGESTIONS = 'resource/HashtagTypeaheadResource/get';
 
     /**
      * Interests.

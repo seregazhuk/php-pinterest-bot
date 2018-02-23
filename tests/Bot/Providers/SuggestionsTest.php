@@ -14,13 +14,26 @@ class SuggestionsTest extends ProviderBaseTest
     public function it_returns_suggestions_for_a_specified_search_query()
     {
         $provider = $this->getProvider();
-        $provider->getForQuery('cats');
+        $provider->searchFor('cats');
 
         $request = [
             'term'      => 'cats',
             'pin_scope' => 'pins',
         ];
         $this->assertWasGetRequest(UrlBuilder::RESOURCE_TYPE_AHEAD_SUGGESTIONS, $request);
+    }
+
+    /** @test */
+    public function it_returns_suggestions_for_a_specified_tag_query()
+    {
+        $provider = $this->getProvider();
+        $provider->tagsFor('cats');
+
+        $request = [
+            'query'      => 'cats',
+            'pins_count' => true,
+        ];
+        $this->assertWasGetRequest(UrlBuilder::RESOURCE_HASHTAG_TYPE_AHEAD_SUGGESTIONS, $request);
     }
 
     protected function getProviderClass()
