@@ -1,7 +1,12 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## v5.6.5 - 2018-02-23
+## v5.6.6 - 2018-02-23
+### Added:
+ - hash-tags typeahead suggestions
+ - suggestions `getForQuery()` renamed to `searchFor()`
+
+## v5.6.5 - 2018-02-13
 ### Changed:
  - Board sections `edit()` renamed to `update()`
 
@@ -12,11 +17,6 @@ All notable changes to this project will be documented in this file.
 ## v5.6.3 - 2018-02-04
 ### Fixed:
  - pagination for inbox conversations
-
-## v5.6.3 - 2018-02-23
-### Added:
- - hash-tags typeahead suggestions
- - suggestions `getForQuery()` renamed to `searchFor()`
 
 ## v5.6.2 - 2018-01-19
 ### Fixed:
