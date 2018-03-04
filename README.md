@@ -13,15 +13,15 @@
 <a href="https://packagist.org/packages/seregazhuk/pinterest-bot"><img class="spinned latest_stable_version_img" src="https://poser.pugx.org/seregazhuk/pinterest-bot/v/stable" style="display: inline;"></a>
 <a href="https://packagist.org/packages/seregazhuk/pinterest-bot"><img src="https://camo.githubusercontent.com/8957462146926452326740b5c6255bbdb3abea67/68747470733a2f2f706f7365722e707567782e6f72672f7365726567617a68756b2f70696e7465726573742d626f742f646f776e6c6f616473" alt="Total Downloads" data-canonical-src="https://poser.pugx.org/seregazhuk/pinterest-bot/downloads" style="max-width:100%;"></a>
 
-This PHP library will help you to work with your Pinterest account without using any API account credentials. 
+A PHP library to help you work with your Pinterest account without API credentials. 
 
-There is a lot of pain using Pinterest API: to get an access to it you need to go to register a developer account, then 
-register your application, then wait for confirmation, and only then you will get an access token. Furthermore, the
-public API is very poor and has a very limited set of features. 
+The Pinterest API is painful: receiving an access token involves registering a developer account, 
+registering an application, then waiting for confirmation. Not to mention, the
+public API itself is poorly implemented and has a limited set of features. 
 
-With this library you have the entire set of functions, which available on Pinterest website. And there is **no need to register an
-application to receive an access token**. Just use your account login and password, like you do it in your browser. But even your account is not required,
-if you don't use such operations as creating pins, writing comments or sending messages!
+This library offers the full functionality available on Pinterest's website, with **no need to register an
+application to receive an access token**. All that's needed is your account login information (but even this is not required
+if you don't plan on creating pins, writing comments or sending messages)!
 
 - [Installation](#installation)
 - [Quick Start](#quick-start)
@@ -34,7 +34,7 @@ if you don't use such operations as creating pins, writing comments or sending m
 - [Search](docs/search.md)
 - [Inbox](docs/inbox.md)
 - [Keywords](docs/keywords.md)
-- [Errors handling](docs/errors-handling.md)
+- [Error handling](docs/errors-handling.md)
 - [Use proxy](docs/proxy.md)
 - [Custom request settings](docs/custom-request.md)
 - [Cookies](docs/cookes.md)
@@ -73,16 +73,15 @@ $boards = $bot->boards->forUser('yourUserName');
 $bot->pins->create('http://exmaple.com/image.jpg', $boards[0]['id'], 'Pin description');
 ```
 
-*Note*: Some methods use pinterest navigation through results (with bookmarks), for example, get user followers/following, pins
-likes/dislikes, search and other feed queries. This means that for every batch of results there will be a 
-request to Pinterest. These methods return a [Pagination](#pagination) object with Pinterest api results.
+*Note*: Some methods (e.g. get user followers/following, pins
+likes/dislikes, search and other feed queries) use Pinterest navigation through results (with bookmarks). This means that for every batch of results, a 
+call is made to Pinterest and a [Pagination](#pagination) object with Pinterest API results is returned.
 
-**How to avoid banned from Pinterest**: don't bee too aggressive making pins or writing comments.
-Try to put some timeouts with `$bot->wait($seconds)` calls, so you will behave like a real person and not a bot,
-creating hundreds of pins in a minute.
+**To avoid being banned by Pinterest**, do not aggressively pin or write comments (e.g. creating hundreds of pins in a single minute).
+Do this by inserting timeouts (`$bot->wait($seconds)`) with calls.
 
 ## Examples
-Here you can find articles with some examples of the most common tasks that can be done with the bot:
+These articles provide examples of common tasks that can be performed with the bot:
 
  - [Automate pinning](http://seregazhuk.github.io/2017/03/25/build-pinterest-bot-with-php-auto-pin/) ([source code](examples/auto_pins.php))
  - [Multiple Accounts and Proxy](http://seregazhuk.github.io/2017/03/28/build-printerest-bot-with-php-multiple-accounts/) ([source code](examples/multiple_accounts_and_proxy.php))
@@ -92,8 +91,8 @@ Here you can find articles with some examples of the most common tasks that can 
 
 
 ## How can I thank you?
-Why not star the GitHub repo? I'd love the attention!
-And you can donate project on PayPal.
+Why not star this GitHub repo? I'd love the attention!
+Or, you can donate to my project on PayPal:
 
 [![Support me with some coffee](https://img.shields.io/badge/donate-paypal-orange.svg)](https://www.paypal.me/seregazhuk)
 
