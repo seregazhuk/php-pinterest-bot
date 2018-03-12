@@ -104,7 +104,7 @@ class Inbox extends Provider
      */
     public function contactRequests()
     {
-        $requests = $this->get(UrlBuilder::RESOURCE_CONTACTS_REQUESTS);
+        $requests = $this->get(UrlBuilder::RESOURCE_CONTACTS_REQUESTS)->getResponseData();
 
         return !$requests ? [] : $requests;
     }

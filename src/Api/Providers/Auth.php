@@ -184,9 +184,9 @@ class Auth extends Provider
             'password'          => $password,
         ];
 
-        $this->post(UrlBuilder::RESOURCE_LOGIN, $credentials);
+        $response = $this->post(UrlBuilder::RESOURCE_LOGIN, $credentials);
 
-        if ($this->response->isEmpty()) {
+        if ($response->isEmpty()) {
             return false;
         }
 

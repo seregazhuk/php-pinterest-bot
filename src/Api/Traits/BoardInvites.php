@@ -39,7 +39,7 @@ trait BoardInvites
             'field_set_key' => 'news',
         ];
 
-        $invites = $this->get(UrlBuilder::RESOURCE_BOARDS_INVITES, $data);
+        $invites = $this->get(UrlBuilder::RESOURCE_BOARDS_INVITES, $data)->getResponseData();
 
         return !$invites ? [] : $invites;
     }

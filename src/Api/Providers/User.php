@@ -148,7 +148,7 @@ class User extends Provider
      */
     protected function getProfile()
     {
-        return $this->get(UrlBuilder::RESOURCE_GET_USER_SETTINGS);
+        return $this->get(UrlBuilder::RESOURCE_GET_USER_SETTINGS)->getResponseData();
     }
 
     /**

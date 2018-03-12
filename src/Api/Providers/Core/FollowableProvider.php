@@ -73,7 +73,7 @@ abstract class FollowableProvider extends EntityProvider
     {
         $query = $this->createFollowRequest($this->resolveEntityId($entityId));
 
-        return $this->post($resourceUrl, $query);
+        return $this->post($resourceUrl, $query)->isOk();
     }
 
     /**

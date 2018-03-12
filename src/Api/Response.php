@@ -27,8 +27,6 @@ class Response implements PaginatedResponse
      */
     public function __construct($data = null)
     {
-        $this->lastError = new Error();
-
         if ($data) {
             $this->fill($data);
         }
@@ -51,9 +49,9 @@ class Response implements PaginatedResponse
      * @param string $json
      * @return static
      */
-    public function fillFromJson($json)
+    public static function fromJson($json)
     {
-        return $this->fill(json_decode($json, true));
+        return new static(json_decode($json, true));
     }
 
     /**

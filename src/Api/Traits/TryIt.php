@@ -42,9 +42,7 @@ trait TryIt
     {
         $data = $this->makeRequest($pinId, $comment, $pathToImage);
 
-        $this->post(UrlBuilder::RESOURCE_TRY_PIN_CREATE, $data);
-
-        return $this->getResponse()->getResponseData();
+        return $this->post(UrlBuilder::RESOURCE_TRY_PIN_CREATE, $data);
     }
 
     /**

@@ -40,7 +40,7 @@ class Pinners extends FollowableProvider
      */
     public function info($username)
     {
-        return $this->get(UrlBuilder::RESOURCE_USER_INFO, ['username' => $username]);
+        return $this->get(UrlBuilder::RESOURCE_USER_INFO, ['username' => $username])->getResponseData();
     }
 
     /**

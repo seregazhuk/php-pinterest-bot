@@ -45,7 +45,7 @@ trait CanBeShared
             'object_id'   => $pinId,
         ];
 
-        $response = $this->post(UrlBuilder::RESOURCE_SHARE_VIA_SOCIAL, $request, true);
+        $response = $this->post(UrlBuilder::RESOURCE_SHARE_VIA_SOCIAL, $request)->getResponseData();
 
         return isset($response['invite_url']) ? $response['invite_url'] : '';
     }

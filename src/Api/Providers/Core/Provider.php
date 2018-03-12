@@ -28,11 +28,6 @@ abstract class Provider
     protected $request;
 
     /**
-     * @var Response
-     */
-    protected $response;
-
-    /**
      * @var ProvidersContainer
      */
     protected $container;
@@ -44,7 +39,6 @@ abstract class Provider
     {
         $this->container = $container;
         $this->request = $container->getRequest();
-        $this->response = $container->getResponse();
     }
 
     /**
@@ -52,21 +46,16 @@ abstract class Provider
      *
      * @param string $resourceUrl
      * @param array $requestOptions
-     * @param bool $returnData
-     * @return bool|array
+     * @return Response
      */
-    public function post($resourceUrl, array $requestOptions = [], $returnData = false)
+    public function post($resourceUrl, array $requestOptions = [])
     {
         $postString = $this->request->createQuery($requestOptions);
 
         // When executing POST request we need a csrf-token.
         $this->initTokenIfRequired();
 
-        $this->execute($resourceUrl, $postString);
-
-        return $returnData ?
-            $this->response->getResponseData() :
-            $this->response->isOk();
+        return $this->execute($resourceUrl, $postString);
     }
 
     /**
@@ -74,32 +63,29 @@ abstract class Provider
      *
      * @param string $resourceUrl
      * @param array $requestOptions
-     * @return array|bool
+     * @param array $bookmarks
+     * @return Response
      */
-    protected function get($resourceUrl = '', array $requestOptions = [])
+    protected function get($resourceUrl = '', array $requestOptions = [], array $bookmarks = [])
     {
         $query = $this->request->createQuery(
             $requestOptions,
-            $this->response->getBookmarks()
+            $bookmarks
         );
 
-        $this->execute($resourceUrl . '?' . $query);
-
-        return $this->response->getResponseData();
+        return $this->execute($resourceUrl . '?' . $query);
     }
 
     /**
      * @param string $url
      * @param string $postString
-     * @return $this
+     * @return Response
      */
     protected function execute($url, $postString = '')
     {
         $result = $this->request->exec($url, $postString);
 
-        $this->response->fillFromJson($result);
-
-        return $this;
+        return Response::fromJson($result);
     }
 
     /**
@@ -109,7 +95,7 @@ abstract class Provider
      */
     public function checkMethodRequiresLogin($method)
     {
-        $methodsThatRequireLogin = array_merge($this->loginRequiredFor, self::requiresLoginFor());
+        $methodsThatRequireLogin = array_merge($this->loginRequiredFor, $this->requiresLoginFor());
 
         return in_array($method, $methodsThatRequireLogin);
     }
@@ -151,8 +137,7 @@ abstract class Provider
         return $this
             ->paginateCustom(
                 function () use ($data, $resourceUrl) {
-                    $this->get($resourceUrl, $data);
-                    return $this->response;
+                    return $this->get($resourceUrl, $data);
                 }
             )->take($limit);
     }
@@ -166,19 +151,9 @@ abstract class Provider
      */
     protected function paginateCustom(callable $callback, $limit = Pagination::DEFAULT_LIMIT)
     {
-        $this->response->clear();
-
         return (new Pagination)
             ->paginateOver($callback)
             ->take($limit);
-    }
-
-    /**
-     * @return Response
-     */
-    public function getResponse()
-    {
-        return $this->response;
     }
 
     /**
