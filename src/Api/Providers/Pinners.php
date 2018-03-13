@@ -69,6 +69,7 @@ class Pinners extends FollowableProvider
      * @param string $username
      * @param int $limit
      * @return Pagination
+     * @throws WrongFollowingType
      */
     public function followingPeople($username, $limit = Pagination::DEFAULT_LIMIT)
     {
@@ -81,6 +82,7 @@ class Pinners extends FollowableProvider
      * @param string $username
      * @param int $limit
      * @return Pagination
+     * @throws WrongFollowingType
      */
     public function followingBoards($username, $limit = Pagination::DEFAULT_LIMIT)
     {

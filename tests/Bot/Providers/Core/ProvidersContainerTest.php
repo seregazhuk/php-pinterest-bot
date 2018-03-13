@@ -6,7 +6,6 @@ use Mockery;
 use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
 use seregazhuk\PinterestBot\Api\Request;
-use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Helpers\Cookies;
 use seregazhuk\PinterestBot\Api\CurlHttpClient;
 use seregazhuk\PinterestBot\Api\ProvidersContainer;
