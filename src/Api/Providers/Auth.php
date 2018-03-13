@@ -112,7 +112,7 @@ class Auth extends Provider
             'account_type'  => 'other',
         ];
 
-        return $this->post(UrlBuilder::RESOURCE_CONVERT_TO_BUSINESS, $data);
+        return $this->post(UrlBuilder::RESOURCE_CONVERT_TO_BUSINESS, $data)->isOk();
     }
 
     /**
@@ -121,7 +121,7 @@ class Auth extends Provider
      */
     public function confirmEmail($link)
     {
-        return $this->get($link);
+        return $this->get($link)->getResponseData();
     }
 
     /**
@@ -146,7 +146,7 @@ class Auth extends Provider
         return $this->post(
             UrlBuilder::RESOURCE_REGISTRATION_COMPLETE,
             ['placed_experience_id' => self::REGISTRATION_COMPLETE_EXPERIENCE_ID]
-        );
+        )->isOk();
     }
 
     /**
@@ -159,7 +159,7 @@ class Auth extends Provider
             return false;
         }
 
-        if (!$this->post(UrlBuilder::RESOURCE_CREATE_REGISTER, $registrationForm->toArray())) {
+        if (!$this->post(UrlBuilder::RESOURCE_CREATE_REGISTER, $registrationForm->toArray())->isOk()) {
             return false;
         }
 
@@ -217,7 +217,7 @@ class Auth extends Provider
         return (new Registration($registrationForm, $password, $name))
             ->setCountry($country)
             ->setAge($age)
-            ->setGender("male");
+            ->setGender('male');
     }
 
     /**

@@ -14,7 +14,7 @@ trait HasProfileSettings
      */
     public function getLocales()
     {
-        return $this->get(UrlBuilder::RESOURCE_AVAILABLE_LOCALES);
+        return $this->get(UrlBuilder::RESOURCE_AVAILABLE_LOCALES)->getResponseData();
     }
 
     /**
@@ -23,7 +23,7 @@ trait HasProfileSettings
      */
     public function getCountries()
     {
-        return $this->get(UrlBuilder::RESOURCE_AVAILABLE_COUNTRIES);
+        return $this->get(UrlBuilder::RESOURCE_AVAILABLE_COUNTRIES)->getResponseData();
     }
 
     /**
@@ -32,6 +32,6 @@ trait HasProfileSettings
      */
     public function getAccountTypes()
     {
-        return $this->get(UrlBuilder::RESOURCE_AVAILABLE_ACCOUNT_TYPES);
+        return $this->get(UrlBuilder::RESOURCE_AVAILABLE_ACCOUNT_TYPES)->getResponseData();
     }
 }

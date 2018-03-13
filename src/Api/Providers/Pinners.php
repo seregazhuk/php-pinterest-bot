@@ -153,7 +153,7 @@ class Pinners extends FollowableProvider
     {
         return $this->post(
             UrlBuilder::RESOURCE_BLOCK_USER, ['blocked_user_id' => $userId]
-        );
+        )->isOk();
     }
 
     /**

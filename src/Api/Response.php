@@ -33,6 +33,15 @@ class Response implements PaginatedResponse
     }
 
     /**
+     * @param string $json
+     * @return static
+     */
+    public static function fromJson($json)
+    {
+        return new static(json_decode($json, true));
+    }
+
+    /**
      * @param mixed $data
      * @return $this
      */
@@ -43,15 +52,6 @@ class Response implements PaginatedResponse
         return $this
             ->fillError()
             ->fillClientInfo();
-    }
-
-    /**
-     * @param string $json
-     * @return static
-     */
-    public static function fromJson($json)
-    {
-        return new static(json_decode($json, true));
     }
 
     /**

@@ -360,14 +360,14 @@ class Pins extends EntityProvider
     /**
      * Get pin analytics, like numbers of clicks, views and repins
      * @param $pinId
-     * @return array|bool|Response
+     * @return array
      */
     public function analytics($pinId)
     {
         // Pinterest requires pinId to be a string
         $pinId = (string)$pinId;
 
-        return $this->get(UrlBuilder::RESOURCE_PIN_ANALYTICS, ['pin_id' => $pinId]);
+        return $this->get(UrlBuilder::RESOURCE_PIN_ANALYTICS, ['pin_id' => $pinId])->getResponseData();
     }
 
     /**

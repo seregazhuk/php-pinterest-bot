@@ -23,22 +23,22 @@ class Interests extends Provider
     /**
      * Get list of main categories
      *
-     * @return array|bool
+     * @return array
      */
     public function main()
     {
-        return $this->get(UrlBuilder::RESOURCE_GET_CATEGORIES, ['category_types' => 'main']);
+        return $this->get(UrlBuilder::RESOURCE_GET_CATEGORIES, ['category_types' => 'main'])->getResponseData();
     }
 
     /**
      * Get category info
      *
      * @param string $category
-     * @return array|bool
+     * @return array
      */
     public function info($category)
     {
-        return $this->get(UrlBuilder::RESOURCE_GET_CATEGORY, ['category' => $category]);
+        return $this->get(UrlBuilder::RESOURCE_GET_CATEGORY, ['category' => $category])->getResponseData();
     }
 
     /**

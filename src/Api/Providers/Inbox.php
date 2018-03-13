@@ -145,6 +145,6 @@ class Inbox extends Provider
             ],
         ];
 
-        return $this->post($endpoint, $data);
+        return $this->post($endpoint, $data)->isOk();
     }
 }

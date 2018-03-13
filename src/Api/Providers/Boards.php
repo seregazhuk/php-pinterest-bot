@@ -52,7 +52,7 @@ class Boards extends FollowableProvider
             'field_set_key' => 'detailed',
         ];
 
-        $result = $this->get(UrlBuilder::RESOURCE_GET_BOARDS, $options);
+        $result = $this->get(UrlBuilder::RESOURCE_GET_BOARDS, $options)->getResponseData();
 
         return $result ?: [];
     }
@@ -97,7 +97,7 @@ class Boards extends FollowableProvider
             'field_set_key' => 'detailed',
         ];
 
-        return $this->get(UrlBuilder::RESOURCE_GET_BOARD, $requestOptions);
+        return $this->get(UrlBuilder::RESOURCE_GET_BOARD, $requestOptions)->getResponseData();
     }
 
     /**
@@ -138,7 +138,7 @@ class Boards extends FollowableProvider
      *
      * @param $boardId
      * @param $attributes
-     * @return mixed
+     * @return bool
      */
     public function update($boardId, $attributes)
     {
@@ -153,7 +153,7 @@ class Boards extends FollowableProvider
             ], $attributes
         );
 
-        return $this->post(UrlBuilder::RESOURCE_UPDATE_BOARD, $requestOptions);
+        return $this->post(UrlBuilder::RESOURCE_UPDATE_BOARD, $requestOptions)->isOk();
     }
 
     /**
@@ -173,7 +173,7 @@ class Boards extends FollowableProvider
             'privacy'     => $privacy,
         ];
 
-        return $this->post(UrlBuilder::RESOURCE_CREATE_BOARD, $requestOptions);
+        return $this->post(UrlBuilder::RESOURCE_CREATE_BOARD, $requestOptions)->isOk();
     }
 
     /**
@@ -193,10 +193,10 @@ class Boards extends FollowableProvider
      * Returns title suggestions for pin.
      *
      * @param string $pinId
-     * @return array|bool
+     * @return array
      */
     public function titleSuggestionsFor($pinId)
     {
-        return $this->get(UrlBuilder::RESOURCE_TITLE_SUGGESTIONS, ['pin_id' => $pinId]);
+        return $this->get(UrlBuilder::RESOURCE_TITLE_SUGGESTIONS, ['pin_id' => $pinId])->getResponseData();
     }
 }

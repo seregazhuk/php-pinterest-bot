@@ -16,7 +16,7 @@ class Suggestions extends Provider
         return (array) $this->get(UrlBuilder::RESOURCE_TYPE_AHEAD_SUGGESTIONS, [
             'term' => $query,
             'pin_scope' => 'pins'
-        ]);
+        ])->getResponseData();
     }
 
     /**
@@ -28,6 +28,6 @@ class Suggestions extends Provider
         return (array)$this->get(UrlBuilder::RESOURCE_HASHTAG_TYPE_AHEAD_SUGGESTIONS, [
             'query' => '#' . $query,
             'showPinCount' => true
-        ]);
+        ])->getResponseData();
     }
 }

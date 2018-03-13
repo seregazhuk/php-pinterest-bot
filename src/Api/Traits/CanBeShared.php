@@ -74,7 +74,7 @@ trait CanBeShared
      * @param string $pinId
      * @param string $userId
      * @param string $reaction
-     * @return array|bool
+     * @return bool
      */
     protected function reactOnPinInConversation($pinId, $userId, $reaction)
     {
@@ -84,6 +84,6 @@ trait CanBeShared
             'text'     => $reaction,
         ];
 
-        return $this->post(UrlBuilder::RESOURCE_SEND_MESSAGE, $request);
+        return $this->post(UrlBuilder::RESOURCE_SEND_MESSAGE, $request)->isOk();
     }
 }

@@ -32,7 +32,7 @@ class ProviderTest extends TestCase
 
         $responseData = $response['resource_response']['data'];
 
-        $this->assertEquals($responseData, $provider->dummyGet());
+        $this->assertEquals($responseData, $provider->dummyGet()->getResponseData());
     }
 
     /** @test */

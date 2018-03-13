@@ -134,10 +134,13 @@ abstract class Provider
      */
     protected function paginate($resourceUrl, $data, $limit = Pagination::DEFAULT_LIMIT)
     {
+        $bookmarks = [];
         return $this
             ->paginateCustom(
-                function () use ($data, $resourceUrl) {
-                    return $this->get($resourceUrl, $data);
+                function () use ($data, $resourceUrl, &$bookmarks) {
+                    $response = $this->get($resourceUrl, $data, $bookmarks);
+                    $bookmarks = $response->getBookmarks();
+                    return $response;
                 }
             )->take($limit);
     }

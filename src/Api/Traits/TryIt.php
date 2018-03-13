@@ -36,13 +36,13 @@ trait TryIt
      * @param string $pinId
      * @param string $comment
      * @param null|string $pathToImage
-     * @return array
+     * @return bool
      */
     public function tryIt($pinId, $comment, $pathToImage = null)
     {
         $data = $this->makeRequest($pinId, $comment, $pathToImage);
 
-        return $this->post(UrlBuilder::RESOURCE_TRY_PIN_CREATE, $data);
+        return $this->post(UrlBuilder::RESOURCE_TRY_PIN_CREATE, $data)->isOk();
     }
 
     /**
@@ -50,14 +50,14 @@ trait TryIt
      * @param string $tryItRecordId
      * @param string $comment
      * @param string|null $pathToImage
-     * @return bool|Response
+     * @return bool
      */
     public function editTryIt($pinId, $tryItRecordId, $comment, $pathToImage = null)
     {
         $data = $this->makeRequest($pinId, $comment, $pathToImage);
         $data['user_did_it_data_id'] = $tryItRecordId;
 
-        return $this->post(UrlBuilder::RESOURCE_TRY_PIN_EDIT, $data);
+        return $this->post(UrlBuilder::RESOURCE_TRY_PIN_EDIT, $data)->isOk();
     }
 
     /**
@@ -79,13 +79,13 @@ trait TryIt
 
     /**
      * @param string $tryItRecordId
-     * @return bool|Response
+     * @return bool
      */
     public function deleteTryIt($tryItRecordId)
     {
         return $this->post(
             UrlBuilder::RESOURCE_TRY_PIN_DELETE, ['user_did_it_data_id' => $tryItRecordId]
-        );
+        )->isOk();
     }
 
     /**
@@ -119,8 +119,8 @@ trait TryIt
     {
         $request = ['image_url' => $this->upload($pathToImage)];
 
-        $this->post(UrlBuilder::RESOURCE_TRY_PIN_IMAGE_UPLOAD, $request);
+        $response = $this->post(UrlBuilder::RESOURCE_TRY_PIN_IMAGE_UPLOAD, $request);
 
-        return $this->getResponse()->getResponseData('image_signature');
+        return $response->getResponseData('image_signature');
     }
 }

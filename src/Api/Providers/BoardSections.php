@@ -22,7 +22,7 @@ class BoardSections extends Provider
      */
     public function forBoard($boardId)
     {
-        return $this->get(UrlBuilder::RESOURCE_GET_BOARD_SECTIONS, ['board_id' => $boardId]);
+        return $this->get(UrlBuilder::RESOURCE_GET_BOARD_SECTIONS, ['board_id' => $boardId])->isOk();
     }
 
     /**
@@ -38,7 +38,7 @@ class BoardSections extends Provider
             'initial_pins' => []
         ];
 
-        return $this->post(UrlBuilder::RESOURCE_ADD_BOARD_SECTION, $requestOptions);
+        return $this->post(UrlBuilder::RESOURCE_ADD_BOARD_SECTION, $requestOptions)->isOk();
     }
 
     /**
@@ -53,7 +53,7 @@ class BoardSections extends Provider
             'name' => $title,
         ];
 
-        return $this->post(UrlBuilder::RESOURCE_EDIT_BOARD_SECTION, $requestOptions);
+        return $this->post(UrlBuilder::RESOURCE_EDIT_BOARD_SECTION, $requestOptions)->isOk();
     }
 
     /**
@@ -62,6 +62,6 @@ class BoardSections extends Provider
      */
     public function delete($sectionId)
     {
-        return $this->post(UrlBuilder::RESOURCE_DELETE_BOARD_SECTION, ['section_id' => $sectionId]);
+        return $this->post(UrlBuilder::RESOURCE_DELETE_BOARD_SECTION, ['section_id' => $sectionId])->isOk();
     }
 }
