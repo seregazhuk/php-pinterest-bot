@@ -25,23 +25,15 @@ class ProvidersContainerTest extends TestCase
     protected $container;
 
     /**
-     * @var Response|MockInterface
-     */
-    protected $response;
-
-    /**
      * @var Request|MockInterface
      */
     protected $request;
 
     protected function setUp()
     {
-        $this->response = Mockery::mock(Response::class)->makePartial();
         $this->request = Mockery::mock(Request::class)->makePartial();
 
-        $this->container = new ProvidersContainer(
-            $this->request, $this->response
-        );
+        $this->container = new ProvidersContainer($this->request);
         parent::setUp();
     }
 
@@ -60,27 +52,8 @@ class ProvidersContainerTest extends TestCase
     /** @test */
     public function it_should_throw_exception_on_getting_wrong_provider()
     {
-        $this->setExpectedException(WrongProvider::class);
+        $this->expectException(WrongProvider::class);
         $this->container->unknown;
-    }
-
-    /** @test */
-    public function it_reloads_client_info()
-    {
-        $clientInfo = ['info'];
-        $this->response
-            ->shouldReceive('getClientInfo')
-            ->once()
-            ->andReturn(null);
-
-        $this->request->shouldReceive('exec')->once();
-
-        $this->response
-            ->shouldReceive('getClientInfo')
-            ->once()
-            ->andReturn($clientInfo);
-
-        $this->assertEquals($clientInfo, $this->container->getClientInfo());
     }
 
     /** @test */

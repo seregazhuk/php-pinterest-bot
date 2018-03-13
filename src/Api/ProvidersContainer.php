@@ -49,11 +49,6 @@ class ProvidersContainer
     protected $request;
 
     /**
-     * @var Response
-     */
-    protected $response;
-
-    /**
      * A array containing the cached providers.
      *
      * @var array
@@ -62,12 +57,10 @@ class ProvidersContainer
 
     /**
      * @param Request $request
-     * @param Response $response
      */
-    public function __construct(Request $request, Response $response)
+    public function __construct(Request $request)
     {
         $this->request = $request;
-        $this->response = $response;
     }
 
     /**
@@ -135,39 +128,6 @@ class ProvidersContainer
     }
 
     /**
-     * Proxies call to Response object and returns message from
-     * the error object.
-     *
-     * @return string|null
-     */
-    public function getLastError()
-    {
-        return $this->response->getLastErrorText();
-    }
-
-    /**
-     * Returns client context from Pinterest response. By default info returns from the last
-     * Pinterest response. If there was no response before or the argument $reload is
-     * true, we make a dummy request to the main page to update client context.
-     *
-     * @param bool $reload
-     * @return array|null
-     * @throws WrongProvider
-     */
-    public function getClientInfo($reload = false)
-    {
-        $clientInfo = $this->response->getClientInfo();
-
-        if ($clientInfo === null || $reload) {
-            /** @var User $userProvider */
-            $userProvider = $this->getProvider('user');
-            $userProvider->visitPage();
-        }
-
-        return $this->response->getClientInfo();
-    }
-
-    /**
      * Returns HttpClient object for setting user-agent string or
      * other CURL available options.
      *
@@ -213,13 +173,5 @@ class ProvidersContainer
     public function getRequest()
     {
         return $this->request;
-    }
-
-    /**
-     * @return Response
-     */
-    public function getResponse()
-    {
-        return $this->response;
     }
 }
