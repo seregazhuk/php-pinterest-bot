@@ -2,16 +2,14 @@
 
 namespace seregazhuk\PinterestBot\Api\Providers;
 
-use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Api\Forms\Profile;
 use seregazhuk\PinterestBot\Api\Traits\HasProfileSettings;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
-use seregazhuk\PinterestBot\Api\Traits\UploadsImages;
 use seregazhuk\PinterestBot\Api\Providers\Core\Provider;
 
 class User extends Provider
 {
-    use UploadsImages, HasProfileSettings;
+    use HasProfileSettings;
 
     /**
      * @var array

@@ -7,6 +7,7 @@ use seregazhuk\PinterestBot\Api\Response;
 use function seregazhuk\PinterestBot\class_uses_recursive;
 use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Api\ProvidersContainer;
+use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 
 /**
  * Class Provider.
@@ -55,7 +56,23 @@ abstract class Provider
         // When executing POST request we need a csrf-token.
         $this->initTokenIfRequired();
 
-        return $this->execute($resourceUrl, $postString);
+        return Response::fromJson($this->request->exec($resourceUrl, $postString));
+    }
+
+
+    /**
+     * @param string $image
+     * @return string|null
+     */
+    public function upload($image)
+    {
+        $result = $this->request->upload($image, UrlBuilder::IMAGE_UPLOAD);
+
+        $response = Response::fromJson($result);
+
+        return $response->hasData('success') ?
+            $response->getData('image_url') :
+            null;
     }
 
     /**
@@ -68,24 +85,9 @@ abstract class Provider
      */
     protected function get($resourceUrl = '', array $requestOptions = [], array $bookmarks = [])
     {
-        $query = $this->request->createQuery(
-            $requestOptions,
-            $bookmarks
-        );
+        $query = $this->request->createQuery($requestOptions, $bookmarks);
 
-        return $this->execute($resourceUrl . '?' . $query);
-    }
-
-    /**
-     * @param string $url
-     * @param string $postString
-     * @return Response
-     */
-    protected function execute($url, $postString = '')
-    {
-        $result = $this->request->exec($url, $postString);
-
-        return Response::fromJson($result);
+        return Response::fromJson($this->request->exec($resourceUrl . '?' . $query, ''));
     }
 
     /**
@@ -157,14 +159,6 @@ abstract class Provider
         return (new Pagination)
             ->paginateOver($callback)
             ->take($limit);
-    }
-
-    /**
-     * @return Request
-     */
-    public function getRequest()
-    {
-        return $this->request;
     }
 
     protected function initTokenIfRequired()

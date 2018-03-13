@@ -64,7 +64,7 @@ abstract class ProviderBaseTest extends TestCase
      */
     protected function getProvider()
     {
-        $container = new ProvidersContainer($this->request, new Response());
+        $container = new ProvidersContainer($this->request);
         $providerClassName = $this->getProviderClass();
 
         return new $providerClassName($container);
