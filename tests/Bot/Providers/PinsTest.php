@@ -87,10 +87,10 @@ class PinsTest extends ProviderBaseTest
         $provider->explore($topicId = '12345')->toArray();
 
         $request = [
-            "aux_fields" => [],
-            "prepend"    => false,
-            "offset"     => 180,
-            "section_id" => '12345',
+            'aux_fields' => [],
+            'prepend'    => false,
+            'offset'     => 180,
+            'section_id' => '12345',
         ];
         $this->assertWasGetRequest(UrlBuilder::RESOURCE_EXPLORE_PINS, $request);
     }
@@ -105,11 +105,11 @@ class PinsTest extends ProviderBaseTest
             'pin_id'          => '12345',
             // Some magic numbers, I have no idea about them
             'crop'            => [
-                "x"                => 0.16,
-                "y"                => 0.16,
-                "w"                => 0.66,
-                "h"                => 0.66,
-                "num_crop_actions" => 1,
+                'x'                => 0.16,
+                'y'                => 0.16,
+                'w'                => 0.66,
+                'h'                => 0.66,
+                'num_crop_actions' => 1,
             ],
             'force_refresh'   => true,
             'keep_duplicates' => false,
