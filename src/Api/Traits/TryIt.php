@@ -2,13 +2,12 @@
 
 namespace seregazhuk\PinterestBot\Api\Traits;
 
-use seregazhuk\PinterestBot\Api\Response;
 use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 
 trait TryIt
 {
-    use HandlesRequest, UploadsImages;
+    use HandlesRequest;
 
     /**
      * @return array

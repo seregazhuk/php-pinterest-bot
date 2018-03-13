@@ -27,9 +27,4 @@ trait HandlesRequest
      * @return Response
      */
     abstract protected function get($resourceUrl = '', array $requestOptions = [], array $bookmarks = []);
-
-    /**
-     * @return Request
-     */
-    abstract public function getRequest();
 }

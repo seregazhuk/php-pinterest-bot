@@ -8,8 +8,6 @@ use seregazhuk\PinterestBot\Exceptions\InvalidRequest;
 /**
  * Class ProviderWrapper is used to check for logged in status before any
  * provider method is being invoked.
- *
- * @package seregazhuk\PinterestBot\Api\Providers\Core
  */
 class ProviderWrapper
 {
@@ -19,7 +17,7 @@ class ProviderWrapper
     protected $provider;
 
     /**
-     * @param Provider|object $provider
+     * @param Provider $provider
      */
     public function __construct(Provider $provider)
     {
