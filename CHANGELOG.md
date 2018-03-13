@@ -1,6 +1,9 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## v6.0.0 -?
+BC break: Removed `$bot->getLastError()` and `$bot->getClientInfo()`.
+
 ## v5.6.6 - 2018-02-23
 ### Added:
  - hash-tags typeahead suggestions
