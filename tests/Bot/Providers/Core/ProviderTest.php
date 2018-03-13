@@ -32,7 +32,7 @@ class ProviderTest extends TestCase
 
         $responseData = $response['resource_response']['data'];
 
-        $this->assertEquals($responseData, $provider->dummyGet());
+        $this->assertEquals($responseData, $provider->dummyGet()->getResponseData());
     }
 
     /** @test */
@@ -53,29 +53,13 @@ class ProviderTest extends TestCase
     }
 
     /** @test */
-    public function it_should_clear_response_before_pagination()
-    {
-        /** @var Response $response */
-        $response = Mockery::mock(Response::class)
-            ->shouldReceive('clear')
-            ->once()
-            ->getMock()
-            ->makePartial();
-
-        /** @var DummyProvider $provider */
-        $provider = $this->makeProviderWithResponse($response);
-
-        $provider->dummyPaginate(['test' => 'test'], 'http://example.com')->toArray();
-    }
-
-    /** @test */
     public function it_should_return_bool_if_required_for_post_request()
     {
         $response = ['resource_response' => ['data' => 'value']];
 
         $provider = $this->makeProvider($response);
 
-        $this->assertTrue($provider->dummyPost());
+        $this->assertTrue($provider->dummyPost()->isOk());
     }
 
     /** @test */
@@ -104,18 +88,7 @@ class ProviderTest extends TestCase
      */
     protected function makeProviderWithRequest(Request $request)
     {
-        $container = new ProvidersContainer($request, new Response());
-        return Mockery::mock(DummyProvider::class, [$container])
-            ->makePartial();
-    }
-
-    /**
-     * @param Response $response
-     * @return Mockery\Mock|Provider|DummyProvider
-     */
-    protected function makeProviderWithResponse(Response $response)
-    {
-        $container = new ProvidersContainer($this->makeRequest(), $response);
+        $container = new ProvidersContainer($request);
         return Mockery::mock(DummyProvider::class, [$container])
             ->makePartial();
     }
@@ -159,7 +132,7 @@ class DummyProvider extends Provider {
     }
 
     /**
-     * @return array|bool|Response
+     * @return Response
      */
     public function dummyGet()
     {

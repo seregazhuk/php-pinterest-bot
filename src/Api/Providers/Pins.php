@@ -88,9 +88,7 @@ class Pins extends EntityProvider
             'board_id'    => $boardId,
         ];
 
-        $this->post(UrlBuilder::RESOURCE_CREATE_PIN, $requestOptions);
-
-        return $this->response->getResponseData();
+        return $this->post(UrlBuilder::RESOURCE_CREATE_PIN, $requestOptions)->getResponseData();
     }
 
     /**
@@ -118,7 +116,7 @@ class Pins extends EntityProvider
             $requestOptions['link'] = stripslashes($link);
         }
 
-        return $this->post(UrlBuilder::RESOURCE_UPDATE_PIN, $requestOptions);
+        return $this->post(UrlBuilder::RESOURCE_UPDATE_PIN, $requestOptions)->isOk();
     }
 
     /**
@@ -151,9 +149,7 @@ class Pins extends EntityProvider
             'pin_id'      => $repinId,
         ];
 
-        $this->post(UrlBuilder::RESOURCE_REPIN, $requestOptions);
-
-        return $this->response->getResponseData();
+        return $this->post(UrlBuilder::RESOURCE_REPIN, $requestOptions)->getResponseData();
     }
 
     /**
@@ -169,7 +165,7 @@ class Pins extends EntityProvider
             'field_set_key' => 'detailed',
         ];
 
-        return $this->get(UrlBuilder::RESOURCE_PIN_INFO, $requestOptions);
+        return $this->get(UrlBuilder::RESOURCE_PIN_INFO, $requestOptions)->getResponseData();
     }
 
     /**
@@ -364,14 +360,14 @@ class Pins extends EntityProvider
     /**
      * Get pin analytics, like numbers of clicks, views and repins
      * @param $pinId
-     * @return array|bool|Response
+     * @return array
      */
     public function analytics($pinId)
     {
         // Pinterest requires pinId to be a string
         $pinId = (string)$pinId;
 
-        return $this->get(UrlBuilder::RESOURCE_PIN_ANALYTICS, ['pin_id' => $pinId]);
+        return $this->get(UrlBuilder::RESOURCE_PIN_ANALYTICS, ['pin_id' => $pinId])->getResponseData();
     }
 
     /**
@@ -383,7 +379,7 @@ class Pins extends EntityProvider
      */
     protected function likePinMethodCall($pinId, $resourceUrl)
     {
-        return $this->post($resourceUrl, ['pin_id' => $pinId]);
+        return $this->post($resourceUrl, ['pin_id' => $pinId])->isOk();
     }
 
     /**
@@ -412,6 +408,6 @@ class Pins extends EntityProvider
             'pin_ids'  => (array)$pinIds,
         ];
 
-        return $this->post($editUrl, $data);
+        return $this->post($editUrl, $data)->isOk();
     }
 }

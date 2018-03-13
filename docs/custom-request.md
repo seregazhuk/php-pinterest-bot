@@ -18,22 +18,6 @@ $bot->getHttpClient()->setOptions([
 ]);
 ```
 
-## Client info
-
-With every request Pinterest returns an array with your current client info, with such info as 
-OS, browser, IP and others:
-
-```php
-$info = $bot->getClientInfo();
-```
-
-By default it uses client info from the last request. To reload client context pass `true` argument:
-
-```php
-// Force to reload client info
-$info = $bot->getClientInfo(true);
-```
-
 ## Current url
 
 You can get an url of the last visited page:

@@ -40,7 +40,7 @@ class Pinners extends FollowableProvider
      */
     public function info($username)
     {
-        return $this->get(UrlBuilder::RESOURCE_USER_INFO, ['username' => $username]);
+        return $this->get(UrlBuilder::RESOURCE_USER_INFO, ['username' => $username])->getResponseData();
     }
 
     /**
@@ -69,6 +69,7 @@ class Pinners extends FollowableProvider
      * @param string $username
      * @param int $limit
      * @return Pagination
+     * @throws WrongFollowingType
      */
     public function followingPeople($username, $limit = Pagination::DEFAULT_LIMIT)
     {
@@ -81,6 +82,7 @@ class Pinners extends FollowableProvider
      * @param string $username
      * @param int $limit
      * @return Pagination
+     * @throws WrongFollowingType
      */
     public function followingBoards($username, $limit = Pagination::DEFAULT_LIMIT)
     {
@@ -153,7 +155,7 @@ class Pinners extends FollowableProvider
     {
         return $this->post(
             UrlBuilder::RESOURCE_BLOCK_USER, ['blocked_user_id' => $userId]
-        );
+        )->isOk();
     }
 
     /**

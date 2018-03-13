@@ -51,7 +51,7 @@ trait SendsMessages
             $data
         );
 
-        return $this->post(UrlBuilder::RESOURCE_SEND_MESSAGE, $requestOptions);
+        return $this->post(UrlBuilder::RESOURCE_SEND_MESSAGE, $requestOptions)->isOk();
     }
 
     /**

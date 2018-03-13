@@ -39,7 +39,7 @@ class LoginTest extends ProviderBaseTest
     {
         $provider = $this->getProvider();
 
-        $this->setExpectedException(LogicException::class);
+        $this->expectException(LogicException::class);
 
         $provider->login('', '');
     }

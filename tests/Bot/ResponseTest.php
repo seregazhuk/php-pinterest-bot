@@ -169,13 +169,12 @@ class ResponseTest extends TestCase
     /** @test */
     public function it_can_be_filled_with_json_data()
     {
-        $response = new Response();
         $data = ['key' => 'value'];
-        $response->fillFromJson(json_encode($data));
+        $response = Response::fromJson(json_encode($data));
 
         $this->assertEquals($data, $response->getData());
 
-        $response->fillFromJson('');
+        $response = Response::fromJson('');
         $this->assertTrue($response->isEmpty());
     }
 }

@@ -12,13 +12,13 @@ trait HasRelatedTopics
      * Returns a list of related topics.
      *
      * @param string $interest
-     * @return array|bool
+     * @return array
      */
     public function getRelatedTopics($interest)
     {
         return $this->get(
             UrlBuilder::RESOURCE_GET_CATEGORIES_RELATED,
             ['interest_name' => $interest]
-        );
+        )->getResponseData();
     }
 }

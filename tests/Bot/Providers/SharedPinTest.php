@@ -18,12 +18,12 @@ class SharedPinTest extends ProviderBaseTest
         $provider->share('12345');
 
         $request = [
-            "invite_type" => [
-                "invite_category" => 3, // magic numbers, but I have
-                "invite_object"   => 1, // no idea what do they mean
-                "invite_channel"  => $linkChannel = 12,
+            'invite_type' => [
+                'invite_category' => 3, // magic numbers, but I have
+                'invite_object'   => 1, // no idea what do they mean
+                'invite_channel'  => $linkChannel = 12,
             ],
-            "object_id"   => '12345',
+            'object_id'   => '12345',
         ];
         $this->assertWasPostRequest(UrlBuilder::RESOURCE_SHARE_VIA_SOCIAL, $request);
     }
@@ -35,12 +35,12 @@ class SharedPinTest extends ProviderBaseTest
         $provider->shareViaTwitter('12345');
 
         $request = [
-            "invite_type" => [
-                "invite_category" => 3, // magic numbers, but I have
-                "invite_object"   => 1, // no idea what do they mean
-                "invite_channel"  => $twitterChannel = 9,
+            'invite_type' => [
+                'invite_category' => 3, // magic numbers, but I have
+                'invite_object'   => 1, // no idea what do they mean
+                'invite_channel'  => $twitterChannel = 9,
             ],
-            "object_id"   => '12345',
+            'object_id'   => '12345',
         ];
         $this->assertWasPostRequest(UrlBuilder::RESOURCE_SHARE_VIA_SOCIAL, $request);
     }
@@ -76,9 +76,9 @@ class SharedPinTest extends ProviderBaseTest
     private function assertWasReactionRequest($pinId, $userId, $reaction)
     {
         $request = [
-            "user_ids" => [$userId],
-            "pin"      => $pinId,
-            "text"     => $reaction,
+            'user_ids' => [$userId],
+            'pin'      => $pinId,
+            'text'     => $reaction,
         ];
 
         $this->assertWasPostRequest(UrlBuilder::RESOURCE_SEND_MESSAGE, $request);

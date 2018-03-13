@@ -30,7 +30,7 @@ trait CanBeDeleted
         return $this->post(
             $this->getDeleteUrl(),
             [$this->getEntityIdName() => $entityId]
-        );
+        )->isOk();
     }
 
     /**

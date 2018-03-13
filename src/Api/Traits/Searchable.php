@@ -28,24 +28,23 @@ trait Searchable
      *
      * @param string $query
      * @param string $scope
+     * @param array $bookmarks
      * @return SearchResponse
      */
-    protected function execSearchRequest($query, $scope)
+    protected function execSearchRequest($query, $scope, $bookmarks = [])
     {
-        $url = $this->getResponse()->hasBookmarks() ?
-            UrlBuilder::RESOURCE_SEARCH_WITH_PAGINATION :
-            UrlBuilder::RESOURCE_SEARCH;
+        $url = empty($bookmarks) ?
+            UrlBuilder::RESOURCE_SEARCH :
+            UrlBuilder::RESOURCE_SEARCH_WITH_PAGINATION;
+
 
         $requestOptions = [
             'scope' => $scope,
             'query' => $query,
         ];
 
-        $this->get($url, $requestOptions);
-
-        return new SearchResponse(
-            $this->getResponse()->getRawData()
-        );
+        $response = $this->get($url, $requestOptions, $bookmarks);
+        return new SearchResponse($response->getRawData());
     }
 
     /**
@@ -58,8 +57,11 @@ trait Searchable
      */
     public function search($query, $limit = Pagination::DEFAULT_LIMIT)
     {
-        return $this->paginateCustom(function () use ($query) {
-            return $this->execSearchRequest($query, $this->getSearchScope());
+        $bookmarks = [];
+        return $this->paginateCustom(function () use ($query, &$bookmarks) {
+            $response = $this->execSearchRequest($query, $this->getSearchScope(), $bookmarks);
+            $bookmarks = $response->getBookmarks();
+            return $response;
         })->take($limit);
     }
 }

@@ -51,13 +51,13 @@ trait SendsRegisterActions
 
     /**
      * @param array $actions
-     * @return bool|Response
+     * @return bool
      */
     protected function sendRegisterActionRequest(array $actions = [])
     {
         return $this->post(
            UrlBuilder::RESOURCE_UPDATE_REGISTRATION_TRACK,
             ['secondStepActions' => $actions]
-        );
+        )->isOk();
     }
 }

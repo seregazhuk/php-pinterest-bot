@@ -20,11 +20,11 @@ class Topics extends FollowableProvider
      * Get category info
      *
      * @param string $topic
-     * @return array|bool
+     * @return array
      */
     public function info($topic)
     {
-        return $this->get(UrlBuilder::RESOURCE_GET_TOPIC, ['interest' => $topic]);
+        return $this->get(UrlBuilder::RESOURCE_GET_TOPIC, ['interest' => $topic])->getResponseData();
     }
 
     /**
@@ -58,6 +58,6 @@ class Topics extends FollowableProvider
             'offset'     => 180,
         ];
 
-        return $this->get(UrlBuilder::RESOURCE_EXPLORE_SECTIONS, $data);
+        return $this->get(UrlBuilder::RESOURCE_EXPLORE_SECTIONS, $data)->getResponseData();
     }
 }

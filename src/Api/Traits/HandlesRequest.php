@@ -12,11 +12,10 @@ trait HandlesRequest
      *
      * @param string $resourceUrl
      * @param array $requestOptions
-     * @param bool $returnData
      *
-     * @return bool|array
+     * @return Response
      */
-    abstract protected function post($resourceUrl, array $requestOptions = [], $returnData = false);
+    abstract protected function post($resourceUrl, array $requestOptions = []);
 
     /**
      * Executes a GET request to Pinterest API.
@@ -24,14 +23,10 @@ trait HandlesRequest
      * @param string $resourceUrl
      * @param array $requestOptions
      *
-     * @return bool|array
-     */
-    abstract protected function get($resourceUrl = '', array $requestOptions = []);
-
-    /**
+     * @param array $bookmarks
      * @return Response
      */
-    abstract public function getResponse();
+    abstract protected function get($resourceUrl = '', array $requestOptions = [], array $bookmarks = []);
 
     /**
      * @return Request

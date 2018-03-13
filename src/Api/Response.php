@@ -27,11 +27,18 @@ class Response implements PaginatedResponse
      */
     public function __construct($data = null)
     {
-        $this->lastError = new Error();
-
         if ($data) {
             $this->fill($data);
         }
+    }
+
+    /**
+     * @param string $json
+     * @return static
+     */
+    public static function fromJson($json)
+    {
+        return new static(json_decode($json, true));
     }
 
     /**
@@ -45,15 +52,6 @@ class Response implements PaginatedResponse
         return $this
             ->fillError()
             ->fillClientInfo();
-    }
-
-    /**
-     * @param string $json
-     * @return static
-     */
-    public function fillFromJson($json)
-    {
-        return $this->fill(json_decode($json, true));
     }
 
     /**

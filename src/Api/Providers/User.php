@@ -97,13 +97,13 @@ class User extends Provider
             'explanation' => $explanation,
         ];
 
-        return $this->post(UrlBuilder::RESOURCE_DEACTIVATE_ACCOUNT, $request);
+        return $this->post(UrlBuilder::RESOURCE_DEACTIVATE_ACCOUNT, $request)->isOk();
     }
 
     /**
      * Send invite to email
      * @param string $email
-     * @return bool|Response
+     * @return bool
      */
     public function invite($email)
     {
@@ -112,26 +112,26 @@ class User extends Provider
             'type'  => 'email',
         ];
 
-        return $this->post(UrlBuilder::RESOURCE_INVITE, $data);
+        return $this->post(UrlBuilder::RESOURCE_INVITE, $data)->isOk();
     }
 
     /**
      * Remove things you’ve recently searched for from search suggestions.
-     * @return bool|Response
+     * @return bool
      */
     public function clearSearchHistory()
     {
-        return $this->post(UrlBuilder::RESOURCE_CLEAR_SEARCH_HISTORY);
+        return $this->post(UrlBuilder::RESOURCE_CLEAR_SEARCH_HISTORY)->isOk();
     }
 
     /**
      * Simply makes GET request to some url.
      * @param string $url
-     * @return array|bool
+     * @return array
      */
     public function visitPage($url = '')
     {
-        return $this->get($url);
+        return $this->get($url)->getResponseData();
     }
 
     /**
@@ -140,7 +140,7 @@ class User extends Provider
      */
     public function sessionsHistory()
     {
-        return $this->get(UrlBuilder::RESOURCE_SESSIONS_HISTORY);
+        return $this->get(UrlBuilder::RESOURCE_SESSIONS_HISTORY)->getResponseData();
     }
 
     /**
@@ -148,12 +148,12 @@ class User extends Provider
      */
     protected function getProfile()
     {
-        return $this->get(UrlBuilder::RESOURCE_GET_USER_SETTINGS);
+        return $this->get(UrlBuilder::RESOURCE_GET_USER_SETTINGS)->getResponseData();
     }
 
     /**
      * @param array|Profile $userInfo
-     * @return bool|Response
+     * @return bool
      */
     protected function updateProfile($userInfo)
     {
@@ -166,7 +166,7 @@ class User extends Provider
             $userInfo['profile_image_url'] = $this->upload($userInfo['profile_image']);
         }
 
-        return $this->post(UrlBuilder::RESOURCE_UPDATE_USER_SETTINGS, $userInfo);
+        return $this->post(UrlBuilder::RESOURCE_UPDATE_USER_SETTINGS, $userInfo)->isOk();
     }
 
     /**
