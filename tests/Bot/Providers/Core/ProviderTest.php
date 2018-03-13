@@ -89,7 +89,7 @@ class ProviderTest extends TestCase
     protected function makeProviderWithRequest(Request $request)
     {
         $container = new ProvidersContainer($request);
-        return Mockery::mock(DummyProvider::class, [$container])
+        return Mockery::mock(DummyProvider::class, [$container, $request])
             ->makePartial();
     }
 

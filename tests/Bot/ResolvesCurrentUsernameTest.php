@@ -37,10 +37,10 @@ class ResolvesCurrentUsernameTest extends TestCase
      */
     protected function makeProvider(Request $request)
     {
-        $container = new ProvidersContainer($request, new Response());
+        $container = new ProvidersContainer($request);
 
         /** @var DummyUsernameProvider $provider */
-        $provider = Mockery::mock(DummyUsernameProvider::class, [$container])->makePartial();
+        $provider = Mockery::mock(DummyUsernameProvider::class, [$container, $request])->makePartial();
 
         return $provider;
     }

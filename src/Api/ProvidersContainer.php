@@ -122,7 +122,7 @@ class ProvidersContainer
      */
     protected function buildProvider($className)
     {
-        $provider = new $className($this);
+        $provider = new $className($this, $this->request);
 
         return new ProviderWrapper($provider);
     }
@@ -165,13 +165,5 @@ class ProvidersContainer
         }
 
         return in_array(Provider::class, class_parents($className));
-    }
-
-    /**
-     * @return Request
-     */
-    public function getRequest()
-    {
-        return $this->request;
     }
 }
