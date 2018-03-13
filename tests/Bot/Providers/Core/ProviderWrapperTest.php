@@ -45,7 +45,7 @@ class ProviderWrapperTest extends TestCase
     {
         $request = new Request(new CurlHttpClient(new Cookies()));
 
-        $provider = new TestProvider(new ProvidersContainer($request));
+        $provider = new TestProvider(new ProvidersContainer($request), $request);
 
         return new ProviderWrapper($provider);
     }
