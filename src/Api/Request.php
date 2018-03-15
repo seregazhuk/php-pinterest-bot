@@ -20,11 +20,6 @@ class Request
     protected $httpClient;
 
     /**
-     * @var bool
-     */
-    protected $loggedIn;
-
-    /**
      *
      * @var string
      */
@@ -55,14 +50,19 @@ class Request
         'X-Pinterest-AppState:active',
         'X-Requested-With: XMLHttpRequest',
 ];
+    /**
+     * @var Session
+     */
+    private $session;
 
     /**
      * @param HttpClient $http
+     * @param Session $session
      */
-    public function __construct(HttpClient $http)
+    public function __construct(HttpClient $http, Session $session)
     {
         $this->httpClient = $http;
-        $this->loggedIn = false;
+        $this->session = $session;
     }
 
     /**
@@ -173,7 +173,7 @@ class Request
         $this->setTokenFromCookies();
 
         if (!empty($this->csrfToken)) {
-            $this->loggedIn = true;
+            $this->session->login();
         }
 
         return $this;
@@ -185,7 +185,7 @@ class Request
     public function logout()
     {
         $this->clearToken();
-        $this->loggedIn = false;
+        $this->session->logout();
     }
 
     /**
@@ -195,7 +195,7 @@ class Request
      */
     public function isLoggedIn()
     {
-        return $this->loggedIn;
+        return $this->session->isLoggedIn();
     }
 
     /**

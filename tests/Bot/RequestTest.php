@@ -6,6 +6,8 @@ use Mockery;
 use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
 use seregazhuk\PinterestBot\Api\Request;
+use seregazhuk\PinterestBot\Api\Session;
+use seregazhuk\PinterestBot\Exceptions\InvalidRequest;
 use seregazhuk\tests\Helpers\CookiesHelper;
 use seregazhuk\PinterestBot\Helpers\Cookies;
 use seregazhuk\tests\Helpers\ResponseHelper;
@@ -61,12 +63,10 @@ class RequestTest extends TestCase
         $this->assertFalse($request->isLoggedIn());
     }
 
-    /**
-     * @test
-     * @expectedException \seregazhuk\PinterestBot\Exceptions\InvalidRequest
-     */
+    /** @test */
     public function it_should_throw_exception_uploading_file_that_does_not_exist()
     {
+        $this->expectException(InvalidRequest::class);
         $this
             ->createRequestObject()
             ->upload('image.jpg', 'http://uploadurl.com');
@@ -178,7 +178,7 @@ class RequestTest extends TestCase
     protected function createRequestObject(HttpClient $http = null)
     {
         $http = $http ? : new CurlHttpClient(new Cookies());
-        $request = new Request($http);
+        $request = new Request($http, new Session());
 
         $this->setReflectedObject($request);
 
