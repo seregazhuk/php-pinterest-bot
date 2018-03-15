@@ -32,6 +32,6 @@ trait ResolvesCurrentUser
      */
     protected function getUserProvider()
     {
-        return $this->container->getProvider('user');
+        return $this->container->user;
     }
 }
