@@ -149,18 +149,6 @@ class RequestTest extends TestCase
         $this->assertFalse($request->isLoggedIn());
     }
 
-    /** @test */
-    public function it_can_be_checked_for_a_token()
-    {
-        $request = $this->createRequestObject();
-
-        $this->setProperty('csrfToken', 'test-token');
-        $this->assertTrue($request->hasToken());
-
-        $this->setProperty('csrfToken', Request::DEFAULT_TOKEN);
-        $this->assertFalse($request->hasToken());
-    }
-
     /**
      * @param array $methods
      * @return MockInterface|HttpClient

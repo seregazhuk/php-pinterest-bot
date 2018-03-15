@@ -12,8 +12,6 @@ use seregazhuk\PinterestBot\Exceptions\InvalidRequest;
  */
 class Request
 {
-    const DEFAULT_TOKEN = '1234';
-
     /**
      * @var HttpClient
      */
@@ -24,11 +22,6 @@ class Request
      * @var string
      */
     protected $filePathToUpload;
-
-    /**
-     * @var string
-     */
-    protected $csrfToken = '';
 
     /**
      * @var string
@@ -49,7 +42,8 @@ class Request
         'X-APP-VERSION: f9d1262',
         'X-Pinterest-AppState:active',
         'X-Requested-With: XMLHttpRequest',
-];
+    ];
+
     /**
      * @var Session
      */
@@ -108,8 +102,8 @@ class Request
     protected function getHttpHeaders()
     {
         $headers = $this->getDefaultHttpHeaders();
-        if ($this->csrfToken === self::DEFAULT_TOKEN) {
-            $headers[] = 'Cookie: csrftoken=' . self::DEFAULT_TOKEN . ';';
+        if ($this->session->hasDefaultToken()) {
+            $headers[] = 'Cookie: csrftoken=' . $this->session->token() . ';';
         }
 
         return $headers;
@@ -120,21 +114,9 @@ class Request
      */
     public function hasToken()
     {
-        return !empty($this->csrfToken) && $this->csrfToken !== self::DEFAULT_TOKEN;
+        return $this->session->hasRealToken();
     }
     
-    /**
-     * Clear token information.
-     *
-     * @return $this
-     */
-    protected function clearToken()
-    {
-        $this->csrfToken = self::DEFAULT_TOKEN;
-
-        return $this;
-    }
-
     /**
      * Load cookies for this username and check if it was logged in.
      * @param string $username
@@ -172,10 +154,6 @@ class Request
     {
         $this->setTokenFromCookies();
 
-        if (!empty($this->csrfToken)) {
-            $this->session->login();
-        }
-
         return $this;
     }
 
@@ -184,7 +162,6 @@ class Request
      */
     public function logout()
     {
-        $this->clearToken();
         $this->session->logout();
     }
 
@@ -245,7 +222,7 @@ class Request
     protected function setTokenFromCookies()
     {
         if ($token = $this->httpClient->cookie('csrftoken')) {
-            $this->csrfToken = $token;
+            $this->session->login($token);
         }
 
         return $this;
@@ -262,7 +239,7 @@ class Request
             [
                 'Host: ' . UrlBuilder::HOST,
                 'Origin: ' . UrlBuilder::URL_BASE,
-                'X-CSRFToken: ' . $this->csrfToken
+                'X-CSRFToken: ' . $this->session->token()
             ]
         );
     }
@@ -335,7 +312,7 @@ class Request
     public function dropCookies()
     {
         $this->httpClient->removeCookies();
-        $this->clearToken();
+        $this->session->logout();
 
         return $this;
     }
