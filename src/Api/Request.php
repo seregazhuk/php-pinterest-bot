@@ -45,7 +45,7 @@ class Request
      *
      * @var array
      */
-    protected $requestHeaders = [
+    const REQUEST_HEADERS = [
         'Accept: application/json, text/javascript, */*; q=0.01',
         'Accept-Language: en-US,en;q=0.5',
         'DNT: 1',
@@ -257,7 +257,7 @@ class Request
     protected function getDefaultHttpHeaders()
     {
         return array_merge(
-            $this->requestHeaders,
+            self::REQUEST_HEADERS,
             $this->getContentTypeHeader(),
             [
                 'Host: ' . UrlBuilder::HOST,
