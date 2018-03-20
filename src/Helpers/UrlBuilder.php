@@ -194,7 +194,7 @@ class UrlBuilder
      */
     public static function buildApiUrl($resourceUrl)
     {
-        if (strpos($resourceUrl, 'http') !== false) {
+        if (strpos($resourceUrl, 'http') === 0) {
             return $resourceUrl;
         }
 

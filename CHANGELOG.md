@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## v5.6.7 - 2018-03-20
+### Fixed:
+ - writing comments for pins
+ - improved testing post requests 
+
 ## v5.6.6 - 2018-02-23
 ### Added:
  - hash-tags typeahead suggestions

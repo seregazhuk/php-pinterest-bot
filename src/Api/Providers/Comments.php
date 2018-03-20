@@ -21,16 +21,26 @@ class Comments extends Provider
      * @param int $pinId
      * @param string $text Comment
      *
-     * @return array|bool
+     * @return array
      */
     public function create($pinId, $text)
     {
         $requestOptions = [
-            'pin_id' => $pinId,
-            'text'   => $text,
+            'id'            => $pinId,
+            'field_set_key' => 'detailed',
         ];
 
-        return $this->post(UrlBuilder::RESOURCE_COMMENT_PIN, $requestOptions);
+        $pinInfo = $this->get(UrlBuilder::RESOURCE_PIN_INFO, $requestOptions);
+
+        $aggregatedPinId = isset($pinInfo['aggregated_pin_data']['id']) ? $pinInfo['aggregated_pin_data']['id'] : null;
+
+        $requestOptions = [
+            'objectId' => $aggregatedPinId,
+            'pinId'    => $pinId,
+            'text'     => $text,
+        ];
+
+        return $this->post(UrlBuilder::RESOURCE_COMMENT_PIN, $requestOptions, true);
     }
 
     /**
@@ -43,10 +53,7 @@ class Comments extends Provider
      */
     public function delete($pinId, $commentId)
     {
-        $requestOptions = [
-            'pin_id'     => $pinId,
-            'comment_id' => $commentId,
-        ];
+        $requestOptions = ['commentId' => $commentId];
 
         return $this->post(UrlBuilder::RESOURCE_COMMENT_DELETE_PIN, $requestOptions);
     }

@@ -30,8 +30,8 @@ class SuggestionsTest extends ProviderBaseTest
         $provider->tagsFor('cats');
 
         $request = [
-            'query'      => 'cats',
-            'pins_count' => true,
+            'query'      => '#cats',
+            'showPinCount' => true,
         ];
         $this->assertWasGetRequest(UrlBuilder::RESOURCE_HASHTAG_TYPE_AHEAD_SUGGESTIONS, $request);
     }

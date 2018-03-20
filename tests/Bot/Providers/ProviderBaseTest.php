@@ -5,6 +5,7 @@ namespace seregazhuk\tests\Bot\Providers;
 use Mockery;
 use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
+use seregazhuk\PinterestBot\Api\Contracts\HttpClient;
 use seregazhuk\PinterestBot\Api\Providers\Core\Provider;
 use seregazhuk\PinterestBot\Api\ProvidersContainer;
 use seregazhuk\PinterestBot\Api\Request;
@@ -23,11 +24,9 @@ abstract class ProviderBaseTest extends TestCase
     {
         parent::setUp();
 
-        $this->request = Mockery::spy(Request::class);
-
-        $this->request
-            ->shouldReceive('hasToken')
-            ->andReturn(true);
+        $this->httpClient = Mockery::spy(HttpClient::class);
+        $this->request = Mockery::mock(Request::class, [$this->httpClient])->makePartial();
+        $this->request->shouldReceive('hasToken')->andReturn(true);
     }
 
     protected function tearDown()
@@ -51,8 +50,8 @@ abstract class ProviderBaseTest extends TestCase
     {
         $response = ['resource_response' => ['data' => $data]];
 
-        $this->request
-            ->shouldReceive('exec')
+        $this->httpClient
+            ->shouldReceive('execute')
             ->times($times)
             ->andReturn(json_encode($response));
 
