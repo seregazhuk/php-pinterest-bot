@@ -57,8 +57,8 @@ class UrlBuilder
     const RESOURCE_DELETE_PIN = 'resource/PinResource/delete/';
     const RESOURCE_LIKE_PIN = 'resource/PinLikeResource/create/';
     const RESOURCE_UNLIKE_PIN = 'resource/PinLikeResource/delete/';
-    const RESOURCE_COMMENT_PIN = 'resource/PinCommentResource/create/';
-    const RESOURCE_COMMENT_DELETE_PIN = 'resource/PinCommentResource/delete/';
+    const RESOURCE_COMMENT_PIN = 'resource/AggregatedCommentResource/create/';
+    const RESOURCE_COMMENT_DELETE_PIN = 'resource/AggregatedCommentResource/delete/';
     const RESOURCE_PIN_INFO = 'resource/PinResource/get/';
     const RESOURCE_DOMAIN_FEED = 'resource/DomainFeedResource/get/';
     const RESOURCE_ACTIVITY = 'resource/AggregatedActivityFeedResource/get/';
