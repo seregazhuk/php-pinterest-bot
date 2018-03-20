@@ -26,9 +26,9 @@ class InboxTest extends ProviderBaseTest
     {
         $this->login();
 
-        $this->getProvider()->getMessages(123)->toArray();
+        $this->getProvider()->getMessages('123')->toArray();
 
-        $this->assertWasGetRequest(UrlBuilder::RESOURCE_GET_CONVERSATION_MESSAGES, ['conversation_id' => 123]);
+        $this->assertWasGetRequest(UrlBuilder::RESOURCE_GET_CONVERSATION_MESSAGES, ['conversation_id' => '123']);
     }
 
     /** @test */

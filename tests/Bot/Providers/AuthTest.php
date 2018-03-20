@@ -37,17 +37,6 @@ class AuthTest extends ProviderBaseTest
     }
 
     /** @test */
-    public function it_delegates_logout_to_request_object()
-    {
-        $provider = $this->getProvider();
-
-        $this->login();
-        $provider->logout();
-
-        $this->request->shouldHaveReceived('logout');
-    }
-
-    /** @test */
     public function it_skips_login_if_user_is_already_logged_in()
     {
         $provider = $this->getProvider();

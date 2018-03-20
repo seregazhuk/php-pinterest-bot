@@ -4,7 +4,9 @@ namespace seregazhuk\tests\Bot\Providers;
 
 use Mockery;
 use Mockery\MockInterface;
+use seregazhuk\PinterestBot\Api\Contracts\HttpClient;
 use seregazhuk\PinterestBot\Api\Request;
+use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 
 trait ApiRequestAssertions
 {
@@ -12,6 +14,11 @@ trait ApiRequestAssertions
      * @var Request|MockInterface
      */
     protected $request;
+
+    /**
+     * @var HttpClient|MockInterface
+     */
+    protected $httpClient;
 
     protected function setUp()
     {
@@ -32,9 +39,13 @@ trait ApiRequestAssertions
     {
         $postString = $this->request->createQuery($data);
 
-        $this->request
-            ->shouldHaveReceived('exec')
-            ->withArgs([$url, $postString]);
+        $check = function($requestUrl, $requestString) use ($url, $postString) {
+            return $requestUrl === UrlBuilder::buildApiUrl($url) && $requestString === $postString;
+        };
+
+        $this->httpClient
+            ->shouldHaveReceived('execute')
+            ->withArgs($check);
     }
 
     /**
@@ -45,16 +56,12 @@ trait ApiRequestAssertions
     {
         $query = $this->request->createQuery($data);
 
-        $this->request
-            ->shouldHaveReceived('exec')
-            ->with($url . '?' . $query, '');
-    }
+        $check = function($requestUrl) use ($url, $query) {
+            return $requestUrl === UrlBuilder::buildApiUrl($url) . '?' . $query;
+        };
 
-    /**
-     * @return MockInterface|Request
-     */
-    public function getRequest()
-    {
-        return $this->request;
+        $this->httpClient
+            ->shouldHaveReceived('execute')
+            ->withArgs($check);
     }
 }
