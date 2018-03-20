@@ -135,7 +135,7 @@ class Response implements PaginatedResponse
      */
     public function hasErrors()
     {
-        return $this->lastError && !$this->lastError->isEmpty();
+        return !$this->lastError->isEmpty();
     }
 
     /**
@@ -226,9 +226,7 @@ class Response implements PaginatedResponse
     {
         $errorData = get_array_data('resource_response.error', $this->data);
 
-        if (!empty($errorData)) {
-            $this->lastError = new Error($errorData);
-        }
+        $this->lastError = new Error($errorData);
 
         return $this;
     }
