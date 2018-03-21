@@ -12,24 +12,6 @@ use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 class PinsTest extends ProviderBaseTest
 {
     /** @test */
-    public function a_user_can_like_a_pin()
-    {
-        $provider = $this->getProvider();
-        $provider->like('12345');
-
-        $this->assertWasPostRequest(UrlBuilder::RESOURCE_LIKE_PIN, ['pin_id' => '12345']);
-    }
-
-    /** @test */
-    public function a_user_can_dislike_a_pin()
-    {
-        $provider = $this->getProvider();
-        $provider->unLike('12345');
-
-        $this->assertWasPostRequest(UrlBuilder::RESOURCE_UNLIKE_PIN, ['pin_id' => '12345']);
-    }
-
-    /** @test */
     public function it_retrieves_detailed_info_for_a_pin()
     {
         $provider = $this->getProvider();

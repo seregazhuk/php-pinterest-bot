@@ -6,7 +6,6 @@
 - [Edit pin](#edit-pin)
 - [Move pin to a new board](#move-pin-to-a-new-board)
 - [Delete pin](#delete-pin)
-- [Like/dislike pin](#likedislike-pin)
 - [Copy/move pin](#copymove-pin)
 - [Save image on disk](#save-image-on-disk)
 - [Delete pin from board](#delete-pin-from-board)
@@ -92,14 +91,6 @@ Delete pin by id:
 ```php
 $bot->pins->delete($pinId);
 ```   
-
-## Like/dislike pin
-
-Like/dislike pin by id:
-```php
-$bot->pins->like($pinId);
-$bot->pins->unLike($pinId);
-```
 
 ## Copy/move pin
 
@@ -253,7 +244,7 @@ $analytics = $bot->pins->analytics($pinId);
 
 ## Share pin
 
-Share a link with a pin where a user can leave his or her reaction on this pin (like or dislike):
+Share a link with a pin where a user can leave his or her reaction on this pin:
 ```php
 $link = $bot->pins->share($pinId);
 ```

@@ -45,26 +45,6 @@ class Pins extends EntityProvider
     protected $deleteUrl = UrlBuilder::RESOURCE_DELETE_PIN;
 
     /**
-     * Likes pin with current ID.
-     * @param string $pinId
-     * @return bool
-     */
-    public function like($pinId)
-    {
-        return $this->likePinMethodCall($pinId, UrlBuilder::RESOURCE_LIKE_PIN);
-    }
-
-    /**
-     * Removes your like from pin with current ID.
-     * @param string $pinId
-     * @return bool
-     */
-    public function unLike($pinId)
-    {
-        return $this->likePinMethodCall($pinId, UrlBuilder::RESOURCE_UNLIKE_PIN);
-    }
-
-    /**
      * Create a pin. Returns created pin info.
      *
      * @param string $imageUrl
@@ -372,18 +352,6 @@ class Pins extends EntityProvider
         $pinId = (string)$pinId;
 
         return $this->get(UrlBuilder::RESOURCE_PIN_ANALYTICS, ['pin_id' => $pinId]);
-    }
-
-    /**
-     * Calls Pinterest API to like or unlike Pin by ID.
-     *
-     * @param string $pinId
-     * @param string $resourceUrl
-     * @return bool
-     */
-    protected function likePinMethodCall($pinId, $resourceUrl)
-    {
-        return $this->post($resourceUrl, ['pin_id' => $pinId]);
     }
 
     /**
