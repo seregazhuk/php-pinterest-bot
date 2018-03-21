@@ -1,9 +1,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## v5.6.8 - 2018-03-21
+## v5.6.9 - 2018-03-21
 ### Fixed:
  - likes/dislikes are no longer supported by Pinterest and have been removed
+
+## v5.6.8 - 2018-03-20
+### Fixed:
+ - clear errors after success response
 
 ## v5.6.7 - 2018-03-20
 ### Fixed:

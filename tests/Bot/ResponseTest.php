@@ -59,16 +59,6 @@ class ResponseTest extends TestCase
     }
 
     /** @test */
-    public function last_error_stores_until_next_error_appears_in_response()
-    {
-        $response = new Response();
-        $response->fill($this->createErrorApiResponse('some error'));
-        $response->fill($this->createSuccessApiResponse('some data'));
-
-        $this->assertEquals('some error', $response->getLastErrorText());
-    }
-
-    /** @test */
     public function it_should_check_empty_responses()
     {
         $response = new Response();
