@@ -9,6 +9,7 @@
 - [Copy/move pin](#copymove-pin)
 - [Save image on disk](#save-image-on-disk)
 - [Delete pin from board](#delete-pin-from-board)
+- [Get list of comments](#get-list-of-comments)
 - [Write comment](#add-comment-to-pin)
 - [Delete comment from pin](#delete-comment-from-pin)
 - [Pins for source](#get-pins-for-source)
@@ -116,8 +117,7 @@ to delete many pins:
 $bot->pins->deleteFromBoard($pinId, $boardId);
 ```
 
-## Add comment to pin
-
+## Get list of comments
 Get list of comments for a specified pin (returns [Pagination](#pagination) object):
 
 ```php
@@ -129,6 +129,8 @@ foreach($comments as $comment) {
 // retrieve all comments
 $commnets = $bot->comments->getList($pinId)->toArray();
 ```
+
+## Add comment to pin
 
 Write a comment:
 ```php
