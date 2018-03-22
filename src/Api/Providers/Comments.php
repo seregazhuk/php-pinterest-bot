@@ -26,8 +26,6 @@ class Comments extends Provider
      */
     public function create($pinId, $text)
     {
-
-
         $requestOptions = [
             'objectId' => $this->getAggregatedPinId($pinId),
             'pinId'    => $pinId,
