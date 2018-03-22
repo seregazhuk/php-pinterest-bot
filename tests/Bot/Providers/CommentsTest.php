@@ -24,7 +24,20 @@ class CommentsTest extends ProviderBaseTest
                 'field_set_key' => 'detailed',
             ]
         );
+    }
 
+    /** @test */
+    public function it_fetches_aggregated_pin_id_to_get_list_of_comments()
+    {
+        $provider = $this->getProvider();
+        $provider->getList('123456');
+
+        // To resolve pin aggregated id
+        $this->assertWasGetRequest(UrlBuilder::RESOURCE_PIN_INFO, [
+                'id'            => '123456',
+                'field_set_key' => 'detailed',
+            ]
+        );
     }
 
     /** @test */
