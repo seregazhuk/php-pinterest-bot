@@ -118,6 +118,18 @@ $bot->pins->deleteFromBoard($pinId, $boardId);
 
 ## Add comment to pin
 
+Get list of comments for a specified pin (returns [Pagination](#pagination) object):
+
+```php
+$comments = $bot->comments->getList($pinId);
+foreach($comments as $comment) {
+    // ...
+}
+
+// retrieve all comments
+$commnets = $bot->comments->getList($pinId)->toArray();
+```
+
 Write a comment:
 ```php
 $result = $bot->comments->create($pinId, 'your comment'); 

@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 
 ## v5.6.9 - 2018-03-21
+### Added:
+ - get comments for a specified pin
+
 ### Fixed:
  - likes/dislikes are no longer supported by Pinterest and have been removed
 
