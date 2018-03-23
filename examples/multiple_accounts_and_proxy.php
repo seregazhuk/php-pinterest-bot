@@ -13,7 +13,7 @@ $accounts = [
         'link' => 'http://awasome-blog-about-cats.com',
         'proxy' => [
             'host' => '123.123.21.21',
-            'post' => 1234
+            'port' => 1234
         ],
     ],
     [
@@ -24,7 +24,7 @@ $accounts = [
         'link' => 'http://awasome-blog-about-dogs.com',
         'proxy' => [
             'host' => '123.123.22.22',
-            'post' => 5678
+            'port' => 5678
         ]
     ]
 ];
