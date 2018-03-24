@@ -217,7 +217,7 @@ class Auth extends Provider
         return (new Registration($registrationForm, $password, $name))
             ->setCountry($country)
             ->setAge($age)
-            ->setGender("male");
+            ->setGender('male');
     }
 
     /**

@@ -109,7 +109,7 @@ abstract class Provider
      */
     public function checkMethodRequiresLogin($method)
     {
-        $methodsThatRequireLogin = array_merge($this->loginRequiredFor, self::requiresLoginFor());
+        $methodsThatRequireLogin = array_merge($this->loginRequiredFor, $this->requiresLoginFor());
 
         return in_array($method, $methodsThatRequireLogin);
     }
