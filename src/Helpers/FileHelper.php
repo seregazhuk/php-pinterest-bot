@@ -30,6 +30,6 @@ class FileHelper
      */
     public static function saveTo($source, $destination)
     {
-        file_put_contents($destination, file_get_contents($source));
+        copy($source, $destination);
     }
 }

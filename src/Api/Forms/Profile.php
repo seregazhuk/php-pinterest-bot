@@ -47,17 +47,17 @@ class Profile extends Form
     /**
      * @var bool
      */
-    protected $excludeFromSearch = null;
+    protected $excludeFromSearch;
 
     /**
      * @var string
      */
-    protected $locale = null;
+    protected $locale;
 
     /**
      * @var string
      */
-    protected $accountType = null;
+    protected $accountType;
 
     /**
      * @param string $lastName
