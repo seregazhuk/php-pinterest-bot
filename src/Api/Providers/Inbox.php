@@ -63,9 +63,7 @@ class Inbox extends Provider
     public function getMessages($conversationId, $limit = Pagination::DEFAULT_LIMIT)
     {
         return $this->paginate(
-            UrlBuilder::RESOURCE_GET_CONVERSATION_MESSAGES,
-            ['conversation_id' => (string)$conversationId],
-            $limit
+            UrlBuilder::RESOURCE_GET_CONVERSATION_MESSAGES, ['conversation_id' => (string)$conversationId], $limit
         );
     }
 
@@ -128,6 +126,20 @@ class Inbox extends Provider
     {
         return $this->makeContactRequestCall(
             $requestId, UrlBuilder::RESOURCE_CONTACT_REQUEST_IGNORE
+        );
+    }
+
+    /**
+     * @param string $newsId
+     * @param int $limit
+     * @return Pagination
+     */
+    public function newsHubDetails($newsId, $limit = Pagination::DEFAULT_LIMIT)
+    {
+        return $this->paginate(
+            UrlBuilder::RESOURCE_GET_NEWS_HUB_DETAILS,
+            ['news_id' => $newsId],
+            $limit
         );
     }
 

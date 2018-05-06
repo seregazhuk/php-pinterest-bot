@@ -22,14 +22,32 @@ foreach ($bot->inbox->news() as $new) {
 
 ## Notifications
 
+### Get all
+
 Get user's notifications (returns [Pagination](#pagination) object):
 
 ```php
 // Get result as array
 $notifications = $bot->inbox->notifications()->toArray();
 
-// Iterate over requests
+// Iterate over notifications
 foreach ($bot->inbox->notifications() as $notification) {
+    // ...
+}
+```
+
+### Details for notification
+
+Each notification from the method above is represented by array. This array contains `id` field, which is an
+id of the current notification (or consider as news id). This id can be used to retrieve details 
+for this notification (returns [Pagination](#pagination) object):
+
+```php
+// Get details for notification by its id
+$details = $bot->inbox->newsHubDetails($notificationId);
+
+// Iterate over details
+foreach ($bot->inbox->newsHubDetails($notificationId) as $detail) {
     // ...
 }
 ```
