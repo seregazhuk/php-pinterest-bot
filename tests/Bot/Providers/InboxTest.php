@@ -88,6 +88,17 @@ class InboxTest extends ProviderBaseTest
         $this->assertWasGetRequest(UrlBuilder::RESOURCE_GET_NOTIFICATIONS);
     }
 
+
+    /** @test */
+    public function it_fetches_details_for_a_specified_notification()
+    {
+        $this->login();
+
+        $this->getProvider()->newsHubDetails('12345')->toArray();
+
+        $this->assertWasGetRequest(UrlBuilder::RESOURCE_GET_NEWS_HUB_DETAILS, ['news_id' => '12345']);
+    }
+
     /**
      * @param string $requestId
      * @return array
