@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## v5.7.1 - 2018-05-13
+### Fixed
+ - endpoint for notification details
+
 ## v5.7.0 - 2018-05-06
 ### Added:
  - get details for a notification

@@ -132,7 +132,7 @@ class UrlBuilder
      */
     const RESOURCE_GET_LATEST_NEWS = 'resource/NetworkStoriesResource/get/';
     const RESOURCE_GET_NOTIFICATIONS = 'resource/NewsHubResource/get/';
-    const RESOURCE_GET_NEWS_HUB_DETAILS = 'resource/NewsHubResource/get/';
+    const RESOURCE_GET_NEWS_HUB_DETAILS = 'resource/NewsHubDetailsResource/get/';
 
     /**
      * Registration
