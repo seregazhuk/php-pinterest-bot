@@ -8,12 +8,13 @@ use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 class BoardSections extends Provider
 {
     /**
-     * @var array
+     * @var string[]
      */
     protected $loginRequiredFor = [
         'create',
         'edit',
         'delete',
+        'forBoard',
     ];
 
     /**
