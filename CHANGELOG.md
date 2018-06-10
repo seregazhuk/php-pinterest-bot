@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 ## v5.7.2 - 2018-06-10
 ### Fixed:
  - board sections should require being logged in
+ - providers resolution for multi-case name 
 
 ## v5.7.1 - 2018-05-13
 ### Fixed
