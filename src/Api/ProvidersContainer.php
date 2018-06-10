@@ -2,6 +2,7 @@
 
 namespace seregazhuk\PinterestBot\Api;
 
+use SebastianBergmann\CodeCoverage\Report\PHP;
 use seregazhuk\PinterestBot\Api\Providers\BoardSections;
 use seregazhuk\PinterestBot\Api\Providers\Pins;
 use seregazhuk\PinterestBot\Api\Providers\Suggestions;
@@ -96,8 +97,6 @@ class ProvidersContainer
      */
     public function getProvider($provider)
     {
-        $provider = strtolower($provider);
-
         // Check if an instance has already been initiated. If not
         // build it and then add to the providers array.
         if (!isset($this->providers[$provider])) {
