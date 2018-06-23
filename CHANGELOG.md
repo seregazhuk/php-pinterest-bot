@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## v5.7.3 - 2018-06-23
+### Fixed:
+ - Retrieving pinner's followers and following requires being logged in
+
 ## v5.7.2 - 2018-06-10
 ### Fixed:
  - board sections should require being logged in
