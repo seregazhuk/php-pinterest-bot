@@ -20,6 +20,8 @@ class Pinners extends FollowableProvider
         'block',
         'search',
         'blockById',
+        'followers',
+        'following',
     ];
 
     protected $searchScope  = 'people';
