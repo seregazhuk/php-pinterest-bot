@@ -24,14 +24,14 @@
         }
     },
     "require": {
-        "php": ">=5.6",
+        "php": ">=7.0",
         "ext-curl": "*",
         "ext-fileinfo": "*"
     },
     "require-dev": {
-        "codeclimate/php-test-reporter": "^0.4.4",
+        "codeclimate/php-test-reporter": "^0.4",
         "mockery/mockery": "1.0",
-        "phpunit/phpunit": "~5.7"
+        "phpunit/phpunit": "~6.5"
     },
     "authors": [
         {

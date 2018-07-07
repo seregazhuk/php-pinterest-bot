@@ -3,6 +3,7 @@
 namespace seregazhuk\tests\Bot\Providers;
 
 use Mockery;
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
 use seregazhuk\PinterestBot\Api\Contracts\HttpClient;
@@ -13,7 +14,7 @@ use seregazhuk\PinterestBot\Api\Response;
 
 abstract class ProviderBaseTest extends TestCase
 {
-    use ApiRequestAssertions;
+    use ApiRequestAssertions, MockeryPHPUnitIntegration;
 
     /**
      * @var string

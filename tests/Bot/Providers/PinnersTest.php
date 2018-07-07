@@ -144,7 +144,7 @@ class PinnersTest extends ProviderBaseTest
     public function it_throws_exception_when_trying_to_fetching_unknown_following_entities()
     {
         $provider = $this->getProvider();
-        $this->setExpectedException(WrongFollowingType::class);
+        $this->expectException(WrongFollowingType::class);
         $provider->following('johnDoe', 'UNKNOWN');
     }
 

@@ -3,6 +3,7 @@
 namespace seregazhuk\tests\Bot\Providers\Core;
 
 use Mockery;
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
 use seregazhuk\PinterestBot\Api\Request;
@@ -19,6 +20,8 @@ use seregazhuk\PinterestBot\Api\Providers\Core\ProviderWrapper;
  */
 class ProvidersContainerTest extends TestCase
 {
+    use MockeryPHPUnitIntegration;
+
     /**
      * @var ProvidersContainer
      */
@@ -60,7 +63,7 @@ class ProvidersContainerTest extends TestCase
     /** @test */
     public function it_should_throw_exception_on_getting_wrong_provider()
     {
-        $this->setExpectedException(WrongProvider::class);
+        $this->expectException(WrongProvider::class);
         $this->container->unknown;
     }
 
