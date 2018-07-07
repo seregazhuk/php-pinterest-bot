@@ -2,11 +2,11 @@
 
 namespace seregazhuk\tests\Bot\Helpers;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use seregazhuk\tests\Helpers\CookiesHelper;
 use seregazhuk\PinterestBot\Helpers\Cookies;
 
-class CookiesTest extends PHPUnit_Framework_TestCase
+class CookiesTest extends TestCase
 {
     use CookiesHelper;
 
