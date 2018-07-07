@@ -38,6 +38,7 @@ class UrlBuilder
     const RESOURCE_CREATE_EMAIL_INVITE = 'resource/BoardEmailInviteResource/create/';
     const RESOURCE_ACCEPT_INVITE = 'resource/BoardInviteResource/update/';
     const RESOURCE_DELETE_INVITE = 'resource/BoardInviteResource/delete/';
+    const RESOURCE_LEAVE_BOARD = 'resource/BoardCollaboratorResource/delete/';
 
     /**
      * Board section
