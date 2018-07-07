@@ -3,6 +3,7 @@
 namespace seregazhuk\tests\Bot\Providers\Core;
 
 use Mockery;
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\TestCase;
 use seregazhuk\PinterestBot\Api\Request;
 use seregazhuk\PinterestBot\Api\Response;
@@ -16,7 +17,7 @@ use seregazhuk\PinterestBot\Api\Providers\Core\Provider;
  */
 class ProviderTest extends TestCase
 {
-    use ResponseHelper;
+    use ResponseHelper, MockeryPHPUnitIntegration;
 
     protected function tearDown()
     {

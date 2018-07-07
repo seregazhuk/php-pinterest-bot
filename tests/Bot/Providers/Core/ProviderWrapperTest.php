@@ -18,7 +18,7 @@ class ProviderWrapperTest extends TestCase
     /** @test */
     public function it_should_fail_when_login_is_required()
     {
-        $this->setExpectedException(AuthRequired::class);
+        $this->expectException(AuthRequired::class);
 
         $wrapper = $this->createWrapper();
         $wrapper->testFail();
@@ -34,7 +34,7 @@ class ProviderWrapperTest extends TestCase
     /** @test */
     public function it_should_throw_exception_when_calling_non_existed_method()
     {
-        $this->setExpectedException(InvalidRequest::class);
+        $this->expectException(InvalidRequest::class);
         $this->createWrapper()->badMethod();
     }
 
