@@ -22,6 +22,7 @@
     - [Accept invite](#accept-invite)
     - [Ignore invite](#ignore-invite)
     - [Delete invite](#delete-invite)
+    - [Leave board](#leave-board)
     
 ## User boards
 
@@ -206,4 +207,11 @@ Delete invite. Removes from the board collaborators, requires an id of the user,
 $bot->boards->deleteInvite($boardId, $userId);
 // also you can ban a user specifying third argument as true
 $bot->boards->deleteInvite($boardId, $userId, true);
+```
+
+### Leave board
+
+Leave a board you have been invited to:
+```php
+$bot->boards->leave($boardId);
 ```
