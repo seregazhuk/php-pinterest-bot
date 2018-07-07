@@ -2,8 +2,10 @@
 All notable changes to this project will be documented in this file.
 
 ## v5.8.0 - 2018-07-07
+### Added:
+ - Board `leave()`
 ### Updated
- - Required PHP version is set to 7.0 
+ - Required PHP version is set to 7.0  
 
 ## v5.7.3 - 2018-06-23
 ### Fixed:

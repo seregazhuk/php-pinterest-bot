@@ -48,7 +48,7 @@ class Boards extends FollowableProvider
     public function forUser($username)
     {
         $options = [
-            'username'      => $username,
+            'username' => $username,
             'field_set_key' => 'detailed',
         ];
 
@@ -92,8 +92,8 @@ class Boards extends FollowableProvider
     public function info($username, $board)
     {
         $requestOptions = [
-            'slug'          => $this->formatBoardName($board),
-            'username'      => $username,
+            'slug' => $this->formatBoardName($board),
+            'username' => $username,
             'field_set_key' => 'detailed',
         ];
 
@@ -107,9 +107,7 @@ class Boards extends FollowableProvider
     protected function formatBoardName($board)
     {
         $nameWithRemovedSpaces = str_replace(' ', '-', $board);
-        return function_exists('mb_strtolower') ?
-            mb_strtolower($nameWithRemovedSpaces) :
-            strtolower($nameWithRemovedSpaces);
+        return function_exists('mb_strtolower') ? mb_strtolower($nameWithRemovedSpaces) : strtolower($nameWithRemovedSpaces);
     }
 
     /**
@@ -123,9 +121,7 @@ class Boards extends FollowableProvider
     public function pins($boardId, $limit = Pagination::DEFAULT_LIMIT)
     {
         return $this->paginate(
-            UrlBuilder::RESOURCE_GET_BOARD_FEED,
-            ['board_id' => $boardId],
-            $limit
+            UrlBuilder::RESOURCE_GET_BOARD_FEED, ['board_id' => $boardId], $limit
         );
     }
 
@@ -168,9 +164,9 @@ class Boards extends FollowableProvider
     public function create($name, $description, $privacy = self::BOARD_PRIVACY_PUBLIC)
     {
         $requestOptions = [
-            'name'        => $name,
+            'name' => $name,
             'description' => $description,
-            'privacy'     => $privacy,
+            'privacy' => $privacy,
         ];
 
         return $this->post(UrlBuilder::RESOURCE_CREATE_BOARD, $requestOptions);
@@ -198,5 +194,22 @@ class Boards extends FollowableProvider
     public function titleSuggestionsFor($pinId)
     {
         return $this->get(UrlBuilder::RESOURCE_TITLE_SUGGESTIONS, ['pin_id' => $pinId]);
+    }
+
+    /**
+     * @param string $boardId
+     * @return array|bool
+     */
+    public function leave($boardId)
+    {
+        $requestOptions = [
+            'ban' => false,
+            'board_id' => (string)$boardId,
+            'field_set_key' => 'boardEdit',
+            'invited_user_id' => (string)$this->resolveCurrentUserId(),
+        ];
+        print_r($requestOptions);
+
+        return $this->post(UrlBuilder::RESOURCE_LEAVE_BOARD, $requestOptions);
     }
 }
