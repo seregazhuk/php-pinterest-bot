@@ -195,9 +195,7 @@ class Pinners extends FollowableProvider
         $userInfo = $this->info($entityId);
 
         // On success return users'id from his profile.
-        return isset($userInfo['id']) ?
-            $userInfo['id'] :
-            null;
+        return $userInfo['id'] ?? null;
     }
 
     /**

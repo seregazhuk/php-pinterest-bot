@@ -177,6 +177,6 @@ class User extends Provider
     {
         $profile = $this->getProfile();
 
-        return isset($profile[$key]) ? $profile[$key] : '';
+        return $profile[$key] ?? '';
     }
 }
