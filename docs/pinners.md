@@ -29,41 +29,31 @@ $userData = $bot->pinners->info($username);
 ```
 ## Following boards/pinners/interests
 
-Get user following info. By default returns following users. Returns [Pagination](#pagination) object:
-```php
-foreach ($bot->pinners->following('username') as $following) {
-    // ...
-}
-```
-
-You can specify type of entities to be returned: *people*, *interests* or *boards*. For example:
-```php
-foreach ($bot->pinners->following('username', 'people') as $user) {
-    // Loop through people
-}
-
-foreach($bot->pinners->following('username', 'boards') as $board) {
-    // Loop through boards
-}
-
-foreach($bot->pinners->following('username', 'interests') as $interest) {
-    // Loop through interests
-}
-```
-
-Also you can use special methods-helpers to achieve the same results:
-
+### People
+Get people the user follows. Returns [Pagination](#pagination) object:
 ```php
 foreach ($bot->pinners->followingPeople('username') as $user) {
     // Loop through people
 }
+```
 
-foreach ($bot->pinners->followingBoards('username') as $board) {
-    // Loop through boards
+Method behaves like https://pinterest.com/following page: includes recent pins for these pinners. 
+
+
+### Boards
+Get boards the user follows. Returns [Pagination](#pagination) object:
+```php
+foreach ($bot->pinners->followingBoards('username') as $user) {
+    // Loop through people
 }
+```
 
-foreach($bot->pinners->followingInterests('username') as $interest) {
-    // Loop through interests
+### Interests
+
+Get interests the user follows. Returns [Pagination](#pagination) object:
+```php
+foreach ($bot->pinners->followingInterests('username') as $user) {
+    // Loop through people
 }
 ```
 
