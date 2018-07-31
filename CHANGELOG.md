@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## v5.8.1 - 2018-07-31
+### Fixed
+ - Added separate method for retrieving board invites (accepted and declined) 
+
 ## v5.8.0 - 2018-07-07
 ### Added:
  - Board `leave()`
