@@ -17,7 +17,8 @@
     - [Update section](#update-section)
     - [Delete section](#delete-section)
 - [Invites](#invites)
-    - [Get invites for board](#get-invites-for-board)
+    - [Get active invites](#get-active-invites)
+    - [Get invites for a board](#get-invites-for-a-board)
     - [Invite someone to board](#invite-someone-to-board)
     - [Accept invite](#accept-invite)
     - [Ignore invite](#ignore-invite)
@@ -163,12 +164,22 @@ $bot->boardSections->delete($sectionId);
 
 ## Invites
 
-### Get invites for board
+### Get active invites
 
-Get your boards invites:
+Get all your active boards invites:
 ```php
 $invites = $bot->boards->invites();
 ```
+
+### Get invites for a board
+
+Get invites for a specified board, including accepted and declined invites (returns [Pagination](#pagination) object):
+ 
+ ```php
+foreach($bot->boards->invitesFor($boardId) as $invite) {
+    // loop through invites
+}
+ ```
 
 ### Invite someone to board
 

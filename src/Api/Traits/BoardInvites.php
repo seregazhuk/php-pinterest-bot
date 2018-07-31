@@ -2,6 +2,7 @@
 
 namespace seregazhuk\PinterestBot\Api\Traits;
 
+use seregazhuk\PinterestBot\Helpers\Pagination;
 use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\ProvidersContainer;
 
@@ -42,6 +43,20 @@ trait BoardInvites
         $invites = $this->get(UrlBuilder::RESOURCE_BOARDS_INVITES, $data);
 
         return !$invites ? [] : $invites;
+    }
+
+    /**
+     * Get invites for a specified board
+     *
+     * @param string $boardId
+     * @param int $limit
+     * @return Pagination
+     */
+    public function invitesFor($boardId, $limit = Pagination::DEFAULT_LIMIT)
+    {
+        return $this->paginate(
+            UrlBuilder::RESOURCE_BOARDS_INVITES, ['board_id' => (string) $boardId], $limit
+        );
     }
 
     /**
