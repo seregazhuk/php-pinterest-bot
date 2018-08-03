@@ -218,4 +218,13 @@ class Pinners extends FollowableProvider
 
         return parent::followers($username, $limit);
     }
+
+    /**
+     * @param string $username
+     * @return bool|null
+     */
+    public function isFollowedByMe($username)
+    {
+        return $this->info($username)['explicitly_followed_by_me'] ?? false;
+    }
 }
