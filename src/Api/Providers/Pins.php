@@ -362,9 +362,7 @@ class Pins extends EntityProvider
     {
         $pinInfo = $this->info($pinId);
 
-        return isset($pinInfo['aggregated_pin_data']['id']) ?
-            $pinInfo['aggregated_pin_data']['id'] :
-            null;
+        return $pinInfo['aggregated_pin_data']['id'] ?? null;
     }
 
     /**
