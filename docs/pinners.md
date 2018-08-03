@@ -77,6 +77,14 @@ foreach($bot->pinners->followers() as $follower)
 }
 ```
 
+Check if you follow a certain user:
+
+```php
+if ($bot->pinners->isFollowedByMe('username)) {
+    // ...
+}
+```
+
 ## User pins
 
 Get the newest pins of a pinner (returns [Pagination](#pagination) object):
