@@ -44,7 +44,7 @@ if you don't plan on creating pins, writing comments or sending messages)!
 ## Installation
 
 ### Dependencies
-Library requires CURL extension and PHP 5.5.9 or above.
+Library requires CURL extension and PHP 7.0 or above.
 
 The recommended way to install this library is via [Composer](https://getcomposer.org). 
 [New to Composer?](https://getcomposer.org/doc/00-intro.md)
