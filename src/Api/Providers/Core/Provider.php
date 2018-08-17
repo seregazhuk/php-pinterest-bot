@@ -64,9 +64,7 @@ abstract class Provider
 
         $this->execute($resourceUrl, $postString);
 
-        return $returnData ?
-            $this->response->getResponseData() :
-            $this->response->isOk();
+        return $returnData ? $this->response->getResponseData() : $this->response->isOk();
     }
 
     /**
@@ -78,12 +76,7 @@ abstract class Provider
      */
     protected function get($resourceUrl = '', array $requestOptions = [])
     {
-        $query = $this->request->createQuery(
-            $requestOptions,
-            $this->response->getBookmarks()
-        );
-
-        $this->execute($resourceUrl . '?' . $query);
+        $this->execute($resourceUrl . $this->makeQueryString($requestOptions));
 
         return $this->response->getResponseData();
     }
@@ -148,13 +141,12 @@ abstract class Provider
      */
     protected function paginate($resourceUrl, $data, $limit = Pagination::DEFAULT_LIMIT)
     {
-        return $this
-            ->paginateCustom(
-                function () use ($data, $resourceUrl) {
-                    $this->get($resourceUrl, $data);
-                    return $this->response;
-                }
-            )->take($limit);
+        return $this->paginateCustom(
+            function () use ($data, $resourceUrl) {
+                $this->get($resourceUrl, $data);
+                return $this->response;
+            }
+        )->take($limit);
     }
 
     /**
@@ -168,9 +160,7 @@ abstract class Provider
     {
         $this->response->clear();
 
-        return (new Pagination)
-            ->paginateOver($callback)
-            ->take($limit);
+        return (new Pagination)->paginateOver($callback)->take($limit);
     }
 
     /**
@@ -198,5 +188,20 @@ abstract class Provider
         // Simply visit main page to fill the cookies
         // and parse a token from them
         $this->get();
+    }
+
+    /**
+     * @param array $requestOptions
+     * @return string
+     */
+    protected function makeQueryString(array $requestOptions)
+    {
+        if (empty($requestOptions)) {
+            return '';
+        }
+
+        return '?' . $this->request->createQuery(
+            $requestOptions, $this->response->getBookmarks()
+        );
     }
 }
