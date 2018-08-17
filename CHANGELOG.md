@@ -1,9 +1,12 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## v5.8.2 - ?
+## v5.8.2 - 2018-08-17
 ### Added:
  - Pinners `isFollowedByMe()` helper method
+ 
+### Fixed:
+ - Password `reset()` method
 
 ## v5.8.1 - 2018-07-31
 ### Fixed
