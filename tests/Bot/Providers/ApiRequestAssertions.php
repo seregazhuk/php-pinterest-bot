@@ -54,10 +54,10 @@ trait ApiRequestAssertions
      */
     protected function assertWasGetRequest($url, array $data = [])
     {
-        $query = $this->request->createQuery($data);
+        $query = empty($data) ? '' : '?' . $this->request->createQuery($data);
 
         $check = function($requestUrl) use ($url, $query) {
-            return $requestUrl === UrlBuilder::buildApiUrl($url) . '?' . $query;
+            return $requestUrl === UrlBuilder::buildApiUrl($url) . $query;
         };
 
         $this->httpClient

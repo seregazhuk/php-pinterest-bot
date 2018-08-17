@@ -7,13 +7,13 @@
     - [Business account](#business-account)
     - [Confirm email](#confirm-email)
 - [Convert to business account](#convert-to-business-account)
-- [Reset password](#reset-password)
 - [Profile](#profile)
     - [Change avatar](#change-avatar)
     - [Settings](#profile-settings)
     - [Username](#username)
     - [User id](#user-id)
     - [Check ban](#ban-check)
+    - [Reset password](#reset-password)    
     - [Change password](#change-password)
     - [Clear search history](#clear-search-history)
     - [Deactivate account](#deactivate-account)
@@ -130,22 +130,6 @@ $bot->auth->convertToBusiness('businessName');
 $bot->auth->convertToBusiness('businessName', 'http://yoursite.com');
 ```
 
-## Reset password
-You can send to your email a link to reset your password:
-
-```php
-$bot->password->sendResetLink('youremail@gmail.com');
-```
-
-Then your can grab a link from email and pass use it to reset password:
-
-```php
-$bot->password->reset(
-    'https://post.pinterest.com/f/a/your-password-reset-params',
-    'newPassword'
-);
-```
-
 ## Profile
 Change profile. To update profile you need to setup `Profile` form object. It has following methods:
  - `setLastName($lastName)`,
@@ -222,6 +206,22 @@ if ($bot->user->isBanned() {
 Change you password:
 ```phpVisual similar pins
 $bot->password->change('oldPassword', 'newPassword');
+```
+
+### Reset password
+You can send to your email a link to reset your password:
+
+```php
+$bot->password->sendResetLink('youremail@gmail.com');
+```
+
+Then your can grab a link from email and pass use it to reset password:
+
+```php
+$bot->password->reset(
+    'https://post.pinterest.com/f/a/your-password-reset-params',
+    'newPassword'
+);
 ```
 
 ### Clear search history
