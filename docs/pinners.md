@@ -44,7 +44,7 @@ Method behaves like https://pinterest.com/following page: includes recent pins f
 Get boards the user follows. Returns [Pagination](#pagination) object:
 ```php
 foreach ($bot->pinners->followingBoards('username') as $user) {
-    // Loop through people
+    // Loop through boards
 }
 ```
 
@@ -53,7 +53,7 @@ foreach ($bot->pinners->followingBoards('username') as $user) {
 Get interests the user follows. Returns [Pagination](#pagination) object:
 ```php
 foreach ($bot->pinners->followingInterests('username') as $user) {
-    // Loop through people
+    // Loop through interests
 }
 ```
 
