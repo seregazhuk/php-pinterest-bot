@@ -53,7 +53,7 @@ class Pins extends EntityProvider
      * @param string $link
      * @return array
      */
-    public function create($imageUrl, $boardId, $description = '', $link = '')
+    public function create($imageUrl, $boardId, $description = '', $link = '', $sectionId = null)
     {
         // Upload image if first argument is not an url
         if (!filter_var($imageUrl, FILTER_VALIDATE_URL)) {
@@ -67,6 +67,10 @@ class Pins extends EntityProvider
             'image_url'   => $imageUrl,
             'board_id'    => $boardId,
         ];
+
+        if ($sectionId !== null) {
+            $requestOptions['section'] = $sectionId;
+        }
 
         $this->post(UrlBuilder::RESOURCE_CREATE_PIN, $requestOptions);
 
@@ -82,7 +86,7 @@ class Pins extends EntityProvider
      * @param int|null $boardId
      * @return bool
      */
-    public function edit($pindId, $description = '', $link = '', $boardId = null)
+    public function edit($pindId, $description = '', $link = '', $boardId = null, $sectionId = null)
     {
         $requestOptions = ['id' => $pindId];
 
@@ -92,6 +96,10 @@ class Pins extends EntityProvider
 
         if ($boardId !== null) {
             $requestOptions['board_id'] = $boardId;
+        }
+
+        if ($sectionId !== null) {
+            $requestOptions['board_section_id'] = $sectionId;
         }
 
         if (!empty($link)) {
