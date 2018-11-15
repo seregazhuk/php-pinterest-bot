@@ -57,6 +57,17 @@ $pinInfo = $bot->pins->create(
     'http://site.com',
 );
 ```
+
+You can specify a section id as fifth argument.
+```php
+$pinInfo = $bot->pins->create(
+    'http://exmaple.com/image.jpg',
+    $boardId,
+    'Pin description',
+    'http://site.com',
+    $sectionId,
+);
+```
     
 ## Repin
  
@@ -77,6 +88,9 @@ $bot->pins->edit($pinId, 'new description', 'new link');
 
 // Change board
 $bot->pins->edit($pinId, 'new description', 'new link', $newBoardId);
+
+// Change section
+$bot->pins->edit($pinId, 'new description', 'new link', $newBoardId, $newSectionId);
 ``` 
 
 ## Move pin to a new board
