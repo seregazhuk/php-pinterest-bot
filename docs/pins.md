@@ -57,6 +57,19 @@ $pinInfo = $bot->pins->create(
     'http://site.com',
 );
 ```
+
+If you have [Rich Pins](https://business.pinterest.com/en/rich-pins) enabled,
+you can specify a title of the pin:
+
+```php
+$pinInfo = $bot->pins->create(
+    'http://exmaple.com/image.jpg',
+    $boardId,
+    'Pin description',
+    'http://site.com',
+    'Pin title'
+);
+```
     
 ## Repin
  

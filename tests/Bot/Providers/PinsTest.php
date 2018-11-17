@@ -251,7 +251,8 @@ class PinsTest extends ProviderBaseTest
             $imageUrl = 'http://example.com/images/image.jpg',
             $boardId = '12345678',
             $description = 'my description for this pin',
-            $link = 'http://example.com'
+            $link = 'http://example.com',
+            $title = 'My title'
         );
 
         $this->assertWasPostRequest(
@@ -261,6 +262,7 @@ class PinsTest extends ProviderBaseTest
                 'link'        => 'http://example.com',
                 'image_url'   => 'http://example.com/images/image.jpg',
                 'board_id'    => '12345678',
+                'title'       => 'My title',
             ]
         );
     }
