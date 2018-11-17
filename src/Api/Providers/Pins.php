@@ -82,9 +82,10 @@ class Pins extends EntityProvider
      * @param string $description
      * @param string $link
      * @param int|null $boardId
+     * @param string $title
      * @return bool
      */
-    public function edit($pindId, $description = '', $link = '', $boardId = null)
+    public function edit($pindId, $description = '', $link = '', $boardId = null, $title = '')
     {
         $requestOptions = ['id' => $pindId];
 
@@ -98,6 +99,10 @@ class Pins extends EntityProvider
 
         if (!empty($link)) {
             $requestOptions['link'] = stripslashes($link);
+        }
+
+        if (!empty($title)) {
+            $requestOptions['title'] = $title;
         }
 
         return $this->post(UrlBuilder::RESOURCE_UPDATE_PIN, $requestOptions);
