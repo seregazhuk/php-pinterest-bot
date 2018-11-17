@@ -92,6 +92,14 @@ $bot->pins->edit($pinId, 'new description', 'new link');
 $bot->pins->edit($pinId, 'new description', 'new link', $newBoardId);
 ``` 
 
+If you have [Rich Pins](https://business.pinterest.com/en/rich-pins) enabled,
+you can change a title of the pin:
+
+```
+$bot->pins->edit($pinId, 'new description', 'new link', $newBoardId, 'new
+title');
+```
+
 ## Move pin to a new board
 
 Move pin to a new board:

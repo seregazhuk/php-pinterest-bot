@@ -230,7 +230,8 @@ class PinsTest extends ProviderBaseTest
             $pinId = '12345',
             $description = 'my description',
             $link = 'http://example.com',
-            $boardId = '5678'
+            $boardId = '5678',
+            $title = 'new title'
         );
 
         $this->assertWasPostRequest(
@@ -239,6 +240,7 @@ class PinsTest extends ProviderBaseTest
                 'description' => 'my description',
                 'board_id'    => '5678',
                 'link'        => 'http://example.com',
+                'title'       => 'new title',
             ]
         );
     }
