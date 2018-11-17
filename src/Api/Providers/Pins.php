@@ -51,9 +51,10 @@ class Pins extends EntityProvider
      * @param int $boardId
      * @param string $description
      * @param string $link
+     * @param string $title
      * @return array
      */
-    public function create($imageUrl, $boardId, $description = '', $link = '')
+    public function create($imageUrl, $boardId, $description = '', $link = '', $title = '')
     {
         // Upload image if first argument is not an url
         if (!filter_var($imageUrl, FILTER_VALIDATE_URL)) {
@@ -61,11 +62,12 @@ class Pins extends EntityProvider
         }
 
         $requestOptions = [
-            'method'      => 'scraped',
+            'method' => 'scraped',
             'description' => $description,
-            'link'        => empty($link) ? '' : $link,
-            'image_url'   => $imageUrl,
-            'board_id'    => $boardId,
+            'link' => empty($link) ? '' : $link,
+            'image_url' => $imageUrl,
+            'board_id' => $boardId,
+            'title' => $title,
         ];
 
         $this->post(UrlBuilder::RESOURCE_CREATE_PIN, $requestOptions);
