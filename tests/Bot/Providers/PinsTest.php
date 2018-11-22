@@ -238,8 +238,8 @@ class PinsTest extends ProviderBaseTest
             UrlBuilder::RESOURCE_UPDATE_PIN, [
                 'id'          => '12345',
                 'description' => 'my description',
-                'board_id'    => '5678',
                 'link'        => 'http://example.com',
+                'board_id'    => '5678',
                 'title'       => 'new title',
             ]
         );
@@ -254,6 +254,7 @@ class PinsTest extends ProviderBaseTest
             $description = 'my description',
             $link = 'http://example.com',
             $boardId = '5678',
+            $title = 'new title',
             $sectionId = '6789'
         );
 
@@ -261,9 +262,10 @@ class PinsTest extends ProviderBaseTest
             UrlBuilder::RESOURCE_UPDATE_PIN, [
                 'id'               => '12345',
                 'description'      => 'my description',
-                'board_id'         => '5678',
-                'board_section_id' => '6789',
                 'link'             => 'http://example.com',
+                'board_id'         => '5678',
+                'title'            => 'new title',
+                'board_section_id' => '6789',
             ]
         );
     }
@@ -301,6 +303,7 @@ class PinsTest extends ProviderBaseTest
             $boardId = '12345678',
             $description = 'my description for this pin',
             $link = 'http://example.com',
+            $title = 'title',
             $sectionId = '23456789'
         );
 
@@ -311,6 +314,7 @@ class PinsTest extends ProviderBaseTest
                 'link'        => 'http://example.com',
                 'image_url'   => 'http://example.com/images/image.jpg',
                 'board_id'    => '12345678',
+                'title'       => 'title',
                 'section'     => '23456789',
             ]
         );

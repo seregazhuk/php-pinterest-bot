@@ -88,6 +88,7 @@ class Pins extends EntityProvider
      * @param string $link
      * @param int|null $boardId
      * @param string $title
+     * @param int|null $sectionId
      * @return bool
      */
 
@@ -99,20 +100,21 @@ class Pins extends EntityProvider
             $requestOptions['description'] = $description;
         }
 
-        if ($boardId !== null) {
-            $requestOptions['board_id'] = $boardId;
-        }
-
-        if ($sectionId !== null) {
-            $requestOptions['board_section_id'] = $sectionId;
-        }
-
         if (!empty($link)) {
             $requestOptions['link'] = stripslashes($link);
         }
 
+        if ($boardId !== null) {
+            $requestOptions['board_id'] = $boardId;
+        }
+
+
         if (!empty($title)) {
             $requestOptions['title'] = $title;
+        }
+
+        if ($sectionId !== null) {
+            $requestOptions['board_section_id'] = $sectionId;
         }
 
         return $this->post(UrlBuilder::RESOURCE_UPDATE_PIN, $requestOptions);
