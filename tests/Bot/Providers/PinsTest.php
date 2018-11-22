@@ -246,6 +246,29 @@ class PinsTest extends ProviderBaseTest
     }
 
     /** @test */
+    public function a_user_can_edit_a_pin_with_section_id()
+    {
+        $provider = $this->getProvider();
+        $provider->edit(
+            $pinId = '12345',
+            $description = 'my description',
+            $link = 'http://example.com',
+            $boardId = '5678',
+            $sectionId = '6789'
+        );
+
+        $this->assertWasPostRequest(
+            UrlBuilder::RESOURCE_UPDATE_PIN, [
+                'id'               => '12345',
+                'description'      => 'my description',
+                'board_id'         => '5678',
+                'board_section_id' => '6789',
+                'link'             => 'http://example.com',
+            ]
+        );
+    }
+
+    /** @test */
     public function a_user_can_create_a_pin_with_image_from_a_link()
     {
         $provider = $this->getProvider();
@@ -265,6 +288,30 @@ class PinsTest extends ProviderBaseTest
                 'image_url'   => 'http://example.com/images/image.jpg',
                 'board_id'    => '12345678',
                 'title'       => 'My title',
+            ]
+        );
+    }
+
+    /** @test */
+    public function a_user_can_create_a_pin_with_image_from_a_link_with_section_id()
+    {
+        $provider = $this->getProvider();
+        $provider->create(
+            $imageUrl = 'http://example.com/images/image.jpg',
+            $boardId = '12345678',
+            $description = 'my description for this pin',
+            $link = 'http://example.com',
+            $sectionId = '23456789'
+        );
+
+        $this->assertWasPostRequest(
+            UrlBuilder::RESOURCE_CREATE_PIN, [
+                'method'      => 'scraped',
+                'description' => 'my description for this pin',
+                'link'        => 'http://example.com',
+                'image_url'   => 'http://example.com/images/image.jpg',
+                'board_id'    => '12345678',
+                'section'     => '23456789',
             ]
         );
     }
