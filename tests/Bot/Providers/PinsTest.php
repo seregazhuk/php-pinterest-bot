@@ -230,7 +230,8 @@ class PinsTest extends ProviderBaseTest
             $pinId = '12345',
             $description = 'my description',
             $link = 'http://example.com',
-            $boardId = '5678'
+            $boardId = '5678',
+            $title = 'new title'
         );
 
         $this->assertWasPostRequest(
@@ -239,6 +240,7 @@ class PinsTest extends ProviderBaseTest
                 'description' => 'my description',
                 'board_id'    => '5678',
                 'link'        => 'http://example.com',
+                'title'       => 'new title',
             ]
         );
     }
@@ -274,7 +276,8 @@ class PinsTest extends ProviderBaseTest
             $imageUrl = 'http://example.com/images/image.jpg',
             $boardId = '12345678',
             $description = 'my description for this pin',
-            $link = 'http://example.com'
+            $link = 'http://example.com',
+            $title = 'My title'
         );
 
         $this->assertWasPostRequest(
@@ -284,6 +287,7 @@ class PinsTest extends ProviderBaseTest
                 'link'        => 'http://example.com',
                 'image_url'   => 'http://example.com/images/image.jpg',
                 'board_id'    => '12345678',
+                'title'       => 'My title',
             ]
         );
     }

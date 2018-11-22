@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## v5.9.0 - ?
+### Added:
+ - Support for Reach Pins. You can specify a title when creating/editing a pin.
+
 ## v5.8.2 - 2018-08-17
 ### Added:
  - Pinners `isFollowedByMe()` helper method

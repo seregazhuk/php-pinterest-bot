@@ -58,16 +58,32 @@ $pinInfo = $bot->pins->create(
 );
 ```
 
-You can specify a section id as fifth argument.
+If you have [Rich Pins](https://business.pinterest.com/en/rich-pins) enabled,
+you can specify a title of the pin:
+
 ```php
 $pinInfo = $bot->pins->create(
     'http://exmaple.com/image.jpg',
     $boardId,
     'Pin description',
     'http://site.com',
-    $sectionId,
+    'Pin title'
 );
 ```
+
+You can specify a board section id as the last argument:
+
+```php
+$pinInfo = $bot->pins->create(
+    'http://exmaple.com/image.jpg',
+    $boardId,
+    'Pin description',
+    'http://site.com',
+    'Pin title'
+    $sectionId,
+);
+
+
     
 ## Repin
  
@@ -92,6 +108,14 @@ $bot->pins->edit($pinId, 'new description', 'new link', $newBoardId);
 // Change section
 $bot->pins->edit($pinId, 'new description', 'new link', $newBoardId, $newSectionId);
 ``` 
+
+If you have [Rich Pins](https://business.pinterest.com/en/rich-pins) enabled,
+you can change a title of the pin:
+
+```
+$bot->pins->edit($pinId, 'new description', 'new link', $newBoardId, 'new
+title');
+```
 
 ## Move pin to a new board
 

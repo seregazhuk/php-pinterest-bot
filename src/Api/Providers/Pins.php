@@ -38,6 +38,7 @@ class Pins extends EntityProvider
     ];
 
     protected $searchScope  = 'pins';
+  
     protected $entityIdName = 'id';
 
     protected $messageEntityName = 'pin';
@@ -51,9 +52,10 @@ class Pins extends EntityProvider
      * @param int $boardId
      * @param string $description
      * @param string $link
+     * @param string $title
      * @return array
      */
-    public function create($imageUrl, $boardId, $description = '', $link = '', $sectionId = null)
+    public function create($imageUrl, $boardId, $description = '', $link = '', $title = '', $sectionId = null)
     {
         // Upload image if first argument is not an url
         if (!filter_var($imageUrl, FILTER_VALIDATE_URL)) {
@@ -61,11 +63,12 @@ class Pins extends EntityProvider
         }
 
         $requestOptions = [
-            'method'      => 'scraped',
+            'method' => 'scraped',
             'description' => $description,
-            'link'        => empty($link) ? '' : $link,
-            'image_url'   => $imageUrl,
-            'board_id'    => $boardId,
+            'link' => $link,
+            'image_url' => $imageUrl,
+            'board_id' => $boardId,
+            'title' => $title,
         ];
 
         if ($sectionId !== null) {
@@ -84,9 +87,11 @@ class Pins extends EntityProvider
      * @param string $description
      * @param string $link
      * @param int|null $boardId
+     * @param string $title
      * @return bool
      */
-    public function edit($pindId, $description = '', $link = '', $boardId = null, $sectionId = null)
+
+    public function edit($pindId, $description = '', $link = '', $boardId = null, $title = '', $sectionId = null)
     {
         $requestOptions = ['id' => $pindId];
 
@@ -104,6 +109,10 @@ class Pins extends EntityProvider
 
         if (!empty($link)) {
             $requestOptions['link'] = stripslashes($link);
+        }
+
+        if (!empty($title)) {
+            $requestOptions['title'] = $title;
         }
 
         return $this->post(UrlBuilder::RESOURCE_UPDATE_PIN, $requestOptions);
