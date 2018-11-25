@@ -1,7 +1,7 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## v5.9.0 - ?
+## v5.9.0 - 2018-11-25
 ### Added:
  - Support for Reach Pins. You can specify a title when creating/editing a pin.
  - Allow to specify a board section when create/edit Pins.
