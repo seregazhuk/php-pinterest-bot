@@ -57,8 +57,8 @@ class Pins extends EntityProvider
      */
     public function create($imageUrl, $boardId, $description = '', $link = '', $title = '', $sectionId = null)
     {
-        // Upload image if first argument is not an url
-        if (!filter_var($imageUrl, FILTER_VALIDATE_URL)) {
+        // Upload image if first argument is a local file
+        if (file_exists($imageUrl)) {
             $imageUrl = $this->upload($imageUrl);
         }
 
