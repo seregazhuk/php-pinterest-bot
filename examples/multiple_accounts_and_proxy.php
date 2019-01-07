@@ -47,13 +47,14 @@ function getImage($folder)
 $bot = PinterestBot::create();
 
 foreach ($accounts as $account) {
-    $bot->auth->login($account['login'], $account['password']);
-
     // add proxy
     if (isset($account['proxy'])) {
         $proxy = $account['proxy'];
         $bot->getHttpClient()->useProxy($proxy['host'], $proxy['port']);
     }
+
+    $bot->auth->login($account['login'], $account['password']);
+
 
     if ($bot->user->isBanned()) {
         $username = $account['username'];
