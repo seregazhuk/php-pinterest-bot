@@ -170,8 +170,8 @@ class UrlBuilder
      */
     const RESOURCE_INVITE = 'resource/EmailInviteSentResource/create/';
 
-    const URL_BASE = 'https://uk.pinterest.com/';
-    const HOST = 'uk.pinterest.com';
+    const URL_BASE = 'https://www.pinterest.com/';
+    const HOST = 'www.pinterest.com';
 
     const FOLLOWING_INTERESTS = 'interests';
     const FOLLOWING_PEOPLE = 'people';
