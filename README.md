@@ -25,6 +25,7 @@ if you don't plan on creating pins, writing comments or sending messages)!
 
 - [Installation](#installation)
 - [Quick Start](#quick-start)
+- [How to avoid ban](#how-to-avoid-ban)
 - [Examples](#examples)
 - [Account](docs/account.md)
 - [Boards](docs/boards.md)
@@ -76,6 +77,8 @@ $bot->pins->create('http://exmaple.com/image.jpg', $boards[0]['id'], 'Pin descri
 *Note*: Some methods (e.g. get user followers/following, pins
 likes/dislikes, search and other feed queries) use Pinterest navigation through results (with bookmarks). This means that for every batch of results, a 
 call is made to Pinterest and a [Pagination](#pagination) object with Pinterest API results is returned.
+
+## How to avoid ban
 
 **To avoid being banned by Pinterest**, do not aggressively pin or write comments (e.g. creating hundreds of pins in a single minute).
 Do this by inserting timeouts (`sleep($seconds)`) with calls.
