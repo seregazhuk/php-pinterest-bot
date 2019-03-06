@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## v5.9.1 - 2019-02-13
+### Fixed
+ - Log in issue
+
 ## v5.9.0 - 2018-12-29
 ### Added:
  - Support for Reach Pins. You can specify a title when creating/editing a pin.
