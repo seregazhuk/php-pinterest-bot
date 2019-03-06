@@ -78,7 +78,7 @@ likes/dislikes, search and other feed queries) use Pinterest navigation through 
 call is made to Pinterest and a [Pagination](#pagination) object with Pinterest API results is returned.
 
 **To avoid being banned by Pinterest**, do not aggressively pin or write comments (e.g. creating hundreds of pins in a single minute).
-Do this by inserting timeouts (`$bot->wait($seconds)`) with calls.
+Do this by inserting timeouts (`sleep($seconds)`) with calls.
 
 ## Examples
 These articles provide examples of common tasks that can be performed with the bot:
