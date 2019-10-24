@@ -14,7 +14,6 @@ class BoardSections extends Provider
         'create',
         'edit',
         'delete',
-        'forBoard',
     ];
 
     /**

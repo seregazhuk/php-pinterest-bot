@@ -140,7 +140,7 @@ class Pins extends EntityProvider
      * @param string $description
      * @return array
      */
-    public function repin($repinId, $boardId, $description = '')
+    public function repin($repinId, $boardId, $description = '', $sectionId = null)
     {
         $requestOptions = [
             'board_id'    => $boardId,
@@ -149,6 +149,10 @@ class Pins extends EntityProvider
             'is_video'    => null,
             'pin_id'      => $repinId,
         ];
+
+        if ($sectionId !== null) {
+            $requestOptions['section'] = $sectionId;
+        }
 
         $this->post(UrlBuilder::RESOURCE_REPIN, $requestOptions);
 
