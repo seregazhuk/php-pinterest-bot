@@ -82,8 +82,7 @@ $pinInfo = $bot->pins->create(
     'Pin title'
     $sectionId,
 );
-
-
+```
     
 ## Repin
  
