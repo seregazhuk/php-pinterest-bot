@@ -76,6 +76,21 @@ class BoardsTest extends ProviderBaseTest
     }
 
     /** @test */
+    public function it_formats_a_board_name_with_single_quotes_when_fetching_its_info()
+    {
+        $provider = $this->getProvider();
+
+        $provider->info('johnDoe', "'my board's name'");
+
+        $request = [
+            'slug'          => 'my-boards-name',
+            'username'      => 'johnDoe',
+            'field_set_key' => 'detailed',
+        ];
+        $this->assertWasGetRequest(UrlBuilder::RESOURCE_GET_BOARD, $request);
+    }
+
+    /** @test */
     public function it_creates_a_public_board()
     {
         $this->login();
