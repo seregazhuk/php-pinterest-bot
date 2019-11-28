@@ -50,7 +50,7 @@ class BoardSections extends Provider
     {
         $requestOptions = [
             'section_id' => $sectionId,
-            'name' => $title,
+            'title' => $title,
         ];
 
         return $this->post(UrlBuilder::RESOURCE_EDIT_BOARD_SECTION, $requestOptions);
