@@ -138,9 +138,9 @@ class Boards extends FollowableProvider
      */
     public function update($boardId, $attributes)
     {
-        if (isset($attributes['name'])) {
+        /*if (isset($attributes['name'])) {
             $attributes['name'] = $this->$attributes['name'];
-        }
+        }*/
 
         $requestOptions = array_merge(
             [
