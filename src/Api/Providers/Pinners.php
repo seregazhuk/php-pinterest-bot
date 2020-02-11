@@ -24,7 +24,7 @@ class Pinners extends FollowableProvider
         'following',
     ];
 
-    protected $searchScope  = 'people';
+    protected $searchScope  = 'users';
     protected $entityIdName = 'user_id';
     protected $followersFor = 'username';
 
