@@ -134,15 +134,16 @@ class Registration extends Form
     public function getData()
     {
         return [
-            'first_name'    => $this->name,
-            'email'         => $this->email,
-            'password'      => $this->password,
-            'age'           => $this->age,
-            'gender'        => $this->gender,
-            'country'       => $this->country,
-            'site'          => $this->site,
-            'container'     => 'home_page',
-            'visited_pages' => [],
+            'first_name'         => $this->name,
+            'email'              => $this->email,
+            'password'           => $this->password,
+            'age'                => $this->age,
+            'gender'             => $this->gender,
+            'country'            => $this->country,
+            'site'               => $this->site,
+            'container'          => 'home_page',
+            /*'visited_pages'    => [],*/
+            'user_behavior_data' => '{}',
         ];
     }
 
