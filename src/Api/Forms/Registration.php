@@ -191,6 +191,4 @@ class Registration extends Form
         $this->password = $password;
         return $this;
     }
-
-
 }
