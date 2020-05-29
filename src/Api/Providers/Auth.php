@@ -3,16 +3,17 @@
 namespace seregazhuk\PinterestBot\Api\Providers;
 
 use LogicException;
-use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 use seregazhuk\PinterestBot\Api\Forms\Registration;
 use seregazhuk\PinterestBot\Api\Providers\Core\Provider;
 use seregazhuk\PinterestBot\Api\Traits\ResolvesCurrentUser;
 use seregazhuk\PinterestBot\Api\Traits\SendsRegisterActions;
+use seregazhuk\PinterestBot\Helpers\UrlBuilder;
 
 class Auth extends Provider
 {
     use SendsRegisterActions, ResolvesCurrentUser;
 
+    const REGISTRATION_COMPLETE_EXPERIENCE_ID = '11:10105';
     /**
      * @var array
      */
@@ -21,7 +22,130 @@ class Auth extends Provider
         'convertToBusiness',
     ];
 
-    const REGISTRATION_COMPLETE_EXPERIENCE_ID = '11:10105';
+    public function logout()
+    {
+        $this->request->logout();
+    }
+
+    /**
+     * Register a new business account. At first we register a basic type account.
+     * Then convert it to a business one. This is done to receive a confirmation
+     * email after registration.
+     *
+     * @param string|Registration $registrationForm
+     * @param string $password
+     * @param string $name
+     * @param string $website
+     * @return bool|mixed
+     */
+    public function registerBusiness($registrationForm, $password = null, $name = null, $website = '')
+    {
+        $registration = $this->register($registrationForm, $password, $name);
+
+        if (!$registration) {
+            return false;
+        }
+
+        // Re-Login
+        $email = ($registrationForm instanceof Registration) ? $registrationForm->getEmail() : $registrationForm;
+        $password = ($registrationForm instanceof Registration) ? $registrationForm->getPassword() : $password;
+        if (!$this->login($email, $password)) {
+            return false;
+        }
+
+        $website = ($registrationForm instanceof Registration) ?
+            $registrationForm->getSite() : $website;
+
+        $name = ($registrationForm instanceof Registration) ?
+            $registrationForm->getName() : $name;
+
+        return $this->convertToBusiness($name, $website);
+    }
+
+    /**
+     * Register a new user.
+     *
+     * @param string|Registration $email
+     * @param string|null $password
+     * @param string|null $name
+     * @param string $country @deprecated
+     * @param int $age @deprecated
+     *
+     * @return bool
+     */
+    public function register($email, $password = null, $name = null, $country = 'GB', $age = 18)
+    {
+        $registrationForm = $this->getRegistrationForm($email, $password, $name, $country, $age);
+
+        return $this->makeRegisterCall($registrationForm);
+    }
+
+    /**
+     * @param string|Registration $email
+     * @param string $password
+     * @param string $name
+     * @param string $country
+     * @param string $age
+     * @return Registration
+     */
+    protected function getRegistrationForm($email, $password, $name, $country, $age)
+    {
+        if ($email instanceof Registration) {
+            return $email;
+        }
+
+        return $this->fillRegistrationForm(
+            $email, $password, $name, $country, $age
+        );
+    }
+
+    /**
+     * @param string $registrationForm
+     * @param string $password
+     * @param string $name
+     * @param string $country
+     * @param string $age
+     * @return Registration
+     */
+    protected function fillRegistrationForm($registrationForm, $password, $name, $country, $age)
+    {
+        return (new Registration($registrationForm, $password, $name))
+            ->setCountry($country)
+            ->setAge($age)
+            ->setGender('male');
+    }
+
+    /**
+     * @param Registration $registrationForm
+     * @return bool|mixed
+     */
+    protected function makeRegisterCall(Registration $registrationForm)
+    {
+        if (!$this->sendEmailVerificationAction()) {
+            return false;
+        }
+
+        if (!$this->post(UrlBuilder::RESOURCE_CREATE_REGISTER, $registrationForm->toArray())) {
+            return false;
+        }
+
+        if (!$this->sendRegistrationActions()) {
+            return false;
+        }
+
+        return $this->completeRegistration();
+    }
+
+    /**
+     * @return bool
+     */
+    protected function completeRegistration()
+    {
+        return $this->post(
+            UrlBuilder::RESOURCE_REGISTRATION_COMPLETE,
+            ['placed_experience_id' => self::REGISTRATION_COMPLETE_EXPERIENCE_ID]
+        );
+    }
 
     /**
      * Login as pinner.
@@ -49,81 +173,6 @@ class Auth extends Provider
         return $this->processLogin($username, $password);
     }
 
-    public function logout()
-    {
-        $this->request->logout();
-    }
-
-    /**
-     * Register a new user.
-     *
-     * @param string|Registration $email
-     * @param string|null $password
-     * @param string|null $name
-     * @param string $country @deprecated
-     * @param int $age @deprecated
-     *
-     * @return bool
-     */
-    public function register($email, $password = null, $name = null, $country = 'GB', $age = 18)
-    {
-        $registrationForm = $this->getRegistrationForm($email, $password, $name, $country, $age);
-
-        return $this->makeRegisterCall($registrationForm);
-    }
-
-    /**
-     * Register a new business account. At first we register a basic type account.
-     * Then convert it to a business one. This is done to receive a confirmation
-     * email after registration.
-     *
-     * @param string|Registration $registrationForm
-     * @param string $password
-     * @param string $name
-     * @param string $website
-     * @return bool|mixed
-     */
-    public function registerBusiness($registrationForm, $password = null, $name = null, $website = '')
-    {
-        $registration = $this->register($registrationForm, $password, $name);
-
-        if (!$registration) {
-            return false;
-        }
-
-        $website = ($registrationForm instanceof Registration) ?
-            $registrationForm->getSite() : $website;
-
-        return $this->convertToBusiness($name, $website);
-    }
-
-    /**
-     * Convert your account to a business one.
-     *
-     * @param string $businessName
-     * @param string $websiteUrl
-     * @return bool
-     */
-    public function convertToBusiness($businessName, $websiteUrl = '')
-    {
-        $data = [
-            'business_name' => $businessName,
-            'website_url'   => $websiteUrl,
-            'account_type'  => 'other',
-        ];
-
-        return $this->post(UrlBuilder::RESOURCE_CONVERT_TO_BUSINESS, $data);
-    }
-
-    /**
-     * @param string $link
-     * @return array|bool
-     */
-    public function confirmEmail($link)
-    {
-        return $this->get($link);
-    }
-
     /**
      * Validates password and login.
      *
@@ -139,35 +188,12 @@ class Auth extends Provider
     }
 
     /**
+     * @param string $username
      * @return bool
      */
-    protected function completeRegistration()
+    protected function processAutoLogin($username)
     {
-        return $this->post(
-            UrlBuilder::RESOURCE_REGISTRATION_COMPLETE,
-            ['placed_experience_id' => self::REGISTRATION_COMPLETE_EXPERIENCE_ID]
-        );
-    }
-
-    /**
-     * @param Registration $registrationForm
-     * @return bool|mixed
-     */
-    protected function makeRegisterCall(Registration $registrationForm)
-    {
-        if (!$this->sendEmailVerificationAction()) {
-            return false;
-        }
-
-        if (!$this->post(UrlBuilder::RESOURCE_CREATE_REGISTER, $registrationForm->toArray())) {
-            return false;
-        }
-
-        if (!$this->sendRegistrationActions()) {
-            return false;
-        }
-
-        return $this->completeRegistration();
+        return $this->request->autoLogin($username) && $this->resolveCurrentUserId();
     }
 
     /**
@@ -196,46 +222,29 @@ class Auth extends Provider
     }
 
     /**
-     * @param string $username
+     * Convert your account to a business one.
+     *
+     * @param string $businessName
+     * @param string $websiteUrl
      * @return bool
      */
-    protected function processAutoLogin($username)
+    public function convertToBusiness($businessName, $websiteUrl = '')
     {
-        return $this->request->autoLogin($username) && $this->resolveCurrentUserId();
+        $data = [
+            'business_name'   => $businessName,
+            'website_url'     => $websiteUrl,
+            'has_ads_credits' => '',
+        ];
+
+        return $this->post(UrlBuilder::RESOURCE_CONVERT_TO_BUSINESS, $data, false, '/business/convert/');
     }
 
     /**
-     * @param string $registrationForm
-     * @param string $password
-     * @param string $name
-     * @param string $country
-     * @param string $age
-     * @return Registration
+     * @param string $link
+     * @return array|bool
      */
-    protected function fillRegistrationForm($registrationForm, $password, $name, $country, $age)
+    public function confirmEmail($link)
     {
-        return (new Registration($registrationForm, $password, $name))
-            ->setCountry($country)
-            ->setAge($age)
-            ->setGender('male');
-    }
-
-    /**
-     * @param string|Registration $email
-     * @param string $password
-     * @param string $name
-     * @param string $country
-     * @param string $age
-     * @return Registration
-     */
-    protected function getRegistrationForm($email, $password, $name, $country, $age)
-    {
-        if ($email instanceof Registration) {
-            return $email;
-        }
-
-        return $this->fillRegistrationForm(
-            $email, $password, $name, $country, $age
-        );
+        return $this->get($link);
     }
 }

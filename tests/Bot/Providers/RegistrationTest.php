@@ -25,13 +25,17 @@ class RegistrationTest extends ProviderBaseTest
     /** @test */
     public function it_converts_account_to_business_type_when_registering_a_business_account()
     {
+        $this->request
+            ->shouldReceive('isLoggedIn')
+            ->andReturn(true);
+
         $provider = $this->getProvider();
         $provider->registerBusiness('johndoe@example.com', 'secret', 'johnDoe');
 
         $this->assertWasPostRequest(UrlBuilder::RESOURCE_CONVERT_TO_BUSINESS, [
-            'business_name' => 'johnDoe',
-            'website_url'   => '',
-            'account_type'  => 'other',
+            'business_name'   => 'johnDoe',
+            'website_url'     => '',
+            'has_ads_credits' => '',
         ]);
     }
 

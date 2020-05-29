@@ -52,36 +52,6 @@ class Registration extends Form
     }
 
     /**
-     * @param mixed $email
-     * @return Registration
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-        return $this;
-    }
-
-    /**
-     * @param string $password
-     * @return Registration
-     */
-    public function setPassword($password)
-    {
-        $this->password = $password;
-        return $this;
-    }
-
-    /**
-     * @param string $name
-     * @return Registration
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-        return $this;
-    }
-
-    /**
      * @param string $country
      * @return Registration
      */
@@ -103,6 +73,14 @@ class Registration extends Form
     }
 
     /**
+     * @return Registration
+     */
+    public function setMaleGender()
+    {
+        return $this->setGender('male');
+    }
+
+    /**
      * @param string $gender
      * @return Registration
      */
@@ -110,14 +88,6 @@ class Registration extends Form
     {
         $this->gender = $gender;
         return $this;
-    }
-
-    /**
-     * @return Registration
-     */
-    public function setMaleGender()
-    {
-        return $this->setGender('male');
     }
 
     /**
@@ -134,16 +104,28 @@ class Registration extends Form
     public function getData()
     {
         return [
-            'first_name'    => $this->name,
-            'email'         => $this->email,
-            'password'      => $this->password,
-            'age'           => $this->age,
-            'gender'        => $this->gender,
-            'country'       => $this->country,
-            'site'          => $this->site,
-            'container'     => 'home_page',
-            'visited_pages' => [],
+            'first_name'         => $this->name,
+            'email'              => $this->email,
+            'password'           => $this->password,
+            'age'                => $this->age,
+            'gender'             => $this->gender,
+            'country'            => $this->country,
+            'site'               => $this->site,
+            'container'          => 'home_page',
+            'signupSource'       => 'home_page',
+            'hybridTier'         => 'open',
+            'page'               => 'home',
+            'recaptchaV3Token'   => '',
+            'user_behavior_data' => "{}",
         ];
+    }
+
+    /**
+     * @return string
+     */
+    public function getSite()
+    {
+        return $this->site;
     }
 
     /**
@@ -159,8 +141,56 @@ class Registration extends Form
     /**
      * @return string
      */
-    public function getSite()
+    public function getName(): string
     {
-        return $this->site;
+        return $this->name;
     }
+
+    /**
+     * @param string $name
+     * @return Registration
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param mixed $email
+     * @return Registration
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPassword(): string
+    {
+        return $this->password;
+    }
+
+    /**
+     * @param string $password
+     * @return Registration
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+        return $this;
+    }
+
+
 }
