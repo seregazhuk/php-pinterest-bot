@@ -19,9 +19,9 @@ class AuthTest extends ProviderBaseTest
         $provider->convertToBusiness('myBusinessName', 'http://example.com');
 
         $request = [
-            'business_name' => 'myBusinessName',
-            'website_url'   => 'http://example.com',
-            'account_type'  => 'other',
+            'business_name'   => 'myBusinessName',
+            'website_url'     => 'http://example.com',
+            'has_ads_credits' => '',
         ];
 
         $this->assertWasPostRequest(UrlBuilder::RESOURCE_CONVERT_TO_BUSINESS, $request);
